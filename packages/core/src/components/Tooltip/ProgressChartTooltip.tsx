@@ -38,7 +38,7 @@ export const ProgressChartTooltip = ({
             alignItems: 'center',
           }}>
           {valueFormatted}
-          {iconName && <Icon name={iconName} size={8} noFallback />}
+          {iconName && <Icon name={iconName} size={8} />}
         </Typography>
       </div>
 

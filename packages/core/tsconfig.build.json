@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+
+    "strict": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "target": "es6",
+    "module": "esnext",
+    "noImplicitAny": false,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./tsbuildcache",
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@themes/*": ["./src/themes/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@types/*": ["./src/types/*"]
+    }
+  },
+
+  "types": ["react", "react-dom", "node"],
+
+  "include": ["src/**/*"],
+  "exclude": [
+    "dist/**/*",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts"
+  ]
+}

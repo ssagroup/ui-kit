@@ -1,3 +1,5 @@
+import './injectGlobal';
+
 export * from './types/global.d';
 export * from './types/emotion.d';
 

@@ -1,10 +1,11 @@
 import { useController } from 'react-hook-form';
+import type { FieldValues } from 'react-hook-form';
 
 import RadioGroup from '@components/RadioGroup';
 
 import { IFormRadioGroupProps } from './types';
 
-const FormRadioGroup = <T,>({
+const FormRadioGroup = <T extends FieldValues>({
   name,
   isRequired = false,
   control,

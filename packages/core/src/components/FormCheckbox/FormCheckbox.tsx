@@ -1,10 +1,11 @@
 import { useController } from 'react-hook-form';
+import type { FieldValues } from 'react-hook-form';
 
 import Checkbox from '@components/Checkbox';
 
 import { IFormCheckboxProps } from './types';
 
-const FormCheckbox = <T,>({
+const FormCheckbox = <T extends FieldValues>({
   control,
   name,
   isRequired = false,
