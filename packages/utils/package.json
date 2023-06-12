@@ -15,7 +15,8 @@
     "directory": "packages/utils"
   },
   "scripts": {
-    "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc -b",
+    "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json",
+    "showConfig": "tsc --showConfig -p ./tsconfig.build.json",
     "clearcache": "rm -f ./tsbuildcache"
   },
   "dependencies": {
