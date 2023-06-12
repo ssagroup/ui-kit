@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+// import styled from '@emotion/styled/macro';
 
 const MockComponentBase = styled.div`
   color: purple;
@@ -21,7 +22,7 @@ const MockComponent = ({
 
 describe('MockComponent', () => {
   it.only('should render', () => {
-    const { debug } = _render(
+    const { debug } = render(
       <MockComponent sayHi="Hi!" css={{ fontSize: '10px' }} />,
     );
     debug();
@@ -35,16 +36,26 @@ describe('MockComponent', () => {
       window.getComputedStyle(el as HTMLDivElement).color,
     );
     debugger;
-    expect(el).toHaveStyleRule('fontSize', '10px');
     expect(el).toHaveStyleRule('color', 'purple');
+    expect(el).toHaveStyleRule('fontSize', '10px');
   });
 
   it('this test works', () => {
     const tree = renderer
-      .create(<MockComponent sayHi="Hi!" css={{ fontSize: '10px' }} />)
+      .create(
+        <MockComponent
+          sayHi="Hi!"
+          css={css`
+            fontsize: '10px';
+          `}
+        />,
+      )
       .toJSON();
+
+    console.log(tree);
 
     // https://github.com/styled-components/jest-styled-components/issues/294
     expect(tree).toHaveStyleRule('color', 'purple');
+    expect(tree).toHaveStyleRule('fontSize', '10px');
   });
 });
