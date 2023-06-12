@@ -1,0 +1,118 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+import Form from '@components/Form';
+import FormGroup from '@components/FormGroup';
+import Input from '@components/Input';
+
+<Meta title="Forms/About" />
+
+# The Form
+
+The Form components rely on the
+[React hook forms](https://react-hook-form.com/api).
+
+With that, the `register` is mandatory for the `TextField` to work.
+
+Ex.:
+
+```javascript
+const { register } = useForm<T>();
+...
+<TextField register={register} />
+```
+
+And for the errors we use the `useForm` hook:
+
+```javascript
+const { formState: { errors } } = useForm<T>();
+...
+<TextField register={register} errors={errors[field name]} />
+```
+
+The `TextField` component can render an input or textarea:
+
+input: `<TextField {...} />` textarea: `<TextField multirow {...} />`
+
+To handle the layout of the forms we have some structural components:
+
+`Form`, `FormGroup` and `FormAction`
+
+A Form example:
+
+```javascript
+// The useForm needs to know the inputs that we have
+type Inputs = {
+  name: string;
+  lastname: string;
+  address: string;
+};
+
+const Sample = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)}>
+
+      // block Inputs
+      <FormGroup>
+        <TextField
+          placeholder="Name" label="Name" name="name" register={register}
+          validationSchema={{
+            required: 'Required',
+          }} errors={errors?.name} />
+
+        <TextField
+          placeholder="Last name"
+          label="Last name"
+          name="lastname"
+          register={register}
+          validationSchema={{
+            required: 'Required',
+          }}
+          errors={errors?.lastname}
+          success
+          helperText={'Success'}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <TextField
+          placeholder="Address"
+          label="Address"
+          name="address"
+          register={register}
+          validationSchema={{
+            required: 'is required',
+            minLength: {
+              value: 3,
+              message: 'Please enter a minimum of 3 characters',
+            },
+          }}
+          errors={errors?.address}
+          helperText={'Basic text'}
+        />
+      </FormGroup>
+
+      <FormGroup>
+          <TextField
+            multirow
+            rows={10}
+            label="Textarea"
+            name="textarea"
+            register={register}
+            validationSchema={{
+              required: 'Required',
+            }}
+            helperText="some nice text"
+          />
+        </FormGroup>
+
+      <FormAction>
+        <button>Submit</button>
+      </FormAction>
+    </Form>
+);
+}
+```

@@ -1,0 +1,182 @@
+import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '@emotion/react';
+import colors from '@themes/main';
+import { useForm } from 'react-hook-form';
+
+import Checkbox from '@components/Checkbox';
+import FormCheckbox from '@components/FormCheckbox';
+
+import { ICheckboxProps } from './types';
+
+const checkLabel = () => {
+  const labelEl = document.getElementsByTagName('label')[0];
+  expect(labelEl).toBeInTheDocument();
+  expect(labelEl).toHaveAttribute('for');
+
+  return labelEl;
+};
+
+const checkIcon = (labelEl, isChecked) => {
+  const icons = labelEl.getElementsByTagName('svg');
+
+  if (isChecked) {
+    expect(icons.length).toEqual(1);
+    expect(icons[0]).toBeInTheDocument();
+  } else {
+    expect(icons.length).toEqual(0);
+  }
+};
+
+const checkToggle = async (
+  getByRole,
+  mockOnChange: () => void,
+  labelEl: HTMLLabelElement,
+  isChecked: boolean,
+) => {
+  checkIcon(labelEl, isChecked);
+  const checkboxEl = getByRole('checkbox', { checked: isChecked });
+  expect(checkboxEl.id).toEqual(labelEl.getAttribute('for'));
+
+  const newIsChecked = !isChecked;
+
+  await userEvent.click(labelEl);
+
+  expect(checkboxEl.checked).toBe(newIsChecked);
+  expect(mockOnChange).toBeCalledWith(newIsChecked);
+
+  checkIcon(labelEl, newIsChecked);
+};
+
+function setup(props: Omit<ICheckboxProps, 'onChange'> = {}) {
+  const mockOnChange = jest.fn();
+  return {
+    user: userEvent.setup(),
+    mockOnChange,
+    ...render(<Checkbox onChange={mockOnChange} {...props} />),
+  };
+}
+
+describe('Checkbox', () => {
+  it('Renders without text', async () => {
+    const { getByRole, mockOnChange } = setup();
+
+    const labelEl = checkLabel();
+    await checkToggle(getByRole, mockOnChange, labelEl, false);
+  });
+
+  it('Renders with text', async () => {
+    const text = 'some text';
+
+    const { getByRole, mockOnChange } = setup({ text });
+
+    const labelEl = checkLabel();
+    expect(labelEl).toHaveTextContent(text);
+    await checkToggle(getByRole, mockOnChange, labelEl, false);
+    expect(labelEl).toHaveTextContent(text);
+  });
+
+  it('Renders with custom id', () => {
+    const checkboxId = 'my-checkbox';
+    const { getByRole } = setup({ id: checkboxId });
+    const checkboxEl = getByRole('checkbox', { checked: false });
+
+    const labelEl = document.getElementsByTagName('label')[0];
+    expect(labelEl).toBeInTheDocument();
+    expect(checkboxEl.id).toEqual(checkboxId);
+    expect(checkboxEl.id).toEqual(labelEl.getAttribute('for'));
+  });
+
+  it('Renders in the disabled state', async () => {
+    const { getByRole, user, mockOnChange } = setup({ isDisabled: true });
+
+    const checkboxEl = getByRole('checkbox', { checked: false });
+
+    await user.click(checkboxEl);
+    expect(mockOnChange).not.toBeCalled();
+  });
+
+  it('Renders with the initial state passed in props', async () => {
+    const isChecked = true;
+    const { getByRole, mockOnChange } = setup({ initialState: isChecked });
+
+    const labelEl = checkLabel();
+    await checkToggle(getByRole, mockOnChange, labelEl, isChecked);
+  });
+
+  it('Renders in the indeterminate state', () => {
+    const { getByRole, rerender, mockOnChange } = setup({
+      isIndeterminate: true,
+    });
+
+    let checkboxEl = getByRole('checkbox');
+    expect(checkboxEl).not.toBeChecked();
+    expect(checkboxEl).toHaveProperty('indeterminate', true);
+
+    rerender(
+      <ThemeProvider theme={colors}>
+        <Checkbox onChange={mockOnChange} isIndeterminate={false} />
+      </ThemeProvider>,
+    );
+
+    checkboxEl = getByRole('checkbox');
+    expect(checkboxEl).not.toBeChecked();
+    expect(checkboxEl).toHaveProperty('indeterminate', false);
+  });
+
+  it('Renders with the "name" attribute', () => {
+    const name = 'nice-checkbox';
+    const { getByRole } = setup({ name });
+    const checkboxEl = getByRole('checkbox');
+    expect(checkboxEl).toHaveAttribute('name', name);
+  });
+
+  it('Renders with the "required" attribute', () => {
+    const { getByRole } = setup({ isRequired: true });
+    const checkboxEl = getByRole('checkbox');
+    expect(checkboxEl).toHaveAttribute('required', name);
+  });
+
+  describe('FormCheckbox', () => {
+    type TestFormValues = {
+      consent: boolean;
+    };
+
+    const TestForm = ({
+      onFormSubmit,
+    }: {
+      onFormSubmit: (data: TestFormValues) => void;
+    }) => {
+      const { control, handleSubmit } = useForm<TestFormValues>();
+      const onSubmit = handleSubmit((data) => onFormSubmit(data));
+
+      return (
+        <form onSubmit={onSubmit}>
+          <FormCheckbox
+            control={control}
+            name="consent"
+            text="Give your consent"
+          />
+          <input type="submit" />
+        </form>
+      );
+    };
+
+    it('Renders and is connected to the form', async () => {
+      const user = userEvent.setup();
+      const onMockFormSubmit = jest.fn();
+
+      const { getByLabelText } = render(
+        <TestForm onFormSubmit={onMockFormSubmit} />,
+      );
+
+      const checkboxEl = getByLabelText('Give your consent');
+      expect(checkboxEl).toHaveProperty('checked', false);
+      const submitEl = document.querySelector('input[type="submit"]');
+
+      await user.click(checkboxEl);
+      await user.click(submitEl as HTMLInputElement);
+
+      expect(onMockFormSubmit).toBeCalledWith({ consent: true });
+    });
+  });
+});

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./tsbuildcache",
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {},
+    "types": [
+      "react",
+      "react-dom",
+      "node",
+    ]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist/**/*"]
+}

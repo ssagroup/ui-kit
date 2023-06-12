@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@themes/*": ["./src/themes/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@types/*": ["./src/types/*"]
+    }
+  },
+  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],
+  "exclude": ["dist/**/*"]
+}

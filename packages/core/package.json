@@ -1,0 +1,65 @@
+{
+  "name": "@ssa-ui-kit/core",
+  "type": "module",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "private": false,
+  "sideEffects": false,
+  "author": "SSA Group",
+  "license": "MIT",
+  "description": "SSA UI Kit",
+  "keywords": [
+    "react",
+    "SSA UI Kit",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssagroup/ui-kit.git",
+    "directory": "packages/core"
+  },
+  "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@floating-ui/react": "0.22.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "@nivo/pie": "^0.80.0",
+    "@nivo/scales": "^0.80.0",
+    "@ssa-ui-kit/hooks": "workspace:^",
+    "@ssa-ui-kit/utils": "workspace:^",
+    "dotenv": "^16.0.3",
+    "js-tokens": "^4.0.0",
+    "loose-envify": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.8",
+    "scheduler": "^0.23.0",
+    "uuid": "^9.0.0"
+  },
+  "scripts": {
+    "test": "TZ='Europe/London' jest -i --no-cache",
+    "lint": "eslint --ignore-path .gitignore .",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve",
+    "create": "node ./tasks/create.js",
+    "analyze": "webpack --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
+    "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json"
+  },
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@emotion/jest": "^11.11.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/testing-library__jest-dom": "^5.14.6",
+    "extend-expect": "link:@testing-library/jest-dom/extend-expect",
+    "react-test-renderer": "^18.2.0"
+  }
+}

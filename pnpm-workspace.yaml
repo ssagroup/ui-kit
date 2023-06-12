@@ -1,0 +1,5 @@
+packages:
+  - 'packages/core'
+  - 'packages/utils'
+  - 'packages/hooks'
+  - 'examples/fitness-dashboard'

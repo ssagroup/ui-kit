@@ -1,0 +1,11 @@
+.DS_*
+
+node_modules
+*.swp
+dist
+storybook-static
+.vercel
+.env.*
+coverage
+stats.json
+.firebase

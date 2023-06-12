@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+    "noEmit": true,
+
+    "strict": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "target": "es6",
+    "module": "esnext",
+    "noImplicitAny": false,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+
+    "types": [
+      "react",
+      "react-dom",
+      "jest",
+      "node",
+      "@testing-library/jest-dom",
+      "@types/testing-library__jest-dom"
+    ]
+  }
+}
