@@ -32,4 +32,11 @@ module.exports = {
       },
     ],
   },
+  ignorePatterns: [
+    'node_modules',
+    'coverage',
+    '@types',
+    '!.babelrc.js',
+    '!.storybook',
+  ],
 };
