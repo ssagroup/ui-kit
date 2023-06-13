@@ -42,7 +42,8 @@
   "scripts": {
     "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json",
     "showConfig": "tsc --showConfig -p ./tsconfig.build.json",
-    "clearcache": "rm -f ./tsbuildcache"
+    "clearcache": "rm -f ./tsbuildcache",
+    "storybook": "storybook dev -p 6006"
   },
   "browserslist": [
     ">0.1%",

@@ -14,7 +14,7 @@
     "test:fitness": "TZ='Europe/London' jest -i --no-cache --selectProjects \"Examples: Fitness Dashboard\"",
     "test:showconfig": "TZ='Europe/London' jest --selectProjects \"UI Kit Core\" --showConfig",
     "test:clearcache": "jest --clearCache",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6001"
   },
   "keywords": [
     "react",
