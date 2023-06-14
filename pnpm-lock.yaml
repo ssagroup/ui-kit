@@ -252,12 +252,27 @@ importers:
       '@emotion/jest':
         specifier: ^11.10.5
         version: 11.10.5(@types/jest@29.5.2)
+      '@pmmmwh/react-refresh-webpack-plugin':
+        specifier: ^0.5.10
+        version: 0.5.10(react-refresh@0.14.0)(webpack-dev-server@4.15.0)(webpack@5.85.0)
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.16.5
       '@types/testing-library__jest-dom':
         specifier: ^5.14.6
         version: 5.14.6
+      copy-webpack-plugin:
+        specifier: ^11.0.0
+        version: 11.0.0(webpack@5.85.0)
+      html-webpack-plugin:
+        specifier: ^5.5.1
+        version: 5.5.1(webpack@5.85.0)
+      terser-webpack-plugin:
+        specifier: ^5.3.9
+        version: 5.3.9(esbuild@0.17.19)(webpack@5.85.0)
+      webpack:
+        specifier: ^5.85.0
+        version: 5.85.0(esbuild@0.17.19)(webpack-cli@5.1.1)
 
   packages/core:
     dependencies:

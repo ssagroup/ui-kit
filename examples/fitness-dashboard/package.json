@@ -60,7 +60,8 @@
     "serve": "webpack serve",
     "create": "node ./tasks/create.js",
     "analyze": "webpack --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
-    "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json"
+    "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
+    "storybook": "storybook dev -p 6007"
   },
   "browserslist": [
     ">0.1%",
@@ -69,7 +70,12 @@
   ],
   "devDependencies": {
     "@emotion/jest": "^11.10.5",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@testing-library/jest-dom": "^5.16.5",
-    "@types/testing-library__jest-dom": "^5.14.6"
+    "@types/testing-library__jest-dom": "^5.14.6",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.1",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.85.0"
   }
 }

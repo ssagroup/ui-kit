@@ -8,6 +8,10 @@ const config: StorybookConfig = {
       title: 'Core',
       url: 'http://localhost:6006',
     },
+    '@ssa-ui-kit/examples': {
+      title: 'Widgets',
+      url: 'http://localhost:6007',
+    },
   },
 };
 

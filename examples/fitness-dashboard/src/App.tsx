@@ -1,13 +1,13 @@
 import { ThemeProvider } from '@emotion/react';
 
-import { themes } from '@ssa-ui-kit/core';
+import { mainTheme } from '@ssa-ui-kit/core';
 import { AuthProvider } from '@hooks/useAuth';
 
 import Routes from './Routes';
 
 const App = () => {
   return (
-    <ThemeProvider theme={themes.main}>
+    <ThemeProvider theme={mainTheme}>
       <AuthProvider>
         <Routes />
       </AuthProvider>
