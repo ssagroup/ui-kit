@@ -1,3 +1,4 @@
+import { MainColors } from '@ssa-ui-kit/core';
 import { Goal } from '@components/ListGoals/types';
 
 export const goalsData: Array<Goal> = [

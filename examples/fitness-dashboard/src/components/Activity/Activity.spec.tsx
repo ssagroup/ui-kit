@@ -1,9 +1,7 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen, waitFor } from '../../../customTest';
 
 import Activity from './index';
 import { ActivityResp } from './types';
-
-const { screen, waitFor } = customTest;
 
 const data = {
   walking: [

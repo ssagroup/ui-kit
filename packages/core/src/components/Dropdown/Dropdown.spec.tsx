@@ -1,5 +1,4 @@
 import { within } from '@testing-library/dom';
-import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
 import { SmallDropdown, LargeDropdown } from './index';
@@ -41,7 +40,7 @@ const commonDropdownTests = (
       };
     }
 
-    it.only('Renders without a selected item', async () => {
+    it('Renders without a selected item', async () => {
       const {
         user,
         mockOnChange,

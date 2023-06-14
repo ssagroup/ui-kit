@@ -1,8 +1,6 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen, within } from '../../../customTest';
 
 import WaterConsume from './index';
-
-const { screen, within } = customTest;
 
 describe('WaterConsume', () => {
   it('Render component', async () => {

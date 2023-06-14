@@ -1,7 +1,5 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen } from '../../../customTest';
 import StepsCounter from './index';
-
-const { screen } = customTest;
 
 describe('StepsCounter', () => {
   it('Render component with correct %', () => {

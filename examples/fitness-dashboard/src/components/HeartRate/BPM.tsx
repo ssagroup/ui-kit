@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@emotion/react';
+import { Theme, useTheme } from '@emotion/react';
 import { css } from '@emotion/react';
 import { IBMPProps } from './types';
 

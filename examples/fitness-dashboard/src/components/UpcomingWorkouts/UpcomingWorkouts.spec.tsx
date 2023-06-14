@@ -1,7 +1,5 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { fireEvent, screen, waitFor } from '../../../customTest';
 import UpcomingWorkouts from './index';
-
-const { fireEvent, screen, waitFor } = customTest;
 
 describe('UpcomingWorkouts', () => {
   it('Render component', async () => {

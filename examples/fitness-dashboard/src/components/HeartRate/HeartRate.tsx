@@ -37,6 +37,7 @@ export const HeartRate = ({
       throttle((point: Point) => setBpmValue(point?.data?.y as number), 100),
     [],
   );
+
   const theme = useTheme();
   const chartColor = color || theme.colors.purpleDark;
 

@@ -1,7 +1,5 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen } from '../../../customTest';
 import Bmi from './index';
-
-const { screen } = customTest;
 
 describe('BMI', () => {
   it('Render BMI with default values', () => {

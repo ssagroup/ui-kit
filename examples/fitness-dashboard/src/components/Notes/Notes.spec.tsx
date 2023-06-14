@@ -1,8 +1,6 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen } from '../../../customTest';
 
 import Notes from './index';
-
-const { screen } = customTest;
 
 describe('Notes', () => {
   it('Render Notes', () => {

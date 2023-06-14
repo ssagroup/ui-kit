@@ -15,12 +15,16 @@ const config = {
     // https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder
     clean: true,
     library: {
-      name: 'SSAHooks',
+      name: 'SSACore',
       type: 'umd',
     },
   },
   externals: {
     react: 'react',
+    '@emotion/core': '@emotion/core',
+    '@emotion/css': '@emotion/css',
+    '@emotion/react': '@emotion/react',
+    '@emotion/styled': '@emotion/styled',
   },
   // experiments: { outputModule: true },
   devServer: {

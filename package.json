@@ -8,10 +8,10 @@
   "license": "MIT",
   "scripts": {
     "test": "TZ='Europe/London' jest -i --no-cache",
-    "test:core": "BABEL_SHOW_CONFIG_FOR=packages/core/src/components/MockComponent/MockComponent.spec.tsx TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Core\"",
+    "test:core": "pnpm --filter ./packages/core test",
     "test:utils": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Utils\"",
     "test:hooks": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Hooks\"",
-    "test:fitness": "TZ='Europe/London' jest -i --no-cache --selectProjects \"Examples: Fitness Dashboard\"",
+    "test:fitness": "pnpm --filter ./examples/fitness-dashboard test",
     "test:showconfig": "TZ='Europe/London' jest --selectProjects \"UI Kit Core\" --showConfig",
     "test:clearcache": "jest --clearCache",
     "storybook": "storybook dev -p 6001"

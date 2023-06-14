@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { useEffect } from 'react';
-import { css, useTheme, Theme } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 
 import {
   Typography,

@@ -1,19 +1,7 @@
-import {} from '@emotion/react/types/css-prop';
+/* eslint-disable @typescript-eslint/no-empty-interface */
+import { MainSizes as MS, MainColors as MC } from './global';
 
 declare global {
-  export interface MainSizes {
-    small: SerializedStyles;
-    medium: SerializedStyles;
-    large: SerializedStyles;
-  }
-
-  export interface MainColors {
-    pink: Interpolation<Theme>;
-    yellow: Interpolation<Theme>;
-    green: Interpolation<Theme>;
-    turquoise: Interpolation<Theme>;
-    purple: Interpolation<Theme>;
-    blueLight: Interpolation<Theme>;
-    blue: Interpolation<Theme>;
-  }
+  export interface MainSizes extends MS {}
+  export interface MainColors extends MC {}
 }

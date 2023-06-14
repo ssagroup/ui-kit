@@ -1,13 +1,15 @@
 import './injectGlobal';
+export type * from './types/global';
 
-export * from './types/global.d';
-export * from './types/emotion.d';
+import './types/global.d';
+import './types/emotion.d';
 
-import mainTheme from './themes/main';
+export * from './types/emotion';
+export { default as mainTheme } from './themes/main';
 
-export const themes = {
-  main: mainTheme,
-};
+// export const themes = {
+//   main: mainTheme,
+// };
 
 export { default as Avatar } from './components/Avatar';
 export { default as Badge } from './components/Badge';

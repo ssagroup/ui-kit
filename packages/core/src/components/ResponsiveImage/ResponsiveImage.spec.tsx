@@ -2,7 +2,7 @@ import ResponsiveImage from './index';
 
 describe('ResponsiveImage', () => {
   it('Renders with the required props', () => {
-    const { getByRole } = render(
+    render(
       <ResponsiveImage
         srcSet="/img/steps/steps_64.png 64w, /img/steps/steps_48.png 48w"
         sizes="(min-width: 1440px) 64px, 48px"
@@ -11,7 +11,9 @@ describe('ResponsiveImage', () => {
       />,
     );
 
-    const imageEl = getByRole('img');
+    const imageEl = document.getElementsByTagName('img')[0];
+    expect(imageEl).toBeInTheDocument();
+
     expect(imageEl).toHaveAttribute(
       'srcSet',
       '/img/steps/steps_64.png 64w, /img/steps/steps_48.png 48w',
@@ -22,7 +24,7 @@ describe('ResponsiveImage', () => {
   });
 
   it('Renders with custom styles ', () => {
-    const { getByRole } = render(
+    render(
       <ResponsiveImage
         srcSet="/img/steps/steps_64.png 64w, /img/steps/steps_48.png 48w"
         sizes="(min-width: 1440px) 64px, 48px"
@@ -34,7 +36,8 @@ describe('ResponsiveImage', () => {
       />,
     );
 
-    const imageEl = getByRole('img');
+    const imageEl = document.getElementsByTagName('img')[0];
+    expect(imageEl).toBeInTheDocument();
     expect(imageEl).toHaveStyle(`margin-left: 10px`);
   });
 });

@@ -1,8 +1,15 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import '@emotion/react';
+import { Theme as T } from '@ssa-ui-kit/core';
 
 import './injectGlobal';
 import App from './App';
+
+declare module '@emotion/react' {
+  // eslint-disable-next-line  @typescript-eslint/no-empty-interface
+  export interface Theme extends T {}
+}
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 

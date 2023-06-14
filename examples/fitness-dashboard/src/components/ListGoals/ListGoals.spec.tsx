@@ -1,8 +1,7 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import type { MainColors } from '@ssa-ui-kit/core';
+import { screen } from '../../../customTest';
 
 import ListGoals from './index';
-
-const { screen } = customTest;
 
 describe('ListGoals', () => {
   it('Render component', async () => {

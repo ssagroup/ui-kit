@@ -8,11 +8,7 @@
   "author": "SSA Group",
   "license": "MIT",
   "description": "SSA UI Kit",
-  "keywords": [
-    "react",
-    "SSA UI Kit",
-    "ui"
-  ],
+  "keywords": ["react", "SSA UI Kit", "ui"],
   "repository": {
     "type": "git",
     "url": "https://github.com/ssagroup/ui-kit.git",
@@ -39,22 +35,41 @@
     "scheduler": "^0.23.0",
     "uuid": "^9.0.0"
   },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["./jest-setup.ts"],
+    "transform": {
+      "^.+\\.(j|t)sx?$": "babel-jest"
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/components/Icon/icons/"
+    ],
+    "moduleNameMapper": {
+      "^@components(.*)$": "<rootDir>/src/components$1",
+      "^@themes(.*)$": "<rootDir>/src/themes$1",
+      "^@styles/(.*)$": "<rootDir>/src/styles/$1",
+      "^@types/(.*)$": "<rootDir>/src/types/$1"
+    }
+  },
   "scripts": {
+    "test": "TZ='Europe/London' jest -i --no-cache",
     "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json",
     "showConfig": "tsc --showConfig -p ./tsconfig.build.json",
     "clearcache": "rm -f ./tsbuildcache",
     "storybook": "storybook dev -p 6006"
   },
-  "browserslist": [
-    ">0.1%",
-    "not dead",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.1%", "not dead", "not op_mini all"],
   "devDependencies": {
     "@emotion/jest": "^11.10.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@types/testing-library__jest-dom": "^5.14.6",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/css": "^11.11.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5"
   }
 }

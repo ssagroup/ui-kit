@@ -1,11 +1,9 @@
 import userEvent from '@testing-library/user-event';
 
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen, within } from '../../../customTest';
 
 import { MealPlannerItem } from './types';
 import MealPlanner from './index';
-
-const { screen, within } = customTest;
 
 const data: { [key: string]: MealPlannerItem } = {
   breakfast: {

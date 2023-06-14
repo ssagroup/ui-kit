@@ -1,8 +1,6 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { screen } from '../../../customTest';
 
 import CardList from './index';
-
-const { screen } = customTest;
 
 describe('CardList', () => {
   it('Render component', async () => {

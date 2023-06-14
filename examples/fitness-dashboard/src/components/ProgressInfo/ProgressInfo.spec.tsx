@@ -1,11 +1,9 @@
-import { customTest } from '@ssa-ui-kit/utils';
+import { fireEvent, screen, waitFor, within } from '../../../customTest';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { progressInfoData as data } from '@apis/sources/mock/utils/mockProgressInfoRequest';
 
 import ProgressInfo from './index';
-
-const { fireEvent, screen, waitFor, within } = customTest;
 
 describe('ProgressInfo', () => {
   beforeAll(() => {
