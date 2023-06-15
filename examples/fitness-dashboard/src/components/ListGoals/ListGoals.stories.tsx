@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { MainColors } from '@ssa-ui-kit/core';
 
 import { ListGoals } from './ListGoals';
 

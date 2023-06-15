@@ -18,7 +18,6 @@ import { useAuth } from '@hooks/useAuth';
 
 import DefaultTemplate from './Template/Default';
 
-
 const layoutContainer = (theme: Theme) => css`
   display: grid;
 
@@ -141,7 +140,6 @@ const Dashboard = () => {
             <StepsCounter
               max={data?.steps.max}
               currentValue={data?.steps.current}
-              unit={data?.steps.unit}
             />
 
             <WaterConsume

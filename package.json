@@ -7,12 +7,13 @@
   "author": "SSA Group",
   "license": "MIT",
   "scripts": {
-    "test:core": "pnpm --filter ./packages/core test",
+    "test": "TZ='Europe/London' jest -i --no-cache",
+    "test:core": "pnpm --filter ./examples/fitness-dashboard test",
     "test:utils": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Utils\"",
     "test:hooks": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Hooks\"",
-    "test:fitness": "pnpm --filter ./examples/fitness-dashboard test",
     "test:clearcache": "jest --clearCache",
-    "storybook": "storybook dev -p 6001"
+    "storybook": "storybook dev -p 6001",
+    "test:fitness": "TZ='Europe/London' jest -i --no-cache --selectProjects \"Examples: Fitness Dashboard\""
   },
   "keywords": [
     "react",

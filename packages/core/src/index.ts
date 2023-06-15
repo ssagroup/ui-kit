@@ -1,5 +1,5 @@
 import './injectGlobal';
-export type * from './types/global';
+export * from './types/global';
 
 import './types/global.d';
 import './types/emotion.d';
@@ -24,10 +24,9 @@ export { default as FormCheckbox } from './components/FormCheckbox';
 export * from './components/FormCheckbox';
 export { default as Dropdown } from './components/Dropdown';
 export * from './components/Dropdown';
-export type * from './components/Dropdown/types.d';
 export { default as Icon } from './components/Icon';
 export * from './components/Icon';
-export type * from './components/Icon/Icons.types';
+export * from './components/Icon/Icons.types';
 export { default as Input } from './components/Input';
 export { default as Label } from './components/Label';
 export { default as Modal } from './components/Modal';

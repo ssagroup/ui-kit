@@ -8,7 +8,11 @@
   "author": "SSA Group",
   "license": "MIT",
   "description": "SSA UI Kit",
-  "keywords": ["react", "SSA UI Kit", "ui"],
+  "keywords": [
+    "react",
+    "SSA UI Kit",
+    "ui"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ssagroup/ui-kit.git",
@@ -37,7 +41,9 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["./jest-setup.ts"],
+    "setupFilesAfterEnv": [
+      "./jest-setup.ts"
+    ],
     "transform": {
       "^.+\\.(j|t)sx?$": "babel-jest"
     },
@@ -58,7 +64,11 @@
     "clearcache": "rm -f ./tsbuildcache",
     "storybook": "storybook dev -p 6006"
   },
-  "browserslist": [">0.1%", "not dead", "not op_mini all"],
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@emotion/jest": "^11.10.5",
     "@testing-library/jest-dom": "^4.2.4",

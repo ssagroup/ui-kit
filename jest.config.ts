@@ -16,10 +16,10 @@ const config: JestConfigWithTsJest = {
     //   testEnvironment: 'jsdom',
     //   setupFilesAfterEnv: ['<rootDir>/packages/core/jest-setup.ts'],
     //   transform: {
-    //     // '^.+\\.(ts|tsx)$': ['babel-jest', { configFile: './.babelrc.js' }],
     //     '^.+\\.(ts|tsx)$': [
     //       'ts-jest',
     //       {
+    //         diagnostics: false,
     //         tsconfig: './packages/core/tsconfig.json',
     //         // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
     //         babelConfig: './.babelrc.js',
@@ -76,36 +76,36 @@ const config: JestConfigWithTsJest = {
         '^@(hooks)/(.*)$': ['<rootDir>/packages/hooks/src/$1/$2'],
       },
     },
-    // {
-    //   preset: 'ts-jest',
-    //   displayName: 'Examples: Fitness Dashboard',
-    //   testEnvironment: 'jsdom',
-    //   setupFilesAfterEnv: [
-    //     '<rootDir>/examples/fitness-dashboard/jest-setup.ts',
-    //   ],
-    //   transform: {
-    //     '^.+\\.(ts|tsx)$': [
-    //       'ts-jest',
-    //       {
-    //         diagnostics: false,
-    //         tsconfig: './examples/fitness-dashboard/tsconfig.json',
-    //         babelConfig: './.babelrc.js',
-    //       },
-    //     ],
-    //   },
-    //   testMatch: [
-    //     '<rootDir>/examples/fitness-dashboard/src/**/*.spec.ts',
-    //     '<rootDir>/examples/fitness-dashboard/src/**/*.spec.tsx',
-    //   ],
-    //   moduleNameMapper: {
-    //     '^@(apis|hooks|components)/(.*)$': [
-    //       '<rootDir>/examples/fitness-dashboard/src/$1/$2',
-    //       '<rootDir>/examples/fitness-dashboard/src/$1/$2.ts',
-    //       '<rootDir>/examples/fitness-dashboard/src/$1/$2.tsx',
-    //     ],
-    //   },
-    //   transformIgnorePatterns: ['/node_modules/'],
-    // },
+    {
+      preset: 'ts-jest',
+      displayName: 'Examples: Fitness Dashboard',
+      testEnvironment: 'jsdom',
+      setupFilesAfterEnv: [
+        '<rootDir>/examples/fitness-dashboard/jest-setup.ts',
+      ],
+      transform: {
+        '^.+\\.(ts|tsx)$': [
+          'ts-jest',
+          {
+            diagnostics: false,
+            tsconfig: './examples/fitness-dashboard/tsconfig.json',
+            babelConfig: './.babelrc.js',
+          },
+        ],
+      },
+      testMatch: [
+        '<rootDir>/examples/fitness-dashboard/src/**/*.spec.ts',
+        '<rootDir>/examples/fitness-dashboard/src/**/*.spec.tsx',
+      ],
+      moduleNameMapper: {
+        '^@(apis|hooks|components)/(.*)$': [
+          '<rootDir>/examples/fitness-dashboard/src/$1/$2',
+          '<rootDir>/examples/fitness-dashboard/src/$1/$2.ts',
+          '<rootDir>/examples/fitness-dashboard/src/$1/$2.tsx',
+        ],
+      },
+      transformIgnorePatterns: ['/node_modules/'],
+    },
   ],
 };
 
