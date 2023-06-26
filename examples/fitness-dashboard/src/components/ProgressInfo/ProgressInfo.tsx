@@ -6,8 +6,7 @@ import {
   Card,
   CardHeader,
   Typography,
-  SmallDropdown,
-  IDropdownItemProp,
+  IDropdownOption,
 } from '@ssa-ui-kit/core';
 
 import { useWindowSize } from '@ssa-ui-kit/hooks';
@@ -23,6 +22,8 @@ import {
   ProgressInfoResp,
   PeriodOption,
 } from './types';
+import { Dropdown } from '@ssa-ui-kit/core';
+import { DropdownOption } from '@ssa-ui-kit/core';
 
 export const ProgressInfo = ({ data }: { data: ProgressInfoResp }) => {
   const { width: windowWidth } = useWindowSize();
@@ -36,7 +37,7 @@ export const ProgressInfo = ({ data }: { data: ProgressInfoResp }) => {
 
       Object.keys(data).forEach((key) => {
         Object.keys(data[key]).length > 0
-          ? options.push({ val: key, id: key })
+          ? options.push({ value: key, id: key })
           : null;
       });
 
@@ -69,7 +70,7 @@ export const ProgressInfo = ({ data }: { data: ProgressInfoResp }) => {
     setResponse(response);
   };
 
-  const handleChange = (e: IDropdownItemProp) => {
+  const handleChange = (e: IDropdownOption) => {
     filterData(e.id as Period);
   };
 
@@ -124,11 +125,11 @@ export const ProgressInfo = ({ data }: { data: ProgressInfoResp }) => {
         </Typography>
 
         {Object.keys(options).length > 0 && (
-          <SmallDropdown
-            onChange={handleChange}
-            selectedItem={selected}
-            items={options}
-          />
+          <Dropdown selectedItem={selected} onChange={handleChange}>
+            {options.map((item, index) => (
+              <DropdownOption key={index} value={item.value} />
+            ))}
+          </Dropdown>
         )}
       </CardHeader>
       <ProgressInfoContent>

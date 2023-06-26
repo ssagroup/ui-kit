@@ -1,71 +1,69 @@
+import React, { useState, useEffect, useRef, useId, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import { useState, useEffect, useRef, useId } from 'react';
 
-import { useClickOutside } from '@ssa-ui-kit/hooks';
+import DropdownToggle from '@components/DropdownToggle';
+import DropdownArrow from '@components/DropdownArrow';
+import DropdownOptions from '@components/DropdownOptions';
+import DropdownContext from '@components/Dropdown/Dropdown.context';
+import { IDropdownOption } from '@components/DropdownOptions/types';
 
-import { IDropdownItemProp, IDropdownProps } from './types';
-
-import { DropdownItemList } from './DropdownItemList';
-import { DropdownToggle } from './DropdownToggle';
-import { DropdownArrow } from './DropdownArrow';
+import { useClickOutside } from './hooks';
+import { DropdownContextType, IDropdownProps } from './types';
 
 /**
  * The structure of the component:
  *
  * Dropdown
  *   DropdownToggle
- *     ItemTemplate
- *       DropdownArrow (Icon)
- *   DropdownItemList
- *     DropdownItem
- *       ItemTemplate
+ *   DropdownOptions
+ *     DropdownOption
  *
  * Aria attributes are set according to
  * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  **/
-export const DropdownBase = styled.div<{ ref: React.Ref<HTMLDivElement> }>`
+
+const DropdownBase = styled.div`
   position: relative;
 `;
 
-const Dropdown = <T extends IDropdownItemProp>({
-  itemTemplate: ItemTemplate,
-  items,
+const Dropdown = <T extends IDropdownOption>({
   selectedItem,
-  onChange,
   isDisabled,
-  placeholder = 'Choose a value',
+  children,
+  onChange: handleChange,
+  className,
 }: IDropdownProps<T>) => {
-  const dropdownId = useId();
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+
+  const placeholder = 'Select something';
+  const dropdownId = useId();
+  const options: T[] = [];
+
   const [isFocused, setIsFocused] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [colors, setColors] = useState<Array<string | undefined>>([]);
-  const [placeholderItem, setPlaceholderItem] = useState({
-    id: Number.NaN,
-    val: placeholder,
-  });
-  const [activeItem, setActiveItem] = useState(selectedItem);
-  const onItemChange = (item) => {
+  const [activeItem, setActiveItem] = useState<T | undefined>(selectedItem);
+
+  const onChange = (item) => {
+    const innerItem = options.filter((option) => option.value === item)[0];
+
     setIsOpen(false);
 
     if (isDisabled || !item) {
       return;
     }
 
-    if (item.id === activeItem?.id) {
+    if (innerItem.value === activeItem?.value) {
       return;
     }
 
-    setActiveItem(item);
-    onChange(item);
+    setActiveItem(innerItem);
+    handleChange && handleChange(innerItem);
   };
-  useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));
 
-  useEffect(() => {
-    setPlaceholderItem({ id: Number.NaN, val: placeholder });
-  }, [placeholder]);
+  useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));
 
   useEffect(() => {
     if (isDisabled) {
@@ -83,35 +81,55 @@ const Dropdown = <T extends IDropdownItemProp>({
     }
   }, [isDisabled]);
 
+  const childrenArray = React.Children.toArray(children).filter(Boolean);
+
+  const items = (childrenArray as React.ReactElement[]).map((child, index) => {
+    options.push(child.props);
+
+    return React.cloneElement(child, {
+      index,
+      onClick: onChange.bind(this),
+      ...child.props,
+    });
+  });
+
+  const contextValue: DropdownContextType = React.useMemo(
+    () => ({ onChange, activeItem }),
+    [onChange, activeItem],
+  );
+
+  const value = (
+    activeItem
+      ? Object.getOwnPropertyDescriptor(activeItem, 'label')
+        ? activeItem.label
+        : Object.getOwnPropertyDescriptor(activeItem, 'children')
+        ? activeItem.children
+        : Object.getOwnPropertyDescriptor(activeItem, 'value')
+        ? activeItem.value
+        : activeItem
+      : placeholder
+  ) as ReactNode;
+
   return (
-    <DropdownBase ref={dropdownRef} data-testid="dropdown">
-      <DropdownToggle
-        isOpen={isOpen}
-        disabled={isDisabled}
-        onClick={() => setIsOpen(!isOpen)}
-        onFocus={() => {
-          setIsFocused(true);
-        }}
-        ariaLabelledby={`dropdown-label-${dropdownId}`}
-        ariaControls={`dropdown-popup-${dropdownId}`}>
-        <ItemTemplate
-          id={`dropdown-label-${dropdownId}`}
-          item={activeItem || (placeholderItem as T)}
-          colors={colors}>
-          <DropdownArrow isUp={isOpen} color={colors?.[0]} />
-        </ItemTemplate>
-      </DropdownToggle>
-      {isOpen && (
-        <DropdownItemList<T>
-          id={`dropdown-popup-${dropdownId}`}
+    <DropdownContext.Provider value={contextValue}>
+      <DropdownBase ref={dropdownRef} data-testid="dropdown">
+        <DropdownToggle
+          className={className}
+          isOpen={isOpen}
+          disabled={isDisabled}
+          onClick={setIsOpen.bind(null, !isOpen)}
+          onFocus={setIsFocused.bind(null, true)}
+          colors={colors}
           ariaLabelledby={`dropdown-label-${dropdownId}`}
-          items={items}
-          activeItem={activeItem}
-          itemTemplate={ItemTemplate}
-          onChange={onItemChange}
-        />
-      )}
-    </DropdownBase>
+          ariaControls={`dropdown-popup-${dropdownId}`}>
+          {value}
+          <DropdownArrow isUp={isOpen} />
+        </DropdownToggle>
+
+        {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}
+      </DropdownBase>
+    </DropdownContext.Provider>
   );
 };
+
 export default Dropdown;

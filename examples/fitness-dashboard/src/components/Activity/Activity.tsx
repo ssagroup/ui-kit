@@ -7,18 +7,19 @@ import {
   CardHeader,
   Typography,
   Wrapper,
-  SmallDropdown,
-  IDropdownItemProp,
+  IDropdownOption,
 } from '@ssa-ui-kit/core';
 
 import { ActivityResp } from './types';
 import { contentWrapper } from './styles';
 
 import ActivityItem from './ActivityItem';
+import { DropdownOption } from '@ssa-ui-kit/core';
+import { Dropdown } from '@ssa-ui-kit/core';
 
 export const Activity = ({ data }: { data: ActivityResp }) => {
   const [selected, setSelected] = useState<string>('');
-  const [options, setOptions] = useState<IDropdownItemProp[]>([]);
+  const [options, setOptions] = useState<IDropdownOption[]>([]);
 
   useEffect(() => {
     if (data == null || typeof data !== 'object') {
@@ -28,7 +29,7 @@ export const Activity = ({ data }: { data: ActivityResp }) => {
     setOptions(
       Object.keys(data).map((item, index) => ({
         id: index,
-        val: `${item.charAt(0).toUpperCase()}${item.slice(1)}`,
+        value: `${item.charAt(0).toUpperCase()}${item.slice(1)}`,
       })),
     );
   }, [data]);
@@ -39,8 +40,10 @@ export const Activity = ({ data }: { data: ActivityResp }) => {
     }
   }, [options]);
 
-  const handleChange = (e: IDropdownItemProp) => {
-    setSelected(e.val.toLowerCase());
+  const handleChange = (e: IDropdownOption) => {
+    const value = e.value.toString().toLowerCase();
+
+    setSelected(value);
   };
 
   return (
@@ -56,11 +59,11 @@ export const Activity = ({ data }: { data: ActivityResp }) => {
         </Typography>
 
         {options?.length > 0 && (
-          <SmallDropdown
-            onChange={handleChange}
-            selectedItem={options[0]}
-            items={options}
-          />
+          <Dropdown selectedItem={options[0]} onChange={handleChange}>
+            {options.map((item, index) => (
+              <DropdownOption key={index} value={item.value} />
+            ))}
+          </Dropdown>
         )}
       </CardHeader>
       <CardContent
