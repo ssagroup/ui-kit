@@ -6,18 +6,16 @@ describe('WaterConsume', () => {
   it('Render component', async () => {
     render(
       <WaterConsume
-        max={3000}
+        active={0}
         currentValue={2500}
         steps={[
           {
             title: '1500ml',
             caption: '11am - 2pm',
-            done: false,
           },
           {
             title: '500ml',
             caption: '11am - 2pm',
-            done: false,
           },
         ]}
       />,

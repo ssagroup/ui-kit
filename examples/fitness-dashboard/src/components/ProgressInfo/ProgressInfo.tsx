@@ -71,7 +71,7 @@ export const ProgressInfo = ({ data }: { data: ProgressInfoResp }) => {
   };
 
   const handleChange = (e: IDropdownOption) => {
-    filterData(e.id as Period);
+    filterData(e.value as Period);
   };
 
   /* istanbul ignore next */

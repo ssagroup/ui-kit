@@ -67,6 +67,8 @@ const DropdownOptions = ({
         'aria-selected': isActive,
         onClick: onChange.bind(null, child.props.value),
       },
+      // TODO: do we need a button as a children?
+      //  Should we place onClick handler on the button?
       <button type="button" css={dropdownOptionButton}>
         {child.props.children || child.props.label || child.props.value}
       </button>,

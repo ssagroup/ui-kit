@@ -4,6 +4,7 @@ export interface CardProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  className?: string;
 }
 
 const Container = styled.div<{ direction?: string }>`
