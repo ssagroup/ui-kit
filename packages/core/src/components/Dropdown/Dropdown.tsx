@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useId, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
+import { useClickOutside } from '@ssa-ui-kit/hooks';
 
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
@@ -8,7 +9,6 @@ import DropdownOptions from '@components/DropdownOptions';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { IDropdownOption } from '@components/DropdownOptions/types';
 
-import { useClickOutside } from './hooks';
 import { DropdownContextType, IDropdownProps } from './types';
 
 /**

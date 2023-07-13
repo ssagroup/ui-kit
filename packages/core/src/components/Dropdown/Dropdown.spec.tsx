@@ -1,4 +1,4 @@
-import { render, within } from '@utils/customTest';
+import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
 import DropdownOption from '@components/DropdownOption';

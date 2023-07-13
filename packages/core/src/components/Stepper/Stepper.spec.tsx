@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from '@utils/customTest';
+import { screen, waitFor, within } from '@testing-library/dom';
 
 import Stepper from './index';
 import Step from '@components/Step';
