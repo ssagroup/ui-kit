@@ -353,24 +353,9 @@ importers:
 
   packages/hooks:
     dependencies:
-      js-tokens:
-        specifier: ^4.0.0
-        version: 4.0.0
-      loose-envify:
-        specifier: ^1.4.0
-        version: 1.4.0
       react:
-        specifier: ^18.2.0
+        specifier: 18.x
         version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-hook-form:
-        specifier: ^7.43.8
-        version: 7.43.8(react@18.2.0)
-      scheduler:
-        specifier: ^0.23.0
-        version: 0.23.0
     devDependencies:
       '@testing-library/jest-dom':
         specifier: ^5.16.5
@@ -389,26 +374,7 @@ importers:
         version: 5.85.0(esbuild@0.17.19)(webpack-cli@5.1.1)
 
   packages/utils:
-    dependencies:
-      js-tokens:
-        specifier: ^4.0.0
-        version: 4.0.0
-      loose-envify:
-        specifier: ^1.4.0
-        version: 1.4.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      scheduler:
-        specifier: ^0.23.0
-        version: 0.23.0
     devDependencies:
-      '@emotion/babel-preset-css-prop':
-        specifier: ^11.11.0
-        version: 11.11.0(@babel/core@7.21.5)
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.16.5

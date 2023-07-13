@@ -8,7 +8,11 @@
   "author": "SSA Group",
   "license": "MIT",
   "description": "React hooks",
-  "keywords": ["react", "SSA UI Kit", "hooks"],
+  "keywords": [
+    "react",
+    "SSA UI Kit",
+    "hooks"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ssagroup/ui-kit.git",
@@ -21,12 +25,6 @@
     "ts-check": "tsc -p ./tsconfig.json"
   },
   "dependencies": {
-    "js-tokens": "^4.0.0",
-    "loose-envify": "^1.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.8",
-    "scheduler": "^0.23.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -35,5 +33,17 @@
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"
   },
-  "browserslist": [">0.1%", "not dead", "not op_mini all"]
+  "peerDependencies": {
+    "react": "18.x"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
