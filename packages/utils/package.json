@@ -16,8 +16,11 @@
   },
   "scripts": {
     "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json",
-    "showConfig": "tsc --showConfig -p ./tsconfig.build.json",
-    "clearcache": "rm -f ./tsbuildcache"
+    "clearcache": "rm -f ./tsbuildcache",
+    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
+    "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
+    "ts-check": "tsc -p ./tsconfig.json",
+    "ts-check-build": "tsc -p ./tsconfig.build.json"
   },
   "dependencies": {
     "js-tokens": "^4.0.0",

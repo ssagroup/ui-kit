@@ -61,7 +61,9 @@
     "create": "node ./tasks/create.js",
     "analyze": "webpack --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
     "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
-    "storybook": "storybook dev -p 6007"
+    "storybook": "storybook dev -p 6007",
+    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "tsc -p ./tsconfig.json"
   },
   "browserslist": [
     ">0.1%",

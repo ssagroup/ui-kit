@@ -7,10 +7,6 @@ import './types/emotion.d';
 export * from './types/emotion';
 export { default as mainTheme } from './themes/main';
 
-// export const themes = {
-//   main: mainTheme,
-// };
-
 export { default as Avatar } from './components/Avatar';
 export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
