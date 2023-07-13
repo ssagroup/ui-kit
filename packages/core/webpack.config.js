@@ -21,6 +21,7 @@ const config = {
   },
   externals: {
     react: 'react',
+    'react-dom': 'react-dom',
     '@emotion/core': '@emotion/core',
     '@emotion/css': '@emotion/css',
     '@emotion/react': '@emotion/react',
