@@ -59,7 +59,7 @@ export const MealNutrients = ({
 
   useEffect(() => {
     if (selectedOption != null) {
-      loadNutrients(selectedOption?.value);
+      loadNutrients(selectedOption?.id);
     }
   }, [selectedOption]);
 

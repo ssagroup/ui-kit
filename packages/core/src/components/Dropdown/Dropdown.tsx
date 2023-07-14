@@ -100,13 +100,11 @@ const Dropdown = <T extends IDropdownOption>({
 
   const value = (
     activeItem
-      ? Object.getOwnPropertyDescriptor(activeItem, 'label')
-        ? activeItem.label
-        : Object.getOwnPropertyDescriptor(activeItem, 'children')
-        ? activeItem.children
-        : Object.getOwnPropertyDescriptor(activeItem, 'value')
-        ? activeItem.value
-        : activeItem
+      ? activeItem.label ||
+        activeItem.children ||
+        activeItem.value ||
+        activeItem ||
+        placeholder
       : placeholder
   ) as ReactNode;
 

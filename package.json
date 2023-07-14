@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "test": "TZ='Europe/London' jest -i --no-cache",
-    "test:core": "pnpm --filter ./examples/fitness-dashboard test",
+    "test:core": "pnpm --filter ./packages/core test",
     "test:utils": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Utils\"",
     "test:hooks": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Hooks\"",
     "test:clearcache": "jest --clearCache",
