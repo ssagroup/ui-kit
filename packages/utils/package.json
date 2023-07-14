@@ -8,7 +8,11 @@
   "author": "SSA Group",
   "license": "MIT",
   "description": "SSA UI Kit utilities",
-  "keywords": ["react", "SSA UI Kit", "utils"],
+  "keywords": [
+    "react",
+    "SSA UI Kit",
+    "utils"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ssagroup/ui-kit.git",
@@ -16,22 +20,21 @@
   },
   "scripts": {
     "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json",
-    "showConfig": "tsc --showConfig -p ./tsconfig.build.json",
-    "clearcache": "rm -f ./tsbuildcache"
-  },
-  "dependencies": {
-    "js-tokens": "^4.0.0",
-    "loose-envify": "^1.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "scheduler": "^0.23.0"
+    "clearcache": "rm -f ./tsbuildcache",
+    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
+    "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
+    "ts-check": "tsc -p ./tsconfig.json",
+    "ts-check-build": "tsc -p ./tsconfig.build.json"
   },
   "devDependencies": {
-    "@emotion/babel-preset-css-prop": "^11.11.0",
     "@testing-library/jest-dom": "^5.16.5",
     "extend-expect": "^1.0.2",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"
   },
-  "browserslist": [">0.1%", "not dead", "not op_mini all"]
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

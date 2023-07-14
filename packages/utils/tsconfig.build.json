@@ -28,8 +28,6 @@
     "paths": {}
   },
 
-  "types": ["react", "react-dom", "node"],
-
   "include": ["src/**/*"],
   "exclude": [
     "dist/**/*",

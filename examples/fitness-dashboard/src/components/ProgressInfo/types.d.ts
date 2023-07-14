@@ -27,6 +27,6 @@ export type ProgressInfoResp = {
   [key: string]: { [key: string]: ProgressInfoItemProps[] };
 };
 
-export type PeriodOption = { val: string; id: string };
+export type PeriodOption = { value: string; id: string };
 
 export type Period = 'daily' | 'weekly' | 'monthly' | 'yearly';

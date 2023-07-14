@@ -1,10 +1,8 @@
 export interface WaterConsumeProps {
-  max: number;
+  active: number;
   currentValue: number;
-  unit?: string;
   steps: {
     title: string;
     caption: string;
-    done: boolean;
   }[];
 }

@@ -5,6 +5,8 @@ import {
   CardContent,
   CardHeader,
   Stepper,
+  Step,
+  StepLabel,
   Typography,
   ResponsiveImage,
   ProgressBar,
@@ -15,11 +17,57 @@ import {
 
 import { WaterConsumeProps } from './types';
 
+const CustomConnector = ({
+  active,
+  completed,
+}: {
+  active?: boolean;
+  completed?: boolean;
+}) => {
+  return (
+    <div
+      css={css`
+        flex: 1 1 auto;
+        margin-left: 11.5px;
+      `}>
+      <span
+        css={css`
+          display: block;
+          border-color: ${active || completed ? '#44b3fc' : '#e0e0e0'};
+          border-left-style: dashed;
+          border-left-width: 1px;
+          min-height: 20px;
+        `}></span>
+    </div>
+  );
+};
+
+const CustomStep: React.FC = (props: {
+  active?: boolean;
+  completed?: boolean;
+}) => {
+  const { active, completed } = props;
+
+  return (
+    <div
+      css={css`
+        width: 10px;
+        height: 10px;
+        background-color: ${active || completed ? '#44b3fc' : '#e0e0e0'};
+        border-radius: 50%;
+      `}></div>
+  );
+};
+
 /**
  *
  * UI Component shows the water consumption objective of the user
  */
-export const WaterConsume = ({ currentValue, steps }: WaterConsumeProps) => {
+export const WaterConsume = ({
+  currentValue,
+  active,
+  steps,
+}: WaterConsumeProps) => {
   const theme = useTheme();
 
   return (
@@ -81,7 +129,23 @@ export const WaterConsume = ({ currentValue, steps }: WaterConsumeProps) => {
             <ProgressBar percentage={currentValue} color="blueLight" />
           </ProgressVertical>
         </div>
-        <Stepper color="blueLight" steps={steps} />
+
+        <Stepper
+          color={'#44b3fc'}
+          activeStep={active}
+          orientation={'vertical'}
+          inverted
+          sx={{
+            rowGap: 0,
+          }}>
+          {steps.map((step, index) => {
+            return (
+              <Step key={index} Connector={CustomConnector}>
+                <StepLabel StepIcon={CustomStep}>1</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
       </CardContent>
     </Card>
   );

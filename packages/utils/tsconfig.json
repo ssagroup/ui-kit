@@ -10,13 +10,7 @@
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
-    "paths": {},
-    "types": [
-      "react",
-      "react-dom",
-      "jest",
-      "node",
-    ]
+    "paths": {}
   },
   "include": ["src/**/*"],
   "exclude": ["dist/**/*"]

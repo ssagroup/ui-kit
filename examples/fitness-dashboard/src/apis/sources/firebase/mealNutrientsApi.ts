@@ -56,9 +56,10 @@ export const mealNutrients = {
     );
     return snapshot.docs.map((doc) => {
       const { val, precision } = doc.data();
+
       return {
-        id: doc.id,
-        val,
+        value: doc.id,
+        label: val,
         precision,
       };
     });

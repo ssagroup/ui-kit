@@ -6,20 +6,31 @@ import {
   CardContent,
   CardHeader,
   Typography,
-  LargeDropdown,
-  IDropdownLargeItemProp,
+  Dropdown,
+  DropdownOption,
+  IDropdownOption,
 } from '@ssa-ui-kit/core';
 
 import { MealPlannerCard } from './MealPlannerCard';
 
 import { MealPlannerProps, MealPlannerData } from './types';
+import styled from '@emotion/styled';
+
+const CustomOption = styled(DropdownOption)`
+  text-align: left;
+  line-height: 18px;
+  font-size: 11px;
+`;
 
 export const MealPlanner = ({ data }: MealPlannerProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [options, setOptions] = useState<IDropdownLargeItemProp[]>([]);
+  const [options, setOptions] = useState<IDropdownOption[]>([]);
 
-  const handleChange = (e: IDropdownLargeItemProp) =>
-    setSelectedOption(e.val.toLowerCase());
+  const handleChange = (e: IDropdownOption) => {
+    const value = e.value.toString().toLowerCase();
+
+    setSelectedOption(value);
+  };
 
   useEffect(() => {
     if (data == null || typeof data !== 'object') {
@@ -29,7 +40,10 @@ export const MealPlanner = ({ data }: MealPlannerProps) => {
     setOptions(
       Object.keys(data).map((item, index) => ({
         id: index,
-        val: `${item.charAt(0).toUpperCase()}${item.slice(1)}`,
+        value: `${item.charAt(0).toUpperCase()}${item.slice(1)}`,
+        label: `${item.charAt(0).toUpperCase()}${item.slice(1)} | ${
+          data[item].time
+        }`,
         extraVal: data[item].time,
       })),
     );
@@ -49,11 +63,22 @@ export const MealPlanner = ({ data }: MealPlannerProps) => {
         </Typography>
 
         {options?.length > 0 && (
-          <LargeDropdown
-            onChange={handleChange}
-            selectedItem={options[0]}
-            items={options}
-          />
+          <Dropdown selectedItem={options[0]} onChange={handleChange}>
+            {options.map((item, index) => (
+              <CustomOption
+                key={index}
+                value={item.value}
+                label={item.label.toString()}>
+                <span style={{ fontSize: 13, fontWeight: 500 }}>
+                  {item.value}
+                </span>
+                &nbsp;|&nbsp;
+                <span style={{ fontSize: 11, fontWeight: 500 }}>
+                  {item.extraVal}
+                </span>
+              </CustomOption>
+            ))}
+          </Dropdown>
         )}
       </CardHeader>
       <Card>

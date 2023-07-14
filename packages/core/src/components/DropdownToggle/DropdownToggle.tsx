@@ -1,13 +1,36 @@
 import styled from '@emotion/styled';
-import { IDropdownToggleProps } from '@components/Dropdown/types';
+
+interface IDropdownToggleProps {
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;
+  isOpen: boolean;
+  disabled?: boolean;
+  children?: React.ReactNode;
+  ariaLabelledby: string;
+  ariaControls: string;
+  colors?: Array<string | undefined>;
+  className?: string;
+}
 
 export const DropdownToggleBase = styled.button<
-  Pick<IDropdownToggleProps, 'isOpen' | 'disabled'>
+  Pick<IDropdownToggleProps, 'colors' | 'isOpen' | 'disabled'>
 >`
-  position: relative;
-  border: none;
-  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+
+  width: auto;
+  padding: 8px 14px 8px 14px;
+
   font: inherit;
+  font-size: 13px;
+  text-align: left;
+  line-height: 18px;
+
+  border: none;
   cursor: pointer;
   outline: inherit;
 
@@ -23,6 +46,7 @@ export const DropdownToggleBase = styled.button<
   }
 
   &:focus {
+    color: ${({ colors, theme }) => colors?.[0] || theme.colors.greyDarker};
     background: ${({ isOpen, theme }) =>
       isOpen
         ? `linear-gradient(108.3deg, ${theme.colors.greyDarker} -0.36%, ${theme.colors.greyDark} 100%)`
@@ -37,12 +61,17 @@ export const DropdownToggleBase = styled.button<
     right: 0px;
     bottom: 0px;
     left: 0px;
-    border: ${({ theme }) => `1px solid ${theme.colors.greyDarker}`};
     border-radius: 12px;
+  }
+
+  svg {
+    path {
+      stroke: ${({ colors, theme }) => colors?.[0] || theme.colors.greyDarker};
+    }
   }
 `;
 
-export const DropdownToggle = ({
+const DropdownToggle = ({
   onClick,
   onFocus,
   isOpen,
@@ -50,14 +79,18 @@ export const DropdownToggle = ({
   children,
   ariaLabelledby,
   ariaControls,
+  colors,
+  className,
 }: IDropdownToggleProps) => {
   return (
     <DropdownToggleBase
+      className={className}
+      colors={colors}
       isOpen={isOpen}
       onClick={(e) => {
         // Safari doesn't support focus on buttons 🤔
         (e.currentTarget as HTMLButtonElement).focus();
-        onClick(e);
+        onClick && onClick(e);
       }}
       onFocus={onFocus}
       disabled={disabled}
@@ -70,3 +103,5 @@ export const DropdownToggle = ({
     </DropdownToggleBase>
   );
 };
+
+export default DropdownToggle;
