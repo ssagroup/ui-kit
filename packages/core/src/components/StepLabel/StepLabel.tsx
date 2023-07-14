@@ -28,6 +28,7 @@ const StepLabel = ({
 
   return (
     <div
+      role="listitem"
       css={label}
       style={{
         flexDirection: orientation === 'vertical' ? 'row' : 'column',

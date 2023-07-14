@@ -9,12 +9,15 @@ export default {
 
 export const Default = {
   args: {
-    max: 3,
-    currentValue: 50,
+    minValue: 0,
+    maxValue: 3,
+    currentValue: 2.7,
+    unit: 'L',
+    active: 3,
     steps: [
       {
-        title: '1500ml',
-        caption: '11am - 2pm',
+        title: '600ml',
+        caption: '2pm - 4pm',
         done: false,
       },
       {
@@ -29,7 +32,7 @@ export const Default = {
       },
       {
         title: '700ml',
-        caption: '6am - 0am',
+        caption: '6am - 8am',
         done: true,
       },
     ],

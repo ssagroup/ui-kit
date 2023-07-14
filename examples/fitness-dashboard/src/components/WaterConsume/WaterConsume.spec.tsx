@@ -10,12 +10,12 @@ describe('WaterConsume', () => {
         currentValue={2500}
         steps={[
           {
-            title: '1500ml',
+            title: '500ml',
             caption: '11am - 2pm',
           },
           {
-            title: '500ml',
-            caption: '11am - 2pm',
+            title: '1500ml',
+            caption: '2pm - 4pm',
           },
         ]}
       />,
@@ -23,8 +23,8 @@ describe('WaterConsume', () => {
 
     const [itemA, itemB] = await screen.findAllByRole('listitem');
 
-    const listItemA = within(itemA).getByText('1500ml');
-    const listItemB = within(itemB).getByText('500ml');
+    const listItemA = within(itemA).getByText('500ml');
+    const listItemB = within(itemB).getByText('1500ml');
 
     const classListA = itemA.classList.toString();
     const classListB = itemB.classList.toString();

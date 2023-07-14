@@ -143,6 +143,9 @@ const Dashboard = () => {
             />
 
             <WaterConsume
+              minValue={0}
+              maxValue={3}
+              unit={'L'}
               active={2}
               currentValue={data?.water.current}
               steps={data?.water.steps}

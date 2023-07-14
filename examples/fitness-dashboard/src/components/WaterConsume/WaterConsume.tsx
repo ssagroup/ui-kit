@@ -24,6 +24,7 @@ const CustomConnector = ({
   active?: boolean;
   completed?: boolean;
 }) => {
+  const theme = useTheme();
   return (
     <div
       css={css`
@@ -33,7 +34,9 @@ const CustomConnector = ({
       <span
         css={css`
           display: block;
-          border-color: ${active || completed ? '#44b3fc' : '#e0e0e0'};
+          border-color: ${active || completed
+            ? theme.colors.blueLightLighter
+            : theme.colors.greyDarker60};
           border-left-style: dashed;
           border-left-width: 1px;
           min-height: 20px;
@@ -47,13 +50,16 @@ const CustomStep: React.FC = (props: {
   completed?: boolean;
 }) => {
   const { active, completed } = props;
+  const theme = useTheme();
 
   return (
     <div
       css={css`
-        width: 10px;
-        height: 10px;
-        background-color: ${active || completed ? '#44b3fc' : '#e0e0e0'};
+        width: 6px;
+        height: 6px;
+        background-color: ${active || completed
+          ? theme.colors.blueLightLighter
+          : theme.colors.greyDarker60};
         border-radius: 50%;
       `}></div>
   );
@@ -62,13 +68,20 @@ const CustomStep: React.FC = (props: {
 /**
  *
  * UI Component shows the water consumption objective of the user
+ * @param steps - the order goes from top to bottom, from left to right
  */
 export const WaterConsume = ({
+  minValue = 0,
+  maxValue = 100,
   currentValue,
   active,
   steps,
+  unit = '%',
 }: WaterConsumeProps) => {
   const theme = useTheme();
+  const currentPercentage = Math.round((currentValue * 100) / maxValue);
+  console.log('currentValue:', currentValue);
+  console.log('currentPercentage:', currentPercentage);
 
   return (
     <Card
@@ -91,8 +104,13 @@ export const WaterConsume = ({
         </Typography>
       </CardHeader>
 
-      <CardContent css={{ width: '100%', justifyContent: 'center' }}>
-        <div style={{ height: 110, fontSize: 14 }}>
+      <CardContent
+        css={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'stretch',
+        }}>
+        <div style={{ fontSize: 14, marginRight: '15px' }}>
           <ProgressVertical>
             <ProgressLegend>
               <ProgressLegendItem position="end" percentage={100}>
@@ -102,17 +120,19 @@ export const WaterConsume = ({
                     display: 'block',
                     paddingRight: 6,
                   }}>
-                  100%
+                  {`${maxValue || 0}${unit}`}
                 </span>
               </ProgressLegendItem>
-              <ProgressLegendItem position="current" percentage={currentValue}>
+              <ProgressLegendItem
+                position="current"
+                percentage={currentPercentage}>
                 <span
                   style={{
                     textAlign: 'right',
                     display: 'block',
                     paddingRight: 6,
                   }}>
-                  {`${currentValue}%`}
+                  {`${currentValue}${unit}`}
                 </span>
               </ProgressLegendItem>
               <ProgressLegendItem position="start" percentage={0}>
@@ -122,16 +142,16 @@ export const WaterConsume = ({
                     display: 'block',
                     paddingRight: 6,
                   }}>
-                  0%
+                  {`${minValue || 0}${unit}`}
                 </span>
               </ProgressLegendItem>
             </ProgressLegend>
-            <ProgressBar percentage={currentValue} color="blueLight" />
+            <ProgressBar percentage={currentPercentage} color="blueLight" />
           </ProgressVertical>
         </div>
 
         <Stepper
-          color={'#44b3fc'}
+          color={theme.colors.blueLight}
           activeStep={active}
           orientation={'vertical'}
           inverted
@@ -141,7 +161,25 @@ export const WaterConsume = ({
           {steps.map((step, index) => {
             return (
               <Step key={index} Connector={CustomConnector}>
-                <StepLabel StepIcon={CustomStep}>1</StepLabel>
+                <StepLabel StepIcon={CustomStep}>
+                  <span
+                    style={{
+                      textAlign: 'left',
+                      display: 'block',
+                      fontSize: 9,
+                    }}>
+                    {step.caption}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: 'left',
+                      display: 'block',
+                      fontSize: 9,
+                      fontWeight: 700,
+                    }}>
+                    {step.title}
+                  </span>
+                </StepLabel>
               </Step>
             );
           })}

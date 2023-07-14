@@ -20,7 +20,7 @@ export const labelIconVertical = css`
   width: 24px;
   height: 24px;
 
-  margin-right: 8px;
+  margin-right: 5px;
 `;
 export const labelText = css`
   text-align: center;
