@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { focusOutline } from '@styles/safari-focus-outline';
 
 interface IDropdownToggleProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
@@ -15,12 +16,16 @@ interface IDropdownToggleProps {
 export const DropdownToggleBase = styled.button<
   Pick<IDropdownToggleProps, 'colors' | 'isOpen' | 'disabled'>
 >`
+  ${({ theme }) => focusOutline(theme)}
+
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
+
+  position: relative;
 
   width: auto;
   padding: 8px 14px 8px 14px;
@@ -51,17 +56,6 @@ export const DropdownToggleBase = styled.button<
       isOpen
         ? `linear-gradient(108.3deg, ${theme.colors.greyDarker} -0.36%, ${theme.colors.greyDark} 100%)`
         : theme.colors.greyFocused};
-  }
-
-  /* This is for Safari to make a rounded outline */
-  &:focus::before {
-    content: '';
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    border-radius: 12px;
   }
 
   svg {
