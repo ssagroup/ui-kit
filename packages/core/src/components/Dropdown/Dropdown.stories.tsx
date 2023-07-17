@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 import DropdownOption from '@components/DropdownOption';
 
@@ -49,8 +50,8 @@ export default {
 export const Basic: StoryObj = (args) => {
   return (
     <Dropdown selectedItem={items[2]} isDisabled={args.isDisabled}>
-      {items.map((item, index) => (
-        <DropdownOption key={index} value={item.id}>
+      {items.map((item) => (
+        <DropdownOption key={item.id} value={item.id}>
           {item.value}
         </DropdownOption>
       ))}
@@ -63,8 +64,8 @@ Basic.args = { isDisabled: false };
 export const Simple: StoryObj = (args) => {
   return (
     <Dropdown isDisabled={args.isDisabled}>
-      {items.map((item, index) => (
-        <DropdownOption key={index} value={item.value} />
+      {items.map((item) => (
+        <DropdownOption key={item.id} value={item.value} />
       ))}
     </Dropdown>
   );
@@ -73,38 +74,13 @@ export const Simple: StoryObj = (args) => {
 Simple.args = { isDisabled: false };
 
 export const NoItems: StoryObj = () => {
-  return (
-    <Dropdown>
-      {[].length > 0
-        ? items.map((item, index) => (
-            <DropdownOption key={index} value={item.value} />
-          ))
-        : null}
-    </Dropdown>
-  );
+  return <Dropdown>{null}</Dropdown>;
 };
 
 NoItems.args = { isDisabled: false };
 
 export const Custom: StoryObj = (args) => {
-  const CustomDropdown = styled(Dropdown)`
-    background: ${({ theme }) => theme.colors.greyLighter};
-
-    &:disabled {
-      background: ${({ theme }) => theme.colors.grey};
-    }
-
-    &:focus {
-      color: white;
-      background: ${({ theme }) => theme.colors.grey};
-
-      svg {
-        path {
-          stroke: white;
-        }
-      }
-    }
-  `;
+  // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
   const CustomOption = styled(DropdownOption)`
     width: auto;
     padding: 10px;
@@ -126,15 +102,32 @@ export const Custom: StoryObj = (args) => {
   `;
 
   return (
-    <CustomDropdown isDisabled={args.isDisabled} selectedItem={items[2]}>
-      {items.map((item, index) => (
-        <CustomOption key={index} value={item.id} label={item.value}>
+    <Dropdown
+      isDisabled={args.isDisabled}
+      selectedItem={items[2]}
+      css={css`
+        background: #ff947b;
+        :focus {
+          background: #ffb566;
+        }
+        &[aria-expanded='true'] {
+          color: #975875;
+
+          svg {
+            path {
+              stroke: #975875;
+            }
+          }
+        }
+      `}>
+      {items.map((item) => (
+        <CustomOption key={item.id} value={item.id} label={item.value}>
           {item.value}
           &nbsp;|&nbsp;
           <b>{item.subText}</b>
         </CustomOption>
       ))}
-    </CustomDropdown>
+    </Dropdown>
   );
 };
 

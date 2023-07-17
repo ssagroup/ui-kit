@@ -24,6 +24,7 @@ import { DropdownContextType, IDropdownProps } from './types';
  **/
 
 const DropdownBase = styled.div`
+  display: inline-block;
   position: relative;
 `;
 

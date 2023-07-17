@@ -27,6 +27,9 @@ export const DropdownToggleBase = styled.button<
 
   position: relative;
 
+  color: ${({ colors, isOpen }) =>
+    isOpen ? colors?.[0] || 'initial' : 'initial'};
+
   width: auto;
   padding: 8px 14px 8px 14px;
 
