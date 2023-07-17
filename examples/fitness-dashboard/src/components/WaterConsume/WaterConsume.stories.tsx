@@ -18,22 +18,18 @@ export const Default = {
       {
         title: '600ml',
         caption: '2pm - 4pm',
-        done: false,
       },
       {
         title: '500ml',
         caption: '11am - 2pm',
-        done: false,
       },
       {
         title: '1000ml',
         caption: '9am - 11am',
-        done: true,
       },
       {
         title: '700ml',
         caption: '6am - 8am',
-        done: true,
       },
     ],
   },

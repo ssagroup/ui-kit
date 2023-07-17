@@ -80,8 +80,6 @@ export const WaterConsume = ({
 }: WaterConsumeProps) => {
   const theme = useTheme();
   const currentPercentage = Math.round((currentValue * 100) / maxValue);
-  console.log('currentValue:', currentValue);
-  console.log('currentPercentage:', currentPercentage);
 
   return (
     <Card
@@ -120,7 +118,7 @@ export const WaterConsume = ({
                     display: 'block',
                     paddingRight: 6,
                   }}>
-                  {`${maxValue || 0}${unit}`}
+                  {`${maxValue}${unit}`}
                 </span>
               </ProgressLegendItem>
               <ProgressLegendItem
@@ -142,7 +140,7 @@ export const WaterConsume = ({
                     display: 'block',
                     paddingRight: 6,
                   }}>
-                  {`${minValue || 0}${unit}`}
+                  {`${minValue}${unit}`}
                 </span>
               </ProgressLegendItem>
             </ProgressLegend>
