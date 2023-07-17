@@ -4,6 +4,7 @@ import type { FieldValues } from 'react-hook-form';
 import Checkbox from '@components/Checkbox';
 
 import { IFormCheckboxProps } from './types';
+import { ChangeEvent } from 'react';
 
 const FormCheckbox = <T extends FieldValues>({
   control,
@@ -21,7 +22,7 @@ const FormCheckbox = <T extends FieldValues>({
     <Checkbox
       name={name}
       onChange={(value) => {
-        field.onChange(value);
+        field.onChange(value as unknown as ChangeEvent);
       }}
       isRequired={isRequired}
       {...props}

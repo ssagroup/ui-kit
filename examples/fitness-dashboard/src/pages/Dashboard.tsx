@@ -143,10 +143,12 @@ const Dashboard = () => {
             />
 
             <WaterConsume
-              max={data?.water.max}
+              minValue={0}
+              maxValue={3}
+              unit={'L'}
+              active={2}
               currentValue={data?.water.current}
               steps={data?.water.steps}
-              unit={data?.water.unit}
             />
 
             <Calories

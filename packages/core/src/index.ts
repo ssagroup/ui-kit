@@ -7,10 +7,6 @@ import './types/emotion.d';
 export * from './types/emotion';
 export { default as mainTheme } from './themes/main';
 
-// export const themes = {
-//   main: mainTheme,
-// };
-
 export { default as Avatar } from './components/Avatar';
 export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
@@ -23,7 +19,8 @@ export * from './components/Checkbox';
 export { default as FormCheckbox } from './components/FormCheckbox';
 export * from './components/FormCheckbox';
 export { default as Dropdown } from './components/Dropdown';
-export * from './components/Dropdown';
+export { default as DropdownOption } from './components/DropdownOption';
+export type { IDropdownOption } from './components/DropdownOptions';
 export { default as Icon } from './components/Icon';
 export * from './components/Icon';
 export * from './components/Icon/Icons.types';
@@ -40,6 +37,8 @@ export { default as ProgressLegend } from './components/ProgressLegend';
 export { default as ProgressLegendItem } from './components/ProgressLegendItem';
 export { default as ProgressVertical } from './components/ProgressVertical';
 export { default as Stepper } from './components/Stepper';
+export { default as Step } from './components/Step';
+export { default as StepLabel } from './components/StepLabel';
 export { default as Switch } from './components/Switch';
 export * from './components/Switch';
 export { default as Table } from './components/Table';

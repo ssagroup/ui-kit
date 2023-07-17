@@ -2,37 +2,61 @@ import { screen, within } from '../../../customTest';
 
 import WaterConsume from './index';
 
+const steps = [
+  {
+    title: '600ml',
+    caption: '2pm - 4pm',
+  },
+  {
+    title: '500ml',
+    caption: '11am - 2pm',
+  },
+  {
+    title: '1000ml',
+    caption: '9am - 11am',
+  },
+  {
+    title: '700ml',
+    caption: '6am - 8am',
+  },
+];
+
+const checkListItems = async () => {
+  const listItems = await screen.findAllByRole('listitem');
+
+  for (let i = 0; i < listItems.length; ++i) {
+    const itemEl = listItems[i];
+    within(itemEl).getByText(steps[steps.length - i - 1].title);
+  }
+};
+
 describe('WaterConsume', () => {
-  it('Render component', async () => {
+  it('Renders with a custom unit', async () => {
     render(
       <WaterConsume
-        max={3000}
-        currentValue={2500}
-        steps={[
-          {
-            title: '1500ml',
-            caption: '11am - 2pm',
-            done: false,
-          },
-          {
-            title: '500ml',
-            caption: '11am - 2pm',
-            done: false,
-          },
-        ]}
+        minValue={0}
+        maxValue={3}
+        currentValue={2.7}
+        unit={'L'}
+        active={2}
+        steps={steps}
       />,
     );
 
-    const [itemA, itemB] = await screen.findAllByRole('listitem');
+    screen.getByText('0L');
+    screen.getByText('2.7L');
+    screen.getByText('3L');
 
-    const listItemA = within(itemA).getByText('1500ml');
-    const listItemB = within(itemB).getByText('500ml');
+    await checkListItems();
+  });
 
-    const classListA = itemA.classList.toString();
-    const classListB = itemB.classList.toString();
+  it('Render with the default unit (%)', async () => {
+    render(<WaterConsume currentValue={50} active={1} steps={steps} />);
 
-    expect(listItemA).toBeInTheDocument();
-    expect(listItemB).toBeInTheDocument();
-    expect(classListA).toEqual(classListB);
+    screen.getByText('0%');
+    screen.getByText('50%');
+    screen.getByText('100%');
+
+    await checkListItems();
   });
 });

@@ -16,14 +16,5 @@
     "jsx": "react-jsx",
     "resolveJsonModule": true,
     "lib": ["dom", "dom.iterable", "esnext"],
-
-    "types": [
-      "react",
-      "react-dom",
-      "jest",
-      "node",
-      "@testing-library/jest-dom",
-      "@types/testing-library__jest-dom",
-    ]
   }
 }

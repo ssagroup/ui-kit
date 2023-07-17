@@ -1,3 +1,4 @@
+import { within } from '@testing-library/dom';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -49,7 +50,7 @@ function setup(component) {
 }
 
 describe('MealNutrients', () => {
-  it('renders', async () => {
+  it('Renders', async () => {
     const { getByTestId, getByText } = setup(<MealNutrients />);
 
     getByText('Meal Nutrients');
@@ -60,7 +61,28 @@ describe('MealNutrients', () => {
     });
   });
 
-  it('renders with a custom caption', async () => {
+  it('Fetches data on a dropdown option change', async () => {
+    const { user, getByTestId, getByRole } = setup(<MealNutrients />);
+
+    await waitFor(async () => {
+      getByTestId('chart-mock');
+      const dropdownEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+      await user.click(dropdownToggleEl);
+
+      const listboxEl = getByRole('listbox');
+      const listItemElToChoose = within(listboxEl).getAllByRole('listitem')[1];
+
+      await user.click(listItemElToChoose);
+
+      const selectedItemText = listItemElToChoose.textContent;
+      expect(selectedItemText).not.toBeFalsy();
+      within(dropdownToggleEl).getByText(selectedItemText as string);
+    });
+  });
+
+  it('Renders with a custom caption', async () => {
     const caption = 'A custom caption';
     const { getByTestId, getByText } = setup(
       <MealNutrients caption={caption} />,
@@ -74,7 +96,7 @@ describe('MealNutrients', () => {
     });
   });
 
-  it('test api error', async () => {
+  it('Hides chart on API error', async () => {
     jest.spyOn(API.mealNutrients, 'get').mockImplementationOnce(() => {
       throw new Error('Something went wrong');
     });

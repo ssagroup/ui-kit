@@ -10,7 +10,7 @@ describe('ProgressInfo', () => {
     window.ResizeObserver = ResizeObserver;
   });
 
-  it('renders the correct number items legends & items', async () => {
+  it('Renders the correct number items legends & items', async () => {
     render(<ProgressInfo data={data} />);
 
     await waitFor(async () => {
@@ -25,7 +25,7 @@ describe('ProgressInfo', () => {
     });
   });
 
-  it('Filter that when change period', async () => {
+  it('Changes its content when a period is changed', async () => {
     const { getByTestId, getByRole, getAllByRole, getByText } = render(
       <ProgressInfo data={data} />,
     );
@@ -51,7 +51,7 @@ describe('ProgressInfo', () => {
     });
   });
 
-  it('renders without data', async () => {
+  it('Renders without data', async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { queryByTestId } = render(<ProgressInfo data="" />);

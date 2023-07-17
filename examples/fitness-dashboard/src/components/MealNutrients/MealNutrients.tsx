@@ -6,8 +6,9 @@ import {
   CardContent,
   CardHeader,
   Typography,
-  SmallDropdown,
-  IDropdownItemProp,
+  Dropdown,
+  DropdownOption,
+  IDropdownOption,
 } from '@ssa-ui-kit/core';
 
 import { useApi } from '@ssa-ui-kit/hooks';
@@ -18,7 +19,7 @@ import { MealNutrientsLineChart } from './MealNutrientsLineChart';
 import useChartConfig from './useChartConfig';
 import { IMealNutrientsProps, UseChartConfig } from './types';
 
-type OptionType = IDropdownItemProp & {
+type OptionType = IDropdownOption & {
   [key: string | number | symbol]: unknown;
 };
 
@@ -62,8 +63,10 @@ export const MealNutrients = ({
     }
   }, [selectedOption]);
 
-  const handleChange = (e: IDropdownItemProp) => {
-    setSelectedOption(e as OptionType);
+  const handleChange = (e: IDropdownOption) => {
+    const item = options.filter((item) => item.value === e.value)[0];
+
+    setSelectedOption(item as OptionType);
   };
 
   return (
@@ -74,11 +77,15 @@ export const MealNutrients = ({
         </Typography>
 
         {options?.length > 0 && (
-          <SmallDropdown
-            onChange={handleChange}
-            items={options}
-            selectedItem={options[0]}
-          />
+          <Dropdown selectedItem={options[0]} onChange={handleChange}>
+            {options.map((item, index) => (
+              <DropdownOption
+                key={index}
+                value={item.value}
+                label={item.label}
+              />
+            ))}
+          </Dropdown>
         )}
       </CardHeader>
       <Card>

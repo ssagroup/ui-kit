@@ -10,3 +10,4 @@ coverage
 stats.json
 .firebase
 tsbuildcache
+tsconfig.tsbuildinfo

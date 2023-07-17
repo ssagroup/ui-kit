@@ -10,7 +10,7 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/addon-mdx-gfm',
   ],
-  // staticDirs: ['../public'],
+  staticDirs: ['../public'],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},

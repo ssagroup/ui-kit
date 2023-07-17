@@ -3,6 +3,7 @@
     "incremental": true,
     "declaration": true,
     "emitDeclarationOnly": true,
+    "noEmit": false,
     "allowJs": true,
 
     "strict": true,
@@ -16,7 +17,6 @@
     "resolveJsonModule": true,
     "lib": ["dom", "dom.iterable", "esnext"],
 
-    "noEmit": false,
     "outDir": "./dist",
     "rootDir": "./src",
     "tsBuildInfoFile": "./tsbuildcache",
@@ -32,8 +32,6 @@
       "@types/*": ["./src/types/*"]
     }
   },
-
-  "types": ["react", "react-dom", "node"],
 
   "include": ["src/**/*"],
   "exclude": [

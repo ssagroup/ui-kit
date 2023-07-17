@@ -1,10 +1,11 @@
 export interface WaterConsumeProps {
-  max: number;
-  currentValue: number;
+  minValue?: number;
+  maxValue?: number;
   unit?: string;
+  active: number;
+  currentValue: number;
   steps: {
     title: string;
     caption: string;
-    done: boolean;
   }[];
 }
