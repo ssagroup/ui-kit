@@ -63,7 +63,8 @@
     "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
     "storybook": "storybook dev -p 6007",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "tsc -p ./tsconfig.json"
+    "ts-check": "tsc -p ./tsconfig.json",
+    "deploy:hosting": "firebase deploy --only hosting"
   },
   "browserslist": [
     ">0.1%",

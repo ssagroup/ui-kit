@@ -58,6 +58,7 @@ export const mealNutrients = {
       const { val, precision } = doc.data();
 
       return {
+        id: doc.id,
         value: doc.id,
         label: val,
         precision,

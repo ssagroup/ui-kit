@@ -50,6 +50,10 @@ const config = {
     // Make a module's hash stay consistent between builds, unless its content
     // has changed
     moduleIds: 'deterministic',
+    // https://webpack.js.org/configuration/optimization/#optimizationmangleexports
+    // https://webpack.js.org/blog/2020-10-10-webpack-5-release/#deterministic-chunk-module-ids-and-export-names
+    // Keep original export names
+    mangleExports: false,
     // Creates a single runtime bundle for all chunks
     runtimeChunk: 'single',
     splitChunks: {

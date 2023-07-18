@@ -56,9 +56,9 @@ const mockDataLoad = {
   },
   getOptions() {
     return Promise.resolve([
-      { id: 'd', value: 'Daily', precision: 'hour' },
-      { id: 'w', value: 'Weekly', precision: 'week' },
-      { id: 'm', value: 'Monthly', precision: 'day' },
+      { value: 'd', label: 'Daily', precision: 'hour' },
+      { value: 'w', label: 'Weekly', precision: 'week' },
+      { value: 'm', label: 'Monthly', precision: 'day' },
     ]);
   },
 };

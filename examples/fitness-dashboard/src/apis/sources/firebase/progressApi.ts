@@ -17,7 +17,6 @@ const groupByDate = (data) => {
     yearly: new Date(new Date().setTime(today.getTime() - offsetYear)),
   };
 
-  console.log(today);
   const dataPeriod = {};
 
   Object.keys(offset).forEach((period) => {
@@ -57,7 +56,6 @@ export const progress = {
         finalMap[period][label].push({ ...el, label });
       });
     });
-    console.log(finalMap);
 
     return finalMap;
   },

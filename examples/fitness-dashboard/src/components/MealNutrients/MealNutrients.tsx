@@ -59,7 +59,7 @@ export const MealNutrients = ({
 
   useEffect(() => {
     if (selectedOption != null) {
-      loadNutrients(selectedOption?.id);
+      loadNutrients(selectedOption?.value);
     }
   }, [selectedOption]);
 
@@ -78,9 +78,9 @@ export const MealNutrients = ({
 
         {options?.length > 0 && (
           <Dropdown selectedItem={options[0]} onChange={handleChange}>
-            {options.map((item, index) => (
+            {options.map((item) => (
               <DropdownOption
-                key={index}
+                key={item.value}
                 value={item.value}
                 label={item.label}
               />
