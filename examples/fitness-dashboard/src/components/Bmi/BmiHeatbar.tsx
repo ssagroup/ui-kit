@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const BmiHeatbar = styled.div`
-  widht: 100%;
+  width: 100%;
   height: 14px;
 
   background: linear-gradient(

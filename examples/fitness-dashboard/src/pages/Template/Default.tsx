@@ -37,7 +37,7 @@ const Default = (Component) => (props) => {
 
   return (
     <Layout>
-      {/* asside toggle */}
+      {/* aside toggle */}
       <input type="checkbox" id="aside" />
       <div
         css={css`

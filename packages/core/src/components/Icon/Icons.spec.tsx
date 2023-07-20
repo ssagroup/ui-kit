@@ -82,7 +82,7 @@ describe('Icons', () => {
     });
   });
 
-  it('Render "Radion-on" icon with attributes', async () => {
+  it('Render "Radio-on" icon with attributes', async () => {
     const iconName = 'radio-on';
     const [icon] = await renderIcon(iconName);
 

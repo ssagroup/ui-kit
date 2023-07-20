@@ -22,7 +22,7 @@ export default {
       },
     },
     className: {
-      description: 'used in order to ovewrite the default style.',
+      description: 'Used in order to overwrite the default style',
       table: {
         type: {
           summary: 'StyledComponent',

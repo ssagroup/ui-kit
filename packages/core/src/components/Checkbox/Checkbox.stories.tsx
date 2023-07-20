@@ -59,15 +59,15 @@ const checkboxPropsVariants: Array<ICheckboxProps & { caption?: string }> = [
     },
   },
   {
-    id: 'indetermined',
-    caption: 'Indetermined',
+    id: 'undetermined',
+    caption: 'Undetermined',
     isIndeterminate: true,
     onChange() {
       /* no-op */
     },
   },
   {
-    id: 'indetermined-disabled',
+    id: 'undetermined-disabled',
     isIndeterminate: true,
     isDisabled: true,
     onChange() {

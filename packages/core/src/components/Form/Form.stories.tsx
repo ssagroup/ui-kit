@@ -361,7 +361,7 @@ export const RecoverPasswordTemplate: StoryObj<typeof Card> = () => {
                           size={16}
                         />
                       }
-                      onClick={handleVisibility('confirmPasword')}
+                      onClick={handleVisibility('confirmPassword')}
                     />
                   }
                   errors={errors?.confirmPassword as FieldError}

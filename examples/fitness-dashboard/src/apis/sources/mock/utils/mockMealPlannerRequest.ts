@@ -15,7 +15,7 @@ export const mealPlannerData: MealPlannerResp = {
       },
       {
         id: 2,
-        name: 'Almound milk',
+        name: 'Almond milk',
         image: '/img/milk/milk_64.png',
         calories: 300,
         carbs: 40,

@@ -12,7 +12,7 @@ export interface ProgressInfoMetricProps {
   size: string;
 }
 
-type PositionSizeCoordenates = {
+type PositionSizeCoordinates = {
   [size: string]: {
     x: number;
     y: number;
@@ -20,7 +20,7 @@ type PositionSizeCoordenates = {
 };
 
 export type TextPositionMap = {
-  [key: string]: PositionSizeCoordenates;
+  [key: string]: PositionSizeCoordinates;
 };
 
 export type ProgressInfoResp = {

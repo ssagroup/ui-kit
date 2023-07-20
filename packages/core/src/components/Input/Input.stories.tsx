@@ -86,7 +86,7 @@ export const WithIcon: StoryObj<typeof Input> = () => {
 };
 WithIcon.args = {};
 
-export const WhithError: StoryObj<typeof Input> = () => {
+export const WithError: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();
 
   return (
@@ -101,9 +101,9 @@ export const WhithError: StoryObj<typeof Input> = () => {
     />
   );
 };
-WhithError.args = {};
+WithError.args = {};
 
-export const WhithSuccess: StoryObj<typeof Input> = () => {
+export const WithSuccess: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();
 
   return (
@@ -118,7 +118,7 @@ export const WhithSuccess: StoryObj<typeof Input> = () => {
     />
   );
 };
-WhithSuccess.args = {};
+WithSuccess.args = {};
 
 export const Disabled: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();

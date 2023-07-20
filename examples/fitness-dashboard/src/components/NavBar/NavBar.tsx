@@ -12,7 +12,7 @@ import NavToggle from './NavToggle';
 
 /**
  *
- * UI Component that shows the navegation bar
+ * UI Component that shows the navigation bar
  */
 export const NavBar = () => {
   const { pathname } = useLocation();
