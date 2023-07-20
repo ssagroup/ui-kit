@@ -1,0 +1,21 @@
+{
+  "projects": {
+    "default": "admin-themes"
+  },
+  "targets": {
+    "admin-themes": {
+      "hosting": {
+        "fitness-dashboard": [
+          "admin-themes"
+        ],
+        "core": [
+          "ui-kit-core"
+        ],
+        "fitness": [
+          "ui-kit-fitness"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

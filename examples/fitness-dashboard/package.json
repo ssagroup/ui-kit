@@ -25,7 +25,6 @@
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
     "dotenv": "^16.0.3",
-    "firebase": "^9.22.1",
     "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
     "react": "^18.2.0",
@@ -61,10 +60,10 @@
     "create": "node ./tasks/create.js",
     "analyze": "webpack --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
     "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
-    "storybook": "storybook dev -p 6007",
+    "sb:dev": "storybook dev -p 6007",
+    "sb:build": "storybook build",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "tsc -p ./tsconfig.json",
-    "deploy:hosting": "firebase deploy --only hosting"
+    "ts-check": "tsc -p ./tsconfig.json"
   },
   "browserslist": [
     ">0.1%",

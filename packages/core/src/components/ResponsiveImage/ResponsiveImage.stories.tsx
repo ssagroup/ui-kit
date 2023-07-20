@@ -22,28 +22,10 @@ export const Default: StoryObj<typeof ResponsiveImage> = () => {
         tag
       </Typography>
       <ResponsiveImage
-        srcSet="/img/steps/steps_64.png 64w, /img/steps/steps_48.png 48w"
+        srcSet="https://placehold.co/64x64 64w, https://placehold.co/48x48 48w"
         sizes="(min-width: 1440px) 64px, 48px"
-        src="/img/steps/steps_48.png"
+        src="https://placehold.co/48x48"
         alt="Steps"
-      />
-      <ResponsiveImage
-        srcSet="/img/water/water_64.png 64w, /img/water/water_48.png 48w"
-        sizes="(min-width: 1440px) 64px, 48px"
-        src="/img/water/water_48.png"
-        alt="Water"
-      />
-      <ResponsiveImage
-        srcSet="/img/calories/calories_64.png 64w, /img/calories/calories_48.png 48w"
-        sizes="(min-width: 1440px) 64px, 48px"
-        src="/img/calories/calories_48.png"
-        alt="Calories burn"
-      />
-      <ResponsiveImage
-        srcSet="/img/heart/heart_64.png 64w, /img/heart/heart_48.png 48w"
-        sizes="(min-width: 1440px) 64px, 48px"
-        src="/img/heart/heart_48.png"
-        alt="Heart"
       />
     </Fragment>
   );

@@ -21,6 +21,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:react/jsx-runtime',
     'plugin:jsx-a11y/recommended',
+    'plugin:storybook/recommended',
   ],
   rules: {
     '@typescript-eslint/no-var-requires': 'error',
