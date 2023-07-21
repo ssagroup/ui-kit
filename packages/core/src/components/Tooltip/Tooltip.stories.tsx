@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useTheme } from '@emotion/react';
 
 import Button from '@components/Button';
 import ProgressCircle from '@components/ProgressCircle';
@@ -35,7 +36,7 @@ export default {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        {Story()}
+        <Story />
       </div>
     ),
   ],
@@ -76,10 +77,15 @@ OnHover.args = {
 OnHover.storyName = 'Hover';
 
 export const CustomContent: StoryObj<typeof Tooltip> = (args) => {
+  const theme = useTheme();
+
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
-        <Button size="medium" endIcon={<Icon name="plus" />} />
+        <Button
+          size="medium"
+          endIcon={<Icon name="plus" color={theme.colors.white} size={12} />}
+        />
       </TooltipTrigger>
       <TooltipContent css={{ textAlign: 'center' }}>
         <Typography variant="h6">Your progress</Typography>
@@ -104,10 +110,16 @@ CustomContent.args = {
 CustomContent.storyName = 'Custom content';
 
 export const NoArrow: StoryObj<typeof Tooltip> = (args) => {
+  const theme = useTheme();
+
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
-        <Button size="small" endIcon={<Icon name="check" />} text="Action" />
+        <Button
+          size="small"
+          endIcon={<Icon name="check" color={theme.colors.white} size={12} />}
+          text="Action"
+        />
       </TooltipTrigger>
       <TooltipContent>No arrow</TooltipContent>
     </Tooltip>

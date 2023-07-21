@@ -14,6 +14,10 @@ import Typography from '@components/Typography';
 export default {
   title: 'Components/Modal',
   component: Modal,
+  parameters: {
+    // https://storybook.js.org/docs/react/api/doc-block-story#height
+    docs: { story: { height: '400px' } },
+  },
 } as Meta<typeof Modal>;
 
 export const Default: StoryObj<typeof Modal> = () => (
