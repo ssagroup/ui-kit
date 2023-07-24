@@ -1,0 +1,4 @@
+{
+  "*": ["pnpm spellcheck"],
+  "*.{ts,tsx,js}": "pnpm lint"
+}

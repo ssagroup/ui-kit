@@ -35,7 +35,7 @@ Basic.args = {
   placeholder: 'Textarea',
   name: 'textarea',
   validationSchema: {
-    required: 'Requ ired',
+    required: 'Required',
   },
 };
 Basic.storyName = 'Textarea';

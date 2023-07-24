@@ -7,6 +7,8 @@
   "author": "SSA Group",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint --ignore-path .gitignore .",
+    "spellcheck": "cspell \"**/*.{tsx,ts,md}\" --show-suggestions --no-progress",
     "test": "TZ='Europe/London' jest -i --no-cache",
     "test:core": "pnpm --filter ./packages/core test",
     "test:utils": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Utils\"",
@@ -18,7 +20,8 @@
     "sb:deploy:fitness": "pnpm --filter ./examples/fitness-dashboard sb:build && firebase deploy --only hosting:fitness",
     "sb:deploy:core": "pnpm --filter ./packages/core sb:build && firebase deploy --only hosting:core",
     "sb:deploy:root": "vercel --prod",
-    "deploy:dashboard": "pnpm --filter ./examples/fitness-dashboard build && firebase deploy --only hosting:fitness-dashboard"
+    "deploy:dashboard": "pnpm --filter ./examples/fitness-dashboard build && firebase deploy --only hosting:fitness-dashboard",
+    "prepare": "husky install"
   },
   "keywords": [
     "react",
@@ -58,6 +61,7 @@
     "babel-jest": "^29.3.1",
     "babel-loader": "^9.1.2",
     "copy-webpack-plugin": "^11.0.0",
+    "cspell": "^6.31.2",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-typescript": "^3.0.0",
@@ -67,11 +71,12 @@
     "eslint-plugin-storybook": "^0.6.12",
     "firebase": "^9.22.1",
     "html-webpack-plugin": "^5.5.1",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "jest": "^29.5.0",
     "jest-cli": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jest-watch-typeahead": "^2.2.2",
+    "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

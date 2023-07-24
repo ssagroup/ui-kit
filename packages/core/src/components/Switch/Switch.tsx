@@ -1,7 +1,7 @@
 import SwitchBase from './SwitchBase';
 import { useSwitchContext } from './SwitchContext';
 
-import { ISwitchProps } from './tpes';
+import { ISwitchProps } from './types';
 
 const Switch = ({ label, isDisabled = false }: ISwitchProps) => {
   const { isOn, toggle } = useSwitchContext();

@@ -6,6 +6,7 @@ export const user = {
     const {
       firestore: { db, doc, getDoc },
     } = await getFirebase();
+    // cspell:disable-next-line
     const user = await getDoc(doc(db, 'user', 'P4zpkqdkYmloXXrhDo1d'));
 
     if (user.exists()) {

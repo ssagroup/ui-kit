@@ -4,6 +4,7 @@ export const progressInfoData: ProgressInfoResp = {
   weekly: {
     stretching: [
       {
+        // cspell:disable-next-line
         id: 'XlyNrZpVvNp2Z9LqloS6',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -14,6 +15,7 @@ export const progressInfoData: ProgressInfoResp = {
     ],
     cardio: [
       {
+        // cspell:disable-next-line
         id: 'YthvgItFS3W0Sa3mRW0X',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -26,6 +28,7 @@ export const progressInfoData: ProgressInfoResp = {
   monthly: {
     cardio: [
       {
+        // cspell:disable-next-line
         id: '5MI8tTgF1PNFs7Cx7gOC',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -34,6 +37,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'cardio',
       },
       {
+        // cspell:disable-next-line
         id: 'YthvgItFS3W0Sa3mRW0X',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -42,6 +46,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'cardio',
       },
       {
+        // cspell:disable-next-line
         id: 'eaSQG2w0TkXhbg5dkSmo',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -52,6 +57,7 @@ export const progressInfoData: ProgressInfoResp = {
     ],
     stretching: [
       {
+        // cspell:disable-next-line
         id: 'FdMmyq45pj9M0VVP01EN',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -60,6 +66,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'stretching',
       },
       {
+        // cspell:disable-next-line
         id: 'TAFnTPs8kOeAy9uTn502',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -68,6 +75,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'stretching',
       },
       {
+        // cspell:disable-next-line
         id: 'XlyNrZpVvNp2Z9LqloS6',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -80,6 +88,7 @@ export const progressInfoData: ProgressInfoResp = {
   yearly: {
     cardio: [
       {
+        // cspell:disable-next-line
         id: '5MI8tTgF1PNFs7Cx7gOC',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -88,6 +97,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'cardio',
       },
       {
+        // cspell:disable-next-line
         id: 'YthvgItFS3W0Sa3mRW0X',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -96,6 +106,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'cardio',
       },
       {
+        // cspell:disable-next-line
         id: 'eaSQG2w0TkXhbg5dkSmo',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -104,6 +115,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'cardio',
       },
       {
+        // cspell:disable-next-line
         id: 'ym7TO7GOoB7NhtFrzT4Y',
         color: 'rgba(65, 187, 187, 1)',
         colorTag: 'turquoise',
@@ -114,6 +126,7 @@ export const progressInfoData: ProgressInfoResp = {
     ],
     stretching: [
       {
+        // cspell:disable-next-line
         id: 'FdMmyq45pj9M0VVP01EN',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -122,6 +135,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'stretching',
       },
       {
+        // cspell:disable-next-line
         id: 'TAFnTPs8kOeAy9uTn502',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -130,6 +144,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'stretching',
       },
       {
+        // cspell:disable-next-line
         id: 'XlyNrZpVvNp2Z9LqloS6',
         color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
@@ -138,6 +153,7 @@ export const progressInfoData: ProgressInfoResp = {
         label: 'stretching',
       },
       {
+        // cspell:disable-next-line
         id: 'twtiFqUQ1yZpv3pcTkCp',
         color: 'rgba(117, 153, 222, 1',
         colorTag: 'blueLight',

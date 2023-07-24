@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "minWordLength": 3,
+  "useGitignore": true,
+  "dictionaries": ["typescript", "node", "html", "css", "project-dictionary"],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-dictionary",
+      "path": "./.cspell/project-dictionary.txt",
+      "addWords": true
+    }
+  ],
+  "ignorePaths": ["pnpm-lock.yaml", "package.json"]
+}
