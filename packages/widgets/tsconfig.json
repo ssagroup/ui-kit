@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsxImportSource": "@emotion/react",
+    "emitDeclarationOnly": false,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@apis/*": ["./src/apis/*"],
+      "@components/*": ["./src/components/*"]
+    }
+  },
+  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],
+  "exclude": ["dist/**/*"]
+}
