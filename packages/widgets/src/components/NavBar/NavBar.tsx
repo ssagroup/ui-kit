@@ -10,11 +10,13 @@ import NavBarItem from './NavBarItem';
 import NavBarLink from './NavBarLink';
 import NavToggle from './NavToggle';
 
+import { INavBarProps } from './types';
+
 /**
  *
  * UI Component that shows the navigation bar
  */
-export const NavBar = () => {
+export const NavBar = ({ items }: INavBarProps) => {
   const { pathname } = useLocation();
   const theme = useTheme();
 
@@ -26,50 +28,13 @@ export const NavBar = () => {
 
       <NavBarWrapper>
         <NavBarList>
-          <NavBarItem>
-            <NavBarLink to="/" active={pathname === '/'}>
-              <Icon name="home" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink to="/stats" active={pathname === '/stats'}>
-              <Icon name="stats" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink to="/calendar" active={pathname === '/calendar'}>
-              <Icon name="calendar" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink to="/trainings" active={pathname === '/trainings'}>
-              <Icon name="trainings" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink
-              to="/measurements"
-              active={pathname === '/measurements'}>
-              <Icon name="measurements" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink to="/diet" active={pathname === '/diet'}>
-              <Icon name="diet" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink
-              to="/notification"
-              active={pathname === '/notification'}>
-              <Icon name="notification" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
-          <NavBarItem>
-            <NavBarLink to="/settings" active={pathname === '/settings'}>
-              <Icon name="settings" color={theme.colors.grey} />
-            </NavBarLink>
-          </NavBarItem>
+          {items.map(({ path, iconName }) => (
+            <NavBarItem key={path}>
+              <NavBarLink to={'/' + path} active={pathname === path}>
+                <Icon name={iconName} color={theme.colors.grey} />
+              </NavBarLink>
+            </NavBarItem>
+          ))}
         </NavBarList>
       </NavBarWrapper>
     </NavBarBase>

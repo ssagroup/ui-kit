@@ -38,6 +38,17 @@ export default {
       <div style={{ height: '100vh', position: 'relative' }}>{Story()}</div>
     ),
   ],
+  args: {
+    items: [
+      { path: 'stats', iconName: 'stats' },
+      { path: 'calendar', iconName: 'calendar' },
+      { path: 'trainings', iconName: 'trainings' },
+      { path: 'measurements', iconName: 'measurements' },
+      { path: 'diet', iconName: 'diet' },
+      { path: 'notification', iconName: 'notification' },
+      { path: 'settings', iconName: 'settings' },
+    ],
+  },
 } as Meta<typeof NavBar>;
 
 export const Default = {};
