@@ -27,8 +27,6 @@
       "../../node_modules/@types"
     ],
     "paths": {
-      "@apis/*": ["./src/apis/*"],
-      "@hooks/*": ["./src/hooks/*"],
       "@components/*": ["./src/components/*"]
     }
   },

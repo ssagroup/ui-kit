@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 import UserCardItem from './UserCardItem';
 
-import { User } from '@apis/index';
+import { User } from './types';
 
 const listCards = css`
   display: flex;

@@ -81,7 +81,6 @@ const config = {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
     alias: {
       '@components': path.resolve(__dirname, './src/components'),
-      '@apis': path.resolve(__dirname, './src/apis'),
     },
   },
 };
