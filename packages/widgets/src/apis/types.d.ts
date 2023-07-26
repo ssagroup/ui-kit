@@ -1,5 +1,3 @@
-import { MealPlannerItem } from '@components/widgets/MealPlanner/types';
-
 export type TopWidgetsResp = {
   calories: {
     current: number;
@@ -21,15 +19,4 @@ export type TopWidgetsResp = {
     data: Array<{ x: number; y: number }>;
   };
   [x: string | number | symbol]: unknown;
-};
-
-export type MealPlannerResp = { [key: string]: MealPlannerItem };
-
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  weight: number;
-  height: number;
-  age: number;
 };

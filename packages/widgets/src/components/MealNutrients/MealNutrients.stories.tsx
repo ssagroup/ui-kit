@@ -4,7 +4,7 @@ import type { Meta } from '@storybook/react';
 import { MealNutrients } from './index';
 import { IMealNutrientsProps } from './types';
 
-import mockApi from '@apis/sources/mock/utils/mockMealNutrientsRequest';
+import mockApi from './mockMealNutrientsRequest';
 const { getData, getOptions } = mockApi;
 
 export default {

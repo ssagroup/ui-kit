@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 
-import { mealPlannerData as data } from '@apis/sources/mock/utils/mockMealPlannerRequest';
+import { mealPlannerData as data } from './mockMealPlannerRequest';
 
 import MealPlanner from './index';
 

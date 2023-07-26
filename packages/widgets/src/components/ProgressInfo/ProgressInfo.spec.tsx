@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor, within } from '../../../customTest';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import { progressInfoData as data } from '@apis/sources/mock/utils/mockProgressInfoRequest';
+import { progressInfoData as data } from './mockProgressInfoRequest';
 
 import ProgressInfo from './index';
 

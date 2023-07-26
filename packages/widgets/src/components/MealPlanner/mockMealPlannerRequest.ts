@@ -1,4 +1,5 @@
-import { MealPlannerResp } from '../../../types';
+import { MealPlannerItem } from './types';
+type MealPlannerResp = { [key: string]: MealPlannerItem };
 
 export const mealPlannerData: MealPlannerResp = {
   breakfast: {

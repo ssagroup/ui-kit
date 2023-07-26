@@ -1,4 +1,4 @@
-import { ProgressInfoResp } from '@components/ProgressInfo/types';
+import { ProgressInfoResp } from './types';
 
 export const progressInfoData: ProgressInfoResp = {
   weekly: {

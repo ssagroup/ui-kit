@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react';
 
 import { HeartRate } from './index';
-import { heartRateData as data } from '../../apis/sources/mock/utils/mockHeartRateRequest';
+import { heartRateData as data } from './mockHeartRateRequest';
 
 export default {
   title: 'Widgets/HeartRate',

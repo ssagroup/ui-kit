@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import mockApi from '@apis/sources/mock/utils/mockMealNutrientsRequest';
+import mockApi from './mockMealNutrientsRequest';
 const { getData, getOptions } = mockApi;
 
 import { MealNutrients } from './index';

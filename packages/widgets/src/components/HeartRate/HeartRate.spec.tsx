@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { waitFor } from '@testing-library/react';
 
-import { heartRateData as data } from '@apis/sources/mock/utils/mockHeartRateRequest';
+import { heartRateData as data } from './mockHeartRateRequest';
 
 import { HeartRate } from './index';
 

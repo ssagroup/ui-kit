@@ -2,7 +2,7 @@ import { css, Theme } from '@emotion/react';
 
 import { Avatar, Button, Typography, Icon } from '@ssa-ui-kit/core';
 
-import { User } from '@apis/index';
+import { User } from './types';
 
 const container = (theme: Theme) => css`
   display: flex;

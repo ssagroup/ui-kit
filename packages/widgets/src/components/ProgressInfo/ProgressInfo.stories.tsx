@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import type { Meta } from '@storybook/react';
 
-import { progressInfoData as data } from '@apis/sources/mock/utils/mockProgressInfoRequest';
+import { progressInfoData as data } from './mockProgressInfoRequest';
 
 import { ProgressInfo } from './ProgressInfo';
 
