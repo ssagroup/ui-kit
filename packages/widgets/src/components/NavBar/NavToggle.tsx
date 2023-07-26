@@ -2,10 +2,10 @@ import { css } from '@emotion/react';
 
 import NavToggleWrapper from './NavToggleWrapper';
 
-const NavToggle = () => (
+const NavToggle = ({ htmlFor }: { htmlFor: string }) => (
   <NavToggleWrapper>
     <label
-      htmlFor="nav"
+      htmlFor={htmlFor}
       css={css`
         cursor: pointer;
 

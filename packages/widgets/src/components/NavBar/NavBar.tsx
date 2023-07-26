@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 
@@ -17,14 +18,15 @@ import { INavBarProps } from './types';
  * UI Component that shows the navigation bar
  */
 export const NavBar = ({ items }: INavBarProps) => {
+  const toggleId = useId();
   const { pathname } = useLocation();
   const theme = useTheme();
 
   return (
     <NavBarBase>
-      <input type="checkbox" id="nav" />
+      <input type="checkbox" id={toggleId} />
 
-      <NavToggle />
+      <NavToggle htmlFor={toggleId} />
 
       <NavBarWrapper>
         <NavBarList>
