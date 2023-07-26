@@ -3,7 +3,8 @@ import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import API from '@apis/index';
+import mockApi from '@apis/sources/mock/utils/mockMealNutrientsRequest';
+const { getData, getOptions } = mockApi;
 
 import { MealNutrients } from './index';
 
@@ -51,7 +52,12 @@ function setup(component) {
 
 describe('MealNutrients', () => {
   it('Renders', async () => {
-    const { getByTestId, getByText } = setup(<MealNutrients />);
+    const options = await getOptions();
+    const data = await getData(options[0].value);
+
+    const { getByTestId, getByText } = setup(
+      <MealNutrients data={data} options={options} />,
+    );
 
     getByText('Meal Nutrients');
 
@@ -61,8 +67,20 @@ describe('MealNutrients', () => {
     });
   });
 
-  it('Fetches data on a dropdown option change', async () => {
-    const { user, getByTestId, getByRole } = setup(<MealNutrients />);
+  it('Changes an option and calls "onOptionChange"', async () => {
+    const options = await getOptions();
+    const data = await getData(options[0].value);
+    const mockOnChange = jest.fn(async ({ value }) => {
+      await getData(String(value));
+    });
+
+    const { user, getByTestId, getByRole } = setup(
+      <MealNutrients
+        data={data}
+        options={options}
+        onOptionChange={mockOnChange}
+      />,
+    );
 
     await waitFor(async () => {
       getByTestId('chart-mock');
@@ -79,13 +97,18 @@ describe('MealNutrients', () => {
       const selectedItemText = listItemElToChoose.textContent;
       expect(selectedItemText).not.toBeFalsy();
       within(dropdownToggleEl).getByText(selectedItemText as string);
+
+      expect(mockOnChange).toBeCalledWith(options[1]);
     });
   });
 
   it('Renders with a custom caption', async () => {
     const caption = 'A custom caption';
+    const options = await getOptions();
+    const data = await getData(options[0].value);
+
     const { getByTestId, getByText } = setup(
-      <MealNutrients caption={caption} />,
+      <MealNutrients caption={caption} data={data} options={options} />,
     );
 
     getByText(caption);
@@ -96,17 +119,10 @@ describe('MealNutrients', () => {
     });
   });
 
-  it('Hides chart on API error', async () => {
-    jest.spyOn(API.mealNutrients, 'get').mockImplementationOnce(() => {
-      throw new Error('Something went wrong');
-    });
-    jest.spyOn(API.mealNutrients, 'getOptions').mockImplementationOnce(() => {
-      throw new Error('Something went wrong');
-    });
-
+  it("Hides chart when there's no data", async () => {
     const caption = 'A custom caption';
     const { queryByTestId, getByText } = setup(
-      <MealNutrients caption={caption} />,
+      <MealNutrients caption={caption} data={[]} options={[]} />,
     );
 
     getByText(caption);

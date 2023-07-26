@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { LineSvgProps } from '@nivo/line';
 
 import {
   Card,
@@ -11,17 +10,9 @@ import {
   IDropdownOption,
 } from '@ssa-ui-kit/core';
 
-import { useApi } from '@ssa-ui-kit/hooks';
-
-import API from '@apis/index';
-
 import { MealNutrientsLineChart } from './MealNutrientsLineChart';
 import useChartConfig from './useChartConfig';
-import { IMealNutrientsProps, UseChartConfig } from './types';
-
-type OptionType = IDropdownOption & {
-  [key: string | number | symbol]: unknown;
-};
+import { IMealNutrientsProps, UseChartConfig, OptionType } from './types';
 
 /**
  *
@@ -29,15 +20,10 @@ type OptionType = IDropdownOption & {
  */
 export const MealNutrients = ({
   caption = 'Meal Nutrients',
+  options,
+  data,
+  onOptionChange,
 }: IMealNutrientsProps) => {
-  const { data: options, query: loadOptions } = useApi<OptionType[]>(
-    API.mealNutrients.getOptions,
-    [],
-  );
-  const { data, query: loadNutrients } = useApi<LineSvgProps['data']>(
-    API.mealNutrients.get,
-    [],
-  );
   const [selectedOption, setSelectedOption] = useState<OptionType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -48,25 +34,16 @@ export const MealNutrients = ({
   );
 
   useEffect(() => {
-    loadOptions();
-  }, []);
-
-  useEffect(() => {
     if (options?.length > 0 && selectedOption == null) {
       handleChange(options[0]);
     }
   }, [options]);
 
-  useEffect(() => {
-    if (selectedOption != null) {
-      loadNutrients(selectedOption?.value);
-    }
-  }, [selectedOption]);
-
   const handleChange = (e: IDropdownOption) => {
     const item = options.filter((item) => item.value === e.value)[0];
 
-    setSelectedOption(item as OptionType);
+    setSelectedOption(item);
+    onOptionChange && onOptionChange(item);
   };
 
   return (

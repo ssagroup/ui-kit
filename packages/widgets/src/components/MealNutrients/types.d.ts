@@ -1,8 +1,16 @@
 import { Point, LineSvgProps, CustomLayerProps } from '@nivo/line';
 import { ScaleTimeSpec } from '@nivo/scales';
+import { IDropdownOption } from '@ssa-ui-kit/core';
+
+export type OptionType = IDropdownOption & {
+  [key: string | number | symbol]: unknown;
+};
 
 export interface IMealNutrientsProps {
   caption?: string;
+  options: OptionType[];
+  data: LineSvgProps['data'];
+  onOptionChange?: (option: OptionType) => void;
 }
 
 export interface IMealNutrientsTooltipProps {
