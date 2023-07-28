@@ -243,9 +243,9 @@ importers:
       '@ssa-ui-kit/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
-      '@ssa-ui-kit/utils':
+      '@ssa-ui-kit/widgets':
         specifier: workspace:^
-        version: link:../../packages/utils
+        version: link:../../packages/widgets
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -444,6 +444,9 @@ importers:
       react-dom:
         specifier: 18.x
         version: 18.2.0(react@18.2.0)
+      react-router-dom:
+        specifier: 6.x
+        version: 6.11.2(react-dom@18.2.0)(react@18.2.0)
       scheduler:
         specifier: ^0.23.0
         version: 0.23.0

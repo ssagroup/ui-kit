@@ -4,14 +4,15 @@ import { css, Theme } from '@emotion/react';
 import { Typography, ResponsiveImage } from '@ssa-ui-kit/core';
 import { useApi } from '@ssa-ui-kit/hooks';
 
-import { HeartRate } from '@components/HeartRate';
-import { MealNutrients } from '@components/MealNutrients';
-import Activity from '@components/Activity';
-import Calories from '@components/Calories';
-import MealPlanner from '@components/MealPlanner';
-import ProgressInfo from '@components/ProgressInfo';
-import StepsCounter from '@components/StepsCounter';
-import WaterConsume from '@components/WaterConsume';
+import { HeartRate } from '@ssa-ui-kit/widgets';
+import { Activity } from '@ssa-ui-kit/widgets';
+import { Calories } from '@ssa-ui-kit/widgets';
+import { MealPlanner } from '@ssa-ui-kit/widgets';
+import { ProgressInfo } from '@ssa-ui-kit/widgets';
+import { StepsCounter } from '@ssa-ui-kit/widgets';
+import { WaterConsume } from '@ssa-ui-kit/widgets';
+
+import { default as MealNutrients } from './components/MealNutrients';
 
 import API from '@apis/index';
 import { useAuth } from '@hooks/useAuth';

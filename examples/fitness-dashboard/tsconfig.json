@@ -10,8 +10,7 @@
     ],
     "paths": {
       "@apis/*": ["./src/apis/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@components/*": ["./src/components/*"]
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],

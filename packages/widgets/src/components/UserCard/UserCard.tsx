@@ -18,7 +18,7 @@ const container = (theme: Theme) => css`
   }
 `;
 
-const UserCard = ({ user }: { user?: User }) => (
+const UserCard = ({ user }: { user: User | null }) => (
   <Fragment>
     <div css={container}>
       <div

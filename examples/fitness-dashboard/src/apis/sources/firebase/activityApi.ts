@@ -1,5 +1,5 @@
 import getFirebase from './initFirebase';
-import { ActivityItemProps, ActivityResp } from '@components/Activity/types';
+import { ActivityItemProps, ActivityResp } from '@ssa-ui-kit/widgets';
 
 export const activity = {
   async getActivities(): Promise<ActivityResp> {

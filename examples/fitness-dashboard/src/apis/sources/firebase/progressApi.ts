@@ -1,8 +1,5 @@
 import getFirebase from './initFirebase';
-import {
-  ProgressInfoResp,
-  ProgressInfoItemProps,
-} from '@components/ProgressInfo/types';
+import { ProgressInfoResp, ProgressInfoItemProps } from '@ssa-ui-kit/widgets';
 
 const groupByDate = (data) => {
   const hoursMilliseconds = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

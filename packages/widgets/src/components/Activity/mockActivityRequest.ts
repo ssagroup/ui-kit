@@ -1,0 +1,106 @@
+import { ActivityResp } from './types';
+
+export const mealActivityData: ActivityResp = {
+  walking: [
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Sun',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Mon',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Tue',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Wed',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Thu',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Fri',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'walking',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Sat',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+  ],
+  cycling: [
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Sun',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Mon',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Tue',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Wed',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Thu',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Fri',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+    {
+      activity: 'cycling',
+      date: '2023-04-16T23:00:00.000Z',
+      day: 'Sat',
+      max: 100,
+      currentValue: Math.round(Math.random() * 100),
+    },
+  ],
+};

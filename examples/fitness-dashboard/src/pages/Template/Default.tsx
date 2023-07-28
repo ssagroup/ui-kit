@@ -8,21 +8,38 @@ import {
   Avatar,
   Button,
   Icon,
+  IMapIcons,
 } from '@ssa-ui-kit/core';
 
 import { useApi } from '@ssa-ui-kit/hooks';
 
-import UpcomingWorkouts from '@components/UpcomingWorkouts';
-import ListGoals from '@components/ListGoals';
-import Bmi from '@components/Bmi';
-import UserCard from '@components/UserCard';
-import NavBar from '@components/NavBar';
+import { UpcomingWorkouts } from '@ssa-ui-kit/widgets';
+import { ListGoals } from '@ssa-ui-kit/widgets';
+import { Bmi } from '@ssa-ui-kit/widgets';
+import { UserCard } from '@ssa-ui-kit/widgets';
+import { NavBar } from '@ssa-ui-kit/widgets';
 
 import { useAuth } from '@hooks/useAuth';
 
 import API from '@apis/index';
 
 import { Layout, Nav, Sidebar } from './layout/NavTwoColumns';
+
+const routes = [
+  { path: 'stats', iconName: 'stats' as unknown as keyof IMapIcons },
+  { path: 'calendar', iconName: 'calendar' as unknown as keyof IMapIcons },
+  { path: 'trainings', iconName: 'trainings' as unknown as keyof IMapIcons },
+  {
+    path: 'measurements',
+    iconName: 'measurements' as unknown as keyof IMapIcons,
+  },
+  { path: 'diet', iconName: 'diet' as unknown as keyof IMapIcons },
+  {
+    path: 'notification',
+    iconName: 'notification' as unknown as keyof IMapIcons,
+  },
+  { path: 'settings', iconName: 'settings' as unknown as keyof IMapIcons },
+];
 
 const Default = (Component) => (props) => {
   const theme = useTheme();
@@ -72,7 +89,7 @@ const Default = (Component) => (props) => {
       </div>
 
       <Nav>
-        <NavBar />
+        <NavBar items={routes} />
 
         <div
           css={(theme: Theme) => css`

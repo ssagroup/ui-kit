@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+// cspell:disable-next-line
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 require('dotenv').config();
 
@@ -98,18 +99,19 @@ const config = {
       'process.env': JSON.stringify(process.env),
     }),
 
-    new webpack.NormalModuleReplacementPlugin(/\.\/sources\/mock/, function (
-      resource,
-    ) {
-      if (!API_SOURCE_TYPE) {
-        return;
-      }
+    new webpack.NormalModuleReplacementPlugin(
+      /\.\/sources\/firebase/,
+      function (resource) {
+        if (!API_SOURCE_TYPE) {
+          return;
+        }
 
-      resource.request = resource.request.replace(
-        /\.\/sources\/mock/,
-        `${API_SOURCE_TYPE}`,
-      );
-    }),
+        resource.request = resource.request.replace(
+          /\.\/sources\/firebase/,
+          `${API_SOURCE_TYPE}`,
+        );
+      },
+    ),
   ],
   module: {
     rules: [
@@ -131,10 +133,6 @@ const config = {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
     alias: {
       '@src': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@themes': path.resolve(__dirname, './src/themes'),
-      '@styles': path.resolve(__dirname, './src/styles'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@apis': path.resolve(__dirname, './src/apis'),
     },
