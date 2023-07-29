@@ -13,7 +13,7 @@
     },
     {
       "target": "fitness",
-      "public": "examples/fitness-dashboard/storybook-static",
+      "public": "packages/widgets/storybook-static",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
