@@ -14,7 +14,8 @@ export const Default: StoryObj<typeof UpcomingWorkouts> = () => {
         workouts={[
           {
             id: 'cardio_training',
-            image: '/img/mat/mat_42.png',
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fmat%2Fmat_42.png?alt=media&token=462a4e3c-4e57-4f76-aad3-97b72c75b4ff',
             title: 'HIIT Cardio training',
             workoutTime: '8:00 AM',
             details: {

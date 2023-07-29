@@ -10,7 +10,8 @@ describe('ListGoals', () => {
         goals={[
           {
             id: 'lifting_weights',
-            image: '/img/dumbbell/dumbbell_42.png',
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fdumbbell%2Fdumbbell_42.png?alt=media&token=06312895-4372-47b0-a5fa-4a64726a6215',
             title: 'Lifting weights',
             details: 'Goal 25 kg | 20 kg',
             completion: 79,
@@ -18,7 +19,8 @@ describe('ListGoals', () => {
           },
           {
             id: 'running',
-            image: '/img/treadmill/treadmill_42.png',
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Ftreadmill%2Ftreadmill_42.png?alt=media&token=151f51bb-a6ba-4f4a-9d51-57a6784c767b',
             title: 'Running',
             details: 'Goal 25 km | 19,7 km',
             completion: 79,
@@ -41,13 +43,15 @@ describe('ListGoals', () => {
     const mockData = [
       {
         id: 'lifting_weights',
-        image: '/img/dumbbell/dumbbell_42.png',
+        image:
+          'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fdumbbell%2Fdumbbell_42.png?alt=media&token=06312895-4372-47b0-a5fa-4a64726a6215',
         title: 'Lifting weights',
         details: 'Goal 25 kg | 20 kg',
       },
       {
         id: 'running',
-        image: '/img/treadmill/treadmill_42.png',
+        image:
+          'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Ftreadmill%2Ftreadmill_42.png?alt=media&token=151f51bb-a6ba-4f4a-9d51-57a6784c767b',
         title: 'Running',
         details: 'Goal 25 km | 19,7 km',
       },

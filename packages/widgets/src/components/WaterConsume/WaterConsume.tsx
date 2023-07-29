@@ -91,9 +91,9 @@ export const WaterConsume = ({
         icon={
           <ResponsiveImage
             css={{ filter: `drop-shadow(0px 5px 5px ${theme.colors.grey})` }}
-            srcSet="/img/water/water_64.png 64w, /img/water/water_48.png 48w"
+            srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fwater%2Fwater_64.png?alt=media&token=2abf9f9c-2159-4235-856c-f054783a007d 64w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fwater%2Fwater_48.png?alt=media&token=abc1e619-940a-4fc0-9f83-ef0a998464f2 48w"
             sizes="(min-width: 1440px) 64px, 48px"
-            src="/img/water/water_48.png"
+            src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fwater%2Fwater_48.png?alt=media&token=abc1e619-940a-4fc0-9f83-ef0a998464f2"
             alt="Water"
           />
         }>

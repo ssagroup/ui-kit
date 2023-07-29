@@ -29,9 +29,9 @@ export const Calories = ({ max, currentValue }: ICaloriesProps) => {
         icon={
           <ResponsiveImage
             css={{ filter: `drop-shadow(0px 5px 5px ${theme.colors.grey})` }}
-            srcSet="/img/calories/calories_64.png 64w, /img/calories/calories_48.png 48w"
+            srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fcalories%2Fcalories_64.png?alt=media&token=6a57e3f5-0e15-4dcf-8871-f1bf94d887af 64w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fcalories%2Fcalories_48.png?alt=media&token=861ad7c8-1bcb-4f2d-a581-4b73b4821251 48w"
             sizes="(min-width: 1440px) 64px, 48px"
-            src="/img/calories/calories_48.png"
+            src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fcalories%2Fcalories_48.png?alt=media&token=861ad7c8-1bcb-4f2d-a581-4b73b4821251"
             alt="Calories burn"
           />
         }>

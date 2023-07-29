@@ -2,7 +2,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 // cspell:disable-next-line
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -80,10 +79,6 @@ const config = {
     },
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [{ from: 'public/img', to: path.resolve(OUTPUT_PATH, 'img') }],
-    }),
-
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),

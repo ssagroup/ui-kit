@@ -127,7 +127,7 @@ const Dashboard = () => {
             <ResponsiveImage
               srcSet=""
               sizes=""
-              src="/img/dumbbell/dumbbell_hand_42.png"
+              src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fdumbbell%2Fdumbbell_hand_42.png?alt=media&token=9a727b96-a781-4338-aad4-174121a6686d"
               alt="Dumbbell with hand"
             />
           </Typography>

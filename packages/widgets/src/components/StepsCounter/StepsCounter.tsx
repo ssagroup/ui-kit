@@ -29,9 +29,9 @@ export const StepsCounter = ({ max, currentValue }: StepsCounterProps) => {
         icon={
           <ResponsiveImage
             css={{ filter: `drop-shadow(0px 5px 5px ${theme.colors.grey})` }}
-            srcSet="/img/steps/steps_64.png 64w, /img/steps/steps_48.png 48w"
+            srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fsteps%2Fsteps_64.png?alt=media&token=22d59e48-da19-448a-98e3-25f396108243 64w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fsteps%2Fsteps_48.png?alt=media&token=7c66d777-ddad-416a-9f07-a89dd3167ca7 48w"
             sizes="(min-width: 1440px) 64px, 48px"
-            src="/img/steps/steps_48.png"
+            src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fsteps%2Fsteps_48.png?alt=media&token=7c66d777-ddad-416a-9f07-a89dd3167ca7"
             alt="Steps"
           />
         }>
