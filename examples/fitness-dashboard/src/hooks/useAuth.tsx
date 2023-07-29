@@ -1,5 +1,6 @@
 import { useEffect, createContext, useContext } from 'react';
-import API, { User } from '@apis/index';
+import API from '@apis/index';
+import { User } from '@ssa-ui-kit/widgets';
 
 import { useApi } from '@ssa-ui-kit/hooks';
 
@@ -8,10 +9,10 @@ import { useApi } from '@ssa-ui-kit/hooks';
  *
  * Authentication to be implemented in the subsequent releases.
  * */
-const AuthContext = createContext<{ user?: User }>({});
+const AuthContext = createContext<{ user: User | null }>({ user: null });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: user, query: loadUser } = useApi<User>(API.user.get, {});
+  const { data: user, query: loadUser } = useApi<User | null>(API.user.get, {});
 
   useEffect(() => {
     loadUser();

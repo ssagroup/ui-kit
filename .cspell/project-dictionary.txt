@@ -12,6 +12,9 @@ nivo
 catmullRom
 Serie
 multirow
+homescreen
+umd
+cjs
 btn
 fns
 xlg
@@ -23,6 +26,7 @@ uuidv4
 SENDERID
 unhover
 greylight
+jsdom
 Lorem
 ipsum
 dolor

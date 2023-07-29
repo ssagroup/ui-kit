@@ -8,4 +8,4 @@
 //
 // e.g. API_SOURCE_TYPE=./sources/firebase pnpm serve
 // or set it in the .env file.
-export * as API from './sources/mock';
+export * as API from './sources/firebase';

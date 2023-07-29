@@ -1,5 +1,5 @@
 import getFirebase from './initFirebase';
-import { Goal } from '@components/ListGoals/types';
+import { Goal } from '@ssa-ui-kit/widgets';
 
 export const goals = {
   async get() {

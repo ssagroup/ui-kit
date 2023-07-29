@@ -1,1 +1,0 @@
-export { MealNutrients } from './MealNutrients';

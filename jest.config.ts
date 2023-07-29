@@ -78,6 +78,34 @@ const config: JestConfigWithTsJest = {
     },
     {
       preset: 'ts-jest',
+      displayName: 'UI Kit Widgets',
+      testEnvironment: 'jsdom',
+      setupFilesAfterEnv: ['<rootDir>/packages/widgets/jest-setup.ts'],
+      transform: {
+        '^.+\\.(ts|tsx)$': [
+          'ts-jest',
+          {
+            diagnostics: false,
+            tsconfig: './packages/widgets/tsconfig.json',
+            babelConfig: './.babelrc.js',
+          },
+        ],
+      },
+      testMatch: [
+        '<rootDir>/packages/widgets/src/**/*.spec.ts',
+        '<rootDir>/packages/widgets/src/**/*.spec.tsx',
+      ],
+      moduleNameMapper: {
+        '^@(apis|components)/(.*)$': [
+          '<rootDir>/packages/widgets/src/$1/$2',
+          '<rootDir>/packages/widgets/src/$1/$2.ts',
+          '<rootDir>/packages/widgets/src/$1/$2.tsx',
+        ],
+      },
+      transformIgnorePatterns: ['/node_modules/'],
+    },
+    {
+      preset: 'ts-jest',
       displayName: 'Examples: Fitness Dashboard',
       testEnvironment: 'jsdom',
       setupFilesAfterEnv: [

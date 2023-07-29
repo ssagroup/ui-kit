@@ -1,5 +1,5 @@
 import getFirebase from './initFirebase';
-import { Workout } from '@components/UpcomingWorkouts/types';
+import { Workout } from '@ssa-ui-kit/widgets';
 
 export const workouts = {
   async get() {

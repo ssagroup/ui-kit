@@ -11,5 +11,10 @@
       "addWords": true
     }
   ],
-  "ignorePaths": ["pnpm-lock.yaml", "package.json"]
+  "ignorePaths": [
+    "pnpm-lock.yaml",
+    "package.json",
+    "**/{*,.*}/**/tsconfig.build.json",
+    "**/{*,.*}/**/tsconfig.json"
+  ]
 }

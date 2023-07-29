@@ -1,1 +1,0 @@
-export { HeartRate } from './HeartRate';
