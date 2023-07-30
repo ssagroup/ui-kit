@@ -14,7 +14,7 @@
     "test:utils": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Utils\"",
     "test:hooks": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Hooks\"",
     "test:widgets": "TZ='Europe/London' jest -i --no-cache --selectProjects \"UI Kit Widgets\"",
-    "test:fitness": "TZ='Europe/London' jest -i --no-cache --selectProjects \"Examples: Fitness Dashboard\"",
+    "test:fitness": "echo 'TODO'",
     "test:clearcache": "jest --clearCache",
     "sb:dev": "storybook dev -p 6001",
     "sb:build:root": "STORYBOOK_ENV=production storybook build",

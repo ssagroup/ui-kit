@@ -32,20 +32,22 @@ SSA UI Kit is a [monorepo](https://en.wikipedia.org/wiki/Monorepo) based on [`pN
 
 ## Project structure
 
-The project consists of 4 sub-projects:
-1. **Core** (`./packages/core/`)- The Core library.   
-2. **Utils** (`./packages/utils/`) - Utility functions used by the Core library.  
-3. **Hooks** (`./packages/hooks/`) - Hooks used by the Core library.  
-4. **Fitness Dashboard** (`./examples/fitness-dashboard`) - An example Dashboard and Widgets it's built with.
+The project consists of 5 sub-projects:
+1. **Core** ([`./packages/core/`](https://github.com/ssagroup/ui-kit/tree/main/packages/core))- The Core library.   
+2. **Utils** ([`./packages/utils/`](https://github.com/ssagroup/ui-kit/tree/main/packages/utils)) - Utility functions used by the Core library.  
+3. **Hooks** ([`./packages/hooks/`](https://github.com/ssagroup/ui-kit/tree/main/packages/hooks)) - Hooks used by the Core library.  
+4. **Widgets** ([`./packages/widgets`](https://github.com/ssagroup/ui-kit/tree/main/packages/widgets)) - Components built on top of the Core library.
+5. **Fitness Dashboard** ([`./examples/fitness-dashboard`](https://github.com/ssagroup/ui-kit/tree/main/examples/fitness-dashboard)) - An example Dashboard built on top of the Widgets and Core library.   
 
 ## Development
 
 See the `package.json` files for the available pNPM scripts:   
-`./package.json`,   
-`./packages/core/package.json`,   
-`./packages/hooks/package.json`,   
-`./packages/utils/package.json`,   
-`./examples/fitness-dashboard/package.json`.    
+[`./package.json`](https://github.com/ssagroup/ui-kit/blob/main/package.json),   
+[`./packages/core/package.json`](https://github.com/ssagroup/ui-kit/blob/main/packages/core/package.json),   
+[`./packages/hooks/package.json`](https://github.com/ssagroup/ui-kit/blob/main/packages/hooks/package.json),   
+[`./packages/utils/package.json`](https://github.com/ssagroup/ui-kit/blob/main/packages/utils/package.json),   
+[`./packages/widgets/package.json`](https://github.com/ssagroup/ui-kit/blob/main/packages/widgets/package.json),   
+[`./examples/fitness-dashboard/package.json`](https://github.com/ssagroup/ui-kit/blob/main/examples/fitness-dashboard/package.json).    
 
 <ins>All commands and scripts</ins> should be run from the project root.  
 
@@ -63,17 +65,17 @@ To run a script for a sub-project use the [`--filter`](https://pnpm.io/filtering
 ### Storybook
 
 We use [Storybook Composition](https://storybook.js.org/docs/react/sharing/storybook-composition) that is currently consists of 3 parts:  
-1. The root Storybook (has one `.mdx` welcome message and references to the other Storybooks).  
-2. The `Core` library Storybook.  
-3. The `Fitness Widgets` library Storybook.  
+1. The [root Storybook](https://github.com/ssagroup/ui-kit/tree/main/.storybook) (has one `.mdx` welcome message and references to the other Storybooks).  
+2. The [`Core` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/core/.storybook).  
+3. The [`Widgets` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/widgets/.storybook).  
 
 **To run the Storybook Composition in the development mode**:  
 ``` bash
 # Run the following commands in order in separate terminal tabs
 # 1. Core library Storybook
 > pnpm --filter ./packages/core sb:dev  
-# 2. Fitness Dashboard widgets Storybook
-> pnpm --filter ./examples/fitness-dashboard sb:dev
+# 2. Widgets library Storybook
+> pnpm --filter ./packages/widgets sb:dev
 # 3. The Root Storybook
 > pnpm sb:dev 
 ```
@@ -92,8 +94,8 @@ To run tests use one of the following commands:
 > pnpm test:utils
 # 4. Run Hooks library tests
 > pnpm test:hooks
-# 5. Run Fitness Dashboard tests
-> pnpm test:fitness
+# 5. Run Widgets library tests
+> pnpm test:widgets
 ```
 
 ### Fitness Dashboard
@@ -109,7 +111,7 @@ According to the [pNPM Workspace](https://pnpm.io/workspaces) feature, all the d
 
 To install/remove a **root** dependency use [this syntax](https://pnpm.io/pnpm-cli#-w---workspace-root): `pnpm add <package> -w` or `pnpm remove <package> -w`, e.g.   
 ``` bash
-# Adds a package to the pNPM workspace root
+# Adds a package to the pNPM workspace root (./package.json)
 > pnpm add @emotion/react -w
 # Removes a package from the pNPM workspace root
 > pnpm remove @emotion/react -w
@@ -122,7 +124,7 @@ To install/remove a **root** dependency use [this syntax](https://pnpm.io/pnpm-c
 To install/remove a dependency to/from a sub-project use this syntax (instead of the `-w` flag use the `--filter` flag): `pnpm add <package> --filter <sub-project>`, e.g.  
 
 ``` bash
-# Adds a dev package to the Core library
+# Adds a dev package to the Core library (./packages/core/package.json)
 > pnpm add @storybook/react --filter ./packages/core -D
 # Removes a dev package from the Core library
 > pnpm remove @storybook/react --filter ./packages/core -D
@@ -131,7 +133,7 @@ To install/remove a dependency to/from a sub-project use this syntax (instead of
 ### Building 
 
 Once you've made changes to a library, you have to make a build to let other sub-project see those changes.  
-For example, if you change something in the Utils library, you must build it first, then build the Core library. After that the changes will be available in the Fitness Dashboard sub-project:  
+For example, if you change something in the Utils library, you must build it first, then build the Core library, and Widgets Library. After that the changes will be available in the Fitness Dashboard sub-project:  
 
 
 ``` bash
@@ -140,6 +142,8 @@ For example, if you change something in the Utils library, you must build it fir
 > pnpm --filter ./packages/utils build
 # 2. Build the Core library
 > pnpm --filter ./packages/core build
+# 3. Build the Widgets library
+> pnpm --filter ./packages/widgets build
 # Now the changes are available in the Fitness Dashboard
 ```
 
