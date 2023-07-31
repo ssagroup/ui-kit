@@ -17,7 +17,7 @@ The project is built using the following tools and technologies.
 - Charts with [Nivo](https://nivo.rocks/)
 - [Floating UI](https://floating-ui.com/) for tooltips  
 - [Storybook](https://storybook.js.org/)
-- [Firebase](https://firebase.google.com/) Hosting and Firestore 
+- [Firebase](https://firebase.google.com/) Hosting, Storage and Firestore 
 - [pNPM](https://pnpm.io/) as package manager
 
 For testing and static code analysis:
