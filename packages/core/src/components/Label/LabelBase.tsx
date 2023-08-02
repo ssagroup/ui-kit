@@ -10,5 +10,5 @@ export const LabelBase = styled.label`
 
   color: ${({ theme }) => theme.colors.greyDarker};
 
-  margin: 0px 0px 6px 4px;
+  margin: 0 0 6px 4px;
 `;

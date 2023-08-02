@@ -37,8 +37,7 @@ export const Default: StoryObj<typeof Icon> = (args) => {
     <div
       css={css`
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-flow: row wrap;
         align-items: flex-start;
         padding-bottom: 54px;
         gap: 12px;

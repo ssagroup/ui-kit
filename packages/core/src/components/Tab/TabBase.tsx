@@ -16,12 +16,12 @@ export const TabBase = styled.button<Pick<ISmallTabProps, 'isActive'>>`
   cursor: pointer;
 
   &:first-of-type {
-    border-radius: 12px 0px 0px 12px;
+    border-radius: 12px 0 0 12px;
   }
 
   &:last-child {
-    border-radius: 0px 12px 12px 0px;
-    margin-right: 0px;
+    border-radius: 0 12px 12px 0;
+    margin-right: 0;
   }
 
   &:focus {

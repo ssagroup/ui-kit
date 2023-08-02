@@ -61,8 +61,7 @@ const Default = (Component) => (props) => {
           display: flex;
 
           grid-area: header;
-          grid-column-start: 2;
-          grid-column-end: -1;
+          grid-column: -1 / 2;
 
           align-items: center;
           justify-content: flex-end;

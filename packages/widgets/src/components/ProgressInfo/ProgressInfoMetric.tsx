@@ -51,14 +51,15 @@ const ProgressInfoMetric = ({
         textAnchor="middle"
         dominantBaseline="central"
         css={css`
-      font-size: 13px;
-      font-weight: 700;
-      fill: ${theme.colors.greyDarker60};
+          font-size: 13px;
+          font-weight: 700;
+          fill: ${theme.colors.greyDarker60};
 
-      ${theme.mediaQueries.md} {
-        font-size: 16px;
-        font-weight: 700;
-    `}>
+          ${theme.mediaQueries.md} {
+            font-size: 16px;
+            font-weight: 700;
+          }
+        `}>
         hrs
       </text>
     </Fragment>

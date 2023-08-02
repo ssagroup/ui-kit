@@ -18,20 +18,12 @@ export const CheckboxBase = styled(Label)`
     border-radius: 6px;
   }
 
-  input:focus + div {
-    box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
-  }
-
-  input:disabled + div {
-    background: ${({ theme }) => theme.colors.greyFocused};
-  }
-
   input + div {
     svg {
       z-index: 2;
     }
 
-    &:before {
+    &::before {
       content: '';
       position: absolute;
       box-sizing: border-box;
@@ -44,8 +36,16 @@ export const CheckboxBase = styled(Label)`
     }
   }
 
-  input:checked + div:before,
-  input:indeterminate + div:before {
+  input:focus + div {
+    box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
+  }
+
+  input:disabled + div {
+    background: ${({ theme }) => theme.colors.greyFocused};
+  }
+
+  input:checked + div::before,
+  input:indeterminate + div::before {
     background: linear-gradient(
       117.5deg,
       ${({ theme }) => theme.colors.greenLighter} 17.12%,
@@ -53,8 +53,12 @@ export const CheckboxBase = styled(Label)`
     );
   }
 
-  input:checked + div:hover:before,
-  input:indeterminate + div:hover:before {
+  input:not(:checked, :indeterminate) + div::before {
+    border: 1.5px solid ${({ theme }) => theme.colors.green};
+  }
+
+  input:checked + div:hover::before,
+  input:indeterminate + div:hover::before {
     background: linear-gradient(
       117.5deg,
       ${({ theme }) => theme.colors.greenLighter60} 17.12%,
@@ -62,11 +66,7 @@ export const CheckboxBase = styled(Label)`
     );
   }
 
-  input:not(:checked):not(:indeterminate) + div:before {
-    border: 1.5px solid ${({ theme }) => theme.colors.green};
-  }
-
-  input:not(:checked):not(:indeterminate) + div:hover:before {
+  input:not(:checked, :indeterminate) + div:hover::before {
     border: 1.5px solid ${({ theme }) => theme.colors.green60};
   }
 

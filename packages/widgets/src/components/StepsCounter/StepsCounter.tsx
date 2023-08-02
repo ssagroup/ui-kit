@@ -22,13 +22,13 @@ export const StepsCounter = ({ max, currentValue }: StepsCounterProps) => {
   return (
     <Card
       css={css`
-        box-shadow: 0px 10px 40px rgba(42, 48, 57, 0.08);
+        box-shadow: 0 10px 40px rgba(42, 48, 57, 0.08);
         border-radius: 20px;
       `}>
       <CardHeader
         icon={
           <ResponsiveImage
-            css={{ filter: `drop-shadow(0px 5px 5px ${theme.colors.grey})` }}
+            css={{ filter: `drop-shadow(0 5px 5px ${theme.colors.grey})` }}
             srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fsteps%2Fsteps_64.png?alt=media&token=22d59e48-da19-448a-98e3-25f396108243 64w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fsteps%2Fsteps_48.png?alt=media&token=7c66d777-ddad-416a-9f07-a89dd3167ca7 48w"
             sizes="(min-width: 1440px) 64px, 48px"
             src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fsteps%2Fsteps_48.png?alt=media&token=7c66d777-ddad-416a-9f07-a89dd3167ca7"

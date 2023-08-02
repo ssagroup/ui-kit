@@ -13,7 +13,7 @@ const SwitchBase = styled.button`
     `linear-gradient(117.5deg, ${theme.colors.greenLighter}, ${theme.colors.green});`};
   cursor: pointer;
 
-  &:before {
+  &::before {
     position: absolute;
     content: '';
     height: 14px;
@@ -36,6 +36,11 @@ const SwitchBase = styled.button`
     outline: 0;
   }
 
+  &:disabled {
+    background: ${({ theme }) => theme.colors.greyDisabled};
+    cursor: auto;
+  }
+
   &:not(:disabled):hover {
     box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
   }
@@ -45,17 +50,12 @@ const SwitchBase = styled.button`
     ${({ theme }) => outlineStyles(theme, 'greenLighter', '50px')}
   }
 
-  &:disabled {
-    background: ${({ theme }) => theme.colors.greyDisabled};
-    cursor: auto;
+  &[aria-checked='true']::before {
+    transform: translateX(0);
   }
 
-  &[aria-checked='true']:before {
-    transform: translatex(0px);
-  }
-
-  &[aria-checked='false']:before {
-    transform: translatex(-20px);
+  &[aria-checked='false']::before {
+    transform: translateX(-20px);
   }
 `;
 
