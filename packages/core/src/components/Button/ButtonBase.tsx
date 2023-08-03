@@ -5,7 +5,7 @@ export const ButtonBase = styled.button`
   align-items: center;
   position: relative;
   border: none;
-  padding: 0px 16px;
+  padding: 0 16px;
   font: inherit;
   cursor: pointer;
   outline: inherit;

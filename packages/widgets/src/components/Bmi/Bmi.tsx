@@ -65,7 +65,7 @@ export const Bmi = ({ height = 175, weight = 66 }: BmiProps) => {
 
       <Card
         css={css`
-          box-shadow: 0px 10px 40px rgba(29, 22, 23, 0.07);
+          box-shadow: 0 10px 40px rgba(29, 22, 23, 0.07);
           border-radius: 16px;
           padding-bottom: 40px;
         `}>

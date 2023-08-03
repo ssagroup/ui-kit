@@ -20,8 +20,6 @@ export const TextareaBase = styled.textarea`
   font-size: 0.875rem;
   line-height: 1rem;
 
-  border: ${({ theme }) => `1px solid ${theme.colors.grey};`};
-
   &::placeholder {
     color: ${({ theme }) => theme.colors.greyDarker60};
   }

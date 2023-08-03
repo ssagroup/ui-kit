@@ -16,7 +16,7 @@ export const FormHelperTextBase = styled.span<{
   font-weight: 400;
   font-size: 0.688rem;
 
-  margin: 6px 0px 0px 4px;
+  margin: 6px 0 0 4px;
 
   color: ${({ theme, status = 'basic' }) => theme.colors[statusColor[status]]};
 `;

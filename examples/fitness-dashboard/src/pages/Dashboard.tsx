@@ -77,6 +77,8 @@ const sectionActivity = css`
   display: grid;
   gap: 30px;
 
+  grid-template-columns: minmax(10px, auto);
+
   @container (max-width: 300px) {
     grid-template-columns: 1fr;
   }

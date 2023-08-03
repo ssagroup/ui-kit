@@ -16,7 +16,7 @@ export const Default: StoryObj<typeof ResponsiveImage> = () => {
         A simple wrapper over the{' '}
         <span
           css={(theme) => css`
-            font-family: 'monospace';
+            font-family: monospace;
             color: ${theme.colors.greyDarker60};
           `}>{`<img />`}</span>{' '}
         tag

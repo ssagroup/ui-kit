@@ -14,7 +14,7 @@ const cardShadow = (theme: Theme) => css`
 
   background: ${theme.colors.white};
   border-radius: 16px;
-  box-shadow: 0px 10px 40px rgba(42, 48, 57, 0.08);
+  box-shadow: 0 10px 40px rgba(42, 48, 57, 0.08);
 `;
 
 interface UserCardItemProps {
