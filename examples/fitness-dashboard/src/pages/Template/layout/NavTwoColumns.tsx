@@ -14,9 +14,9 @@ export const Layout = styled.div`
   grid-auto-rows: 60px auto;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    grid-template-columns: 100px 1fr 1fr 376px;
-    grid-template-areas: 'nav main main aside';
-    grid-template-rows: 100vh;
+    grid-template:
+      'nav main main aside' 100vh
+      / 100px 1fr 1fr 376px;
   }
 
   background: linear-gradient(
@@ -85,8 +85,7 @@ export const Nav = styled.section`
   display: flex;
 
   grid-area: header;
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column: 2 / 1;
 
   align-items: center;
 
@@ -95,7 +94,6 @@ export const Nav = styled.section`
 
   ${({ theme }) => theme.mediaQueries.lg} {
     grid-area: nav;
-    grid-row-start: main;
-    grid-row-end: main;
+    grid-row: main;
   }
 `;

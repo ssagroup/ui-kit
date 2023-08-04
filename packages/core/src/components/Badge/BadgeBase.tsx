@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const BadgeBase = styled.span`
-  font-family: 'Manrope';
+  font-family: Manrope, sans-serif;
   font-style: normal;
   font-weight: 500;
 

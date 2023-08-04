@@ -4,7 +4,7 @@ export const BmiPointer = styled.div<{ percentage: number }>`
   position: absolute;
 
   left: ${({ percentage }) => percentage}%;
-  top: 0px;
+  top: 0;
 
   width: 14px;
   height: 14px;

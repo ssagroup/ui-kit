@@ -19,8 +19,7 @@ export const DropdownToggleBase = styled.button<
   ${({ theme }) => focusOutline(theme)}
 
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
@@ -31,7 +30,7 @@ export const DropdownToggleBase = styled.button<
     isOpen ? colors?.[0] || 'initial' : 'initial'};
 
   width: auto;
-  padding: 8px 14px 8px 14px;
+  padding: 8px 14px;
 
   font: inherit;
   font-size: 13px;

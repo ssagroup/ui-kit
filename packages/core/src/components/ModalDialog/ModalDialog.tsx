@@ -6,16 +6,12 @@ const modalDialogWrapper = (theme: Theme, isOpen, noBackground) => css`
   display: ${isOpen ? 'flex' : 'none'};
 
   position: fixed;
+  inset: 0;
 
   justify-content: center;
   align-items: center;
 
   background-color: ${noBackground ? 'transparent' : theme.colors.grey20};
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 
   z-index: 1000;
 `;

@@ -22,7 +22,7 @@ export const Calories = ({ max, currentValue }: ICaloriesProps) => {
   return (
     <Card
       css={css`
-        box-shadow: 0px 10px 40px rgba(42, 48, 57, 0.08);
+        box-shadow: 0 10px 40px rgba(42, 48, 57, 0.08);
         border-radius: 20px;
       `}>
       <CardHeader

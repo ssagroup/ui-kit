@@ -6,8 +6,7 @@ import { inputStatus } from './styles';
 
 export const InputSuccess = styled.div`
   background: ${({ theme }) =>
-    `linear-gradient(68.38deg, ${theme.colors.greenLighter}, ${theme.colors.green});`}
-  }
+    `linear-gradient(68.38deg, ${theme.colors.greenLighter}, ${theme.colors.green});`};
 `;
 
 export const InputStatusSuccess = () => (

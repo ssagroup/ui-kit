@@ -18,7 +18,7 @@ export const LargeTabBase = styled.button<Pick<ILargeTabProps, 'isActive'>>`
   cursor: pointer;
 
   &:last-child {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   &:focus {

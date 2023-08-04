@@ -13,10 +13,10 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
 
   list-style: none;
 
-  margin: 4px 0 0 0;
+  margin: 4px 0 0;
   padding: 0;
 
-  background: #ffffff;
+  background: #fff;
   border-radius: 8px;
 
   overflow-x: hidden;
@@ -26,7 +26,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
 
   filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
-  -webkit-backdrop-filter: ${({ theme }) =>
+  backdrop-filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
 `;
 
