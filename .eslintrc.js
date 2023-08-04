@@ -32,6 +32,12 @@ module.exports = {
         ignore: ['css'],
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   ignorePatterns: [
     'node_modules',

@@ -50,7 +50,7 @@
     }
   },
   "scripts": {
-    "test": "TZ='Europe/London' jest -i --no-cache",
+    "test": "jest -i --no-cache",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
