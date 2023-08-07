@@ -15,13 +15,15 @@ describe('Hook: useApi', () => {
         balance: 100,
       },
     ];
-    const mockRequest = () => {
-      return Promise.resolve(mockRequestData);
-    };
-    const { result } = renderHook(() => useApi(mockRequest, []));
+    const { result } = renderHook(() =>
+      useApi(
+        jest.fn(() => Promise.resolve(mockRequestData)),
+        [],
+      ),
+    );
 
-    await act(() => {
-      result.current.query();
+    await act(async () => {
+      await result.current.query();
     });
 
     expect(result.current.data).toBe(mockRequestData);
