@@ -7,7 +7,20 @@ import type { JestConfigWithTsJest } from 'ts-jest';
 const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  coverageProvider: 'v8',
   coverageDirectory: '<rootDir>/coverage',
+  collectCoverageFrom: [
+    '**/*.{ts,tsx}',
+    '!**/*.spec.{ts,tsx}',
+    '!**/*.stories.{ts,tsx}',
+    '!**/*.d.{ts,tsx}',
+    '!**/.storybook/**',
+    '!**/global-setup.ts',
+    '!**/jest-setup.ts',
+    '!**/jest.config.ts',
+    '!./packages/**/dist/**',
+    '!**/node_modules/**',
+  ],
   verbose: true,
   globalSetup: '<rootDir>/global-setup.ts',
   projects: [
