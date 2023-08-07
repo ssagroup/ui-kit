@@ -19,15 +19,13 @@
     "directory": "packages/hooks"
   },
   "scripts": {
-    "build": "pnpm clearcache && webpack --mode=production --node-env=production && tsc -b",
-    "clearcache": "rm -f ./tsbuildcache",
+    "build": "webpack --mode=production --node-env=production && tsc -b",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },
-  "dependencies": {
-  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
     "@types/testing-library__jest-dom": "^5.14.6",
     "extend-expect": "^1.0.2",
     "terser-webpack-plugin": "^5.3.9",

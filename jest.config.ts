@@ -9,6 +9,7 @@ const config: JestConfigWithTsJest = {
   testEnvironment: 'jsdom',
   coverageDirectory: '<rootDir>/coverage',
   verbose: true,
+  globalSetup: '<rootDir>/global-setup.ts',
   projects: [
     // {
     //   preset: 'ts-jest',
