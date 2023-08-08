@@ -24,35 +24,35 @@ const config: JestConfigWithTsJest = {
   verbose: true,
   globalSetup: '<rootDir>/global-setup.ts',
   projects: [
-    // {
-    //   preset: 'ts-jest',
-    //   displayName: 'UI Kit Core',
-    //   testEnvironment: 'jsdom',
-    //   setupFilesAfterEnv: ['<rootDir>/packages/core/jest-setup.ts'],
-    //   transform: {
-    //     '^.+\\.(ts|tsx)$': [
-    //       'ts-jest',
-    //       {
-    //         diagnostics: false,
-    //         tsconfig: './packages/core/tsconfig.json',
-    //         // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
-    //         babelConfig: './.babelrc.js',
-    //       },
-    //     ],
-    //   },
-    //   testMatch: [
-    //     '<rootDir>/packages/core/src/**/*.spec.ts',
-    //     '<rootDir>/packages/core/src/**/*.spec.tsx',
-    //   ],
-    //   moduleNameMapper: {
-    //     '^@(components|themes|styles|types)/(.*)$': [
-    //       '<rootDir>/packages/core/src/$1/$2',
-    //       '<rootDir>/packages/core/src/$1/$2.ts',
-    //       '<rootDir>/packages/core/src/$1/$2.tsx',
-    //     ],
-    //   },
-    //   transformIgnorePatterns: ['/node_modules/'],
-    // },
+    {
+      preset: 'ts-jest',
+      displayName: 'UI Kit Core',
+      testEnvironment: 'jsdom',
+      setupFilesAfterEnv: ['<rootDir>/packages/core/jest-setup.ts'],
+      transform: {
+        '^.+\\.(ts|tsx)$': [
+          'ts-jest',
+          {
+            diagnostics: false,
+            tsconfig: './packages/core/tsconfig.json',
+            // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
+            babelConfig: './.babelrc.js',
+          },
+        ],
+      },
+      testMatch: [
+        '<rootDir>/packages/core/src/**/*.spec.ts',
+        '<rootDir>/packages/core/src/**/*.spec.tsx',
+      ],
+      moduleNameMapper: {
+        '^@(components|themes|styles|types)/(.*)$': [
+          '<rootDir>/packages/core/src/$1/$2',
+          '<rootDir>/packages/core/src/$1/$2.ts',
+          '<rootDir>/packages/core/src/$1/$2.tsx',
+        ],
+      },
+      transformIgnorePatterns: ['/node_modules/'],
+    },
     {
       displayName: 'UI Kit Utils',
       testEnvironment: 'jsdom',
