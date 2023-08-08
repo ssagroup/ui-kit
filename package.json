@@ -16,7 +16,7 @@
     "lint:styles": "stylelint \"**/*.tsx\"",
     "spellcheck": "cspell \"**/*.{tsx,ts,md}\" --show-suggestions --no-progress",
     "test": "jest -i --no-cache",
-    "test:core": "pnpm --filter ./packages/core test",
+    "test:core": "jest -i --no-cache --selectProjects \"UI Kit Core\"",
     "test:utils": "jest -i --no-cache --selectProjects \"UI Kit Utils\"",
     "test:hooks": "jest -i --no-cache --selectProjects \"UI Kit Hooks\"",
     "test:widgets": "jest -i --no-cache --selectProjects \"UI Kit Widgets\"",
