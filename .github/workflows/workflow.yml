@@ -50,6 +50,7 @@ jobs:
         run: pnpm install
 
   lint:
+    needs: cache-and-install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
