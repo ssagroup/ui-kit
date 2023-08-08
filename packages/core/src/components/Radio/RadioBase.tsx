@@ -7,6 +7,10 @@ export const RadioBase = styled(Label)`
   align-items: center;
   cursor: pointer;
 
+  &:has(input:disabled) {
+    cursor: default;
+  }
+
   input:focus + svg {
     filter: drop-shadow(
       ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`}

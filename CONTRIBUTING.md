@@ -30,6 +30,13 @@ SSA UI Kit is a [monorepo](https://en.wikipedia.org/wiki/Monorepo) based on [`pN
 > pnpm install --frozen-lockfile
 ```
 
+**3. Build projects located in ./packages/ directory**
+
+After installing the dependencies you have to build all the sub-projects to be able to work locally:  
+```bash
+pnpm build:all
+```
+
 ## Project structure
 
 The project consists of 5 sub-projects:
@@ -147,12 +154,17 @@ For example, if you change something in the Utils library, you must build it fir
 # Now the changes are available in the Fitness Dashboard
 ```
 
-
-### Configurations
-
-#### Typescript configuration 
-TODO
-
-#### Webpack configuration
-TODO
+The root `./package.json` contains shortcuts for `build` commands:
+```bash
+# Build all projects located in the ./packages/ directory
+> pnpm build:all
+# Build ./packages/utils project
+> pnpm build:utils
+# Build ./packages/hooks project
+> pnpm build:hooks
+# Build ./packages/core project
+> pnpm build:core
+# Build ./packages/widgets project
+> pnpm build:widgets
+```
 
