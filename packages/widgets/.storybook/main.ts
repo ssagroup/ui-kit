@@ -10,7 +10,7 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/addon-mdx-gfm', // cspell:disable-line
   ],
-  staticDirs: ['../public'],
+  // staticDirs: ['../public'],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
