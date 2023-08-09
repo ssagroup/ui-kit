@@ -119,15 +119,18 @@ jobs:
       - name: Building storybook...
         run: pnpm sb:build:root
 
-      - name: 'Uploading artifact (core)...'
+      - name: 'Uploading artifacts (build)...'
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: |
-            ./packages/core/dist
-            ./packages/hooks/dist
-            ./packages/utils/dist
-            ./packages/widgets/dist
+          path: ./packages/**/dist/
+          retention-days: 1
+
+      - name: 'Uploading artifacts (all)...'
+        uses: actions/upload-artifact@v3
+        with:
+          name: all
+          path: .
           retention-days: 1
       
       # - name: "Running unit tests: UI Kit Core"
@@ -149,8 +152,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - uses: actions/checkout@v3
+      #Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
 
       - name: Installing Node.js...
         uses: actions/setup-node@v3
@@ -178,7 +181,7 @@ jobs:
       - name: Downloading build...
         uses: actions/download-artifact@v3
         with:
-          name: build
+          name: all
               
       - name: "Running unit tests: UI Kit Core"
         run: pnpm test:core
