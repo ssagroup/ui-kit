@@ -119,6 +119,9 @@ jobs:
       - name: Building storybook...
         run: pnpm sb:build:root
 
+      - name: Zipping artifacts for deployment
+        run: zip codebase.zip ./* -r
+
       - name: 'Uploading artifacts (build)...'
         uses: actions/upload-artifact@v3
         with:
@@ -129,8 +132,8 @@ jobs:
       - name: 'Uploading artifacts (all)...'
         uses: actions/upload-artifact@v3
         with:
-          name: all
-          path: .
+          name: codebase
+          path: codebase.zip
           retention-days: 1
       
       # - name: "Running unit tests: UI Kit Core"
@@ -181,7 +184,10 @@ jobs:
       - name: Downloading build...
         uses: actions/download-artifact@v3
         with:
-          name: all
+          name: codebase
+
+      - name: unzipping artifacts for deployment...
+        run: unzip codebase.zip
               
       - name: "Running unit tests: UI Kit Core"
         run: pnpm test:core
