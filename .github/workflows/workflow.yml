@@ -119,11 +119,15 @@ jobs:
       - name: Building storybook...
         run: pnpm sb:build:root
 
-      - name: 'Uploading artifact...'
+      - name: 'Uploading artifact (core)...'
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: ./dist
+          path: |
+            ./packages/core/dist
+            ./packages/hooks/dist
+            ./packages/utils/dist
+            ./packages/widgets/dist
           retention-days: 1
       
       # - name: "Running unit tests: UI Kit Core"
