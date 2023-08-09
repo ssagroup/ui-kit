@@ -40,6 +40,7 @@ jobs:
 
       - uses: actions/cache@v3
         name: Configuring the pnpm cache...
+        id: cache-node-modules
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -59,16 +60,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: true
       
       - name: Getting pnpm store directory...
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Configuring the pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Linting codebase...
         run: pnpm lint
@@ -91,16 +95,19 @@ jobs:
         with:
           node-version: 18
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: true
-      
       - name: Getting pnpm store directory...
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
+      - uses: actions/cache@v3
+        name: Configuring the pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+        
       - name: Building packages...
         run: pnpm build:all
 
@@ -122,15 +129,18 @@ jobs:
         with:
           node-version: 18
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: true
-      
       - name: Getting pnpm store directory...
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
+      - uses: actions/cache@v3
+        name: Configuring the pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+              
       - name: Running unit tests
         run: pnpm test
