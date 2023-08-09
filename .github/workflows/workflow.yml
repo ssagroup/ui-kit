@@ -187,7 +187,7 @@ jobs:
           name: codebase
 
       - name: unzipping artifacts for deployment...
-        run: unzip codebase.zip
+        run: unzip -n codebase.zip
               
       - name: "Running unit tests: UI Kit Core"
         run: pnpm test:core
