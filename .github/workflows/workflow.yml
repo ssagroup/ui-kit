@@ -152,5 +152,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
               
-      - name: Running unit tests
-        run: pnpm test
+      - name: "Running unit tests: UI Kit Core"
+        run: pnpm test:core
+              
+      - name: "Running unit tests: UI Kit Utils"
+        run: pnpm test:utils
+    
+      - name: "Running unit tests: UI Kit Hooks"
+        run: pnpm test:hooks
+  
+      - name: "Running unit tests: UI Kit Widgets"
+        run: pnpm test:widgets
