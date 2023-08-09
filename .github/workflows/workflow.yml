@@ -80,7 +80,7 @@ jobs:
       - name: Linting styles...
         run: pnpm lint:styles
         
-  build-and-test:
+  build:
     needs: cache-and-install
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -118,7 +118,64 @@ jobs:
 
       - name: Building storybook...
         run: pnpm sb:build:root
+
+      - name: 'Uploading artifact...'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ./build
+          retention-days: 1
       
+      # - name: "Running unit tests: UI Kit Core"
+      #   run: pnpm test:core
+              
+      # - name: "Running unit tests: UI Kit Utils"
+      #   run: pnpm test:utils
+    
+      # - name: "Running unit tests: UI Kit Hooks"
+      #   run: pnpm test:hooks
+  
+      # - name: "Running unit tests: UI Kit Widgets"
+      #   run: pnpm test:widgets
+
+  test:
+    needs: build
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - uses: actions/checkout@v3
+
+      # - name: Installing Node.js...
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
+      
+      # - uses: pnpm/action-setup@v2
+      #   with:
+      #     version: 8
+      #     run_install: true
+
+      # - name: Getting pnpm store directory...
+      #   shell: bash
+      #   run: |
+      #     echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      # - uses: actions/cache@v3
+      #   name: Configuring the pnpm cache...
+      #   with:
+      #     path: ${{ env.STORE_PATH }}
+      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pnpm-store-
+
+      - name: Downloading build...
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+              
       - name: "Running unit tests: UI Kit Core"
         run: pnpm test:core
               
@@ -130,48 +187,3 @@ jobs:
   
       - name: "Running unit tests: UI Kit Widgets"
         run: pnpm test:widgets
-
-  # test:
-  #   needs: build
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v3
-
-  #     - name: Installing Node.js...
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18
-      
-  #     - uses: pnpm/action-setup@v2
-  #       with:
-  #         version: 8
-  #         run_install: true
-
-  #     - name: Getting pnpm store directory...
-  #       shell: bash
-  #       run: |
-  #         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-  #     - uses: actions/cache@v3
-  #       name: Configuring the pnpm cache...
-  #       with:
-  #         path: ${{ env.STORE_PATH }}
-  #         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-pnpm-store-
-              
-  #     - name: "Running unit tests: UI Kit Core"
-  #       run: pnpm test:core
-              
-  #     - name: "Running unit tests: UI Kit Utils"
-  #       run: pnpm test:utils
-    
-  #     - name: "Running unit tests: UI Kit Hooks"
-  #       run: pnpm test:hooks
-  
-  #     - name: "Running unit tests: UI Kit Widgets"
-  #       run: pnpm test:widgets
