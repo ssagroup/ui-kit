@@ -120,16 +120,9 @@ jobs:
         run: pnpm sb:build:root
 
       - name: Zipping artifacts for deployment
-        run: zip codebase.zip ./* -r -x "**/node_modules/*"
+        run: zip codebase.zip ./* -r -x "**/node_modules/*" -q
 
-      - name: 'Uploading artifacts (build)...'
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: ./packages/**/dist/
-          retention-days: 1
-
-      - name: 'Uploading artifacts (all)...'
+      - name: 'Uploading artifacts...'
         uses: actions/upload-artifact@v3
         with:
           name: codebase
@@ -200,3 +193,56 @@ jobs:
   
       - name: "Running unit tests: UI Kit Widgets"
         run: pnpm test:widgets
+
+  deploy:
+    needs: test
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      #Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Configuring the pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Downloading build...
+        uses: actions/download-artifact@v3
+        with:
+          name: codebase
+
+      - name: unzipping artifacts for deployment...
+        run: unzip -n codebase.zip
+              
+      - name: "Deploying: storybook root"
+        run: pnpm sb:deploy:root
+              
+      - name: "Deploying: storybook fitness"
+        run: pnpm sb:deploy:fitness
+    
+      - name: "Deploying: storybook core"
+        run: pnpm sb:deploy:core
+  
+      - name: "Deploying: fitness dashboard"
+        run: pnpm deploy:dashboard
