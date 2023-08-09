@@ -54,23 +54,14 @@ jobs:
       - name: Building packages...
         run: pnpm build:all
 
-      - name: Building storybook...
-        run: pnpm sb:build:root
+      # - name: Building storybook...
+      #   run: pnpm sb:build:root
 
-      - name: "Running unit tests: UI Kit Core"
-        run: pnpm test:core
-              
-      - name: "Running unit tests: UI Kit Utils"
-        run: pnpm test:utils
-    
-      - name: "Running unit tests: UI Kit Hooks"
-        run: pnpm test:hooks
-  
-      - name: "Running unit tests: UI Kit Widgets"
-        run: pnpm test:widgets
+      - name: "Running unit tests..."
+        run: pnpm test
 
       - name: "Deploying: storybook root"
-        run: pnpm sb:deploy:root -- --yes
+        run: pnpm sb:deploy:root --yes
               
       - name: "Deploying: storybook fitness"
         run: pnpm sb:deploy:fitness
