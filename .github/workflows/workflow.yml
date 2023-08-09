@@ -70,7 +70,7 @@ jobs:
         run: pnpm test:widgets
 
       - name: "Deploying: storybook root"
-        run: pnpm sb:deploy:root
+        run: pnpm sb:deploy:root -- --yes
               
       - name: "Deploying: storybook fitness"
         run: pnpm sb:deploy:fitness
