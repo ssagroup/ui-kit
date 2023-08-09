@@ -120,7 +120,7 @@ jobs:
         run: pnpm sb:build:root
 
       - name: Zipping artifacts for deployment
-        run: zip codebase.zip ./* -r
+        run: zip codebase.zip ./* -r -x "**/node_modules/*"
 
       - name: 'Uploading artifacts (build)...'
         uses: actions/upload-artifact@v3
