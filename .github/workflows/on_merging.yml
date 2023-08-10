@@ -1,0 +1,80 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout...
+        uses: actions/checkout@v3
+
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+      
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Restoring pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Installing dependencies...
+        run: pnpm install
+
+      - name: Linting codebase...
+        run: pnpm lint
+
+      - name: Linting styles...
+        run: pnpm lint:styles
+
+      - name: Building packages...
+        run: pnpm build:all
+
+      - name: "Running unit tests..."
+        run: pnpm test
+
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
+
+      - name: "Deploying: storybook root"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: pnpm sb:deploy:root --yes --token=${{ env.VERCEL_TOKEN }}
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+
+      - name: "Deploying: storybook fitness"
+        run: pnpm sb:deploy:fitness
+
+      - name: "Deploying: storybook core"
+        run: pnpm sb:deploy:core
+
+      - name: "Deploying: fitness dashboard"
+        run: pnpm deploy:dashboard

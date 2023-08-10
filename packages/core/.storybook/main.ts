@@ -8,9 +8,8 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm',
+    '@storybook/addon-mdx-gfm', //cspell:disable-line
   ],
-  // staticDirs: ['../public'],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
@@ -18,7 +17,8 @@ const config: StorybookConfig = {
   typescript: {
     check: false,
     checkOptions: {},
-    reactDocgen: 'react-docgen-typescript',
+    reactDocgen: 'react-docgen-typescript', //cspell:disable-line
+    //cspell:disable-next-line
     reactDocgenTypescriptOptions: {
       compilerOptions: {
         allowSyntheticDefaultImports: false,
@@ -35,7 +35,7 @@ const config: StorybookConfig = {
     return config;
   },
   docs: {
-    autodocs: true,
+    autodocs: true, //cspell:disable-line
   },
 };
 
