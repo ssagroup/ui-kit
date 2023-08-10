@@ -12,38 +12,83 @@ on:
   workflow_dispatch:
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout...
+        uses: actions/checkout@v3
+
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Configuring the pnpm cache...
+        id: cache-node-modules
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Installing dependencies...
+        run: pnpm install
+
+      - name: "Installing firebase tools..."
+        run: npm install -g firebase-tools
+      
+      - uses: actions/cache@v3
+        name: Configuring the Firebase tools cache...
+        id: firebase-tools-cache
+        with:
+          path: ~/.npm-global/lib/node_modules
+          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-tools-
+
   main:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout...
-      #   uses: actions/checkout@v3
+      - name: Checkout...
+        uses: actions/checkout@v3
 
-      # - name: Installing Node.js...
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
       # - uses: pnpm/action-setup@v2
       #   with:
       #     version: 8
       #     run_install: true
       
-      # - name: Getting pnpm store directory...
-      #   shell: bash
-      #   run: |
-      #     echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      # - uses: actions/cache@v3
-      #   name: Configuring the pnpm cache...
-      #   id: cache-node-modules
-      #   with:
-      #     path: ${{ env.STORE_PATH }}
-      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pnpm-store-
+      - uses: actions/cache@v3
+        name: Restoring pnpm cache...
+        # id: cache-node-modules
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
-      # - name: Installing dependencies...
-      #   run: pnpm install
+      - name: Installing dependencies...
+        run: pnpm install
 
       - name: Linting codebase...
         run: pnpm lint
@@ -51,14 +96,14 @@ jobs:
       - name: Linting styles...
         run: pnpm lint:styles
 
-      # - name: Building packages...
-      #   run: pnpm build:all
+      - name: Building packages...
+        run: pnpm build:all
 
       - name: "Running unit tests..."
         run: pnpm test
 
-      # - name: "Installing firebase tools..."
-      #   run: curl -sL https://firebase.tools | bash
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
 
   deploy-storybook-root:
     needs: main
@@ -75,6 +120,7 @@ jobs:
         with:
           version: 8
           run_install: true
+          
       - name: "Deploying: storybook root"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -85,7 +131,29 @@ jobs:
   deploy-storybook-fitness:
     needs: main
     runs-on: ubuntu-latest
-    steps:
+    steps: 
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Restoring pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      
+      - uses: actions/cache@v3
+        name: Restoring Firebase cache...
+        with:
+          path: ~/.npm-global/lib/node_modules
+          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-tools-
+
       - name: "Deploying: storybook fitness"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -95,6 +163,28 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps:
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Restoring pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      
+      - uses: actions/cache@v3
+        name: Restoring Firebase cache...
+        with:
+          path: ~/.npm-global/lib/node_modules
+          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-tools-
+
       - name: "Deploying: storybook core"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -104,6 +194,28 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps:
+      - name: Getting pnpm store directory...
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Restoring pnpm cache...
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      
+      - uses: actions/cache@v3
+        name: Restoring Firebase cache...
+        with:
+          path: ~/.npm-global/lib/node_modules
+          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-tools-
+
       - name: "Deploying: fitness dashboard"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
