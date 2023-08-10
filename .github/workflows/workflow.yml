@@ -45,24 +45,10 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
-      - name: Getting node modules cache directory...
-        shell: bash
-        run: |
-          echo "NODE_MODULES_CACHE_PATH=$(npm config get prefix)/node_modules" >> $GITHUB_ENV
-
       - name: "Installing firebase tools..."
         run: |
           npm install -g firebase-tools
           npm config get prefix
-      
-      - uses: actions/cache@v3
-        name: Configuring the Firebase tools cache...
-        id: firebase-tools-cache
-        with:
-          path: ${{ env.NODE_MODULES_CACHE_PATH }}
-          key: ${{ runner.os }}-npm-store-
-          restore-keys: |
-            ${{ runner.os }}-npm-store-
 
   main:
     # needs: setup
@@ -110,9 +96,6 @@ jobs:
       - name: "Running unit tests..."
         run: pnpm test
 
-      - name: "Installing firebase tools..."
-        run: curl -sL https://firebase.tools | bash
-
   deploy-storybook-root:
     needs: main
     runs-on: ubuntu-latest
@@ -129,14 +112,8 @@ jobs:
           version: 8
           run_install: true
 
-      - uses: actions/cache@v3
-        name: Restoring Firebase tools cache...
-        # id: firebase-tools-cache
-        with:
-          path: ${{ env.NODE_MODULES_CACHE_PATH }}
-          key: ${{ runner.os }}-npm-store-
-          restore-keys: |
-            ${{ runner.os }}-npm-store-
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
 
       - name: "Deploying: storybook root"
         env:
@@ -149,6 +126,11 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps: 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
       - name: Getting pnpm store directory...
         shell: bash
         run: |
@@ -162,14 +144,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      
-      - uses: actions/cache@v3
-        name: Restoring Firebase cache...
-        with:
-          path: ~/.npm-global/lib/node_modules
-          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-firebase-tools-
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
 
       - name: "Deploying: storybook fitness"
         env:
@@ -180,6 +156,11 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
       - name: Getting pnpm store directory...
         shell: bash
         run: |
@@ -193,14 +174,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      
-      - uses: actions/cache@v3
-        name: Restoring Firebase cache...
-        with:
-          path: ~/.npm-global/lib/node_modules
-          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-firebase-tools-
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
 
       - name: "Deploying: storybook core"
         env:
@@ -211,6 +186,11 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
       - name: Getting pnpm store directory...
         shell: bash
         run: |
@@ -224,14 +204,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      
-      - uses: actions/cache@v3
-        name: Restoring Firebase cache...
-        with:
-          path: ~/.npm-global/lib/node_modules
-          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-firebase-tools-
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
 
       - name: "Deploying: fitness dashboard"
         env:
