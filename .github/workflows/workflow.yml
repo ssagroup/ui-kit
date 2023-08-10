@@ -115,6 +115,9 @@ jobs:
       
       - name: Installing dependencies...
         run: pnpm install
+          
+      - name: Building packages...
+        run: pnpm build:all
 
       - name: "Installing firebase tools..."
         run: curl -sL https://firebase.tools | bash
@@ -155,6 +158,9 @@ jobs:
       
       - name: Installing dependencies...
         run: pnpm install
+          
+      - name: Building packages...
+        run: pnpm build:all
 
       - name: "Installing firebase tools..."
         run: curl -sL https://firebase.tools | bash
@@ -195,6 +201,9 @@ jobs:
       
       - name: Installing dependencies...
         run: pnpm install
+          
+      - name: Building packages...
+        run: pnpm build:all
 
       - name: "Installing firebase tools..."
         run: curl -sL https://firebase.tools | bash
