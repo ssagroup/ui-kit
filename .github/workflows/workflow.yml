@@ -57,26 +57,42 @@ jobs:
       - name: "Running unit tests..."
         run: pnpm test
 
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
+
+  deploy-storybook-root:
+    needs: main
+    runs-on: ubuntu-latest
+    steps:
       - name: "Deploying: storybook root"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: pnpm sb:deploy:root --yes --token=${{ env.VERCEL_TOKEN }}
-
-      - name: "Installing firebase tools..."
-        run: curl -sL https://firebase.tools | bash
               
+  deploy-storybook-fitness:
+    needs: main
+    runs-on: ubuntu-latest
+    steps:
       - name: "Deploying: storybook fitness"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: pnpm sb:deploy:fitness --token=${{ env.FIREBASE_TOKEN }}
     
+  deploy-storybook-core:
+    needs: main
+    runs-on: ubuntu-latest
+    steps:
       - name: "Deploying: storybook core"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: pnpm sb:deploy:core --token=${{ env.FIREBASE_TOKEN }}
   
+  deploy-fitness-dashboard:
+    needs: main
+    runs-on: ubuntu-latest
+    steps:
       - name: "Deploying: fitness dashboard"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
