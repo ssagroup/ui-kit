@@ -54,17 +54,15 @@ jobs:
         run: |
           npm install -g firebase-tools
           npm config get prefix
-          ll ${{ env.NODE_MODULES_CACHE_PATH }}
-          echo ${{ env.NODE_MODULES_CACHE_PATH }}
       
       - uses: actions/cache@v3
         name: Configuring the Firebase tools cache...
         id: firebase-tools-cache
         with:
-          path: ~/.npm-global/lib/node_modules
-          key: ${{ runner.os }}-firebase-tools-${{ hashFiles('**/package.json') }}
+          path: ${{ env.NODE_MODULES_CACHE_PATH }}
+          key: ${{ runner.os }}-npm-store-
           restore-keys: |
-            ${{ runner.os }}-firebase-tools-
+            ${{ runner.os }}-npm-store-
 
   main:
     # needs: setup
@@ -130,6 +128,15 @@ jobs:
         with:
           version: 8
           run_install: true
+
+      - uses: actions/cache@v3
+        name: Restoring Firebase tools cache...
+        # id: firebase-tools-cache
+        with:
+          path: ${{ env.NODE_MODULES_CACHE_PATH }}
+          key: ${{ runner.os }}-npm-store-
+          restore-keys: |
+            ${{ runner.os }}-npm-store-
 
       - name: "Deploying: storybook root"
         env:
