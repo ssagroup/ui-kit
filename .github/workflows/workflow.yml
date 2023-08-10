@@ -112,6 +112,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      
+      - name: Installing dependencies...
+        run: pnpm install
 
       - name: "Installing firebase tools..."
         run: curl -sL https://firebase.tools | bash
@@ -149,6 +152,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      
+      - name: Installing dependencies...
+        run: pnpm install
 
       - name: "Installing firebase tools..."
         run: curl -sL https://firebase.tools | bash
@@ -168,7 +174,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -186,6 +192,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      
+      - name: Installing dependencies...
+        run: pnpm install
 
       - name: "Installing firebase tools..."
         run: curl -sL https://firebase.tools | bash
