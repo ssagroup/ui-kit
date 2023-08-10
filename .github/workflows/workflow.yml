@@ -88,6 +88,13 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v3
+
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -118,6 +125,13 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -148,6 +162,13 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
+      - name: Installing Node.js...
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          
       - uses: pnpm/action-setup@v2
         with:
           version: 8
