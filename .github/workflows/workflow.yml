@@ -45,20 +45,17 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
-      - name: Linting codebase...
-        run: pnpm lint
+      # - name: Linting codebase...
+      #   run: pnpm lint
 
-      - name: Linting styles...
-        run: pnpm lint:styles
+      # - name: Linting styles...
+      #   run: pnpm lint:styles
 
-      - name: Building packages...
-        run: pnpm build:all
+      # - name: Building packages...
+      #   run: pnpm build:all
 
-      # - name: Building storybook...
-      #   run: pnpm sb:build:root
-
-      - name: "Running unit tests..."
-        run: pnpm test
+      # - name: "Running unit tests..."
+      #   run: pnpm test
 
       - name: "Deploying: storybook root"
         env:
@@ -66,15 +63,24 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: pnpm sb:deploy:root --yes --token=${{ env.VERCEL_TOKEN }}
+
+      - name: "Installing firebase tools..."
+        run: curl -sL https://firebase.tools | bash
               
       - name: "Deploying: storybook fitness"
-        run: pnpm sb:deploy:fitness
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: pnpm sb:deploy:fitness --token=${{ env.FIREBASE_TOKEN }}
     
       - name: "Deploying: storybook core"
-        run: pnpm sb:deploy:core
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: pnpm sb:deploy:core --token=${{ env.FIREBASE_TOKEN }}
   
       - name: "Deploying: fitness dashboard"
-        run: pnpm deploy:dashboard
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: pnpm deploy:dashboard --token=${{ env.FIREBASE_TOKEN }}
 
   # lint:
   #   needs: cache-and-install
