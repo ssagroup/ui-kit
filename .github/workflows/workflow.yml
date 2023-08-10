@@ -45,11 +45,17 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
+      - name: Getting node modules cache directory...
+        shell: bash
+        run: |
+          echo "NODE_MODULES_CACHE_PATH=$(npm config get prefix)/node_modules" >> $GITHUB_ENV
+
       - name: "Installing firebase tools..."
         run: |
           npm install -g firebase-tools
-          npm list -g
-          npm config ls -l
+          npm config get prefix
+          ll ${{ env.NODE_MODULES_CACHE_PATH }}
+          echo ${{ env.NODE_MODULES_CACHE_PATH }}
       
       - uses: actions/cache@v3
         name: Configuring the Firebase tools cache...
