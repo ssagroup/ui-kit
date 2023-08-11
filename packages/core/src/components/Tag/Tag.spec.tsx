@@ -48,7 +48,7 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.pink}`);
+    expect(tag).toHaveStyle(`background-color: ${theme.colors.pink20}`);
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.pink}`);
   });
 
@@ -57,7 +57,7 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.yellow}`);
+    expect(tag).toHaveStyle(`background-color: ${theme.colors.yellow20}`);
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.yellow}`);
   });
 
@@ -66,7 +66,7 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.green}`);
+    expect(tag).toHaveStyle(`background-color: ${theme.colors.green20}`);
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.green}`);
   });
 
@@ -75,7 +75,7 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.turquoise}`);
+    expect(tag).toHaveStyle(`background-color: ${theme.colors.turquoise20}`);
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.turquoise}`);
   });
 
@@ -84,7 +84,9 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.purple}`);
+    expect(tag).toHaveStyle(
+      `background-color: ${theme.colors.purpleLighter20}`,
+    );
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.purple}`);
   });
 
@@ -93,7 +95,7 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.blueLight}`);
+    expect(tag).toHaveStyle(`background-color: ${theme.colors.blueLight20}`);
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.blueLight}`);
   });
 
@@ -102,7 +104,7 @@ describe('tag', () => {
 
     const tag = screen.getByText(/tag/i);
 
-    expect(tag).toHaveStyle(`background-color: ${theme.colors.blue}`);
+    expect(tag).toHaveStyle(`background-color: ${theme.colors.blue20}`);
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.blue}`);
   });
 });
