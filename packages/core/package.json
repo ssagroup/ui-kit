@@ -18,6 +18,14 @@
     "url": "https://github.com/ssagroup/ui-kit.git",
     "directory": "packages/core"
   },
+  "devDependencies": {
+    "@emotion/jest": "^11.11.0",
+    "@nivo/line": "0.80.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/testing-library__jest-dom": "^5.14.6",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.85.0"
+  },
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
@@ -32,25 +40,6 @@
     "react-hook-form": "^7.43.8",
     "scheduler": "^0.23.0",
     "uuid": "^9.0.0"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "./jest-setup.ts"
-    ],
-    "transform": {
-      "^.+\\.(j|t)sx?$": "babel-jest"
-    },
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/components/Icon/icons/",
-      "<rootDir>/dist/"
-    ],
-    "moduleNameMapper": {
-      "^@components(.*)$": "<rootDir>/src/components$1",
-      "^@themes(.*)$": "<rootDir>/src/themes$1",
-      "^@styles/(.*)$": "<rootDir>/src/styles/$1",
-      "^@types/(.*)$": "<rootDir>/src/types/$1"
-    }
   },
   "scripts": {
     "test": "jest -i --no-cache",
@@ -67,13 +56,6 @@
     "not dead",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "@emotion/jest": "^11.11.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
-  },
   "peerDependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.0",

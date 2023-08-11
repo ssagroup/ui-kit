@@ -33,7 +33,6 @@ const config: JestConfigWithTsJest = {
         '^.+\\.(ts|tsx)$': [
           'ts-jest',
           {
-            diagnostics: false,
             tsconfig: './packages/core/tsconfig.json',
             // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
             babelConfig: './.babelrc.js',
@@ -99,7 +98,6 @@ const config: JestConfigWithTsJest = {
         '^.+\\.(ts|tsx)$': [
           'ts-jest',
           {
-            diagnostics: false,
             tsconfig: './packages/widgets/tsconfig.json',
             babelConfig: './.babelrc.js',
           },
@@ -129,7 +127,6 @@ const config: JestConfigWithTsJest = {
         '^.+\\.(ts|tsx)$': [
           'ts-jest',
           {
-            diagnostics: false,
             tsconfig: './examples/fitness-dashboard/tsconfig.json',
             babelConfig: './.babelrc.js',
           },
