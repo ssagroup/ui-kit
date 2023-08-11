@@ -7,7 +7,7 @@ import {
   purple,
   turquoise,
   yellow,
-} from '@styles/global';
+} from './styles';
 
 import {
   pinkBorder,
