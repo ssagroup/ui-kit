@@ -35,7 +35,9 @@ describe('Tooltip', () => {
   beforeEach(() => {
     const getComputedStyle = window.getComputedStyle;
     jest.spyOn(window, 'getComputedStyle').mockImplementation((...args) => {
-      const result = getComputedStyle(...args);
+      const result = getComputedStyle(
+        ...(args as [Element, string | null | undefined]),
+      );
 
       const el = args[0];
       if (el instanceof SVGSVGElement) {

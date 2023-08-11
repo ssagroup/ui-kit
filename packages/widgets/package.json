@@ -33,23 +33,6 @@
     "loose-envify": "^1.4.0",
     "scheduler": "^0.23.0"
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "./jest-setup.ts"
-    ],
-    "transform": {
-      "^.+\\.(j|t)sx?$": "babel-jest"
-    },
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/apis/sources/mock/"
-    ],
-    "moduleNameMapper": {
-      "^@components(.*)$": "<rootDir>/src/components$1",
-      "^@apis(.*)$": "<rootDir>/src/apis$1",
-      "^@hooks(.*)$": "<rootDir>/src/hooks$1"
-    }
-  },
   "scripts": {
     "test": "jest -i --no-cache",
     "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json",
