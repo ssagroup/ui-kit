@@ -59,6 +59,9 @@ const baseConfig = {
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
   },
+  stats: {
+    errorDetails: true,
+  },
 };
 
 module.exports = ({
