@@ -5,6 +5,6 @@ export const config: Partial<CustomProjectConfig> = {
     storybookUrl: './storybook-static',
   },
   // @cspell:disable-next-line
-  lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',
+  lostPixelProjectId: 'clldrwk2t4dkena0e4nu2rikp',
   apiKey: process.env.LOST_PIXEL_API_KEY,
 };
