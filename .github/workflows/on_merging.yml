@@ -51,10 +51,10 @@ jobs:
       - name: Building packages...
         run: pnpm build:all
 
-      - name: "Running unit tests..."
+      - name: Running unit tests...
         run: pnpm test
 
-      - name: "Installing firebase tools..."
+      - name: Installing firebase tools...
         run: curl -sL https://firebase.tools | bash
 
       - name: "Deploying: storybook root"

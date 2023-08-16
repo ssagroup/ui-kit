@@ -51,5 +51,16 @@ jobs:
       - name: Building packages...
         run: pnpm build:all
 
-      - name: "Running unit tests..."
+      - name: Running unit tests...
         run: pnpm test
+
+      - name: "Building storybook: Core"
+        run: pnpm sb:build:core
+
+      - name: "Building storybook: Widgets"
+        run: pnpm sb:build:widgets
+
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.4.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
