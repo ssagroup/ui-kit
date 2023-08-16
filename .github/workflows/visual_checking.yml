@@ -1,9 +1,9 @@
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   pull_request:
+    branches: [ "main" ]
+  push:
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -12,6 +12,19 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - {
+              package: "packages/core",
+              name: "Building storybook: Core",
+              command: "pnpm sb:build:core",
+            }
+          - {
+              package: "packages/widgets",
+              name: "Building storybook: Widgets",
+              command: "pnpm sb:build:widgets",
+            }
     steps:
       - name: Checkout...
         uses: actions/checkout@v3
@@ -42,14 +55,13 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
-      - name: Linting codebase...
-        run: pnpm lint
+      - name: ${{ matrix.config.name }}
+        run: ${{ matrix.config.command }}
+        env:
+          CI: true
 
-      - name: Linting styles...
-        run: pnpm lint:styles
-
-      - name: Building packages...
-        run: pnpm build:all
-
-      - name: Running unit tests...
-        run: pnpm test
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.4.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ${{ matrix.config.package }}
