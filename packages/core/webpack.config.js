@@ -5,11 +5,11 @@ const createConfig = require('../../webpack.packages.base');
 module.exports = () => {
   const currentConfig = createConfig({
     libraryName: 'SSACore',
+    outputPath: path.resolve(__dirname, 'dist'),
     alias: {
       '@components': path.resolve(__dirname, './src/components'),
       '@themes': path.resolve(__dirname, './src/themes'),
       '@styles': path.resolve(__dirname, './src/styles'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
     },
     externals: {
       react: 'react',

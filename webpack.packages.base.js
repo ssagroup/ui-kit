@@ -1,17 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const R = require('ramda');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-const OUTPUT_PATH = path.resolve(__dirname, 'dist');
-
 const baseConfig = {
   entry: ['./src/index.ts'],
   output: {
-    path: OUTPUT_PATH,
     filename: 'index.js',
     // https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder
     clean: true,
@@ -64,17 +60,24 @@ const baseConfig = {
   },
 };
 
+const isNotNilOrEmpty = R.compose(R.not, R.either(R.isNil, R.isEmpty));
+
 module.exports = ({
   libraryName,
-  externals = {},
+  outputPath,
+  externals = null,
   alias = {},
   extraConfig = {},
 }) => {
-  const config = R.compose(
+  let config = R.compose(
     R.mergeLeft(extraConfig),
+    R.when(
+      R.always(isNotNilOrEmpty(externals)),
+      R.assoc('externals', externals),
+    ),
     R.assoc('mode', isProduction ? 'production' : 'development'),
-    R.assoc('externals', externals),
     R.assocPath(['resolve', 'alias'], alias),
+    R.assocPath(['output', 'path'], outputPath),
     R.assocPath(['output', 'library', 'name'], libraryName),
   )(baseConfig);
 
