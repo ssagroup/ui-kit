@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  main:
+  visual_checking:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,6 +54,9 @@ jobs:
 
       - name: Installing dependencies...
         run: pnpm install
+
+      - name: Building packages...
+        run: pnpm build:all
 
       - name: ${{ matrix.config.name }}
         run: ${{ matrix.config.command }}
