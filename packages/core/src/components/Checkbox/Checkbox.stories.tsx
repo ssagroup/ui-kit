@@ -91,4 +91,3 @@ export const AllStates = () => (
     ))}
   </Fragment>
 );
-AllStates.storyName = 'All States';

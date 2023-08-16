@@ -95,10 +95,10 @@ export const Large = { args: { size: 'large' } };
 
 export const Block = { args: { size: 'large', block: true } };
 
-export const startIcon = {
+export const StartIcon = {
   args: { startIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
 };
 
-export const endIcon = {
+export const EndIcon = {
   args: { endIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
 };

@@ -164,7 +164,6 @@ Vertical.args = {
   percentage: 30,
   color: 'blue',
 };
-Vertical.storyName = 'Vertical';
 
 export const Horizontal: StoryObj = (args) => {
   return (
@@ -231,4 +230,3 @@ Horizontal.args = {
   percentage: 80,
   color: 'blue',
 };
-Horizontal.storyName = 'Horizontal';
