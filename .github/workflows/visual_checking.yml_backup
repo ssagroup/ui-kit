@@ -58,19 +58,27 @@ jobs:
       - name: Building packages...
         run: pnpm build:all
 
-      - name: ${{ matrix.config.name }}
-        run: ${{ matrix.config.command }}
+      - name: "Building storybook: Core"
+        run: pnpm sb:build:core
         env:
           CI: true
-
-      - name: List of storybook static
-        run: ls ./packages/widgets/storybook-static/
 
       - name: Running visual tests...
         uses: lost-pixel/lost-pixel@v3.4.0
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          LOST_PIXEL_CONFIG_DIR: ${{ matrix.config.package }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/core
+
+      - name: "Building storybook: Widgets"
+        run: pnpm sb:build:widgets
+        env:
+          CI: true
+
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.4.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
 
   finalize:
     needs: [visual_checking]
