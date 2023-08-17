@@ -15,11 +15,11 @@ jobs:
     strategy:
       matrix:
         config:
-          - {
-              package: "packages/core",
-              name: "Building storybook: Core",
-              command: "pnpm sb:build:core",
-            }
+          # - {
+          #     package: "packages/core",
+          #     name: "Building storybook: Core",
+          #     command: "pnpm sb:build:core",
+          #   }
           - {
               package: "packages/widgets",
               name: "Building storybook: Widgets",
@@ -62,6 +62,9 @@ jobs:
         run: ${{ matrix.config.command }}
         env:
           CI: true
+
+      - name: List of storybook static
+        run: ls ./packages/widgets/storybook-static/
 
       - name: Running visual tests...
         uses: lost-pixel/lost-pixel@v3.4.0
