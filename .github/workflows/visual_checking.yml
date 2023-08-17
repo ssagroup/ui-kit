@@ -16,12 +16,12 @@ jobs:
       matrix:
         config:
           # - {
-          #     package: "packages/core",
+          #     package: "./packages/core",
           #     name: "Building storybook: Core",
           #     command: "pnpm sb:build:core",
           #   }
           - {
-              package: "packages/widgets",
+              package: "./packages/widgets",
               name: "Building storybook: Widgets",
               command: "pnpm sb:build:widgets",
             }
@@ -75,20 +75,6 @@ jobs:
   finalize:
     needs: [visual_checking]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        config:
-          # - {
-          #     package: "packages/core",
-          #     name: "Building storybook: Core",
-          #     command: "pnpm sb:build:core",
-          #   }
-          - {
-            package: "packages/widgets",
-            name: "Building storybook: Widgets",
-            command: "pnpm sb:build:widgets",
-          }
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -97,6 +83,6 @@ jobs:
         uses: lost-pixel/lost-pixel@v3.3.0
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          LOST_PIXEL_CONFIG_DIR: ${{ matrix.config.package }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
         with:
           FINALIZE: true

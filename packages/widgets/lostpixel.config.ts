@@ -2,7 +2,7 @@ import { CustomProjectConfig } from 'lost-pixel';
 
 export const config: Partial<CustomProjectConfig> = {
   storybookShots: {
-    storybookUrl: './storybook-static',
+    storybookUrl: './packages/widgets/storybook-static',
   },
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',
