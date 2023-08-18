@@ -80,6 +80,10 @@ export default {
 
 export const Default = {};
 
+export const Secondary = { args: { variant: 'secondary' } };
+
+export const Tertiary = { args: { variant: 'tertiary' } };
+
 export const Small = {
   args: {
     size: 'small',
@@ -101,4 +105,12 @@ export const StartIcon = {
 
 export const EndIcon = {
   args: { endIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
+};
+
+export const Focused = {
+  parameters: {
+    pseudo: {
+      focus: true,
+    },
+  },
 };

@@ -201,3 +201,19 @@ export const MultilineDisabled: StoryObj<typeof TextField> = () => {
   );
 };
 MultilineDisabled.args = {};
+
+export const Focused: StoryObj<typeof TextField> = (args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <TextField {...args} register={register} />;
+};
+Focused.args = {
+  ...Basic.args,
+  label: 'Focused field',
+};
+
+Focused.parameters = {
+  pseudo: {
+    focus: true,
+  },
+};

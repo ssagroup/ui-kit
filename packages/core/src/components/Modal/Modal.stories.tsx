@@ -70,3 +70,28 @@ export const Custom: StoryObj<typeof Modal> = () => (
   </Modal>
 );
 Custom.args = {};
+
+export const Opened: StoryObj<typeof Modal> = () => (
+  <Modal isOpen>
+    <ModalOpenButton>
+      <Button size="small" text="Open modal" />
+    </ModalOpenButton>
+    <ModalContent noBackground={true} aria-label="label">
+      <div>
+        <Typography variant="h3" gutter={true}>
+          Hello
+        </Typography>
+
+        <Typography variant="body1" gutter={true}>
+          lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor,
+          nisl eget
+        </Typography>
+
+        <ModalDismissButton>
+          <Button size="small" text="close" />
+        </ModalDismissButton>
+      </div>
+    </ModalContent>
+  </Modal>
+);
+Opened.args = {};

@@ -17,7 +17,7 @@ export default {
   decorators: [TabBarDecorator],
 } as Meta<typeof TabBar>;
 
-export const WeekTabBarStory: StoryObj<typeof LargeTab> = (args) => (
+const TabBarOutput = ({ args }: { args: typeof TabBar }) => (
   <TabBar {...args}>
     <LargeTab
       tabId="monday"
@@ -112,4 +112,23 @@ export const WeekTabBarStory: StoryObj<typeof LargeTab> = (args) => (
     />
   </TabBar>
 );
+
+export const WeekTabBarStory: StoryObj<typeof LargeTab> = (args) => (
+  <TabBarOutput args={args} />
+);
 WeekTabBarStory.storyName = 'Week Tab Bar';
+
+export const WeekTabBarStoryWithActiveBar: StoryObj<typeof LargeTab> = (
+  args,
+) => <TabBarOutput args={args} />;
+WeekTabBarStoryWithActiveBar.storyName = 'Week Tab Bar (+Active Tab)';
+WeekTabBarStoryWithActiveBar.args = {
+  selectedTabId: 'wednesday',
+  renderContent: () => (
+    <TabContents
+      id="wednesday-panel"
+      labelledBy="wednesday"
+      text="Wednesday contents"
+    />
+  ),
+};

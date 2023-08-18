@@ -12,4 +12,5 @@ export interface Colors {
 
 export interface ColorPickerProps {
   onChange: Dispatch<SetStateAction<string>>;
+  initColor?: keyof Colors;
 }

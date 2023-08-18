@@ -15,6 +15,16 @@ const reactRouterDecorator = (Story) => {
   );
 };
 
+const Items = [
+  { path: 'stats', iconName: 'stats' },
+  { path: 'calendar', iconName: 'calendar' },
+  { path: 'trainings', iconName: 'trainings' },
+  { path: 'measurements', iconName: 'measurements' },
+  { path: 'diet', iconName: 'diet' },
+  { path: 'notification', iconName: 'notification' },
+  { path: 'settings', iconName: 'settings' },
+];
+
 export default {
   title: 'Widgets/NavBar',
   component: NavBar,
@@ -39,15 +49,7 @@ export default {
     ),
   ],
   args: {
-    items: [
-      { path: 'stats', iconName: 'stats' },
-      { path: 'calendar', iconName: 'calendar' },
-      { path: 'trainings', iconName: 'trainings' },
-      { path: 'measurements', iconName: 'measurements' },
-      { path: 'diet', iconName: 'diet' },
-      { path: 'notification', iconName: 'notification' },
-      { path: 'settings', iconName: 'settings' },
-    ],
+    items: Items,
   },
 } as Meta<typeof NavBar>;
 

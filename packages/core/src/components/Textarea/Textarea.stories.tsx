@@ -39,3 +39,18 @@ Basic.args = {
   },
 };
 Basic.storyName = 'Textarea';
+
+export const Focused: StoryObj<typeof Textarea> = (args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+Focused.args = {
+  ...Basic.args,
+};
+
+Focused.parameters = {
+  pseudo: {
+    focus: true,
+  },
+};

@@ -22,8 +22,8 @@ export const mapColors: Colors = {
   purple,
 };
 
-const ColorPicker = ({ onChange }: ColorPickerProps) => {
-  const [activeColor, setActiveColor] = useState('');
+const ColorPicker = ({ onChange, initColor }: ColorPickerProps) => {
+  const [activeColor, setActiveColor] = useState(initColor || '');
 
   const handleColorChange = (color: string) => {
     onChange(color);

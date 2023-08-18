@@ -18,6 +18,7 @@ export interface ITooltipProps {
   size?: 'small' | 'medium' | 'large';
   hasArrow?: boolean;
   arrowProps?: ITooltipArrowProps;
+  isOpen?: boolean;
 }
 
 export type UseTooltipArgs = Omit<ITooltipProps, 'children'>;

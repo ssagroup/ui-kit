@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Meta, StoryObj } from '@storybook/react';
 import TabBar from '@components/TabBar';
 import Tab from '@components/Tab';
@@ -17,7 +18,9 @@ export default {
   decorators: [TabBarDecorator],
 } as Meta<typeof TabBar>;
 
-export const TimePeriodTabBarStory: StoryObj<typeof Tab> = (args) => (
+const TabBarOutput = ({ args }: {
+  args: typeof TabBar;
+}) => (
   <TabBar {...args}>
     <Tab
       tabId="year"
@@ -56,5 +59,24 @@ export const TimePeriodTabBarStory: StoryObj<typeof Tab> = (args) => (
       )}
     />
   </TabBar>
+)
+
+export const TimePeriodTabBarStory: StoryObj<typeof Tab> = (args) => (
+  <TabBarOutput args={args} />
 );
 TimePeriodTabBarStory.storyName = 'Time Period Tab Bar';
+
+export const TimePeriodTabBarStoryWithActiveBar: StoryObj<typeof Tab> = (
+  args,
+) => <TabBarOutput args={args} />;
+TimePeriodTabBarStoryWithActiveBar.storyName = 'Time Period Tab Bar (+Active Tab)';
+TimePeriodTabBarStoryWithActiveBar.args = {
+  selectedTabId: 'month',
+  renderContent: () => (
+    <TabContents
+      id="month-panel"
+      labelledBy="month"
+      text="Month contents"
+    />
+  )
+}

@@ -132,3 +132,27 @@ NoArrow.args = {
   placement: 'left',
 };
 NoArrow.storyName = 'No arrow';
+
+export const Opened: StoryObj<typeof Tooltip> = (args) => {
+  return (
+    <Tooltip {...args}>
+      <TooltipTrigger>
+        <Button size="medium" text="Hover over me!" />
+      </TooltipTrigger>
+      <TooltipContent>Tooltip</TooltipContent>
+    </Tooltip>
+  );
+};
+
+Opened.args = {
+  enableClick: false,
+  enableHover: true,
+  size: 'large',
+  isOpen: true,
+};
+Opened.parameters = {
+  pseudo: {
+    hover: true,
+    rootSelector: 'body',
+  },
+};
