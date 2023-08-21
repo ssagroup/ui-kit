@@ -60,7 +60,7 @@ jobs:
           CI: true
 
       - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@v3.4.0
+        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/core
@@ -71,7 +71,7 @@ jobs:
           CI: true
 
       - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@v3.4.0
+        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lost Pixel Finalize
-        uses: lost-pixel/lost-pixel@v3.4.0
+        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
