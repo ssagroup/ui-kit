@@ -7,7 +7,7 @@ export const config: Partial<CustomProjectConfig> & {
 } = {
   storybookShots: {
     storybookUrl: './packages/widgets/storybook-static',
-    breakpoints: [1024, 1440],
+    breakpoints: [390, 900, 1440, 1920],
   },
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',
