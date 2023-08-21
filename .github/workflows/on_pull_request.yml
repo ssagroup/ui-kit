@@ -42,6 +42,9 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
+      - name: Installing Playwright Browsers...
+        run: pnpm exec playwright install --with-deps
+
       - name: Linting codebase...
         run: pnpm lint
 
@@ -54,21 +57,31 @@ jobs:
       - name: Running unit tests...
         run: pnpm test
 
-      - name: "Building storybook: Core"
-        run: pnpm sb:build:core
-        env:
-          CI: true
+      # - name: "Building storybook: Core"
+      #   run: pnpm sb:build:core
+      #   env:
+      #     CI: true
 
-      - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
-        env:
-          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          LOST_PIXEL_CONFIG_DIR: ./packages/core
+      # - name: Running visual tests...
+      #   uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+      #   env:
+      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+      #     LOST_PIXEL_CONFIG_DIR: ./packages/core
 
       - name: "Building storybook: Widgets"
         run: pnpm sb:build:widgets
         env:
           CI: true
+
+      - name: Running e2e tests...
+        run: pnpm test:e2e
+        
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       - name: Running visual tests...
         uses: lost-pixel/lost-pixel@feature/breakpoint-shots

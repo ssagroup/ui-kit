@@ -32,8 +32,10 @@ jsdom
 ligula
 lobortis
 Lorem
+lostpixel
 Mauris
 metus
+msedge
 multirow
 neque
 nisl
@@ -48,9 +50,11 @@ Setted
 ssa
 ssagroup
 stylelint
+swp
 suscipit
 testid
 translatex
+tsbuildcache
 umd
 unhover
 uuidv4

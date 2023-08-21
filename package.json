@@ -22,6 +22,8 @@
     "test:widgets": "jest -i --no-cache --selectProjects \"UI Kit Widgets\"",
     "test:fitness": "echo 'TODO'",
     "test:clearcache": "jest --clearCache",
+    "test:e2e": "cd -w && pnpm exec playwright test && cd ..",
+    "test:e2e:ui": "cd -w && pnpm exec playwright test --ui && cd ..",
     "sb:dev": "storybook dev -p 6001",
     "sb:utils": "pnpm --filter ./packages/utils sb:dev",
     "sb:hooks": "pnpm --filter ./packages/hooks sb:dev",

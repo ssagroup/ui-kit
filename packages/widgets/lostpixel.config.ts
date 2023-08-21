@@ -9,6 +9,9 @@ export const config: Partial<CustomProjectConfig> & {
     storybookUrl: './packages/widgets/storybook-static',
     breakpoints: [390, 900, 1440, 1920],
   },
+  customShots: {
+    currentShotsPath: './lost-pixel',
+  },
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',
   apiKey: process.env.LOST_PIXEL_API_KEY,

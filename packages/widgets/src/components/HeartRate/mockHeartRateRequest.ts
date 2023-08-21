@@ -4,10 +4,12 @@ const BPMs = [
   65, 67, 57, 61,
 ];
 
+const DATE_NOW_MOCKED = 1692626621701;
+
 export const heartRateData = {
   id: 'heart-rate',
   data: BPMs.map((bpm, index) => ({
-    x: Date.now() - ONE_HOUR_MS * (BPMs.length - index - 1),
+    x: DATE_NOW_MOCKED - ONE_HOUR_MS * (BPMs.length - index - 1),
     y: bpm,
   })),
 };

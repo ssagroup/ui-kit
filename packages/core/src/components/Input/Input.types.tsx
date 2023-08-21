@@ -9,6 +9,7 @@ export interface InputProps extends Partial<Pick<UseFormReturn, 'register'>> {
   validationSchema?: Record<string, unknown>;
   disabled?: boolean;
   append?: React.ReactElement;
+  label?: string;
 }
 
 export interface InputStatusColors {
