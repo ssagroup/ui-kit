@@ -12,4 +12,6 @@ export const config: Partial<CustomProjectConfig> & {
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',
   apiKey: process.env.LOST_PIXEL_API_KEY,
+  shotConcurrency: 10,
+  compareConcurrency: 20,
 };
