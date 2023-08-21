@@ -43,7 +43,7 @@ jobs:
         run: pnpm install
 
       - name: Installing Playwright Browsers...
-        run: pnpm exec playwright install --with-deps
+        run: npx playwright install --with-deps
 
       - name: Linting codebase...
         run: pnpm lint
