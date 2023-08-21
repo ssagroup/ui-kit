@@ -54,3 +54,35 @@ export default {
 } as Meta<typeof NavBar>;
 
 export const Default = {};
+
+const VIEWPORTS = {
+  laptop: {
+    name: 'Laptop',
+    styles: {
+      width: '2560px',
+      height: '1600px',
+    },
+  },
+};
+
+export const VisibleByDefaultOnMobile = {
+  component: NavBar,
+  args: {
+    isVisible: true,
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile2',
+    },
+  },
+};
+
+export const WideScreen = {
+  component: NavBar,
+  parameters: {
+    viewport: {
+      viewports: VIEWPORTS,
+      defaultViewport: 'Laptop',
+    },
+  },
+};

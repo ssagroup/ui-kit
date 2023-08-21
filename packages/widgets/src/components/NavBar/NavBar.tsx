@@ -17,14 +17,14 @@ import { INavBarProps } from './types';
  *
  * UI Component that shows the navigation bar
  */
-export const NavBar = ({ items }: INavBarProps) => {
+export const NavBar = ({ items, isVisible = false }: INavBarProps) => {
   const toggleId = useId();
   const { pathname } = useLocation();
   const theme = useTheme();
 
   return (
     <NavBarBase>
-      <input type="checkbox" id={toggleId} />
+      <input type="checkbox" id={toggleId} checked={isVisible} />
 
       <NavToggle htmlFor={toggleId} />
 

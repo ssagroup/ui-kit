@@ -55,5 +55,6 @@ umd
 unhover
 uuidv4
 VERCEL
+viewports
 vtpit
 xlg
