@@ -59,8 +59,8 @@ const VIEWPORTS = {
   laptop: {
     name: 'Laptop',
     styles: {
-      width: '2560px',
-      height: '1600px',
+      width: '1440px',
+      height: '1080px',
     },
   },
 };
@@ -82,7 +82,7 @@ export const WideScreen = {
   parameters: {
     viewport: {
       viewports: VIEWPORTS,
-      defaultViewport: 'Laptop',
+      defaultViewport: 'laptop',
     },
   },
 };
