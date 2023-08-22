@@ -71,7 +71,7 @@ jobs:
           CI: true
 
       - name: "List of directories"
-        run: ls ./ && ls ./packages && ./packages/widgets
+        run: ls ./packages/widgets/
 
       - name: Serve Storybook and run tests 
         run: |
