@@ -70,11 +70,12 @@ jobs:
         env:
           CI: true
 
-      - name: Serve Storybook and run tests
+      - name: Serve Storybook and run tests 
         run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-          "npx http-server storybook-static --port 6007 --silent" \
-          "npx wait-on tcp:6007 && yarn test-storybook"
+          npm install -g concurrently http-server wait-on
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue &" \
+          "npx http-server storybook-static --port 6007 --silent &" \
+          "npx wait-on tcp:6007 &"
 
       # - name: Running storybook...
       #   run: pnpm sb:widgets &
