@@ -1,13 +1,22 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-test.beforeAll(async ({ page }) => {
-  await page.goto('http://172.17.0.1:6007');
-  await page.waitForTimeout(7000);
+test.describe.configure({ mode: 'serial' });
+
+let page: Page;
+
+test.beforeAll(async ({ page, browser }) => {
+  page = await browser.newPage();
+});
+
+test.afterAll(async () => {
+  await page.close();
 });
 
 test('Widgets: HeartRate item should be present in the sidebar', async ({
   page,
 }) => {
+  await page.goto('http://172.17.0.1:6007');
+  await page.waitForTimeout(7000);
   await expect(page.getByText('HeartRate')).toBeVisible();
 });
 
