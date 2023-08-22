@@ -70,12 +70,14 @@ jobs:
       #   env:
       #     CI: true
 
+      - name: Running storybook...
+        run: pnpm sb:widgets
+
       - name: Installing Playwright Browsers...
         run: |
           cd ./-w
           npm install
           npx playwright install --with-deps
-          pnpm sb:widgets
           cd ..
 
       - name: Running e2e tests...
