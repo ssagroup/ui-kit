@@ -65,19 +65,25 @@ jobs:
       #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
       #     LOST_PIXEL_CONFIG_DIR: ./packages/core
 
-      # - name: "Building storybook: Widgets"
-      #   run: pnpm sb:build:widgets
-      #   env:
-      #     CI: true
+      - name: "Building storybook: Widgets"
+        run: pnpm sb:build:widgets --quite
+        env:
+          CI: true
 
-      - name: Running storybook...
-        run: pnpm sb:widgets &
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+          "npx http-server storybook-static --port 6007 --silent" \
+          "npx wait-on tcp:6007 && yarn test-storybook"
+
+      # - name: Running storybook...
+      #   run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
         run: |
           cd ./-w
           npm install
-          npx playwright install --with-deps
+          npx playwright install chromium --with-deps
           cd ..
 
       - name: Running e2e tests...
