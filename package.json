@@ -24,6 +24,7 @@
     "test:clearcache": "jest --clearCache",
     "test:e2e": "cd ./-w && pnpm exec playwright test --project=chromium && cd ..",
     "test:e2e:ui": "cd ./-w && pnpm exec playwright test --project=chromium --ui && cd ..",
+    "test:e2e:debug": "cd ./-w && pnpm exec playwright test --project=chromium --debug && cd ..",
     "sb:dev": "storybook dev -p 6001",
     "sb:dev:quite": "storybook dev -p 6001 --quite",
     "sb:utils": "pnpm --filter ./packages/utils sb:dev",
