@@ -70,6 +70,9 @@ jobs:
         env:
           CI: true
 
+      - name: "List of directories"
+        run: ls ./ && ls ./packages && ./packages/widgets
+
       - name: Serve Storybook and run tests 
         run: |
           "npx http-server ./packages/widgets/storybook-static --port 6007 &"\
