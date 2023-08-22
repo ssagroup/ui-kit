@@ -75,8 +75,12 @@ jobs:
           ls ./packages/widgets/
           cd ./packages/widgets/storybook-static
 
-      - name: Serve Storybook and run tests 
-        run: npx http-server &
+      - name: Serve Files
+        # cspell:disable-next-line
+        uses: Eun/http-server-action@v1
+        with:
+          directory: ./packages/widgets/storybook-static
+          port: 8080
 
       # - name: Running storybook...
       #   run: pnpm sb:widgets &
