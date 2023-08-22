@@ -6,7 +6,7 @@ export const config: Partial<CustomProjectConfig> & {
   };
 } = {
   storybookShots: {
-    storybookUrl: './packages/core/storybook-static',
+    storybookUrl: '/packages/core/storybook-static',
     breakpoints: [390, 900, 1440, 1920],
   },
   // @cspell:disable-next-line

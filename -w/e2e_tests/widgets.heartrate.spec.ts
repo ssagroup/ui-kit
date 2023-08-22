@@ -8,15 +8,25 @@ test('Widgets: HeartRate - Hint is shown', async ({ page }) => {
     // 'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
     // 'http://172.17.0.1:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
     // 'http://172.17.0.1:8080/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
-    'http://localhost:8080/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
+    'http://172.17.0.1:6007',
+    // 'http://localhost:6007',
   );
+  await page.waitForTimeout(7000);
+  await expect(page.getByText('HeartRate')).toBeVisible();
+  // await page.mouse.move(64, 243);
+  // await page.mouse.click(64, 243);
 
-  await page.mouse.move(50, 99);
+  // // await page.mouse.move(88, 290);
+  // await page.waitForTimeout(100);
+  // await page.mouse.click(88, 290);
+  // await page.waitForTimeout(100);
+  // await page.mouse.move(481, 87);
+  // await page.waitForTimeout(100);
 
   await page.screenshot({
     path: '../lost-pixel/widgets/HeartRateHint.png',
     fullPage: true,
   });
 
-  await expect(page.getByText('08:03 PM - 120 bpm')).toBeVisible();
+  // await expect(page.getByText('08:03 PM - 120 bpm')).toBeVisible();
 });

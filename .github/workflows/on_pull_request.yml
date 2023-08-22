@@ -67,23 +67,21 @@ jobs:
 
       - name: "Building storybook: Widgets"
         run: pnpm sb:build:widgets
-        env:
-          CI: true
 
       - name: "List of directories, go to directory"
         run: |
           ls ./packages/widgets/
           cd ./packages/widgets/storybook-static
 
-      - name: Serve Files
-        # cspell:disable-next-line
-        uses: Eun/http-server-action@v1
-        with:
-          directory: ./packages/widgets/storybook-static
-          port: 8080
+      # - name: Serve Files
+      #   # cspell:disable-next-line
+      #   uses: Eun/http-server-action@v1
+      #   with:
+      #     directory: ./packages/widgets/storybook-static
+      #     port: 8080
 
-      # - name: Running storybook...
-      #   run: pnpm sb:widgets &
+      - name: Running storybook...
+        run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
         run: |
