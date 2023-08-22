@@ -75,6 +75,7 @@ jobs:
           cd ./-w
           npm install
           npx playwright install --with-deps
+          pnpm sb:widgets
           cd ..
 
       - name: Running e2e tests...

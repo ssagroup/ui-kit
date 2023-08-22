@@ -6,7 +6,7 @@ test('Widgets: HeartRate - Hint is shown', async ({ page }) => {
   // );
   await page.goto(
     // 'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
-    'http://172.17.0.1:3000/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
+    'http://172.17.0.1:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
   );
 
   await page.mouse.move(50, 99);
