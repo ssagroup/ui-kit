@@ -72,10 +72,7 @@ jobs:
 
       - name: Serve Storybook and run tests 
         run: |
-          npm install -g concurrently http-server wait-on
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue &" \
-          "npx http-server storybook-static --port 6007 --silent &" \
-          "npx wait-on tcp:6007 &"
+          "npx http-server ./storybook-static --port 6007 &"\
 
       # - name: Running storybook...
       #   run: pnpm sb:widgets &
