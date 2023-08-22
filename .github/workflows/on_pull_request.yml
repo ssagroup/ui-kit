@@ -70,19 +70,20 @@ jobs:
         env:
           CI: true
 
-      - name: "List of directories"
-        run: ls ./packages/widgets/
+      - name: "List of directories, go to directory"
+        run: |
+          ls ./packages/widgets/
+          cd ./packages/widgets/storybook-static
 
       - name: Serve Storybook and run tests 
-        run: |
-          "npm install -g http-server"
-          "http-server ./packages/widgets/storybook-static --port 6007 &"\
+        run: npx http-server &
 
       # - name: Running storybook...
       #   run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
         run: |
+          cd ../../../
           cd ./-w
           npm install
           npx playwright install chromium --with-deps
