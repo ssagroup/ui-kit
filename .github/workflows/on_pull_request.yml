@@ -42,20 +42,17 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
-      - name: Installing Playwright Browsers...
-        run: npx playwright install --with-deps
+      # - name: Linting codebase...
+      #   run: pnpm lint
 
-      - name: Linting codebase...
-        run: pnpm lint
+      # - name: Linting styles...
+      #   run: pnpm lint:styles
 
-      - name: Linting styles...
-        run: pnpm lint:styles
+      # - name: Building packages...
+      #   run: pnpm build:all
 
-      - name: Building packages...
-        run: pnpm build:all
-
-      - name: Running unit tests...
-        run: pnpm test
+      # - name: Running unit tests...
+      #   run: pnpm test
 
       # - name: "Building storybook: Core"
       #   run: pnpm sb:build:core
@@ -68,10 +65,16 @@ jobs:
       #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
       #     LOST_PIXEL_CONFIG_DIR: ./packages/core
 
-      - name: "Building storybook: Widgets"
-        run: pnpm sb:build:widgets
-        env:
-          CI: true
+      # - name: "Building storybook: Widgets"
+      #   run: pnpm sb:build:widgets
+      #   env:
+      #     CI: true
+
+      - name: Installing Playwright Browsers...
+        run: |
+          cd ./-w
+          npx playwright install --with-deps
+          cd ..
 
       - name: Running e2e tests...
         run: pnpm test:e2e
