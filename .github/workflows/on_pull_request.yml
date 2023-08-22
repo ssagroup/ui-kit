@@ -75,7 +75,8 @@ jobs:
 
       - name: Serve Storybook and run tests 
         run: |
-          "npx http-server ./packages/widgets/storybook-static --port 6007 &"\
+          "npm install -g http-server"
+          "http-server ./packages/widgets/storybook-static --port 6007 &"\
 
       # - name: Running storybook...
       #   run: pnpm sb:widgets &
