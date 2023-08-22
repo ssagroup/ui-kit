@@ -71,7 +71,7 @@ jobs:
       #     CI: true
 
       - name: Running storybook...
-        run: pnpm sb:widgets
+        run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
         run: |
