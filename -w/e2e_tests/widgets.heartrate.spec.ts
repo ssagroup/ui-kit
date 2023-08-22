@@ -5,7 +5,8 @@ test('Widgets: HeartRate - Hint is shown', async ({ page }) => {
   //   'https://ui-kit-fitness.web.app/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
   // );
   await page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
+    // 'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
+    'http://172.17.0.1:3000/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
   );
 
   await page.mouse.move(50, 99);
