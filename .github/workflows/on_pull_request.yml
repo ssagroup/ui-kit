@@ -84,9 +84,9 @@ jobs:
       - name: Directories
         run: |
           pwd
-          ll
-          ll ./lost-pixel/
-          ll ./lost-pixel/widgets/
+          ls -a
+          ls -a ./lost-pixel/
+          ls -a ./lost-pixel/widgets/
 
       - uses: actions/upload-artifact@v3
         with:
