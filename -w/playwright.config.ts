@@ -28,8 +28,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    // Emulates the user timezone.
-    timezoneId: 'Europe/London',
+
+    // Emulates the user locale.
+    locale: 'en-US',
   },
 
   /* Configure projects for major browsers */
