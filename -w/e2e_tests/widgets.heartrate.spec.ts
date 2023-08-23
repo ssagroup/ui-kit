@@ -13,8 +13,11 @@ test.afterAll(async () => {
 });
 
 test('Widgets: HeartRate item should be present in the sidebar', async () => {
-  await page.goto('http://172.17.0.1:6007/?path=/docs/widgets-heartrate--docs');
+  // await page.goto('http://172.17.0.1:6007/?path=/docs/widgets-heartrate--docs');
   // await page.goto('http://localhost:6007/?path=/docs/widgets-heartrate--docs');
+  await page.goto(
+    'http://172.17.0.1:6007/iframe.html?id=widgets-heartrate--default&viewMode=story',
+  );
   await page.waitForTimeout(1000);
   await expect(
     page
