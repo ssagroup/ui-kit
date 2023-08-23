@@ -22,7 +22,7 @@ test('Widgets: HeartRate item should be present in the sidebar', async () => {
       .getByRole('heading', { name: 'Heart Rate' }),
   ).toBeVisible();
   await page.screenshot({
-    path: 'HeartRateDefault.png',
+    path: '../lost-pixel/widgets/HeartRateDefault.png',
     fullPage: true,
   });
 });
