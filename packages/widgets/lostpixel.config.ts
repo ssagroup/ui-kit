@@ -6,11 +6,11 @@ export const config: Partial<CustomProjectConfig> & {
   };
 } = {
   storybookShots: {
-    storybookUrl: '/packages/widgets/storybook-static',
+    storybookUrl: './packages/widgets/storybook-static',
     breakpoints: [390, 900, 1440, 1920],
   },
   customShots: {
-    currentShotsPath: '/lost-pixel',
+    currentShotsPath: './lost-pixel',
   },
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',
