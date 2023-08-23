@@ -32,8 +32,12 @@ test('Widgets: HeartRate item should be present in the sidebar', async () => {
 
 test('Widgets: HeartRate - Hint is shown', async () => {
   await page.waitForTimeout(5000);
-  await page.mouse.move(663, 350);
-  await page.mouse.move(660, 350, {
+  // await page.mouse.move(663, 350);
+  // await page.mouse.move(660, 350, {
+  //   steps: 5,
+  // });
+  await page.mouse.move(608, 110);
+  await page.mouse.move(605, 110, {
     steps: 5,
   });
   await page.waitForTimeout(500);

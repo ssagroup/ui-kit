@@ -81,11 +81,6 @@ jobs:
       - name: Running e2e tests...
         run: pnpm test:e2e
 
-      - name: Directories
-        run: |
-          pwd
-          ls -LR
-
       - uses: actions/upload-artifact@v3
         with:
           name: playwright-screenshots
