@@ -22,7 +22,7 @@ test('Widgets: HeartRate item should be present in the sidebar', async () => {
       .getByRole('heading', { name: 'Heart Rate' }),
   ).toBeVisible();
   await page.screenshot({
-    path: '../../lost-pixel/widgets/HeartRateDefault2.png',
+    path: 'HeartRateDefault.png',
     fullPage: true,
   });
 });
@@ -41,7 +41,7 @@ test('Widgets: HeartRate item should be present in the sidebar', async () => {
 //   ).toBeVisible();
 
 //   await page.screenshot({
-//     path: '../../lost-pixel/widgets/HeartRateHint2.png',
+//     path: '../../lost-pixel/widgets/HeartRateHint.png',
 //     fullPage: true,
 //   });
 // });
