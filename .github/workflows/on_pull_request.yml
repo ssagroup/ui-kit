@@ -80,6 +80,12 @@ jobs:
 
       - name: Running e2e tests...
         run: pnpm test:e2e
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: playwright-screenshots
+          path: ./lost-pixel/widgets/
+          retention-days: 30
         
       # - uses: actions/upload-artifact@v3
       #   if: always()
