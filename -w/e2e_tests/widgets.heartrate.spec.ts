@@ -13,25 +13,34 @@ test.afterAll(async () => {
 });
 
 test('Widgets: HeartRate item should be present in the sidebar', async () => {
-  await page.goto('http://172.17.0.1:6007');
-  // await page.goto('http://localhost:6007');
+  await page.goto('http://172.17.0.1:6007/?path=/docs/widgets-heartrate--docs');
+  // await page.goto('http://localhost:6007/?path=/docs/widgets-heartrate--docs');
   await page.waitForTimeout(1000);
-  await page.getByRole('button', { name: 'Activity' }).click();
-  await expect(page.getByText('HeartRate')).toBeVisible();
+  await expect(
+    page
+      .frameLocator('iframe[title="storybook-preview-iframe"]')
+      .getByRole('heading', { name: 'Heart Rate' }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: '../../lost-pixel/widgets/HeartRateDefault.png',
+    fullPage: true,
+  });
 });
 
 test('Widgets: HeartRate - Hint is shown', async () => {
-  await page.getByRole('button', { name: 'HeartRate' }).click();
-  await page.getByRole('link', { name: 'Default' }).click();
-  const page2Promise = page.waitForEvent('popup');
-  await page.getByRole('link', { name: 'Open canvas in new tab' }).click();
-  const page2 = await page2Promise;
-  await page2.waitForTimeout(7000);
-  await page2.mouse.move(546, 82);
-  await expect(page2.getByText('04:03 AM - 60 bpm')).toBeVisible();
+  await page.mouse.move(663, 350);
+  await page.mouse.move(660, 350, {
+    steps: 5,
+  });
+  await page.waitForTimeout(500);
+  await expect(
+    page
+      .frameLocator('iframe[title="storybook-preview-iframe"]')
+      .getByText('03:03 AM - 80 bpm'),
+  ).toBeVisible();
 
-  await page2.screenshot({
-    path: '../lost-pixel/widgets/HeartRateHint.png',
+  await page.screenshot({
+    path: '../../lost-pixel/widgets/HeartRateHint.png',
     fullPage: true,
   });
 });
