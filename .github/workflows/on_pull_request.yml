@@ -31,6 +31,11 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
+      - name: Directories
+        run: |
+          pwd
+          ls -a ./lost-pixel/widgets/
+
       - uses: actions/cache@v3
         name: Restoring pnpm cache...
         with:
@@ -38,6 +43,11 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
+      - name: Directories
+        run: |
+          pwd
+          ls -a ./lost-pixel/widgets/
 
       - name: Installing dependencies...
         run: pnpm install
@@ -78,14 +88,17 @@ jobs:
           npx playwright install chromium --with-deps
           cd ..
 
+      - name: Directories
+        run: |
+          pwd
+          ls -a ./lost-pixel/widgets/
+
       - name: Running e2e tests...
         run: pnpm test:e2e
 
       - name: Directories
         run: |
           pwd
-          ls -a
-          ls -a ./lost-pixel/
           ls -a ./lost-pixel/widgets/
 
       - uses: actions/upload-artifact@v3
