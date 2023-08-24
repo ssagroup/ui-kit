@@ -10,7 +10,7 @@ export const config: Partial<CustomProjectConfig> & {
     breakpoints: [390, 900, 1440, 1920],
   },
   customShots: {
-    currentShotsPath: './lost-pixel',
+    currentShotsPath: './packages/widgets/custom-shots',
   },
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrvzro4dkcna0ez80h1y2h',

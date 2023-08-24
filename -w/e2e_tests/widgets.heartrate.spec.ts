@@ -12,6 +12,8 @@ test.afterAll(async () => {
   await page.close();
 });
 
+const WIDGETS_CUSTOM_SHOTS_PATH = '../packages/widgets/custom-shots/';
+
 test('Widgets: HeartRate item should be present in the sidebar', async () => {
   await page.goto(
     'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
@@ -20,19 +22,19 @@ test('Widgets: HeartRate item should be present in the sidebar', async () => {
   await expect(page.getByRole('heading', { name: 'Heart Rate' })).toBeVisible();
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateDefault__[w1920px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateDefault__[w1920px].png`,
   });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateDefault__[w1440px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateDefault__[w1440px].png`,
   });
   await page.setViewportSize({ width: 900, height: 900 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateDefault__[w900px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateDefault__[w900px].png`,
   });
   await page.setViewportSize({ width: 390, height: 390 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateDefault__[w390px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateDefault__[w390px].png`,
   });
 });
 
@@ -45,18 +47,18 @@ test('Widgets: HeartRate - Hint is shown', async () => {
   // await expect(page.getByText('09:03 PM - 75 bpm')).toBeVisible();
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateHint__[w1920px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateHint__[w1920px].png`,
   });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateHint__[w1440px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateHint__[w1440px].png`,
   });
   await page.setViewportSize({ width: 900, height: 900 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateHint__[w900px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateHint__[w900px].png`,
   });
   await page.setViewportSize({ width: 390, height: 390 });
   await page.screenshot({
-    path: '../lost-pixel/widgets/HeartRateHint__[w390px].png',
+    path: `${WIDGETS_CUSTOM_SHOTS_PATH}HeartRateHint__[w390px].png`,
   });
 });
