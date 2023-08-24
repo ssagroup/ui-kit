@@ -124,6 +124,6 @@ test('Widgets: HeartRate - Hint is shown', async () => {
   await expect(
     page
       .frameLocator('iframe[title="storybook-preview-iframe"]')
-      .getByText('12:03 AM - 75 bpm'),
+      .getByText('09:03 PM - 75 bpm'),
   ).toBeVisible();
 });
