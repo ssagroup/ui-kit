@@ -121,9 +121,5 @@ test('Widgets: HeartRate - Hint is shown', async () => {
   await page.screenshot({
     path: '../lost-pixel/widgets/HeartRateHint.png',
   });
-  await expect(
-    page
-      .frameLocator('iframe[title="storybook-preview-iframe"]')
-      .getByText('09:03 PM - 75 bpm'),
-  ).toBeVisible();
+  await expect(page.getByText('09:03 PM - 75 bpm')).toBeVisible();
 });
