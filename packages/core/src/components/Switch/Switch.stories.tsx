@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import '@storybook/types';
 
 import Switch, { SwitchContextProvider } from './index';
