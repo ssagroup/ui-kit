@@ -84,7 +84,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: playwright-screenshots
-          path: ./lost-pixel/widgets/
+          path: ./packages/widgets/custom-shots/
           retention-days: 30
 
       - name: Running visual tests...
@@ -92,6 +92,9 @@ jobs:
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
+
+      - name: Directory list
+        run: ls -R
 
   finalize:
     needs: [main]
