@@ -76,9 +76,9 @@ test('Widgets: HeartRate item should be present in the sidebar', async () => {
   // await page.goto(
   //   'http://172.17.0.1:6007/?path=/docs/widgets-heartrate--default',
   // );
-  await page.goto(
-    'http://localhost:6007/?path=/docs/widgets-heartrate--default',
-  );
+  // await page.goto(
+  //   'http://localhost:6007/?path=/docs/widgets-heartrate--default',
+  // );
   await page.goto(
     'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
   );
