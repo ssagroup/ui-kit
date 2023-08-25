@@ -42,17 +42,17 @@ jobs:
       - name: Installing dependencies...
         run: pnpm install
 
-      # - name: Linting codebase...
-      #   run: pnpm lint
+      - name: Linting codebase...
+        run: pnpm lint
 
-      # - name: Linting styles...
-      #   run: pnpm lint:styles
+      - name: Linting styles...
+        run: pnpm lint:styles
 
       - name: Building packages...
         run: pnpm build:all
 
-      # - name: Running unit tests...
-      #   run: pnpm test
+      - name: Running unit tests...
+        run: pnpm test
 
       - name: "Building storybook: Core"
         run: pnpm sb:build:core
@@ -81,20 +81,14 @@ jobs:
       - name: Running e2e tests...
         run: pnpm test:e2e
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: playwright-screenshots
-          path: ./packages/widgets/custom-shots/
-          retention-days: 30
-
       - name: Running visual tests...
         uses: lost-pixel/lost-pixel@feature/breakpoint-shots
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
 
-      - name: Directory list
-        run: ls -R
+      # - name: Directory list
+      #   run: ls -R
 
   finalize:
     needs: [main]

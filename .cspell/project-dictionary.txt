@@ -10,7 +10,9 @@ cjs
 clldjub
 commodo
 consectetur
+consts
 dolor
+domcontentloaded
 Donec
 dui
 ecdeldbxe
@@ -51,8 +53,8 @@ Setted
 ssa
 ssagroup
 stylelint
-swp
 suscipit
+swp
 testid
 translatex
 tsbuildcache

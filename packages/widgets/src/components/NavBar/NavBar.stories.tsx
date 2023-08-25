@@ -65,18 +65,6 @@ const VIEWPORTS = {
   },
 };
 
-export const VisibleByDefaultOnMobile = {
-  component: NavBar,
-  args: {
-    isVisible: true,
-  },
-  parameters: {
-    viewport: {
-      defaultViewport: 'mobile2',
-    },
-  },
-};
-
 export const WideScreen = {
   component: NavBar,
   parameters: {

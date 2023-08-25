@@ -168,7 +168,9 @@ export const WithCallAction: StoryObj<typeof Input> = () => {
 };
 WithCallAction.args = {};
 
-export const Focused: StoryObj<typeof Input> = () => {
+export const Focused: StoryObj<typeof Input> & {
+  args: { label?: string };
+} = () => {
   const { register } = useForm<FieldValues>();
 
   return (

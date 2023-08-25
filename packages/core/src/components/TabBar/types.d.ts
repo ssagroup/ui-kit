@@ -27,7 +27,6 @@ export interface ILargeTabProps extends ITabProps {
 
 export interface ITabBarProps {
   children: React.ReactElement<React.PropsWithChildren<ITabProps>>[];
-  // selectedTabId?: string | number;
 }
 
 export interface ITabBarContext {

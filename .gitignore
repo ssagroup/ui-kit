@@ -11,5 +11,4 @@ stats.json
 .firebase
 tsbuildcache
 tsconfig.tsbuildinfo
-lostpixel
-lost-pixel
+**/custom-shots/**

@@ -4,8 +4,8 @@ import type { Meta } from '@storybook/react';
 import { MealNutrients } from './index';
 import { IMealNutrientsProps } from './types';
 
-import mockApi from './mockMealNutrientsRequest';
-const { getData, getOptions } = mockApi;
+import { mockStaticApi } from './mockMealNutrientsRequest';
+const { getData, getOptions } = mockStaticApi;
 
 export default {
   title: 'Widgets/MealNutrients',
