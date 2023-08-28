@@ -87,9 +87,6 @@ jobs:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
 
-      # - name: Directory list
-      #   run: ls -R
-
   finalize:
     needs: [main]
     runs-on: ubuntu-latest
