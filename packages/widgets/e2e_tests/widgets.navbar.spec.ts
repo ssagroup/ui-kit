@@ -13,7 +13,7 @@ test.afterAll(async () => {
   await page.close();
 });
 
-const WIDGETS_CUSTOM_SHOTS_PATH = '../packages/widgets/custom-shots/';
+const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
 
 test('Widgets: NavBar should be visible after icon clicking', async () => {
   await page.setViewportSize(SCREEN_SIZES[1920]);

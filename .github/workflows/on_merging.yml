@@ -73,13 +73,13 @@ jobs:
 
       - name: Installing Playwright Browsers...
         run: |
-          cd ./-w
-          npm install
+          cd ./packages/widgets
+          npm install -D @playwright/test
           npx playwright install chromium --with-deps
-          cd ..
+          cd ../..
 
       - name: Running e2e tests...
-        run: pnpm test:e2e
+        run: pnpm test:widgets:e2e
 
       - name: Running visual tests...
         uses: lost-pixel/lost-pixel@feature/breakpoint-shots

@@ -1,9 +1,10 @@
-import { defineConfig, devices } from '@playwright/test';
+import { mergeLeft } from 'ramda';
+import { devices } from '@playwright/test';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+const baseConfig = {
   testDir: './e2e_tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -34,4 +35,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-});
+};
+
+export const createConfig = (extendedConfig = {}) =>
+  mergeLeft(extendedConfig)(baseConfig);
