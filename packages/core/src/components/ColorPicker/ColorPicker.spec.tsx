@@ -51,7 +51,7 @@ describe('ColorPicker', () => {
 
     render(<ColorPicker onChange={mockOnChange} initColor="green" />);
 
-    const [btnGreen] = await screen.queryAllByRole('button');
+    const [, , btnGreen] = await screen.queryAllByRole('button');
 
     expect(btnGreen).toHaveStyleRule('border', '1.4px solid #fff');
   });
