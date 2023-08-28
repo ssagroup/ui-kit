@@ -52,7 +52,7 @@ jobs:
         run: pnpm build:all
 
       - name: Running unit tests...
-        run: pnpm test
+        run: pnpm test:coverage
 
       - name: "Building storybook: Core"
         run: pnpm sb:build:core
