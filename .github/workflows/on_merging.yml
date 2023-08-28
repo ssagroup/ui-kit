@@ -40,7 +40,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Installing dependencies...
-        run: pnpm install
+        run: pnpm -w install
 
       - name: Linting codebase...
         run: pnpm lint
@@ -74,7 +74,7 @@ jobs:
       - name: Installing Playwright Browsers...
         run: |
           cd ./packages/widgets
-          npm install
+          pnpm -w install
           npx playwright install chromium --with-deps
           cd ../..
 
