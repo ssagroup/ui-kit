@@ -166,6 +166,19 @@ describe('Tooltip', () => {
     (console.error as jest.Mock).mockRestore();
   });
 
+  it('Shows up by default', () => {
+    const { queryByText } = setup(
+      <Tooltip isOpen>
+        <TooltipTrigger>
+          <Button size="medium" text="Click me!" />
+        </TooltipTrigger>
+        <TooltipContent>{tooltipText}</TooltipContent>
+      </Tooltip>,
+    );
+
+    expect(queryByText(tooltipText)).toBeInTheDocument();
+  });
+
   describe('SimpleChartTooltip', () => {
     const point: Point = {
       id: '',

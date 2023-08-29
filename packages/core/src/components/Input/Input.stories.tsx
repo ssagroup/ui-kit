@@ -167,3 +167,31 @@ export const WithCallAction: StoryObj<typeof Input> = () => {
   );
 };
 WithCallAction.args = {};
+
+export const Focused: StoryObj<typeof Input> & {
+  args: { label?: string };
+} = () => {
+  const { register } = useForm<FieldValues>();
+
+  return (
+    <Input
+      placeholder="Field focused"
+      name="field3"
+      register={register}
+      validationSchema={{
+        required: 'Required',
+      }}
+      status="basic"
+    />
+  );
+};
+Focused.args = {
+  ...Default.args,
+  label: 'Focused Input',
+};
+
+Focused.parameters = {
+  pseudo: {
+    focus: true,
+  },
+};

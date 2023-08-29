@@ -61,6 +61,20 @@ export const Basic: StoryObj = (args) => {
 
 Basic.args = { isDisabled: false };
 
+export const Opened: StoryObj = (args) => {
+  return (
+    <Dropdown selectedItem={items[2]} {...args}>
+      {items.map((item) => (
+        <DropdownOption key={item.id} value={item.id}>
+          {item.value}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  );
+};
+
+Opened.args = { isOpen: true, isDisabled: false };
+
 export const Simple: StoryObj = (args) => {
   return (
     <Dropdown isDisabled={args.isDisabled}>

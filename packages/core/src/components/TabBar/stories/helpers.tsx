@@ -1,8 +1,26 @@
-import { Fragment } from 'react';
+import { Fragment, useLayoutEffect } from 'react';
 import { useTabBarContext, TabBarContextProvider } from '@components/TabBar';
+import { ITab } from '../types';
 
-export const TabBarWrapper = ({ children }: { children: React.ReactNode }) => {
-  const { activeTab } = useTabBarContext();
+export const TabBarWrapper = ({
+  children,
+  selectedTabId,
+  renderContent,
+}: {
+  children: React.ReactNode;
+  selectedTabId?: ITab['tabId'];
+  renderContent?: ITab['renderContent'];
+}) => {
+  const { activeTab, setActiveTab } = useTabBarContext();
+  useLayoutEffect(() => {
+    if (selectedTabId && renderContent) {
+      setActiveTab({
+        tabId: selectedTabId,
+        renderContent,
+      });
+    }
+  }, []);
+
   return (
     <Fragment>
       <div>{children}</div>
@@ -31,7 +49,7 @@ export const TabContents = ({
 export const TabBarDecorator = (Story, { args }) => {
   return (
     <TabBarContextProvider>
-      <TabBarWrapper>
+      <TabBarWrapper {...args}>
         <Story {...args} />
       </TabBarWrapper>
     </TabBarContextProvider>

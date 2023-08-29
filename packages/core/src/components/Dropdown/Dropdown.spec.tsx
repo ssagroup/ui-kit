@@ -312,4 +312,10 @@ describe('Dropdown', () => {
 
     expect(queryByRole('listbox')).not.toBeInTheDocument();
   });
+
+  it('Renders opened', () => {
+    const { queryByRole } = setup({ isOpen: true });
+
+    expect(queryByRole('listbox')).toBeInTheDocument();
+  });
 });

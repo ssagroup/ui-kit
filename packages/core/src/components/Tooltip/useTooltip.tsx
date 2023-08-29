@@ -22,8 +22,9 @@ export const useTooltip = ({
   size = 'small',
   hasArrow = true,
   arrowProps = {},
+  isOpen: isInitOpen = false,
 }: UseTooltipArgs) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const arrowRef = useRef(null);
 
   const floatingData = useFloating({

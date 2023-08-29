@@ -1,4 +1,6 @@
+import React from 'react';
 import type { Meta } from '@storybook/react';
+import { HeaderTitle, GridWrapper, colors, sizes } from './helpers';
 
 import Badge from './index';
 
@@ -61,3 +63,40 @@ export default {
 } as Meta<typeof Badge>;
 
 export const Default = {};
+
+export const AllStates = () => (
+  <GridWrapper>
+    <HeaderTitle>Small</HeaderTitle>
+    <HeaderTitle>Medium</HeaderTitle>
+    <HeaderTitle>Large</HeaderTitle>
+    {colors.map((color) => {
+      return (
+        <React.Fragment key={color}>
+          {sizes.map((size) => {
+            return (
+              <Badge color={color} size={size} key={color + size}>
+                badge
+              </Badge>
+            );
+          })}
+        </React.Fragment>
+      );
+    })}
+  </GridWrapper>
+);
+
+AllStates.args = {
+  name: 'All States',
+};
+
+AllStates.argTypes = {
+  color: {
+    control: false,
+  },
+  size: {
+    control: false,
+  },
+  children: {
+    control: false,
+  },
+};

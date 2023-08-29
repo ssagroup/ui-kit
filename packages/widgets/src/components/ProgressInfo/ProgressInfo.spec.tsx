@@ -1,9 +1,29 @@
+import userEvent from '@testing-library/user-event';
 import { fireEvent, screen, waitFor, within } from '../../../customTest';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { progressInfoData as data } from './mockProgressInfoRequest';
 
 import ProgressInfo from './index';
+
+const ResponsivePieMock = ({
+  colors,
+}: {
+  onMouseMove: (p: { data: { y: number } }) => void;
+  colors?: string;
+}) => <div data-testid="progress-mock" css={{ color: colors }}></div>;
+
+jest.mock('@nivo/pie', () => ({
+  PieCustomLayerProps: {},
+  ResponsivePie: ResponsivePieMock,
+}));
+
+const setup = (component) => {
+  return {
+    user: userEvent.setup(),
+    ...render(component),
+  };
+};
 
 describe('ProgressInfo', () => {
   beforeAll(() => {
@@ -61,5 +81,11 @@ describe('ProgressInfo', () => {
 
       expect(dropdownEl).not.toBeInTheDocument();
     });
+  });
+
+  it('Renders ResponsivePie', async () => {
+    const { getByTestId } = setup(<ProgressInfo data={data} />);
+
+    await expect(getByTestId('progress-mock')).toBeInTheDocument();
   });
 });

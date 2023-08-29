@@ -40,7 +40,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Installing dependencies...
-        run: pnpm install
+        run: pnpm -w install
 
       - name: Linting codebase...
         run: pnpm lint
@@ -51,10 +51,43 @@ jobs:
       - name: Building packages...
         run: pnpm build:all
 
-      - name: "Running unit tests..."
-        run: pnpm test
+      - name: Running unit tests...
+        run: pnpm test:coverage
 
-      - name: "Installing firebase tools..."
+      - name: "Building storybook: Core"
+        run: pnpm sb:build:core
+        env:
+          CI: true
+
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/core
+
+      - name: "Building storybook: Widgets"
+        run: pnpm sb:build:widgets
+
+      - name: Running storybook...
+        run: pnpm sb:widgets &
+
+      - name: Installing Playwright Browsers...
+        run: |
+          cd ./packages/widgets
+          pnpm -w install
+          npx playwright install chromium --with-deps
+          cd ../..
+
+      - name: Running e2e tests...
+        run: pnpm test:widgets:e2e
+
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
+
+      - name: Installing firebase tools...
         run: curl -sL https://firebase.tools | bash
 
       - name: "Deploying: storybook root"
@@ -78,3 +111,18 @@ jobs:
 
       - name: "Deploying: fitness dashboard"
         run: pnpm deploy:dashboard
+
+  finalize:
+    needs: [main]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Lost Pixel Finalize
+        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
+        with:
+          FINALIZE: true

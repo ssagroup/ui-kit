@@ -31,6 +31,7 @@ const DropdownBase = styled.div`
 const Dropdown = <T extends IDropdownOption>({
   selectedItem,
   isDisabled,
+  isOpen: isInitOpen,
   children,
   onChange: handleChange,
   className,
@@ -43,7 +44,7 @@ const Dropdown = <T extends IDropdownOption>({
   const options: T[] = [];
 
   const [isFocused, setIsFocused] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [colors, setColors] = useState<Array<string | undefined>>([]);
   const [activeItem, setActiveItem] = useState<T | undefined>(selectedItem);
 

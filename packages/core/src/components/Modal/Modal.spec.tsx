@@ -85,6 +85,24 @@ describe('Modal', () => {
       expect(handleClick).toHaveBeenCalledTimes(1);
       expect(queryByTestId('inner')).toBeInTheDocument();
     });
+
+    it('renders opened', () => {
+      const { queryByTestId } = render(
+        <Modal isOpen>
+          <ModalOpenButton>
+            <Button size="small" text="open" />
+          </ModalOpenButton>
+          <ModalContent aria-label="dialog-label">
+            <ModalDismissButton>
+              <Button size="small" text="close" />
+            </ModalDismissButton>
+            <div data-testid="inner" />
+          </ModalContent>
+        </Modal>,
+      );
+
+      expect(queryByTestId('inner')).toBeInTheDocument();
+    });
   });
 
   describe('a11y', () => {

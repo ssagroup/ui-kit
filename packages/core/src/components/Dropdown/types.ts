@@ -7,6 +7,7 @@ export interface IDropdownProps<P extends IDropdownOption> {
   placeholder?: string;
   children?: React.ReactNode;
   className?: string;
+  isOpen?: boolean;
 }
 
 export interface DropdownContextType {
