@@ -12,7 +12,7 @@ export const SCREEN_SIZES = {
     height: 900,
   },
   1920: {
-    width: 190,
+    width: 1920,
     height: 1080,
   },
 };

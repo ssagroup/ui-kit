@@ -27,7 +27,7 @@
     "test:widgets:e2e:ui": "pnpm --filter ./packages/widgets test:e2e:ui",
     "test:widgets:e2e:debug": "pnpm --filter ./packages/widgets test:e2e:debug",
     "sb:dev": "storybook dev -p 6001",
-    "sb:dev:quite": "storybook dev -p 6001 --quite",
+    "sb:dev:quiet": "storybook dev -p 6001 --quiet",
     "sb:utils": "pnpm --filter ./packages/utils sb:dev",
     "sb:hooks": "pnpm --filter ./packages/hooks sb:dev",
     "sb:core": "pnpm --filter ./packages/core sb:dev",

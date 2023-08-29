@@ -33,6 +33,6 @@ Default.propTypes = {
   initColor: String,
 };
 
-export const SettedColor = () => {
+export const SelectedColor = () => {
   return <Default initColor="green" />;
 };

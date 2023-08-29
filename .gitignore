@@ -12,3 +12,6 @@ stats.json
 tsbuildcache
 tsconfig.tsbuildinfo
 **/custom-shots/**
+test-results/
+playwright-report/
+playwright/.cache/
