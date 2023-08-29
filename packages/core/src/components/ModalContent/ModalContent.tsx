@@ -10,14 +10,10 @@ function ModalContent({
   'aria-label': ariaLabel,
   ...props
 }: ModalProps) {
-  const [isOpen, setIsOpen] = useContext(ModalContext);
+  const [isOpen] = useContext(ModalContext);
 
   return (
-    <ModalDialog
-      aria-label={ariaLabel}
-      isOpen={isOpen}
-      onDismiss={() => setIsOpen(false)}
-      {...props}>
+    <ModalDialog aria-label={ariaLabel} isOpen={isOpen} {...props}>
       {isOpen ? children : null}
     </ModalDialog>
   );

@@ -33,7 +33,6 @@ const modalDialogContent = (theme: Theme, isOpen) => css`
 
 const ModalDialog = ({
   isOpen,
-  onDismiss,
   noBackground,
   children,
   'aria-label': ariaLabel,
@@ -45,8 +44,6 @@ const ModalDialog = ({
     <div
       role="button"
       tabIndex={-1}
-      onClick={onDismiss}
-      onKeyDown={onDismiss}
       css={modalDialogWrapper(theme, isOpen, noBackground)}>
       <div
         aria-modal="true"
