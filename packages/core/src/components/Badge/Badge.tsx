@@ -9,7 +9,6 @@ import {
 } from '@styles/global';
 
 import BadgeBase from './BadgeBase';
-
 import { BadgeProps } from './types';
 import { large, medium, small } from './styles';
 
