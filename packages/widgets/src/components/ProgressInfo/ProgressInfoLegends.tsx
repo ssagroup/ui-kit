@@ -13,7 +13,7 @@ const ProgressInfoLegends = ({ data }: { data: ProgressInfoItemProps[] }) => (
       <ProgressInfoList>
         {data.map(({ id, label, colorTag }) => (
           <li key={`tag-${id}`}>
-            <ProgressInfoMarker color={colorTag} />
+            <ProgressInfoMarker color={colorTag} as={'span'} />
             <Typography variant="h6">{label}</Typography>
           </li>
         ))}
