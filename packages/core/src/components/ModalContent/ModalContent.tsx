@@ -2,7 +2,6 @@ import { useContext } from 'react';
 
 import ModalDialog from '@components/ModalDialog';
 import { ModalProps } from '@components/Modal/types';
-
 import { ModalContext } from '../Modal/Modal.context';
 
 function ModalContent({
@@ -10,14 +9,10 @@ function ModalContent({
   'aria-label': ariaLabel,
   ...props
 }: ModalProps) {
-  const [isOpen, setIsOpen] = useContext(ModalContext);
+  const [isOpen] = useContext(ModalContext);
 
   return (
-    <ModalDialog
-      aria-label={ariaLabel}
-      isOpen={isOpen}
-      onDismiss={() => setIsOpen(false)}
-      {...props}>
+    <ModalDialog aria-label={ariaLabel} isOpen={isOpen} {...props}>
       {isOpen ? children : null}
     </ModalDialog>
   );
