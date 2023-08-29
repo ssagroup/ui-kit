@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const BadgeBase = styled.span`
+const BadgeBase = styled.div`
   font-family: Manrope, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -9,6 +9,8 @@ const BadgeBase = styled.span`
 
   text-align: center;
   color: #fff;
+
+  white-space: pre;
 `;
 
 export default BadgeBase;
