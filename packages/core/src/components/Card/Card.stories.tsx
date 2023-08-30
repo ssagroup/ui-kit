@@ -64,14 +64,14 @@ Basic.args = {};
 
 export const IconHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
   const theme = useTheme();
-  console.log('>>>theme', theme);
-
   return (
     <Card noShadow={noShadow}>
       <CardHeader
         icon={
           <ResponsiveImage
-            css={{ filter: `drop-shadow(0px 5px 5px rgba(156, 122, 235, 1)` }}
+            css={{
+              filter: `drop-shadow(0px 5px 5px ${theme.colors.purpleDark}`,
+            }}
             srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fheart%2Fheart_64.png?alt=media&token=aca1639b-62f5-44ed-a0d1-3cea8e4797e2 64w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fheart%2Fheart_48.png?alt=media&token=7ef68a25-5362-48b9-b359-c46b48d1db54 48w"
             sizes="(min-width: 1440px) 64px, 48px"
             src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fheart%2Fheart_48.png?alt=media&token=7ef68a25-5362-48b9-b359-c46b48d1db54"
