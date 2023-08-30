@@ -20,7 +20,9 @@ const Input = ({
   status = 'basic',
   disabled = false,
   startElement,
+  startElementPadding = 40,
   endElement,
+  endElementPadding = 40,
 }: InputProps) => {
   if (!register) {
     throw new Error('Input component must be used within a Form component');
@@ -36,8 +38,10 @@ const Input = ({
         id={`formElement-${name}`}
         placeholder={placeholder}
         disabled={disabled}
-        $paddingLeft={startElement && 40}
-        $paddingRight={endElement && 40}
+        css={{
+          paddingLeft: startElement && startElementPadding,
+          paddingRight: endElement && endElementPadding,
+        }}
         {...register(name, validationSchema)}
       />
 
