@@ -91,6 +91,7 @@ export const IconHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
     </Card>
   );
 };
+
 IconHeader.args = {};
 
 export const FloatHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
