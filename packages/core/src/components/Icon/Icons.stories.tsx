@@ -115,10 +115,6 @@ export const Default: StoryObj<typeof Icon> = (args) => {
         <Typography variant="body1">invisible</Typography>
       </div>
       <div css={iconWrapper}>
-        <Icon name="invisible" size={args.size} color={args.color} />
-        <Typography variant="body1">invisible</Typography>
-      </div>
-      <div css={iconWrapper}>
         <Icon name="carrot-up" size={args.size} color={args.color} />
         <Typography variant="body1">carrot-up</Typography>
       </div>

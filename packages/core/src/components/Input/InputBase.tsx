@@ -1,6 +1,21 @@
 import styled from '@emotion/styled';
 
-export const InputBase = styled.input`
+const getPadding = ({
+  $paddingLeft,
+  $paddingRight,
+}: {
+  $paddingLeft?: number;
+  $paddingRight?: number;
+}) => {
+  const paddingRight = $paddingRight ? `${$paddingRight}px` : '14px';
+  const paddingLeft = $paddingLeft ? `${$paddingLeft}px` : '14px';
+  return `14px ${paddingRight} 14px ${paddingLeft}`;
+};
+
+export const InputBase = styled.input<{
+  $paddingLeft?: number;
+  $paddingRight?: number;
+}>`
   flex: 1;
 
   background: ${({ theme }) => theme.colors.white};
@@ -14,7 +29,7 @@ export const InputBase = styled.input`
 
   width: 100%;
   height: 44px;
-  padding: 14px;
+  padding: ${(props) => getPadding(props)};
 
   font-weight: 400;
   font-size: 0.875rem;

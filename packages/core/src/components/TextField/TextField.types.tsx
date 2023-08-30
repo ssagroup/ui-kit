@@ -12,7 +12,7 @@ export interface TextFieldProps
   helperText?: string;
   disabled?: boolean;
   rows?: number;
-  append?: React.ReactElement;
+  endElement?: React.ReactElement;
   multirow?: boolean;
   maxLength?: number;
 }

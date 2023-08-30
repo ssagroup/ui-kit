@@ -149,7 +149,7 @@ describe('TextField', () => {
         validationSchema={{
           required: 'Required',
         }}
-        append={
+        endElement={
           <Button
             variant="tertiary"
             endIcon={<Icon name="visible" />}

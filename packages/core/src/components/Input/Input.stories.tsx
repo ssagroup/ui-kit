@@ -29,7 +29,7 @@ export default {
         disable: true,
       },
     },
-    append: {
+    endElement: {
       control: {
         disable: true,
       },
@@ -41,7 +41,7 @@ export const Default: StoryObj<typeof Input> = ({
   placeholder,
   name,
   status,
-  append,
+  endElement,
   disabled,
   type,
 }: InputProps) => {
@@ -56,7 +56,7 @@ export const Default: StoryObj<typeof Input> = ({
       validationSchema={{
         required: 'Required',
       }}
-      append={append}
+      endElement={endElement}
       status={status}
       disabled={disabled}
     />
@@ -80,11 +80,29 @@ export const WithIcon: StoryObj<typeof Input> = () => {
       validationSchema={{
         required: 'Required',
       }}
-      append={<Icon name="visible" />}
+      endElement={<Icon name="visible" />}
     />
   );
 };
 WithIcon.args = {};
+
+export const WithBothIcons: StoryObj<typeof Input> = () => {
+  const { register } = useForm<FieldValues>();
+
+  return (
+    <Input
+      placeholder="Field"
+      name="field1"
+      register={register}
+      validationSchema={{
+        required: 'Required',
+      }}
+      startElement={<Icon name="invisible" />}
+      endElement={<Icon name="visible" />}
+    />
+  );
+};
+WithBothIcons.args = {};
 
 export const WithError: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();
@@ -159,7 +177,7 @@ export const WithCallAction: StoryObj<typeof Input> = () => {
       placeholder="Field"
       name="field6"
       register={register}
-      append={
+      endElement={
         <button onClick={() => console.log('calling action...')}>Action</button>
       }
       status="basic"
