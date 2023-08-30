@@ -78,7 +78,22 @@ export const inputStatus = css`
   height: 14px;
 `;
 
-export const appendElement = css`
+export const startElement = css`
+  position: absolute;
+  top: 0;
+  left: 14px;
+
+  height: 100%;
+  width: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 10px;
+`;
+
+export const endElement = css`
   position: absolute;
   top: 0;
   right: 14px;

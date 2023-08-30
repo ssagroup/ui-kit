@@ -25,7 +25,7 @@ export default {
         disable: true,
       },
     },
-    append: {
+    endElement: {
       control: {
         disable: true,
       },
@@ -111,7 +111,7 @@ export const Disabled: StoryObj<typeof TextField> = () => {
       register={register}
       helperText="some nice text"
       disabled={true}
-      append={<Icon name="visible" size={16} />}
+      endElement={<Icon name="visible" size={16} />}
     />
   );
 };
@@ -145,7 +145,7 @@ export const WithAction: StoryObj<typeof TextField> = () => {
       name="field6"
       register={register}
       helperText="some nice text"
-      append={
+      endElement={
         <button onClick={() => console.log('calling action...')}>Action</button>
       }
     />
