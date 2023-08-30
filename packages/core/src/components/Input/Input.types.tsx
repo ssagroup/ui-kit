@@ -8,10 +8,10 @@ export interface InputProps extends Partial<Pick<UseFormReturn, 'register'>> {
   placeholder?: string;
   validationSchema?: Record<string, unknown>;
   disabled?: boolean;
+  className?: string;
   startElement?: React.ReactElement;
-  startElementPadding?: number;
   endElement?: React.ReactElement;
-  endElementPadding?: number;
+  css?: Interpolation<Theme>;
 }
 
 export interface InputStatusColors {

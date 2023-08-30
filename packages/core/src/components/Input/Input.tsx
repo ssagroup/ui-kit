@@ -20,16 +20,14 @@ const Input = ({
   status = 'basic',
   disabled = false,
   startElement,
-  startElementPadding = 40,
   endElement,
-  endElementPadding = 40,
+  className,
 }: InputProps) => {
   if (!register) {
     throw new Error('Input component must be used within a Form component');
   }
 
   const showStatusIcon = () => !disabled && !endElement;
-
   return (
     <InputGroup css={[mapColors[status]]} disabled={disabled}>
       {startElement ? <div css={S.startElement}>{startElement}</div> : null}
@@ -39,9 +37,10 @@ const Input = ({
         placeholder={placeholder}
         disabled={disabled}
         css={{
-          paddingLeft: startElement && startElementPadding,
-          paddingRight: endElement && endElementPadding,
+          paddingLeft: startElement && 40,
+          paddingRight: endElement && 40,
         }}
+        className={className}
         {...register(name, validationSchema)}
       />
 
