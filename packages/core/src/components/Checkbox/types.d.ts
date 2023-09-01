@@ -4,6 +4,7 @@ export interface ICheckboxProps {
   text?: string;
   id?: string;
   onChange: (newState: boolean) => void;
+  externalState?: boolean;
   isDisabled?: boolean;
   initialState?: boolean;
   isIndeterminate?: boolean;

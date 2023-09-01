@@ -10,6 +10,7 @@ const Checkbox = ({
   id,
   onChange,
   isDisabled,
+  externalState,
   initialState,
   isIndeterminate,
   name = '',
@@ -29,6 +30,10 @@ const Checkbox = ({
       checkboxRef.current.indeterminate = Boolean(isIndeterminate);
     }
   }, [isIndeterminate, isChecked]);
+
+  useEffect(() => {
+    setIsChecked(Boolean(externalState));
+  }, [externalState]);
 
   const checkboxId = id || autoGenId;
 
