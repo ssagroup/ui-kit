@@ -9,6 +9,9 @@ const main: Theme = {
     greySelectedMenuItem: 'rgba(222, 225, 236, 1)', //  #dee1ec
     greyFocused: 'rgba(210, 212, 219, 1)', //  #d2d4db
     greyFocused40: 'rgba(210, 212, 219, 0.4)', //  #d2d4db
+    greyDropdownMain: 'rgba(222, 224, 232, 1)', // #dee0e8
+    greyDropdownFocused: 'rgba(128, 129, 131)', // #808183
+    greyDropdownText: 'rgba(21, 21, 21, 1)', // #151515
     grey: 'rgba(195, 197, 204, 1)', // #c3c5cc
     grey20: 'rgba(43, 45, 49, 0.2)', // #c3c5cc
     grey40: 'rgba(43, 45, 49, 0.4)', // #c3c5cc
@@ -72,6 +75,7 @@ const main: Theme = {
     blueLightLighter: 'rgba(133, 199, 242, 1)', // #85c7f2
     blueLightLighter20: 'rgba(133, 199, 242, 0.2)', // #85c7f2
     blueLightLighter40: 'rgba(133, 199, 242, 0.4)', // #85c7f2
+    blueNotification: 'rgba(0, 133, 226, 1)', //#0085e2
   },
   mediaQueries: {
     sm: '@media screen and (min-width: 390px)',

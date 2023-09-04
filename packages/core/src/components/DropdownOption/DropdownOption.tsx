@@ -13,6 +13,7 @@ interface IDropdownItemProps {
 const DropdownOption = styled.li<IDropdownItemProps>`
   overflow: hidden;
 
+  height: 34px;
   padding: 8px 16px;
 
   border: none;

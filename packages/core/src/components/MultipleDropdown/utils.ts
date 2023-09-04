@@ -10,13 +10,17 @@ const getActiveItem = ({ activeItem, placeholder }): ReactNode =>
       placeholder
     : placeholder;
 
-export const getActiveItems = <T extends IDropdownOption[]>({
-  allItems = [],
+export const getActiveItems = <
+  T extends Record<string | number, IDropdownOption>,
+>({
+  allItems = {} as T,
   placeholder,
 }: {
-  allItems: T | [];
+  allItems: T;
   placeholder: string;
-}): ReactNode[] =>
-  allItems
+}): ReactNode[] => {
+  const allItemsArray = Object.values(allItems);
+  return allItemsArray
     .filter((item) => item.isSelected)
     .map((activeItem) => getActiveItem({ activeItem, placeholder }));
+};

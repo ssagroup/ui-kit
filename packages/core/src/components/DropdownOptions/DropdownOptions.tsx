@@ -31,7 +31,8 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
 `;
 
 const dropdownOptionButton = css`
-  display: block;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   font: inherit;
   font-size: 0.813rem;

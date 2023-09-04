@@ -4,6 +4,7 @@ import { DropdownContextType } from './types';
 
 const MultipleDropdownContext = React.createContext<DropdownContextType>({
   allItems: {},
+  isMultiple: false,
   onChange: () => {
     /* noop */
   },

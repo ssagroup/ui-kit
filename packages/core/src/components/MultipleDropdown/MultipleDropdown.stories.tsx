@@ -12,8 +12,6 @@ const items = [
   { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
 ];
 
-const selectedItems = [items[0], items[2]];
-
 export default {
   title: 'Components/MultipleDropdown',
   component: MultipleDropdown,
@@ -52,8 +50,10 @@ export default {
 export const Basic: StoryObj = (args) => {
   return (
     <MultipleDropdown
-      selectedItems={selectedItems}
-      isDisabled={args.isDisabled}>
+      selectedItems={args.selectedItems}
+      isDisabled={args.isDisabled}
+      isMultiple={args.isMultiple}
+      label={args.label}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -63,7 +63,33 @@ export const Basic: StoryObj = (args) => {
   );
 };
 
-Basic.args = { isDisabled: false };
+Basic.args = {
+  isDisabled: false,
+  isMultiple: true,
+  selectedItems: [items[0], items[2]],
+  label: 'Strategy',
+};
+
+export const Single: StoryObj = (args) => {
+  return (
+    <MultipleDropdown
+      selectedItems={args.selectedItems}
+      isDisabled={args.isDisabled}
+      isMultiple={args.isMultiple}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+};
+
+Single.args = {
+  isDisabled: false,
+  isMultiple: false,
+  selectedItems: [items[0]],
+};
 
 export const Opened: StoryObj = (args) => {
   return (

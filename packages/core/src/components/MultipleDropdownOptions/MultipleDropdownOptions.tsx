@@ -49,6 +49,10 @@ const dropdownOptionButton = css`
   background: none;
   color: inherit;
   border: none;
+
+  & label {
+    margin: 0 16px 0 0;
+  }
 `;
 
 const noItemsMsg = { id: Number.NaN, value: 'No items' };
@@ -58,7 +62,7 @@ const MultipleDropdownOptions = ({
   id,
   children,
 }: IDropdownItemsListProps) => {
-  const { onChange, allItems } = useMultipleDropdownContext();
+  const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
 
   const toggleItem = (value) => {
     const item = allItems[value];
@@ -82,11 +86,16 @@ const MultipleDropdownOptions = ({
         },
       },
       <div css={dropdownOptionButton}>
-        <Checkbox
-          initialState={isActive}
-          externalState={isActive}
-          onChange={toggleItem.bind(null, child.props.value)}
-        />
+        {isMultiple && (
+          <Checkbox
+            initialState={isActive}
+            externalState={isActive}
+            onChange={toggleItem.bind(null, child.props.value)}
+            css={{
+              margin: 0,
+            }}
+          />
+        )}
         {child.props.children || child.props.label || child.props.value}
       </div>,
     );
