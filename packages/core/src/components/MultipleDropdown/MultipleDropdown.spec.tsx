@@ -6,16 +6,16 @@ import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from './index';
 
 const items = [
-  { id: 1, value: 'First Item' },
-  { id: 2, value: 'Second Item' },
-  { id: 3, value: 'Third Item' },
-  { id: 4, value: 'Fourth Item' },
-  { id: 5, value: 'Fifth Item' },
-  { id: 6, value: 'Sixth Item' },
-  { id: 7, value: 'Seventh Item' },
+  { id: 1, label: 'First Item', subText: 'Sub text 1' },
+  { id: 2, label: 'Second Item', subText: 'Sub text 2' },
+  { id: 3, label: 'Third Item', subText: 'Sub text 3' },
+  { id: 4, label: 'Fourth Item', subText: 'Sub text 4' },
+  { id: 5, label: 'Fifth Item', subText: 'Sub text 5' },
+  { id: 6, label: 'Sixth Item', subText: 'Sub text 6' },
+  { id: 7, label: 'Seventh Item', subText: 'Sub text 7' },
 ];
 
-const getListItemValue = (item) => item.value;
+const getListItemValue = (item) => item.label;
 
 describe('MultipleDropdown', () => {
   function setup(props = {}) {
@@ -25,9 +25,9 @@ describe('MultipleDropdown', () => {
       user: userEvent.setup(),
       mockOnChange,
       ...render(
-        <MultipleDropdown onChange={mockOnChange} {...props}>
+        <MultipleDropdown isMultiple onChange={mockOnChange} {...props}>
           {items.map((item, index) => (
-            <DropdownOption key={index} value={item.value} />
+            <DropdownOption key={index} value={item.label} />
           ))}
         </MultipleDropdown>,
       ),
@@ -42,7 +42,7 @@ describe('MultipleDropdown', () => {
       queryByRole,
       getByTestId,
       findByTitle,
-    } = setup();
+    } = setup({ isMultiple: false });
 
     expect(mockOnChange).not.toBeCalled();
 
@@ -139,7 +139,9 @@ describe('MultipleDropdown', () => {
   it('Renders with an empty items array', async () => {
     const mockOnChange = jest.fn();
     const { getByTestId, queryByRole, getByRole } = render(
-      <MultipleDropdown onChange={mockOnChange}>{null}</MultipleDropdown>,
+      <MultipleDropdown isMultiple onChange={mockOnChange}>
+        {null}
+      </MultipleDropdown>,
     );
 
     expect(mockOnChange).not.toBeCalled();
@@ -194,7 +196,7 @@ describe('MultipleDropdown', () => {
     const dropdownEl = getByTestId('dropdown');
     let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
-    expect(dropdownToggleEl).toHaveTextContent(selectedItem.value);
+    expect(dropdownToggleEl).toHaveTextContent(selectedItem.label);
 
     await user.click(dropdownToggleEl);
 
@@ -205,7 +207,7 @@ describe('MultipleDropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
     expect(dropdownToggleEl).toHaveTextContent(getListItemValue(items[0]));
-    expect(mockOnChange).toHaveBeenCalledWith({ value: items[0].value });
+    expect(mockOnChange).toHaveBeenCalledWith({ value: items[0].label });
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
     await within(dropdownToggleEl).findByTitle('Carrot down');
@@ -301,10 +303,10 @@ describe('MultipleDropdown', () => {
     expect(queryByRole('listbox')).toBeInTheDocument();
 
     rerender(
-      <MultipleDropdown isDisabled>
+      <MultipleDropdown isMultiple isDisabled>
         {items.map((item, index) => (
           <DropdownOption key={index} value={item.id}>
-            {item.value}
+            {item.label}
           </DropdownOption>
         ))}
       </MultipleDropdown>,

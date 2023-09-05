@@ -1,41 +1,51 @@
-import { Theme, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { focusOutline } from '@styles/safari-focus-outline';
+import { IDropdownToggleProps, MultipleStylesProps } from './interfaces';
 
-interface IDropdownToggleProps {
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
-  onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;
-  isOpen: boolean;
-  isMultiple?: boolean;
-  disabled?: boolean;
-  children?: React.ReactNode;
-  ariaLabelledby: string;
-  ariaControls: string;
-  colors?: Array<string | undefined>;
-  className?: string;
-}
-
-// TODO: Rewrite other styles: arrow's down color, sizes, checkbox...
-const multipleStyles = (theme: Theme, isOpen: boolean) => css`
-  height: 40px;
-  gap: 14px;
-  padding: 11px 15px 9px 10px;
-  color: ${theme.colors.greyDropdownText};
-  border: 1px solid ${theme.colors.greyDropdownMain};
-  border-radius: 5px;
-  background: ${isOpen ? theme.colors.white : theme.colors.white};
-
-  &:focus {
-    color: ${theme.colors.greyDropdownText};
-    background: ${isOpen ? theme.colors.white : theme.colors.white};
-    &::before {
-      border-color: ${theme.colors.greyDropdownFocused};
-    }
+const multipleStyles = ({ theme, selectedCount = 0 }: MultipleStylesProps) => {
+  let borderColor = theme.colors.greyDropdownMain;
+  let borderColorFocused = theme.colors.greyDropdownFocused;
+  let backgroundColor = theme.colors.white;
+  if (selectedCount > 0) {
+    borderColor = theme.colors.blueDropdownWithSelectedItemsBorder;
+    borderColorFocused = theme.colors.blueDropdownWithSelectedItemsBorder;
+    backgroundColor = theme.colors.blueDropdownWithSelectedItems;
   }
-`;
+
+  return css`
+    justify-content: space-between;
+    height: 40px;
+    padding: 11px 15px 9px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: ${theme.colors.greyDropdownText};
+    border: 1px solid ${borderColor};
+    border-radius: 5px;
+    background: ${backgroundColor};
+    max-width: 250px;
+
+    &:focus {
+      color: ${theme.colors.greyDropdownText};
+      background: ${backgroundColor};
+      &::before {
+        border-color: ${borderColorFocused};
+      }
+    }
+
+    svg {
+      path {
+        stroke: ${theme.colors.greyDarker};
+      }
+    }
+  `;
+};
 
 export const DropdownToggleBase = styled.button<
-  Pick<IDropdownToggleProps, 'colors' | 'isOpen' | 'disabled' | 'isMultiple'>
+  Pick<
+    IDropdownToggleProps,
+    'colors' | 'isOpen' | 'disabled' | 'isMultiple' | 'selectedCount'
+  >
 >`
   ${({ isMultiple, theme }) =>
     isMultiple
@@ -90,8 +100,12 @@ export const DropdownToggleBase = styled.button<
     }
   }
 
-  ${({ isMultiple, isOpen, theme }) =>
-    isMultiple && multipleStyles(theme, isOpen)}
+  ${({ isMultiple, selectedCount, theme }) =>
+    isMultiple &&
+    multipleStyles({
+      theme,
+      selectedCount,
+    })}
 `;
 
 const DropdownToggle = ({
@@ -99,6 +113,7 @@ const DropdownToggle = ({
   onFocus,
   isOpen,
   isMultiple,
+  selectedCount,
   disabled,
   children,
   ariaLabelledby,
@@ -111,6 +126,7 @@ const DropdownToggle = ({
     colors={colors}
     isOpen={isOpen}
     isMultiple={isMultiple}
+    selectedCount={selectedCount}
     onClick={(e) => {
       // Safari doesn't support focus on buttons 🤔
       (e.currentTarget as HTMLButtonElement).focus();

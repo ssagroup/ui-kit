@@ -13,6 +13,13 @@ import { IDropdownOption } from '@components/DropdownOptions/types';
 import { DropdownContextType, IDropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
 import MultipleDropdownNotification from '@components/MultipleDropdownNotification/MultipleDropdownNotification';
+import styled from '@emotion/styled';
+
+const DropdownPlaceholderLabel = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 /**
  * The structure of the component:
@@ -141,13 +148,16 @@ const MultipleDropdown = <T extends IDropdownOption>({
           colors={colors}
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}
-          isMultiple={isMultiple}>
+          isMultiple={isMultiple}
+          selectedCount={values.length}>
           {isMultiple ? (
             <>
-              {label}
-              {values.length > 0 ? `:${values[0]}` : ''}
+              <DropdownPlaceholderLabel>
+                {label}
+                {values.length > 0 ? `: ${values[0]}` : ''}
+              </DropdownPlaceholderLabel>
               {values.length > 1 ? (
-                <MultipleDropdownNotification>
+                <MultipleDropdownNotification as={'div'}>
                   +{values.length - 1}
                 </MultipleDropdownNotification>
               ) : (

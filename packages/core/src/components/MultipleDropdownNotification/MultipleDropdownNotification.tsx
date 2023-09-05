@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 
 const MultipleDropdownNotification = styled.span`
-  display: inline-block;
+  display: flex;
 
   width: 18px;
   height: 18px;
+  min-width: 18px;
+  justify-content: center;
 
   padding: 0;
 

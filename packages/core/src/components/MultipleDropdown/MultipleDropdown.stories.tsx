@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
-// import styled from '@emotion/styled';
-// import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import DropdownOption from '@components/DropdownOption';
 
 import MultipleDropdown from './MultipleDropdown';
+import { css } from '@emotion/react';
 
 const items = [
-  { value: 1, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 1, label: 'One lorem ipsum One lorem ipsum', subText: 'subtext' },
   { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
   { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
 ];
@@ -49,11 +49,7 @@ export default {
 
 export const Basic: StoryObj = (args) => {
   return (
-    <MultipleDropdown
-      selectedItems={args.selectedItems}
-      isDisabled={args.isDisabled}
-      isMultiple={args.isMultiple}
-      label={args.label}>
+    <MultipleDropdown {...args}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -73,7 +69,7 @@ Basic.args = {
 export const Single: StoryObj = (args) => {
   return (
     <MultipleDropdown
-      selectedItems={args.selectedItems}
+      // selectedItems={args.selectedItems}
       isDisabled={args.isDisabled}
       isMultiple={args.isMultiple}>
       {items.map((item) => (
@@ -93,7 +89,11 @@ Single.args = {
 
 export const Opened: StoryObj = (args) => {
   return (
-    <MultipleDropdown selectedItems={items[2]} {...args}>
+    <MultipleDropdown
+      selectedItems={args.selectedItems}
+      isMultiple={args.isMultiple}
+      label={args.label}
+      {...args}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -103,11 +103,16 @@ export const Opened: StoryObj = (args) => {
   );
 };
 
-Opened.args = { isOpen: true, isDisabled: false };
+Opened.args = {
+  isOpen: true,
+  isDisabled: false,
+  label: 'Strategy',
+  isMultiple: true,
+};
 
 export const Simple: StoryObj = (args) => {
   return (
-    <MultipleDropdown isDisabled={args.isDisabled}>
+    <MultipleDropdown {...args}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} />
       ))}
@@ -115,66 +120,67 @@ export const Simple: StoryObj = (args) => {
   );
 };
 
-Simple.args = { isDisabled: false };
+Simple.args = { isDisabled: false, label: 'Strategy' };
 
 export const NoItems: StoryObj = () => {
-  return <MultipleDropdown>{null}</MultipleDropdown>;
+  return <MultipleDropdown label="Strategy">{null}</MultipleDropdown>;
 };
 
 NoItems.args = { isDisabled: false };
 
-// export const Custom: StoryObj = (args) => {
-//   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
-//   const CustomOption = styled(DropdownOption)`
-//     width: auto;
-//     padding: 10px;
+export const Custom: StoryObj = (args) => {
+  // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
+  const CustomOption = styled(DropdownOption)`
+    width: auto;
+    padding: 10px;
 
-//     text-align: left;
-//     line-height: 18px;
-//     font-size: 16px;
+    text-align: left;
+    line-height: 18px;
+    font-size: 16px;
 
-//     background: hotpink;
-//     color: white;
+    background: hotpink;
+    color: white;
 
-//     :hover {
-//       background: pink;
-//     }
+    :hover {
+      background: pink;
+    }
 
-//     b {
-//       color: white;
-//     }
-//   `;
+    b {
+      color: white;
+    }
+  `;
 
-//   return (
-//     <MultipleDropdown
-//       isDisabled={args.isDisabled}
-//       selectedItems={items[2]}
-//       css={css`
-//         background: #ff947b;
-//         :focus {
-//           background: #ffb566;
-//         }
-//         &[aria-expanded='true'] {
-//           color: #975875;
+  return (
+    <MultipleDropdown
+      isDisabled={args.isDisabled}
+      selectedItems={[items[2]]}
+      label="Strategy"
+      css={css`
+        background: #ff947b;
+        :focus {
+          background: #ffb566;
+        }
+        &[aria-expanded='true'] {
+          color: #975875;
 
-//           svg {
-//             path {
-//               stroke: #975875;
-//             }
-//           }
-//         }
-//       `}>
-//       {items.map((item) => (
-//         <CustomOption key={item.id} value={item.id} label={item.value}>
-//           {item.value}
-//           &nbsp;|&nbsp;
-//           <b>{item.subText}</b>
-//         </CustomOption>
-//       ))}
-//     </MultipleDropdown>
-//   );
-// };
+          svg {
+            path {
+              stroke: #975875;
+            }
+          }
+        }
+      `}>
+      {items.map((item) => (
+        <CustomOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+          &nbsp;|&nbsp;
+          <b>{item.subText}</b>
+        </CustomOption>
+      ))}
+    </MultipleDropdown>
+  );
+};
 
-// Custom.args = {
-//   isDisabled: false,
-// };
+Custom.args = {
+  isDisabled: false,
+};

@@ -97,6 +97,7 @@ export const Custom: StoryObj = (args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
   const CustomOption = styled(DropdownOption)`
     width: auto;
+    height: auto;
     padding: 10px;
 
     text-align: left;

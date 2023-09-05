@@ -1,14 +1,30 @@
 import React from 'react';
+import { Theme, css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 interface IDropdownItemProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   isActive?: boolean;
+  isMultiple?: boolean;
   noHover?: boolean;
   value?: string | number;
   label?: string | number;
   children?: React.ReactNode;
 }
+
+interface MultipleStylesProps {
+  theme: Theme;
+}
+
+const multipleStyles = ({ theme }: MultipleStylesProps) => {
+  return css`
+    background: none;
+    color: ${theme.colors.greyDisabled};
+    &:hover {
+      background: none;
+    }
+  `;
+};
 
 const DropdownOption = styled.li<IDropdownItemProps>`
   overflow: hidden;
@@ -23,6 +39,12 @@ const DropdownOption = styled.li<IDropdownItemProps>`
   &:hover {
     background: ${({ theme }) => theme.colors.greyLighter};
   }
+
+  ${({ isMultiple, theme }) =>
+    isMultiple &&
+    multipleStyles({
+      theme,
+    })}
 `;
 
 export default DropdownOption;

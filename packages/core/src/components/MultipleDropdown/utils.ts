@@ -19,8 +19,8 @@ export const getActiveItems = <
   allItems: T;
   placeholder: string;
 }): ReactNode[] => {
-  const allItemsArray = Object.values(allItems);
-  return allItemsArray
+  const activeItems = Object.values(allItems)
     .filter((item) => item.isSelected)
     .map((activeItem) => getActiveItem({ activeItem, placeholder }));
+  return activeItems.length ? activeItems : [placeholder];
 };

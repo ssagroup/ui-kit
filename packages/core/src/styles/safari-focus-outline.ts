@@ -28,6 +28,8 @@ export const outlineStyles: OutlineFn = (
   right: 0px;
   bottom: 0px;
   left: 0px;
-  border: ${`1px solid ${theme.colors[color || 'greyDarker']}`};
+  border-style: solid;
+  border-width: 1px;
+  border-color: ${theme.colors[color || 'greyDarker']};
   border-radius: ${borderRadius};
 `;

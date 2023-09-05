@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
 import Checkbox from '@components/Checkbox';
 import { useMultipleDropdownContext } from '@components/MultipleDropdown/MultipleDropdown.context';
@@ -9,7 +8,6 @@ import DropdownOption from '@components/DropdownOption';
 import { IDropdownItemsListProps } from './types';
 import { IDropdownOption } from '../..';
 
-// TODO: Make common?
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   position: absolute;
   width: 100%;
@@ -33,27 +31,55 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
 `;
 
-// TODO: Make common?
-const dropdownOptionButton = css`
-  display: block;
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.813rem;
-  outline: inherit;
-  text-align: left;
+const DropdownOptionButton = styled.div<{
+  checked?: boolean;
+}>(({ theme }) => ({
+  display: 'block',
+  cursor: 'pointer',
+  font: 'inherit',
+  fontSize: '0.813rem',
+  outline: 'inherit',
+  textAlign: 'left',
 
-  width: 100%;
-  padding: 0;
-  margin: 0;
+  width: '100%',
+  padding: 0,
+  margin: 0,
 
-  background: none;
-  color: inherit;
-  border: none;
+  background: 'none',
+  color: 'inherit',
+  border: 'none',
 
-  & label {
-    margin: 0 16px 0 0;
-  }
-`;
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+
+  userSelect: 'none',
+
+  '& label': {
+    margin: '0 16px 0 0',
+  },
+
+  '&:has(> label > input:checked)': {
+    fontWeight: '800',
+  },
+
+  [`&:hover input:not(:checked, :indeterminate) + div::before`]: {
+    borderColor: theme.colors.greyDropdownFocused,
+  },
+  'input + div': {
+    borderRadius: '2px',
+    '&::before': {
+      borderRadius: '2px',
+    },
+  },
+  'input:not(:checked, :indeterminate) + div::before': {
+    border: `1.5px solid ${theme.colors.greyDropdownMain}`,
+  },
+  [`input:checked + div::before,
+  input:indeterminate + div::before`]: {
+    background: theme.colors.blueNotification,
+  },
+}));
 
 const noItemsMsg = { id: Number.NaN, value: 'No items' };
 
@@ -80,12 +106,13 @@ const MultipleDropdownOptions = ({
       {
         ...child.props,
         isActive,
+        isMultiple,
         'aria-selected': isActive,
         onClick: () => {
           toggleItem(child.props.value);
         },
       },
-      <div css={dropdownOptionButton}>
+      <DropdownOptionButton checked={isActive}>
         {isMultiple && (
           <Checkbox
             initialState={isActive}
@@ -97,14 +124,16 @@ const MultipleDropdownOptions = ({
           />
         )}
         {child.props.children || child.props.label || child.props.value}
-      </div>,
+      </DropdownOptionButton>,
     );
   });
 
   if (options.length === 0) {
     options.push(
       <DropdownOption key={noItemsMsg.id} value={''} aria-selected={false}>
-        <button css={dropdownOptionButton}>{noItemsMsg.value}</button>
+        <DropdownOptionButton as="button">
+          {noItemsMsg.value}
+        </DropdownOptionButton>
       </DropdownOption>,
     );
   }
