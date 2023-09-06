@@ -4,7 +4,6 @@ type MapObjIndexedFn<T, U> = (
   obj: Record<string, T>,
 ) => U;
 
-// TODO: test
 export const mapObjIndexed = <T, U>(
   fn: MapObjIndexedFn<T, U>,
   obj: Record<string, T>,

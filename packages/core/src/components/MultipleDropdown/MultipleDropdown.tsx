@@ -24,9 +24,9 @@ const DropdownPlaceholderLabel = styled.div`
 /**
  * The structure of the component:
  *
- * Dropdown
+ * MultipleDropdown
  *   DropdownToggle
- *   DropdownOptions
+ *   MultipleDropdownOptions
  *     DropdownOption
  *
  * Aria attributes are set according to

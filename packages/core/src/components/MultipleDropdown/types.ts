@@ -15,6 +15,5 @@ export type IDropdownProps<P extends IDropdownOption> = {
 export interface DropdownContextType {
   onChange: (item: IDropdownOption) => void;
   isMultiple?: boolean;
-  // activeItems: IDropdownOption[];
   allItems: Record<string | number, IDropdownOption>;
 }
