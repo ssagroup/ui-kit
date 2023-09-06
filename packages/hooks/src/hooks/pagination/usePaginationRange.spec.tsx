@@ -15,4 +15,14 @@ describe('usePaginationRange', () => {
     rerender({ pagesCount: 10, selectedPage: 6 });
     expect(result.current).toEqual([1, -1, 5, 6, 7, -1, 10]);
   });
+
+  it('Returns the range when a page is not selected', () => {
+    const { result } = renderHook(usePaginationRange, {
+      initialProps: {
+        pagesCount: 10,
+      },
+    });
+
+    expect(result.current).toEqual([1, 2, 3, -1, 10]);
+  });
 });

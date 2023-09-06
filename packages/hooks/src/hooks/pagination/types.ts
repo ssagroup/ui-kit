@@ -1,4 +1,4 @@
 export interface IUsePaginationRangeProps {
   pagesCount: number;
-  selectedPage: number;
+  selectedPage?: number;
 }
