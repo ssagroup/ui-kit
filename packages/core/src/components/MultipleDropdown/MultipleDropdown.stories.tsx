@@ -1,20 +1,20 @@
 import { Meta, StoryObj } from '@storybook/react';
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
 import DropdownOption from '@components/DropdownOption';
 
-import Dropdown from './Dropdown';
+import MultipleDropdown from './MultipleDropdown';
+import { css } from '@emotion/react';
 
 const items = [
-  { id: 1, value: 'One lorem ipsum', subText: 'subtext' },
-  { id: 2, value: 'Two lorem ipsum', subText: 'subtext' },
-  { id: 3, value: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 1, label: 'One lorem ipsum One lorem ipsum', subText: 'subtext' },
+  { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
 ];
 
 export default {
-  title: 'Components/Dropdown',
-  component: Dropdown,
+  title: 'Components/MultipleDropdown',
+  component: MultipleDropdown,
   argTypes: {
     onChange: {
       control: {
@@ -45,50 +45,83 @@ export default {
       );
     },
   ],
-} as Meta<typeof Dropdown>;
+} as Meta<typeof MultipleDropdown>;
 
 export const Basic: StoryObj = (args) => {
   return (
-    <Dropdown selectedItem={items[2]} isDisabled={args.isDisabled}>
+    <MultipleDropdown {...args}>
       {items.map((item) => (
-        <DropdownOption key={item.id} value={item.id}>
-          {item.value}
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
         </DropdownOption>
       ))}
-    </Dropdown>
+    </MultipleDropdown>
   );
 };
 
-Basic.args = { isDisabled: false };
+Basic.args = {
+  isDisabled: false,
+  isMultiple: true,
+  selectedItems: [items[0], items[2]],
+  label: 'Strategy',
+};
+
+export const Single: StoryObj = (args) => {
+  return (
+    <MultipleDropdown isDisabled={args.isDisabled} isMultiple={args.isMultiple}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+};
+
+Single.args = {
+  isDisabled: false,
+  isMultiple: false,
+  selectedItems: [items[0]],
+};
 
 export const Opened: StoryObj = (args) => {
   return (
-    <Dropdown selectedItem={items[2]} {...args}>
+    <MultipleDropdown
+      selectedItems={args.selectedItems}
+      isMultiple={args.isMultiple}
+      label={args.label}
+      {...args}>
       {items.map((item) => (
-        <DropdownOption key={item.id} value={item.id}>
-          {item.value}
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
         </DropdownOption>
       ))}
-    </Dropdown>
+    </MultipleDropdown>
   );
 };
 
-Opened.args = { isOpen: true, isDisabled: false };
+Opened.args = {
+  isOpen: true,
+  isDisabled: false,
+  label: 'Strategy',
+  isMultiple: true,
+  selectedItems: [items[1]],
+};
 
 export const Simple: StoryObj = (args) => {
   return (
-    <Dropdown isDisabled={args.isDisabled}>
+    <MultipleDropdown {...args}>
       {items.map((item) => (
-        <DropdownOption key={item.id} value={item.value} />
+        <DropdownOption key={item.value} value={item.value} />
       ))}
-    </Dropdown>
+    </MultipleDropdown>
   );
 };
 
-Simple.args = { isDisabled: false };
+Simple.args = { isDisabled: false, label: 'Strategy' };
 
 export const NoItems: StoryObj = () => {
-  return <Dropdown>{null}</Dropdown>;
+  return <MultipleDropdown label="Strategy">{null}</MultipleDropdown>;
 };
 
 NoItems.args = { isDisabled: false };
@@ -97,7 +130,6 @@ export const Custom: StoryObj = (args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
   const CustomOption = styled(DropdownOption)`
     width: auto;
-    height: auto;
     padding: 10px;
 
     text-align: left;
@@ -117,9 +149,10 @@ export const Custom: StoryObj = (args) => {
   `;
 
   return (
-    <Dropdown
+    <MultipleDropdown
       isDisabled={args.isDisabled}
-      selectedItem={items[2]}
+      selectedItems={[items[2]]}
+      label="Strategy"
       css={css`
         background: #ff947b;
         :focus {
@@ -136,13 +169,13 @@ export const Custom: StoryObj = (args) => {
         }
       `}>
       {items.map((item) => (
-        <CustomOption key={item.id} value={item.id} label={item.value}>
-          {item.value}
+        <CustomOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
           &nbsp;|&nbsp;
           <b>{item.subText}</b>
         </CustomOption>
       ))}
-    </Dropdown>
+    </MultipleDropdown>
   );
 };
 

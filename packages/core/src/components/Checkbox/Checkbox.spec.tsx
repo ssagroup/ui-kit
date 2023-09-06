@@ -103,6 +103,14 @@ describe('Checkbox', () => {
     await checkToggle(getByRole, mockOnChange, labelEl, isChecked);
   });
 
+  it('Renders with the external state passed in props', async () => {
+    const isChecked = true;
+    const { getByRole, mockOnChange } = setup({ externalState: isChecked });
+
+    const labelEl = checkLabel();
+    await checkToggle(getByRole, mockOnChange, labelEl, isChecked);
+  });
+
   it('Renders in the indeterminate state', () => {
     const { getByRole, rerender, mockOnChange } = setup({
       isIndeterminate: true,

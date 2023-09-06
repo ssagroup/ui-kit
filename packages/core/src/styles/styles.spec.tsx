@@ -9,10 +9,13 @@ describe('Style', () => {
     `;
 
     const { getByRole } = render(<Component />);
+    const button = getByRole('button');
 
-    expect(getByRole('button')).toHaveStyleRule(
-      'border',
-      `1px solid ${theme.colors['greyDarker']}`,
+    expect(button).toHaveStyleRule('border-width', `1px`);
+    expect(button).toHaveStyleRule('border-style', `solid`);
+    expect(button).toHaveStyleRule(
+      'border-color',
+      `${theme.colors['greyDarker']}`,
     );
   });
 });

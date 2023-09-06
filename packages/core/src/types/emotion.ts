@@ -28,6 +28,9 @@ type Colors = MakeColors<
     'greyShadow',
     'greyOutline',
     'greyShadowHover',
+    'greyDropdownMain',
+    'greyDropdownFocused',
+    'greyDropdownText',
     'redLighter',
     'redLighter40',
     'red',
@@ -66,6 +69,8 @@ type Colors = MakeColors<
     'purpleDark40',
     'blue',
     'blue20',
+    'blueDropdownWithSelectedItems',
+    'blueDropdownWithSelectedItemsBorder',
     'blueLighter',
     'blueLighter20',
     'blueLighter40',
@@ -75,6 +80,7 @@ type Colors = MakeColors<
     'blueLightLighter',
     'blueLightLighter20',
     'blueLightLighter40',
+    'blueNotification',
   ]
 >;
 
