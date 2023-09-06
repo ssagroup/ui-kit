@@ -60,28 +60,32 @@ const MultipleDropdown = <T extends IDropdownOption>({
     if (isDisabled || !item) {
       return;
     }
+    if (!isMultiple && optionsWithKey[item.value].isSelected) {
+      return;
+    }
+    let newOptionsWithKey = {};
     if (isMultiple) {
-      setOptionsWithKey((prevState) => ({
-        ...prevState,
+      newOptionsWithKey = {
+        ...optionsWithKey,
         [item.value]: {
-          ...prevState[item.value],
-          isSelected: !prevState[item.value].isSelected,
+          ...optionsWithKey[item.value],
+          isSelected: !optionsWithKey[item.value].isSelected,
         },
-      }));
+      };
+      setOptionsWithKey(newOptionsWithKey);
     } else {
-      setOptionsWithKey((prevState) =>
-        mapObjIndexed(
-          (option) => ({
-            ...option,
-            isSelected: option.value === item.value,
-          }),
-          prevState,
-        ),
+      newOptionsWithKey = mapObjIndexed(
+        (option) => ({
+          ...option,
+          isSelected: option.value === item.value,
+        }),
+        optionsWithKey,
       );
+      setOptionsWithKey(newOptionsWithKey);
       setIsOpen(false);
     }
 
-    handleChange && handleChange(Object.values(optionsWithKey));
+    handleChange && handleChange(Object.values(newOptionsWithKey));
   };
 
   useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));

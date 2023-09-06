@@ -57,6 +57,19 @@ const DropdownOptionButton = styled.div<{
 
   '& label': {
     margin: '0 16px 0 0',
+    '& input:not(:checked, :indeterminate) + div::before': {
+      border: `1.5px solid ${theme.colors.greyDropdownMain}`,
+    },
+    [`& input:checked + div::before,
+    & input:indeterminate + div::before`]: {
+      background: theme.colors.blueNotification,
+    },
+    '& input + div': {
+      borderRadius: '2px',
+      '&::before': {
+        borderRadius: '2px',
+      },
+    },
   },
 
   '&:has(> label > input:checked)': {
@@ -65,19 +78,6 @@ const DropdownOptionButton = styled.div<{
 
   [`&:hover input:not(:checked, :indeterminate) + div::before`]: {
     borderColor: theme.colors.greyDropdownFocused,
-  },
-  'input + div': {
-    borderRadius: '2px',
-    '&::before': {
-      borderRadius: '2px',
-    },
-  },
-  'input:not(:checked, :indeterminate) + div::before': {
-    border: `1.5px solid ${theme.colors.greyDropdownMain}`,
-  },
-  [`input:checked + div::before,
-  input:indeterminate + div::before`]: {
-    background: theme.colors.blueNotification,
   },
 }));
 
@@ -112,7 +112,7 @@ const MultipleDropdownOptions = ({
           toggleItem(child.props.value);
         },
       },
-      <DropdownOptionButton checked={isActive}>
+      <DropdownOptionButton checked={isActive} role="button">
         {isMultiple && (
           <Checkbox
             initialState={isActive}

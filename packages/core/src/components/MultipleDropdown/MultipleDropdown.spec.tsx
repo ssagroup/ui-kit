@@ -6,14 +6,17 @@ import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from './index';
 
 const items = [
-  { id: 1, label: 'First Item', subText: 'Sub text 1' },
-  { id: 2, label: 'Second Item', subText: 'Sub text 2' },
-  { id: 3, label: 'Third Item', subText: 'Sub text 3' },
-  { id: 4, label: 'Fourth Item', subText: 'Sub text 4' },
-  { id: 5, label: 'Fifth Item', subText: 'Sub text 5' },
-  { id: 6, label: 'Sixth Item', subText: 'Sub text 6' },
-  { id: 7, label: 'Seventh Item', subText: 'Sub text 7' },
+  { value: 1, label: 'First Item', subText: 'Sub text 1' },
+  { value: 2, label: 'Second Item', subText: 'Sub text 2' },
+  { value: 3, label: 'Third Item', subText: 'Sub text 3' },
+  { value: 4, label: 'Fourth Item', subText: 'Sub text 4' },
+  { value: 5, label: 'Fifth Item', subText: 'Sub text 5' },
+  { value: 6, label: 'Sixth Item', subText: 'Sub text 6' },
+  { value: 7, label: 'Seventh Item', subText: 'Sub text 7' },
 ];
+const selectedItems = [items[2], items[4]];
+const selectedItemsValues = selectedItems.map((item) => item.value);
+const placeholder = 'Strategy';
 
 const getListItemValue = (item) => item.label;
 
@@ -27,7 +30,9 @@ describe('MultipleDropdown', () => {
       ...render(
         <MultipleDropdown isMultiple onChange={mockOnChange} {...props}>
           {items.map((item, index) => (
-            <DropdownOption key={index} value={item.label} />
+            <DropdownOption key={index} value={item.value}>
+              {item.label}
+            </DropdownOption>
           ))}
         </MultipleDropdown>,
       ),
@@ -42,7 +47,7 @@ describe('MultipleDropdown', () => {
       queryByRole,
       getByTestId,
       findByTitle,
-    } = setup({ isMultiple: false });
+    } = setup();
 
     expect(mockOnChange).not.toBeCalled();
 
@@ -84,9 +89,9 @@ describe('MultipleDropdown', () => {
   });
 
   it('Renders with a selected item', async () => {
-    const selectedItem = items[2];
     const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup({
-      selectedItem,
+      selectedItems,
+      label: placeholder,
     });
 
     expect(mockOnChange).not.toBeCalled();
@@ -94,7 +99,9 @@ describe('MultipleDropdown', () => {
     const dropdownEl = getByTestId('dropdown');
 
     let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
-    expect(dropdownToggleEl).toHaveTextContent(getListItemValue(selectedItem));
+    expect(dropdownToggleEl).toHaveTextContent(
+      placeholder + ': ' + selectedItems[0].label,
+    );
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
@@ -127,9 +134,8 @@ describe('MultipleDropdown', () => {
         itemListValue,
       );
 
-      if (listItem.id === selectedItem.id) {
+      if (selectedItemsValues.includes(listItem.value)) {
         expect(listItemEl).toHaveAttribute('aria-selected', 'true');
-        expect(listItemEl).toHaveStyle('background: #DEE1EC');
       } else {
         expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       }
@@ -180,23 +186,27 @@ describe('MultipleDropdown', () => {
     // Items list hides when clicked
     await userEvent.click(within(listItemEl).getByRole('button'));
 
-    expect(queryByRole('listbox')).not.toBeInTheDocument();
+    expect(within(listItemEl).getByRole('button')).toHaveTextContent(
+      'No items',
+    );
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
     expect(dropdownToggleEl).toHaveTextContent('Select something');
   });
 
-  it("Chooses an item when it's clicked", async () => {
-    const selectedItem = items[2];
+  it("Chooses an item when it's clicked [isMultiple = true]", async () => {
     const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup({
-      selectedItem,
+      selectedItems,
+      label: placeholder,
     });
 
     const dropdownEl = getByTestId('dropdown');
     let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
-    expect(dropdownToggleEl).toHaveTextContent(selectedItem.label);
+    expect(dropdownToggleEl).toHaveTextContent(
+      'Strategy: Third Item+1Carrot down',
+    );
 
     await user.click(dropdownToggleEl);
 
@@ -207,7 +217,50 @@ describe('MultipleDropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
     expect(dropdownToggleEl).toHaveTextContent(getListItemValue(items[0]));
-    expect(mockOnChange).toHaveBeenCalledWith({ value: items[0].label });
+    expect(mockOnChange).toHaveBeenCalledWith([
+      { children: items[0].label, isSelected: true, value: 1 },
+      { children: items[1].label, isSelected: false, value: 2 },
+      { children: items[2].label, isSelected: true, value: 3 },
+      { children: items[3].label, isSelected: false, value: 4 },
+      { children: items[4].label, isSelected: true, value: 5 },
+      { children: items[5].label, isSelected: false, value: 6 },
+      { children: items[6].label, isSelected: false, value: 7 },
+    ]);
+    expect(queryByRole('listbox')).toBeInTheDocument();
+
+    await within(dropdownToggleEl).findByTitle('Carrot up');
+  });
+
+  it("Chooses an item when it's clicked [isMultiple = false]", async () => {
+    const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup({
+      selectedItems: [items[2]],
+      label: placeholder,
+      isMultiple: false,
+    });
+
+    const dropdownEl = getByTestId('dropdown');
+    let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    expect(dropdownToggleEl).toHaveTextContent('Third ItemCarrot down');
+
+    await user.click(dropdownToggleEl);
+
+    const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+
+    await user.click(listItemEls[0]);
+
+    dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    expect(dropdownToggleEl).toHaveTextContent(getListItemValue(items[0]));
+    expect(mockOnChange).toHaveBeenCalledWith([
+      { children: items[0].label, isSelected: true, value: 1 },
+      { children: items[1].label, isSelected: false, value: 2 },
+      { children: items[2].label, isSelected: false, value: 3 },
+      { children: items[3].label, isSelected: false, value: 4 },
+      { children: items[4].label, isSelected: false, value: 5 },
+      { children: items[5].label, isSelected: false, value: 6 },
+      { children: items[6].label, isSelected: false, value: 7 },
+    ]);
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
     await within(dropdownToggleEl).findByTitle('Carrot down');
@@ -230,9 +283,10 @@ describe('MultipleDropdown', () => {
   });
 
   it('Do not trigger onChange if clicked on the same option', async () => {
-    const selectedItem = items[2];
     const { user, mockOnChange, getByRole, getByTestId } = setup({
-      selectedItem,
+      selectedItems: [items[2]],
+      label: placeholder,
+      isMultiple: false,
     });
 
     const dropdownEl = getByTestId('dropdown');
@@ -305,7 +359,7 @@ describe('MultipleDropdown', () => {
     rerender(
       <MultipleDropdown isMultiple isDisabled>
         {items.map((item, index) => (
-          <DropdownOption key={index} value={item.id}>
+          <DropdownOption key={index} value={item.value}>
             {item.label}
           </DropdownOption>
         ))}

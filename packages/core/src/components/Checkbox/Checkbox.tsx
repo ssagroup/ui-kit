@@ -32,7 +32,9 @@ const Checkbox = ({
   }, [isIndeterminate, isChecked]);
 
   useEffect(() => {
-    setIsChecked(Boolean(externalState));
+    if (typeof externalState === 'boolean') {
+      setIsChecked(Boolean(externalState));
+    }
   }, [externalState]);
 
   const checkboxId = id || autoGenId;
