@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { focusOutline } from '@styles/safari-focus-outline';
-import { IDropdownToggleProps, MultipleStylesProps } from './interfaces';
+import { IDropdownToggleProps, MultipleStylesProps } from './types';
 
 const multipleStyles = ({ theme, selectedCount = 0 }: MultipleStylesProps) => {
   let borderColor = theme.colors.greyDropdownMain;

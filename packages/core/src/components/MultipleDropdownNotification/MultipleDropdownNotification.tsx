@@ -1,29 +1,13 @@
+import BadgeBase from '@components/Badge/BadgeBase';
 import styled from '@emotion/styled';
 
-const MultipleDropdownNotification = styled.span`
-  display: flex;
-
-  width: 18px;
-  height: 18px;
+const MultipleDropdownNotification = styled(BadgeBase)`
   min-width: 18px;
-  justify-content: center;
-
-  padding: 0;
-
-  font-family: Manrope, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-
-  border-radius: 50%;
-
-  text-align: center;
-  color: #fff;
-
+  width: 18px;
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.blueNotification};
-
-  white-space: pre;
+  font-size: 10px;
+  border-radius: 50%;
 `;
 
 export default MultipleDropdownNotification;
