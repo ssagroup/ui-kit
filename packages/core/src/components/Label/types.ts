@@ -1,9 +1,9 @@
 import { MouseEventHandler } from 'react';
+import { CommonProps } from '../..';
 
-export interface LabelProps {
+export interface LabelProps extends CommonProps {
   htmlFor?: string;
   children: React.ReactNode;
-  className?: string;
   onMouseEnter?: MouseEventHandler<HTMLLabelElement>;
   onMouseLeave?: MouseEventHandler<HTMLLabelElement>;
 }

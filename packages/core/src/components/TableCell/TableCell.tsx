@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { CommonProps } from '../..';
 
-const TableCell = styled.td<{ align?: string }>`
+const TableCell = styled.td<{ align?: string } & CommonProps>`
   display: table-cell;
 
   vertical-align: inherit;

@@ -1,4 +1,4 @@
-import { IDropdownOption } from '@components/DropdownOptions';
+import { IDropdownOption } from '@components/DropdownOptions/types';
 
 export type IDropdownProps<P extends IDropdownOption> = {
   selectedItems?: P[];
@@ -12,8 +12,8 @@ export type IDropdownProps<P extends IDropdownOption> = {
   label?: string;
 };
 
-export interface DropdownContextType {
-  onChange: (item: IDropdownOption) => void;
+export interface DropdownContextType<T extends IDropdownOption> {
+  onChange: (item: T) => void;
   isMultiple?: boolean;
-  allItems: Record<string | number, IDropdownOption>;
+  allItems: Record<string | number, T>;
 }

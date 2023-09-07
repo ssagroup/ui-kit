@@ -25,7 +25,7 @@ export const labelIconVertical = css`
 export const labelText = css`
   text-align: center;
 `;
-export const labelTitle = (color) => css`
+export const labelTitle = (color: string) => css`
   display: flex;
   align-items: center;
   justify-content: center;

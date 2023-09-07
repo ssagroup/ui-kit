@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { CommonProps } from '../..';
 
-const BadgeBase = styled.div`
+const BadgeBase = styled.div<CommonProps>`
   display: inline-block;
 
   font-family: Manrope, sans-serif;

@@ -4,6 +4,8 @@ import { HeaderTitle, GridWrapper, colors } from '@components/Badge/helpers';
 
 import ProgressCircle from './index';
 
+type Args = Parameters<typeof ProgressCircle>[0];
+
 export default {
   title: 'Components/Progress/Circle',
   component: ProgressCircle,
@@ -50,7 +52,7 @@ export const Default = {
 
 const sizes = [80, 130, 180];
 
-export const SizesAndColors: StoryObj<typeof ProgressCircle> = (args) => (
+export const SizesAndColors: StoryObj<typeof ProgressCircle> = (args: Args) => (
   <GridWrapper>
     <HeaderTitle>Size: 80</HeaderTitle>
     <HeaderTitle>Size: 130</HeaderTitle>

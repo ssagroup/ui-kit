@@ -1,4 +1,6 @@
-export interface IconProps {
+import { CommonProps } from '../..';
+
+export interface IconProps extends CommonProps {
   name: keyof IMapIcons;
   color?: string;
   size?: number;

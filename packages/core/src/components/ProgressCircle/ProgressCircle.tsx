@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ProgressCircleBase } from './ProgressCircleBase';
 import { ProgressCircleOuter } from './ProgressCircleOuter';
 import { ProgressCircleInner } from './ProgressCircleInner';
-import { ProgressCircleProps } from './types';
+import { ProgressCircleProps } from './typed';
 
 const ProgressCircle = ({
   max,

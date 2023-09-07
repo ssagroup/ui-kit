@@ -1,5 +1,7 @@
+export type RGBString = `rgb${string}`;
+
 type MakeColors<T extends Array<string>> = {
-  [K in T[number]]?: string;
+  [K in T[number]]?: RGBString;
 };
 
 type Colors = MakeColors<
@@ -84,12 +86,21 @@ type Colors = MakeColors<
   ]
 >;
 
+export type ColorsKeys = keyof Colors;
+
+type MediaQueryString = `@media${string}`;
+
 export interface Theme {
   colors: Colors;
   mediaQueries: {
-    sm;
-    md;
-    lg;
-    xlg;
+    sm: MediaQueryString;
+    md: MediaQueryString;
+    lg: MediaQueryString;
+    xlg: MediaQueryString;
   };
+}
+
+export interface CommonProps {
+  as?: React.ElementType;
+  className?: string;
 }

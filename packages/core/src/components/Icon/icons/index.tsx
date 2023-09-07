@@ -1,4 +1,4 @@
-import { IconProps, IMapIcons } from '../Icons.types';
+import { IconProps, IMapIcons } from '../types';
 
 import { Calendar } from './Calendar';
 import { Diet } from './Diet';

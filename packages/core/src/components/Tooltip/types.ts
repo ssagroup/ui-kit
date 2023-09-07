@@ -5,10 +5,12 @@ import {
   Placement,
 } from '@floating-ui/react';
 import { PointTooltipProps, Point } from '@nivo/line';
-import { IMapIcons } from '@components/Icon/Icons.types';
-import { types } from '@components/ProgressBar';
+import { IMapIcons } from '@components/Icon/types';
+import { ProgressBarProps } from '@components/ProgressBar/types';
+import { SerializedStyles } from '@emotion/react';
+import { CommonProps } from '../..';
 
-export interface ITooltipProps {
+export interface ITooltipProps extends CommonProps {
   children: React.ReactNode;
   placement?: Placement;
   enableHover?: boolean;
@@ -17,7 +19,7 @@ export interface ITooltipProps {
   // TooltipContent-related props
   size?: 'small' | 'medium' | 'large';
   hasArrow?: boolean;
-  arrowProps?: ITooltipArrowProps;
+  arrowProps?: TooltipArrowProps;
   isOpen?: boolean;
 }
 
@@ -27,7 +29,7 @@ export type TooltipContextType =
   | (ReturnType<typeof useFloating> &
       ReturnType<typeof useInteractions> & {
         isOpen: boolean;
-        arrowRef: React.Ref<HTMLSVGElement>;
+        arrowRef: React.Ref<SVGSVGElement>;
       } & Pick<ITooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
   | null;
 
@@ -63,5 +65,5 @@ export interface IProgressChartTooltipProps {
   value: number;
   valueFormatted: string;
   iconName?: keyof IMapIcons;
-  barProps?: Partial<Omit<types.ProgressBarProps, 'currentValue'>>;
+  barProps?: Partial<Omit<ProgressBarProps, 'currentValue'>>;
 }

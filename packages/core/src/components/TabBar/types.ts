@@ -1,4 +1,6 @@
-export interface ITab {
+import { CommonProps } from '../..';
+
+export interface ITab extends CommonProps {
   tabId: number | string;
   renderContent: (
     tab?: {

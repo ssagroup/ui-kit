@@ -9,5 +9,7 @@ export interface TextareaProps
   disabled?: boolean;
   rows?: number;
   maxLength?: number;
+  as?: React.ElementType;
+  className?: string;
   setCountChar?: ReactEventHandler;
 }

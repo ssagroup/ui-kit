@@ -42,9 +42,8 @@ type DemoForm = {
   tree: string;
 };
 
-export const FormRadioGroupStory = (args) => {
-  const { name, isRequired, initialState } =
-    args as IFormRadioGroupProps<DemoForm>;
+export const FormRadioGroupStory = (args: IFormRadioGroupProps<DemoForm>) => {
+  const { name, isRequired, initialState } = args;
 
   const { handleSubmit, control } = useForm<DemoForm>();
 

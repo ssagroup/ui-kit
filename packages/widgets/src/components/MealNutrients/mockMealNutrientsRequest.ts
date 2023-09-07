@@ -1217,14 +1217,14 @@ const createMockGraphData = (firstDate: number) => ({
   ],
 });
 
-const getMockGraphData = (timePeriodId: string) => {
+const getMockGraphData = (timePeriodId: 'd' | 'm' | 'w') => {
   const firstDate = FIRST_DATE + Math.floor(Math.random() * 3600);
   const mockGraphData = createMockGraphData(firstDate);
   return [...mockGraphData[timePeriodId]];
 };
 
 export const mockStaticApi = {
-  getData(timePeriodId: string) {
+  getData(timePeriodId: 'd' | 'm' | 'w') {
     const res = getMockGraphData(timePeriodId);
     if (!res) {
       return Promise.resolve([]);

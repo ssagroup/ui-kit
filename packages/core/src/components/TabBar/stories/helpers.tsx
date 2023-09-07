@@ -1,3 +1,4 @@
+import React from 'react';
 import { Fragment, useLayoutEffect } from 'react';
 import { useTabBarContext, TabBarContextProvider } from '@components/TabBar';
 import { ITab } from '../types';

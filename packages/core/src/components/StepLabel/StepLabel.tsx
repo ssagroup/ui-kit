@@ -42,7 +42,9 @@ const StepLabel = ({
         ) : (
           <div
             css={labelTitle(
-              active || completed ? color : theme.colors.greyLighter,
+              active || completed
+                ? color
+                : (theme.colors.greyLighter as string),
             )}>
             <span
               style={{

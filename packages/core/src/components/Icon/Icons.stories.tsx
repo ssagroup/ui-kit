@@ -32,7 +32,9 @@ const iconWrapper = css`
   gap: 10px;
 `;
 
-export const Default: StoryObj<typeof Icon> = (args) => {
+export const Default: StoryObj<typeof Icon> = (
+  args: Parameters<typeof Icon>[0],
+) => {
   return (
     <div
       css={css`

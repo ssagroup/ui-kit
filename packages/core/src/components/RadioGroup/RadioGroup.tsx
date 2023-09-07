@@ -15,7 +15,7 @@ const RadioGroup = ({
 }: IRadioGroupProps) => {
   const [activeValue, setActiveValue] = useState(initialState);
 
-  const onRadioValueChange = (value) => {
+  const onRadioValueChange = (value: string) => {
     setActiveValue(value);
     onChange(value);
   };

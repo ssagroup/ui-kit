@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 
 import Dropdown from './Dropdown';
+import { Args } from './types';
 
 const items = [
   { id: 1, value: 'One lorem ipsum', subText: 'subtext' },
@@ -47,7 +48,7 @@ export default {
   ],
 } as Meta<typeof Dropdown>;
 
-export const Basic: StoryObj = (args) => {
+export const Basic: StoryObj = (args: Args) => {
   return (
     <Dropdown selectedItem={items[2]} isDisabled={args.isDisabled}>
       {items.map((item) => (
@@ -61,7 +62,7 @@ export const Basic: StoryObj = (args) => {
 
 Basic.args = { isDisabled: false };
 
-export const Opened: StoryObj = (args) => {
+export const Opened: StoryObj = (args: Args) => {
   return (
     <Dropdown selectedItem={items[2]} {...args}>
       {items.map((item) => (
@@ -75,7 +76,7 @@ export const Opened: StoryObj = (args) => {
 
 Opened.args = { isOpen: true, isDisabled: false };
 
-export const Simple: StoryObj = (args) => {
+export const Simple: StoryObj = (args: Args) => {
   return (
     <Dropdown isDisabled={args.isDisabled}>
       {items.map((item) => (
@@ -93,7 +94,7 @@ export const NoItems: StoryObj = () => {
 
 NoItems.args = { isDisabled: false };
 
-export const Custom: StoryObj = (args) => {
+export const Custom: StoryObj = (args: Args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
   const CustomOption = styled(DropdownOption)`
     width: auto;

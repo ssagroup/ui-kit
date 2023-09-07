@@ -6,6 +6,8 @@ import Icon from '@components/Icon';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
 
+type Args = Parameters<typeof TextField>[0];
+
 export default {
   title: 'Components/TextField',
   component: TextField,
@@ -48,7 +50,7 @@ const mockError: FieldError = {
   message: 'Required field',
 };
 
-export const Basic: StoryObj<typeof TextField> = (args) => {
+export const Basic: StoryObj<typeof TextField> = (args: Args) => {
   const { register } = useForm<FieldValues>();
 
   return <TextField {...args} register={register} />;
@@ -202,7 +204,7 @@ export const MultilineDisabled: StoryObj<typeof TextField> = () => {
 };
 MultilineDisabled.args = {};
 
-export const Focused: StoryObj<typeof TextField> = (args) => {
+export const Focused: StoryObj<typeof TextField> = (args: Args) => {
   const { register } = useForm<FieldValues>();
 
   return <TextField {...args} register={register} />;

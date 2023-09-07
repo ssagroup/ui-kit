@@ -1,6 +1,6 @@
 import { callAll } from '@ssa-ui-kit/utils';
 
-import { TextareaProps } from './Textarea.types';
+import { TextareaProps } from './types';
 import { TextareaBase } from './TextareaBase';
 
 const Textarea = ({

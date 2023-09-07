@@ -81,7 +81,7 @@ const DropdownOptions = ({
       <DropdownOption
         key={noItemsMsg.id}
         value={''}
-        onClick={onChange.bind(null, null)}
+        onClick={onChange.bind(null, '')}
         aria-selected={false}>
         <button css={dropdownOptionButton}>{noItemsMsg.value}</button>
       </DropdownOption>,

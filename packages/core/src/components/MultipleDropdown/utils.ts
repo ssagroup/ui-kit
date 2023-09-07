@@ -1,7 +1,12 @@
-import { ReactNode } from 'react';
 import { IDropdownOption } from '../..';
 
-const getActiveItem = ({ activeItem, placeholder }): ReactNode =>
+const getActiveItem = <T>({
+  activeItem,
+  placeholder,
+}: {
+  activeItem: Record<number | string, T>;
+  placeholder: string;
+}) =>
   activeItem
     ? activeItem.label ||
       activeItem.children ||
@@ -10,15 +15,16 @@ const getActiveItem = ({ activeItem, placeholder }): ReactNode =>
       placeholder
     : placeholder;
 
+interface GetActiveItems<T> {
+  allItems: T;
+  placeholder: string;
+}
 export const getActiveItems = <
   T extends Record<string | number, IDropdownOption>,
 >({
   allItems = {} as T,
   placeholder,
-}: {
-  allItems: T;
-  placeholder: string;
-}): ReactNode[] => {
+}: GetActiveItems<T>) => {
   const activeItems = Object.values(allItems)
     .filter((item) => item.isSelected)
     .map((activeItem) => getActiveItem({ activeItem, placeholder }));

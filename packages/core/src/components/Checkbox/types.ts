@@ -1,6 +1,7 @@
-import { Control, FieldPath } from 'react-hook-form';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { CommonProps } from '../..';
 
-export interface ICheckboxProps {
+export interface ICheckboxProps extends CommonProps {
   text?: string;
   id?: string;
   onChange: (newState: boolean) => void;
@@ -12,7 +13,7 @@ export interface ICheckboxProps {
   isRequired?: boolean;
 }
 
-export type IFormCheckboxProps<T> = Omit<
+export type IFormCheckboxProps<T extends FieldValues> = Omit<
   ICheckboxProps,
   'onChange' | 'name'
 > & {

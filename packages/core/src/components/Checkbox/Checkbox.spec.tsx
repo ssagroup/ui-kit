@@ -7,6 +7,7 @@ import Checkbox from '@components/Checkbox';
 import FormCheckbox from '@components/FormCheckbox';
 
 import { ICheckboxProps } from './types';
+import { getByRole } from '@testing-library/dom';
 
 const checkLabel = () => {
   const labelEl = document.getElementsByTagName('label')[0];
@@ -16,7 +17,7 @@ const checkLabel = () => {
   return labelEl;
 };
 
-const checkIcon = (labelEl, isChecked) => {
+const checkIcon = (labelEl: HTMLLabelElement, isChecked: boolean) => {
   const icons = labelEl.getElementsByTagName('svg');
 
   if (isChecked) {
@@ -28,13 +29,15 @@ const checkIcon = (labelEl, isChecked) => {
 };
 
 const checkToggle = async (
-  getByRole,
+  container: HTMLElement,
   mockOnChange: () => void,
   labelEl: HTMLLabelElement,
   isChecked: boolean,
 ) => {
   checkIcon(labelEl, isChecked);
-  const checkboxEl = getByRole('checkbox', { checked: isChecked });
+  const checkboxEl: HTMLInputElement = getByRole(container, 'checkbox', {
+    checked: isChecked,
+  });
   expect(checkboxEl.id).toEqual(labelEl.getAttribute('for'));
 
   const newIsChecked = !isChecked;
@@ -58,20 +61,20 @@ function setup(props: Omit<ICheckboxProps, 'onChange'> = {}) {
 
 describe('Checkbox', () => {
   it('Renders without text', async () => {
-    const { getByRole, mockOnChange } = setup();
+    const { mockOnChange, container } = setup();
 
     const labelEl = checkLabel();
-    await checkToggle(getByRole, mockOnChange, labelEl, false);
+    await checkToggle(container, mockOnChange, labelEl, false);
   });
 
   it('Renders with text', async () => {
     const text = 'some text';
 
-    const { getByRole, mockOnChange } = setup({ text });
+    const { container, mockOnChange } = setup({ text });
 
     const labelEl = checkLabel();
     expect(labelEl).toHaveTextContent(text);
-    await checkToggle(getByRole, mockOnChange, labelEl, false);
+    await checkToggle(container, mockOnChange, labelEl, false);
     expect(labelEl).toHaveTextContent(text);
   });
 
@@ -97,18 +100,18 @@ describe('Checkbox', () => {
 
   it('Renders with the initial state passed in props', async () => {
     const isChecked = true;
-    const { getByRole, mockOnChange } = setup({ initialState: isChecked });
+    const { container, mockOnChange } = setup({ initialState: isChecked });
 
     const labelEl = checkLabel();
-    await checkToggle(getByRole, mockOnChange, labelEl, isChecked);
+    await checkToggle(container, mockOnChange, labelEl, isChecked);
   });
 
   it('Renders with the external state passed in props', async () => {
     const isChecked = true;
-    const { getByRole, mockOnChange } = setup({ externalState: isChecked });
+    const { container, mockOnChange } = setup({ externalState: isChecked });
 
     const labelEl = checkLabel();
-    await checkToggle(getByRole, mockOnChange, labelEl, isChecked);
+    await checkToggle(container, mockOnChange, labelEl, isChecked);
   });
 
   it('Renders in the indeterminate state', () => {

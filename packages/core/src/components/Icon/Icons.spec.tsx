@@ -1,7 +1,7 @@
 import { screen, waitFor } from '../../../customTest';
 
 import Icon from '@components/Icon';
-import { IMapIcons } from './Icons.types';
+import { IMapIcons } from './types';
 
 const IconsList = [
   'diet',

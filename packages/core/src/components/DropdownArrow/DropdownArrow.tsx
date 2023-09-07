@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
 import Icon from '@components/Icon';
+import { CommonProps } from '../..';
 
-export const DropdownArrowBase = styled.div`
+export const DropdownArrowBase = styled.div<CommonProps>`
   display: flex;
   align-items: center;
 `;
