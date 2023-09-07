@@ -66,6 +66,8 @@ type Colors = MakeColors<
     'purpleDark40',
     'blue',
     'blue20',
+    'blueDark',
+    'blueLightDarker',
     'blueLighter',
     'blueLighter20',
     'blueLighter40',

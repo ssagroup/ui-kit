@@ -63,6 +63,8 @@ const main: Theme = {
     purpleDark40: 'rgba(156, 122, 235, 0.4)', // #9c7aeb
     blue: 'rgba(65, 120, 225, 1)', // #4178e1
     blue20: 'rgba(65, 120, 225, 0.2)', // #4178e1
+    blueDark: 'rgba(36, 101, 227, 1)', // #2465e3
+    blueLightDarker: 'rgba(127, 159, 221)', // #7f9fdd
     blueLighter: 'rgba(117, 153, 222, 1)', // #7599de
     blueLighter20: 'rgba(117, 153, 222, 0.2)', // #7599de
     blueLighter40: 'rgba(117, 153, 222, 0.4)', // #7599de
