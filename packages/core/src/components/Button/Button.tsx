@@ -63,10 +63,12 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
     const isTertiary = variant === 'tertiary';
     const noMargin = !text ? { margin: 0 } : {};
 
+    const variantStyles = mapVariants[variant] && mapVariants[variant](theme);
+
     const btn = (
       <ButtonBase
         ref={ref}
-        css={[mapSizes[size], mapVariants[variant](theme)]}
+        css={[mapSizes[size], variantStyles]}
         type={type}
         disabled={isDisabled}
         className={className}
@@ -79,7 +81,9 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
           </span>
         ) : null}
         {text ? (
-          isDisabled ? (
+          typeof text === 'function' ? (
+            text(isHovered)
+          ) : isDisabled ? (
             <DisabledButtonText text={text} size={size} />
           ) : isPrimary ? (
             <WhiteButtonText text={text} size={size} />
