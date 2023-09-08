@@ -382,9 +382,6 @@ importers:
       '@types/uuid':
         specifier: ^9.0.3
         version: 9.0.3
-      csstype:
-        specifier: ^3.1.2
-        version: 3.1.2
       storybook-addon-pseudo-states:
         specifier: ^2.1.0
         version: 2.1.0(@storybook/components@7.3.2)(@storybook/core-events@7.3.2)(@storybook/manager-api@7.3.2)(@storybook/preview-api@7.3.2)(@storybook/theming@7.3.2)(react-dom@18.2.0)(react@18.2.0)

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, SetStateAction } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { linearGradientDef } from '@nivo/core';
 import { Point } from '@nivo/line';
