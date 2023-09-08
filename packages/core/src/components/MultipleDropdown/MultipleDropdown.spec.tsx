@@ -5,6 +5,12 @@ import DropdownOption from '@components/DropdownOption';
 
 import MultipleDropdown from './index';
 
+interface Item {
+  value: number;
+  label: string;
+  subText: string;
+}
+
 const items = [
   { value: 1, label: 'First Item', subText: 'Sub text 1' },
   { value: 2, label: 'Second Item', subText: 'Sub text 2' },
@@ -18,7 +24,7 @@ const selectedItems = [items[2], items[4]];
 const selectedItemsValues = selectedItems.map((item) => item.value);
 const placeholder = 'Strategy';
 
-const getListItemValue = (item) => item.label;
+const getListItemValue = (item: Item) => item.label;
 
 describe('MultipleDropdown', () => {
   function setup(props = {}) {

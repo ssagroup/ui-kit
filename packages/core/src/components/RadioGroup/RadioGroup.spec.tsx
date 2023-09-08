@@ -4,8 +4,13 @@ import userEvent from '@testing-library/user-event';
 import RadioGroup from './RadioGroup';
 import Radio from '@components/Radio';
 
+interface RadioType {
+  value: string;
+  text: string;
+}
+
 describe('RadioGroup', () => {
-  const radios = {
+  const radios: Record<string, RadioType> = {
     radio1: { value: 'apple', text: 'Apple' },
     radio2: { value: 'orange', text: 'Orange' },
     radio3: { value: 'banana', text: 'Banana' },

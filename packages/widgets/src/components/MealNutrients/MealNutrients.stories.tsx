@@ -30,7 +30,7 @@ export const Default = () => {
       data={data}
       options={options}
       onOptionChange={({ value }) => {
-        getData(String(value)).then(setData);
+        getData(String(value) as 'd' | 'w' | 'm').then(setData);
       }}
     />
   );

@@ -5,6 +5,8 @@ export interface ITab extends CommonProps {
   renderContent: (
     tab?: {
       tabId: number | string;
+      // text: string;
+      // renderContent: () => ReactNode;
       [prop: string | number | symbol]: unknown;
     },
     arg?: unknown,

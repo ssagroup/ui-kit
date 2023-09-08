@@ -15,5 +15,3 @@ export interface DropdownContextType {
   onChange: (item?: string) => void;
   activeItem?: IDropdownOption | null;
 }
-
-export type Args = IDropdownProps<IDropdownOption>;

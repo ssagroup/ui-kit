@@ -1,10 +1,10 @@
-import { screen, waitFor, within } from '@testing-library/dom';
+import { Matcher, screen, waitFor, within } from '@testing-library/dom';
 
 import Stepper from './index';
 import Step from '@components/Step';
 import StepLabel from '@components/StepLabel';
 
-const getCheckIcon = async (query) => {
+const getCheckIcon = async (query: Matcher) => {
   const item = await screen.findByText(query);
   const icon = item.parentNode as HTMLElement;
 

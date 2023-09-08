@@ -41,7 +41,8 @@ const routes = [
   { path: 'settings', iconName: 'settings' as unknown as keyof IMapIcons },
 ];
 
-const Default = (Component) => (props) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Default = (Component: JSX.ElementType) => (props: any) => {
   const theme = useTheme();
   const { user } = useAuth();
   const { data: goals, query: loadGoals } = useApi(API.goals.get, []);

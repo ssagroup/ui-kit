@@ -1,4 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const callAll =
-  (...fns) =>
-  (...args) =>
+  (...fns: any[]) =>
+  (...args: any) =>
     fns.forEach((fn) => fn?.(...args));

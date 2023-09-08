@@ -42,7 +42,10 @@ const renderIcon = async (icon: keyof IMapIcons) => {
   return [svg, path];
 };
 
-const checkFillOrStrokeAttrs = (el, name) => {
+const checkFillOrStrokeAttrs = (
+  el: HTMLElement | SVGPathElement | null,
+  name: string,
+) => {
   expect(el).toBeInTheDocument();
   try {
     expect(el).toHaveAttribute('fill', '#fff');
