@@ -1,4 +1,16 @@
-const baseSpecs = [
+import Icon from '@components/Icon';
+import { IButtonProps } from './types';
+
+export type TestPropsType = Omit<
+  IButtonProps,
+  'isDisabled' | 'startIcon' | 'endIcon'
+> & {
+  disabled?: boolean;
+  startIcon?: React.ComponentProps<typeof Icon>['name'];
+  endIcon?: React.ComponentProps<typeof Icon>['name'];
+};
+
+const baseSpecs: TestPropsType[] = [
   {
     type: 'button',
     variant: 'primary',
@@ -112,20 +124,32 @@ const baseSpecs = [
 
 export const primaryBtnSpecs = [
   ...baseSpecs,
-  ...baseSpecs.map((s) => ({ ...s, size: null })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'medium' })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'large' })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'small', type: 'submit' })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'medium', type: 'submit' })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'large', type: 'submit' })),
+  ...baseSpecs.map((s) => ({ ...s, size: undefined })),
+  ...baseSpecs.map((s) => ({ ...s, size: 'medium' as IButtonProps['size'] })),
+  ...baseSpecs.map((s) => ({ ...s, size: 'large' as IButtonProps['size'] })),
+  ...baseSpecs.map((s) => ({
+    ...s,
+    size: 'small' as IButtonProps['size'],
+    type: 'submit' as IButtonProps['type'],
+  })),
+  ...baseSpecs.map((s) => ({
+    ...s,
+    size: 'medium' as IButtonProps['size'],
+    type: 'submit' as IButtonProps['type'],
+  })),
+  ...baseSpecs.map((s) => ({
+    ...s,
+    size: 'large' as IButtonProps['size'],
+    type: 'submit' as IButtonProps['type'],
+  })),
 ];
 
 export const secondaryBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'secondary',
+  variant: 'secondary' as IButtonProps['variant'],
 }));
 
 export const tertiaryBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'tertiary',
+  variant: 'tertiary' as IButtonProps['variant'],
 }));

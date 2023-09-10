@@ -48,11 +48,12 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
       className,
       isDisabled,
       onClick,
+      children,
     },
     ref,
   ) {
-    if (!text && !startIcon && !endIcon) {
-      throw new Error('Button must have text or icon');
+    if (!text && !startIcon && !endIcon && !children) {
+      throw new Error('Button must have either text or icon or children');
     }
 
     const theme = useTheme();
@@ -60,10 +61,14 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
     const [isHovered, setIsHovered] = useState(false);
 
     const isPrimary = variant === 'primary';
+    const isSecondary = variant === 'secondary';
     const isTertiary = variant === 'tertiary';
     const noMargin = !text ? { margin: 0 } : {};
 
-    const variantStyles = mapVariants[variant] && mapVariants[variant](theme);
+    const variantStyles =
+      isPrimary || isTertiary || isSecondary
+        ? mapVariants[variant] && mapVariants[variant](theme)
+        : undefined;
 
     const btn = (
       <ButtonBase
@@ -80,10 +85,10 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
             {startIcon}
           </span>
         ) : null}
-        {text ? (
-          typeof text === 'function' ? (
-            text(isHovered)
-          ) : isDisabled ? (
+        {children ? (
+          children
+        ) : text ? (
+          isDisabled ? (
             <DisabledButtonText text={text} size={size} />
           ) : isPrimary ? (
             <WhiteButtonText text={text} size={size} />
