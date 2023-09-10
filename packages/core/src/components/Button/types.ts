@@ -3,7 +3,7 @@ import { SerializedStyles, Theme } from '@emotion/react';
 export interface IButtonProps {
   block?: boolean;
   size?: keyof MainSizes;
-  text?: string | ((isHovered: boolean) => React.ReactNode);
+  text?: string;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   variant?: keyof IButtonVariants | 'custom';
@@ -11,6 +11,7 @@ export interface IButtonProps {
   isDisabled?: boolean;
   className?: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 export interface IButtonVariants {
