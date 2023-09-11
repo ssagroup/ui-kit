@@ -29,7 +29,7 @@ const Pagination = ({ pagesCount, selectedPage }: IPaginationProps) => {
           }
         }}
         isDisabled={page === 1}
-        css={{ marginRight: '15px' }}
+        css={{ marginRight: '12px' }}
       />
       <PaginationButtons range={range} selectedPage={page} onClick={setPage} />
       <ArrowButton
@@ -40,6 +40,7 @@ const Pagination = ({ pagesCount, selectedPage }: IPaginationProps) => {
           }
         }}
         isDisabled={page === pagesCount}
+        css={{ marginLeft: '7px' }}
       />
     </Fragment>
   );

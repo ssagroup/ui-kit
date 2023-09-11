@@ -10,6 +10,7 @@ export const pageBtnStyles = css`
   background: unset;
   box-shadow: unset;
   color: #070821;
+  padding: 0 9px;
 
   &:hover,
   &:active,
@@ -35,8 +36,8 @@ export const selectedPageBtnStyles = (theme: Theme) => css`
 
   color: white;
 
+  margin: 0 3px;
   padding: 0 10px;
-  margin: 0 4px;
 
   &:hover {
     box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.3);
