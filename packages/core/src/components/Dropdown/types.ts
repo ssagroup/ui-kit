@@ -1,5 +1,5 @@
 import { IDropdownOption } from '@components/DropdownOptions';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface IDropdownProps<P extends IDropdownOption> extends CommonProps {
   selectedItem?: P;

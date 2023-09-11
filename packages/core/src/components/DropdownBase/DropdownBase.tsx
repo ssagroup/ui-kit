@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 const DropdownBase = styled.div<CommonProps>`
   display: inline-block;

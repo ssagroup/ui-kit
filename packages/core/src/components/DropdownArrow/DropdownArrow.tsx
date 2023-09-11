@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import Icon from '@components/Icon';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export const DropdownArrowBase = styled.div<CommonProps>`
   display: flex;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Theme, css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 interface IDropdownItemProps extends CommonProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;

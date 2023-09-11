@@ -1,6 +1,4 @@
-import { CommonProps } from '../..';
-
-export interface TypographyProps extends CommonProps {
+export interface TypographyProps {
   variant?:
     | 'h1'
     | 'h2'
@@ -17,4 +15,6 @@ export interface TypographyProps extends CommonProps {
   gutter?: boolean;
   color?: string;
   children: React.ReactNode;
+  as?: React.ElementType;
+  className?: string;
 }

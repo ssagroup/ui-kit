@@ -8,7 +8,7 @@ import { PointTooltipProps, Point } from '@nivo/line';
 import { IMapIcons } from '@components/Icon/types';
 import { ProgressBarProps } from '@components/ProgressBar/types';
 import { SerializedStyles } from '@emotion/react';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface ITooltipProps extends CommonProps {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface LabelProps extends CommonProps {
   htmlFor?: string;

@@ -1,4 +1,4 @@
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 import CardHeaderBase from './CardHeaderBase';
 
 export interface CardProps extends CommonProps {

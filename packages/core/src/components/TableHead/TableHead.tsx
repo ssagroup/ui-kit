@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import TableCell from '@components/TableCell';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 const TableHead = styled.thead<CommonProps>({
   display: 'table-header-group',

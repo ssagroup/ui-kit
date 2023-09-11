@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 const Avatar = styled.div<{ size: number; image: string } & CommonProps>`
   border-radius: 100px;

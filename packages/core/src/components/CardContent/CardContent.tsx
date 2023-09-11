@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface CardProps extends CommonProps {
   children: React.ReactNode;

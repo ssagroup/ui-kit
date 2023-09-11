@@ -1,4 +1,4 @@
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface TagsProps extends CommonProps {
   color?: keyof MainColors;

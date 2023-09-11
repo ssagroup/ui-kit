@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 const TableRow = styled.tr<CommonProps>`
   display: table-row;

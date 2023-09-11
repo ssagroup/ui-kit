@@ -1,6 +1,6 @@
 import React from 'react';
 import { Theme } from '@emotion/react';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface IDropdownToggleProps extends CommonProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;

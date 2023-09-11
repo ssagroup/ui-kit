@@ -1,5 +1,5 @@
 import { Control, FieldPath, FieldValues } from 'react-hook-form';
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export interface ICheckboxProps extends CommonProps {
   text?: string;

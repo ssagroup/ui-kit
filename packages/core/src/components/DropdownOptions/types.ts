@@ -1,4 +1,4 @@
-import { CommonProps } from '../..';
+import { CommonProps } from '@global-types/emotion';
 
 export type IDropdownOption = Record<string, string | number>;
 
