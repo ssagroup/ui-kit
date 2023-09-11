@@ -33,7 +33,7 @@ describe('generateRange', () => {
   const selectedItemTestCases = [
     { pages: 10, selected: 1, expected: [1, 2, 3, -1, 10] },
     { pages: 10, selected: 2, expected: [1, 2, 3, -1, 10] },
-    { pages: 10, selected: 3, expected: [1, 2, 3, -1, 10] },
+    { pages: 10, selected: 3, expected: [1, 2, 3, 4, -1, 10] },
     { pages: 10, selected: 4, expected: [1, 2, 3, 4, 5, -1, 10] },
     { pages: 10, selected: 5, expected: [1, -1, 4, 5, 6, -1, 10] },
     { pages: 10, selected: 6, expected: [1, -1, 5, 6, 7, -1, 10] },

@@ -12,7 +12,7 @@ import { GenerateRangeFn } from './types';
  * */
 const SKIPPED_ITEMS_DELTA = 2;
 
-const getSelectedRange = (pagesCount, selectedPage) => {
+const getSelectedRange = (pagesCount: number, selectedPage: number) => {
   const range: number[] = [];
 
   if (selectedPage !== pagesCount) {
@@ -30,7 +30,7 @@ const getSelectedRange = (pagesCount, selectedPage) => {
   return range;
 };
 
-const fill = (range, minValue, maxValue) => {
+const fill = (range: number[], minValue: number, maxValue: number) => {
   for (let i = minValue; i < maxValue; ++i) {
     range.push(i);
   }
@@ -59,7 +59,7 @@ const generateRange: GenerateRangeFn = (pagesCount, selectedPage) => {
     throw new Error(`Selected page ${selectedPage} is out of range`);
   }
 
-  if (selectedPage && selectedPage > 3) {
+  if (selectedPage && selectedPage > 2) {
     const selectedRange = getSelectedRange(pagesCount, selectedPage);
 
     const [minSelectedRange, , maxSelectedRange] = selectedRange;
