@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { Fragment } from 'react';
 
 import { usePaginationRange } from '@ssa-ui-kit/hooks';
 
@@ -6,12 +6,10 @@ import { ArrowButton } from './ArrowButton';
 import { PaginationButtons } from './PaginationButtons';
 
 import { IPaginationProps } from './types';
+import { usePaginationContext } from './PaginationContext';
 
-/**
- * Props: onPageChange or context?
- * */
-const Pagination = ({ pagesCount, selectedPage }: IPaginationProps) => {
-  const [page, setPage] = useState(selectedPage);
+const Pagination = ({ pagesCount }: IPaginationProps) => {
+  const { page, setPage } = usePaginationContext();
   const range = usePaginationRange({ pagesCount, selectedPage: page });
 
   return (

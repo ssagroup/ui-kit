@@ -29,3 +29,13 @@ export interface IPageButtonProps {
   page: number | string;
   isSelected: boolean;
 }
+
+export interface IPaginationContext {
+  page?: number;
+  setPage: React.Dispatch<React.SetStateAction<number | undefined>>;
+}
+
+export interface IPaginationContextProviderProps {
+  selectedPage?: number;
+  children: React.ReactNode;
+}
