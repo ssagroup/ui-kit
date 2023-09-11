@@ -33,8 +33,7 @@ export const HeartRate = ({
     data?.data?.[0]?.y as number,
   );
   const [onBpmValueChange, cancelTimer] = useMemo(
-    () =>
-      throttle((point: Point) => setBpmValue(point?.data?.y as number), 100),
+    () => throttle((point: Point) => setBpmValue(point?.data?.y as any), 100),
     [],
   );
 

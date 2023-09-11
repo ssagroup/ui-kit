@@ -25,7 +25,7 @@ export { default as DropdownOption } from './components/DropdownOption';
 export type { IDropdownOption } from './components/DropdownOptions';
 export { default as Icon } from './components/Icon';
 export * from './components/Icon';
-export * from './components/Icon/Icons.types';
+export * from './components/Icon/types';
 export { default as Input } from './components/Input';
 export { default as Label } from './components/Label';
 export { default as Modal } from './components/Modal';

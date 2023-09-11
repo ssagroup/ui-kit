@@ -5,6 +5,11 @@ import DropdownOption from '@components/DropdownOption';
 
 import Dropdown from './index';
 
+interface Item {
+  id: number;
+  value: string;
+}
+
 const items = [
   { id: 1, value: 'First Item' },
   { id: 2, value: 'Second Item' },
@@ -15,7 +20,7 @@ const items = [
   { id: 7, value: 'Seventh Item' },
 ];
 
-const getListItemValue = (item) => item.value;
+const getListItemValue = (item: Item) => item.value;
 
 describe('Dropdown', () => {
   function setup(props = {}) {

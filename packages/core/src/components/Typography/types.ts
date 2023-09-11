@@ -6,7 +6,6 @@ export interface TypographyProps {
     | 'h4'
     | 'h5'
     | 'h6'
-    | 'p'
     | 'subtitle'
     | 'body1'
     | 'body2'
@@ -17,4 +16,5 @@ export interface TypographyProps {
   color?: string;
   children: React.ReactNode;
   as?: React.ElementType;
+  className?: string;
 }

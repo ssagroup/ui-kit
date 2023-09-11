@@ -29,7 +29,7 @@
       "@components/*": ["./src/components/*"],
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
-      "@types/*": ["./src/types/*"]
+      "@global-types/*": ["./src/types/*"]
     }
   },
 

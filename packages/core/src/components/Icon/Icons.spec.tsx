@@ -1,7 +1,7 @@
 import { screen, waitFor } from '../../../customTest';
 
 import Icon from '@components/Icon';
-import { IMapIcons } from './Icons.types';
+import { IMapIcons } from './types';
 
 const IconsList = [
   'diet',
@@ -42,7 +42,10 @@ const renderIcon = async (icon: keyof IMapIcons) => {
   return [svg, path];
 };
 
-const checkFillOrStrokeAttrs = (el, name) => {
+const checkFillOrStrokeAttrs = (
+  el: HTMLElement | SVGPathElement | null,
+  name: string,
+) => {
   expect(el).toBeInTheDocument();
   try {
     expect(el).toHaveAttribute('fill', '#fff');

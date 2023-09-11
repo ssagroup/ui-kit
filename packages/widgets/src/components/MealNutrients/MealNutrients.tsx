@@ -7,7 +7,6 @@ import {
   Typography,
   Dropdown,
   DropdownOption,
-  IDropdownOption,
 } from '@ssa-ui-kit/core';
 
 import { MealNutrientsLineChart } from './MealNutrientsLineChart';
@@ -39,7 +38,7 @@ export const MealNutrients = ({
     }
   }, [options]);
 
-  const handleChange = (e: IDropdownOption) => {
+  const handleChange = (e: OptionType) => {
     const item = options.filter((item) => item.value === e.value)[0];
 
     setSelectedOption(item);

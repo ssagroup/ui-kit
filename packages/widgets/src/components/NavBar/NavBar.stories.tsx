@@ -4,8 +4,18 @@ import { Meta } from '@storybook/react';
 import { Title, Description, Source } from '@storybook/addon-docs';
 
 import { NavBar } from './NavBar';
+import { DecoratorFunction } from '@storybook/types';
 
-const reactRouterDecorator = (Story) => {
+type Args = Parameters<typeof NavBar>[0];
+
+const reactRouterDecorator: DecoratorFunction<
+  {
+    component: typeof NavBar;
+    storyResult: React.ReactElement;
+    canvasElement: unknown;
+  },
+  Args
+> = (Story) => {
   return (
     <BrowserRouter>
       <Routes>

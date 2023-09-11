@@ -5,7 +5,7 @@ import FormHelperText from '@components/FormHelperText';
 import Input from '@components/Input';
 import Textarea from '@components/Textarea';
 
-import { TextFieldProps } from './TextField.types';
+import { TextFieldProps } from './types';
 
 const TextField = ({
   multirow,

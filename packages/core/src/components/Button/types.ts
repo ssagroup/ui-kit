@@ -1,4 +1,4 @@
-import { Theme, SerializedStyles } from '@emotion/react';
+import { SerializedStyles, Theme } from '@emotion/react';
 
 export interface IButtonProps {
   block?: boolean;

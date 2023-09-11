@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { InputColors } from '@components/Input/Input.types';
+import { InputColors } from '@components/Input/types';
 
 const statusColor: Record<string, InputColors> = {
   error: 'red',

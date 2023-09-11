@@ -6,6 +6,8 @@ import Radio from '@components/Radio';
 
 import RadioGroup from './RadioGroup';
 
+type Args = Parameters<typeof RadioGroup>[0];
+
 export default {
   title: 'Components/Radio Buttons',
   component: RadioGroup,
@@ -41,7 +43,7 @@ export default {
 } as Meta<typeof RadioGroup>;
 
 export const HorizontalRadioGroupStories: StoryObj<typeof RadioGroup> = (
-  args,
+  args: Args,
 ) => (
   <Fragment>
     <Typography variant="h4">Horizontal Radio Group</Typography>
@@ -58,7 +60,7 @@ HorizontalRadioGroupStories.args = {
 HorizontalRadioGroupStories.storyName = 'Horizontal Radio Group';
 
 export const VerticalRadioGroupStories: StoryObj<typeof RadioGroup> = (
-  args,
+  args: Args,
 ) => (
   <Fragment>
     <Typography variant="h4">Vertical Radio Group</Typography>

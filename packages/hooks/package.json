@@ -19,7 +19,7 @@
     "directory": "packages/hooks"
   },
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc -b",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },

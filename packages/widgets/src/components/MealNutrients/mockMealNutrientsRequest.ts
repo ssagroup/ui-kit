@@ -1,3 +1,5 @@
+import { OptionType } from './types';
+
 const ONE_DAY_MS = 86400000;
 const ONE_HOUR_MS = 3600000;
 
@@ -55,7 +57,7 @@ const mockDataLoad = {
     return Promise.resolve(res);
   },
   getOptions() {
-    return Promise.resolve([
+    return Promise.resolve<OptionType[]>([
       { value: 'd', label: 'Daily', precision: 'hour' },
       { value: 'w', label: 'Weekly', precision: 'week' },
       { value: 'm', label: 'Monthly', precision: 'day' },
@@ -1217,14 +1219,14 @@ const createMockGraphData = (firstDate: number) => ({
   ],
 });
 
-const getMockGraphData = (timePeriodId: string) => {
+const getMockGraphData = (timePeriodId: 'd' | 'm' | 'w') => {
   const firstDate = FIRST_DATE + Math.floor(Math.random() * 3600);
   const mockGraphData = createMockGraphData(firstDate);
   return [...mockGraphData[timePeriodId]];
 };
 
 export const mockStaticApi = {
-  getData(timePeriodId: string) {
+  getData(timePeriodId: 'd' | 'm' | 'w') {
     const res = getMockGraphData(timePeriodId);
     if (!res) {
       return Promise.resolve([]);
@@ -1233,7 +1235,7 @@ export const mockStaticApi = {
     return Promise.resolve(res);
   },
   getOptions() {
-    return Promise.resolve([
+    return Promise.resolve<OptionType[]>([
       { value: 'd', label: 'Daily', precision: 'hour' },
       { value: 'w', label: 'Weekly', precision: 'week' },
       { value: 'm', label: 'Monthly', precision: 'day' },

@@ -31,7 +31,7 @@ jest.mock('./HeartRateLineChart', () => ({
   HeartRateLineChart: HeartRateLineChartMock,
 }));
 
-function setup(component) {
+function setup(component: React.ReactElement) {
   return {
     user: userEvent.setup(),
     ...render(component),

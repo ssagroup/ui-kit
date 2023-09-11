@@ -26,7 +26,7 @@ fs.access(componentPath, (error) => {
         execSync(`touch ${componentPath}/index.tsx`);
         execSync(`touch ${componentPath}/${componentName}.spec.tsx`);
         execSync(`touch ${componentPath}/${componentName}.stories.tsx`);
-        execSync(`touch ${componentPath}/${componentName}.types.tsx`);
+        execSync(`touch ${componentPath}/types.ts`);
         execSync(`touch ${componentPath}/styles.ts`);
         execSync(`touch ${componentPath}/${componentName}.tsx`);
 

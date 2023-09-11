@@ -1,4 +1,4 @@
-import { MealPlannerItem } from '@components/widgets/MealPlanner/types';
+import { MealPlannerItem } from '@ssa-ui-kit/widgets';
 
 export type TopWidgetsResp = {
   calories: {

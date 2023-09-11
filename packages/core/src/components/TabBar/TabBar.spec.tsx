@@ -1,24 +1,52 @@
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { getByRole } from '@testing-library/dom';
 
 import Tab from '@components/Tab';
 import LargeTab from '@components/LargeTab';
 
 import { TabBarWrapper, TabContents } from './stories/helpers';
 import TabBar, { TabBarContextProvider } from './index';
+import { ISmallTabProps, ITab } from './types';
+import { ReactNode } from 'react';
 
-const componentTabBarTests = (
+interface TabTest extends Pick<ISmallTabProps, 'tabId'> {
+  controls: string;
+  topText?: string;
+  bottomText?: string;
+  text?: string;
+  renderContent: (
+    tab?: {
+      tabId: number | string;
+      text: string;
+      renderContent: () => ReactNode;
+      [prop: string | number | symbol]: unknown;
+    },
+    arg?: unknown,
+  ) => React.ReactNode;
+}
+
+interface ComponentTabBarTests {
+  (
+    describeBlockName: string,
+    tabs: TabTest[],
+    renderTab: (tab: TabTest) => React.ReactElement,
+    getTabText: (tab: TabTest) => string[],
+  ): void;
+}
+
+const componentTabBarTests: ComponentTabBarTests = (
   describeBlockName,
   tabs,
   renderTab,
   getTabText,
 ) => {
-  const checkTabPanel = (tab, getByRole) => {
-    const tabPanel = getByRole('tabpanel');
+  const checkTabPanel = (tab: TabTest, container: HTMLElement) => {
+    const tabPanel = getByRole(container, 'tabpanel');
 
     expect(tabPanel).toHaveAttribute('id', tab.controls);
     expect(tabPanel).toHaveAttribute('aria-labelledby', tab.tabId);
-    expect(tabPanel).toHaveTextContent(tab.topText || tab.text);
+    expect(tabPanel).toHaveTextContent(tab.topText || tab.text || '');
   };
 
   describe(describeBlockName, () => {
@@ -62,7 +90,7 @@ const componentTabBarTests = (
     });
 
     it("Marks a tab as active when it's clicked", async () => {
-      const { user, getByRole } = setup();
+      const { user, getByRole, container } = setup();
       const tabBarEl = getByRole('tablist');
       const tabEls = within(tabBarEl).getAllByRole('tab');
 
@@ -75,7 +103,7 @@ const componentTabBarTests = (
         if (i === 0) {
           expect(tabEl).toHaveAttribute('aria-selected', 'true');
 
-          checkTabPanel(tab, getByRole);
+          checkTabPanel(tab, container);
         } else {
           expect(tabEl).toHaveAttribute('aria-selected', 'false');
         }
@@ -93,7 +121,7 @@ const componentTabBarTests = (
     });
 
     it('Marks a tab as inactive when another tab is clicked', async () => {
-      const { user, getByRole } = setup();
+      const { user, getByRole, container } = setup();
       const tabBarEl = getByRole('tablist');
       const tabEls = within(tabBarEl).getAllByRole('tab');
 
@@ -107,7 +135,7 @@ const componentTabBarTests = (
         if (i === 1) {
           expect(tabEl).toHaveAttribute('aria-selected', 'true');
 
-          checkTabPanel(tab, getByRole);
+          checkTabPanel(tab, container);
         } else {
           expect(tabEl).toHaveAttribute('aria-selected', 'false');
         }
@@ -125,7 +153,7 @@ const componentTabBarTests = (
     });
 
     it("Does not toggle an active element when it's clicked", async () => {
-      const { user, getByRole } = setup();
+      const { user, getByRole, container } = setup();
       const tabBarEl = getByRole('tablist');
       const tabEls = within(tabBarEl).getAllByRole('tab');
 
@@ -138,7 +166,7 @@ const componentTabBarTests = (
         if (i === 0) {
           expect(tabEl).toHaveAttribute('aria-selected', 'true');
 
-          checkTabPanel(tabs[i], getByRole);
+          checkTabPanel(tabs[i], container);
         } else {
           expect(tabEl).toHaveAttribute('aria-selected', 'false');
         }
@@ -159,12 +187,12 @@ const componentTabBarTests = (
 };
 
 describe('TabBar', () => {
-  const renderContent = (tab) => {
+  const renderContent = (tab?: ISmallTabProps): React.ReactNode => {
     return (
       <TabContents
-        id={tab.ariaControls}
-        labelledBy={tab.tabId}
-        text={`${tab.topText || tab.text} contents`}
+        id={tab?.ariaControls}
+        labelledBy={tab?.tabId as string}
+        text={`${tab?.topText || tab?.text} contents`}
       />
     );
   };
@@ -186,12 +214,12 @@ describe('TabBar', () => {
       <Tab
         key={tab.tabId}
         tabId={tab.tabId}
-        text={tab.text}
+        text={tab.text || ''}
         ariaControls={tab.controls}
-        renderContent={tab.renderContent}
+        renderContent={tab.renderContent as ITab['renderContent']}
       />
     ),
-    (tab) => [tab.text],
+    (tab) => [tab.text || ''],
   );
 
   componentTabBarTests(
@@ -251,12 +279,12 @@ describe('TabBar', () => {
       <LargeTab
         key={tab.tabId}
         tabId={tab.tabId}
-        topText={tab.topText}
-        bottomText={tab.bottomText}
+        topText={tab.topText || ''}
+        bottomText={tab.bottomText || ''}
         ariaControls={tab.controls}
-        renderContent={tab.renderContent}
+        renderContent={tab.renderContent as ITab['renderContent']}
       />
     ),
-    (tab) => [tab.topText, tab.bottomText],
+    (tab) => [tab.topText || '', tab.bottomText || ''],
   );
 });

@@ -18,7 +18,7 @@ jest.mock('@nivo/pie', () => ({
   ResponsivePie: ResponsivePieMock,
 }));
 
-const setup = (component) => {
+const setup = (component: React.ReactElement) => {
   return {
     user: userEvent.setup(),
     ...render(component),

@@ -1,4 +1,5 @@
 import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { ICheckboxProps } from '../..';
 
 export type IFormCheckboxProps<T extends FieldValues> = Omit<
   ICheckboxProps,

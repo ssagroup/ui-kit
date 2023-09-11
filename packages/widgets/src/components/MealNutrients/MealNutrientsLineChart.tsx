@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { ResponsiveLine, LineSvgProps } from '@nivo/line';
+import { ResponsiveLine, LineSvgProps, LineProps } from '@nivo/line';
 import { useTheme } from '@emotion/react';
+import type { ColorsKeys, MainColors } from '@ssa-ui-kit/core';
 
 import { defaults } from './chartDefaultConfig';
 import { MealNutrientsTooltip } from './MealNutrientsTooltip';
@@ -12,42 +13,52 @@ export const MealNutrientsLineChart = ({ data, ...props }: LineSvgProps) => {
 
   const defaultColorMapping = useMemo(
     () =>
-      colorPalette.reduce((res, colorName) => {
-        const colorValue = theme.colors[`${colorName}Lighter`];
-        res[colorValue] = colorName;
-        return res;
-      }, {}),
+      colorPalette.reduce<Record<string, keyof MainColors>>(
+        (res, colorName) => {
+          const colorValue = theme.colors[
+            `${colorName}Lighter` as ColorsKeys
+          ] as string;
+          res[colorValue] = colorName as keyof MainColors;
+          return res;
+        },
+        {},
+      ),
     [theme.colors],
   );
 
   const defaultSettings = useMemo(
     () =>
-      Object.assign(defaults, {
-        colors: colorPalette.map((color) => theme.colors[`${color}Lighter`]),
-        tooltip: ({ point }) => {
-          const color = defaultColorMapping[point.color];
-          return <MealNutrientsTooltip point={point} colorName={color} />;
-        },
-        theme: {
-          fontFamily: "'Manrope', sans-serif",
-          axis: {
-            ticks: {
-              text: {
-                fontSize: '0.833rem',
-                fontWeight: 500,
-                fill: theme.colors.greyDarker,
+      Object.assign<Omit<LineProps, 'data'>, Omit<LineProps, 'data'>>(
+        defaults,
+        {
+          colors: colorPalette.map(
+            (color) => theme.colors[`${color}Lighter` as ColorsKeys] as string,
+          ),
+          tooltip: ({ point }) => {
+            const color: keyof MainColors = defaultColorMapping[point.color];
+            return <MealNutrientsTooltip point={point} colorName={color} />;
+          },
+          theme: {
+            fontFamily: "'Manrope', sans-serif",
+            axis: {
+              ticks: {
+                text: {
+                  fontSize: '0.833rem',
+                  fontWeight: 500,
+                  fill: theme.colors.greyDarker,
+                },
+              },
+            },
+            grid: {
+              line: {
+                stroke: theme.colors.greyLighter,
+                strokeWidth: 1,
+                strokeDasharray: '8 8',
               },
             },
           },
-          grid: {
-            line: {
-              stroke: theme.colors.greyLighter,
-              strokeWidth: 1,
-              strokeDasharray: '8 8',
-            },
-          },
         },
-      }),
+      ),
     [theme.colors, defaultColorMapping],
   );
 

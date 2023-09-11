@@ -6,6 +6,7 @@ export const CheckboxBase = styled(Label)`
   display: inline-flex;
   flex-grow: 0;
   align-items: center;
+  vertical-align: middle;
   cursor: pointer;
 
   div {

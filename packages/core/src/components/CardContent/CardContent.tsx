@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { CommonProps } from '@global-types/emotion';
 
-export interface CardProps {
+export interface CardProps extends CommonProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
