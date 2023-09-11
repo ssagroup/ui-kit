@@ -48,7 +48,7 @@ const Dropdown = <T extends IDropdownOption>({
   const [colors, setColors] = useState<Array<string | undefined>>([]);
   const [activeItem, setActiveItem] = useState<T | undefined>(selectedItem);
 
-  const onChange = (item) => {
+  const onChange: DropdownContextType['onChange'] = (item) => {
     const innerItem = options.filter((option) => option.value === item)[0];
 
     setIsOpen(false);

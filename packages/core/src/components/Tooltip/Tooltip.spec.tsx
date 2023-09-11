@@ -10,7 +10,7 @@ import TooltipContent from '@components/TooltipContent';
 
 import Tooltip, { SimpleChartTooltip, ProgressChartTooltip } from './index';
 
-function setup(component) {
+function setup(component: React.ReactElement) {
   const user = userEvent.setup();
   return {
     user,
@@ -203,8 +203,13 @@ describe('Tooltip', () => {
     });
 
     it('Renders with a custom formatting', () => {
-      const renderFn = ({ xFormatted, yFormatted }) =>
-        `${xFormatted} - ${yFormatted}`.toUpperCase();
+      const renderFn = ({
+        xFormatted,
+        yFormatted,
+      }: {
+        xFormatted: string | number;
+        yFormatted: string | number;
+      }) => `${xFormatted} - ${yFormatted}`.toUpperCase();
 
       const { getByText } = setup(
         <SimpleChartTooltip point={point} renderValue={renderFn} />,

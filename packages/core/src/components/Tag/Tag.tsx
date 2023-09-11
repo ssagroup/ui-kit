@@ -18,7 +18,7 @@ import {
   blueLightBorder,
   blueBorder,
 } from './styles';
-import { TagsProps } from './Tag.types';
+import { TagsProps } from './types';
 
 const mapColors: MainColors = {
   pink: [pink, pinkBorder],

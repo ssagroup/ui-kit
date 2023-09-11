@@ -15,4 +15,6 @@ export interface TextFieldProps
   endElement?: React.ReactElement;
   multirow?: boolean;
   maxLength?: number;
+  className?: string;
+  as?: React.ElementType;
 }

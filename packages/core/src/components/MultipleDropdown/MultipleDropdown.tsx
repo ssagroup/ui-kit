@@ -56,7 +56,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
   >({});
   const [items, setItems] = useState<Array<React.ReactElement>>([]);
 
-  const onChange = (item) => {
+  const onChange = (item: IDropdownOption) => {
     if (isDisabled || !item) {
       return;
     }
@@ -109,7 +109,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
   useEffect(() => {
     const childrenArray = React.Children.toArray(children).filter(Boolean);
     const newOptions: T[] = [];
-    const keyedOptions = {};
+    const keyedOptions: Record<number | string, T> = {};
     const childItems: Array<React.ReactElement> = (
       childrenArray as React.ReactElement[]
     ).map((child, index) => {
@@ -133,7 +133,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
     setItems(childItems);
   }, []);
 
-  const contextValue: DropdownContextType = React.useMemo(
+  const contextValue: DropdownContextType<IDropdownOption> = React.useMemo(
     () => ({ onChange, allItems: optionsWithKey, isMultiple }),
     [onChange, optionsWithKey, isMultiple],
   );

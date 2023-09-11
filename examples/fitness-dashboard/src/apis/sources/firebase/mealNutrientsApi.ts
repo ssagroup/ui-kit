@@ -1,4 +1,9 @@
+import { OptionType } from '@ssa-ui-kit/widgets';
 import getFirebase from './initFirebase';
+
+interface RespOption extends OptionType {
+  id: string;
+}
 
 export const mealNutrients = {
   async get(timePeriodId: string) {
@@ -62,7 +67,7 @@ export const mealNutrients = {
         value: doc.id,
         label: val,
         precision,
-      };
+      } as RespOption;
     });
   },
 };

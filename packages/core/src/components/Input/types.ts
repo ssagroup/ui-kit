@@ -9,6 +9,7 @@ export interface InputProps extends Partial<Pick<UseFormReturn, 'register'>> {
   validationSchema?: Record<string, unknown>;
   disabled?: boolean;
   className?: string;
+  as?: React.ElementType;
   startElement?: React.ReactElement;
   endElement?: React.ReactElement;
   css?: Interpolation<Theme>;

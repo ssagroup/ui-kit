@@ -3,6 +3,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 
 import Textarea from '@components/Textarea';
 
+type Args = Parameters<typeof Textarea>[0];
+
 export default {
   title: 'Components/Textarea',
   component: Textarea,
@@ -25,7 +27,7 @@ export default {
   },
 } as Meta<typeof Textarea>;
 
-export const Basic: StoryObj<typeof Textarea> = (args) => {
+export const Basic: StoryObj<typeof Textarea> = (args: Args) => {
   const { register } = useForm<FieldValues>();
 
   return <Textarea {...args} register={register} />;
@@ -40,7 +42,7 @@ Basic.args = {
 };
 Basic.storyName = 'Textarea';
 
-export const Focused: StoryObj<typeof Textarea> = (args) => {
+export const Focused: StoryObj<typeof Textarea> = (args: Args) => {
   const { register } = useForm<FieldValues>();
 
   return <Textarea {...args} register={register} />;

@@ -3,7 +3,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 
 import Input from '@components/Input';
 import Icon from '@components/Icon';
-import { InputProps } from './Input.types';
+import { InputProps } from './types';
 
 export default {
   title: 'Components/Inputs',

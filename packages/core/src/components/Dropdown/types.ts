@@ -1,6 +1,7 @@
 import { IDropdownOption } from '@components/DropdownOptions';
+import { CommonProps } from '@global-types/emotion';
 
-export interface IDropdownProps<P extends IDropdownOption> {
+export interface IDropdownProps<P extends IDropdownOption> extends CommonProps {
   selectedItem?: P;
   onChange?: (item: P) => void;
   isDisabled?: boolean;
@@ -11,6 +12,6 @@ export interface IDropdownProps<P extends IDropdownOption> {
 }
 
 export interface DropdownContextType {
-  onChange: (item: IDropdownOption | null | undefined) => void;
-  activeItem: IDropdownOption | null | undefined;
+  onChange: (item?: string) => void;
+  activeItem?: IDropdownOption | null;
 }

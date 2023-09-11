@@ -6,7 +6,6 @@ import { useMultipleDropdownContext } from '@components/MultipleDropdown/Multipl
 import DropdownOption from '@components/DropdownOption';
 
 import { IDropdownItemsListProps } from './types';
-import { IDropdownOption } from '../..';
 
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   position: absolute;
@@ -90,9 +89,9 @@ const MultipleDropdownOptions = ({
 }: IDropdownItemsListProps) => {
   const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
 
-  const toggleItem = (value) => {
+  const toggleItem = (value: string | number) => {
     const item = allItems[value];
-    onChange(item as IDropdownOption);
+    onChange(item);
   };
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);

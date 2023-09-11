@@ -6,6 +6,8 @@ import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from './MultipleDropdown';
 import { css } from '@emotion/react';
 
+type Args = Parameters<typeof MultipleDropdown>[0];
+
 const items = [
   { value: 1, label: 'One lorem ipsum One lorem ipsum', subText: 'subtext' },
   { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
@@ -47,7 +49,7 @@ export default {
   ],
 } as Meta<typeof MultipleDropdown>;
 
-export const Basic: StoryObj = (args) => {
+export const Basic: StoryObj = (args: Args) => {
   return (
     <MultipleDropdown {...args}>
       {items.map((item) => (
@@ -66,7 +68,7 @@ Basic.args = {
   label: 'Strategy',
 };
 
-export const Single: StoryObj = (args) => {
+export const Single: StoryObj = (args: Args) => {
   return (
     <MultipleDropdown isDisabled={args.isDisabled} isMultiple={args.isMultiple}>
       {items.map((item) => (
@@ -84,7 +86,7 @@ Single.args = {
   selectedItems: [items[0]],
 };
 
-export const Opened: StoryObj = (args) => {
+export const Opened: StoryObj = (args: Args) => {
   return (
     <MultipleDropdown
       selectedItems={args.selectedItems}
@@ -108,7 +110,7 @@ Opened.args = {
   selectedItems: [items[1]],
 };
 
-export const Simple: StoryObj = (args) => {
+export const Simple: StoryObj = (args: Args) => {
   return (
     <MultipleDropdown {...args}>
       {items.map((item) => (
@@ -126,7 +128,7 @@ export const NoItems: StoryObj = () => {
 
 NoItems.args = { isDisabled: false };
 
-export const Custom: StoryObj = (args) => {
+export const Custom: StoryObj = (args: Args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
   const CustomOption = styled(DropdownOption)`
     width: auto;

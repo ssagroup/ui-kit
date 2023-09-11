@@ -4,7 +4,7 @@ import theme from '@themes/main';
 import Switch from './index';
 import { SwitchContextProvider } from './SwitchContext';
 
-function setup(component, initialState) {
+function setup(component: React.ReactNode, initialState: boolean) {
   return {
     user: userEvent.setup(),
     ...render(
@@ -15,7 +15,19 @@ function setup(component, initialState) {
   };
 }
 
-const checkSwitchStyleAndMarkup = (switchEl, { isOn, isDisabled = false }) => {
+interface CheckSwitchStyleAndMarkup {
+  (
+    switchEl: HTMLElement,
+    options: {
+      isOn: boolean;
+      isDisabled?: boolean;
+    },
+  ): void;
+}
+const checkSwitchStyleAndMarkup: CheckSwitchStyleAndMarkup = (
+  switchEl,
+  { isOn, isDisabled = false },
+) => {
   // NOTE: we cannot test :before/:hover styles because getComputedStyle()
   // support for pseudo-classes is not implemented in the test suite yet.
   expect(switchEl).toHaveStyle(`

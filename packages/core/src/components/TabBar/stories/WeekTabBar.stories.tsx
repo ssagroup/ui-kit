@@ -4,6 +4,8 @@ import LargeTab from '@components/LargeTab';
 
 import { TabBarDecorator, TabContents } from './helpers';
 
+type Args = Parameters<typeof TabBar>[0];
+
 export default {
   title: 'Components/TabBar',
   component: TabBar,
@@ -17,7 +19,7 @@ export default {
   decorators: [TabBarDecorator],
 } as Meta<typeof TabBar>;
 
-const TabBarOutput = ({ args }: { args: typeof TabBar }) => (
+const TabBarOutput = ({ args }: { args: Args }) => (
   <TabBar {...args}>
     <LargeTab
       tabId="monday"
@@ -113,13 +115,13 @@ const TabBarOutput = ({ args }: { args: typeof TabBar }) => (
   </TabBar>
 );
 
-export const WeekTabBarStory: StoryObj<typeof LargeTab> = (args) => (
+export const WeekTabBarStory: StoryObj<typeof LargeTab> = (args: Args) => (
   <TabBarOutput args={args} />
 );
 WeekTabBarStory.storyName = 'Week Tab Bar';
 
 export const WeekTabBarStoryWithActiveBar: StoryObj<typeof LargeTab> = (
-  args,
+  args: Args,
 ) => <TabBarOutput args={args} />;
 WeekTabBarStoryWithActiveBar.storyName = 'Week Tab Bar (+Active Tab)';
 WeekTabBarStoryWithActiveBar.args = {

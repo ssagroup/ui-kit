@@ -8,16 +8,22 @@ import {
   primaryBtnSpecs,
   secondaryBtnSpecs,
   tertiaryBtnSpecs,
+  TestPropsType,
 } from './fixtures';
 
-function setup(component) {
+function setup(component: JSX.Element) {
   return {
     user: userEvent.setup(),
     ...render(component),
   };
 }
 
-const getElTestId = (elType, isDisabled, variant, isHovered?) => {
+const getElTestId = (
+  elType: string,
+  isDisabled?: boolean,
+  variant?: IButtonProps['variant'],
+  isHovered?: boolean,
+) => {
   const prefix = isDisabled
     ? 'disabled'
     : variant === 'primary'
@@ -29,15 +35,15 @@ const getElTestId = (elType, isDisabled, variant, isHovered?) => {
   return `${prefix}-button-${elType}`;
 };
 
-const getSpecName = (spec) => {
-  return `Renders ${spec.variant} [${spec.type}${',' + spec.size}${
-    spec.text ? ',text' : ''
-  }${spec.startIcon ? ',startIcon' : ''}${spec.endIcon ? ',endIcon' : ''}${
-    spec.disabled ? ',disabled' : ''
+const getSpecName = (props: TestPropsType) => {
+  return `Renders ${props.variant} [${props.type}${',' + props.size}${
+    props.text ? ',text' : ''
+  }${props.startIcon ? ',startIcon' : ''}${props.endIcon ? ',endIcon' : ''}${
+    props.disabled ? ',disabled' : ''
   }]`;
 };
 
-const testButton = async (spec) => {
+const testButton = async (spec: TestPropsType) => {
   const { type, size, variant, text, disabled, endIcon, startIcon } = spec;
   const mockOnClick = jest.fn();
   let appendIcon;
@@ -93,7 +99,7 @@ const testButton = async (spec) => {
   }
 };
 
-const testTertiaryBtnHoverState = async (spec) => {
+const testTertiaryBtnHoverState = async (spec: TestPropsType) => {
   const { type, size, variant, text, disabled, endIcon, startIcon } = spec;
   const mockOnClick = jest.fn();
   let appendIcon;
@@ -173,11 +179,25 @@ describe('Button', () => {
       expect(buttonWrapper).toHaveStyleRule('width', '100%');
     });
 
+    it('Renders with a custom text component', () => {
+      const { queryByTestId, getByText } = render(
+        <Button size="small" variant="primary">
+          Click me!
+        </Button>,
+      );
+
+      getByText('Click me!');
+      expect(queryByTestId('disabled-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('white-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('grey-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
+    });
+
     it('Throw error when without register', () => {
       jest.spyOn(console, 'error').mockImplementation();
 
       expect(() => render(<Button variant="primary" />)).toThrow(
-        'Button must have text or icon',
+        'Button must have either text or icon or children',
       );
     });
   });
@@ -202,11 +222,35 @@ describe('Button', () => {
       expect(buttonEl).toHaveStyleRule('background-color', 'blue');
     });
 
+    it('Renders with full width', () => {
+      const { getByRole } = render(
+        <Button block={true} variant="secondary" text="Click me!" />,
+      );
+
+      const buttonWrapper = getByRole('button').closest('div');
+
+      expect(buttonWrapper).toHaveStyleRule('width', '100%');
+    });
+
+    it('Renders with a custom text component', () => {
+      const { queryByTestId, getByText } = render(
+        <Button size="small" variant="secondary">
+          Secondary button
+        </Button>,
+      );
+
+      getByText('Secondary button');
+      expect(queryByTestId('disabled-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('white-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('grey-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
+    });
+
     it('Trow error when without register', () => {
       jest.spyOn(console, 'error').mockImplementation();
 
       expect(() => render(<Button variant="secondary" />)).toThrow(
-        'Button must have text or icon',
+        'Button must have either text or icon or children',
       );
     });
   });
@@ -234,11 +278,35 @@ describe('Button', () => {
       expect(buttonEl).toHaveStyleRule('background-color', 'blue');
     });
 
+    it('Renders with full width', () => {
+      const { getByRole } = render(
+        <Button block={true} variant="tertiary" text="Click me!" />,
+      );
+
+      const buttonWrapper = getByRole('button').closest('div');
+
+      expect(buttonWrapper).toHaveStyleRule('width', '100%');
+    });
+
+    it('Renders with a custom text component', () => {
+      const { queryByTestId, getByText } = render(
+        <Button size="small" variant="tertiary">
+          Tertiary button
+        </Button>,
+      );
+
+      getByText('Tertiary button');
+      expect(queryByTestId('disabled-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('white-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('grey-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
+    });
+
     it('Trow error when without register', () => {
       jest.spyOn(console, 'error').mockImplementation();
 
       expect(() => render(<Button variant="tertiary" />)).toThrow(
-        'Button must have text or icon',
+        'Button must have either text or icon or children',
       );
     });
   });

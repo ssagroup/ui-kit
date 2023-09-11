@@ -1,6 +1,7 @@
+import { CommonProps } from '@global-types/emotion';
 import CardHeaderBase from './CardHeaderBase';
 
-export interface CardProps {
+export interface CardProps extends CommonProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   transparent?: boolean;

@@ -379,6 +379,9 @@ importers:
       '@types/testing-library__jest-dom':
         specifier: ^5.14.6
         version: 5.14.6
+      '@types/uuid':
+        specifier: ^9.0.3
+        version: 9.0.3
       storybook-addon-pseudo-states:
         specifier: ^2.1.0
         version: 2.1.0(@storybook/components@7.3.2)(@storybook/core-events@7.3.2)(@storybook/manager-api@7.3.2)(@storybook/preview-api@7.3.2)(@storybook/theming@7.3.2)(react-dom@18.2.0)(react@18.2.0)
@@ -7643,6 +7646,10 @@ packages:
 
   /@types/unist@2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
+    dev: true
+
+  /@types/uuid@9.0.3:
+    resolution: {integrity: sha512-taHQQH/3ZyI3zP8M/puluDEIEvtQHVYcC6y3N8ijFtAd28+Ey/G4sg1u2gB01S8MwybLOKAp9/yCMu/uR5l3Ug==}
     dev: true
 
   /@types/ws@8.5.5:

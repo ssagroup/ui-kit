@@ -1,4 +1,4 @@
-import { IMapIcons } from '../Icons.types';
+import { IMapIcons } from '../types';
 
 // This file is also imported into the Button/Button.stories.tsx
 // and into the ./index.tsx

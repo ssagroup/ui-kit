@@ -1,8 +1,12 @@
-export interface ITab {
+import { CommonProps } from '@global-types/emotion';
+
+export interface ITab extends CommonProps {
   tabId: number | string;
   renderContent: (
     tab?: {
       tabId: number | string;
+      // text: string;
+      // renderContent: () => ReactNode;
       [prop: string | number | symbol]: unknown;
     },
     arg?: unknown,
