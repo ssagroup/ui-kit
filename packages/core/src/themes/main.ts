@@ -82,6 +82,7 @@ const main: Theme = {
     blueNotification: 'rgba(0, 133, 226, 1)', //#0085e2
   },
   mediaQueries: {
+    xs: '@media screen and (max-width: 390px)',
     sm: '@media screen and (min-width: 390px)',
     md: '@media screen and (min-width: 900px)',
     lg: '@media screen and (min-width: 1440px)',

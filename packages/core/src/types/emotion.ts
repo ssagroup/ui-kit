@@ -95,6 +95,7 @@ type MediaQueryString = `@media${string}`;
 export interface Theme {
   colors: Colors;
   mediaQueries: {
+    xs: MediaQueryString;
     sm: MediaQueryString;
     md: MediaQueryString;
     lg: MediaQueryString;

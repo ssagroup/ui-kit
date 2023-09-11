@@ -10,7 +10,7 @@ const Break = () => <span css={{ cursor: 'default' }}>...</span>;
 const PageButton = ({ onClick, isSelected, page }: IPageButtonProps) => {
   const theme = useTheme();
   const styles = useMemo(() => {
-    return isSelected ? selectedPageBtnStyles(theme) : pageBtnStyles;
+    return isSelected ? selectedPageBtnStyles(theme) : pageBtnStyles(theme);
   }, [isSelected]);
 
   return (

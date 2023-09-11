@@ -8,12 +8,7 @@ import { PaginationButtons } from './PaginationButtons';
 import { IPaginationProps } from './types';
 
 /**
- * Styling
- *  > selected button +
- *  > hover
- *  > sizes
- * Disabled buttons
- * Media queries
+ * Props: onPageChange or context?
  * */
 const Pagination = ({ pagesCount, selectedPage }: IPaginationProps) => {
   const [page, setPage] = useState(selectedPage);

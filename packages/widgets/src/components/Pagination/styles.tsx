@@ -1,16 +1,25 @@
 import { css, Theme } from '@emotion/react';
 
-const baseBtnStyles = css`
+const baseBtnStyles = (theme: Theme) => css`
   height: 25px;
   border-radius: 6px;
+
+  ${theme.mediaQueries.xs} {
+    height: 30px;
+  }
 `;
 
-export const pageBtnStyles = css`
-  ${baseBtnStyles}
+export const pageBtnStyles = (theme: Theme) => css`
+  ${baseBtnStyles(theme)}
+
   background: unset;
   box-shadow: unset;
   color: #070821;
   padding: 0 9px;
+
+  ${theme.mediaQueries.xs} {
+    padding: 0 11px;
+  }
 
   &:hover,
   &:active,
@@ -24,20 +33,23 @@ const selectedBtnBg = (theme: Theme) => css`
   background: ${theme.colors.blueLightDarker};
   background: linear-gradient(
     247.37deg,
-    ${theme.colors.blueLightDarker},
-    ${theme.colors.blueDark}
+    ${theme.colors.blueDark},
+    ${theme.colors.blueLightDarker}
   );
 `;
 
 export const selectedPageBtnStyles = (theme: Theme) => css`
-  ${baseBtnStyles}
+  ${baseBtnStyles(theme)}
 
   ${selectedBtnBg(theme)}
 
   color: white;
-
   margin: 0 3px;
   padding: 0 10px;
+
+  ${theme.mediaQueries.xs} {
+    padding: 0 13px;
+  }
 
   &:hover {
     box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.3);
@@ -51,8 +63,8 @@ export const selectedPageBtnStyles = (theme: Theme) => css`
   }
 `;
 
-export const arrowBtnStyles = css`
-  ${baseBtnStyles}
+export const arrowBtnStyles = (theme: Theme) => css`
+  ${baseBtnStyles(theme)}
 
   padding: 0 8px;
   background: #eef1f7;
@@ -67,25 +79,3 @@ export const arrowBtnStyles = css`
     cursor: pointer;
   }
 `;
-
-/*
-  &:hover {
-    background: ${theme.colors.white};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadowHover};
-  }
-
-  &:active {
-    background: ${theme.colors.greyFocused};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-  }
-
-  &:disabled {
-    background: ${theme.colors.grey};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-  }
-
-  &:focus {
-    background: ${theme.colors.greySelectedMenuItem};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-  }
- */

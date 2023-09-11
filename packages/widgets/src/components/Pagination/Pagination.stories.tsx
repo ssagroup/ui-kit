@@ -9,6 +9,6 @@ export default {
 export const Default = {
   args: {
     pagesCount: 10,
-    selectedPage: 5,
+    selectedPage: 1,
   },
 };
