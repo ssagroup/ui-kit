@@ -2,13 +2,7 @@ import { CommonProps } from '@ssa-ui-kit/core';
 
 export interface IPaginationProps extends CommonProps {
   pagesCount: number;
-  selectedPage?: number;
-  onPageChange: () => void;
-
-  prevPageElem?: React.ReactNode;
-  nextPageElem?: React.ReactNode;
-  renderPageElem?: () => React.ReactNode;
-  breakElem?: React.ReactNode;
+  ariaLabel?: string;
 }
 
 export interface IPaginationButtonsProps {

@@ -22,6 +22,7 @@ export const ArrowButton = ({
       size="small"
       className={className}
       css={arrowBtnStyles(theme)}
+      aria-label={`Goto ${direction === 'left' ? 'previous' : 'next'} page`}
     />
   );
 };
