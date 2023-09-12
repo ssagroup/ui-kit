@@ -14,6 +14,7 @@ const TabBarBase = styled.div``;
  * */
 const TabBar = ({ children }: ITabBarProps) => {
   const { activeTab, setActiveTab } = useTabBarContext();
+  const activeTabId = activeTab?.tabId;
 
   return (
     <TabBarBase role="tablist">
@@ -22,7 +23,6 @@ const TabBar = ({ children }: ITabBarProps) => {
         if (isValidElement(child)) {
           const { renderContent, ...rest } = child.props;
           const tabId = rest.tabId;
-          const activeTabId = activeTab?.tabId;
 
           return cloneElement(child, {
             key: tabId,

@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { CommonProps } from '@global-types/emotion';
+import CardContentBase from './CardContentBase';
 
 export interface CardProps extends CommonProps {
   children: React.ReactNode;
@@ -8,17 +8,8 @@ export interface CardProps extends CommonProps {
   className?: string;
 }
 
-const Container = styled.div<{ direction?: string }>`
-  display: flex;
-  justify-content: space-between;
-
-  flex-direction: ${({ direction }) => (direction ? direction : 'row')};
-  align-items: ${({ direction }) =>
-    direction === 'column' ? 'normal' : 'center'};
-`;
-
 const CardContent = ({ children, ...props }: CardProps) => (
-  <Container {...props}>{children}</Container>
+  <CardContentBase {...props}>{children}</CardContentBase>
 );
 
 export default CardContent;
