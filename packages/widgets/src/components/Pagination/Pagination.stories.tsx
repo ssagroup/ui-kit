@@ -16,11 +16,35 @@ export default {
   ],
 } as Meta<typeof Pagination>;
 
-export const Default = {
+export const PageSelected = {
   args: {
     pagesCount: 10,
   },
   parameters: {
     selectedPage: 5,
+  },
+};
+
+export const NoPagesSelected = {
+  args: {
+    pagesCount: 10,
+  },
+};
+
+export const FirstPageSelected = {
+  args: {
+    pagesCount: 10,
+  },
+  parameters: {
+    selectedPage: 1,
+  },
+};
+
+export const LastPageSelected = {
+  args: {
+    pagesCount: 10,
+  },
+  parameters: {
+    selectedPage: 10,
   },
 };
