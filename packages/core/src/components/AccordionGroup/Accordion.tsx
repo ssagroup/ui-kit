@@ -1,9 +1,8 @@
 import CardBase from '@components/Card/CardBase';
-import { AccordionTabProps } from './types';
+import { AccordionProps } from './types';
 import { createWrapperStyles } from './styles';
-import { useTheme } from '@emotion/react';
 
-const AccordionTab = ({
+const Accordion = ({
   title,
   isActive,
   ariaControls,
@@ -12,9 +11,8 @@ const AccordionTab = ({
   renderTitle,
   renderContent,
   onClick,
-}: AccordionTabProps) => {
-  const theme = useTheme();
-  const styles = createWrapperStyles(theme);
+}: AccordionProps) => {
+  const styles = createWrapperStyles();
   return (
     <CardBase
       role="tab"
@@ -23,16 +21,11 @@ const AccordionTab = ({
       aria-controls={ariaControls}
       tabIndex={0}
       title={title}
-      onClick={() => {
-        if (typeof onClick === 'function') {
-          onClick();
-        }
-      }}
       css={styles[variant]}>
-      {renderTitle({ tabId, isActive, title, variant })}
+      {renderTitle({ tabId, isActive, title, variant, onClick })}
       {renderContent({ tabId, isActive, variant })}
     </CardBase>
   );
 };
 
-export default AccordionTab;
+export default Accordion;

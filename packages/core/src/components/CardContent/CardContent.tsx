@@ -6,6 +6,7 @@ export interface CardProps extends CommonProps {
   style?: React.CSSProperties;
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   className?: string;
+  role?: string;
 }
 
 const CardContent = ({ children, ...props }: CardProps) => (

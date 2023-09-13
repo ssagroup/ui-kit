@@ -8,6 +8,7 @@ type Colors = MakeColors<
   [
     'white',
     'white60',
+    'white80',
     'white30',
     'dark',
     'greyLighter',
@@ -33,6 +34,7 @@ type Colors = MakeColors<
     'greyDropdownMain',
     'greyDropdownFocused',
     'greyDropdownText',
+    'greyArrowSidebar',
     'redLighter',
     'redLighter40',
     'red',

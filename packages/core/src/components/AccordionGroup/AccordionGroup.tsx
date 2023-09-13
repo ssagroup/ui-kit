@@ -1,15 +1,20 @@
 import styled from '@emotion/styled';
 import { Children, cloneElement, isValidElement, useLayoutEffect } from 'react';
-import { useAccordionContext } from './AccordionContext';
-import { AccordionProps, AccordionTab } from './types';
+import { useAccordionGroupContext } from './AccordionContext';
+import { AccordionGroupProps, Accordion } from './types';
 
 const AccordionBase = styled.div``;
 
-const Accordion = ({ children, variant = 'empty' }: AccordionProps) => {
-  const { activeTabs, setActiveTabs, toggleActiveTab } = useAccordionContext();
+const AccordionGroup = ({
+  children,
+  variant = 'empty',
+  ...rest
+}: AccordionGroupProps) => {
+  const { activeTabs, setActiveTabs, toggleActiveTab } =
+    useAccordionGroupContext();
 
   useLayoutEffect(() => {
-    const initialTabs: AccordionTab[] = [];
+    const initialTabs: Accordion[] = [];
     Children.map(children, (child) => {
       if (isValidElement(child) && child.props.isActive) {
         const { renderContent, renderTitle, ...rest } = child.props;
@@ -24,7 +29,7 @@ const Accordion = ({ children, variant = 'empty' }: AccordionProps) => {
   }, []);
 
   return (
-    <AccordionBase role="tablist">
+    <AccordionBase role="tablist" {...rest}>
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           const { renderContent, renderTitle, ...rest } = child.props;
@@ -50,4 +55,4 @@ const Accordion = ({ children, variant = 'empty' }: AccordionProps) => {
   );
 };
 
-export default Accordion;
+export default AccordionGroup;
