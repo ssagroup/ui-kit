@@ -2,6 +2,7 @@ import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 
 export type AccordionVariant = 'empty' | 'small' | 'medium' | 'large';
+
 export type VariantStyles = {
   [K in AccordionVariant]: SerializedStyles;
 };
