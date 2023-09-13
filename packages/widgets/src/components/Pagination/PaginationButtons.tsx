@@ -25,7 +25,7 @@ const PageButton = ({ onClick, isSelected, page }: IPageButtonProps) => {
           : onClick
       }
       css={styles}
-      aria-label={isSelected ? `Current page ${page}` : `Goto page ${page}`}
+      aria-label={isSelected ? `Current page ${page}` : `Go to page ${page}`}
       aria-current={isSelected}>
       {page}
     </Button>
