@@ -74,8 +74,8 @@ export const blueLightDarker = (theme: Theme) => css`
   background-color: ${theme.colors.blueLightDarker};
   background: linear-gradient(
     247.37deg,
-    ${theme.colors.blueLightDarker},
-    ${theme.colors.blueDark}
+    ${theme.colors.blueDark},
+    ${theme.colors.blueLightDarker}
   );
   box-shadow: -4px 4px 10px ${theme.colors.blueLightDarker40};
 `;
