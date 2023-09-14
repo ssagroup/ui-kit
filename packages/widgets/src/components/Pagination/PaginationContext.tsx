@@ -2,7 +2,7 @@ import { createContext, useState, useContext } from 'react';
 import { IPaginationContext, IPaginationContextProviderProps } from './types';
 
 export const PaginationContext = createContext<IPaginationContext>({
-  setPage: () => {
+  setPage() {
     /* no-op */
   },
 });

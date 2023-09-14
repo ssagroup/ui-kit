@@ -11,6 +11,8 @@ const config: JestConfigWithTsJest = {
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
+    '!**/types.ts',
+    '!**/*.e2e.{ts,tsx}',
     '!**/*.spec.{ts,tsx}',
     '!**/*.stories.{ts,tsx}',
     '!**/*.d.{ts,tsx}',
@@ -20,6 +22,9 @@ const config: JestConfigWithTsJest = {
     '!**/jest.config.ts',
     '!./packages/**/dist/**',
     '!**/node_modules/**',
+    '!./playwright.base.config.ts',
+    '!./packages/**/playwright.config.ts',
+    '!./packages/**/lostpixel.config.ts',
   ],
   verbose: true,
   globalSetup: '<rootDir>/global-setup.ts',

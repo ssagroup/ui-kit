@@ -8,48 +8,51 @@ describe('generateRange', () => {
     range = generateRange(-1);
     expect(range).toEqual([]);
   });
+  describe('No page selected', () => {
+    const noSelectedItemTestCases = [
+      { pages: 1, expected: [1] },
+      { pages: 2, expected: [1, 2] },
+      { pages: 3, expected: [1, 2, 3] },
+      { pages: 4, expected: [1, 2, 3, 4] },
+      { pages: 5, expected: [1, 2, 3, 4, 5] },
+      { pages: 6, expected: [1, 2, 3, -1, 6] },
+      { pages: 7, expected: [1, 2, 3, -1, 7] },
+      { pages: 8, expected: [1, 2, 3, -1, 8] },
+      { pages: 9, expected: [1, 2, 3, -1, 9] },
+      { pages: 10, expected: [1, 2, 3, -1, 10] },
+    ];
 
-  const noSelectedItemTestCases = [
-    { pages: 1, expected: [1] },
-    { pages: 2, expected: [1, 2] },
-    { pages: 3, expected: [1, 2, 3] },
-    { pages: 4, expected: [1, 2, 3, 4] },
-    { pages: 5, expected: [1, 2, 3, 4, 5] },
-    { pages: 6, expected: [1, 2, 3, -1, 6] },
-    { pages: 7, expected: [1, 2, 3, -1, 7] },
-    { pages: 8, expected: [1, 2, 3, -1, 8] },
-    { pages: 9, expected: [1, 2, 3, -1, 9] },
-    { pages: 10, expected: [1, 2, 3, -1, 10] },
-  ];
+    it.each(noSelectedItemTestCases)(
+      'returns the range for $pages pages',
+      ({ pages, expected }) => {
+        const range = generateRange(pages);
+        expect(range).toEqual(expected);
+      },
+    );
+  });
 
-  it.each(noSelectedItemTestCases)(
-    'returns the range for $pages pages without a selected one',
-    ({ pages, expected }) => {
-      const range = generateRange(pages);
-      expect(range).toEqual(expected);
-    },
-  );
+  describe('With a selected page', () => {
+    const selectedItemTestCases = [
+      { pages: 10, selected: 1, expected: [1, 2, 3, -1, 10] },
+      { pages: 10, selected: 2, expected: [1, 2, 3, -1, 10] },
+      { pages: 10, selected: 3, expected: [1, 2, 3, 4, -1, 10] },
+      { pages: 10, selected: 4, expected: [1, 2, 3, 4, 5, -1, 10] },
+      { pages: 10, selected: 5, expected: [1, -1, 4, 5, 6, -1, 10] },
+      { pages: 10, selected: 6, expected: [1, -1, 5, 6, 7, -1, 10] },
+      { pages: 10, selected: 7, expected: [1, -1, 6, 7, 8, 9, 10] },
+      { pages: 10, selected: 8, expected: [1, -1, 7, 8, 9, 10] },
+      { pages: 10, selected: 9, expected: [1, -1, 8, 9, 10] },
+      { pages: 10, selected: 10, expected: [1, -1, 9, 10] },
+    ];
 
-  const selectedItemTestCases = [
-    { pages: 10, selected: 1, expected: [1, 2, 3, -1, 10] },
-    { pages: 10, selected: 2, expected: [1, 2, 3, -1, 10] },
-    { pages: 10, selected: 3, expected: [1, 2, 3, 4, -1, 10] },
-    { pages: 10, selected: 4, expected: [1, 2, 3, 4, 5, -1, 10] },
-    { pages: 10, selected: 5, expected: [1, -1, 4, 5, 6, -1, 10] },
-    { pages: 10, selected: 6, expected: [1, -1, 5, 6, 7, -1, 10] },
-    { pages: 10, selected: 7, expected: [1, -1, 6, 7, 8, 9, 10] },
-    { pages: 10, selected: 8, expected: [1, -1, 7, 8, 9, 10] },
-    { pages: 10, selected: 9, expected: [1, -1, 8, 9, 10] },
-    { pages: 10, selected: 10, expected: [1, -1, 9, 10] },
-  ];
-
-  it.each(selectedItemTestCases)(
-    'returns the range for $pages pages when selected item $selected',
-    ({ pages, selected, expected }) => {
-      const range = generateRange(pages, selected);
-      expect(range).toEqual(expected);
-    },
-  );
+    it.each(selectedItemTestCases)(
+      'returns the range for $pages pages when selected item $selected',
+      ({ pages, selected, expected }) => {
+        const range = generateRange(pages, selected);
+        expect(range).toEqual(expected);
+      },
+    );
+  });
 
   it('throws an error if the selected page is out of range', () => {
     expect(() => generateRange(10, 0)).toThrow(
