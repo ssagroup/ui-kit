@@ -27,7 +27,9 @@ export const AccordionGroupDecorator: DecoratorFunction<
   );
 };
 
-export const AccordionTemplate = (args: Pick<AccordionGroupProps, 'size'>) => (
+export const AccordionTemplate = (
+  args: Pick<AccordionGroupProps, 'size' | 'accordionsStayOpen'>,
+) => (
   <AccordionGroup {...args}>
     <Accordion
       id="first"

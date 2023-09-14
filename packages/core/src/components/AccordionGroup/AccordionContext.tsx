@@ -7,48 +7,58 @@ export const AccordionGroupContext = createContext<IAccordionGroupContext>(
 
 export const useAccordionGroupContext = () => useContext(AccordionGroupContext);
 
-const useAccordionGroup = (
-  initialAccordions: Array<AccordionProps>,
-): IAccordionGroupContext => {
+const useAccordionGroup = (): IAccordionGroupContext => {
   const [openedAccordions, setOpenedAccordions] = useState<AccordionProps[]>(
-    initialAccordions || [],
+    [],
   );
+  const [stayOpen, setStayOpen] = useState<boolean>(false);
 
   const toggleOpenedAccordion = (accordion: AccordionProps) => {
     const isOpened = !!openedAccordions.find(
       (activeAccordion) => activeAccordion.id === accordion.id,
     );
-    const newOpenedAccordions = isOpened
-      ? openedAccordions.filter(
-          (activeAccordion) => activeAccordion.id !== accordion.id,
-        )
-      : openedAccordions.concat([accordion]);
-    setOpenedAccordions(newOpenedAccordions);
+    if (stayOpen) {
+      const newOpenedAccordions = isOpened
+        ? openedAccordions.filter(
+            (activeAccordion) => activeAccordion.id !== accordion.id,
+          )
+        : openedAccordions.concat([accordion]);
+      setOpenedAccordions(newOpenedAccordions);
+    } else {
+      setOpenedAccordions(isOpened ? [] : [accordion]);
+    }
   };
 
   return {
     openedAccordions,
+    stayOpen,
     setOpenedAccordions,
     toggleOpenedAccordion,
+    setStayOpen,
   };
 };
 
 export const AccordionGroupContextProvider = ({
-  initialAccordions = [],
   children,
 }: {
-  initialAccordions?: AccordionProps[];
   children: React.ReactNode;
 }) => {
-  const { openedAccordions, setOpenedAccordions, toggleOpenedAccordion } =
-    useAccordionGroup(initialAccordions);
+  const {
+    openedAccordions,
+    stayOpen,
+    setOpenedAccordions,
+    toggleOpenedAccordion,
+    setStayOpen,
+  } = useAccordionGroup();
 
   return (
     <AccordionGroupContext.Provider
       value={{
         openedAccordions,
+        stayOpen,
         setOpenedAccordions,
         toggleOpenedAccordion,
+        setStayOpen,
       }}>
       {children}
     </AccordionGroupContext.Provider>

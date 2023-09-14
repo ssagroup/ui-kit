@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
-import { Children, cloneElement, isValidElement, useLayoutEffect } from 'react';
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import { useAccordionGroupContext } from './AccordionContext';
 import { AccordionGroupProps, AccordionProps } from './types';
 
@@ -8,10 +14,19 @@ const AccordionBase = styled.div``;
 export const AccordionGroup = ({
   children,
   size = 'empty',
+  accordionsStayOpen = true,
   ...rest
 }: AccordionGroupProps) => {
-  const { openedAccordions, setOpenedAccordions, toggleOpenedAccordion } =
-    useAccordionGroupContext();
+  const {
+    openedAccordions,
+    setOpenedAccordions,
+    toggleOpenedAccordion,
+    setStayOpen,
+  } = useAccordionGroupContext();
+
+  useEffect(() => {
+    setStayOpen(accordionsStayOpen);
+  }, []);
 
   useLayoutEffect(() => {
     const initialAccordions: AccordionProps[] = [];

@@ -11,6 +11,7 @@ export interface AccordionGroupProps {
   id?: string;
   children: React.ReactElement<React.PropsWithChildren<AccordionViewProps>>[];
   size?: AccordionSize;
+  accordionsStayOpen?: boolean;
 }
 
 export interface AccordionProps extends CommonProps {
@@ -39,6 +40,8 @@ export interface AccordionViewProps extends AccordionProps {
 
 export interface IAccordionGroupContext {
   openedAccordions: Array<AccordionProps> | [];
+  stayOpen: boolean;
   setOpenedAccordions: (accordions: Array<AccordionProps>) => void;
   toggleOpenedAccordion: (accordion: AccordionProps) => void;
+  setStayOpen: (isStayOpen: boolean) => void;
 }

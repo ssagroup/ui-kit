@@ -63,3 +63,45 @@ export const Small = () => {
     />
   );
 };
+
+export const LargeWithOnlySingleOpened = {
+  ...StoryTemplate,
+  args: {
+    size: 'large',
+    accordionsStayOpen: false,
+  },
+};
+
+export const MediumWithOnlySingleOpened = () => {
+  const theme = useTheme();
+  return (
+    <AccordionTemplate
+      size="medium"
+      accordionsStayOpen={false}
+      css={css`
+        width: 340px;
+        border-radius: 5px;
+        border: 1px solid ${theme.colors.greyDropdownMain};
+      `}
+    />
+  );
+};
+
+export const SmallWithOnlySingleOpened = () => {
+  const theme = useTheme();
+  return (
+    <AccordionTemplate
+      size="small"
+      accordionsStayOpen={false}
+      css={css`
+        width: 240px;
+        border-radius: 0;
+        background: linear-gradient(
+          108deg,
+          ${theme.colors.greyDarker} 0%,
+          ${theme.colors.greyDark} 100%
+        );
+      `}
+    />
+  );
+};

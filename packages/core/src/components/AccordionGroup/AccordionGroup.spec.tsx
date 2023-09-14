@@ -67,12 +67,12 @@ const componentAccordionTests: ComponentAccordionTests = (
   };
 
   describe(describeBlockName, () => {
-    function setup() {
+    function setup(params: Parameters<typeof AccordionTemplate>[0] = {}) {
       return {
         user: userEvent.setup(),
         ...render(
           <AccordionGroupContextProvider>
-            <AccordionTemplate size={size} />
+            <AccordionTemplate size={size} {...params} />
           </AccordionGroupContextProvider>,
         ),
       };
@@ -81,8 +81,7 @@ const componentAccordionTests: ComponentAccordionTests = (
     it('Renders AccordionGroup', () => {
       const { getByRole } = setup();
       const accordionListElement = getByRole('tablist');
-      const accordionEls =
-        within(accordionListElement).getAllByRole('accordion');
+      const accordionEls = within(accordionListElement).getAllByRole('tab');
 
       expect(accordionEls.length).toBe(ACCORDIONS_COUNT);
       expect(screen.getAllByRole('tabpanel').length).toBe(ACCORDIONS_COUNT);
@@ -109,7 +108,7 @@ const componentAccordionTests: ComponentAccordionTests = (
       }
     });
 
-    it("Marks an accordion as active when it's clicked", async () => {
+    it("Marks an accordion #1 as active and accordion #2 as inactive when they're clicked [accordionStayOpen = true]", async () => {
       const { user } = setup();
       const accordionListElement = screen.getByRole('tablist');
       const chapterTitle = accordionListElement.querySelectorAll('h3');
@@ -117,8 +116,38 @@ const componentAccordionTests: ComponentAccordionTests = (
       await user.click(chapterTitle[0]);
       await user.click(chapterTitle[1]);
 
-      const accordionEls =
-        within(accordionListElement).getAllByRole('accordion');
+      const accordionEls = within(accordionListElement).getAllByRole('tab');
+
+      for (let i = 0; i < accordions.length; ++i) {
+        const accordion = accordions[i];
+        const accordionEl = accordionEls[i];
+
+        if (i === 0) {
+          expect(accordionEl).toHaveAttribute('aria-selected', 'true');
+
+          checkAccordionPanel(accordion, accordionEl);
+        } else {
+          expect(accordionEl).toHaveAttribute('aria-selected', 'false');
+        }
+
+        expect(accordionEl).toHaveAttribute('id', accordion.id);
+        expect(accordionEl).toHaveAttribute('tabindex', '0');
+        expect(accordionEl).toHaveAttribute(
+          'aria-controls',
+          accordions[i].ariaControls,
+        );
+        expect(accordionEl.getAttribute('title')).toEqual(accordion.title);
+      }
+    });
+
+    it('Marks an accordion #1 as active and accordion #2 as inactive when clicked on accordion #1 [accordionStayOpen = false]', async () => {
+      const { user } = setup({ accordionsStayOpen: false });
+      const accordionListElement = screen.getByRole('tablist');
+      const chapterTitle = accordionListElement.querySelectorAll('h3');
+
+      await user.click(chapterTitle[0]);
+
+      const accordionEls = within(accordionListElement).getAllByRole('tab');
 
       for (let i = 0; i < accordions.length; ++i) {
         const accordion = accordions[i];
