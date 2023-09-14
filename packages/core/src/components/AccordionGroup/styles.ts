@@ -26,6 +26,7 @@ export const baseTitleStyles = css`
   user-select: none;
   align-items: center;
   cursor: pointer;
+  border: none;
 `;
 
 export const createTitleStyles = (theme: Theme, isActive?: boolean) => ({

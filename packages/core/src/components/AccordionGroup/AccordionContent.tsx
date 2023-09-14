@@ -7,13 +7,14 @@ export const AccordionContent = ({
   isOpened,
   children,
   size = 'empty',
+  ...rest
 }: RenderContentProps & {
   children: React.ReactNode;
 }) => {
   const theme = useTheme();
   const styles = createContentStyles(theme, isOpened);
   return (
-    <CardContent css={styles[size]} role="tabpanel">
+    <CardContent css={styles[size]} {...rest}>
       {children}
     </CardContent>
   );

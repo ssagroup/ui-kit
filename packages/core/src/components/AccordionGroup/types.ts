@@ -1,5 +1,6 @@
 import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
+import { AriaAttributes } from 'react';
 
 export type AccordionSize = 'empty' | 'small' | 'medium' | 'large';
 
@@ -20,16 +21,17 @@ export interface AccordionProps extends CommonProps {
   renderTitle: (
     data: RenderContentProps & {
       title: string;
+      ariaControls?: string;
       onClick?: () => void;
     },
   ) => React.ReactNode;
   renderContent: (accordion: RenderContentProps) => React.ReactNode;
 }
 
-export interface RenderContentProps
-  extends Pick<AccordionProps, 'id' | 'size'> {
-  isOpened?: boolean;
-}
+export type RenderContentProps = Pick<AccordionProps, 'id' | 'size'> &
+  Pick<AriaAttributes, 'aria-labelledby'> & {
+    isOpened?: boolean;
+  };
 
 export interface AccordionViewProps extends AccordionProps {
   ariaControls?: string;
