@@ -1,45 +1,44 @@
 import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 
-export type AccordionVariant = 'empty' | 'small' | 'medium' | 'large';
+export type AccordionSize = 'empty' | 'small' | 'medium' | 'large';
 
-export type VariantStyles = {
-  [K in AccordionVariant]: SerializedStyles;
+export type SizeStyles = {
+  [K in AccordionSize]: SerializedStyles;
 };
 
 export interface AccordionGroupProps {
   id?: string;
-  children: React.ReactElement<React.PropsWithChildren<AccordionProps>>[];
-  variant?: AccordionVariant;
+  children: React.ReactElement<React.PropsWithChildren<AccordionViewProps>>[];
+  size?: AccordionSize;
 }
 
-export interface RenderContentProps {
-  tabId: number | string;
-  isActive?: boolean;
-  variant?: AccordionVariant;
-}
-
-export interface Accordion extends CommonProps {
-  tabId: number | string;
-  variant?: AccordionVariant;
+export interface AccordionProps extends CommonProps {
+  id: number | string;
+  size?: AccordionSize;
   renderTitle: (
     data: RenderContentProps & {
       title: string;
       onClick?: () => void;
     },
   ) => React.ReactNode;
-  renderContent: (tab: RenderContentProps) => React.ReactNode;
+  renderContent: (accordion: RenderContentProps) => React.ReactNode;
 }
 
-export interface AccordionProps extends Accordion {
+export interface RenderContentProps
+  extends Pick<AccordionProps, 'id' | 'size'> {
+  isOpened?: boolean;
+}
+
+export interface AccordionViewProps extends AccordionProps {
   ariaControls?: string;
-  isActive?: boolean;
+  isOpened?: boolean;
   title: string;
   onClick?: () => void;
 }
 
-export interface ITabBarContext {
-  activeTabs: Array<Accordion> | [];
-  setActiveTabs: (tabs: Array<Accordion>) => void;
-  toggleActiveTab: (tab: Accordion) => void;
+export interface IAccordionGroupContext {
+  openedAccordions: Array<AccordionProps> | [];
+  setOpenedAccordions: (accordions: Array<AccordionProps>) => void;
+  toggleOpenedAccordion: (accordion: AccordionProps) => void;
 }

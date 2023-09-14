@@ -3,20 +3,18 @@ import { RenderContentProps } from './types';
 import { createContentStyles } from './styles';
 import { useTheme } from '@emotion/react';
 
-const AccordionContent = ({
-  isActive,
+export const AccordionContent = ({
+  isOpened,
   children,
-  variant = 'empty',
+  size = 'empty',
 }: RenderContentProps & {
   children: React.ReactNode;
 }) => {
   const theme = useTheme();
-  const styles = createContentStyles(theme, isActive);
+  const styles = createContentStyles(theme, isOpened);
   return (
-    <CardContent css={styles[variant]} role="tabpanel">
+    <CardContent css={styles[size]} role="tabpanel">
       {children}
     </CardContent>
   );
 };
-
-export default AccordionContent;

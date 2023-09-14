@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react';
 
-export const createWrapperStyles = () => ({
+export const wrapperStyles = {
   empty: css``,
   small: css`
     background: none;
@@ -20,7 +20,7 @@ export const createWrapperStyles = () => ({
       margin-bottom: 0;
     }
   `,
-});
+};
 
 export const baseTitleStyles = css`
   user-select: none;

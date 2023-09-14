@@ -2,10 +2,12 @@ import React from 'react';
 import { DecoratorFunction } from '@storybook/types';
 import { AccordionGroupContextProvider } from '../AccordionContext';
 import Typography from '@components/Typography';
-import Accordion from '@components/AccordionGroup/Accordion';
-import AccordionGroup from '..';
-import AccordionTitle from '../AccordionTitle';
-import AccordionContent from '../AccordionContent';
+import {
+  Accordion,
+  AccordionTitle,
+  AccordionGroup,
+  AccordionContent,
+} from '@components/AccordionGroup';
 import { AccordionGroupProps } from '../types';
 
 type Args = Parameters<typeof AccordionGroup>[0];
@@ -25,12 +27,10 @@ export const AccordionGroupDecorator: DecoratorFunction<
   );
 };
 
-export const AccordionTemplate = (
-  args: Pick<AccordionGroupProps, 'variant'>,
-) => (
+export const AccordionTemplate = (args: Pick<AccordionGroupProps, 'size'>) => (
   <AccordionGroup {...args}>
     <Accordion
-      tabId="first"
+      id="first"
       title="Basic"
       ariaControls="first-panel"
       renderContent={(props) => (
@@ -50,9 +50,9 @@ export const AccordionTemplate = (
       renderTitle={AccordionTitle}
     />
     <Accordion
-      tabId="second"
+      id="second"
       title="Advanced"
-      isActive
+      isOpened
       ariaControls="second-panel"
       renderContent={(props) => (
         <AccordionContent {...props}>
@@ -66,7 +66,7 @@ export const AccordionTemplate = (
       renderTitle={AccordionTitle}
     />
     <Accordion
-      tabId="third"
+      id="third"
       title="Indicator"
       ariaControls="third-panel"
       renderContent={(props) => (

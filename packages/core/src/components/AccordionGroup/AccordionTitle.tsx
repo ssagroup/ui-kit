@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 import CardHeaderBase from '@components/CardHeader/CardHeaderBase';
-import { Accordion as AccordionTabType } from './types';
+import { AccordionProps } from './types';
 import { useTheme } from '@emotion/react';
-import { Icon } from '../../../dist';
+import Icon from '@components/Icon';
 import { createTitleStyles } from './styles';
 
-const AccordionTitle: AccordionTabType['renderTitle'] = ({
+export const AccordionTitle: AccordionProps['renderTitle'] = ({
   title,
-  variant = 'empty',
-  isActive,
+  size = 'empty',
+  isOpened: isActive,
   onClick,
 }) => {
   const theme = useTheme();
@@ -16,7 +16,7 @@ const AccordionTitle: AccordionTabType['renderTitle'] = ({
   return (
     <CardHeaderBase
       as="h3"
-      css={styles[variant]}
+      css={styles[size]}
       onClick={() => {
         if (typeof onClick === 'function') {
           onClick();
@@ -29,5 +29,3 @@ const AccordionTitle: AccordionTabType['renderTitle'] = ({
     </CardHeaderBase>
   );
 };
-
-export default AccordionTitle;

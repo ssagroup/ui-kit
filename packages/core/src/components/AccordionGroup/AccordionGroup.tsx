@@ -1,31 +1,31 @@
 import styled from '@emotion/styled';
 import { Children, cloneElement, isValidElement, useLayoutEffect } from 'react';
 import { useAccordionGroupContext } from './AccordionContext';
-import { AccordionGroupProps, Accordion } from './types';
+import { AccordionGroupProps, AccordionProps } from './types';
 
 const AccordionBase = styled.div``;
 
-const AccordionGroup = ({
+export const AccordionGroup = ({
   children,
-  variant = 'empty',
+  size = 'empty',
   ...rest
 }: AccordionGroupProps) => {
-  const { activeTabs, setActiveTabs, toggleActiveTab } =
+  const { openedAccordions, setOpenedAccordions, toggleOpenedAccordion } =
     useAccordionGroupContext();
 
   useLayoutEffect(() => {
-    const initialTabs: Accordion[] = [];
+    const initialAccordions: AccordionProps[] = [];
     Children.map(children, (child) => {
-      if (isValidElement(child) && child.props.isActive) {
+      if (isValidElement(child) && child.props.isOpened) {
         const { renderContent, renderTitle, ...rest } = child.props;
-        initialTabs.push({
-          tabId: rest.tabId,
+        initialAccordions.push({
+          id: rest.id,
           renderContent: renderContent.bind(null, rest),
           renderTitle: renderTitle.bind(null, rest),
         });
       }
     });
-    setActiveTabs(initialTabs);
+    setOpenedAccordions(initialAccordions);
   }, []);
 
   return (
@@ -33,18 +33,18 @@ const AccordionGroup = ({
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           const { renderContent, renderTitle, ...rest } = child.props;
-          const tabId = rest.tabId;
-          const isActive = !!activeTabs.find(
-            (activeTab) => activeTab.tabId === tabId,
+          const id = rest.id;
+          const isOpened = !!openedAccordions.find(
+            (activeAccordion) => activeAccordion.id === id,
           );
 
           return cloneElement(child, {
-            key: tabId,
-            isActive,
-            variant,
+            key: id,
+            isOpened,
+            size,
             onClick: () =>
-              toggleActiveTab({
-                tabId,
+              toggleOpenedAccordion({
+                id,
                 renderContent: renderContent.bind(null, rest),
                 renderTitle: renderTitle.bind(null, rest),
               }),
@@ -54,5 +54,3 @@ const AccordionGroup = ({
     </AccordionBase>
   );
 };
-
-export default AccordionGroup;

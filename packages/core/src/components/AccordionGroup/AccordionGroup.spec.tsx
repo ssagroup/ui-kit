@@ -3,60 +3,66 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
 
 import { AccordionGroupContextProvider } from './AccordionContext';
-import { AccordionVariant } from './types';
+import { AccordionSize } from './types';
 import { AccordionTemplate } from './stories/helpers';
 
 interface AccordionTest {
-  tabId: string;
+  id: string;
   ariaControls: string;
   title: string;
   text: string;
-  selected: boolean;
+  opened: boolean;
 }
 
 interface ComponentAccordionTests {
   (
     describeBlockName: string,
-    variant: AccordionVariant,
-    getTabText: (tab: AccordionTest) => string,
+    size: AccordionSize,
+    getAccordionText: (accordion: AccordionTest) => string,
   ): void;
 }
 
 const ACCORDIONS_COUNT = 3;
 const accordions: Array<AccordionTest> = [
   {
-    tabId: 'first',
+    id: 'first',
     ariaControls: 'first-panel',
     title: 'Basic',
-    selected: false,
+    opened: false,
     text: 'BasicCarrot upLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
   },
   {
-    tabId: 'second',
+    id: 'second',
     ariaControls: 'second-panel',
     title: 'Advanced',
-    selected: true,
+    opened: true,
     text: 'AdvancedCarrot downLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
   },
   {
-    tabId: 'third',
+    id: 'third',
     ariaControls: 'third-panel',
     title: 'Indicator',
-    selected: false,
+    opened: false,
     text: 'BasicCarrot upLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
   },
 ];
 
 const componentAccordionTests: ComponentAccordionTests = (
   describeBlockName,
-  variant,
-  getTabText,
+  size,
+  getAccordionText,
 ) => {
-  const checkTabPanel = (tab: AccordionTest, tabEl: HTMLElement) => {
-    expect(tabEl).toHaveAttribute('id', tab.tabId);
-    expect(tabEl).toHaveAttribute('aria-controls', tab.ariaControls);
-    expect(tabEl).toHaveTextContent(
-      tab.text.replace('BasicCarrot up', 'BasicCarrot down') || '',
+  const checkAccordionPanel = (
+    accordion: AccordionTest,
+    accordionEl: HTMLElement,
+  ) => {
+    expect(accordionEl).toHaveAttribute('id', accordion.id);
+    expect(accordionEl).toHaveAttribute(
+      'aria-controls',
+      accordion.ariaControls,
+    );
+    expect(accordionEl).toHaveTextContent(
+      accordion.text.replace('BasicCarrot up', 'BasicCarrot down') || '',
     );
   };
 
@@ -66,7 +72,7 @@ const componentAccordionTests: ComponentAccordionTests = (
         user: userEvent.setup(),
         ...render(
           <AccordionGroupContextProvider>
-            <AccordionTemplate variant={variant} />
+            <AccordionTemplate size={size} />
           </AccordionGroupContextProvider>,
         ),
       };
@@ -75,24 +81,31 @@ const componentAccordionTests: ComponentAccordionTests = (
     it('Renders AccordionGroup', () => {
       const { getByRole } = setup();
       const accordionListElement = getByRole('tablist');
-      const tabEls = within(accordionListElement).getAllByRole('tab');
+      const accordionEls =
+        within(accordionListElement).getAllByRole('accordion');
 
-      expect(tabEls.length).toBe(ACCORDIONS_COUNT);
+      expect(accordionEls.length).toBe(ACCORDIONS_COUNT);
       expect(screen.getAllByRole('tabpanel').length).toBe(ACCORDIONS_COUNT);
 
       for (let i = 0; i < accordions.length - 1; ++i) {
-        const tab = accordions[i];
-        const tabEl = tabEls[i];
+        const accordion = accordions[i];
+        const accordionEl = accordionEls[i];
 
-        expect(tabEl).toHaveAttribute('id', tab.tabId);
-        expect(tabEl).toHaveAttribute('aria-selected', `${tab.selected}`);
-        expect(tabEl).toHaveAttribute('tabindex', '0');
-        expect(tabEl).toHaveAttribute('aria-controls', tab.ariaControls);
+        expect(accordionEl).toHaveAttribute('id', accordion.id);
+        expect(accordionEl).toHaveAttribute(
+          'aria-selected',
+          `${accordion.opened}`,
+        );
+        expect(accordionEl).toHaveAttribute('tabindex', '0');
+        expect(accordionEl).toHaveAttribute(
+          'aria-controls',
+          accordion.ariaControls,
+        );
 
-        const textContents = getTabText(tab);
+        const textContents = getAccordionText(accordion);
 
-        expect(tabEl).toHaveTextContent(textContents);
-        expect(tabEl.getAttribute('title')).toEqual(tab.title);
+        expect(accordionEl).toHaveTextContent(textContents);
+        expect(accordionEl.getAttribute('title')).toEqual(accordion.title);
       }
     });
 
@@ -104,35 +117,36 @@ const componentAccordionTests: ComponentAccordionTests = (
       await user.click(chapterTitle[0]);
       await user.click(chapterTitle[1]);
 
-      const tabEls = within(accordionListElement).getAllByRole('tab');
+      const accordionEls =
+        within(accordionListElement).getAllByRole('accordion');
 
       for (let i = 0; i < accordions.length; ++i) {
-        const tab = accordions[i];
-        const tabEl = tabEls[i];
+        const accordion = accordions[i];
+        const accordionEl = accordionEls[i];
 
         if (i === 0) {
-          expect(tabEl).toHaveAttribute('aria-selected', 'true');
+          expect(accordionEl).toHaveAttribute('aria-selected', 'true');
 
-          checkTabPanel(tab, tabEl);
+          checkAccordionPanel(accordion, accordionEl);
         } else {
-          expect(tabEl).toHaveAttribute('aria-selected', 'false');
+          expect(accordionEl).toHaveAttribute('aria-selected', 'false');
         }
 
-        expect(tabEl).toHaveAttribute('id', tab.tabId);
-        expect(tabEl).toHaveAttribute('tabindex', '0');
-        expect(tabEl).toHaveAttribute(
+        expect(accordionEl).toHaveAttribute('id', accordion.id);
+        expect(accordionEl).toHaveAttribute('tabindex', '0');
+        expect(accordionEl).toHaveAttribute(
           'aria-controls',
           accordions[i].ariaControls,
         );
-        expect(tabEl.getAttribute('title')).toEqual(tab.title);
+        expect(accordionEl.getAttribute('title')).toEqual(accordion.title);
       }
     });
   });
 };
 
 describe('AccordionGroup', () => {
-  componentAccordionTests('Large', 'large', (tab) => tab.text);
-  componentAccordionTests('Medium', 'medium', (tab) => tab.text);
-  componentAccordionTests('Small', 'small', (tab) => tab.text);
-  componentAccordionTests('Empty', 'empty', (tab) => tab.text);
+  componentAccordionTests('Large', 'large', (accordion) => accordion.text);
+  componentAccordionTests('Medium', 'medium', (accordion) => accordion.text);
+  componentAccordionTests('Small', 'small', (accordion) => accordion.text);
+  componentAccordionTests('Empty', 'empty', (accordion) => accordion.text);
 });

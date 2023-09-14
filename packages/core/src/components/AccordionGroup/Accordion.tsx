@@ -1,31 +1,26 @@
 import CardBase from '@components/Card/CardBase';
-import { AccordionProps } from './types';
-import { createWrapperStyles } from './styles';
+import { AccordionViewProps } from './types';
+import { wrapperStyles } from './styles';
 
-const Accordion = ({
+export const Accordion = ({
   title,
-  isActive,
+  isOpened,
   ariaControls,
-  tabId,
-  variant = 'empty',
+  id,
+  size = 'empty',
   renderTitle,
   renderContent,
   onClick,
-}: AccordionProps) => {
-  const styles = createWrapperStyles();
-  return (
-    <CardBase
-      role="tab"
-      id={`${tabId}`}
-      aria-selected={isActive}
-      aria-controls={ariaControls}
-      tabIndex={0}
-      title={title}
-      css={styles[variant]}>
-      {renderTitle({ tabId, isActive, title, variant, onClick })}
-      {renderContent({ tabId, isActive, variant })}
-    </CardBase>
-  );
-};
-
-export default Accordion;
+}: AccordionViewProps) => (
+  <CardBase
+    role="tab"
+    id={`${id}`}
+    aria-selected={isOpened}
+    aria-controls={ariaControls}
+    tabIndex={0}
+    title={title}
+    css={wrapperStyles[size]}>
+    {renderTitle({ id, isOpened, title, size, onClick })}
+    {renderContent({ id, isOpened, size })}
+  </CardBase>
+);

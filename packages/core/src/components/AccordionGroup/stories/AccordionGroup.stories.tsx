@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import AccordionGroup from '../index';
+import { AccordionGroup } from '../index';
 import { AccordionGroupDecorator } from './helpers';
 import { css, useTheme } from '@emotion/react';
 import { AccordionTemplate } from './helpers';
@@ -28,7 +28,7 @@ const StoryTemplate: Args = {
 export const Large = {
   ...StoryTemplate,
   args: {
-    variant: 'large',
+    size: 'large',
   },
 };
 
@@ -36,7 +36,7 @@ export const Medium = () => {
   const theme = useTheme();
   return (
     <AccordionTemplate
-      variant="medium"
+      size="medium"
       css={css`
         width: 340px;
         border-radius: 5px;
@@ -50,7 +50,7 @@ export const Small = () => {
   const theme = useTheme();
   return (
     <AccordionTemplate
-      variant="small"
+      size="small"
       css={css`
         width: 240px;
         border-radius: 0;
