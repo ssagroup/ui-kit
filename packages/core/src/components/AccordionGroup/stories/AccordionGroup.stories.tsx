@@ -13,7 +13,7 @@ export default {
     docs: {
       description: {
         component:
-          'An AccordionGroup is a container that allows users to toggle visible of related content on a page',
+          'An AccordionGroup is a container that allows users to toggle the visibility of related content on a page',
       },
     },
   },
