@@ -394,6 +394,9 @@ importers:
 
   packages/hooks:
     dependencies:
+      '@ssa-ui-kit/utils':
+        specifier: workspace:^
+        version: link:../utils
       react:
         specifier: 18.x
         version: 18.2.0

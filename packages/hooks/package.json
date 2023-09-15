@@ -23,6 +23,9 @@
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },
+  "dependencies": {
+    "@ssa-ui-kit/utils": "workspace:^"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

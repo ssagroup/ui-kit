@@ -1,6 +1,20 @@
+import { AriaAttributes } from 'react';
 import { SerializedStyles, Theme } from '@emotion/react';
 
-export interface IButtonProps {
+/**
+ * https://www.w3.org/WAI/ARIA/apg/patterns/button/
+ * */
+type ButtonAriaProps = Pick<
+  AriaAttributes,
+  | 'aria-labelledby'
+  | 'aria-label'
+  | 'aria-describedby'
+  | 'aria-disabled'
+  | 'aria-pressed'
+  | 'aria-current'
+>;
+
+export interface IButtonProps extends ButtonAriaProps {
   block?: boolean;
   size?: keyof MainSizes;
   text?: string;

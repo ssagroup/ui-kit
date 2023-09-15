@@ -6,6 +6,9 @@ import './types/emotion.d';
 
 export * from './types/emotion';
 export { default as mainTheme } from './themes/main';
+
+export * as globalStyles from './styles/global';
+
 export * from './components/AccordionGroup';
 export { default as Avatar } from './components/Avatar';
 export { default as Badge } from './components/Badge';

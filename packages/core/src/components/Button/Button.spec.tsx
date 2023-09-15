@@ -193,6 +193,16 @@ describe('Button', () => {
       expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
     });
 
+    it('Renders with custom aria-* attributes', () => {
+      const { getByRole } = render(
+        <Button size="small" variant="primary" aria-current="true">
+          Click me!
+        </Button>,
+      );
+
+      expect(getByRole('button')).toHaveAttribute('aria-current', 'true');
+    });
+
     it('Throw error when without register', () => {
       jest.spyOn(console, 'error').mockImplementation();
 
@@ -244,6 +254,16 @@ describe('Button', () => {
       expect(queryByTestId('white-button-text')).not.toBeInTheDocument();
       expect(queryByTestId('grey-button-text')).not.toBeInTheDocument();
       expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
+    });
+
+    it('Renders with custom aria-* attributes', () => {
+      const { getByRole } = render(
+        <Button size="small" variant="secondary" aria-current="true">
+          Click me!
+        </Button>,
+      );
+
+      expect(getByRole('button')).toHaveAttribute('aria-current', 'true');
     });
 
     it('Trow error when without register', () => {
@@ -302,11 +322,34 @@ describe('Button', () => {
       expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
     });
 
+    it('Renders with custom aria-* attributes', () => {
+      const { getByRole } = render(
+        <Button size="small" variant="tertiary" aria-current="true">
+          Click me!
+        </Button>,
+      );
+
+      expect(getByRole('button')).toHaveAttribute('aria-current', 'true');
+    });
+
     it('Trow error when without register', () => {
       jest.spyOn(console, 'error').mockImplementation();
 
       expect(() => render(<Button variant="tertiary" />)).toThrow(
         'Button must have either text or icon or children',
+      );
+    });
+  });
+
+  describe('Custom', () => {
+    it('Renders with the "custom" variant', () => {
+      const { getByRole } = render(
+        <Button variant="custom" text="Click me!" size="small" />,
+      );
+
+      expect(getByRole('button')).not.toHaveStyleRule(
+        'background-color',
+        'ButtonFace',
       );
     });
   });
