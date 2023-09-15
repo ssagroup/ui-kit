@@ -32,6 +32,7 @@ module.exports = {
         ignore: ['css'],
       },
     ],
+    'react/prop-types': 0,
     'prettier/prettier': [
       'error',
       {
