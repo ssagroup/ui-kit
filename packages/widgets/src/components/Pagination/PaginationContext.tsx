@@ -1,11 +1,9 @@
 import { createContext, useState, useContext } from 'react';
 import { IPaginationContext, IPaginationContextProviderProps } from './types';
 
-export const PaginationContext = createContext<IPaginationContext>({
-  setPage() {
-    /* no-op */
-  },
-});
+export const PaginationContext = createContext<IPaginationContext>(
+  {} as IPaginationContext,
+);
 
 export const usePaginationContext = () => useContext(PaginationContext);
 

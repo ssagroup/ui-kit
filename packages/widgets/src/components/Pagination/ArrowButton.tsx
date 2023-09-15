@@ -14,7 +14,11 @@ export const ArrowButton = ({
   return (
     <Button
       startIcon={
-        <Icon name={`carrot-${direction}`} size={12} color="#55575A" />
+        <Icon
+          name={`carrot-${direction}`}
+          size={12}
+          color={theme.colors.greyDisabled}
+        />
       }
       variant="custom"
       onClick={onClick}

@@ -343,7 +343,14 @@ describe('Button', () => {
 
   describe('Custom', () => {
     it('Renders with the "custom" variant', () => {
-      render(<Button variant="custom" text="Click me!" size="small" />);
+      const { getByRole } = render(
+        <Button variant="custom" text="Click me!" size="small" />,
+      );
+
+      expect(getByRole('button')).not.toHaveStyleRule(
+        'background-color',
+        'ButtonFace',
+      );
     });
   });
 

@@ -37,16 +37,19 @@ export const PaginationButtons = ({
   selectedPage,
   onClick,
 }: IPaginationButtonsProps) => {
-  return range.map((page, index) => {
-    return page === -1 ? (
-      <Break key={index} />
-    ) : (
-      <PageButton
-        key={index}
-        page={page}
-        isSelected={page === selectedPage}
-        onClick={() => onClick(page)}
-      />
-    );
-  });
+  return (
+    Array.isArray(range) &&
+    range.map((page, index) => {
+      return page === -1 ? (
+        <Break key={index} />
+      ) : (
+        <PageButton
+          key={index}
+          page={page}
+          isSelected={page === selectedPage}
+          onClick={() => onClick(page)}
+        />
+      );
+    })
+  );
 };
