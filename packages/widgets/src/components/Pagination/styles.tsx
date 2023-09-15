@@ -1,11 +1,11 @@
 import { css, Theme } from '@emotion/react';
 
 const baseBtnStyles = (theme: Theme) => css`
-  height: 25px;
+  height: 30px;
   border-radius: 6px;
 
-  ${theme.mediaQueries.xs} {
-    height: 30px;
+  ${theme.mediaQueries.md} {
+    height: 25px;
   }
 `;
 
@@ -15,10 +15,10 @@ export const pageBtnStyles = (theme: Theme) => css`
   background: unset;
   box-shadow: unset;
   color: #070821;
-  padding: 0 9px;
+  padding: 0 11px;
 
-  ${theme.mediaQueries.xs} {
-    padding: 0 11px;
+  ${theme.mediaQueries.md} {
+    padding: 0 9px;
   }
 
   &:hover,
@@ -45,10 +45,10 @@ export const selectedPageBtnStyles = (theme: Theme) => css`
 
   color: white;
   margin: 0 3px;
-  padding: 0 10px;
+  padding: 0 13px;
 
-  ${theme.mediaQueries.xs} {
-    padding: 0 13px;
+  ${theme.mediaQueries.md} {
+    padding: 0 10px;
   }
 
   &:hover {
