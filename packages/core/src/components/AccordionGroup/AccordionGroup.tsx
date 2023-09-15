@@ -44,7 +44,7 @@ export const AccordionGroup = ({
   }, []);
 
   return (
-    <AccordionBase role="tablist" {...rest}>
+    <AccordionBase data-testid="accordion-group" tabIndex={0} {...rest}>
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           const { renderContent, renderTitle, ...rest } = child.props;

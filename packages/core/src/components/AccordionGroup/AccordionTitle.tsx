@@ -18,6 +18,7 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
   return (
     <CardHeaderBase
       as="button"
+      data-testid="accordion-title"
       css={styles[size]}
       id={`${id}`}
       aria-expanded={isOpened}

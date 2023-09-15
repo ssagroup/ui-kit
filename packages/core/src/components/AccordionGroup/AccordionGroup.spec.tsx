@@ -61,9 +61,7 @@ const componentAccordionTests: ComponentAccordionTests = (
       'aria-controls',
       accordion.ariaControls,
     );
-    expect(accordionEl).toHaveTextContent(
-      accordion.text.replace('BasicCarrot up', 'BasicCarrot down') || '',
-    );
+    expect(accordionEl).toHaveTextContent('BasicCarrot down');
   };
 
   describe(describeBlockName, () => {
@@ -79,95 +77,107 @@ const componentAccordionTests: ComponentAccordionTests = (
     }
 
     it('Renders AccordionGroup', () => {
-      const { getByRole } = setup();
-      const accordionListElement = getByRole('tablist');
-      const accordionEls = within(accordionListElement).getAllByRole('tab');
+      const { getByTestId } = setup();
+      const accordionListElement = getByTestId('accordion-group');
+      const accordionEls = within(accordionListElement).getAllByRole('region');
 
       expect(accordionEls.length).toBe(ACCORDIONS_COUNT);
-      expect(screen.getAllByRole('tabpanel').length).toBe(ACCORDIONS_COUNT);
+      expect(screen.getAllByRole('region').length).toBe(ACCORDIONS_COUNT);
 
       for (let i = 0; i < accordions.length - 1; ++i) {
         const accordion = accordions[i];
-        const accordionEl = accordionEls[i];
+        const accordionGroupEl = accordionEls[i];
+        const accordionTitleEl = within(accordionEls[i]).getByTestId(
+          'accordion-title',
+        );
 
-        expect(accordionEl).toHaveAttribute('id', accordion.id);
-        expect(accordionEl).toHaveAttribute(
-          'aria-selected',
+        expect(accordionTitleEl).toHaveAttribute('id', accordion.id);
+        expect(accordionTitleEl).toHaveAttribute(
+          'aria-expanded',
           `${accordion.opened}`,
         );
-        expect(accordionEl).toHaveAttribute('tabindex', '0');
-        expect(accordionEl).toHaveAttribute(
+        expect(accordionGroupEl).toHaveAttribute('tabindex', '0');
+        expect(accordionTitleEl).toHaveAttribute(
           'aria-controls',
           accordion.ariaControls,
         );
 
         const textContents = getAccordionText(accordion);
 
-        expect(accordionEl).toHaveTextContent(textContents);
-        expect(accordionEl.getAttribute('title')).toEqual(accordion.title);
+        expect(accordionGroupEl).toHaveTextContent(textContents);
+        expect(accordionGroupEl.getAttribute('title')).toEqual(accordion.title);
       }
     });
 
     it("Marks an accordion #1 as active and accordion #2 as inactive when they're clicked [accordionStayOpen = true]", async () => {
       const { user } = setup();
-      const accordionListElement = screen.getByRole('tablist');
-      const chapterTitle = accordionListElement.querySelectorAll('h3');
+      let accordionListElement = screen.getByTestId('accordion-group');
+      const chapterTitle = accordionListElement.querySelectorAll('button');
 
       await user.click(chapterTitle[0]);
       await user.click(chapterTitle[1]);
 
-      const accordionEls = within(accordionListElement).getAllByRole('tab');
+      accordionListElement = screen.getByTestId('accordion-group');
+      const accordionEls = within(accordionListElement).getAllByRole('region');
 
       for (let i = 0; i < accordions.length; ++i) {
         const accordion = accordions[i];
-        const accordionEl = accordionEls[i];
+        const accordionGroupEl = accordionEls[i];
+        const accordionTitleEl = within(accordionEls[i]).getByTestId(
+          'accordion-title',
+        );
 
         if (i === 0) {
-          expect(accordionEl).toHaveAttribute('aria-selected', 'true');
+          expect(accordionTitleEl).toHaveAttribute('aria-expanded', 'true');
 
-          checkAccordionPanel(accordion, accordionEl);
+          checkAccordionPanel(accordion, accordionTitleEl);
         } else {
-          expect(accordionEl).toHaveAttribute('aria-selected', 'false');
+          expect(accordionTitleEl).toHaveAttribute('aria-expanded', 'false');
         }
 
-        expect(accordionEl).toHaveAttribute('id', accordion.id);
-        expect(accordionEl).toHaveAttribute('tabindex', '0');
-        expect(accordionEl).toHaveAttribute(
+        expect(accordionTitleEl).toHaveAttribute('id', accordion.id);
+        expect(accordionGroupEl).toHaveAttribute('tabindex', '0');
+        expect(accordionTitleEl).toHaveAttribute(
           'aria-controls',
           accordions[i].ariaControls,
         );
-        expect(accordionEl.getAttribute('title')).toEqual(accordion.title);
+        expect(accordionGroupEl.getAttribute('title')).toEqual(accordion.title);
       }
     });
 
     it('Marks an accordion #1 as active and accordion #2 as inactive when clicked on accordion #1 [accordionStayOpen = false]', async () => {
       const { user } = setup({ accordionsStayOpen: false });
-      const accordionListElement = screen.getByRole('tablist');
-      const chapterTitle = accordionListElement.querySelectorAll('h3');
+      const accordionListElement = screen.getByTestId('accordion-group');
+      const chapterTitle = accordionListElement.querySelectorAll('button');
 
       await user.click(chapterTitle[0]);
 
-      const accordionEls = within(accordionListElement).getAllByRole('tab');
+      const accordionEls = within(accordionListElement).getAllByRole('region');
 
       for (let i = 0; i < accordions.length; ++i) {
         const accordion = accordions[i];
-        const accordionEl = accordionEls[i];
+        const accordionGroupEl = accordionEls[i];
+        const accordionTitleEl = within(accordionEls[i]).getByTestId(
+          'accordion-title',
+        );
 
         if (i === 0) {
-          expect(accordionEl).toHaveAttribute('aria-selected', 'true');
+          expect(accordionTitleEl).toHaveAttribute('aria-expanded', 'true');
 
-          checkAccordionPanel(accordion, accordionEl);
+          checkAccordionPanel(accordion, accordionTitleEl);
         } else {
-          expect(accordionEl).toHaveAttribute('aria-selected', 'false');
+          expect(accordionTitleEl).toHaveAttribute('aria-expanded', 'false');
         }
 
-        expect(accordionEl).toHaveAttribute('id', accordion.id);
-        expect(accordionEl).toHaveAttribute('tabindex', '0');
-        expect(accordionEl).toHaveAttribute(
+        expect(accordionTitleEl).toHaveAttribute('id', accordion.id);
+        expect(accordionGroupEl).toHaveAttribute('tabindex', '0');
+        expect(accordionTitleEl).toHaveAttribute(
           'aria-controls',
           accordions[i].ariaControls,
         );
-        expect(accordionEl.getAttribute('title')).toEqual(accordion.title);
+        expect(accordionTitleEl.textContent).toEqual(
+          `${accordion.title}Carrot ${i === 0 ? 'down' : 'up'}`,
+        );
       }
     });
   });
