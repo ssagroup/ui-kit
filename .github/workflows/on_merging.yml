@@ -60,7 +60,7 @@ jobs:
           CI: true
 
       - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        uses: lost-pixel/lost-pixel@v3.6.0
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/core

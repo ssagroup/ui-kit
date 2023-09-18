@@ -99,7 +99,7 @@
     "jest-environment-jsdom": "^29.6.4",
     "jest-watch-typeahead": "^2.2.2",
     "lint-staged": "^13.2.3",
-    "lost-pixel": "^3.4.3",
+    "lost-pixel": "3.6.0",
     "postcss-styled-syntax": "^0.4.0",
     "prettier": "^2.8.8",
     "ramda": "^0.29.0",
