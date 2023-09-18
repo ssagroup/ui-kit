@@ -10,9 +10,9 @@ import {
   useRole,
   useInteractions,
 } from '@floating-ui/react';
-import { PopoverOptions, SetIDs } from '../types';
+import { PopoverOptions, UsePopover } from '../types';
 
-export const usePopover = ({
+export const usePopover: UsePopover = ({
   initialOpen = false,
   placement = 'bottom',
   modal,
@@ -71,7 +71,3 @@ export const usePopover = ({
 
   return result;
 };
-
-export type UsePopover = ReturnType<typeof usePopover>;
-
-export type ContextType = UsePopover & SetIDs;

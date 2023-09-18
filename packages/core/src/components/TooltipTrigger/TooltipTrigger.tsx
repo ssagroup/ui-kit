@@ -9,7 +9,7 @@ const TooltipTrigger = ({ children }: ITooltipTriggerProps) => {
   if (isValidElement(children)) {
     return cloneElement(
       children,
-      tooltipCtx.getReferenceProps({
+      tooltipCtx?.getReferenceProps({
         ref: tooltipCtx.refs.setReference,
       }),
     );

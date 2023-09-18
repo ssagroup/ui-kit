@@ -1,4 +1,8 @@
-import { Placement } from '@floating-ui/react';
+import {
+  Placement,
+  useInteractions,
+  UseFloatingReturn,
+} from '@floating-ui/react';
 
 export interface PopoverOptions {
   initialOpen?: boolean;
@@ -17,3 +21,18 @@ export interface PopoverTriggerProps {
   children: React.ReactNode;
   asChild?: boolean;
 }
+
+type UseInteractions = ReturnType<typeof useInteractions>;
+
+export type UsePopover = (props: PopoverOptions) => {
+  open: boolean;
+  modal?: boolean;
+  labelId?: string;
+  descriptionId?: string;
+  setLabelId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDescriptionId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setOpen: (open: boolean) => void;
+} & UseInteractions &
+  UseFloatingReturn;
+
+export type ContextType = ReturnType<UsePopover> & SetIDs;

@@ -3,7 +3,7 @@ import { Popover } from '..';
 import { StoryComponent } from './StoryComponent';
 
 type PopoverType = typeof Popover;
-type Args = Parameters<PopoverType>[0];
+export type Args = Parameters<PopoverType>[0];
 
 export default {
   title: 'Components/Popover',
@@ -11,8 +11,8 @@ export default {
   argTypes: {},
 } as Meta<typeof Popover>;
 
-export const Default: StoryObj<PopoverType> = (args: Args) => {
-  return <StoryComponent {...args} />;
+export const Default: StoryObj<PopoverType> = () => {
+  return <StoryComponent />;
 };
 
 Default.args = {};

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ContextType } from './usePopover';
+import { ContextType } from '../types';
 
 export const PopoverContext = React.createContext<ContextType>(
   {} as ContextType,

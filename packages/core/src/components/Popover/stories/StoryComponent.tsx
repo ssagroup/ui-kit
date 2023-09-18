@@ -8,10 +8,7 @@ import {
   PopoverClose,
 } from '..';
 
-type PopoverType = typeof Popover;
-type Args = Parameters<PopoverType>[0];
-
-export const StoryComponent = (args: Args) => {
+export const StoryComponent = () => {
   const theme = useTheme();
   return (
     <div
@@ -21,7 +18,7 @@ export const StoryComponent = (args: Args) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Popover {...args}>
+      <Popover>
         <PopoverTrigger>Trigger</PopoverTrigger>
         <PopoverContent
           className="popover"

@@ -1,14 +1,16 @@
 import {
-  useFloating,
   useInteractions,
   FloatingArrow,
   Placement,
+  UseFloatingReturn,
 } from '@floating-ui/react';
 import { PointTooltipProps, Point } from '@nivo/line';
 import { IMapIcons } from '@components/Icon/types';
 import { ProgressBarProps } from '@components/ProgressBar/types';
 import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
+
+export type TooltipSize = 'small' | 'medium' | 'large';
 
 export interface ITooltipProps extends CommonProps {
   children: React.ReactNode;
@@ -17,7 +19,7 @@ export interface ITooltipProps extends CommonProps {
   enableClick?: boolean;
   offsetPx?: number;
   // TooltipContent-related props
-  size?: 'small' | 'medium' | 'large';
+  size?: TooltipSize;
   hasArrow?: boolean;
   arrowProps?: TooltipArrowProps;
   isOpen?: boolean;
@@ -25,8 +27,23 @@ export interface ITooltipProps extends CommonProps {
 
 export type UseTooltipArgs = Omit<ITooltipProps, 'children'>;
 
+type UseInteractions = ReturnType<typeof useInteractions>;
+
+interface MutableRefObject<T> {
+  current: T;
+}
+
+export type UseTooltip = (props: UseTooltipArgs) => Pick<
+  ITooltipProps,
+  'size' | 'hasArrow' | 'arrowProps'
+> & {
+  arrowRef: MutableRefObject<null>;
+  isOpen: boolean;
+} & UseFloatingReturn &
+  UseInteractions;
+
 export type TooltipContextType =
-  | (ReturnType<typeof useFloating> &
+  | (UseFloatingReturn &
       ReturnType<typeof useInteractions> & {
         isOpen: boolean;
         arrowRef: React.Ref<SVGSVGElement>;
@@ -67,3 +84,5 @@ export interface IProgressChartTooltipProps {
   iconName?: keyof IMapIcons;
   barProps?: Partial<Omit<ProgressBarProps, 'currentValue'>>;
 }
+
+export type UseTooltipContext = () => NonNullable<TooltipContextType>;
