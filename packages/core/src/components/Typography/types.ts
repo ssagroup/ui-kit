@@ -17,4 +17,6 @@ export interface TypographyProps {
   children: React.ReactNode;
   as?: React.ElementType;
   className?: string;
+  ref?: React.Ref<HTMLElement>;
+  id?: string;
 }

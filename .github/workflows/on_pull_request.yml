@@ -52,6 +52,8 @@ jobs:
         run: pnpm build:all
 
       - name: Running unit tests...
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: pnpm test:coverage
 
       - name: "Building storybook: Core"
@@ -59,8 +61,21 @@ jobs:
         env:
           CI: true
 
+      - name: Running Core storybook...
+        run: pnpm sb:core &
+  
+      - name: Installing Playwright Browsers...
+        run: |
+          cd ./packages/core
+          pnpm -w install
+          npx playwright install chromium --with-deps
+          cd ../..
+
+      - name: Running e2e tests...
+        run: pnpm test:core:e2e
+
       - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        uses: lost-pixel/lost-pixel@v3.6.0
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/core
@@ -68,7 +83,7 @@ jobs:
       - name: "Building storybook: Widgets"
         run: pnpm sb:build:widgets
 
-      - name: Running storybook...
+      - name: "Running storybook: Widgets"
         run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
@@ -82,7 +97,7 @@ jobs:
         run: pnpm test:widgets:e2e
 
       - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        uses: lost-pixel/lost-pixel@v3.6.0
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
@@ -95,7 +110,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lost Pixel Finalize
-        uses: lost-pixel/lost-pixel@feature/breakpoint-shots
+        uses: lost-pixel/lost-pixel@v3.6.0
         env:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
