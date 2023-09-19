@@ -59,6 +59,19 @@ jobs:
         env:
           CI: true
 
+      - name: Running Core storybook...
+        run: pnpm sb:core &
+  
+      - name: Installing Playwright Browsers...
+        run: |
+          cd ./packages/core
+          pnpm -w install
+          npx playwright install chromium --with-deps
+          cd ../..
+
+      - name: Running e2e tests...
+        run: pnpm test:core:e2e
+
       - name: Running visual tests...
         uses: lost-pixel/lost-pixel@v3.6.0
         env:
@@ -68,7 +81,7 @@ jobs:
       - name: "Building storybook: Widgets"
         run: pnpm sb:build:widgets
 
-      - name: Running storybook...
+      - name: "Running storybook: Widgets"
         run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
