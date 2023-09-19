@@ -52,6 +52,8 @@ jobs:
         run: pnpm build:all
 
       - name: Running unit tests...
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: pnpm test:coverage
 
       - name: "Building storybook: Core"
