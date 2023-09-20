@@ -51,6 +51,7 @@ export const small = css`
 `;
 
 export const primary = (theme: Theme) => css`
+  color: ${theme.colors.white};
   background: linear-gradient(
     108.3deg,
     ${theme.colors.greyDarker} -0.36%,
@@ -82,6 +83,31 @@ export const primary = (theme: Theme) => css`
       ${theme.colors.greyBackgroundLight} 100%
     );
     box-shadow: -4px 4px 14px ${theme.colors.greyDarker14};
+  }
+`;
+
+export const info = (theme: Theme) => css`
+  color: ${theme.colors.white};
+  background: linear-gradient(
+    247deg,
+    ${theme.colors.blueLighter} 14.71%,
+    ${theme.colors.blue} 85.29%
+  );
+
+  &:hover {
+    background: linear-gradient(
+      247deg,
+      ${theme.colors.blueButtonHoverGradientFrom} 14.71%,
+      ${theme.colors.blueButtonHoverGradientTo} 85.29%
+    );
+  }
+
+  &:active {
+    background: ${theme.colors.blueButtonActive};
+  }
+
+  &:disabled {
+    background: ${theme.colors.grey};
   }
 `;
 

@@ -1,20 +1,18 @@
 import styled from '@emotion/styled';
+import { IButtonVariants } from './types';
 
 export const sizes: Array<keyof MainSizes> = ['small', 'medium', 'large'];
-export const colors: Array<keyof MainColors> = [
-  'purple',
-  'blueLight',
-  'green',
-  'blue',
-  'pink',
-  'turquoise',
-  'yellow',
+export const variants: Array<keyof IButtonVariants> = [
+  'primary',
+  'info',
+  'secondary',
+  'tertiary',
 ];
 
 export const HeaderTitle = styled.span`
   text-align: center;
   font-weight: 800;
-  font-size: 10px;
+  font-size: 12px;
 `;
 
 export const GridWrapper = styled.div`

@@ -26,7 +26,7 @@ const getElTestId = (
 ) => {
   const prefix = isDisabled
     ? 'disabled'
-    : variant === 'primary'
+    : ['primary', 'primary-blue'].includes(variant || '')
     ? 'white'
     : variant === 'tertiary' && isHovered
     ? 'greylight'
@@ -207,6 +207,68 @@ describe('Button', () => {
       jest.spyOn(console, 'error').mockImplementation();
 
       expect(() => render(<Button variant="primary" />)).toThrow(
+        'Button must have either text or icon or children',
+      );
+    });
+  });
+
+  describe('Primary Blue', () => {
+    primaryBtnSpecs.forEach((spec) =>
+      it(getSpecName(spec), () => testButton(spec)),
+    );
+
+    it('Renders with custom styles', () => {
+      const { getByRole } = render(
+        <Button
+          size="small"
+          variant="info"
+          text="Click me!"
+          css={{ backgroundColor: 'blue' }}
+        />,
+      );
+
+      const buttonEl = getByRole('button');
+      expect(buttonEl).toHaveStyleRule('background-color', 'blue');
+    });
+
+    it('Renders with full width', () => {
+      const { getByRole } = render(
+        <Button block={true} variant="info" text="Click me!" />,
+      );
+
+      const buttonWrapper = getByRole('button').closest('div');
+
+      expect(buttonWrapper).toHaveStyleRule('width', '100%');
+    });
+
+    it('Renders with a custom text component', () => {
+      const { queryByTestId, getByText } = render(
+        <Button size="small" variant="info">
+          Click me!
+        </Button>,
+      );
+
+      getByText('Click me!');
+      expect(queryByTestId('disabled-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('white-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('grey-button-text')).not.toBeInTheDocument();
+      expect(queryByTestId('greylight-button-text')).not.toBeInTheDocument();
+    });
+
+    it('Renders with custom aria-* attributes', () => {
+      const { getByRole } = render(
+        <Button size="small" variant="info" aria-current="true">
+          Click me!
+        </Button>,
+      );
+
+      expect(getByRole('button')).toHaveAttribute('aria-current', 'true');
+    });
+
+    it('Throw error when without register', () => {
+      jest.spyOn(console, 'error').mockImplementation();
+
+      expect(() => render(<Button variant="info" />)).toThrow(
         'Button must have either text or icon or children',
       );
     });

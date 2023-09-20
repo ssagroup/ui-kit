@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@emotion/jest": "^11.11.0",
-    "@playwright/test": "^1.37.1",
     "@nivo/line": "0.83.0",
+    "@playwright/test": "^1.37.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@types/testing-library__jest-dom": "^5.14.6",
     "@types/uuid": "^9.0.3",
@@ -40,7 +40,7 @@
     "dotenv": "^16.0.3",
     "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
-    "react-hook-form": "^7.43.8",
+    "react-hook-form": "^7.46.1",
     "scheduler": "^0.23.0",
     "uuid": "^9.0.0"
   },

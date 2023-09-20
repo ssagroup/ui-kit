@@ -3,6 +3,8 @@ import type { Meta } from '@storybook/react';
 import Icon from '@components/Icon';
 
 import Button from './index';
+import { GridWrapper, HeaderTitle, sizes, variants } from './helpers';
+import React from 'react';
 
 export default {
   title: 'Components/Button',
@@ -54,7 +56,7 @@ export default {
           summary: 'string',
         },
       },
-      options: ['primary', 'secondary', 'tertiary'],
+      options: ['primary', 'primary-blue', 'secondary', 'tertiary'],
       control: {
         type: 'inline-radio',
       },
@@ -80,22 +82,30 @@ export default {
 
 export const Default = {};
 
-export const Secondary = { args: { variant: 'secondary' } };
+export const AllStates = () => (
+  <GridWrapper>
+    <HeaderTitle>Variant</HeaderTitle>
+    <HeaderTitle>Small</HeaderTitle>
+    <HeaderTitle>Medium</HeaderTitle>
+    <HeaderTitle>Large</HeaderTitle>
+    {variants.map((variant) => (
+      <React.Fragment key={variant}>
+        <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
+        {sizes.map((size) => {
+          return (
+            <Button variant={variant} size={size} key={variant + size}>
+              Button
+            </Button>
+          );
+        })}
+      </React.Fragment>
+    ))}
+  </GridWrapper>
+);
 
-export const Tertiary = { args: { variant: 'tertiary' } };
-
-export const Small = {
-  args: {
-    size: 'small',
-    text: 'Button',
-  },
+AllStates.args = {
+  name: 'All States',
 };
-
-export const Medium = {
-  args: { size: 'medium' },
-};
-
-export const Large = { args: { size: 'large' } };
 
 export const Block = { args: { size: 'large', block: true } };
 
