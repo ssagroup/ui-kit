@@ -1,15 +1,13 @@
 import Button from '@components/Button';
-import { baseButtonStyle } from './TableFiltersButtons';
 import { Theme, css, useTheme } from '@emotion/react';
+import { baseButtonStyle } from '../styles';
 
 export const clearButtonStyles = (theme: Theme) => css`
-  width: 85px;
+  ${baseButtonStyle}
   color: ${theme.colors.greyCancelClearButton};
   background: ${theme.colors.greyLighter};
   border: 1px solid ${theme.colors.greyDropdownMain};
   justify-content: center;
-  border-radius: 5px;
-  padding: 0 14px;
 
   &:hover {
     border-color: ${theme.colors.greyDropdownFocused};

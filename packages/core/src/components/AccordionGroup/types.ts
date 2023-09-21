@@ -38,6 +38,7 @@ export interface AccordionViewProps extends AccordionProps {
   isOpened?: boolean;
   title: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 export interface IAccordionGroupContext {

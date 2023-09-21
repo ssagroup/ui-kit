@@ -1,15 +1,13 @@
 import { PopoverClose } from '@components/Popover';
-import { baseButtonStyle } from './TableFiltersButtons';
 import { Theme, css, useTheme } from '@emotion/react';
+import { baseButtonStyle } from '../styles';
 
 export const cancelButtonStyles = (theme: Theme) => css`
-  width: 85px;
+  ${baseButtonStyle}
   color: ${theme.colors.greyCancelClearButton};
   background: ${theme.colors.white};
   border: 1px solid ${theme.colors.greyDropdownMain};
   justify-content: center;
-  border-radius: 5px;
-  padding: 0 14px;
 
   &:hover {
     border-color: ${theme.colors.greyDropdownFocused};
@@ -30,12 +28,6 @@ export const TableFiltersCancelButton = ({
 }: React.PropsWithChildren) => {
   const theme = useTheme();
   return (
-    <PopoverClose
-      css={{
-        ...baseButtonStyle,
-        ...cancelButtonStyles(theme),
-      }}>
-      {children}
-    </PopoverClose>
+    <PopoverClose css={cancelButtonStyles(theme)}>{children}</PopoverClose>
   );
 };

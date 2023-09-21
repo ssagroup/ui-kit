@@ -89,6 +89,7 @@ type Colors = MakeColors<
     'blueLightLighter20',
     'blueLightLighter40',
     'blueNotification',
+    'blueNotification40',
     'blueButtonHoverGradientFrom',
     'blueButtonHoverGradientTo',
     'blueButtonActive',

@@ -15,6 +15,7 @@ const Checkbox = ({
   isIndeterminate,
   name = '',
   isRequired = false,
+  ...rest
 }: ICheckboxProps) => {
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
   const autoGenId = useId();
@@ -40,7 +41,7 @@ const Checkbox = ({
   const checkboxId = id || autoGenId;
 
   return (
-    <CheckboxBase htmlFor={checkboxId}>
+    <CheckboxBase htmlFor={checkboxId} {...rest}>
       <input
         id={checkboxId}
         type="checkbox"

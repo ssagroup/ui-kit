@@ -6,6 +6,9 @@ export const TableFiltersAccordion = (props: AccordionViewProps) => (
     {...props}
     css={{
       padding: '10px 0',
+      '&:last-child': {
+        paddingBottom: 0,
+      },
     }}
   />
 );

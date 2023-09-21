@@ -1,27 +1,23 @@
 import Button from '@components/Button';
 import Wrapper from '@components/Wrapper';
-import { css } from '@emotion/react';
 import { TableFiltersCancelButton } from './TableFilterCancelButton';
 import { TableFiltersClearButton } from './TableFilterClearButton';
+import { baseButtonStyle } from '../styles';
+import { FieldValues, UseFormReset } from 'react-hook-form';
 
-export const baseButtonStyle = css`
-  padding: 0 14px;
-  height: 38px;
-  border-radius: 5px;
-`;
-
-export const TableFiltersButtons = () => {
+export const TableFiltersButtons = ({
+  onReset,
+}: {
+  onReset: UseFormReset<FieldValues>;
+}) => {
   const onClear = () => {
-    console.log('>>>clearing...');
-  };
-  const onApply = () => {
-    console.log('>>>applying...');
+    onReset();
   };
   return (
     <Wrapper css={{ gap: '10px', width: 'auto', alignSelf: 'end' }}>
       <TableFiltersCancelButton>Cancel</TableFiltersCancelButton>
       <TableFiltersClearButton onClick={onClear}>Clear</TableFiltersClearButton>
-      <Button css={baseButtonStyle} variant="info" onClick={onApply}>
+      <Button css={baseButtonStyle} variant="info" type="submit">
         Apply
       </Button>
     </Wrapper>

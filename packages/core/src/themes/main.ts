@@ -84,6 +84,7 @@ const main: Theme = {
     blueLightLighter20: 'rgba(133, 199, 242, 0.2)', // #85c7f2
     blueLightLighter40: 'rgba(133, 199, 242, 0.4)', // #85c7f2
     blueNotification: 'rgba(0, 133, 226, 1)', //#0085e2
+    blueNotification40: 'rgba(0, 133, 226, 0.4)', //#0085e2
     blueButtonHoverGradientFrom: 'rgb(72, 122, 218)', //#487ada
     blueButtonHoverGradientTo: 'rgb(14, 75, 193)', //#0e4bc1
     blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
