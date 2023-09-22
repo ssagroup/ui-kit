@@ -15,20 +15,21 @@ const Checkbox = ({
   isIndeterminate,
   name = '',
   isRequired = false,
+  ref,
   ...rest
 }: ICheckboxProps) => {
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
   const autoGenId = useId();
   const theme = useTheme();
-  const checkboxRef = useRef<HTMLInputElement | null>(null);
+  const checkboxInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     // istanbul ignore else
-    if (checkboxRef.current) {
+    if (checkboxInputRef.current) {
       // Browsers drop the "indeterminate" state after the "checked" state
       // changes. We keep the component in the "indeterminate" state until the
       // prop's value changes to false or is removed.
-      checkboxRef.current.indeterminate = Boolean(isIndeterminate);
+      checkboxInputRef.current.indeterminate = Boolean(isIndeterminate);
     }
   }, [isIndeterminate, isChecked]);
 
@@ -52,7 +53,12 @@ const Checkbox = ({
           onChange(newIsChecked);
         }}
         disabled={isDisabled}
-        ref={checkboxRef}
+        ref={(node: any) => {
+          checkboxInputRef.current = node;
+          if (ref) {
+            ref.current = node;
+          }
+        }}
         name={name}
         required={isRequired}
       />

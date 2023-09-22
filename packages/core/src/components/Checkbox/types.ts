@@ -11,6 +11,7 @@ export interface ICheckboxProps extends CommonProps {
   isIndeterminate?: boolean;
   name?: string;
   isRequired?: boolean;
+  ref?: any;
 }
 
 export type IFormCheckboxProps<T extends FieldValues> = Omit<

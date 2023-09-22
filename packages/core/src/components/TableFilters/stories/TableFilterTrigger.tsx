@@ -12,6 +12,7 @@ export const filterButtonStyles = (theme: Theme) => css`
   border-radius: 5px;
   padding: 0 11px 0 13px;
   gap: 7px;
+  user-select: none;
 
   &:hover {
     border-color: ${theme.colors.greyDropdownFocused};
