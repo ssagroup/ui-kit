@@ -18,8 +18,7 @@ describe('StatisticCard', () => {
 
   it('Render component without unit', () => {
     render(<StatisticCard value={'400'} title={'Title'} />);
-
-    expect(screen.queryByText('USD')).toBeNull();
+    expect(screen.queryByTestId('unit')).toBeNull();
     screen.getByText('400');
     screen.getByText('Title');
   });
