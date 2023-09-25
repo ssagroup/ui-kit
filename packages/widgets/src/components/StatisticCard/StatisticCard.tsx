@@ -12,16 +12,22 @@ export interface StatisticCardProps {
   value: string | number;
   unit?: string;
   title?: string;
+  onClick?: () => void;
 }
 
-const StatisticCard = ({ value, unit, title }: StatisticCardProps) => {
+const StatisticCard = ({ value, unit, title, onClick }: StatisticCardProps) => {
   const theme = useTheme();
   const number = Number(value);
   const isInteger = Number.isInteger(number);
   const isNumber = isNaN(number) ? value : Math.floor(number);
+
   return (
     <button
-      onClick={() => console.log('Clicked!')}
+      onClick={() => {
+        if (typeof onClick === 'function') {
+          onClick();
+        }
+      }}
       css={css`
         display: flex;
         flex-direction: column;
@@ -40,12 +46,16 @@ const StatisticCard = ({ value, unit, title }: StatisticCardProps) => {
           box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow24};
         }
       `}>
-      {isInteger ? (
+      {isInteger || isNaN(number) ? (
         <StatisticCardContent value={isNumber} unit={unit} />
       ) : (
-        <Tooltip enableHover={true} arrowProps={{ width: 15, height: 6 }}>
+        <Tooltip
+          offsetPx={0}
+          enableHover={true}
+          enableClick={false}
+          arrowProps={{ width: 18, height: 3, fill: '#474a50' }}>
           <TooltipTrigger>
-            <div>
+            <div data-testid="hover-element">
               <StatisticCardContent value={isNumber} unit={unit} />
             </div>
           </TooltipTrigger>
@@ -58,6 +68,10 @@ const StatisticCard = ({ value, unit, title }: StatisticCardProps) => {
               font-size: 12px;
               font-weight: 600;
               line-height: 15px;
+
+              svg {
+                margin-bottom: -1px;
+              }
             `}>
             {value} {unit}
           </TooltipContent>

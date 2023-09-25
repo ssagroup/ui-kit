@@ -16,7 +16,7 @@ export const PriceCard: StoryObj<typeof StatisticCard> = (
 };
 
 PriceCard.args = {
-  value: 500.234,
+  value: '500.234',
   unit: 'USD',
   title: 'Turnover',
 };
