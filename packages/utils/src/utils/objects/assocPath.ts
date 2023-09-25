@@ -1,18 +1,13 @@
-type AssocPathValue = string | number | boolean | null;
-interface AssocPath {
-  [key: string | number]: AssocPathValue | AssocPath;
-}
+import { PathValue } from '../types';
 
-type AssocPathFunction = (
-  path: string[],
-  value: AssocPathValue,
-) => (obj: AssocPath) => AssocPath;
-
-export const assocPath: AssocPathFunction =
-  ([first, ...rest], value) =>
-  (obj = {}) => ({
-    ...obj,
-    [first]: rest.length
-      ? assocPath(rest, value)(obj[first] as AssocPath)
-      : value,
-  });
+export const assocPath =
+  <T>([first, ...rest]: string[], value: PathValue) =>
+  (sourceObject: T): T =>
+    JSON.parse(
+      JSON.stringify({
+        ...sourceObject,
+        [first]: rest.length
+          ? assocPath(rest, value)((sourceObject as any)[first])
+          : value,
+      }),
+    ) as T;

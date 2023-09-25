@@ -2,7 +2,7 @@ import Button from '@components/Button';
 import Wrapper from '@components/Wrapper';
 import { TableFiltersCancelButton } from './TableFilterCancelButton';
 import { TableFiltersClearButton } from './TableFilterClearButton';
-import { baseButtonStyle } from '../styles';
+import { baseButtonStyle } from './styles';
 import { FieldValues, UseFormReset } from 'react-hook-form';
 
 export const TableFiltersButtons = ({

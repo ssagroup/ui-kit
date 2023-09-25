@@ -16,22 +16,22 @@ const getStyles = () => css`
       border-radius: 2px;
     }
   }
-  & input:checked + div::before,
-  & input:indeterminate + div::before {
-    background: ${theme.colors.blueNotification};
-  }
-  & input:not(:checked, :indeterminate) + div::before {
+  & input:not(:checked, :indeterminate, :disabled) + div::before {
     border: 1.5px solid ${theme.colors.greyDropdownMain};
   }
-  & input:checked + div:hover::before {
+  & input:not(:checked, :indeterminate, :disabled) + div:hover::before {
+    border: 1.5px solid ${theme.colors.greyDropdownMain};
+  }
+  & input:not(:disabled):checked + div::before,
+  & input:not(:disabled):indeterminate + div::before {
     background: ${theme.colors.blueNotification};
   }
-  & input:checked + div + span {
+  & input:not(:disabled):checked + div:hover::before {
+    background: ${theme.colors.blueNotification};
+  }
+  & input:not(:disabled):checked + div + span {
     font-weight: 500;
     color: ${theme.colors.greyDropdownText};
-  }
-  & input:not(:checked, :indeterminate) + div:hover::before {
-    border: 1.5px solid ${theme.colors.greyDropdownMain};
   }
   & input:focus + div {
     box-shadow: -4px 4px 10px ${theme.colors.blueNotification40};

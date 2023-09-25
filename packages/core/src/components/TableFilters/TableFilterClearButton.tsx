@@ -1,6 +1,6 @@
 import Button from '@components/Button';
 import { Theme, css, useTheme } from '@emotion/react';
-import { baseButtonStyle } from '../styles';
+import { baseButtonStyle } from './styles';
 
 export const clearButtonStyles = (theme: Theme) => css`
   ${baseButtonStyle}

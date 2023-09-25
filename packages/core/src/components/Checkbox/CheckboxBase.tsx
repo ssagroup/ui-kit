@@ -8,6 +8,9 @@ export const CheckboxBase = styled(Label)`
   align-items: center;
   vertical-align: middle;
   cursor: pointer;
+  &:has(input:disabled) {
+    cursor: default;
+  }
 
   div {
     position: relative;
@@ -41,12 +44,21 @@ export const CheckboxBase = styled(Label)`
     box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
   }
 
-  input:disabled + div {
+  input:disabled + div,
+  input:indeterminate:disabled + div {
     background: ${({ theme }) => theme.colors.greyFocused};
   }
 
-  input:checked + div::before,
-  input:indeterminate + div::before {
+  input:not(:checked, :indeterminate, :disabled) + div::before {
+    border: 1.5px solid ${({ theme }) => theme.colors.green};
+  }
+
+  input:not(:checked, :indeterminate, :disabled) + div:hover::before {
+    border: 1.5px solid ${({ theme }) => theme.colors.green60};
+  }
+
+  input:not(:disabled):checked + div::before,
+  input:not(:disabled):indeterminate + div::before {
     background: linear-gradient(
       117.5deg,
       ${({ theme }) => theme.colors.greenLighter} 17.12%,
@@ -54,21 +66,13 @@ export const CheckboxBase = styled(Label)`
     );
   }
 
-  input:not(:checked, :indeterminate) + div::before {
-    border: 1.5px solid ${({ theme }) => theme.colors.green};
-  }
-
-  input:checked + div:hover::before,
-  input:indeterminate + div:hover::before {
+  input:not(:disabled):checked + div:hover::before,
+  input:not(:disabled):indeterminate + div:hover::before {
     background: linear-gradient(
       117.5deg,
       ${({ theme }) => theme.colors.greenLighter60} 17.12%,
       ${({ theme }) => theme.colors.green60} 85.53%
     );
-  }
-
-  input:not(:checked, :indeterminate) + div:hover::before {
-    border: 1.5px solid ${({ theme }) => theme.colors.green60};
   }
 
   input {

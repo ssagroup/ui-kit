@@ -1,4 +1,5 @@
-import { SubmitHandler } from 'react-hook-form';
+import { BaseSyntheticEvent, useState } from 'react';
+import { assocPath, dissocPath } from '@ssa-ui-kit/utils';
 import {
   Popover,
   PopoverContent,
@@ -9,38 +10,67 @@ import {
   AccordionGroup,
   AccordionGroupContextProvider,
 } from '@components/AccordionGroup';
-import { TableFiltersAccordion } from './TableFiltersAccordion';
-import { TableFiltersAccordionContent } from './TableFiltersAccordionContent';
-import { TableFiltersButtons } from './TableFiltersButtons';
-import { TableFilterTrigger } from './TableFilterTrigger';
 import {
   tableFilterDividerStyles,
   tableFilterPopoverContentStyles,
 } from '../styles';
-import { TableFilterCheckbox } from './TableFilterCheckbox';
-import { useState } from 'react';
-import { assocPath } from '@ssa-ui-kit/utils';
+import { mockData } from './mockData';
+import {
+  TableFilterCheckbox,
+  TableFilterTrigger,
+  TableFiltersAccordion,
+  TableFiltersAccordionContent,
+  TableFiltersButtons,
+} from '..';
 
-type KeysNames2 = 'checkbox1' | 'checkbox2';
+export type KeysNames =
+  | 'checkbox1'
+  | 'checkbox2'
+  | 'checkbox3'
+  | 'checkbox4'
+  | 'checkbox5'
+  | 'running'
+  | 'btcfdusd'
+  | 'binance';
 
-const initialState2: Record<
-  'strategy',
-  Partial<Record<KeysNames2, boolean>>
-> = {
+type AccordionNames = 'strategy' | 'status' | 'pairs' | 'exchange';
+
+export type InitialState = Record<
+  AccordionNames,
+  Partial<Record<KeysNames, boolean>>
+>;
+
+const initialState: InitialState = {
   strategy: {
     checkbox1: true,
-    checkbox2: true,
+    checkbox4: true,
+  },
+  status: {
+    running: true,
+  },
+  pairs: {
+    ['btcfdusd']: true,
+  },
+  exchange: {
+    binance: true,
   },
 };
 
 export const StoryComponent = () => {
-  const [checkboxData, setCheckboxData] = useState(initialState2);
-  const onSubmit: SubmitHandler<Record<string, any>> = (event) => {
+  const [checkboxData, setCheckboxData] = useState(initialState);
+  const handleCheckboxChange = (path: string[]) => (newState: boolean) => {
+    if (newState) {
+      setCheckboxData(assocPath(path, newState));
+    } else {
+      setCheckboxData(dissocPath(path));
+    }
+  };
+  const onSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
-    console.log('>>>onSubmit', checkboxData);
+    console.log('>>>onSubmit data', checkboxData);
   };
   const onReset = () => {
-    setCheckboxData(() => initialState2);
+    setCheckboxData(() => initialState);
   };
   return (
     <div
@@ -54,74 +84,51 @@ export const StoryComponent = () => {
         <PopoverContent
           className="popover"
           css={tableFilterPopoverContentStyles}>
-          <form onSubmit={onSubmit}>
+          <form
+            onSubmit={onSubmit}
+            css={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+            }}>
             <PopoverDescription variant="body1">
               <AccordionGroupContextProvider>
                 <AccordionGroup size="medium">
-                  <TableFiltersAccordion
-                    id="strategy"
-                    title="Strategy"
-                    isOpened
-                    ariaControls="strategy-panel"
-                    renderContent={(props) => (
-                      <TableFiltersAccordionContent {...props}>
-                        <TableFilterCheckbox
-                          onChange={(newState) =>
-                            setCheckboxData(
-                              assocPath(
-                                ['strategy', 'checkbox1'],
-                                newState,
-                              ) as any,
-                            )
-                          }
-                          // onChange={(newState) =>
-                          //   setCheckboxData((data) => ({
-                          //     ...data,
-                          //     strategy: {
-                          //       ...data.strategy,
-                          //       checkbox1: newState,
-                          //     },
-                          //   }))
-                          // }
-                          text="checkbox1"
-                          externalState={checkboxData.strategy.checkbox1}
-                        />
-                      </TableFiltersAccordionContent>
-                    )}
-                    renderTitle={AccordionTitle}
-                  />
-                  <TableFiltersAccordion
-                    id="strategy2"
-                    title="Strategy2"
-                    isOpened
-                    ariaControls="strategy-panel2"
-                    renderContent={(props) => (
-                      <TableFiltersAccordionContent {...props}>
-                        <TableFilterCheckbox
-                          onChange={(newState) =>
-                            setCheckboxData(
-                              assocPath(
-                                ['strategy', 'checkbox2'],
-                                newState,
-                              ) as any,
-                            )
-                          }
-                          // onChange={(newState) =>
-                          //   setCheckboxData((data) => ({
-                          //     ...data,
-                          //     strategy: {
-                          //       ...data.strategy,
-                          //       checkbox2: newState,
-                          //     },
-                          //   }))
-                          // }
-                          text="checkbox1"
-                          externalState={checkboxData.strategy.checkbox2}
-                        />
-                      </TableFiltersAccordionContent>
-                    )}
-                    renderTitle={AccordionTitle}
-                  />
+                  {mockData.map((accordionInfo) => (
+                    <TableFiltersAccordion
+                      key={accordionInfo.id}
+                      id={accordionInfo.id}
+                      title={accordionInfo.title}
+                      isOpened={accordionInfo.isOpened}
+                      ariaControls={accordionInfo.ariaControls}
+                      renderContent={(props) => (
+                        <TableFiltersAccordionContent {...props}>
+                          {accordionInfo.items.map((info) => (
+                            <TableFilterCheckbox
+                              key={info.key}
+                              name={info.content.text
+                                .toLowerCase()
+                                .replace('-', '')}
+                              id={info.key}
+                              onChange={handleCheckboxChange(
+                                info.content.statePath,
+                              )}
+                              text={info.content.text}
+                              externalState={
+                                !!(checkboxData as any)[accordionInfo.id][
+                                  info.content.text
+                                    .toLowerCase()
+                                    .replace('-', '')
+                                ]
+                              }
+                              isDisabled={info.isDisabled}
+                            />
+                          ))}
+                        </TableFiltersAccordionContent>
+                      )}
+                      renderTitle={AccordionTitle}
+                    />
+                  ))}
                 </AccordionGroup>
               </AccordionGroupContextProvider>
             </PopoverDescription>
