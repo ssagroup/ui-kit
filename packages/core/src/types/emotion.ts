@@ -8,6 +8,7 @@ type Colors = MakeColors<
   [
     'white',
     'white60',
+    'white80',
     'white30',
     'dark',
     'greyLighter',
@@ -33,6 +34,7 @@ type Colors = MakeColors<
     'greyDropdownMain',
     'greyDropdownFocused',
     'greyDropdownText',
+    'greyArrowSidebar',
     'redLighter',
     'redLighter40',
     'red',
@@ -71,6 +73,8 @@ type Colors = MakeColors<
     'purpleDark40',
     'blue',
     'blue20',
+    'blueDark',
+    'blueLightDarker',
     'blueDropdownWithSelectedItems',
     'blueDropdownWithSelectedItemsBorder',
     'blueLighter',
@@ -93,6 +97,7 @@ type MediaQueryString = `@media${string}`;
 export interface Theme {
   colors: Colors;
   mediaQueries: {
+    xs: MediaQueryString;
     sm: MediaQueryString;
     md: MediaQueryString;
     lg: MediaQueryString;

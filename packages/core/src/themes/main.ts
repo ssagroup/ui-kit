@@ -3,6 +3,7 @@ import { Theme } from '@emotion/react';
 const main: Theme = {
   colors: {
     white: 'rgba(255, 255, 255, 1)', //  #ffffff
+    white80: 'rgba(255, 255, 255, 0.8)', //  #ffffff
     white60: 'rgba(255, 255, 255, 0.6)', //  #ffffff
     white30: 'rgba(255, 255, 255, 0.3)', //  #ffffff
     greyLighter: 'rgba(238, 241, 247, 1)', //  #eef1f7
@@ -12,6 +13,7 @@ const main: Theme = {
     greyDropdownMain: 'rgba(222, 224, 232, 1)', // #dee0e8
     greyDropdownFocused: 'rgba(128, 129, 131)', // #808183
     greyDropdownText: 'rgba(21, 21, 21, 1)', // #151515
+    greyArrowSidebar: 'rgba(218, 219, 220)', // #dadbdc
     grey: 'rgba(195, 197, 204, 1)', // #c3c5cc
     grey20: 'rgba(43, 45, 49, 0.2)', // #c3c5cc
     grey40: 'rgba(43, 45, 49, 0.4)', // #c3c5cc
@@ -66,6 +68,8 @@ const main: Theme = {
     purpleDark40: 'rgba(156, 122, 235, 0.4)', // #9c7aeb
     blue: 'rgba(65, 120, 225, 1)', // #4178e1
     blue20: 'rgba(65, 120, 225, 0.2)', // #4178e1
+    blueDark: 'rgba(36, 101, 227, 1)', // #2465e3
+    blueLightDarker: 'rgba(127, 159, 221)', // #7f9fdd
     blueDropdownWithSelectedItems: 'rgba(236, 247, 255, 1)', // #ECF7FF
     blueDropdownWithSelectedItemsBorder: 'rgba(166, 213, 244, 1)', // #A6D5F4
     blueLighter: 'rgba(117, 153, 222, 1)', // #7599de
@@ -80,6 +84,7 @@ const main: Theme = {
     blueNotification: 'rgba(0, 133, 226, 1)', //#0085e2
   },
   mediaQueries: {
+    xs: '@media screen and (max-width: 390px)',
     sm: '@media screen and (min-width: 390px)',
     md: '@media screen and (min-width: 900px)',
     lg: '@media screen and (min-width: 1440px)',

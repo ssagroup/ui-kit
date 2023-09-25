@@ -1,16 +1,31 @@
+import { AriaAttributes } from 'react';
 import { SerializedStyles, Theme } from '@emotion/react';
+import { MouseEventHandler } from 'react';
 
-export interface IButtonProps {
+/**
+ * https://www.w3.org/WAI/ARIA/apg/patterns/button/
+ * */
+type ButtonAriaProps = Pick<
+  AriaAttributes,
+  | 'aria-labelledby'
+  | 'aria-label'
+  | 'aria-describedby'
+  | 'aria-disabled'
+  | 'aria-pressed'
+  | 'aria-current'
+>;
+
+export interface IButtonProps extends ButtonAriaProps {
   block?: boolean;
   size?: keyof MainSizes;
   text?: string;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   variant?: keyof IButtonVariants | 'custom';
-  type?: 'button' | 'submit';
+  type?: 'button' | 'reset' | 'submit';
   isDisabled?: boolean;
   className?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   children?: React.ReactNode;
 }
 

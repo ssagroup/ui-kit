@@ -7,23 +7,24 @@ import {
 
 import { TooltipArrow } from '@components/Tooltip/TooltipArrow';
 import { TooltipContentBase } from '@components/Tooltip/TooltipContentBase';
-import { ITooltipContentProps } from '@components/Tooltip/types';
+import { ITooltipContentProps, TooltipSize } from '@components/Tooltip/types';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { mapSizes } from '@components/Tooltip/utils';
 
 const TooltipContent = forwardRef<HTMLDivElement, ITooltipContentProps>(
   function TooltipContent({ children, className, style }, refProp) {
     const tooltipCtx = useTooltipContext();
-    const ref = useMergeRefs([tooltipCtx.refs.setFloating, refProp]);
+    const ref = useMergeRefs([tooltipCtx?.refs.setFloating, refProp]);
 
     return (
       <FloatingPortal>
-        {tooltipCtx.isOpen && (
+        {tooltipCtx?.isOpen && (
           <FloatingFocusManager context={tooltipCtx.context} modal={false}>
             <TooltipContentBase
               {...tooltipCtx.getFloatingProps({
                 ref,
-                css: tooltipCtx.size && mapSizes[tooltipCtx.size],
+                css:
+                  tooltipCtx.size && mapSizes[tooltipCtx.size as TooltipSize],
                 className,
                 style: {
                   position: tooltipCtx.strategy,

@@ -49,6 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
       isDisabled,
       onClick,
       children,
+      ...ariaProps
     },
     ref,
   ) {
@@ -79,7 +80,8 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
         className={className}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={onClick}>
+        onClick={onClick}
+        {...ariaProps}>
         {startIcon ? (
           <span style={noMargin} css={[iconWrapperRight]}>
             {startIcon}

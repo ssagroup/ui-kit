@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-import { TooltipContextType } from './types';
+import { TooltipContextType, UseTooltipContext } from './types';
 
 export const TooltipContext = createContext<TooltipContextType>(null);
 
-export const useTooltipContext = () => {
+export const useTooltipContext: UseTooltipContext = () => {
   const tooltipContext = useContext(TooltipContext);
 
   if (tooltipContext == null) {

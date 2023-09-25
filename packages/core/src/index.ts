@@ -7,6 +7,9 @@ import './types/emotion.d';
 export * from './types/emotion';
 export { default as mainTheme } from './themes/main';
 
+export * as globalStyles from './styles/global';
+
+export * from './components/AccordionGroup';
 export { default as Avatar } from './components/Avatar';
 export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
@@ -31,6 +34,10 @@ export { default as ModalDismissButton } from './components/ModalDismissButton';
 export { default as ModalContent } from './components/ModalContent';
 export { default as ModalOpenButton } from './components/ModalOpenButton';
 export * from './components/Modal';
+export * from './components/Popover';
+export { default as MultipleDropdown } from './components/MultipleDropdown';
+export { default as MultipleDropdownNotification } from './components/MultipleDropdownNotification';
+export { default as MultipleDropdownOptions } from './components/MultipleDropdownOptions';
 export { default as ProgressBar } from './components/ProgressBar';
 export { default as ProgressCircle } from './components/ProgressCircle';
 export { default as ProgressLegend } from './components/ProgressLegend';
