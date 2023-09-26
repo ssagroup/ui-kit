@@ -27,6 +27,7 @@ const main: Theme = {
     greyButtonGradientLight: 'rgba(94, 103, 114, 1)', // #5e6772
     greyBackground: 'rgb(64, 68, 73)', // #404449
     greyBackgroundLight: 'rgb(76, 84, 93)', // #4c545d
+    greyGraphite: 'rgba(71, 74, 80, 1)', //#474a50
     greyShadow: 'rgba(42, 48, 57, 0.08)', // #2a3039
     greyShadowHover: 'rgba(93, 102, 112, 0.24)', // #5d6670
     greyOutline: 'rgba(208,	210,	220, 1)', // #d0d2dc

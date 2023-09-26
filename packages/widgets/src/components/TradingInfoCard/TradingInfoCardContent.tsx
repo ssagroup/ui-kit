@@ -1,8 +1,9 @@
-import { CardContent, Typography } from '@ssa-ui-kit/core';
-import { StatisticCardProps } from './StatisticCard';
 import { useTheme } from '@emotion/react';
+import { CardContent, Typography } from '@ssa-ui-kit/core';
 
-const StatisticCardContent = ({ value, unit }: StatisticCardProps) => {
+import { TradingInfoContent } from './types';
+
+const TradingInfoCardContent = ({ value, unit, icon }: TradingInfoContent) => {
   const theme = useTheme();
   return (
     <CardContent
@@ -19,8 +20,13 @@ const StatisticCardContent = ({ value, unit }: StatisticCardProps) => {
           {unit}
         </Typography>
       ) : null}
+      {icon ? (
+        <div css={{ display: 'flex', alignSelf: 'center', marginLeft: '3px' }}>
+          {icon}
+        </div>
+      ) : null}
     </CardContent>
   );
 };
 
-export default StatisticCardContent;
+export default TradingInfoCardContent;
