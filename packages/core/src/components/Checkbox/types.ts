@@ -13,6 +13,7 @@ export interface ICheckboxProps extends CommonProps {
   name?: string;
   isRequired?: boolean;
   ref?: MutableRefObject<HTMLInputElement>;
+  color?: 'green' | 'blue' | 'custom';
 }
 
 export type IFormCheckboxProps<T extends FieldValues> = Omit<

@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import Label from '@components/Label';
+import { blueInputCheckbox, greenInputCheckbox } from './styles';
+import { ICheckboxProps } from './types';
 
-export const CheckboxBase = styled(Label)`
+export const CheckboxBase = styled(Label)<Pick<ICheckboxProps, 'color'>>`
   position: relative;
   display: inline-flex;
   flex-grow: 0;
@@ -40,40 +42,15 @@ export const CheckboxBase = styled(Label)`
     }
   }
 
-  input:focus + div {
-    box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
-  }
-
-  input:disabled + div,
-  input:indeterminate:disabled + div {
-    background: ${({ theme }) => theme.colors.greyFocused};
-  }
-
-  input:not(:checked, :indeterminate, :disabled) + div::before {
-    border: 1.5px solid ${({ theme }) => theme.colors.green};
-  }
-
-  input:not(:checked, :indeterminate, :disabled) + div:hover::before {
-    border: 1.5px solid ${({ theme }) => theme.colors.green60};
-  }
-
-  input:not(:disabled):checked + div::before,
-  input:not(:disabled):indeterminate + div::before {
-    background: linear-gradient(
-      117.5deg,
-      ${({ theme }) => theme.colors.greenLighter} 17.12%,
-      ${({ theme }) => theme.colors.green} 85.53%
-    );
-  }
-
-  input:not(:disabled):checked + div:hover::before,
-  input:not(:disabled):indeterminate + div:hover::before {
-    background: linear-gradient(
-      117.5deg,
-      ${({ theme }) => theme.colors.greenLighter60} 17.12%,
-      ${({ theme }) => theme.colors.green60} 85.53%
-    );
-  }
+  ${({ color = 'green' }) => {
+    switch (color) {
+      case 'blue':
+        return blueInputCheckbox;
+      case 'green':
+        return greenInputCheckbox;
+      default:
+    }
+  }}
 
   input {
     border: 0;

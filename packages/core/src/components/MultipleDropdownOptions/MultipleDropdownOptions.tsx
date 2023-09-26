@@ -6,6 +6,7 @@ import { useMultipleDropdownContext } from '@components/MultipleDropdown/Multipl
 import DropdownOption from '@components/DropdownOption';
 
 import { IDropdownItemsListProps } from './types';
+import { blueInputCheckbox } from '@components/Checkbox/styles';
 
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   position: absolute;
@@ -28,6 +29,8 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
   backdrop-filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
+
+  ${blueInputCheckbox}
 `;
 
 const DropdownOptionButton = styled.div<{
@@ -120,6 +123,7 @@ const MultipleDropdownOptions = ({
             css={{
               margin: 0,
             }}
+            color="blue"
           />
         )}
         {child.props.children || child.props.label || child.props.value}
