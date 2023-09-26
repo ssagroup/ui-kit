@@ -1,4 +1,3 @@
-export * from './TableFilters';
 export * from './TableFilterCancelButton';
 export * from './TableFilterCheckbox';
 export * from './TableFilterClearButton';

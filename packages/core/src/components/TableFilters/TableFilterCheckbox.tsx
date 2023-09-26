@@ -1,7 +1,6 @@
 import Checkbox, { ICheckboxProps } from '@components/Checkbox';
 import theme from '@themes/main';
 import { css } from '@emotion/react';
-import { UseFormRegisterReturn } from 'react-hook-form';
 
 const getStyles = () => css`
   margin: 0 0 14px;
@@ -41,33 +40,4 @@ const getStyles = () => css`
 export const TableFilterCheckbox = (props: ICheckboxProps) => {
   const styles = getStyles();
   return <Checkbox {...props} css={styles} />;
-};
-
-export const TableFilterCheckboxBackup = <T extends string>(
-  props: UseFormRegisterReturn<T> & Partial<Omit<ICheckboxProps, 'onChange'>>,
-) => {
-  const styles = getStyles();
-  const onChangeHandle = (newState: boolean) => {
-    props.onChange({
-      target: {
-        value: newState,
-      },
-    });
-  };
-  return (
-    <Checkbox
-      onChange={onChangeHandle}
-      externalState={props.externalState}
-      initialState={props.initialState}
-      as={props.as}
-      className={props.className}
-      id={props.id}
-      isDisabled={props.isDisabled}
-      isIndeterminate={props.isIndeterminate}
-      isRequired={props.isRequired}
-      name={props.name}
-      text={props.text}
-      css={styles}
-    />
-  );
 };
