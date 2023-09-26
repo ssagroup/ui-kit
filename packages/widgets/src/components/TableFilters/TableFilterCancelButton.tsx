@@ -1,4 +1,4 @@
-import { PopoverClose } from '@components/Popover';
+import { PopoverClose } from '@ssa-ui-kit/core';
 import { Theme, css, useTheme } from '@emotion/react';
 import { baseButtonStyle } from './styles';
 

@@ -1,7 +1,9 @@
-import { css } from '@emotion/react';
-import theme from '@themes/main';
+import { css, Theme } from '@emotion/react';
 
-export const blueInputCheckbox = css`
+const blueInput = (theme: Theme) => css`
+  & input:focus + div {
+    box-shadow: -4px 4px 10px ${theme.colors.blueNotification40};
+  }
   & input:disabled + div,
   & input:indeterminate:disabled + div {
     background: ${theme.colors.greyFocused};
@@ -23,12 +25,9 @@ export const blueInputCheckbox = css`
     font-weight: 500;
     color: ${theme.colors.greyDropdownText};
   }
-  & input:focus + div {
-    box-shadow: -4px 4px 10px ${theme.colors.blueNotification40};
-  }
 `;
 
-export const greenInputCheckbox = css`
+const greenInput = (theme: Theme) => css`
   & input:focus + div {
     box-shadow: -4px 4px 10px ${theme.colors.green40};
   }
@@ -64,3 +63,8 @@ export const greenInputCheckbox = css`
     );
   }
 `;
+
+export const checkboxStyles = {
+  blueInput,
+  greenInput,
+};

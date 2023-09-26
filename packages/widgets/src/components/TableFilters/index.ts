@@ -5,3 +5,4 @@ export * from './TableFilterTrigger';
 export * from './TableFiltersAccordion';
 export * from './TableFiltersAccordionContent';
 export * from './TableFiltersButtons';
+export * from './TableFilters';

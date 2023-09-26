@@ -1,15 +1,9 @@
-import Button from '@components/Button';
-import Wrapper from '@components/Wrapper';
+import { Button, Wrapper } from '@ssa-ui-kit/core';
 import { TableFiltersCancelButton } from './TableFilterCancelButton';
 import { TableFiltersClearButton } from './TableFilterClearButton';
 import { baseButtonStyle } from './styles';
-import { FieldValues, UseFormReset } from 'react-hook-form';
 
-export const TableFiltersButtons = ({
-  onReset,
-}: {
-  onReset: UseFormReset<FieldValues>;
-}) => {
+export const TableFiltersButtons = ({ onReset }: { onReset: () => void }) => {
   const onClear = () => {
     onReset();
   };

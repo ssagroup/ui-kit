@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Label from '@components/Label';
-import { blueInputCheckbox, greenInputCheckbox } from './styles';
+import { checkboxStyles } from './styles';
 import { ICheckboxProps } from './types';
 
 export const CheckboxBase = styled(Label)<Pick<ICheckboxProps, 'color'>>`
@@ -42,12 +42,12 @@ export const CheckboxBase = styled(Label)<Pick<ICheckboxProps, 'color'>>`
     }
   }
 
-  ${({ color = 'green' }) => {
+  ${({ color = 'green', theme }) => {
     switch (color) {
       case 'blue':
-        return blueInputCheckbox;
+        return checkboxStyles.blueInput(theme);
       case 'green':
-        return greenInputCheckbox;
+        return checkboxStyles.greenInput(theme);
       default:
     }
   }}

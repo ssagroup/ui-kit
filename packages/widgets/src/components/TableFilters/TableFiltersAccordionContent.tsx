@@ -1,5 +1,5 @@
-import { AccordionContent } from '@components/AccordionGroup';
-import { RenderContentProps } from '@components/AccordionGroup/types';
+import { AccordionContent } from '@ssa-ui-kit/core';
+import { RenderContentProps } from '@ssa-ui-kit/core/src/components/AccordionGroup/types';
 
 export const TableFiltersAccordionContent = ({
   isOpened,

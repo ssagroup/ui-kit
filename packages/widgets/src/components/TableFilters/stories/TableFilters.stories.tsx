@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { StoryComponent } from './StoryComponent';
+import { TableFilters } from '..';
 
-type PopoverType = typeof StoryComponent;
+type PopoverType = typeof TableFilters;
 
 export default {
-  title: 'Components/TableFilters',
-  component: StoryComponent,
+  title: 'Widgets/TableFilters',
+  component: TableFilters,
   argTypes: {},
-} as Meta<typeof StoryComponent>;
+} as Meta<typeof TableFilters>;
 
 export const Default: StoryObj<PopoverType> = () => {
   return <StoryComponent />;

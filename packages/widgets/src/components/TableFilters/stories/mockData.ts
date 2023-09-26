@@ -1,17 +1,8 @@
-export const mockData: {
-  id: string;
-  title: string;
-  isOpened: boolean;
-  ariaControls: string;
-  items: {
-    key: string;
-    isDisabled?: boolean;
-    content: {
-      statePath: string[];
-      text: string;
-    };
-  }[];
-}[] = [
+import { AccordionInfo, CheckboxData } from '../types';
+
+const getName = (data: string) => data.toLowerCase().replaceAll('-', '');
+
+export const mockData: AccordionInfo[] = [
   {
     id: 'strategy',
     title: 'Strategy',
@@ -19,6 +10,7 @@ export const mockData: {
     ariaControls: 'strategy-panel',
     items: [1, 2, 3, 4, 5].map((number) => ({
       key: `strategy-checkbox${number}`,
+      name: `checkbox${number}`,
       content: {
         statePath: ['strategy', `checkbox${number}`],
         text: `checkbox${number}`,
@@ -32,6 +24,7 @@ export const mockData: {
     ariaControls: 'status-panel',
     items: ['Running', 'Stopped'].map((status) => ({
       key: `status-checkbox-${status}`,
+      name: getName(status),
       content: {
         statePath: ['status', `checkbox${status.toLowerCase()}`],
         text: status,
@@ -46,6 +39,7 @@ export const mockData: {
     items: [
       {
         key: `btcfdusd`,
+        name: 'btcfdusd',
         isDisabled: true,
         content: {
           statePath: ['pairs', 'btcfdusd'],
@@ -61,7 +55,8 @@ export const mockData: {
     ariaControls: 'exchange-panel',
     items: [
       {
-        key: `binance`,
+        key: 'binance',
+        name: 'binance',
         isDisabled: true,
         content: {
           statePath: ['exchange', 'binance'],
@@ -71,3 +66,23 @@ export const mockData: {
     ],
   },
 ];
+
+export const mockInitialState: CheckboxData = {
+  strategy: {
+    checkbox1: true,
+    checkbox4: true,
+  },
+  status: {
+    running: true,
+  },
+  pairs: {
+    btcfdusd: true,
+  },
+  exchange: {
+    binance: true,
+  },
+};
+
+export const mockOnSubmitHandle = (checkboxData: CheckboxData) => {
+  console.log('>>>onSubmit data', checkboxData);
+};

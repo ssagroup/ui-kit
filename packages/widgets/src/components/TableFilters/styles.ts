@@ -1,8 +1,6 @@
-import { css } from '@emotion/react';
+import { Theme, css } from '@emotion/react';
 
-import theme from '@themes/main';
-
-export const tableFilterPopoverContentStyles = css`
+export const tableFilterPopoverContentStyles = (theme: Theme) => css`
   border: 1px solid ${theme.colors.greyDropdownMain};
   border-radius: 20px;
   padding: 20px 20px 14px 18px;
@@ -10,7 +8,7 @@ export const tableFilterPopoverContentStyles = css`
   background: ${theme.colors.white};
 `;
 
-export const tableFilterDividerStyles = css`
+export const tableFilterDividerStyles = (theme: Theme) => css`
   border: 1px solid ${theme.colors.greyDropdownMain};
   width: calc(100% + 38px);
   margin: 22px auto 14px -19px;

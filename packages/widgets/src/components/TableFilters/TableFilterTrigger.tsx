@@ -1,6 +1,5 @@
 import { css, useTheme } from '@emotion/react';
-import { PopoverTrigger } from '@components/Popover/PopoverTrigger';
-import Icon from '@components/Icon';
+import { PopoverTrigger, Icon } from '@ssa-ui-kit/core';
 import { Theme } from '@emotion/react';
 
 export const filterButtonStyles = (theme: Theme) => css`

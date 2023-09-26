@@ -60,7 +60,7 @@ describe('TableFilters', () => {
 
     const logSpy = jest.spyOn(console, 'log');
     fireEvent.click(getByText('Apply'));
-    expect(logSpy).toHaveBeenCalledWith('>>>onSubmit data', {
+    expect(logSpy).toHaveBeenCalledWith('>>>onSubmit', {
       exchange: { binance: true },
       pairs: { btcfdusd: true },
       status: { running: true },

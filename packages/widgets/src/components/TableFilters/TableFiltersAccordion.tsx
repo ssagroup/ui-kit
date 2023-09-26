@@ -1,5 +1,5 @@
-import { Accordion } from '@components/AccordionGroup';
-import { AccordionViewProps } from '@components/AccordionGroup/types';
+import { Accordion } from '@ssa-ui-kit/core';
+import { AccordionViewProps } from '@ssa-ui-kit/core/src/components/AccordionGroup/types';
 
 export const TableFiltersAccordion = (props: AccordionViewProps) => (
   <Accordion
