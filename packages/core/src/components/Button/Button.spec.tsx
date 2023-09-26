@@ -26,7 +26,7 @@ const getElTestId = (
 ) => {
   const prefix = isDisabled
     ? 'disabled'
-    : ['primary', 'primary-blue'].includes(variant || '')
+    : ['primary', 'info'].includes(variant || '')
     ? 'white'
     : variant === 'tertiary' && isHovered
     ? 'greylight'

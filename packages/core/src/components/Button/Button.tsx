@@ -64,13 +64,13 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
     const [isHovered, setIsHovered] = useState(false);
 
     const isPrimary = variant === 'primary';
-    const isPrimaryBlue = variant === 'info';
+    const isInfo = variant === 'info';
     const isSecondary = variant === 'secondary';
     const isTertiary = variant === 'tertiary';
     const noMargin = !text ? { margin: 0 } : {};
 
     const variantStyles =
-      isPrimary || isPrimaryBlue || isTertiary || isSecondary
+      isPrimary || isInfo || isTertiary || isSecondary
         ? mapVariants[variant] && mapVariants[variant](theme)
         : undefined;
 
@@ -95,7 +95,7 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
         ) : text ? (
           isDisabled ? (
             <DisabledButtonText text={text} size={size} />
-          ) : isPrimary || isPrimaryBlue ? (
+          ) : isPrimary || isInfo ? (
             <WhiteButtonText text={text} size={size} />
           ) : isTertiary && isHovered ? (
             <GreyLightButtonText text={text} size={size} />
