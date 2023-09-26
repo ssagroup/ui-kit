@@ -62,22 +62,20 @@ export const Default = {};
 
 export const AllStates = () => (
   <GridWrapper>
+    <HeaderTitle>Color</HeaderTitle>
     <HeaderTitle>Small</HeaderTitle>
     <HeaderTitle>Medium</HeaderTitle>
     <HeaderTitle>Large</HeaderTitle>
-    {colors.map((color) => {
-      return (
-        <React.Fragment key={color}>
-          {sizes.map((size) => {
-            return (
-              <Tag color={color} size={size} key={color + size}>
-                tag
-              </Tag>
-            );
-          })}
-        </React.Fragment>
-      );
-    })}
+    {colors.map((color) => (
+      <React.Fragment key={color}>
+        <HeaderTitle>{color}</HeaderTitle>
+        {sizes.map((size) => (
+          <Tag color={color} size={size} key={color + size}>
+            tag
+          </Tag>
+        ))}
+      </React.Fragment>
+    ))}
   </GridWrapper>
 );
 

@@ -91,13 +91,11 @@ export const AllStates = () => (
     {variants.map((variant) => (
       <React.Fragment key={variant}>
         <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
-        {sizes.map((size) => {
-          return (
-            <Button variant={variant} size={size} key={variant + size}>
-              Button
-            </Button>
-          );
-        })}
+        {sizes.map((size) => (
+          <Button variant={variant} size={size} key={variant + size}>
+            Button
+          </Button>
+        ))}
       </React.Fragment>
     ))}
   </GridWrapper>

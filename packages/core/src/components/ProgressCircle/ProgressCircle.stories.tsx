@@ -54,23 +54,23 @@ const sizes = [80, 130, 180];
 
 export const SizesAndColors: StoryObj<typeof ProgressCircle> = (args: Args) => (
   <GridWrapper>
+    <HeaderTitle>Color</HeaderTitle>
     <HeaderTitle>Size: 80</HeaderTitle>
     <HeaderTitle>Size: 130</HeaderTitle>
     <HeaderTitle>Size: 180</HeaderTitle>
-    {colors.map((color) => {
-      return (
-        <React.Fragment key={color}>
-          {sizes.map((size) => (
-            <ProgressCircle
-              color={color}
-              size={size}
-              key={color + size}
-              {...args}
-            />
-          ))}
-        </React.Fragment>
-      );
-    })}
+    {colors.map((color) => (
+      <React.Fragment key={color}>
+        <HeaderTitle css={{ width: 80 }}>{color}</HeaderTitle>
+        {sizes.map((size) => (
+          <ProgressCircle
+            color={color}
+            size={size}
+            key={color + size}
+            {...args}
+          />
+        ))}
+      </React.Fragment>
+    ))}
   </GridWrapper>
 );
 

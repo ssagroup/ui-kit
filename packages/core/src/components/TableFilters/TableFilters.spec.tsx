@@ -2,7 +2,7 @@ import { fireEvent } from '@testing-library/dom';
 import { StoryComponent } from './stories/StoryComponent';
 
 describe('TableFilters', () => {
-  it('Should be correct rendered', () => {
+  it('Should be correctly rendered', () => {
     const { getByText, getByRole, queryByText } = render(<StoryComponent />);
 
     const buttonEl = getByRole('button');

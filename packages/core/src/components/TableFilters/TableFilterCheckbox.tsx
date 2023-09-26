@@ -6,7 +6,7 @@ const getStyles = () => css`
   margin: 0 0 14px;
   & span {
     margin-left: 16px;
-    color: #55575a;
+    color: ${theme.colors.greyDisabled};
     user-select: none;
   }
   & input + div {

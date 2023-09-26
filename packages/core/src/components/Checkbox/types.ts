@@ -1,5 +1,6 @@
 import { Control, FieldPath, FieldValues } from 'react-hook-form';
 import { CommonProps } from '@global-types/emotion';
+import { MutableRefObject } from 'react';
 
 export interface ICheckboxProps extends CommonProps {
   text?: string;
@@ -11,7 +12,7 @@ export interface ICheckboxProps extends CommonProps {
   isIndeterminate?: boolean;
   name?: string;
   isRequired?: boolean;
-  ref?: any;
+  ref?: MutableRefObject<HTMLInputElement>;
 }
 
 export type IFormCheckboxProps<T extends FieldValues> = Omit<
