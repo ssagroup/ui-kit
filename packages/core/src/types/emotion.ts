@@ -36,6 +36,8 @@ type Colors = MakeColors<
     'greyDropdownFocused',
     'greyDropdownText',
     'greyArrowSidebar',
+    'greyFilterIcon',
+    'greyCancelClearButton',
     'redLighter',
     'redLighter40',
     'red',
@@ -88,6 +90,10 @@ type Colors = MakeColors<
     'blueLightLighter20',
     'blueLightLighter40',
     'blueNotification',
+    'blueNotification40',
+    'blueButtonHoverGradientFrom',
+    'blueButtonHoverGradientTo',
+    'blueButtonActive',
   ]
 >;
 

@@ -5,6 +5,8 @@ import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
 import { createTitleStyles } from './styles';
 
+const CardHeaderBaseButton = CardHeaderBase.withComponent('button');
+
 export const AccordionTitle: AccordionProps['renderTitle'] = ({
   title,
   size = 'empty',
@@ -16,8 +18,8 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
   const theme = useTheme();
   const styles = createTitleStyles(theme, isOpened);
   return (
-    <CardHeaderBase
-      as="button"
+    <CardHeaderBaseButton
+      type="button"
       data-testid="accordion-title"
       css={styles[size]}
       id={`${id}`}
@@ -32,6 +34,6 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
         {title}
         {isOpened ? <Icon name="carrot-down" /> : <Icon name="carrot-up" />}
       </Fragment>
-    </CardHeaderBase>
+    </CardHeaderBaseButton>
   );
 };

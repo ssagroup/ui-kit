@@ -18,6 +18,7 @@ export const usePopover: UsePopover = ({
   modal,
   open: controlledOpen,
   onOpenChange: setControlledOpen,
+  floatingOptions = {},
 }: PopoverOptions = {}) => {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
   const [labelId, setLabelId] = React.useState<string | undefined>();
@@ -37,11 +38,11 @@ export const usePopover: UsePopover = ({
       offset(5),
       flip({
         crossAxis: placement.includes('-'),
-        fallbackAxisSideDirection: 'end',
         padding: 5,
       }),
       shift({ padding: 5 }),
     ],
+    ...floatingOptions,
   });
 
   const context = data.context;
@@ -63,10 +64,20 @@ export const usePopover: UsePopover = ({
       modal,
       labelId,
       descriptionId,
+      floatingOptions,
       setLabelId,
       setDescriptionId,
     }),
-    [open, setOpen, interactions, data, modal, labelId, descriptionId],
+    [
+      open,
+      setOpen,
+      interactions,
+      data,
+      modal,
+      labelId,
+      descriptionId,
+      floatingOptions,
+    ],
   );
 
   return result;

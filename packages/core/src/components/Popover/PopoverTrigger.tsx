@@ -3,10 +3,11 @@ import { useMergeRefs } from '@floating-ui/react';
 import Button from '@components/Button';
 import { PopoverTriggerProps } from './types';
 import { usePopoverContext } from './hooks/usePopoverContext';
+import { IButtonProps } from '@components/Button/types';
 
 export const PopoverTrigger = React.forwardRef<
   HTMLElement,
-  React.HTMLProps<HTMLElement> & PopoverTriggerProps
+  React.HTMLProps<HTMLElement> & IButtonProps & PopoverTriggerProps
 >(function PopoverTrigger({ children, asChild = false, ...props }, propRef) {
   const context = usePopoverContext();
   const childrenRef = (

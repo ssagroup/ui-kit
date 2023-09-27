@@ -31,6 +31,8 @@ const main: Theme = {
     greyShadow: 'rgba(42, 48, 57, 0.08)', // #2a3039
     greyShadowHover: 'rgba(93, 102, 112, 0.24)', // #5d6670
     greyOutline: 'rgba(208,	210,	220, 1)', // #d0d2dc
+    greyFilterIcon: 'rgb(133, 137, 147)', // #858993
+    greyCancelClearButton: 'rgb(101, 101, 103)', // #656567
     redLighter: 'rgba(242, 136, 142, 1)', // #f2888e
     redLighter40: 'rgba(242, 136, 142, 0.4)', // #f2888e
     red: 'rgba(235, 117, 86, 1)', // #eb7556
@@ -83,6 +85,10 @@ const main: Theme = {
     blueLightLighter20: 'rgba(133, 199, 242, 0.2)', // #85c7f2
     blueLightLighter40: 'rgba(133, 199, 242, 0.4)', // #85c7f2
     blueNotification: 'rgba(0, 133, 226, 1)', //#0085e2
+    blueNotification40: 'rgba(0, 133, 226, 0.4)', //#0085e2
+    blueButtonHoverGradientFrom: 'rgb(72, 122, 218)', //#487ada
+    blueButtonHoverGradientTo: 'rgb(14, 75, 193)', //#0e4bc1
+    blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
   },
   mediaQueries: {
     xs: '@media screen and (max-width: 390px)',

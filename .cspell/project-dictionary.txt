@@ -67,3 +67,7 @@ viewports
 vtpit
 xlg
 USD
+btc
+btcfdusd
+Dissoc
+fdusd

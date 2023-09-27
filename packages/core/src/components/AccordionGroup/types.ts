@@ -1,5 +1,4 @@
 import { SerializedStyles } from '@emotion/react';
-import { CommonProps } from '@global-types/emotion';
 import { AriaAttributes } from 'react';
 
 export type AccordionSize = 'empty' | 'small' | 'medium' | 'large';
@@ -15,7 +14,7 @@ export interface AccordionGroupProps {
   accordionsStayOpen?: boolean;
 }
 
-export interface AccordionProps extends CommonProps {
+export interface AccordionProps {
   id: number | string;
   size?: AccordionSize;
   renderTitle: (
@@ -26,11 +25,15 @@ export interface AccordionProps extends CommonProps {
     },
   ) => React.ReactNode;
   renderContent: (accordion: RenderContentProps) => React.ReactNode;
+  as?: React.ElementType;
+  className?: string;
 }
 
 export type RenderContentProps = Pick<AccordionProps, 'id' | 'size'> &
   Pick<AriaAttributes, 'aria-labelledby'> & {
     isOpened?: boolean;
+    as?: React.ElementType;
+    className?: string;
   };
 
 export interface AccordionViewProps extends AccordionProps {
@@ -38,6 +41,7 @@ export interface AccordionViewProps extends AccordionProps {
   isOpened?: boolean;
   title: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 export interface IAccordionGroupContext {
