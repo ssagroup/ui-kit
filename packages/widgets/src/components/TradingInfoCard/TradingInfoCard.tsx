@@ -19,7 +19,8 @@ const TradingInfoCard = ({
 
   return (
     <CardBase
-      data-testid="card"
+      role={onClick ? 'button' : 'region'}
+      tabIndex={onClick ? 0 : -1}
       onClick={() => {
         if (typeof onClick === 'function') {
           onClick();

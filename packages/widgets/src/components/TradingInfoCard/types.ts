@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface ITradingInfoCardProps {
-  value: string | number;
+  value: React.ReactNode;
   title: string;
   unit?: string;
   icon?: React.ReactNode;
@@ -14,6 +14,6 @@ export type TradingInfoContent = Pick<
 >;
 
 export interface ITradingInfoCardTooltipProps {
-  trigger: JSX.Element;
+  trigger: string | number | JSX.Element;
   children: React.ReactNode;
 }

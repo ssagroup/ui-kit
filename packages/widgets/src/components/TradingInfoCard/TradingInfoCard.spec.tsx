@@ -34,9 +34,7 @@ describe('TradingInfoCard', () => {
     screen.getByText('%');
     screen.getByText('Title');
 
-    const icon = await screen.findByTitle(/Arrow Up/i);
-
-    expect(icon).toBeInTheDocument();
+    await screen.findByTitle(/Arrow Up/i);
   });
 
   it('Renders with an integer value (no tooltip)', async () => {
@@ -82,7 +80,7 @@ describe('TradingInfoCard', () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
 
-    const { getByTestId } = render(
+    const { getByRole } = render(
       <TradingInfoCard
         value={'400.500'}
         title={'Title'}
@@ -90,10 +88,11 @@ describe('TradingInfoCard', () => {
       />,
     );
 
-    const button = getByTestId('card');
+    const button = getByRole('button');
 
     await user.click(button);
 
     expect(mockOnClick).toBeCalledTimes(1);
+    expect(button).toHaveAttribute('tabindex', '0');
   });
 });
