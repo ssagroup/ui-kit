@@ -1,5 +1,7 @@
 import { fireEvent } from '@testing-library/dom';
 import { StoryComponent } from './stories/StoryComponent';
+import { TableFilters } from '.';
+import { mockData, mockInitialState } from './stories/mockData';
 
 describe('TableFilters', () => {
   it('Should be correctly rendered', () => {
@@ -49,7 +51,34 @@ describe('TableFilters', () => {
       expect(checkbox.checked).toEqual([0, 3].includes(key));
     });
   });
-  it('Should be submitted correctly', () => {
+  it('Should be reset to the initial state with console.log', () => {
+    const { getByText, getByRole } = render(
+      <div
+        css={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <TableFilters
+          data={mockData}
+          initialState={mockInitialState}
+          handleReset={() => {
+            console.log('>>>Reset completed');
+          }}
+        />
+      </div>,
+    );
+
+    const logSpy = jest.spyOn(console, 'log');
+    const buttonEl = getByRole('button');
+    fireEvent.click(buttonEl);
+    fireEvent.click(getByText('checkbox2'));
+    fireEvent.click(getByText('checkbox3'));
+    fireEvent.click(getByText('checkbox5'));
+    fireEvent.click(getByText('Clear'));
+    expect(logSpy).toHaveBeenCalledWith('>>>Reset completed');
+  });
+  it('Should be submitted with callback', () => {
     const { getByText, getByRole } = render(<StoryComponent />);
 
     const buttonEl = getByRole('button');
@@ -72,5 +101,28 @@ describe('TableFilters', () => {
         checkbox5: true,
       },
     });
+  });
+  it('Should be submitted by default', () => {
+    const { getByText, getByRole, getByTestId } = render(
+      <div
+        css={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <TableFilters data={mockData} initialState={mockInitialState} />
+      </div>,
+    );
+
+    const buttonEl = getByRole('button');
+    fireEvent.click(buttonEl);
+
+    const formEl = getByTestId('table-filters-form');
+    formEl.onsubmit = jest.fn(() => {
+      console.log('>>>Form submitted');
+    });
+    const logSpy = jest.spyOn(console, 'log');
+    fireEvent.click(getByText('Apply'));
+    expect(logSpy).toHaveBeenCalledWith('>>>Form submitted');
   });
 });

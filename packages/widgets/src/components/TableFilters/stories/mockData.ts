@@ -82,7 +82,3 @@ export const mockInitialState: CheckboxData = {
     binance: true,
   },
 };
-
-export const mockOnSubmitHandle = (checkboxData: CheckboxData) => {
-  console.log('>>>onSubmit data', checkboxData);
-};

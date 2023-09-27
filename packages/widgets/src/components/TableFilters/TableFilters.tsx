@@ -53,7 +53,8 @@ export const TableFilters = ({
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
-          }}>
+          }}
+          data-testid="table-filters-form">
           <PopoverDescription variant="body1">
             <AccordionGroupContextProvider>
               <AccordionGroup size="medium">
