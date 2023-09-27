@@ -33,6 +33,8 @@ import { ArrowDown } from './ArrowDown';
 
 import { iconsList } from './iconsList';
 
+import { Filter } from './Filter';
+
 const componentsList = [
   Diet,
   Calendar,
@@ -60,6 +62,7 @@ const componentsList = [
   Circle,
   ArrowUp,
   ArrowDown,
+  Filter,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {

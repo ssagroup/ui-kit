@@ -4,7 +4,7 @@ import { MouseEventHandler } from 'react';
 
 /**
  * https://www.w3.org/WAI/ARIA/apg/patterns/button/
- * */
+ */
 type ButtonAriaProps = Pick<
   AriaAttributes,
   | 'aria-labelledby'
@@ -31,6 +31,7 @@ export interface IButtonProps extends ButtonAriaProps {
 
 export interface IButtonVariants {
   primary: (theme: Theme) => SerializedStyles;
+  info: (theme: Theme) => SerializedStyles;
   secondary: (theme: Theme) => SerializedStyles;
   tertiary: (theme: Theme) => SerializedStyles;
 }

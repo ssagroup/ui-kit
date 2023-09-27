@@ -1,5 +1,3 @@
-import { IMapIcons } from '../types';
-
 // This file is also imported into the Button/Button.stories.tsx
 // and into the ./index.tsx
 // We need such a file to let webpack create a chunk for
@@ -9,7 +7,7 @@ import { IMapIcons } from '../types';
 //
 // Make sure the order in this array corresponds to the one in the
 // ./index.tsx
-export const iconsList: Array<keyof IMapIcons> = [
+export const iconsList = [
   'diet',
   'calendar',
   'home',
@@ -36,4 +34,5 @@ export const iconsList: Array<keyof IMapIcons> = [
   'circle',
   'arrow-up',
   'arrow-down',
-];
+  'filter',
+] as const;

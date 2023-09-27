@@ -17,5 +17,5 @@ export const PopoverDescription = React.forwardRef<
     return () => setDescriptionId(undefined);
   }, [id, setDescriptionId]);
 
-  return <Typography {...props} ref={ref} id={id} />;
+  return <Typography as="div" {...props} ref={ref} id={id} />;
 });

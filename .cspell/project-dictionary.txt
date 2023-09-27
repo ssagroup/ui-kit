@@ -66,3 +66,7 @@ VERCEL
 viewports
 vtpit
 xlg
+btc
+btcfdusd
+Dissoc
+fdusd

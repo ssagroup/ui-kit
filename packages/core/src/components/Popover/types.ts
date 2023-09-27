@@ -2,6 +2,7 @@ import {
   Placement,
   useInteractions,
   UseFloatingReturn,
+  UseFloatingOptions,
 } from '@floating-ui/react';
 
 export interface PopoverOptions {
@@ -9,6 +10,7 @@ export interface PopoverOptions {
   placement?: Placement;
   modal?: boolean;
   open?: boolean;
+  floatingOptions?: Partial<UseFloatingOptions>;
   onOpenChange?: (open: boolean) => void;
 }
 
@@ -29,6 +31,7 @@ export type UsePopover = (props: PopoverOptions) => {
   modal?: boolean;
   labelId?: string;
   descriptionId?: string;
+  floatingOptions?: PopoverOptions['floatingOptions'];
   setLabelId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setDescriptionId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setOpen: (open: boolean) => void;

@@ -49,7 +49,7 @@ export const AccordionGroup = ({
         if (isValidElement(child)) {
           const { renderContent, renderTitle, ...rest } = child.props;
           const id = rest.id;
-          const isOpened = !!openedAccordions.find(
+          const isOpened = !!openedAccordions?.find(
             (activeAccordion) => activeAccordion.id === id,
           );
 
