@@ -17,7 +17,7 @@ const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
 
 test('Widgets: TableFilters should be opened correctly', async () => {
   await page.goto(
-    'http://localhost:6006/iframe.html?id=widgets-tablefilters--default&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=widgets-tablefilters--default&viewMode=story',
   );
   await expect(page.getByText('More')).toBeVisible();
 });
