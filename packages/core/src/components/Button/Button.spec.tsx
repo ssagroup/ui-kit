@@ -212,7 +212,7 @@ describe('Button', () => {
     });
   });
 
-  describe('Primary Blue', () => {
+  describe('Info', () => {
     primaryBtnSpecs.forEach((spec) =>
       it(getSpecName(spec), () => testButton(spec)),
     );
