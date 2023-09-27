@@ -66,6 +66,7 @@ VERCEL
 viewports
 vtpit
 xlg
+USD
 btc
 btcfdusd
 Dissoc

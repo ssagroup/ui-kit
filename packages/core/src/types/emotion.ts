@@ -28,6 +28,7 @@ type Colors = MakeColors<
     'greyButtonGradientLight',
     'greyBackground',
     'greyBackgroundLight',
+    'greyGraphite',
     'greyShadow',
     'greyOutline',
     'greyShadowHover',

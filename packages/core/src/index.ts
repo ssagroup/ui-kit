@@ -14,6 +14,7 @@ export { default as Avatar } from './components/Avatar';
 export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
 export { default as Card } from './components/Card';
+export { default as CardBase } from './components/Card/CardBase';
 export { default as CardContent } from './components/CardContent';
 export { default as CardHeader } from './components/CardHeader';
 export { default as ColorPicker } from './components/ColorPicker';
