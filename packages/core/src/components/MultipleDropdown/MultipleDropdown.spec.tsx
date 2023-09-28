@@ -313,12 +313,27 @@ describe('MultipleDropdown', () => {
   });
 
   it('Renders with a custom placeholder', () => {
-    const { getByTestId } = setup({ placeholder: 'Select something' });
+    const { getByTestId } = setup({
+      label: 'Strategy',
+      placeholder: 'Choose at least one option',
+    });
 
     const dropdownToggleEl = within(getByTestId('dropdown')).getByRole(
       'combobox',
     );
-    expect(dropdownToggleEl).toHaveTextContent('Select something');
+    expect(dropdownToggleEl).toHaveTextContent('Choose at least one option');
+  });
+
+  it('Renders with a hidden placeholder', () => {
+    const { getByTestId } = setup({
+      label: 'Strategy',
+      showPlaceholder: false,
+    });
+
+    const dropdownToggleEl = within(getByTestId('dropdown')).getByRole(
+      'combobox',
+    );
+    expect(dropdownToggleEl).toHaveTextContent('StrategyCarrot down');
   });
 
   it('Renders in the disabled state', async () => {
