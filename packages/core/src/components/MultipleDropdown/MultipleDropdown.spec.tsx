@@ -84,7 +84,6 @@ describe('MultipleDropdown', () => {
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
       const listItemEl = listItemEls[i];
-
       expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       const itemListValue = getListItemValue(listItem);
       expect(within(listItemEl).getByRole('button')).toHaveTextContent(
