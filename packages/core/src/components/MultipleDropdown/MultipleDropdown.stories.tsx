@@ -68,6 +68,25 @@ Basic.args = {
   label: 'Strategy',
 };
 
+export const PlaceholderHidden: StoryObj = (args: Args) => {
+  return (
+    <MultipleDropdown {...args}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+};
+
+PlaceholderHidden.args = {
+  isDisabled: false,
+  isMultiple: true,
+  showPlaceholder: false,
+  label: 'Strategy',
+};
+
 export const Single: StoryObj = (args: Args) => {
   return (
     <MultipleDropdown isDisabled={args.isDisabled} isMultiple={args.isMultiple}>

@@ -3,14 +3,15 @@ import { PopoverTrigger, Icon } from '@ssa-ui-kit/core';
 import { Theme } from '@emotion/react';
 
 export const filterButtonStyles = (theme: Theme) => css`
-  width: 85px;
   height: 40px;
   color: ${theme.colors.greyDisabled};
   background: ${theme.colors.white};
   border: 1px solid ${theme.colors.greyDropdownMain};
-  border-radius: 5px;
+  border-radius: 6.5px;
   padding: 0 11px 0 13px;
-  gap: 7px;
+  font-size: 14px;
+  letter-spacing: normal;
+  gap: 5px;
   user-select: none;
 
   &:hover {
@@ -28,8 +29,11 @@ export const filterButtonStyles = (theme: Theme) => css`
 
 export const TableFilterTrigger = ({
   children,
+  ...rest
 }: {
   children: React.ReactNode;
+  as?: React.ElementType;
+  className?: string;
 }) => {
   const theme = useTheme();
   return (
@@ -38,7 +42,8 @@ export const TableFilterTrigger = ({
       css={filterButtonStyles}
       endIcon={
         <Icon name="filter" color={theme.colors.greyFilterIcon} size={20} />
-      }>
+      }
+      {...rest}>
       {children}
     </PopoverTrigger>
   );

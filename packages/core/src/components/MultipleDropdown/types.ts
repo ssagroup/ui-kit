@@ -6,6 +6,7 @@ export type IDropdownProps<P extends IDropdownOption> = {
   onChange?: (items: P[]) => void;
   isDisabled?: boolean;
   placeholder?: string;
+  showPlaceholder?: boolean;
   children?: React.ReactNode;
   className?: string;
   isOpen?: boolean;
