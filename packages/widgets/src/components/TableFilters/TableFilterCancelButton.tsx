@@ -25,9 +25,15 @@ export const cancelButtonStyles = (theme: Theme) => css`
 
 export const TableFiltersCancelButton = ({
   children,
-}: React.PropsWithChildren) => {
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}) => {
   const theme = useTheme();
   return (
-    <PopoverClose css={cancelButtonStyles(theme)}>{children}</PopoverClose>
+    <PopoverClose css={cancelButtonStyles(theme)} onClick={onClick}>
+      {children}
+    </PopoverClose>
   );
 };

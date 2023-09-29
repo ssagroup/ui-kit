@@ -32,7 +32,7 @@ describe('TableFilters', () => {
       expect(checkbox.checked).toEqual(true);
     });
   });
-  it('Should be reset to the initial state', () => {
+  it('Should be cleared with persisting of disabled values', () => {
     const { getByText, getByRole } = render(<StoryComponent />);
 
     const buttonEl = getByRole('button');
@@ -40,18 +40,35 @@ describe('TableFilters', () => {
     fireEvent.click(getByText('checkbox2'));
     fireEvent.click(getByText('checkbox3'));
     fireEvent.click(getByText('checkbox5'));
-    const checkboxes = document.querySelectorAll<HTMLInputElement>(
+    let strategyCheckboxes = document.querySelectorAll<HTMLInputElement>(
       'div[role=region][title=Strategy] input',
     );
-    checkboxes.forEach((checkbox) => {
+    strategyCheckboxes.forEach((checkbox) => {
       expect(checkbox.checked).toEqual(true);
     });
     fireEvent.click(getByText('Clear'));
-    checkboxes.forEach((checkbox, key) => {
-      expect(checkbox.checked).toEqual([0, 3].includes(key));
+    strategyCheckboxes = document.querySelectorAll<HTMLInputElement>(
+      'div[role=region][title=Strategy] input',
+    );
+    strategyCheckboxes.forEach((checkbox) => {
+      expect(checkbox.checked).toEqual(false);
+    });
+    const pairsCheckboxes = document.querySelectorAll<HTMLInputElement>(
+      'div[role=region][title=Pairs] input',
+    );
+    pairsCheckboxes.forEach((checkbox) => {
+      expect(checkbox.checked).toEqual(true);
+      expect(checkbox.disabled).toEqual(true);
+    });
+    const exchangeCheckboxes = document.querySelectorAll<HTMLInputElement>(
+      'div[role=region][title=Exchange] input',
+    );
+    exchangeCheckboxes.forEach((checkbox) => {
+      expect(checkbox.checked).toEqual(true);
+      expect(checkbox.disabled).toEqual(true);
     });
   });
-  it('Should be reset to the initial state with console.log', () => {
+  it('Should be correctly working custom handlers', () => {
     const { getByText, getByRole } = render(
       <div
         css={{
@@ -62,8 +79,14 @@ describe('TableFilters', () => {
         <TableFilters
           data={mockData}
           initialState={mockInitialState}
-          handleReset={() => {
-            console.log('>>>Reset completed');
+          handleSubmit={() => {
+            console.log('>>>Submit: completed');
+          }}
+          handleCancel={() => {
+            console.log('>>>Cancel: completed');
+          }}
+          handleClear={() => {
+            console.log('>>>Clear: completed');
           }}
         />
       </div>,
@@ -73,10 +96,13 @@ describe('TableFilters', () => {
     const buttonEl = getByRole('button');
     fireEvent.click(buttonEl);
     fireEvent.click(getByText('checkbox2'));
-    fireEvent.click(getByText('checkbox3'));
-    fireEvent.click(getByText('checkbox5'));
     fireEvent.click(getByText('Clear'));
-    expect(logSpy).toHaveBeenCalledWith('>>>Reset completed');
+    expect(logSpy).toHaveBeenCalledWith('>>>Clear: completed');
+    fireEvent.click(getByText('checkbox2'));
+    fireEvent.click(getByText('Apply'));
+    expect(logSpy).toHaveBeenCalledWith('>>>Submit: completed');
+    fireEvent.click(getByText('Cancel'));
+    expect(logSpy).toHaveBeenCalledWith('>>>Cancel: completed');
   });
   it('Should be submitted with callback', () => {
     const { getByText, getByRole } = render(<StoryComponent />);
