@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { css } from '@emotion/react';
 import { Icon } from '@ssa-ui-kit/core';
+import { TradingInfoCard } from '@components/TradingInfoCard';
 import TradingScoreboard from './TradingScoreboard';
 import { ITradingScoreboardProps } from './types';
 
@@ -12,7 +14,18 @@ export const Default: StoryObj<typeof TradingScoreboard> = (
   args: ITradingScoreboardProps,
 ) => {
   return (
-    <TradingScoreboard itemsPerRow={args.itemsPerRow} items={args.items} />
+    <TradingScoreboard
+      items={args.items}
+      itemsPerRow={args.itemsPerRow}
+      onClick={(item) => console.log(item)}
+      renderCard={(item, onClick) => (
+        <TradingInfoCard {...item} onClick={() => onClick?.(item)} />
+        // <button onClick={() => onClick?.(item)}>{item.value}</button>
+      )}
+      css={css`
+        gap: 4px;
+      `}
+    />
   );
 };
 
@@ -20,64 +33,109 @@ Default.args = {
   itemsPerRow: 5,
   items: [
     {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
+      value: (
+        <div>
+          <Icon name="stats" color="gold" size={16} />
+          <span css={{ marginLeft: '10px' }}>Binance</span>
+        </div>
+      ),
+      title: 'Exchange',
+    },
+    {
+      value: 'Account name',
+      title: 'Account',
+    },
+    {
+      value: 'Grid v7',
+      title: 'Strategy',
+    },
+    {
+      value: 'ETH/USDT',
+      title: 'Pairs',
+    },
+    {
+      value: '25',
+      title: 'Orders',
+    },
+    {
+      value: '27.07.23',
+      unit: '4:22:23 pm',
+      title: 'Start Date',
+    },
+    {
+      value: '30.07.23',
+      unit: '4:22:23 pm',
+      title: 'End date',
+    },
+    {
+      value: '4d 5h 36m 2s',
+      title: 'Launch duration',
+    },
+    {
+      value: '25',
+      unit: '%',
+      title: 'ROI',
       icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
+    },
+    {
+      value: '340.025',
+      unit: 'USD',
+      title: 'PNL',
+      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
+    },
+  ],
+};
+
+export const OneLine: StoryObj<typeof TradingScoreboard> = (
+  args: ITradingScoreboardProps,
+) => {
+  return (
+    <TradingScoreboard
+      items={args.items}
+      itemsPerRow={args.itemsPerRow}
+      onClick={(item) => console.log(item)}
+      css={css`
+        gap: 4px;
+      `}
+    />
+  );
+};
+
+OneLine.args = {
+  itemsPerRow: 7,
+  items: [
+    {
+      value: '16',
+      title: 'Exchanges',
+    },
+    {
+      value: '6',
+      title: 'Accounts',
+    },
+    {
+      value: '62',
+      title: 'Orders',
     },
     {
       value: '500.025',
       unit: 'USD',
       title: 'Turnover',
+    },
+    {
+      value: '340',
+      unit: 'USD',
+      title: 'PNL',
       icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
     },
     {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
+      value: '25',
+      unit: '%',
+      title: 'ROI',
       icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
     },
     {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-    },
-    {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-    },
-    {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-    },
-    {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-    },
-    {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-    },
-    {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-    },
-    {
-      value: '500.025',
-      unit: 'USD',
-      title: 'Turnover',
-      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
+      value: '15',
+      title: 'Errors',
     },
   ],
 };

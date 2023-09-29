@@ -1,23 +1,39 @@
 import { TradingInfoCard } from '@components/TradingInfoCard';
-import { ITradingScoreboardProps } from './types';
 import TradingScoreboardBase from './TradingScoreboardBase';
+import { ITradingScoreboardProps } from './types';
 
-const TradingScoreboard = ({ itemsPerRow, items }: ITradingScoreboardProps) => {
+const TradingScoreboard = ({
+  items,
+  onClick,
+  renderCard,
+  ...props
+}: ITradingScoreboardProps) => {
   return (
-    <TradingScoreboardBase itemsPerRow={itemsPerRow}>
-      {items.map((item: any, index: number) => {
-        return (
-          <TradingInfoCard
-            key={index}
-            value={item.value}
-            unit={item.unit}
-            title={item.title}
-            icon={item.icon}
-            onClick={() => console.log('object')}
-          />
-        );
-      })}
-    </TradingScoreboardBase>
+    <div>
+      <TradingScoreboardBase {...props} data-testid="score-board">
+        {items.map((item, index) => {
+          return (
+            <div key={index}>
+              {typeof renderCard === 'function' ? (
+                renderCard(item, onClick)
+              ) : (
+                <TradingInfoCard
+                  value={item.value}
+                  unit={item.unit}
+                  title={item.title}
+                  icon={item.icon}
+                  onClick={() => {
+                    if (typeof onClick === 'function') {
+                      onClick(item);
+                    }
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+      </TradingScoreboardBase>
+    </div>
   );
 };
 

@@ -28,12 +28,13 @@ const TradingInfoCard = ({
       }}
       css={css`
         align-items: flex-start;
-        width: fit-content;
-        min-width: 123px;
+        width: max-content;
+        min-width: 100%;
         background: ${theme.colors.greyLighter};
         padding: 4px 10px;
         border-radius: 6px;
         cursor: pointer;
+        white-space: nowrap;
         box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
         user-select: none;
 
