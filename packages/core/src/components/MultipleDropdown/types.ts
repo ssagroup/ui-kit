@@ -3,7 +3,6 @@ import { IDropdownOption } from '@components/DropdownOptions/types';
 export type IDropdownProps<P extends IDropdownOption> = {
   selectedItems?: P[];
   isMultiple?: boolean;
-  onChange?: (items: P[]) => void;
   isDisabled?: boolean;
   placeholder?: string;
   showPlaceholder?: boolean;
@@ -11,6 +10,8 @@ export type IDropdownProps<P extends IDropdownOption> = {
   className?: string;
   isOpen?: boolean;
   label?: string;
+  onChange?: (items: P[]) => void;
+  setRef?: (element: HTMLDivElement) => void;
 };
 
 export interface DropdownContextType<T extends IDropdownOption> {

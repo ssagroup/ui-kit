@@ -38,6 +38,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
   isOpen: isInitOpen,
   isMultiple = true,
   placeholder = 'Select something',
+  setRef,
   showPlaceholder = true,
   label,
   children,
@@ -45,7 +46,8 @@ const MultipleDropdown = <T extends IDropdownOption>({
   className,
 }: IDropdownProps<T>) => {
   const theme = useTheme();
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownBaseRef: React.MutableRefObject<HTMLDivElement | null> =
+    useRef<HTMLDivElement>(null);
 
   const dropdownId = useId();
 
@@ -89,7 +91,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
     handleChange && handleChange(Object.values(newOptionsWithKey));
   };
 
-  useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));
+  useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
 
   useEffect(() => {
     if (isDisabled) {
@@ -146,7 +148,12 @@ const MultipleDropdown = <T extends IDropdownOption>({
 
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
-      <DropdownBase ref={dropdownRef} data-testid="dropdown">
+      <DropdownBase
+        ref={(element: HTMLDivElement) => {
+          dropdownBaseRef.current = element;
+          setRef?.(element);
+        }}
+        data-testid="dropdown">
         <DropdownToggle
           className={className}
           isOpen={isOpen}
