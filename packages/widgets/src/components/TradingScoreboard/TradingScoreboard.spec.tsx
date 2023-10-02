@@ -1,4 +1,4 @@
-import { Icon } from '@ssa-ui-kit/core';
+import { Button, Icon } from '@ssa-ui-kit/core';
 
 import TradingScoreboard from './TradingScoreboard';
 import userEvent from '@testing-library/user-event';
@@ -69,6 +69,27 @@ describe('TradingScoreboard', () => {
     }
   });
 
+  it('Renders with Render Prop', () => {
+    const { getByRole } = render(
+      <TradingScoreboard
+        itemsPerRow={5}
+        items={itemsArr}
+        renderCard={(item) => (
+          <Button>
+            <span>
+              {item.value} {item.unit}
+            </span>
+            <span>{item.title}</span>
+          </Button>
+        )}
+      />,
+    );
+
+    for (const item of itemsArr) {
+      getByRole('button', { name: new RegExp(item.title, 'i') });
+    }
+  });
+
   it('Calls onClick handlers when clicked', async () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
@@ -86,6 +107,7 @@ describe('TradingScoreboard', () => {
         name: new RegExp(item.title, 'i'),
       });
       await user.click(buttonEl);
+      expect(mockOnClick).toHaveBeenCalledWith(item);
     }
 
     expect(mockOnClick).toBeCalledTimes(itemsArr.length);

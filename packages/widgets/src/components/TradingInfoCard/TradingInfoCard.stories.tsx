@@ -18,12 +18,33 @@ export const Default: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
+      onClick={() => alert('clicked!')}
     />
   );
 };
 
 Default.args = {
+  value: '500',
+  unit: 'USD',
+  title: 'Turnover',
+};
+
+export const WithLink: StoryObj<typeof TradingInfoCard> = (
+  args: ITradingInfoCardProps,
+) => {
+  return (
+    <TradingInfoCard
+      value={args.value}
+      unit={args.unit}
+      title={args.title}
+      icon={args.icon}
+      onClick={() => alert('clicked!')}
+      link={'/'}
+    />
+  );
+};
+
+WithLink.args = {
   value: '500',
   unit: 'USD',
   title: 'Turnover',
@@ -38,7 +59,7 @@ export const WithTooltip: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
+      onClick={() => alert('clicked!')}
     />
   );
 };
@@ -58,7 +79,7 @@ export const WithIcon: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
+      onClick={() => alert('clicked!')}
     />
   );
 };
@@ -79,7 +100,6 @@ export const WithoutUnit: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
     />
   );
 };

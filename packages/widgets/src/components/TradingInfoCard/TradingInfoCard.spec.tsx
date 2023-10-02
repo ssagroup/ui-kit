@@ -95,4 +95,12 @@ describe('TradingInfoCard', () => {
     expect(mockOnClick).toBeCalledTimes(1);
     expect(button).toHaveAttribute('tabindex', '0');
   });
+
+  it('Renders with link prop', () => {
+    const { getByRole } = render(
+      <TradingInfoCard value={'400.500'} title={'Title'} link="/" />,
+    );
+
+    expect(getByRole('link')).toHaveAttribute('href', '/');
+  });
 });

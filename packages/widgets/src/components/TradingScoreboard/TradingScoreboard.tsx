@@ -10,7 +10,7 @@ const TradingScoreboard = ({
 }: ITradingScoreboardProps) => {
   return (
     <div>
-      <TradingScoreboardBase {...props} data-testid="score-board">
+      <TradingScoreboardBase {...props}>
         {items.map((item, index) => {
           return (
             <div key={index}>
