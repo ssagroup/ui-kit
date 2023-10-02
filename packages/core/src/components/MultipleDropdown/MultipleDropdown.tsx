@@ -37,6 +37,8 @@ const MultipleDropdown = <T extends IDropdownOption>({
   isDisabled,
   isOpen: isInitOpen,
   isMultiple = true,
+  placeholder = 'Select something',
+  showPlaceholder = true,
   label,
   children,
   onChange: handleChange,
@@ -45,7 +47,6 @@ const MultipleDropdown = <T extends IDropdownOption>({
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const placeholder = 'Select something';
   const dropdownId = useId();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -139,6 +140,9 @@ const MultipleDropdown = <T extends IDropdownOption>({
   );
 
   const values = getActiveItems({ allItems: optionsWithKey, placeholder });
+  const valuesWithoutPlaceholder = values.filter(
+    (item) => item !== placeholder,
+  );
 
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
@@ -153,12 +157,15 @@ const MultipleDropdown = <T extends IDropdownOption>({
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}
           isMultiple={isMultiple}
-          selectedCount={values.length}>
+          selectedCount={valuesWithoutPlaceholder.length}>
           {isMultiple ? (
             <>
               <DropdownPlaceholderLabel>
                 {label}
-                {values.length > 0 ? `: ${values[0]}` : ''}
+                {showPlaceholder
+                  ? values.length > 0 && `: ${values[0]}`
+                  : valuesWithoutPlaceholder.length > 0 &&
+                    `: ${valuesWithoutPlaceholder[0]}`}
               </DropdownPlaceholderLabel>
               {values.length > 1 ? (
                 <MultipleDropdownNotification as={'div'}>

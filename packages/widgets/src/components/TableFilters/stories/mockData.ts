@@ -26,7 +26,7 @@ export const mockData: AccordionInfo[] = [
       key: `status-checkbox-${status}`,
       name: getName(status),
       content: {
-        statePath: ['status', `checkbox${status.toLowerCase()}`],
+        statePath: ['status', status.toLowerCase()],
         text: status,
       },
     })),

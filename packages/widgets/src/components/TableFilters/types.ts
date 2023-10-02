@@ -19,7 +19,8 @@ export interface AccordionInfo {
 }
 
 export interface TableFiltersView {
-  handleReset?: () => void;
+  handleCancel?: () => void;
+  handleClear?: () => void;
   handleSubmit?: (checkboxData: CheckboxData) => void;
   initialState?: CheckboxData;
   data: AccordionInfo[];
