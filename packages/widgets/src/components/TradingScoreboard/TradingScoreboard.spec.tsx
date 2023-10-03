@@ -1,5 +1,6 @@
-import { Button, Icon } from '@ssa-ui-kit/core';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { Button, Icon } from '@ssa-ui-kit/core';
 import TradingScoreboard from './TradingScoreboard';
 import userEvent from '@testing-library/user-event';
 
@@ -52,6 +53,24 @@ const itemsArr = [
   },
 ];
 
+const linkItemsArr = [
+  {
+    value: 'Binance',
+    title: 'Exchange',
+    link: '/Exchange',
+  },
+  {
+    value: 'Account name',
+    title: 'Account',
+    link: '/Account',
+  },
+  {
+    value: 'Grid v7',
+    title: 'Strategy',
+    link: '/Strategy',
+  },
+];
+
 describe('TradingScoreboard', () => {
   it('Renders all items', () => {
     const { getAllByRole, getByRole } = render(
@@ -99,6 +118,56 @@ describe('TradingScoreboard', () => {
         itemsPerRow={5}
         items={itemsArr}
         onClick={mockOnClick}
+      />,
+    );
+
+    for (const item of itemsArr) {
+      const buttonEl = getByRole('button', {
+        name: new RegExp(item.title, 'i'),
+      });
+      await user.click(buttonEl);
+      expect(mockOnClick).toHaveBeenCalledWith(item);
+    }
+
+    expect(mockOnClick).toBeCalledTimes(itemsArr.length);
+  });
+
+  it('Renders with link prop', () => {
+    const { getByRole } = render(
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/*"
+            element={<TradingScoreboard itemsPerRow={5} items={linkItemsArr} />}
+          />
+        </Routes>
+      </BrowserRouter>,
+    );
+
+    for (const item of linkItemsArr) {
+      getByRole('link', { name: new RegExp(item.title, 'i') });
+    }
+  });
+
+  it('Calls onClick handlers with render prop when clicked', async () => {
+    const user = userEvent.setup();
+    const mockOnClick = jest.fn();
+
+    const { getByRole } = render(
+      <TradingScoreboard
+        itemsPerRow={5}
+        items={itemsArr}
+        onClick={mockOnClick}
+        renderCard={(item, onClick) => (
+          <Button onClick={() => onClick?.(item)}>
+            <span>
+              {item.value} {item.unit}
+            </span>
+            <span>
+              {item.title} {item.icon}
+            </span>
+          </Button>
+        )}
       />,
     );
 

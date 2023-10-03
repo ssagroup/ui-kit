@@ -1,5 +1,7 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Meta, StoryObj } from '@storybook/react';
 import { css } from '@emotion/react';
+
 import { Button, Icon } from '@ssa-ui-kit/core';
 import TradingScoreboard from './TradingScoreboard';
 import { ITradingScoreboardProps } from './types';
@@ -135,7 +137,7 @@ OneLine.args = {
   ],
 };
 
-export const BoardWithCustomComponent: StoryObj<typeof TradingScoreboard> = (
+export const WithCustomComponent: StoryObj<typeof TradingScoreboard> = (
   args: ITradingScoreboardProps,
 ) => {
   return (
@@ -168,7 +170,7 @@ export const BoardWithCustomComponent: StoryObj<typeof TradingScoreboard> = (
   );
 };
 
-BoardWithCustomComponent.args = {
+WithCustomComponent.args = {
   itemsPerRow: 7,
   items: [
     {
@@ -203,6 +205,75 @@ BoardWithCustomComponent.args = {
     {
       value: '15',
       title: 'Errors',
+    },
+  ],
+};
+
+export const WithLink: StoryObj<typeof TradingScoreboard> = (
+  args: ITradingScoreboardProps,
+) => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={'/*'}
+          element={
+            <TradingScoreboard
+              items={args.items}
+              itemsPerRow={args.itemsPerRow}
+              css={css`
+                gap: 4px;
+              `}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+WithLink.args = {
+  itemsPerRow: 7,
+  items: [
+    {
+      value: '16',
+      title: 'Exchanges',
+      link: '/Exchanges',
+    },
+    {
+      value: '6',
+      title: 'Accounts',
+      link: '/Accounts',
+    },
+    {
+      value: '62',
+      title: 'Orders',
+      link: '/Orders',
+    },
+    {
+      value: '500.025',
+      unit: 'USD',
+      title: 'Turnover',
+      link: '/Turnover',
+    },
+    {
+      value: '340',
+      unit: 'USD',
+      title: 'PNL',
+      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
+      link: '/PNL',
+    },
+    {
+      value: '25',
+      unit: '%',
+      title: 'ROI',
+      icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
+      link: '/ROI',
+    },
+    {
+      value: '15',
+      title: 'Errors',
+      link: '/Errors',
     },
   ],
 };

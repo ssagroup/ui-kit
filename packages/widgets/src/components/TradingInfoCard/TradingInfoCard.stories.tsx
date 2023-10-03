@@ -1,8 +1,9 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Icon } from '@ssa-ui-kit/core';
 import TradingInfoCard from './TradingInfoCard';
 import { ITradingInfoCardProps } from './types';
-import { Icon } from '@ssa-ui-kit/core';
 
 export default {
   title: 'Widgets/TradingInfoCard',
@@ -33,14 +34,23 @@ export const WithLink: StoryObj<typeof TradingInfoCard> = (
   args: ITradingInfoCardProps,
 ) => {
   return (
-    <TradingInfoCard
-      value={args.value}
-      unit={args.unit}
-      title={args.title}
-      icon={args.icon}
-      onClick={() => alert('clicked!')}
-      link={'/'}
-    />
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            <TradingInfoCard
+              value={args.value}
+              unit={args.unit}
+              title={args.title}
+              icon={args.icon}
+              onClick={() => alert('clicked!')}
+              link={'/'}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

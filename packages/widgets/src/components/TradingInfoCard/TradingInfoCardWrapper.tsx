@@ -1,11 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Theme, css } from '@emotion/react';
 import { CardBase } from '@ssa-ui-kit/core';
 import { ITradingInfoCardWrapperProps } from './types';
 
-const LinkCard = CardBase.withComponent('a');
-
 const infoCardWrapper = (theme: Theme) => css`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   width: max-content;
   min-width: 100%;
@@ -15,12 +17,27 @@ const infoCardWrapper = (theme: Theme) => css`
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
+  box-shadow: none;
   user-select: none;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
+    content: '';
+  }
 
   &:active {
     background: ${theme.colors.white};
-    box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow24};
+
+    &::before {
+      border-radius: 6px;
+      box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow24};
+    }
   }
 `;
 
@@ -32,9 +49,9 @@ const TradingInfoCardWrapper = ({
   return (
     <React.Fragment>
       {link ? (
-        <LinkCard href={link} css={infoCardWrapper}>
+        <Link to={link} css={infoCardWrapper}>
           {children}
-        </LinkCard>
+        </Link>
       ) : (
         <CardBase
           role={onClick ? 'button' : 'region'}

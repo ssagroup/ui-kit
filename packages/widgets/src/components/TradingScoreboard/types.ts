@@ -1,18 +1,18 @@
 import { ITradingInfoCardProps } from '@components/TradingInfoCard/types';
 import { SerializedStyles } from '@emotion/react';
 
-type TradingCard = Pick<
+type TradingScoreboardType = Pick<
   ITradingInfoCardProps,
-  'value' | 'unit' | 'title' | 'icon'
+  'value' | 'unit' | 'title' | 'icon' | 'link'
 >;
 
 export interface ITradingScoreboardProps {
   itemsPerRow: number;
-  items: Array<TradingCard>;
-  onClick?: (item: TradingCard) => void;
+  items: Array<TradingScoreboardType>;
+  onClick?: (item: TradingScoreboardType) => void;
   renderCard?: (
-    item: ITradingInfoCardProps,
-    onClick?: (item: TradingCard) => void,
+    item: TradingScoreboardType,
+    onClick?: (item: TradingScoreboardType) => void,
   ) => React.ReactNode;
   css?: SerializedStyles;
 }

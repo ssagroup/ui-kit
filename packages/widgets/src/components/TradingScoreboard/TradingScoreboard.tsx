@@ -22,6 +22,7 @@ const TradingScoreboard = ({
                   unit={item.unit}
                   title={item.title}
                   icon={item.icon}
+                  link={item.link}
                   onClick={() => {
                     if (typeof onClick === 'function') {
                       onClick(item);
