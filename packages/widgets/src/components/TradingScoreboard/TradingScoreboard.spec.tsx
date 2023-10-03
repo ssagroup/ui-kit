@@ -89,12 +89,12 @@ describe('TradingScoreboard', () => {
   });
 
   it('Renders with Render Prop', () => {
-    const { getByRole } = render(
+    const { getAllByTestId } = render(
       <TradingScoreboard
         itemsPerRow={5}
         items={itemsArr}
         renderCard={(item) => (
-          <Button>
+          <Button data-testid="trading-board">
             <span>
               {item.value} {item.unit}
             </span>
@@ -103,9 +103,11 @@ describe('TradingScoreboard', () => {
         )}
       />,
     );
+    const itemsEls = getAllByTestId('trading-board');
+    expect(itemsEls.length).toBe(itemsArr.length);
 
-    for (const item of itemsArr) {
-      getByRole('button', { name: new RegExp(item.title, 'i') });
+    for (let i = 0; i < itemsEls.length; i++) {
+      expect(itemsEls[i]).toHaveTextContent(itemsArr[i].value);
     }
   });
 
@@ -153,13 +155,13 @@ describe('TradingScoreboard', () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
 
-    const { getByRole } = render(
+    const { getAllByTestId } = render(
       <TradingScoreboard
         itemsPerRow={5}
         items={itemsArr}
         onClick={mockOnClick}
         renderCard={(item, onClick) => (
-          <Button onClick={() => onClick?.(item)}>
+          <Button data-testid="trading-board" onClick={() => onClick?.(item)}>
             <span>
               {item.value} {item.unit}
             </span>
@@ -171,12 +173,12 @@ describe('TradingScoreboard', () => {
       />,
     );
 
-    for (const item of itemsArr) {
-      const buttonEl = getByRole('button', {
-        name: new RegExp(item.title, 'i'),
-      });
-      await user.click(buttonEl);
-      expect(mockOnClick).toHaveBeenCalledWith(item);
+    const itemsEls = getAllByTestId('trading-board');
+    expect(itemsEls.length).toBe(itemsArr.length);
+
+    for (let i = 0; i < itemsEls.length; i++) {
+      await user.click(itemsEls[i]);
+      expect(mockOnClick).toHaveBeenCalledWith(itemsArr[i]);
     }
 
     expect(mockOnClick).toBeCalledTimes(itemsArr.length);

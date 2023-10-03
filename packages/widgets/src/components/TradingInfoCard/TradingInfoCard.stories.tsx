@@ -44,7 +44,6 @@ export const WithLink: StoryObj<typeof TradingInfoCard> = (
               unit={args.unit}
               title={args.title}
               icon={args.icon}
-              onClick={() => alert('clicked!')}
               link={'/'}
             />
           }
