@@ -15,6 +15,7 @@ export interface AccordionInfo {
   title: string;
   isOpened: boolean;
   ariaControls: string;
+  isDisabled?: boolean;
   items: SingleItem[];
 }
 

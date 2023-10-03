@@ -1,11 +1,4 @@
 import {
-  BaseSyntheticEvent,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
-import { PathValue, assocPath, dissocPath, path } from '@ssa-ui-kit/utils';
-import {
   AccordionTitle,
   AccordionGroup,
   AccordionGroupContextProvider,
@@ -26,6 +19,7 @@ import {
   TableFiltersButtons,
 } from '.';
 import { CheckboxData, TableFiltersView } from './types';
+import { useTableData } from './hooks/useTableData';
 
 export const TableFilters = ({
   handleCancel,
@@ -34,63 +28,20 @@ export const TableFilters = ({
   initialState = {} as CheckboxData,
   data,
 }: TableFiltersView) => {
-  const [checkboxData, setCheckboxData] = useState(initialState);
-  const [persistentData, setPersistentData] = useState({});
-  const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
-  useLayoutEffect(() => {
-    let counter = 0;
-    Object.keys(checkboxData).forEach((groupName) => {
-      const currentItems = checkboxData[groupName];
-      let elementChecked = false;
-      Object.keys(currentItems).forEach((itemName) => {
-        const currentValue = currentItems[itemName];
-        if (elementChecked) {
-          return;
-        }
-        if (currentValue) {
-          elementChecked = true;
-          counter++;
-        }
-      });
-    });
-    setSelectedGroupsCount(counter);
-  }, [checkboxData]);
-  useEffect(() => {
-    let notChangedData = {} as CheckboxData;
-    data.forEach((groupInfo) => {
-      groupInfo.items.forEach((itemInfo) => {
-        const initialStateValue = path(itemInfo.content.statePath)(
-          initialState,
-        );
-        if (itemInfo.isDisabled && initialStateValue !== undefined) {
-          notChangedData = assocPath<CheckboxData>(
-            itemInfo.content.statePath,
-            initialStateValue as PathValue,
-          )(notChangedData);
-        }
-      });
-    });
-    setPersistentData(notChangedData);
-  }, [data]);
-  const handleCheckboxChange = (path: string[]) => (newState: boolean) => {
-    if (newState) {
-      setCheckboxData(assocPath(path, newState));
-    } else {
-      setCheckboxData(dissocPath(path));
-    }
-  };
-  const onSubmit = (event: BaseSyntheticEvent) => {
-    event.preventDefault();
-    handleSubmit?.(checkboxData);
-  };
-  const onReset = () => {
-    setCheckboxData(() => initialState);
-    handleCancel?.();
-  };
-  const onClear = () => {
-    setCheckboxData(persistentData);
-    handleClear?.();
-  };
+  const {
+    checkboxData,
+    selectedGroupsCount,
+    handleCheckboxChange,
+    onClear,
+    onReset,
+    onSubmit,
+  } = useTableData({
+    data,
+    initialState,
+    handleCancel,
+    handleSubmit,
+    handleClear,
+  });
   return (
     <Popover>
       <TableFilterTriggerWithNotification count={selectedGroupsCount}>

@@ -36,6 +36,7 @@ export const mockData: AccordionInfo[] = [
     title: 'Pairs',
     isOpened: false,
     ariaControls: 'pairs-panel',
+    isDisabled: true,
     items: [
       {
         key: `btcfdusd`,
@@ -53,6 +54,7 @@ export const mockData: AccordionInfo[] = [
     title: 'Exchange',
     isOpened: false,
     ariaControls: 'exchange-panel',
+    isDisabled: true,
     items: [
       {
         key: 'binance',

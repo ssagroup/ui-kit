@@ -1,3 +1,7 @@
+import {
+  mockData,
+  mockInitialState,
+} from '@components/TableFilters/stories/mockData';
 import { Filters } from '../Filters';
 
 export const StoryComponent = () => {
@@ -8,7 +12,7 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Filters />
+      <Filters data={mockData} initialState={mockInitialState} />
     </div>
   );
 };

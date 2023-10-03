@@ -8,7 +8,7 @@ interface IDropdownItemProps extends CommonProps {
   isActive?: boolean;
   isMultiple?: boolean;
   noHover?: boolean;
-  value?: string | number;
+  value?: string | number | boolean;
   label?: string | number;
   children?: React.ReactNode;
 }

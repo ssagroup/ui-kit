@@ -134,7 +134,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
 
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
-  }, []);
+  }, [selectedItems]);
 
   const contextValue: DropdownContextType<IDropdownOption> = React.useMemo(
     () => ({ onChange, allItems: optionsWithKey, isMultiple }),

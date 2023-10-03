@@ -1,49 +1,64 @@
 import { DropdownOption, MultipleDropdown, Wrapper } from '@ssa-ui-kit/core';
-import { useOnScreen, useRefs } from '@ssa-ui-kit/hooks';
+import { useRefs, useWindowSize } from '@ssa-ui-kit/hooks';
+import { propOr } from '@ssa-ui-kit/utils';
 import { TableFilters } from '@components/TableFilters';
-import { mockData, mockInitialState, mockItems } from './stories/mockData';
-import { CheckboxData } from '@components/TableFilters/types';
-import { useEffect } from 'react';
+import {
+  mockData,
+  mockInitialState,
+} from '@components/TableFilters/stories/mockData';
+import { CheckboxData, TableFiltersView } from '@components/TableFilters/types';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useTableData } from '@components/TableFilters/hooks/useTableData';
 
-// TODO: pass setRef and call it internally to set ref locally
-const MultipleDropdownObserver = ({ refs, ...rest }: any) => {
-  const isIntersecting = true; //useOnScreen(currentRef);
-  /*
-  setRef() => use local ref for useOnScreen!!!
-  ...
-  {...rest} setRef={setRef}...
-  */
-  console.log('>>>MultipleDropdownObserver refs', refs);
-  useEffect(() => {
-    console.log('>>>isIntersecting', rest.key);
-  }, [isIntersecting]);
-  return <MultipleDropdown {...rest} />;
-};
-
-export const Filters = () => {
+export const Filters = ({
+  initialState = {} as CheckboxData,
+  data,
+}: Pick<TableFiltersView, 'initialState' | 'data'>) => {
   const onSubmit = (checkboxData: CheckboxData) => {
     console.log('>>>onSubmit', checkboxData);
   };
 
   const { refsByKey, setRef } = useRefs();
 
+  const { selectedItemsByGroup } = useTableData({
+    data,
+    initialState,
+  });
+
   useEffect(() => {
     const refs = Object.values(refsByKey).filter(Boolean);
     console.log('>>>Refs', {
       refs,
       refsByKey,
+      selectedItemsByGroup,
     });
   }, [refsByKey]);
+
+  const { width } = useWindowSize();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    Object.values(refsByKey)
+      .filter(Boolean)
+      .map((element) => {
+        if (element && wrapperRef.current) {
+          element.style.visibility =
+            element.offsetLeft < wrapperRef.current.offsetLeft
+              ? 'hidden'
+              : 'visible';
+        }
+      });
+  }, [width]);
 
   return (
     <div
       css={{
-        width: 800,
-        // overflow: 'hidden',
+        width: 300,
         display: 'flex',
         justifyContent: 'right',
         flex: 'auto',
-      }}>
+      }}
+      ref={wrapperRef}>
       <Wrapper
         css={{
           justifyContent: 'end',
@@ -53,26 +68,27 @@ export const Filters = () => {
             marginRight: 10,
           },
         }}>
-        {Array.from({ length: 10 }, (_, key) => key + 1).map((value) => (
-          <MultipleDropdownObserver
-            key={`multiple-dropdown-${value}`}
+        {data.map((accordionInfo) => (
+          <MultipleDropdown
+            key={accordionInfo.id}
             showPlaceholder={false}
-            label={`Dropdown #${value + 1}`}
+            label={accordionInfo.title}
+            isDisabled={accordionInfo.isDisabled}
             setRef={(element: HTMLDivElement) => {
-              setRef(element, `multiple-dropdown-${value}`);
+              setRef(element, accordionInfo.title);
             }}
-            css={{
-              minWidth: 'unset',
-            }}
-            refs={refsByKey}>
-            {mockItems.map((item) => (
+            selectedItems={propOr([], accordionInfo.id)(selectedItemsByGroup)}>
+            {accordionInfo.items.map((item) => (
               <DropdownOption
-                key={`${item.value}${value + 1}`}
-                value={`${item.value}${value + 1}`}>
-                {item.label}
+                key={`${accordionInfo.id}${item.name}`}
+                value={item.name}
+                // isDisabled={item.isDisabled}
+                // name={item.name}
+              >
+                {item.content.text}
               </DropdownOption>
             ))}
-          </MultipleDropdownObserver>
+          </MultipleDropdown>
         ))}
       </Wrapper>
       <Wrapper css={{ width: 110 }}>
