@@ -153,6 +153,7 @@ export const WithCustomComponent: StoryObj<typeof TradingScoreboard> = (
             width: '100%',
             height: 'auto',
             padding: '10px',
+            boxShadow: 'none',
           }}
           variant="secondary"
           onClick={() => onClick?.(item)}>
