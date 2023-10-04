@@ -6,6 +6,7 @@ import {
   purple,
   blue,
   blueLight,
+  yellowLight,
 } from '@styles/global';
 
 import { ProgressBarProps } from './types';
@@ -19,6 +20,7 @@ const mapColors: MainColors = {
   purple,
   blue,
   blueLight,
+  yellowLight,
 };
 
 export const ProgressBar = ({

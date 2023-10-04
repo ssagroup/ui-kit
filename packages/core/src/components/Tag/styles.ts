@@ -23,6 +23,9 @@ export const blueLightBorder = css`
 export const blueBorder = css`
   border: 1px solid ${theme.colors.blue};
 `;
+export const yellowLightBorder = css`
+  border: 1px solid ${theme.colors.yellowWarm};
+`;
 
 export const pink = (theme: Theme) => css`
   color: ${theme.colors.pink};
@@ -46,6 +49,18 @@ export const yellow = (theme: Theme) => css`
     ${theme.colors.yellowLighter20} 100%
   );
   box-shadow: -4px 4px 10px ${theme.colors.yellowLighter40};
+`;
+
+export const yellowLight = (theme: Theme) => css`
+  color: ${theme.colors.yellowLighter};
+
+  background-color: ${theme.colors.yellowLighter20};
+  background: linear-gradient(
+    90deg,
+    ${theme.colors.yellowLighter20} 0%,
+    ${theme.colors.yellowWarm20} 100%
+  );
+  box-shadow: -4px 4px 10px ${theme.colors.yellowWarm40};
 `;
 
 export const green = (theme: Theme) => css`
