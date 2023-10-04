@@ -22,7 +22,7 @@ const gotoPage = () => {
   );
 };
 
-test('Widgets: HeartRate item should be opened correctly', async () => {
+test('Widgets: HeartRate renders correctly', async () => {
   await gotoPage();
   await expect(page.getByRole('heading', { name: 'Heart Rate' })).toBeVisible();
 });
