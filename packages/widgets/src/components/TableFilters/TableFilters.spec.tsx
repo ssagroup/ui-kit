@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/dom';
 import { StoryComponent } from './stories/StoryComponent';
 import { TableFilters } from '.';
-import { mockData, mockInitialState } from './stories/mockData';
+import { mockData } from './stories/mockData';
 
 describe('TableFilters', () => {
   it('Should be correctly rendered', () => {
@@ -77,8 +77,7 @@ describe('TableFilters', () => {
           justifyContent: 'center',
         }}>
         <TableFilters
-          data={mockData}
-          initialState={mockInitialState}
+          initialState={mockData}
           handleSubmit={() => {
             console.log('>>>Submit: completed');
           }}
@@ -136,7 +135,7 @@ describe('TableFilters', () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <TableFilters data={mockData} initialState={mockInitialState} />
+        <TableFilters initialState={mockData} />
       </div>,
     );
 

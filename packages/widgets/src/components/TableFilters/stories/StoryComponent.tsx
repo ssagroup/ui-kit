@@ -1,9 +1,9 @@
-import { CheckboxData } from '../types';
+import { TableFilterConfig } from '../types';
 import { TableFilters } from '../TableFilters';
-import { mockData, mockInitialState } from './mockData';
+import { mockData } from './mockData';
 
 export const StoryComponent = () => {
-  const onSubmit = (checkboxData: CheckboxData) => {
+  const onSubmit = (checkboxData: TableFilterConfig) => {
     console.log('>>>onSubmit', checkboxData);
   };
   return (
@@ -13,11 +13,7 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <TableFilters
-        data={mockData}
-        initialState={mockInitialState}
-        handleSubmit={onSubmit}
-      />
+      <TableFilters handleSubmit={onSubmit} initialState={mockData} />
     </div>
   );
 };

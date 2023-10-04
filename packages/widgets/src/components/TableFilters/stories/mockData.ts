@@ -1,86 +1,114 @@
-import { AccordionInfo, CheckboxData } from '../types';
+import { TableFilterConfig } from '../types';
 
-const getName = (data: string) => data.toLowerCase().replaceAll('-', '');
-
-export const mockData: AccordionInfo[] = [
-  {
+export const mockData: TableFilterConfig = {
+  strategy: {
     id: 'strategy',
     title: 'Strategy',
     isOpened: true,
     ariaControls: 'strategy-panel',
-    items: [1, 2, 3, 4, 5].map((number) => ({
-      key: `strategy-checkbox${number}`,
-      name: `checkbox${number}`,
-      content: {
-        statePath: ['strategy', `checkbox${number}`],
-        text: `checkbox${number}`,
+    selectedItems: ['checkbox1', 'checkbox4'],
+    items: {
+      checkbox1: {
+        key: 'strategy-checkbox1',
+        name: 'checkbox1',
+        content: {
+          statePath: ['strategy', 'items', 'checkbox1'],
+          text: 'checkbox1',
+        },
       },
-    })),
+      checkbox2: {
+        key: 'strategy-checkbox2',
+        name: 'checkbox2',
+        content: {
+          statePath: ['strategy', 'items', 'checkbox2'],
+          text: 'checkbox2',
+        },
+      },
+      checkbox3: {
+        key: 'strategy-checkbox3',
+        name: 'checkbox3',
+        content: {
+          statePath: ['strategy', 'items', 'checkbox3'],
+          text: 'checkbox3',
+        },
+      },
+      checkbox4: {
+        key: 'strategy-checkbox4',
+        name: 'checkbox4',
+        content: {
+          statePath: ['strategy', 'items', 'checkbox4'],
+          text: 'checkbox4',
+        },
+      },
+      checkbox5: {
+        key: 'strategy-checkbox5',
+        name: 'checkbox5',
+        content: {
+          statePath: ['strategy', 'items', 'checkbox5'],
+          text: 'checkbox5',
+        },
+      },
+    },
   },
-  {
+  status: {
     id: 'status',
     title: 'Status',
     isOpened: false,
     ariaControls: 'status-panel',
-    items: ['Running', 'Stopped'].map((status) => ({
-      key: `status-checkbox-${status}`,
-      name: getName(status),
-      content: {
-        statePath: ['status', status.toLowerCase()],
-        text: status,
+    selectedItems: ['running'],
+    items: {
+      running: {
+        key: 'status-checkbox-running',
+        name: 'running',
+        content: {
+          statePath: ['status', 'items', 'running'],
+          text: 'Running',
+        },
       },
-    })),
+      stopped: {
+        key: 'status-checkbox-stopped',
+        name: 'stopped',
+        content: {
+          statePath: ['status', 'items', 'stopped'],
+          text: 'Stopped',
+        },
+      },
+    },
   },
-  {
+  pairs: {
     id: 'pairs',
     title: 'Pairs',
     isOpened: false,
     ariaControls: 'pairs-panel',
-    isDisabled: true,
-    items: [
-      {
-        key: `btcfdusd`,
+    selectedItems: ['btcfdusd'],
+    items: {
+      btcfdusd: {
+        key: 'btcfdusd',
         name: 'btcfdusd',
         isDisabled: true,
         content: {
-          statePath: ['pairs', 'btcfdusd'],
+          statePath: ['pairs', 'items', 'btcfdusd'],
           text: 'BTC-FDUSD',
         },
       },
-    ],
+    },
   },
-  {
+  exchange: {
     id: 'exchange',
     title: 'Exchange',
     isOpened: false,
     ariaControls: 'exchange-panel',
-    isDisabled: true,
-    items: [
-      {
+    selectedItems: ['binance'],
+    items: {
+      binance: {
         key: 'binance',
         name: 'binance',
         isDisabled: true,
         content: {
-          statePath: ['exchange', 'binance'],
+          statePath: ['exchange', 'items', 'binance'],
           text: 'Binance',
         },
       },
-    ],
-  },
-];
-
-export const mockInitialState: CheckboxData = {
-  strategy: {
-    checkbox1: true,
-    checkbox4: true,
-  },
-  status: {
-    running: true,
-  },
-  pairs: {
-    btcfdusd: true,
-  },
-  exchange: {
-    binance: true,
+    },
   },
 };

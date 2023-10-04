@@ -35,9 +35,10 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
 
 const DropdownOptionButton = styled.div<{
   checked?: boolean;
-}>(({ theme }) => ({
+  isDisabled?: boolean;
+}>(({ theme, isDisabled }) => ({
   display: 'block',
-  cursor: 'pointer',
+  cursor: isDisabled ? 'default' : 'pointer',
   font: 'inherit',
   fontSize: '0.813rem',
   outline: 'inherit',
@@ -59,13 +60,6 @@ const DropdownOptionButton = styled.div<{
 
   '& label': {
     margin: '0 16px 0 0',
-    '& input:not(:checked, :indeterminate) + div::before': {
-      border: `1.5px solid ${theme.colors.greyDropdownMain}`,
-    },
-    [`& input:checked + div::before,
-    & input:indeterminate + div::before`]: {
-      background: theme.colors.blueNotification,
-    },
     '& input + div': {
       borderRadius: '2px',
       '&::before': {
@@ -92,9 +86,11 @@ const MultipleDropdownOptions = ({
 }: IDropdownItemsListProps) => {
   const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
 
-  const toggleItem = (value: string | number) => {
-    const item = allItems[value];
-    onChange(item);
+  const toggleItem = (value: string | number, isDisabled: boolean) => {
+    if (!isDisabled) {
+      const item = allItems[value];
+      onChange(item);
+    }
   };
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
@@ -102,6 +98,7 @@ const MultipleDropdownOptions = ({
   const options = (childrenArray as React.ReactElement[]).map((child) => {
     const element = allItems[child.props.value];
     const isActive = Boolean(element?.isSelected);
+    const isDisabled = Boolean(element?.isDisabled);
 
     return React.cloneElement(
       child,
@@ -111,15 +108,19 @@ const MultipleDropdownOptions = ({
         isMultiple,
         'aria-selected': isActive,
         onClick: () => {
-          toggleItem(child.props.value);
+          toggleItem(child.props.value, isDisabled);
         },
       },
-      <DropdownOptionButton checked={isActive} role="button">
+      <DropdownOptionButton
+        checked={isActive}
+        isDisabled={isDisabled}
+        role="button">
         {isMultiple && (
           <Checkbox
             initialState={isActive}
             externalState={isActive}
-            onChange={toggleItem.bind(null, child.props.value)}
+            isDisabled={isDisabled}
+            onChange={toggleItem.bind(null, child.props.value, isDisabled)}
             css={{
               margin: 0,
             }}

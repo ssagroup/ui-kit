@@ -24,6 +24,7 @@ type Colors = MakeColors<
     'greyDarker14',
     'greyDark',
     'greyDisabled',
+    'greyDisabledCheckbox',
     'greyButtonGradient',
     'greyButtonGradientLight',
     'greyBackground',

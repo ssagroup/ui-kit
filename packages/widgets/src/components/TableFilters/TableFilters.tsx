@@ -18,30 +18,29 @@ import {
   TableFiltersAccordionContent,
   TableFiltersButtons,
 } from '.';
-import { CheckboxData, TableFiltersView } from './types';
+import { FiltersNames, TableFiltersView } from './types';
 import { useTableData } from './hooks/useTableData';
+import { useTableDataState } from './hooks/useTableDataState';
 
 export const TableFilters = ({
   handleCancel,
   handleSubmit,
   handleClear,
-  initialState = {} as CheckboxData,
-  data,
+  initialState,
 }: TableFiltersView) => {
   const {
-    checkboxData,
     selectedGroupsCount,
     handleCheckboxChange,
     onClear,
     onReset,
     onSubmit,
   } = useTableData({
-    data,
-    initialState,
     handleCancel,
     handleSubmit,
     handleClear,
+    initialState,
   });
+  const [checkboxData] = useTableDataState();
   return (
     <Popover>
       <TableFilterTriggerWithNotification count={selectedGroupsCount}>
@@ -59,43 +58,49 @@ export const TableFilters = ({
           <PopoverDescription variant="body1">
             <AccordionGroupContextProvider>
               <AccordionGroup size="medium">
-                {data.map((accordionInfo) => (
-                  <TableFiltersAccordion
-                    key={accordionInfo.id}
-                    id={accordionInfo.id}
-                    title={accordionInfo.title}
-                    isOpened={accordionInfo.isOpened}
-                    ariaControls={accordionInfo.ariaControls}
-                    renderContent={(props) => (
-                      <TableFiltersAccordionContent {...props}>
-                        {accordionInfo.items.map((info) => {
-                          const extraProps: Partial<ICheckboxProps> = {};
-                          if (info.isDisabled) {
-                            extraProps.initialState =
-                              !!checkboxData?.[accordionInfo.id]?.[info.name];
-                          } else {
-                            extraProps.externalState =
-                              !!checkboxData?.[accordionInfo.id]?.[info.name];
-                          }
-                          return (
-                            <TableFilterCheckbox
-                              key={info.key}
-                              name={info.name}
-                              id={info.key}
-                              onChange={handleCheckboxChange(
-                                info.content.statePath,
-                              )}
-                              text={info.content.text}
-                              isDisabled={info.isDisabled}
-                              {...extraProps}
-                            />
-                          );
-                        })}
-                      </TableFiltersAccordionContent>
-                    )}
-                    renderTitle={AccordionTitle}
-                  />
-                ))}
+                {Object.keys(checkboxData).map((groupName) => {
+                  const accordionInfo = checkboxData[groupName as FiltersNames];
+                  const selectedItems = accordionInfo['selectedItemsDraft'];
+                  return (
+                    <TableFiltersAccordion
+                      key={accordionInfo.id}
+                      id={accordionInfo.id}
+                      title={accordionInfo.title}
+                      isOpened={accordionInfo.isOpened}
+                      ariaControls={accordionInfo.ariaControls}
+                      renderContent={(props) => (
+                        <TableFiltersAccordionContent {...props}>
+                          {Object.keys(accordionInfo.items).map((itemKey) => {
+                            const info = accordionInfo.items[itemKey];
+                            const extraProps: Partial<ICheckboxProps> = {};
+                            const checked = !!selectedItems?.includes(
+                              info.name,
+                            );
+                            if (info.isDisabled) {
+                              extraProps.initialState = checked;
+                            } else {
+                              extraProps.externalState = checked;
+                            }
+                            return (
+                              <TableFilterCheckbox
+                                key={info.key}
+                                name={info.name}
+                                id={info.key}
+                                onChange={handleCheckboxChange(
+                                  info.content.statePath,
+                                )}
+                                text={info.content.text}
+                                isDisabled={info.isDisabled}
+                                {...extraProps}
+                              />
+                            );
+                          })}
+                        </TableFiltersAccordionContent>
+                      )}
+                      renderTitle={AccordionTitle}
+                    />
+                  );
+                })}
               </AccordionGroup>
             </AccordionGroupContextProvider>
           </PopoverDescription>
