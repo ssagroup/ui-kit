@@ -1,8 +1,9 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Icon } from '@ssa-ui-kit/core';
 import TradingInfoCard from './TradingInfoCard';
 import { ITradingInfoCardProps } from './types';
-import { Icon } from '@ssa-ui-kit/core';
 
 export default {
   title: 'Widgets/TradingInfoCard',
@@ -18,12 +19,41 @@ export const Default: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
+      onClick={() => alert('clicked!')}
     />
   );
 };
 
 Default.args = {
+  value: '500',
+  unit: 'USD',
+  title: 'Turnover',
+};
+
+export const WithLink: StoryObj<typeof TradingInfoCard> = (
+  args: ITradingInfoCardProps,
+) => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            <TradingInfoCard
+              value={args.value}
+              unit={args.unit}
+              title={args.title}
+              icon={args.icon}
+              link={'/'}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+WithLink.args = {
   value: '500',
   unit: 'USD',
   title: 'Turnover',
@@ -38,7 +68,7 @@ export const WithTooltip: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
+      onClick={() => alert('clicked!')}
     />
   );
 };
@@ -58,7 +88,7 @@ export const WithIcon: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
+      onClick={() => alert('clicked!')}
     />
   );
 };
@@ -79,7 +109,6 @@ export const WithoutUnit: StoryObj<typeof TradingInfoCard> = (
       unit={args.unit}
       title={args.title}
       icon={args.icon}
-      onClick={() => console.log('object')}
     />
   );
 };
