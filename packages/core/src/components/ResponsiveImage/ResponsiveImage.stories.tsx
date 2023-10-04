@@ -22,6 +22,7 @@ export const Default: StoryObj<typeof ResponsiveImage> = () => {
         tag
       </Typography>
       <ResponsiveImage
+        className="lostpixel-ignore"
         srcSet="https://placehold.co/64x64 64w, https://placehold.co/48x48 48w"
         sizes="(min-width: 1440px) 64px, 48px"
         src="https://placehold.co/48x48"

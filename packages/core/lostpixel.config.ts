@@ -12,6 +12,8 @@ export const config: Partial<CustomProjectConfig> & {
   storybookShots: {
     storybookUrl: './packages/core/storybook-static',
     breakpoints,
+    // https://docs.lost-pixel.com/user-docs/api-reference/mask
+    mask: ['.lostpixel-ignore'],
   },
   // @cspell:disable-next-line
   lostPixelProjectId: 'clldrwk2t4dkena0e4nu2rikp',
