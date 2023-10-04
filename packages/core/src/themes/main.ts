@@ -52,6 +52,7 @@ const main: Theme = {
     pinkLighter40: 'rgba(249, 153, 144, 0.4)', // #f99990
     pinkShadow40: 'rgba(236, 119, 91, 0.4)', // #ec775b
     yellow: 'rgba(237, 153, 93, 1)', // #ed995d
+    yellowWarm: 'rgba(237, 223, 93, 1)', // #eddf5d
     yellow20: 'rgba(237, 153, 93, 0.2)', // #ed995d
     yellowLighter: 'rgba(237, 186, 93, 1)', // #edba5d
     yellowLighter20: 'rgba(237, 186, 93, 0.2)', // #edba5d

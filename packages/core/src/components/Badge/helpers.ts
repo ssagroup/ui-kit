@@ -1,3 +1,4 @@
+import { IMapIcons } from '@components/Icon/types';
 import styled from '@emotion/styled';
 
 export const sizes: Array<keyof MainSizes> = ['small', 'medium', 'large'];
@@ -9,7 +10,24 @@ export const colors: Array<keyof MainColors> = [
   'pink',
   'turquoise',
   'yellow',
+  'yellowLight',
 ];
+
+export const icons: Array<{ color: keyof MainColors; icon: keyof IMapIcons }> =
+  [
+    {
+      color: 'blueLight',
+      icon: 'information',
+    },
+    {
+      color: 'yellowLight',
+      icon: 'warning',
+    },
+    {
+      color: 'pink',
+      icon: 'attention',
+    },
+  ];
 
 export const HeaderTitle = styled.span`
   text-align: center;

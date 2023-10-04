@@ -59,6 +59,7 @@ type Colors = MakeColors<
     'yellow',
     'yellow20',
     'yellowLighter',
+    'yellowWarm',
     'yellowLighter20',
     'yellowLighter40',
     'turquoise',

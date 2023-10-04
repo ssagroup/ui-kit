@@ -1,8 +1,10 @@
 import React from 'react';
 import type { Meta } from '@storybook/react';
-import { HeaderTitle, GridWrapper, colors, sizes } from './helpers';
+import { useTheme } from '@emotion/react';
+import { HeaderTitle, GridWrapper, colors, sizes, icons } from './helpers';
 
 import Badge from './index';
+import Icon from '@components/Icon';
 
 export default {
   title: 'Components/Badge',
@@ -24,6 +26,7 @@ export default {
       options: [
         'pink',
         'yellow',
+        'yellowLight',
         'green',
         'turquoise',
         'purple',
@@ -90,6 +93,47 @@ AllStates.args = {
 };
 
 AllStates.argTypes = {
+  color: {
+    control: false,
+  },
+  size: {
+    control: false,
+  },
+  children: {
+    control: false,
+  },
+};
+
+export const WithIcon = () => {
+  const theme = useTheme();
+  return (
+    <React.Fragment>
+      {icons.map((iconItem, index) => (
+        <GridWrapper key={index} css={{ marginBottom: '20px' }}>
+          <HeaderTitle css={{ width: 80 }}>{iconItem.icon}</HeaderTitle>
+          <Badge
+            color={iconItem.color}
+            size="small"
+            css={{
+              display: 'flex',
+              height: 'auto',
+              padding: '11px',
+              borderRadius: '12px',
+              boxShadow: `-4px 12px 14px 0px #DAE1E1`,
+            }}>
+            <Icon name={iconItem.icon} color={theme.colors.white} size={20} />
+          </Badge>
+        </GridWrapper>
+      ))}
+    </React.Fragment>
+  );
+};
+
+WithIcon.args = {
+  name: 'With Icon',
+};
+
+WithIcon.argTypes = {
   color: {
     control: false,
   },
