@@ -50,6 +50,7 @@ test('[900] Widgets: NavBar should be visible after icon clicking', async () => 
 test('[390] Widgets: NavBar should be visible after icon clicking', async () => {
   await page.setViewportSize(SCREEN_SIZES[390]);
   await gotoPage();
+  await page.locator('#storybook-root div').nth(1).click();
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w390px].png`,
   });
