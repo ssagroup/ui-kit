@@ -57,6 +57,9 @@ const main: Theme = {
     yellowLighter: 'rgba(237, 186, 93, 1)', // #edba5d
     yellowLighter20: 'rgba(237, 186, 93, 0.2)', // #edba5d
     yellowLighter40: 'rgba(237, 186, 93, 0.4)', // #edba5d
+    yellowWarm: 'rgba(237, 223, 93, 1)', // #eddf5d
+    yellowWarm20: 'rgba(237, 223, 93, 0.2)', // #eddf5d
+    yellowWarm40: 'rgba(237, 223, 93, 0.4)', // #eddf5d
     turquoise: 'rgba(65, 187, 187, 1)', // #41bbbb
     turquoise20: 'rgba(65, 187, 187, 0.2)', // #41bbbb
     turquoiseShadow40: 'rgba(143, 207, 207, 0.4)', // #8fcfcf

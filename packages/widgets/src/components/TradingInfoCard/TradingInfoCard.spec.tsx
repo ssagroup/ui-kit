@@ -1,3 +1,4 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '../../../customTest';
 
@@ -94,5 +95,22 @@ describe('TradingInfoCard', () => {
 
     expect(mockOnClick).toBeCalledTimes(1);
     expect(button).toHaveAttribute('tabindex', '0');
+  });
+
+  it('Renders with link prop', () => {
+    const { getByRole } = render(
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/*"
+            element={
+              <TradingInfoCard value={'5000'} title={'Test'} link={'/'} />
+            }
+          />
+        </Routes>
+      </BrowserRouter>,
+    );
+
+    expect(getByRole('link')).toHaveAttribute('href', '/');
   });
 });

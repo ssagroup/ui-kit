@@ -20,7 +20,8 @@ export const ProgressCircleBase = styled.div<{
 
     filter: ${({ theme, color }) =>
       `drop-shadow(3px 5px 10px ${
-        theme.colors[`${color}Lighter40` as ColorsKeys]
+        theme.colors[`${color}Lighter40` as ColorsKeys] ||
+        theme.colors[color as ColorsKeys]
       })`};
   }
 

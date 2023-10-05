@@ -10,6 +10,7 @@ export interface MainSizes {
 export interface MainColors {
   pink: Interpolation<Theme>;
   yellow: Interpolation<Theme>;
+  yellowWarm: Interpolation<Theme>;
   green: Interpolation<Theme>;
   turquoise: Interpolation<Theme>;
   purple: Interpolation<Theme>;
