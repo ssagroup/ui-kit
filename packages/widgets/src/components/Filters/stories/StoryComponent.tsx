@@ -2,6 +2,9 @@ import { mockData } from '@components/TableFilters/stories/mockData';
 import { Filters } from '../Filters';
 
 export const StoryComponent = () => {
+  const onSubmit = (checkboxData: Record<string, string[]>) => {
+    console.log('>>>onSubmit', checkboxData);
+  };
   return (
     <div
       css={{
@@ -9,7 +12,7 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Filters initialState={mockData} />
+      <Filters handleSubmit={onSubmit} initialState={mockData} />
     </div>
   );
 };

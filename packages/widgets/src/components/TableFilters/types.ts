@@ -30,5 +30,5 @@ export interface TableFiltersView {
   setConfig?: (config: TableFilterConfig) => void;
   handleCancel?: () => void;
   handleClear?: () => void;
-  handleSubmit?: (checkboxData: TableFilterConfig) => void;
+  handleSubmit?: (data: Record<string, string[]>) => void;
 }

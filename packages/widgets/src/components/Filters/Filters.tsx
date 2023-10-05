@@ -1,4 +1,9 @@
-import { DropdownOption, MultipleDropdown, Wrapper } from '@ssa-ui-kit/core';
+import {
+  DropdownOption,
+  IDropdownOption,
+  MultipleDropdown,
+  Wrapper,
+} from '@ssa-ui-kit/core';
 import { useRefs, useWindowSize } from '@ssa-ui-kit/hooks';
 import { TableFilters } from '@components/TableFilters';
 import {
@@ -6,28 +11,72 @@ import {
   TableFilterConfig,
   TableFiltersView,
 } from '@components/TableFilters/types';
-import { useEffect, useLayoutEffect, useRef } from 'react';
-import { useTableDataState } from '@components/TableFilters/hooks/useTableDataState';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useTableData } from '@components/TableFilters/hooks/useTableData';
-import { propOr } from '@ssa-ui-kit/utils';
 
 export const Filters = ({
   initialState = {} as TableFilterConfig,
-}: Pick<TableFiltersView, 'initialState'>) => {
-  const onSubmit = (submitData: TableFilterConfig) => {
+}: TableFiltersView) => {
+  const onSubmit = (submitData: Record<string, string[]>) => {
     console.log('>>>onSubmit', submitData);
   };
 
   const { refsByKey, setRef } = useRefs();
-  const [checkboxData, setCheckboxData] = useTableDataState();
-  const { selectedItemsByGroup } = useTableData({});
+  const { checkboxData, selectedItemsByGroup, handleCheckboxToggleByGroup } =
+    useTableData({
+      initialState,
+    });
+  const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
+    Record<
+      string,
+      Array<{
+        value: string;
+      }>
+    >
+  >({});
 
   useEffect(() => {
-    setCheckboxData(initialState);
-  }, []);
+    const newData: Record<
+      string,
+      Array<{
+        value: string;
+      }>
+    > = {};
+    Object.keys(selectedItemsByGroup).map((groupName) => {
+      const selectedItems = selectedItemsByGroup[groupName];
+      newData[groupName] = selectedItems.map((item) => ({
+        value: item,
+      }));
+    });
+    setSelectedItemsWithValue(newData);
+    console.log('>>>Filters: selectedItemsByGroup', selectedItemsByGroup);
+  }, [selectedItemsByGroup]);
 
   useEffect(() => {
-    const refs = Object.values(refsByKey).filter(Boolean);
+    console.log('>>>Filters: checkboxData', checkboxData);
+  }, [checkboxData]);
+  // const [, setCheckboxData] = useTableDataState();
+  // const {
+  //   checkboxData,
+  //   selectedItemsByGroup,
+  //   selectedGroupsCount,
+  //   handleCheckboxToggle,
+  //   onClear,
+  //   onReset,
+  //   onSubmit,
+  // } = useTableData({
+  //   handleCancel,
+  //   handleSubmit,
+  //   handleClear,
+  //   initialState,
+  // });
+
+  // useEffect(() => {
+  //   setCheckboxData(initialState);
+  // }, []);
+
+  useEffect(() => {
+    const refs = Object.values(refsByKey);
     console.log('>>>Refs', {
       refs,
       refsByKey,
@@ -50,6 +99,15 @@ export const Filters = ({
       });
   }, [width]);
 
+  const handleOnChange =
+    (groupName: string) => (items: Array<IDropdownOption>) => {
+      const newState = items
+        .filter((item) => item.isSelected)
+        .map((item) => item.value);
+      console.log('>>>handleOnChange', { groupName, items, newState });
+      handleCheckboxToggleByGroup(groupName, newState as any);
+    };
+
   return (
     <div
       css={{
@@ -70,6 +128,11 @@ export const Filters = ({
         }}>
         {Object.keys(checkboxData).map((groupName) => {
           const accordionInfo = checkboxData[groupName as FiltersNames];
+          const selectedItems = selectedItemsWithValue[groupName];
+          // console.log('>>>Filters MultipleDropdown selected', {
+          //   selectedItems,
+          //   accordionInfo,
+          // });
           return (
             <MultipleDropdown
               key={accordionInfo.id}
@@ -78,7 +141,8 @@ export const Filters = ({
               setRef={(element: HTMLDivElement) => {
                 setRef(element, accordionInfo.title);
               }}
-              selectedItems={propOr([], accordionInfo.id)(selectedItemsByGroup)}
+              onChange={handleOnChange(groupName)}
+              selectedItems={selectedItems}
               css={{
                 '& + ul': {
                   minWidth: 150,
@@ -91,6 +155,7 @@ export const Filters = ({
                     key={`${accordionInfo.id}${item.name}`}
                     value={item.name}
                     isDisabled={item.isDisabled}
+                    // onClick={handleCheckboxToggle(groupName, item.name)}
                     // name={item.name}
                   >
                     {item.content.text}
@@ -102,7 +167,7 @@ export const Filters = ({
         })}
       </Wrapper>
       <Wrapper css={{ width: 110 }}>
-        <TableFilters handleSubmit={onSubmit} />
+        <TableFilters initialState={checkboxData} handleSubmit={onSubmit} />
       </Wrapper>
     </div>
   );

@@ -1,12 +1,6 @@
-import { assocPath, dissocPath, propOr } from '@ssa-ui-kit/utils';
-import {
-  useState,
-  useLayoutEffect,
-  BaseSyntheticEvent,
-  useEffect,
-} from 'react';
-import { FiltersNames, TableFiltersView, TableFilterConfig } from '../types';
-import { useTableDataState } from './useTableDataState';
+import { pathOr, propOr } from '@ssa-ui-kit/utils';
+import { useState, BaseSyntheticEvent, useEffect } from 'react';
+import { TableFiltersView, TableFilterConfig } from '../types';
 
 // TODO: merge data with checkboxData and return in the hook response
 // Merged data use in different places of the storybook
@@ -17,102 +11,122 @@ export const useTableData = ({
   handleSubmit,
   handleClear,
 }: TableFiltersView) => {
-  const [checkboxData, setCheckboxData] = useTableDataState();
-  useEffect(() => {
-    if (initialState) {
-      setCheckboxData(initialState);
-    }
-  }, []);
+  const [checkboxData, setCheckboxData] = useState<TableFilterConfig>(
+    {} as TableFilterConfig,
+  );
   const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
   const [selectedItemsByGroup, setSelectedItemsByGroup] = useState<
-    Record<string, Array<{ value: string }>>
+    Record<string, string[]>
   >({});
-  const selectedItemsByGroupDraft: Record<
-    string,
-    Array<{ value: string }>
-  > = {};
-  useLayoutEffect(() => {
-    let counter = 0;
-    let data = JSON.parse(JSON.stringify(checkboxData));
-    Object.keys(checkboxData).forEach((groupName) => {
-      const groupInfo = propOr({}, groupName)(checkboxData);
-      const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
-      data = assocPath(
-        [groupName, 'selectedItemsDraft'],
-        groupInfoSelectedItems,
-      )(data);
+  const selectedItemsByGroupDraft: Record<string, string[]> = {};
 
-      let elementChecked = false;
-      if (elementChecked) {
-        return;
-      }
-      if (groupInfoSelectedItems.length > 0) {
-        elementChecked = true;
-        counter++;
-      }
-    });
+  useEffect(() => {
+    if (initialState) {
+      const data = JSON.parse(JSON.stringify(initialState));
+      Object.keys(initialState).forEach((groupName) => {
+        const groupInfo = propOr({}, groupName)(initialState);
+        const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
+        data[groupName]['selectedItemsDraft'] = groupInfoSelectedItems;
+        selectedItemsByGroupDraft[groupInfo.id] = groupInfoSelectedItems;
+      });
+      setSelectedItemsByGroup(selectedItemsByGroupDraft);
+      setCheckboxData(data);
+    }
+  }, []);
+
+  useEffect(() => {
     Object.keys(checkboxData).forEach((groupName) => {
       const groupInfo = propOr({}, groupName)(checkboxData);
       const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
       selectedItemsByGroupDraft[groupInfo.id] = groupInfoSelectedItems;
     });
-    setSelectedGroupsCount(counter);
     setSelectedItemsByGroup(selectedItemsByGroupDraft);
-    if (JSON.stringify(data) !== JSON.stringify(checkboxData)) {
-      console.log('>>>useTableData: setting checkbox data...', checkboxData);
-      setCheckboxData(data);
-    }
   }, [checkboxData]);
 
-  const handleCheckboxChange = (path: string[]) => (newState: boolean) => {
-    if (newState) {
-      setCheckboxData(assocPath(path, newState));
-    } else {
-      setCheckboxData(dissocPath(path));
-    }
+  useEffect(() => {
+    console.log('>>>CHANGED: selectedItemsByGroup', selectedItemsByGroup);
+    const length = Object.keys(selectedItemsByGroup)
+      .map((groupName) => {
+        return selectedItemsByGroup[groupName].length;
+      })
+      .filter((length) => length > 0).length;
+    setSelectedGroupsCount(length);
+  }, [selectedItemsByGroup]);
+
+  const handleCheckboxToggle = (groupName: string, name: string) => () => {
+    const currentState = propOr<Record<string, any>, string[]>(
+      [],
+      groupName,
+    )(selectedItemsByGroup);
+    const newState = currentState.includes(name)
+      ? currentState.filter((stateName) => stateName !== name)
+      : [...currentState, name];
+    setSelectedItemsByGroup({
+      ...selectedItemsByGroup,
+      [groupName]: newState,
+    });
+  };
+
+  const handleCheckboxToggleByGroup = (
+    groupName: string,
+    newState: string[],
+  ) => {
+    console.log('>>>handleCheckboxToggleByGroup', groupName, newState);
+    setSelectedItemsByGroup({
+      ...selectedItemsByGroup,
+      [groupName]: newState,
+    });
   };
 
   const onSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
-    handleSubmit?.(checkboxData);
+    handleSubmit?.(selectedItemsByGroup);
   };
 
   const onReset = () => {
-    const result: TableFilterConfig = JSON.parse(JSON.stringify(checkboxData));
+    const selectedItemsByGroupDraft: Record<string, string[]> = {};
     Object.keys(checkboxData).forEach((groupName) => {
       const groupInfo = propOr({}, groupName)(checkboxData);
       const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
-      result[groupName as FiltersNames]['selectedItemsDraft'] =
-        groupInfoSelectedItems;
+      selectedItemsByGroupDraft[groupInfo.id] = groupInfoSelectedItems;
     });
-    setCheckboxData(result);
+    setSelectedItemsByGroup(selectedItemsByGroupDraft);
     handleCancel?.();
   };
 
   const onClear = () => {
-    const result: TableFilterConfig = JSON.parse(JSON.stringify(checkboxData));
+    const selectedItemsByGroupDraft: Record<string, string[]> = {};
     Object.keys(checkboxData).forEach((groupName) => {
-      const groupInfo = checkboxData[groupName as FiltersNames];
-      const groupItems = groupInfo.items;
-      const selectedItems: string[] = [];
-      Object.keys(groupItems).map((itemKey) => {
-        const itemInfo = groupItems[itemKey];
-        if (itemInfo.isDisabled) {
-          selectedItems.push(itemInfo.name);
+      selectedItemsByGroupDraft[groupName] = [];
+      const groupInfo = propOr({}, groupName)(checkboxData);
+      const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
+      for (const itemName of groupInfoSelectedItems) {
+        const isDisabled = pathOr(false, [
+          groupName,
+          'items',
+          itemName,
+          'isDisabled',
+        ])(checkboxData);
+        if (isDisabled) {
+          selectedItemsByGroupDraft[groupName].push(itemName);
         }
-      });
-      result[groupName as FiltersNames]['selectedItems'] = selectedItems;
+      }
     });
-    setCheckboxData(result);
+    setSelectedItemsByGroup(selectedItemsByGroupDraft);
     handleClear?.();
   };
 
   return {
     selectedGroupsCount,
     selectedItemsByGroup,
-    handleCheckboxChange,
+    checkboxData,
+    setCheckboxData,
+    handleCheckboxToggle,
+    handleCheckboxToggleByGroup,
     onSubmit,
     onReset,
     onClear,
   };
 };
+
+export type UseTableDataResult = ReturnType<typeof useTableData>;
