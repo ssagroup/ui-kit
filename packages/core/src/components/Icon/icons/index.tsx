@@ -19,6 +19,9 @@ import { User } from './User';
 import { Union } from './Union';
 import { Visible } from './Visible';
 import { Invisible } from './Invisible';
+import { Information } from './Information';
+import { Warning } from './Warning';
+import { Attention } from './Attention';
 
 import { CarrotDown } from './CarrotDown';
 import { CarrotUp } from './CarrotUp';
@@ -52,6 +55,9 @@ const componentsList = [
   User,
   Union,
   Notification,
+  Information,
+  Warning,
+  Attention,
   Visible,
   Invisible,
   CarrotDown,
