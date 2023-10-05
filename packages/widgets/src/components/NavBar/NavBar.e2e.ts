@@ -22,6 +22,17 @@ const gotoPage = () => {
   );
 };
 
+const clickAndWaitForAnimationEnd = async () => {
+  await page.locator('#storybook-root div').nth(1).click();
+  await page
+    .locator('div[class*="NavBarWrapper"]')
+    .evaluate((element) =>
+      Promise.all(
+        element.getAnimations().map((animation) => animation.finished),
+      ),
+    );
+};
+
 test('[1920] Widgets: NavBar should be visible', async () => {
   await page.setViewportSize(SCREEN_SIZES[1920]);
   await gotoPage();
@@ -41,7 +52,7 @@ test('[1440] Widgets: NavBar should be visible', async () => {
 test('[900] Widgets: NavBar should be visible after icon clicking', async () => {
   await page.setViewportSize(SCREEN_SIZES[900]);
   await gotoPage();
-  await page.locator('#storybook-root div').nth(1).click();
+  await clickAndWaitForAnimationEnd();
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w900px].png`,
   });
@@ -50,7 +61,7 @@ test('[900] Widgets: NavBar should be visible after icon clicking', async () => 
 test('[390] Widgets: NavBar should be visible after icon clicking', async () => {
   await page.setViewportSize(SCREEN_SIZES[390]);
   await gotoPage();
-  await page.locator('#storybook-root div').nth(1).click();
+  await clickAndWaitForAnimationEnd();
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w390px].png`,
   });
