@@ -117,11 +117,21 @@ export const WithIcon = () => {
             css={{
               display: 'flex',
               height: 'auto',
-              padding: '11px',
-              borderRadius: '12px',
-              boxShadow: `-4px 12px 14px 0px #DAE1E1`,
+              padding: '5px',
+              borderRadius: '6px',
+              boxShadow: '-4px 12px 14px 0px #DAE1E1',
+
+              [`${theme.mediaQueries.md}`]: {
+                padding: '11px',
+                borderRadius: '12px',
+
+                [`> svg`]: {
+                  width: '20px',
+                  height: '20px',
+                },
+              },
             }}>
-            <Icon name={iconItem.icon} color={theme.colors.white} size={20} />
+            <Icon name={iconItem.icon} color={theme.colors.white} size={14} />
           </Badge>
         </GridWrapper>
       ))}
