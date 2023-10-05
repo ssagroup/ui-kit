@@ -6,6 +6,7 @@ import {
   purple,
   turquoise,
   yellow,
+  yellowWarm,
 } from '@styles/global';
 
 import BadgeBase from './BadgeBase';
@@ -21,6 +22,7 @@ const mapSizes: MainSizes = {
 const mapColors: MainColors = {
   pink,
   yellow,
+  yellowWarm,
   green,
   turquoise,
   purple,
