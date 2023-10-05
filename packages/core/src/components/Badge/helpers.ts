@@ -10,7 +10,7 @@ export const colors: Array<keyof MainColors> = [
   'pink',
   'turquoise',
   'yellow',
-  'yellowLight',
+  'yellowWarm',
 ];
 
 export const icons: Array<{ color: keyof MainColors; icon: keyof IMapIcons }> =
@@ -20,7 +20,7 @@ export const icons: Array<{ color: keyof MainColors; icon: keyof IMapIcons }> =
       icon: 'information',
     },
     {
-      color: 'yellowLight',
+      color: 'yellowWarm',
       icon: 'warning',
     },
     {

@@ -26,7 +26,7 @@ export default {
       options: [
         'pink',
         'yellow',
-        'yellowLight',
+        'yellowWarm',
         'green',
         'turquoise',
         'purple',

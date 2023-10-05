@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { ColorsKeys } from '@global-types/emotion';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ProgressCircleBase } from './ProgressCircleBase';
@@ -22,6 +23,8 @@ const ProgressCircle = ({
   const svgOffset =
     fullStroke -
     (((2 * 22) / 7) * (size / 2 - barStroke) * currentPercentage) / 100;
+  const colorName = `${color}Lighter` as ColorsKeys;
+  const colorValue = theme.colors[colorName] || theme.colors[color];
 
   return (
     <ProgressCircleBase
@@ -45,7 +48,7 @@ const ProgressCircle = ({
         <defs>
           <linearGradient id={gradientId}>
             <stop offset="0%" stopColor={theme.colors[color]} />
-            <stop offset="100%" stopColor={theme.colors[`${color}Lighter`]} />
+            <stop offset="100%" stopColor={colorValue} />
           </linearGradient>
         </defs>
         <circle cx={size / 2} cy={size / 2} r={size / 2 - barStroke} />

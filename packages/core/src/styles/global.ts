@@ -20,7 +20,7 @@ export const yellow = (theme: Theme) => css`
   box-shadow: -4px 4px 10px ${theme.colors.yellowLighter40};
 `;
 
-export const yellowLight = (theme: Theme) => css`
+export const yellowWarm = (theme: Theme) => css`
   background-color: ${theme.colors.yellowLighter};
   background: linear-gradient(
     90deg,

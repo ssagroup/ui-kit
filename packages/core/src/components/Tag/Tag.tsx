@@ -7,7 +7,7 @@ import {
   purple,
   turquoise,
   yellow,
-  yellowLight,
+  yellowWarm,
 } from './styles';
 
 import {
@@ -18,7 +18,7 @@ import {
   purpleBorder,
   blueLightBorder,
   blueBorder,
-  yellowLightBorder,
+  yellowWarmBorder,
 } from './styles';
 import { TagsProps } from './types';
 
@@ -30,7 +30,7 @@ const mapColors: MainColors = {
   purple: [purple, purpleBorder],
   blueLight: [blueLight, blueLightBorder],
   blue: [blue, blueBorder],
-  yellowLight: [yellowLight, yellowLightBorder],
+  yellowWarm: [yellowWarm, yellowWarmBorder],
 };
 
 const Tag = ({ color = 'purple', size = 'medium', children }: TagsProps) => (

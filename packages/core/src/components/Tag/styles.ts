@@ -23,7 +23,7 @@ export const blueLightBorder = css`
 export const blueBorder = css`
   border: 1px solid ${theme.colors.blue};
 `;
-export const yellowLightBorder = css`
+export const yellowWarmBorder = css`
   border: 1px solid ${theme.colors.yellowWarm};
 `;
 
@@ -51,7 +51,7 @@ export const yellow = (theme: Theme) => css`
   box-shadow: -4px 4px 10px ${theme.colors.yellowLighter40};
 `;
 
-export const yellowLight = (theme: Theme) => css`
+export const yellowWarm = (theme: Theme) => css`
   color: ${theme.colors.yellowLighter};
 
   background-color: ${theme.colors.yellowLighter20};
