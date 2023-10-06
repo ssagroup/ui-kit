@@ -1,9 +1,10 @@
+import { useLayoutEffect } from 'react';
 import { css } from '@emotion/react';
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { progressInfoData as data } from './mockProgressInfoRequest';
 
-import { ProgressInfo } from './ProgressInfo';
+import { default as ProgressInfo, IProgressInfoProps } from './index';
 
 export default {
   title: 'Widgets/ProgressInfo',
@@ -23,4 +24,38 @@ export default {
   ],
 } as Meta<typeof ProgressInfo>;
 
-export const Default = {};
+const ignoreChartElInLostPixel = () => {
+  useLayoutEffect(() => {
+    const pieChartSVGWrapper = document.querySelector(
+      'div[class*="ProgressInfoContent"]',
+    ) as HTMLDivElement;
+
+    const observer = new MutationObserver(() => {
+      const chartEl = pieChartSVGWrapper.querySelector('svg');
+      if (chartEl != null) {
+        chartEl.classList.add('lostpixel-ignore');
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(pieChartSVGWrapper, {
+      childList: true,
+      attributes: false,
+      subtree: true,
+      characterDataOldValue: false,
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+};
+
+export const Default: StoryObj<typeof ProgressInfo> = (
+  args: IProgressInfoProps,
+) => {
+  ignoreChartElInLostPixel();
+  return <ProgressInfo {...args} />;
+};
+
+Default.args = { data };

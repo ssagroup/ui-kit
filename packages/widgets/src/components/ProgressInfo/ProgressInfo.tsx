@@ -19,13 +19,13 @@ import {
   ProgressInfoItemProps,
   TextPositionMap,
   Period,
-  ProgressInfoResp,
+  IProgressInfoProps,
   PeriodOption,
 } from './types';
 import { Dropdown } from '@ssa-ui-kit/core';
 import { DropdownOption } from '@ssa-ui-kit/core';
 
-export const ProgressInfo = ({ data }: { data: ProgressInfoResp }) => {
+export const ProgressInfo = ({ data }: IProgressInfoProps) => {
   const { width: windowWidth } = useWindowSize();
   const [options, setOptions] = useState<PeriodOption[]>([]);
   const [selected, setSelected] = useState<PeriodOption>();
