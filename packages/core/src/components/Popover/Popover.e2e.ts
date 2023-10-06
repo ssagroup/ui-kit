@@ -1,33 +1,21 @@
 import { test, expect, Page } from '@playwright/test';
 import { SCREEN_SIZES } from '../../consts';
 
-test.describe.configure({ mode: 'serial' });
-
-let page: Page;
-
-test.beforeEach(async ({ browser }) => {
-  page = await browser.newPage();
-});
-
-test.afterEach(async () => {
-  await page.close();
-});
-
 const CUSTOM_SHOTS_PATH = './custom-shots/';
 
-const gotoPage = () => {
+const gotoPage = (page: Page) => {
   return page.goto(
     'http://localhost:6006/iframe.html?args=&globals=&id=components-popover--default&viewMode=story',
   );
 };
 
-test('Core: Popover should be opened correctly', async () => {
-  await gotoPage();
+test('Core: Popover should be opened correctly', async ({ page }) => {
+  await gotoPage(page);
   await expect(page.getByText('Trigger')).toBeVisible();
 });
 
-test('Core: Popover - Hint is shown', async () => {
-  await gotoPage();
+test('Core: Popover - Hint is shown', async ({ page }) => {
+  await gotoPage(page);
   await page.setViewportSize(SCREEN_SIZES[1920]);
   await page.getByText('Trigger').click();
 

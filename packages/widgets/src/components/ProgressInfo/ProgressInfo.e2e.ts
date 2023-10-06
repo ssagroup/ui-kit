@@ -1,11 +1,6 @@
 import { test, Page } from '@playwright/test';
 import { SCREEN_SIZES } from '../../consts';
 
-/**
- * https://playwright.dev/docs/api/class-test#test-describe-configure
- * */
-test.describe.configure({ mode: 'parallel' });
-
 const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
 const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-progressInfo__`;
 
