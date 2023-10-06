@@ -1,3 +1,5 @@
+import { BaseSyntheticEvent } from 'react';
+
 export type CheckboxData = Record<string, string[]>;
 
 export type FiltersNames = 'strategy' | 'status' | 'pairs' | 'exchange';
@@ -26,9 +28,14 @@ export interface AccordionInfo {
 export type TableFilterConfig = Record<FiltersNames, AccordionInfo>;
 
 export interface TableFiltersView {
-  initialState?: TableFilterConfig;
+  checkboxData?: TableFilterConfig;
+  selectedItemsByGroup: Record<string, string[]>;
+  selectedGroupsCount: number;
+  wrapperRef?: React.RefObject<HTMLElement>;
+  refsByKey?: Record<string, HTMLElement | null>;
+  handleCheckboxToggle: (groupName: string, name: string) => () => void;
   setConfig?: (config: TableFilterConfig) => void;
-  handleCancel?: () => void;
-  handleClear?: () => void;
-  handleSubmit?: (data: Record<string, string[]>) => void;
+  onReset?: () => void;
+  onClear?: () => void;
+  onSubmit?: (event: BaseSyntheticEvent) => void;
 }

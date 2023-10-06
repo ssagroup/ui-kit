@@ -1,10 +1,22 @@
+// import { useFiltersContext } from '@components/Filters/FiltersContext';
+import { mockData } from '@components/TableFilters/stories/mockData';
 import { TableFilters } from '../TableFilters';
-import { mockData } from './mockData';
+import { useTableData } from '../hooks/useTableData';
+// import { mockData } from './mockData';
 
 export const StoryComponent = () => {
-  const onSubmit = (checkboxData: Record<string, string[]>) => {
-    console.log('>>>onSubmit', checkboxData);
-  };
+  const {
+    checkboxData,
+    selectedItemsByGroup,
+    selectedGroupsCount,
+    handleCheckboxToggle,
+    onClear,
+    onReset,
+    onSubmit,
+  } = useTableData({
+    initialState: mockData,
+  });
+
   return (
     <div
       css={{
@@ -12,7 +24,15 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <TableFilters handleSubmit={onSubmit} initialState={mockData} />
+      <TableFilters
+        checkboxData={checkboxData}
+        selectedItemsByGroup={selectedItemsByGroup}
+        selectedGroupsCount={selectedGroupsCount}
+        handleCheckboxToggle={handleCheckboxToggle}
+        onClear={onClear}
+        onReset={onReset}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 };

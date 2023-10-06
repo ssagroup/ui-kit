@@ -77,7 +77,7 @@ describe('TableFilters', () => {
           justifyContent: 'center',
         }}>
         <TableFilters
-          initialState={mockData}
+          checkboxData={mockData}
           handleSubmit={() => {
             console.log('>>>Submit: completed');
           }}
@@ -135,7 +135,7 @@ describe('TableFilters', () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <TableFilters initialState={mockData} />
+        <TableFilters checkboxData={mockData} />
       </div>,
     );
 

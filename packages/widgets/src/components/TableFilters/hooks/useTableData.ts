@@ -1,16 +1,26 @@
 import { pathOr, propOr } from '@ssa-ui-kit/utils';
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
-import { TableFiltersView, TableFilterConfig } from '../types';
+import { TableFilterConfig } from '../types';
 
-// TODO: merge data with checkboxData and return in the hook response
-// Merged data use in different places of the storybook
-// Add disabled option to the DropdownOption? use item.isDisabled for this purpose
+export interface UseTableDataParameters {
+  initialState?: TableFilterConfig;
+  wrapperRef?: React.RefObject<HTMLElement>;
+  refsByKey?: Record<string, HTMLElement | null>;
+  setRef?: (element: HTMLElement | null, key: string) => void;
+  handleCancel?: () => void;
+  handleClear?: () => void;
+  handleSubmit?: (data: Record<string, string[]>) => void;
+}
+
 export const useTableData = ({
   initialState,
+  wrapperRef,
+  refsByKey,
+  setRef,
   handleCancel,
   handleSubmit,
   handleClear,
-}: TableFiltersView) => {
+}: UseTableDataParameters) => {
   const [checkboxData, setCheckboxData] = useState<TableFilterConfig>(
     {} as TableFilterConfig,
   );
@@ -18,11 +28,11 @@ export const useTableData = ({
   const [selectedItemsByGroup, setSelectedItemsByGroup] = useState<
     Record<string, string[]>
   >({});
-  const selectedItemsByGroupDraft: Record<string, string[]> = {};
 
-  useEffect(() => {
+  const addSelectedItemsDraft = () => {
     if (initialState) {
       const data = JSON.parse(JSON.stringify(initialState));
+      const selectedItemsByGroupDraft: Record<string, string[]> = {};
       Object.keys(initialState).forEach((groupName) => {
         const groupInfo = propOr({}, groupName)(initialState);
         const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
@@ -32,9 +42,14 @@ export const useTableData = ({
       setSelectedItemsByGroup(selectedItemsByGroupDraft);
       setCheckboxData(data);
     }
+  };
+
+  useEffect(() => {
+    addSelectedItemsDraft();
   }, []);
 
   useEffect(() => {
+    const selectedItemsByGroupDraft: Record<string, string[]> = {};
     Object.keys(checkboxData).forEach((groupName) => {
       const groupInfo = propOr({}, groupName)(checkboxData);
       const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
@@ -44,7 +59,6 @@ export const useTableData = ({
   }, [checkboxData]);
 
   useEffect(() => {
-    console.log('>>>CHANGED: selectedItemsByGroup', selectedItemsByGroup);
     const length = Object.keys(selectedItemsByGroup)
       .map((groupName) => {
         return selectedItemsByGroup[groupName].length;
@@ -71,7 +85,6 @@ export const useTableData = ({
     groupName: string,
     newState: string[],
   ) => {
-    console.log('>>>handleCheckboxToggleByGroup', groupName, newState);
     setSelectedItemsByGroup({
       ...selectedItemsByGroup,
       [groupName]: newState,
@@ -80,6 +93,13 @@ export const useTableData = ({
 
   const onSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
+
+    const data = JSON.parse(JSON.stringify(checkboxData));
+    Object.keys(checkboxData).forEach((groupName) => {
+      data[groupName]['selectedItems'] = selectedItemsByGroup[groupName];
+    });
+    setCheckboxData(data);
+
     handleSubmit?.(selectedItemsByGroup);
   };
 
@@ -120,7 +140,9 @@ export const useTableData = ({
     selectedGroupsCount,
     selectedItemsByGroup,
     checkboxData,
-    setCheckboxData,
+    wrapperRef,
+    refsByKey,
+    setRef,
     handleCheckboxToggle,
     handleCheckboxToggleByGroup,
     onSubmit,

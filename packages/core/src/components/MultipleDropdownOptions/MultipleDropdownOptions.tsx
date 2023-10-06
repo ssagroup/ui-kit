@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { BaseSyntheticEvent } from 'react';
 import styled from '@emotion/styled';
 
 import Checkbox from '@components/Checkbox';
@@ -87,6 +87,7 @@ const MultipleDropdownOptions = ({
   const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
 
   const toggleItem = (value: string | number, isDisabled: boolean) => {
+    console.log('>>>toggleItem', { value, isDisabled });
     if (!isDisabled) {
       const item = allItems[value];
       onChange(item);
@@ -107,7 +108,8 @@ const MultipleDropdownOptions = ({
         isActive,
         isMultiple,
         'aria-selected': isActive,
-        onClick: () => {
+        onClick: (event: BaseSyntheticEvent) => {
+          event.preventDefault();
           toggleItem(child.props.value, isDisabled);
         },
       },
@@ -120,7 +122,6 @@ const MultipleDropdownOptions = ({
             initialState={isActive}
             externalState={isActive}
             isDisabled={isDisabled}
-            onChange={toggleItem.bind(null, child.props.value, isDisabled)}
             css={{
               margin: 0,
             }}
