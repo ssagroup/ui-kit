@@ -1,4 +1,3 @@
-import { useLayoutEffect } from 'react';
 import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -30,4 +29,4 @@ export const Default: StoryObj<typeof ProgressInfo> = (
   return <ProgressInfo {...args} />;
 };
 
-Default.args = { data };
+Default.args = { data, className: 'lostpixel-ignore' };

@@ -25,7 +25,7 @@ import {
 import { Dropdown } from '@ssa-ui-kit/core';
 import { DropdownOption } from '@ssa-ui-kit/core';
 
-export const ProgressInfo = ({ data }: IProgressInfoProps) => {
+export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
   const { width: windowWidth } = useWindowSize();
   const [options, setOptions] = useState<PeriodOption[]>([]);
   const [selected, setSelected] = useState<PeriodOption>();
@@ -118,7 +118,8 @@ export const ProgressInfo = ({ data }: IProgressInfoProps) => {
         border-radius: 20px;
         padding-inline: 24px;
         padding-block: 24px;
-      `}>
+      `}
+      className={className}>
       <CardHeader>
         <Typography variant="h3" weight="bold">
           Progress

@@ -13,7 +13,7 @@ const widgetsConfig: Partial<CustomProjectConfig> & {
     storybookUrl: './packages/widgets/storybook-static',
     breakpoints,
     // https://docs.lost-pixel.com/user-docs/api-reference/mask
-    mask: [{ selector: 'div[class*="ProgressInfoContent"] svg' }],
+    mask: [{ selector: '.lostpixel-ignore' }],
   },
   customShots: {
     currentShotsPath: './packages/widgets/custom-shots',

@@ -31,6 +31,7 @@ export type ProgressInfoResp = {
 
 export interface IProgressInfoProps {
   data: ProgressInfoResp;
+  className?: string;
 }
 
 export type PeriodOption = { value: string; id: string };
