@@ -12,6 +12,8 @@ const widgetsConfig: Partial<CustomProjectConfig> & {
   storybookShots: {
     storybookUrl: './packages/widgets/storybook-static',
     breakpoints,
+    // https://docs.lost-pixel.com/user-docs/api-reference/mask
+    mask: [{ selector: 'div[class*="ProgressInfoContent"] svg' }],
   },
   customShots: {
     currentShotsPath: './packages/widgets/custom-shots',
