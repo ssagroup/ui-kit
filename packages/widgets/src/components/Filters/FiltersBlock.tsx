@@ -1,24 +1,19 @@
-import React from 'react';
 import { FiltersNames } from '@components/TableFilters/types';
 import {
   DropdownOption,
   IDropdownOption,
   MultipleDropdown,
 } from '@ssa-ui-kit/core';
-import { useWindowSize } from '@ssa-ui-kit/hooks';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFiltersContext } from './FiltersContext';
 
 export const FiltersBlock = () => {
   const {
     handleCheckboxToggleByGroup,
-    setRef,
-    refsByKey,
     selectedItemsByGroup,
     checkboxData,
-    wrapperRef,
+    setElementRef,
   } = useFiltersContext();
-  console.log('>>>wrapperRef', wrapperRef);
   const handleOnChange =
     (groupName: string) => (items: Array<IDropdownOption>) => {
       const newState = items
@@ -30,8 +25,6 @@ export const FiltersBlock = () => {
   const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
     Record<string, Array<{ value: string }>>
   >({});
-
-  const { width } = useWindowSize();
 
   useEffect(() => {
     const newData: Record<
@@ -49,33 +42,18 @@ export const FiltersBlock = () => {
     setSelectedItemsWithValue(newData);
   }, [selectedItemsByGroup]);
 
-  useLayoutEffect(() => {
-    refsByKey &&
-      Object.values(refsByKey)
-        .filter(Boolean)
-        .map((element) => {
-          if (element && wrapperRef && wrapperRef.current) {
-            element.style.visibility =
-              element.offsetLeft < wrapperRef.current.offsetLeft
-                ? 'hidden'
-                : 'visible';
-          }
-        });
-  }, [width, selectedItemsByGroup]);
-
   return (
     <>
       {Object.keys(checkboxData).map((groupName) => {
         const accordionInfo = checkboxData[groupName as FiltersNames];
         const selectedItems = selectedItemsWithValue[groupName];
-
         return (
           <MultipleDropdown
             key={accordionInfo.id}
             showPlaceholder={false}
             label={accordionInfo.title}
             setRef={(element: HTMLDivElement) => {
-              setRef?.(element, accordionInfo.title);
+              setElementRef(accordionInfo.id, element);
             }}
             onChange={handleOnChange(groupName)}
             selectedItems={selectedItems}

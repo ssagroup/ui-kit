@@ -31,8 +31,8 @@ export interface TableFiltersView {
   checkboxData?: TableFilterConfig;
   selectedItemsByGroup: Record<string, string[]>;
   selectedGroupsCount: number;
-  wrapperRef?: React.RefObject<HTMLElement>;
-  refsByKey?: Record<string, HTMLElement | null>;
+  // wrapperRef?: React.RefObject<HTMLElement>;
+  // refsByKey?: Record<string, HTMLElement | null>;
   handleCheckboxToggle: (groupName: string, name: string) => () => void;
   setConfig?: (config: TableFilterConfig) => void;
   onReset?: () => void;

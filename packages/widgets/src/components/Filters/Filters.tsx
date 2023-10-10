@@ -13,7 +13,6 @@ import { FiltersContextProvider } from './FiltersContext';
 import { FiltersBlock } from './FiltersBlock';
 import { FilterBlockWrapper } from './FilterBlockWrapper';
 import { FiltersWrapper } from './FiltersWrapper';
-import { useRefs } from '@ssa-ui-kit/hooks';
 
 export const Filters = ({
   checkboxData: initialState = {} as TableFilterConfig,
@@ -26,12 +25,10 @@ export const Filters = ({
     'handleSubmit' | 'handleCancel' | 'handleClear'
   >) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { refsByKey, setRef } = useRefs();
 
   const useTableDataResult = useTableData({
     initialState,
     wrapperRef,
-    setRef,
     handleSubmit,
     handleCancel,
     handleClear,

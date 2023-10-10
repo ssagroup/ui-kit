@@ -1,10 +1,12 @@
-// import { useFiltersContext } from '@components/Filters/FiltersContext';
 import { mockData } from '@components/TableFilters/stories/mockData';
 import { TableFilters } from '../TableFilters';
 import { useTableData } from '../hooks/useTableData';
-// import { mockData } from './mockData';
 
 export const StoryComponent = () => {
+  const handleSubmit = (submitData: Record<string, string[]>) => {
+    console.log('>>>onSubmit', submitData);
+  };
+
   const {
     checkboxData,
     selectedItemsByGroup,
@@ -15,6 +17,7 @@ export const StoryComponent = () => {
     onSubmit,
   } = useTableData({
     initialState: mockData,
+    handleSubmit,
   });
 
   return (

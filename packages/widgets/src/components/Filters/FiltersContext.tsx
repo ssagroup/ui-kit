@@ -22,13 +22,13 @@ export const FiltersContextProvider = ({
   selectedItemsByGroup,
   selectedGroupsCount,
   wrapperRef,
-  refsByKey,
-  setRef,
+  elementsRef,
+  setElementRef,
   handleCheckboxToggle,
   handleCheckboxToggleByGroup,
-  onClear,
-  onReset,
   onSubmit,
+  onReset,
+  onClear,
 }: {
   children: React.ReactNode;
 } & ReturnType<typeof useTableData>) => (
@@ -38,8 +38,8 @@ export const FiltersContextProvider = ({
       selectedItemsByGroup,
       selectedGroupsCount,
       wrapperRef,
-      refsByKey,
-      setRef,
+      elementsRef,
+      setElementRef,
       handleCheckboxToggle,
       handleCheckboxToggleByGroup,
       onClear,

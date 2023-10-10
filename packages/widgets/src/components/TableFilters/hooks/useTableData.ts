@@ -1,12 +1,11 @@
 import { pathOr, propOr } from '@ssa-ui-kit/utils';
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
 import { TableFilterConfig } from '../types';
+import { useVisibility } from '@components/Filters/hooks/useVisibility';
 
 export interface UseTableDataParameters {
   initialState?: TableFilterConfig;
   wrapperRef?: React.RefObject<HTMLElement>;
-  refsByKey?: Record<string, HTMLElement | null>;
-  setRef?: (element: HTMLElement | null, key: string) => void;
   handleCancel?: () => void;
   handleClear?: () => void;
   handleSubmit?: (data: Record<string, string[]>) => void;
@@ -15,8 +14,6 @@ export interface UseTableDataParameters {
 export const useTableData = ({
   initialState,
   wrapperRef,
-  refsByKey,
-  setRef,
   handleCancel,
   handleSubmit,
   handleClear,
@@ -28,6 +25,8 @@ export const useTableData = ({
   const [selectedItemsByGroup, setSelectedItemsByGroup] = useState<
     Record<string, string[]>
   >({});
+
+  const useVisibilityResult = useVisibility(checkboxData, wrapperRef);
 
   const addSelectedItemsDraft = () => {
     if (initialState) {
@@ -137,12 +136,11 @@ export const useTableData = ({
   };
 
   return {
-    selectedGroupsCount,
-    selectedItemsByGroup,
     checkboxData,
+    selectedItemsByGroup,
+    selectedGroupsCount,
     wrapperRef,
-    refsByKey,
-    setRef,
+    ...useVisibilityResult,
     handleCheckboxToggle,
     handleCheckboxToggleByGroup,
     onSubmit,
