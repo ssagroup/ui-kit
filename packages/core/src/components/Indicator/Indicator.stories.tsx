@@ -8,6 +8,7 @@ import { IndicatorProps } from './types';
 import Button from '@components/Button';
 
 const BadgeWrapper = (theme: Theme) => `
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 30px;
@@ -92,7 +93,7 @@ export const WithContent: StoryObj<typeof Indicator> = () => {
       background={`linear-gradient(90deg, ${theme.colors.yellow} 0%, ${theme.colors.yellowLighter} 100%)`}
       text={
         <Typography variant="body2" weight="regular" color={theme.colors.white}>
-          +20
+          +2100
         </Typography>
       }>
       <Button size="large" block={true}>

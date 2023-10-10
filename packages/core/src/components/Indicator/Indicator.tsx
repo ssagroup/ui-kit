@@ -1,8 +1,9 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import IndicatorBase from './IndicatorBase';
 import { ChildrenDataProps, IndicatorProps } from './types';
+import { useWindowSize } from '@ssa-ui-kit/hooks';
 
 const Indicator = ({
   isVisible = true,
@@ -17,7 +18,10 @@ const Indicator = ({
   const [childrenData, setChildrenData] = useState<ChildrenDataProps | null>(
     {} || null,
   );
+  const { width: windowWidth } = useWindowSize();
+  const theme = useTheme();
 
+  console.log();
   const refValue = indicatorRef.current ? indicatorRef.current.offsetWidth : 0;
   const isRight = position === 'right';
 
@@ -32,7 +36,7 @@ const Indicator = ({
       setWidth(refValue);
       setChildrenData(refData);
     }
-  }, [width, childrenRef.current]);
+  }, [width, childrenRef.current, windowWidth]);
 
   return (
     <React.Fragment>
@@ -44,8 +48,12 @@ const Indicator = ({
             childrenData && [
               css`
                 top: ${childrenData.top + 4}px;
-                left: ${isRight && '-8px'};
+                left: ${isRight ? '-4px' : '-1px'};
                 transform: translate(${childrenData?.[position]}px, -50%);
+
+                ${theme.mediaQueries.md} {
+                  left: ${isRight ? '-8px' : 0};
+                }
               `,
               width > 8 &&
                 css`
@@ -53,6 +61,10 @@ const Indicator = ({
                   transform: ${isRight
                     ? `translate(${childrenData?.[position] - width}px, -50%)`
                     : `translate(${childrenData?.[position]}px, -50%)`};
+
+                  ${theme.mediaQueries.md} {
+                    left: ${isRight ? '4px' : '-4px'};
+                  }
                 `,
               width > 24 &&
                 css`
