@@ -1,6 +1,7 @@
 import { screen } from '../../../customTest';
 import Badge from '@components/Badge';
 import theme from '@themes/main';
+import React from 'react';
 
 describe('Badge', () => {
   it('Render purple if no color set', () => {
@@ -97,5 +98,16 @@ describe('Badge', () => {
     const badge = screen.getByText(/badge/i);
 
     expect(badge).toHaveStyleRule('background-color', theme.colors.blue);
+  });
+
+  it('Renders with ref', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(
+      <Badge ref={ref} color="blue">
+        Badge
+      </Badge>,
+    );
+
+    expect(ref.current?.textContent).toBe('Badge');
   });
 });
