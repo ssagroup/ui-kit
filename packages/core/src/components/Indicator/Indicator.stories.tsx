@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Theme, css, useTheme } from '@emotion/react';
+import { Theme, useTheme } from '@emotion/react';
 import Typography from '@components/Typography';
 import Badge from '@components/Badge';
 import Icon from '@components/Icon';
 import Indicator from './Indicator';
-import Card from '@components/Card';
 import { IndicatorProps } from './types';
+import Button from '@components/Button';
 
 const BadgeWrapper = (theme: Theme) => `
   align-items: center;
@@ -47,26 +47,6 @@ export default {
         type: 'select',
       },
     },
-    text: {
-      control: {
-        type: 'text',
-      },
-      table: {
-        type: {
-          summary: 'string | element',
-        },
-      },
-    },
-    children: {
-      control: {
-        type: 'text',
-      },
-      table: {
-        type: {
-          summary: 'string | element',
-        },
-      },
-    },
   },
 } as Meta<typeof Indicator>;
 
@@ -74,19 +54,13 @@ export const Default: StoryObj<typeof Indicator> = ({
   isVisible,
   position,
   background,
-  text,
 }: IndicatorProps) => {
   const theme = useTheme();
   return (
     <Indicator
       isVisible={isVisible}
       position={position}
-      background={background}
-      text={
-        <Typography variant="body2" weight="regular" color={theme.colors.white}>
-          {text}
-        </Typography>
-      }>
+      background={background}>
       <Badge color="blueLight" size="small" css={BadgeWrapper}>
         <Icon name="information" color={theme.colors.white} size={14} />
       </Badge>
@@ -121,12 +95,9 @@ export const WithContent: StoryObj<typeof Indicator> = () => {
           +20
         </Typography>
       }>
-      <Card
-        css={css`
-          width: 500px;
-        `}>
-        Card
-      </Card>
+      <Button size="large" block={true}>
+        Button
+      </Button>
     </Indicator>
   );
 };

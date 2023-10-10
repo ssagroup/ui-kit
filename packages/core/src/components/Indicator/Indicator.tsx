@@ -19,6 +19,7 @@ const Indicator = ({
   );
 
   const refValue = indicatorRef.current ? indicatorRef.current.offsetWidth : 0;
+  const isRight = position === 'right';
 
   useEffect(() => {
     if (indicatorRef.current && childrenRef.current) {
@@ -31,7 +32,7 @@ const Indicator = ({
       setWidth(refValue);
       setChildrenData(refData);
     }
-  }, [refValue, childrenRef.current]);
+  }, [width, childrenRef.current]);
 
   return (
     <React.Fragment>
@@ -43,13 +44,13 @@ const Indicator = ({
             childrenData && [
               css`
                 top: ${childrenData.top + 4}px;
-                left: ${position === 'right' && '-8px'};
+                left: ${isRight && '-8px'};
                 transform: translate(${childrenData?.[position]}px, -50%);
               `,
               width > 8 &&
                 css`
-                  left: ${position === 'right' ? '4px' : '-4px'};
-                  transform: ${position === 'right'
+                  left: ${isRight ? '4px' : '-4px'};
+                  transform: ${isRight
                     ? `translate(${childrenData?.[position] - width}px, -50%)`
                     : `translate(${childrenData?.[position]}px, -50%)`};
                 `,
@@ -64,9 +65,9 @@ const Indicator = ({
           {text}
         </IndicatorBase>
       ) : null}
-      <div ref={childrenRef} css={{ width: 'fit-content' }}>
-        {children}
-      </div>
+      {React.cloneElement(children, {
+        ref: (ref: HTMLDivElement | null) => (childrenRef.current = ref),
+      })}
     </React.Fragment>
   );
 };

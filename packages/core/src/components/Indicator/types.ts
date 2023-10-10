@@ -1,11 +1,9 @@
 export interface IndicatorProps {
   isVisible: boolean;
+  children: React.ReactElement;
   position?: 'right' | 'left';
   background?: string;
   text?: string | number | JSX.Element;
-  children?: React.ReactNode;
 }
 
-export interface ChildrenDataProps {
-  [key: string]: number;
-}
+export type ChildrenDataProps = Record<string, number>;

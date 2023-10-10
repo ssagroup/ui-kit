@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 const IndicatorBase = styled.div<{ background?: string }>`
   position: absolute;
   left: 0;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
