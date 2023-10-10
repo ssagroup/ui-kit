@@ -2,38 +2,45 @@ import Indicator from './Indicator';
 
 describe('Indicator', () => {
   it('Renders with default left position', () => {
-    const { getByTestId } = render(<Indicator />);
+    const { getByTestId } = render(<Indicator isVisible={true} />);
 
-    const indicatorEl = getByTestId('indicator');
-
-    expect(indicatorEl).toHaveStyle('left: 4px');
+    getByTestId('indicator-left');
   });
 
   it('Renders with right position', () => {
-    const { getByTestId } = render(<Indicator position="right" />);
+    const { getByTestId } = render(
+      <Indicator isVisible={true} position="right" />,
+    );
 
-    const indicatorEl = getByTestId('indicator');
-
-    expect(indicatorEl).toHaveStyle('right: 4px');
+    getByTestId('indicator-right');
   });
 
   it('Renders with children and default left position', () => {
-    const { getByText, getByTestId } = render(<Indicator>+20</Indicator>);
-
-    const indicatorEl = getByTestId('indicator');
-
-    getByText('+20');
-    expect(indicatorEl).toHaveStyle('left: 4px');
-  });
-
-  it('Renders with children and right position', () => {
     const { getByText, getByTestId } = render(
-      <Indicator position="right">+20</Indicator>,
+      <Indicator isVisible={true}>
+        <span>Content</span>
+      </Indicator>,
     );
 
-    const indicatorEl = getByTestId('indicator');
+    getByTestId('indicator-left');
+    getByText('Content');
+  });
 
+  it('Renders with children and Indicator text', () => {
+    const { getByText, getByTestId } = render(
+      <Indicator isVisible={true} text={'+20'}>
+        <span>Content</span>
+      </Indicator>,
+    );
+
+    getByTestId('indicator-left');
+    getByText('Content');
     getByText('+20');
-    expect(indicatorEl).toHaveStyle('right: 4px');
+  });
+
+  it('Is not rendered in the document', () => {
+    const { queryByTestId } = render(<Indicator isVisible={false} />);
+
+    expect(queryByTestId('indicator-left')).not.toBeInTheDocument;
   });
 });

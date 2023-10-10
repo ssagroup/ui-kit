@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
-const IndicatorBase = styled.div<{ position?: string; background?: string }>`
+const IndicatorBase = styled.div<{ background?: string }>`
   position: absolute;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +11,6 @@ const IndicatorBase = styled.div<{ position?: string; background?: string }>`
   padding: 3px;
   border-radius: 50%;
   aspect-ratio: 1;
-  transform: ${({ position }) =>
-    position === 'right' ? 'translate(50%, -50%)' : 'translate(-50%, -50%)'};
   background: ${({ theme, background }) =>
     background
       ? background

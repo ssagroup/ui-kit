@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Theme, useTheme } from '@emotion/react';
+import { Theme, css, useTheme } from '@emotion/react';
 import Typography from '@components/Typography';
 import Badge from '@components/Badge';
 import Icon from '@components/Icon';
 import Indicator from './Indicator';
-import { indicatorProps } from './types';
+import Card from '@components/Card';
+import { IndicatorProps } from './types';
 
 const BadgeWrapper = (theme: Theme) => `
   align-items: center;
@@ -32,6 +33,9 @@ export default {
   title: 'Components/Indicator',
   component: Indicator,
   argTypes: {
+    isVisible: {
+      control: 'boolean',
+    },
     position: {
       table: {
         type: {
@@ -41,6 +45,16 @@ export default {
       options: ['right', 'left'],
       control: {
         type: 'select',
+      },
+    },
+    text: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string | element',
+        },
       },
     },
     children: {
@@ -57,17 +71,20 @@ export default {
 } as Meta<typeof Indicator>;
 
 export const Default: StoryObj<typeof Indicator> = ({
+  isVisible,
   position,
   background,
-}: indicatorProps) => {
+  text,
+}: IndicatorProps) => {
   const theme = useTheme();
   return (
     <Indicator
+      isVisible={isVisible}
       position={position}
       background={background}
       text={
-        <Typography color={theme.colors.white} variant="body2" weight="regular">
-          +210
+        <Typography variant="body2" weight="regular" color={theme.colors.white}>
+          {text}
         </Typography>
       }>
       <Badge color="blueLight" size="small" css={BadgeWrapper}>
@@ -79,35 +96,39 @@ export const Default: StoryObj<typeof Indicator> = ({
 
 Default.argTypes = {};
 
-// export const RightSide: StoryObj<typeof Indicator> = () => {
-//   const theme = useTheme();
-//   return (
-//     <Badge color="blueLight" size="small" css={BadgeWrapper}>
-//       <Indicator position="right" />
-//       <Icon name="information" color={theme.colors.white} size={14} />
-//     </Badge>
-//   );
-// };
+export const RightSide: StoryObj<typeof Indicator> = () => {
+  const theme = useTheme();
+  return (
+    <Indicator position="right" isVisible={true}>
+      <Badge color="blueLight" size="small" css={BadgeWrapper}>
+        <Icon name="information" color={theme.colors.white} size={14} />
+      </Badge>
+    </Indicator>
+  );
+};
 
-// RightSide.argTypes = {};
+RightSide.argTypes = {};
 
-// export const WithContent: StoryObj<typeof Indicator> = () => {
-//   const theme = useTheme();
-//   return (
-//     <Card
-//       css={css`
-//         position: relative;
-//       `}>
-//       <Indicator
-//         position="left"
-//         background={`linear-gradient(90deg, ${theme.colors.yellow} 0%, ${theme.colors.yellowLighter} 100%)`}>
-//         <Typography variant="body2" weight="regular" color={theme.colors.white}>
-//           +20
-//         </Typography>
-//       </Indicator>
-//       Card
-//     </Card>
-//   );
-// };
+export const WithContent: StoryObj<typeof Indicator> = () => {
+  const theme = useTheme();
+  return (
+    <Indicator
+      isVisible={true}
+      position="right"
+      background={`linear-gradient(90deg, ${theme.colors.yellow} 0%, ${theme.colors.yellowLighter} 100%)`}
+      text={
+        <Typography variant="body2" weight="regular" color={theme.colors.white}>
+          +20
+        </Typography>
+      }>
+      <Card
+        css={css`
+          width: 500px;
+        `}>
+        Card
+      </Card>
+    </Indicator>
+  );
+};
 
-// WithContent.args = {};
+WithContent.args = {};

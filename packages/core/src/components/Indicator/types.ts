@@ -1,13 +1,11 @@
-export interface indicatorProps {
+export interface IndicatorProps {
+  isVisible: boolean;
   position?: 'right' | 'left';
   background?: string;
   text?: string | number | JSX.Element;
   children?: React.ReactNode;
 }
 
-export interface childrenDataProps {
-  // top?: number;
-  // left?: number;
-  // width?: number;
+export interface ChildrenDataProps {
   [key: string]: number;
 }

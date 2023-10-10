@@ -1,21 +1,24 @@
+import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import IndicatorBase from './IndicatorBase';
-import { childrenDataProps, indicatorProps } from './types';
-import React from 'react';
+import { ChildrenDataProps, IndicatorProps } from './types';
 
 const Indicator = ({
-  position = 'right',
+  isVisible = true,
+  position = 'left',
   background,
   text,
   children,
-}: indicatorProps) => {
+}: IndicatorProps) => {
   const indicatorRef = useRef<HTMLDivElement>(null);
   const childrenRef = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState<number>(0);
-  const [childrenData, setChildrenData] = useState<childrenDataProps | null>(
+  const [childrenData, setChildrenData] = useState<ChildrenDataProps | null>(
     {} || null,
   );
+
+  const refValue = indicatorRef.current ? indicatorRef.current.offsetWidth : 0;
 
   useEffect(() => {
     if (indicatorRef.current && childrenRef.current) {
@@ -23,48 +26,44 @@ const Indicator = ({
         top: childrenRef.current.offsetTop,
         left: childrenRef.current.offsetLeft,
         width: childrenRef.current.offsetWidth,
-        right: indicatorRef.current?.offsetLeft,
+        right: childrenRef.current.offsetWidth + childrenRef.current.offsetLeft,
       };
-      setWidth(indicatorRef.current.offsetWidth);
+      setWidth(refValue);
       setChildrenData(refData);
     }
-  }, [childrenRef.current]);
-
-  console.log(childrenData);
+  }, [refValue, childrenRef.current]);
 
   return (
     <React.Fragment>
-      <IndicatorBase
-        data-testid={`indicator-${position}`}
-        ref={indicatorRef}
-        css={
-          childrenData && [
-            css`
-              top: ${childrenData.top + 4}px;
-              ${position}: 0;
-              transform: translate(
-                calc(${childrenData?.width}px - ${0}px),
-                -50%
-              );
-            `,
-            width > 24 &&
+      {isVisible ? (
+        <IndicatorBase
+          data-testid={`indicator-${position}`}
+          ref={indicatorRef}
+          css={
+            childrenData && [
               css`
-                top: ${childrenData.top}px;
-                ${position}: 0;
-                border-radius: 3px;
-                aspect-ratio: 0;
-                transform: ${position === 'right'
-                  ? `translate(calc(8px - ${
-                      childrenData?.right - childrenData?.left
-                    }px), -50%)`
-                  : `translate(${childrenData?.left - 4}px, -50%)`};
+                top: ${childrenData.top + 4}px;
+                left: ${position === 'right' && '-8px'};
+                transform: translate(${childrenData?.[position]}px, -50%);
               `,
-          ]
-        }
-        position={position}
-        background={background}>
-        {text}
-      </IndicatorBase>
+              width > 8 &&
+                css`
+                  left: ${position === 'right' ? '4px' : '-4px'};
+                  transform: ${position === 'right'
+                    ? `translate(${childrenData?.[position] - width}px, -50%)`
+                    : `translate(${childrenData?.[position]}px, -50%)`};
+                `,
+              width > 24 &&
+                css`
+                  border-radius: 3px;
+                  aspect-ratio: 0;
+                `,
+            ]
+          }
+          background={background}>
+          {text}
+        </IndicatorBase>
+      ) : null}
       <div ref={childrenRef} css={{ width: 'fit-content' }}>
         {children}
       </div>
