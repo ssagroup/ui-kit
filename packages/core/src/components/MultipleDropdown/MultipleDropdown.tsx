@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, useId } from 'react';
+import React, { useState, useEffect, useId, useRef } from 'react';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
-import { mapObjIndexed } from '@ssa-ui-kit/utils';
+import { mapObjIndexed, mergeRefs } from '@ssa-ui-kit/utils';
 
 import DropdownBase from '@components/DropdownBase';
 import DropdownToggle from '@components/DropdownToggle';
@@ -32,25 +32,25 @@ const DropdownPlaceholderLabel = styled.div`
  * Aria attributes are set according to
  * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  **/
-const MultipleDropdown = <T extends IDropdownOption>({
-  selectedItems = [],
-  isDisabled,
-  isOpen: isInitOpen,
-  isMultiple = true,
-  placeholder = 'Select something',
-  setRef,
-  showPlaceholder = true,
-  label,
-  children,
-  onChange: handleChange,
-  className,
-}: IDropdownProps<T>) => {
+function MultipleDropdownInner<T extends IDropdownOption>(
+  {
+    selectedItems = [],
+    isDisabled,
+    isOpen: isInitOpen,
+    isMultiple = true,
+    placeholder = 'Select something',
+    showPlaceholder = true,
+    label,
+    children,
+    onChange: handleChange,
+    className,
+  }: IDropdownProps<T>,
+  ref?: React.MutableRefObject<HTMLDivElement | null>,
+) {
   const theme = useTheme();
   const dropdownBaseRef: React.MutableRefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
-
   const dropdownId = useId();
-
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [colors, setColors] = useState<Array<string | undefined>>([]);
@@ -149,10 +149,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
       <DropdownBase
-        ref={(element: HTMLDivElement) => {
-          dropdownBaseRef.current = element;
-          setRef?.(element);
-        }}
+        ref={mergeRefs([dropdownBaseRef, ref])}
         data-testid="dropdown">
         <DropdownToggle
           className={className}
@@ -194,6 +191,11 @@ const MultipleDropdown = <T extends IDropdownOption>({
       </DropdownBase>
     </MultipleDropdownContext.Provider>
   );
-};
+}
+
+const MultipleDropdown = React.forwardRef<
+  HTMLDivElement,
+  IDropdownProps<IDropdownOption>
+>(MultipleDropdownInner as any);
 
 export default MultipleDropdown;

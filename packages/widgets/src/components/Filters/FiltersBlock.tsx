@@ -52,7 +52,7 @@ export const FiltersBlock = () => {
             key={accordionInfo.id}
             showPlaceholder={false}
             label={accordionInfo.title}
-            setRef={(element: HTMLDivElement) => {
+            ref={(element) => {
               setElementRef(accordionInfo.id, element);
             }}
             onChange={handleOnChange(groupName)}

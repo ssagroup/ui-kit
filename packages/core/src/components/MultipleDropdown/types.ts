@@ -11,7 +11,6 @@ export type IDropdownProps<P extends IDropdownOption> = {
   isOpen?: boolean;
   label?: string;
   onChange?: (items: P[]) => void;
-  setRef?: (element: HTMLDivElement) => void;
 };
 
 export interface DropdownContextType<T extends IDropdownOption> {

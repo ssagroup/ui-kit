@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 type UseClickOutsideType = (
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   fn: (e: Event) => void,
 ) => void;
 

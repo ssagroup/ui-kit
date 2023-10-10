@@ -30,7 +30,7 @@ export const useVisibility = (
       {},
     );
 
-  const setElementRef = (groupId: string, element: HTMLElement) => {
+  const setElementRef = (groupId: string, element: HTMLElement | null) => {
     if (element !== null && !Object.keys(refsByKey).includes(groupId)) {
       setRefsByKey((state) => {
         const newRef: React.MutableRefObject<HTMLElement | null> =
