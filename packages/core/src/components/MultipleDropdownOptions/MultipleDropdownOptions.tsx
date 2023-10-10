@@ -87,7 +87,6 @@ const MultipleDropdownOptions = ({
   const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
 
   const toggleItem = (value: string | number, isDisabled: boolean) => {
-    console.log('>>>toggleItem', { value, isDisabled });
     if (!isDisabled) {
       const item = allItems[value];
       onChange(item);

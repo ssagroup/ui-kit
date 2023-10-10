@@ -47,11 +47,6 @@ export const useVisibility = (
   const processVisibility = () => {
     for (const itemKey of Object.keys(checkboxData)) {
       const element = elementsRef.current[itemKey].element.current;
-      console.log('>>>processVisibility', {
-        itemKey,
-        elementsRefCurrent: elementsRef.current,
-        element,
-      });
       if (element && wrapperRef?.current) {
         const visibility = element?.offsetLeft < wrapperRef?.current.offsetLeft;
         element.style.visibility = visibility ? 'hidden' : 'visible';
@@ -65,7 +60,6 @@ export const useVisibility = (
   const elementsRef = useRef(refs);
 
   useEffect(() => {
-    console.log('>>>useEffect: checkboxData => setting refs...', getRefs());
     const newRefs = getRefs();
     setRefs(newRefs);
     elementsRef.current = newRefs;
@@ -73,12 +67,6 @@ export const useVisibility = (
 
   useEffect(() => {
     const groupsCount = Object.keys(checkboxData).length;
-    const elementsRefCount = Object.keys(elementsRef.current).length;
-    console.log('>>>useEffect: refsByKey/elementsRef => elementsRefCount', {
-      elementsRefCount,
-      elementsRef,
-      refsByKey,
-    });
     if (
       groupsCount > 0 &&
       Object.keys(refsByKey).length === groupsCount &&
