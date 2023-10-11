@@ -16,6 +16,7 @@ const IndicatorBase = styled.div<{ background?: string }>`
     background
       ? background
       : `linear-gradient(291.8deg, ${theme.colors.blueLightDarker}, ${theme.colors.blueDark})`};
+
   ${({ theme }) => theme.mediaQueries.md} {
     min-width: 8px;
     min-height: 8px;

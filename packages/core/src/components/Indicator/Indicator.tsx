@@ -21,7 +21,6 @@ const Indicator = ({
   const { width: windowWidth } = useWindowSize();
   const theme = useTheme();
 
-  console.log();
   const refValue = indicatorRef.current ? indicatorRef.current.offsetWidth : 0;
   const isRight = position === 'right';
 
@@ -47,12 +46,12 @@ const Indicator = ({
           css={
             childrenData && [
               css`
-                top: ${childrenData.top + 4}px;
-                left: ${isRight ? '-4px' : '-1px'};
+                top: ${childrenData.top + 2}px;
+                left: ${isRight ? '-6px' : '1px'};
                 transform: translate(${childrenData?.[position]}px, -50%);
 
                 ${theme.mediaQueries.md} {
-                  left: ${isRight ? '-8px' : 0};
+                  left: ${isRight ? '-10px' : '1px'};
                 }
               `,
               width > 8 &&
@@ -68,7 +67,7 @@ const Indicator = ({
                 `,
               width > 24 &&
                 css`
-                  border-radius: 3px;
+                  border-radius: 10px;
                   aspect-ratio: 0;
                 `,
             ]
