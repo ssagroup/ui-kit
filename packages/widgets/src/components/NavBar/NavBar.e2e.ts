@@ -26,6 +26,7 @@ const clickAndWaitForAnimationEnd = async (page: Page) => {
 test('[1920] Widgets: NavBar should be visible', async ({ page }) => {
   await page.setViewportSize(SCREEN_SIZES[1920]);
   await gotoPage(page);
+  await page.locator('nav ul');
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w1920px].png`,
   });
@@ -34,6 +35,7 @@ test('[1920] Widgets: NavBar should be visible', async ({ page }) => {
 test('[1440] Widgets: NavBar should be visible', async ({ page }) => {
   await page.setViewportSize(SCREEN_SIZES[1440]);
   await gotoPage(page);
+  await page.locator('nav ul');
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w1440px].png`,
   });
