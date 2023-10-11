@@ -32,7 +32,7 @@ export const TableFilterTrigger = ({
   ...rest
 }: {
   children: React.ReactNode;
-  as?: React.ElementType;
+  as?: string;
   className?: string;
 }) => {
   const theme = useTheme();
