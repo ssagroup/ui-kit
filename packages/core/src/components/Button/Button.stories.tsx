@@ -56,7 +56,7 @@ export default {
           summary: 'string',
         },
       },
-      options: ['primary', 'info', 'secondary', 'tertiary'],
+      options: ['primary', 'info', 'secondary', 'tertiary', 'attention'],
       control: {
         type: 'inline-radio',
       },

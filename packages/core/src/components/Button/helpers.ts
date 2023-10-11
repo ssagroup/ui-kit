@@ -7,6 +7,7 @@ export const variants: Array<keyof IButtonVariants> = [
   'info',
   'secondary',
   'tertiary',
+  'attention',
 ];
 
 export const HeaderTitle = styled.span`

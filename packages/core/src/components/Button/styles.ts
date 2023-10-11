@@ -141,3 +141,28 @@ export const tertiary = (theme: Theme) => css`
 
   ${focusOutline(theme, 'greyOutline')}
 `;
+
+export const attention = (theme: Theme) => css`
+  color: ${theme.colors.white};
+  background: linear-gradient(
+    99.26deg,
+    ${theme.colors.pink} -7.01%,
+    ${theme.colors.pinkLighter} 92.87%
+  );
+
+  &:hover {
+    background: linear-gradient(
+      99.26deg,
+      ${theme.colors.pinkDark} 7.01%,
+      ${theme.colors.pinkDarker} 92.87%
+    );
+  }
+
+  &:active {
+    background: ${theme.colors.pinkDark};
+  }
+
+  &:disabled {
+    background: ${theme.colors.grey};
+  }
+`;

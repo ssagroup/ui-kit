@@ -52,6 +52,8 @@ type Colors = MakeColors<
     'green60',
     'pink',
     'pink20',
+    'pinkDark',
+    'pinkDarker',
     'pinkShadow40',
     'pinkLighter',
     'pinkLighter20',

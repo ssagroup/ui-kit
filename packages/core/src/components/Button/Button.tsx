@@ -19,6 +19,7 @@ import {
   info,
   secondary,
   tertiary,
+  attention,
   buttonBlock,
   iconWrapperLeft,
   iconWrapperRight,
@@ -35,6 +36,7 @@ const mapVariants: IButtonVariants = {
   secondary,
   tertiary,
   info,
+  attention,
 };
 
 export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
@@ -67,10 +69,11 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
     const isInfo = variant === 'info';
     const isSecondary = variant === 'secondary';
     const isTertiary = variant === 'tertiary';
+    const isAttention = variant === 'attention';
     const noMargin = !text ? { margin: 0 } : {};
 
     const variantStyles =
-      isPrimary || isInfo || isTertiary || isSecondary
+      isPrimary || isInfo || isTertiary || isSecondary || isAttention
         ? mapVariants[variant] && mapVariants[variant](theme)
         : undefined;
 
@@ -95,7 +98,7 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
         ) : text ? (
           isDisabled ? (
             <DisabledButtonText text={text} size={size} />
-          ) : isPrimary || isInfo ? (
+          ) : isPrimary || isInfo || isAttention ? (
             <WhiteButtonText text={text} size={size} />
           ) : isTertiary && isHovered ? (
             <GreyLightButtonText text={text} size={size} />
