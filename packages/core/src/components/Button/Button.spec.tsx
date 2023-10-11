@@ -8,6 +8,8 @@ import {
   primaryBtnSpecs,
   secondaryBtnSpecs,
   tertiaryBtnSpecs,
+  infoBtnSpecs,
+  attentionBtnSpecs,
   TestPropsType,
 } from './fixtures';
 
@@ -26,7 +28,7 @@ const getElTestId = (
 ) => {
   const prefix = isDisabled
     ? 'disabled'
-    : ['primary', 'info'].includes(variant || '')
+    : ['primary', 'info', 'attention'].includes(variant || '')
     ? 'white'
     : variant === 'tertiary' && isHovered
     ? 'greylight'
@@ -213,7 +215,7 @@ describe('Button', () => {
   });
 
   describe('Info', () => {
-    primaryBtnSpecs.forEach((spec) =>
+    infoBtnSpecs.forEach((spec) =>
       it(getSpecName(spec), () => testButton(spec)),
     );
 
@@ -404,7 +406,7 @@ describe('Button', () => {
   });
 
   describe('Attention', () => {
-    primaryBtnSpecs.forEach((spec) =>
+    attentionBtnSpecs.forEach((spec) =>
       it(getSpecName(spec), () => testButton(spec)),
     );
 
