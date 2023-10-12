@@ -81,21 +81,6 @@ export const useVisibility = (
 
   const windowSize = useWindowSize();
 
-  const observer = new IntersectionObserver((entries) => {
-    console.log('>>>IntersectionObserver', entries);
-    processVisibility();
-  });
-
-  useEffect(() => {
-    if (wrapperRef && wrapperRef.current) {
-      console.log('>>>starting observing...');
-      observer.observe(wrapperRef.current);
-    }
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   useEffect(() => {
     processVisibility();
   }, [windowSize.width]);
@@ -103,5 +88,6 @@ export const useVisibility = (
   return {
     elementsRef,
     setElementRef,
+    processVisibility,
   };
 };

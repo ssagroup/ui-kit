@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useId, useRef } from 'react';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
-import { mapObjIndexed, mergeRefs } from '@ssa-ui-kit/utils';
+import { mapObjIndexed } from '@ssa-ui-kit/utils';
+import { useMergeRefs } from '@floating-ui/react';
 
 import DropdownBase from '@components/DropdownBase';
 import DropdownToggle from '@components/DropdownToggle';
@@ -45,7 +46,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
     onChange: handleChange,
     className,
   }: IDropdownProps<T>,
-  ref?: React.MutableRefObject<HTMLDivElement | null>,
+  ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
   const theme = useTheme();
   const dropdownBaseRef: React.MutableRefObject<HTMLDivElement | null> =
@@ -149,7 +150,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
       <DropdownBase
-        ref={mergeRefs([dropdownBaseRef, ref])}
+        ref={useMergeRefs([dropdownBaseRef, ref])}
         data-testid="dropdown">
         <DropdownToggle
           className={className}
@@ -196,6 +197,6 @@ function MultipleDropdownInner<T extends IDropdownOption>(
 const MultipleDropdown = React.forwardRef<
   HTMLDivElement,
   IDropdownProps<IDropdownOption>
->(MultipleDropdownInner as any);
+>(MultipleDropdownInner);
 
 export default MultipleDropdown;

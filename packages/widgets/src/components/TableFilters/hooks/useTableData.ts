@@ -72,7 +72,7 @@ export const useTableData = ({
       groupName,
     )(selectedItemsByGroup);
     const newState = currentState.includes(name)
-      ? currentState.filter((stateName) => stateName !== name)
+      ? currentState.filter((stateName: string) => stateName !== name)
       : [...currentState, name];
     setSelectedItemsByGroup({
       ...selectedItemsByGroup,
