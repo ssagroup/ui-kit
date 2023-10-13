@@ -6,10 +6,9 @@ import {
   notifyTitle,
   notifyText,
   notifyTime,
-  childrenWrapper,
 } from './style';
 import { INotificationCardProps } from './types';
-import { formatPeriod } from './timeFormatters';
+import { timeAgo } from '@ssa-ui-kit/utils';
 
 const NotificationCard = ({
   title,
@@ -18,20 +17,15 @@ const NotificationCard = ({
   isRead,
   badgeColor,
   iconName,
-  timeAgo,
+  time,
   onClick,
 }: INotificationCardProps) => {
   const theme = useTheme();
+  const { getTimeAgo } = timeAgo;
 
-  // 1618301456781
-  //Tue Apr 13 2023 11:10:56 GMT+0300 (Eastern European Summer Time)
-  console.log(
-    formatPeriod(
-      'Tue Apr 13 2023 11:10:56 GMT+0300 (Eastern European Summer Time)',
-    ),
-  );
   return (
     <CardBase
+      data-testid="notification"
       css={notifyCard}
       noShadow
       onClick={() => {
@@ -40,7 +34,7 @@ const NotificationCard = ({
         }
       }}>
       <Indicator isVisible={!isRead}>
-        <Badge color={badgeColor} css={notifyBadge}>
+        <Badge data-testid="badge" color={badgeColor} css={notifyBadge}>
           <Icon name={iconName} color={theme.colors.white} size={14} />
         </Badge>
       </Indicator>
@@ -58,13 +52,13 @@ const NotificationCard = ({
         color={theme.colors.greyDarker60}>
         {text}
       </Typography>
-      {children ? <div css={childrenWrapper}>{children}</div> : null}
+      {children}
       <Typography
         variant="body1"
         weight="regular"
         css={notifyTime}
         color={theme.colors.greyDarker}>
-        {timeAgo}
+        {getTimeAgo(time)}
       </Typography>
     </CardBase>
   );

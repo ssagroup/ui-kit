@@ -1,15 +1,24 @@
 import { Theme, css } from '@emotion/react';
 
 export const notifyCard = (theme: Theme) => css`
+  position: relative;
   display: grid;
   column-gap: 9px;
   grid-template-columns: auto 1fr auto;
   padding: 14px 12px;
   align-items: flex-start;
 
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
   ${theme.mediaQueries.md} {
     column-gap: 12px;
     padding: 14px 18px 14px 12px;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
   }
 
   ${theme.mediaQueries.xs} {
@@ -76,40 +85,6 @@ export const notifyText = (theme: Theme) => css`
 
   ${theme.mediaQueries.xs} {
     grid-row: 3;
-  }
-`;
-
-export const childrenWrapper = (theme: Theme) => css`
-  grid-column: 2 / span 2;
-  margin-top: 10px;
-
-  button {
-    height: 31px;
-    border-radius: 6px;
-    font-weight: 700;
-
-    &:focus::before {
-      content: none;
-    }
-
-    &:not(:last-child) {
-      margin-right: 20px;
-    }
-  }
-
-  ${theme.mediaQueries.md} {
-    margin-top: 13px;
-  }
-
-  ${theme.mediaQueries.xs} {
-    button {
-      height: 28px;
-      padding: 10px;
-
-      &:not(:last-child) {
-        margin-right: 5px;
-      }
-    }
   }
 `;
 

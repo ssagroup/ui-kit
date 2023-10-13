@@ -7,7 +7,7 @@ const periodValues: Record<string, number> = {
   min: 60,
 };
 
-export const formatPeriod = (timeValue: string | number) => {
+export const getTimeAgo = (timeValue: string | number) => {
   const date = new Date(timeValue);
   if (Number.isNaN(date.getTime())) {
     throw new Error('Invalid date');

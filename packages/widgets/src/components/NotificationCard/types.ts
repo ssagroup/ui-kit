@@ -6,7 +6,7 @@ export interface INotificationCardProps {
   isRead: boolean;
   badgeColor: string;
   iconName: keyof IMapIcons;
-  timeAgo: string | number;
+  time: string | number;
   children?: React.ReactNode;
   onClick?: () => void;
 }
