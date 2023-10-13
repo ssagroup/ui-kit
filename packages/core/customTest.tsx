@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { ThemeProvider, Theme } from '@emotion/react';
 import '@testing-library/dom';
 import { render, RenderOptions } from '@testing-library/react';
-import { UseFormReturn } from 'react-hook-form';
 
 const AllTheProviders = ({
   children,
@@ -28,12 +27,14 @@ const customRender = (
 
 function mockUseForm() {
   return {
-    register: ({ name }) => ({
+    ...jest.requireActual('react-hook-form'),
+    register: ({ name }: { name: string }) => ({
       onChange: jest.fn(),
       onBlur: jest.fn(),
       name: name,
+      ref: jest.fn(),
     }),
-  } as unknown as UseFormReturn;
+  };
 }
 
 export const initRender = (theme: Theme) => {

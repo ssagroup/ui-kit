@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const StepConnectorWrapper = (inverted) => css`
+export const StepConnectorWrapper = (inverted?: boolean) => css`
   position: absolute;
   top: 10px;
 
@@ -8,7 +8,7 @@ export const StepConnectorWrapper = (inverted) => css`
   right: calc(${inverted ? '-50%' : '50%'} + 16px);
 `;
 
-export const StepConnectorLineVertical = (color) => css`
+export const StepConnectorLineVertical = (color?: string) => css`
   display: block;
   border-color: ${color};
   border-left-style: solid;
@@ -16,7 +16,7 @@ export const StepConnectorLineVertical = (color) => css`
   min-height: 20px;
 `;
 
-export const StepConnectorLine = (color) => css`
+export const StepConnectorLine = (color?: string) => css`
   display: block;
   border-color: ${color};
   border-top-width: 2px;

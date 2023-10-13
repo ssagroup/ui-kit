@@ -1,4 +1,4 @@
-import { IconProps, IMapIcons } from '../Icons.types';
+import { IconProps, IMapIcons } from '../types';
 
 import { Calendar } from './Calendar';
 import { Diet } from './Diet';
@@ -19,6 +19,9 @@ import { User } from './User';
 import { Union } from './Union';
 import { Visible } from './Visible';
 import { Invisible } from './Invisible';
+import { Information } from './Information';
+import { Warning } from './Warning';
+import { Attention } from './Attention';
 
 import { CarrotDown } from './CarrotDown';
 import { CarrotUp } from './CarrotUp';
@@ -32,6 +35,8 @@ import { ArrowUp } from './ArrowUp';
 import { ArrowDown } from './ArrowDown';
 
 import { iconsList } from './iconsList';
+
+import { Filter } from './Filter';
 
 const componentsList = [
   Diet,
@@ -50,6 +55,9 @@ const componentsList = [
   User,
   Union,
   Notification,
+  Information,
+  Warning,
+  Attention,
   Visible,
   Invisible,
   CarrotDown,
@@ -60,6 +68,7 @@ const componentsList = [
   Circle,
   ArrowUp,
   ArrowDown,
+  Filter,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {

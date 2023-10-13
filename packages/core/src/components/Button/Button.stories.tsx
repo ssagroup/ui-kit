@@ -3,6 +3,8 @@ import type { Meta } from '@storybook/react';
 import Icon from '@components/Icon';
 
 import Button from './index';
+import { GridWrapper, HeaderTitle, sizes, variants } from './helpers';
+import React from 'react';
 
 export default {
   title: 'Components/Button',
@@ -54,7 +56,7 @@ export default {
           summary: 'string',
         },
       },
-      options: ['primary', 'secondary', 'tertiary'],
+      options: ['primary', 'info', 'secondary', 'tertiary', 'attention'],
       control: {
         type: 'inline-radio',
       },
@@ -80,25 +82,43 @@ export default {
 
 export const Default = {};
 
-export const Small = {
-  args: {
-    size: 'small',
-    text: 'Button',
-  },
-};
+export const AllStates = () => (
+  <GridWrapper>
+    <HeaderTitle>Variant</HeaderTitle>
+    <HeaderTitle>Small</HeaderTitle>
+    <HeaderTitle>Medium</HeaderTitle>
+    <HeaderTitle>Large</HeaderTitle>
+    {variants.map((variant) => (
+      <React.Fragment key={variant}>
+        <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
+        {sizes.map((size) => (
+          <Button variant={variant} size={size} key={variant + size}>
+            Button
+          </Button>
+        ))}
+      </React.Fragment>
+    ))}
+  </GridWrapper>
+);
 
-export const Medium = {
-  args: { size: 'medium' },
+AllStates.args = {
+  name: 'All States',
 };
-
-export const Large = { args: { size: 'large' } };
 
 export const Block = { args: { size: 'large', block: true } };
 
-export const startIcon = {
+export const StartIcon = {
   args: { startIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
 };
 
-export const endIcon = {
+export const EndIcon = {
   args: { endIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
+};
+
+export const Focused = {
+  parameters: {
+    pseudo: {
+      focus: true,
+    },
+  },
 };

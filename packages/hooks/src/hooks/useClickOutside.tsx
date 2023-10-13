@@ -2,15 +2,18 @@ import { useEffect } from 'react';
 
 type UseClickOutsideType = (
   ref: React.RefObject<HTMLElement>,
-  fn: (e: React.MouseEvent<HTMLElement>) => void,
+  fn: (e: Event) => void,
 ) => void;
 
 export const useClickOutside: UseClickOutsideType = (ref, onClickOutside) => {
   const events = ['mousedown', 'touchstart'];
 
   useEffect(() => {
-    const handler = (e) => {
-      if (ref.current == null || ref.current.contains(e.target)) {
+    const handler = (e: Event) => {
+      if (
+        ref.current == null ||
+        ref.current.contains(e.target as HTMLElement)
+      ) {
         return;
       }
       onClickOutside(e);

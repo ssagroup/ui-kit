@@ -1,3 +1,4 @@
+import React from 'react';
 import '@storybook/react-webpack5';
 
 import { ThemeProvider } from '@emotion/react';
@@ -10,7 +11,11 @@ const preview = {
     controls: { expanded: true, hideNoControlsWarning: true },
   },
   decorators: [
-    (Story) => <ThemeProvider theme={theme}>{Story()}</ThemeProvider>,
+    (Story) => (
+      <ThemeProvider theme={theme}>
+        <Story />
+      </ThemeProvider>
+    ),
   ],
 };
 

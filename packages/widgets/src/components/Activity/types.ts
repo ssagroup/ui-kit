@@ -6,9 +6,5 @@ export interface ActivityItemProps {
   max: number;
   currentValue: number;
 }
-interface ActivityProps {
-  data: {
-    [key: string]: ActivityItemProps[];
-  };
-}
+
 export type ActivityResp = { [key: string]: ActivityItemProps[] };

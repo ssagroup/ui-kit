@@ -32,7 +32,9 @@ const iconWrapper = css`
   gap: 10px;
 `;
 
-export const Default: StoryObj<typeof Icon> = (args) => {
+export const Default: StoryObj<typeof Icon> = (
+  args: Parameters<typeof Icon>[0],
+) => {
   return (
     <div
       css={css`
@@ -107,12 +109,20 @@ export const Default: StoryObj<typeof Icon> = (args) => {
         <Typography variant="body1">union</Typography>
       </div>
       <div css={iconWrapper}>
-        <Icon name="visible" size={args.size} color={args.color} />
-        <Typography variant="body1">visible</Typography>
+        <Icon name="information" size={args.size} color={args.color} />
+        <Typography variant="body1">information</Typography>
       </div>
       <div css={iconWrapper}>
-        <Icon name="invisible" size={args.size} color={args.color} />
-        <Typography variant="body1">invisible</Typography>
+        <Icon name="warning" size={args.size} color={args.color} />
+        <Typography variant="body1">warning</Typography>
+      </div>
+      <div css={iconWrapper}>
+        <Icon name="attention" size={args.size} color={args.color} />
+        <Typography variant="body1">attention</Typography>
+      </div>
+      <div css={iconWrapper}>
+        <Icon name="visible" size={args.size} color={args.color} />
+        <Typography variant="body1">visible</Typography>
       </div>
       <div css={iconWrapper}>
         <Icon name="invisible" size={args.size} color={args.color} />

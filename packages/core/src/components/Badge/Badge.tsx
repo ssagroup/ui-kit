@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   blue,
   green,
@@ -6,10 +7,10 @@ import {
   purple,
   turquoise,
   yellow,
+  yellowWarm,
 } from '@styles/global';
 
 import BadgeBase from './BadgeBase';
-
 import { BadgeProps } from './types';
 import { large, medium, small } from './styles';
 
@@ -22,6 +23,7 @@ const mapSizes: MainSizes = {
 const mapColors: MainColors = {
   pink,
   yellow,
+  yellowWarm,
   green,
   turquoise,
   purple,
@@ -29,15 +31,15 @@ const mapColors: MainColors = {
   blue,
 };
 
-const Badge = ({
-  color = 'purple',
-  size = 'medium',
-  children,
-  ...props
-}: BadgeProps) => (
-  <BadgeBase css={[mapColors[color], mapSizes[size]]} {...props}>
-    {children ? children : null}
-  </BadgeBase>
-);
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(function Badge(
+  { color = 'purple', size = 'medium', children, ...props },
+  ref,
+) {
+  return (
+    <BadgeBase ref={ref} css={[mapColors[color], mapSizes[size]]} {...props}>
+      {children ? children : null}
+    </BadgeBase>
+  );
+});
 
 export default Badge;

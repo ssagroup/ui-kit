@@ -22,7 +22,7 @@ const NavBarBase = styled.nav`
       & ~ ${NavBarWrapper} {
         transform: translateY(0);
         border-radius: 12px 12px 0 0;
-        height: Calc(100vh - 60px);
+        height: calc(100vh - 60px);
 
         ${({ theme }) => theme.mediaQueries.lg} {
           border-radius: 0;

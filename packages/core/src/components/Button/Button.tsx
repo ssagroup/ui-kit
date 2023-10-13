@@ -16,8 +16,10 @@ import {
   medium,
   small,
   primary,
+  info,
   secondary,
   tertiary,
+  attention,
   buttonBlock,
   iconWrapperLeft,
   iconWrapperRight,
@@ -33,6 +35,8 @@ const mapVariants: IButtonVariants = {
   primary,
   secondary,
   tertiary,
+  info,
+  attention,
 };
 
 export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
@@ -48,11 +52,13 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
       className,
       isDisabled,
       onClick,
+      children,
+      ...ariaProps
     },
     ref,
   ) {
-    if (!text && !startIcon && !endIcon) {
-      throw new Error('Button must have text or icon');
+    if (!text && !startIcon && !endIcon && !children) {
+      throw new Error('Button must have either text or icon or children');
     }
 
     const theme = useTheme();
@@ -60,28 +66,39 @@ export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
     const [isHovered, setIsHovered] = useState(false);
 
     const isPrimary = variant === 'primary';
+    const isInfo = variant === 'info';
+    const isSecondary = variant === 'secondary';
     const isTertiary = variant === 'tertiary';
+    const isAttention = variant === 'attention';
     const noMargin = !text ? { margin: 0 } : {};
+
+    const variantStyles =
+      isPrimary || isInfo || isTertiary || isSecondary || isAttention
+        ? mapVariants[variant] && mapVariants[variant](theme)
+        : undefined;
 
     const btn = (
       <ButtonBase
         ref={ref}
-        css={[mapSizes[size], mapVariants[variant](theme)]}
+        css={[mapSizes[size], variantStyles]}
         type={type}
         disabled={isDisabled}
         className={className}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={onClick}>
+        onClick={onClick}
+        {...ariaProps}>
         {startIcon ? (
           <span style={noMargin} css={[iconWrapperRight]}>
             {startIcon}
           </span>
         ) : null}
-        {text ? (
+        {children ? (
+          children
+        ) : text ? (
           isDisabled ? (
             <DisabledButtonText text={text} size={size} />
-          ) : isPrimary ? (
+          ) : isPrimary || isInfo || isAttention ? (
             <WhiteButtonText text={text} size={size} />
           ) : isTertiary && isHovered ? (
             <GreyLightButtonText text={text} size={size} />

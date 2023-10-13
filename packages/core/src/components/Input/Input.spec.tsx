@@ -77,4 +77,19 @@ describe('Inputs', () => {
     expect(input).toBeInTheDocument();
     expect(icon).toBeInTheDocument();
   });
+
+  it('Render input with startElement and endElement', () => {
+    render(
+      <Input
+        placeholder="Field"
+        name="field"
+        register={register}
+        startElement={<span data-testid="startElement">+</span>}
+        endElement={<span data-testid="endElement">-</span>}
+      />,
+    );
+
+    expect(screen.getByTestId('startElement')).toBeInTheDocument();
+    expect(screen.getByTestId('endElement')).toBeInTheDocument();
+  });
 });

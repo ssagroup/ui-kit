@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { progressInfoData as data } from './mockProgressInfoRequest';
 
-import { ProgressInfo } from './ProgressInfo';
+import { default as ProgressInfo, IProgressInfoProps } from './index';
 
 export default {
   title: 'Widgets/ProgressInfo',
@@ -23,4 +23,10 @@ export default {
   ],
 } as Meta<typeof ProgressInfo>;
 
-export const Default = {};
+export const Default: StoryObj<typeof ProgressInfo> = (
+  args: IProgressInfoProps,
+) => {
+  return <ProgressInfo {...args} />;
+};
+
+Default.args = { data, className: 'lostpixel-ignore' };

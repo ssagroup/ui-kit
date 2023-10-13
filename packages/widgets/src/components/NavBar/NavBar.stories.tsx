@@ -4,8 +4,18 @@ import { Meta } from '@storybook/react';
 import { Title, Description, Source } from '@storybook/addon-docs';
 
 import { NavBar } from './NavBar';
+import { DecoratorFunction } from '@storybook/types';
 
-const reactRouterDecorator = (Story) => {
+type Args = Parameters<typeof NavBar>[0];
+
+const reactRouterDecorator: DecoratorFunction<
+  {
+    component: typeof NavBar;
+    storyResult: React.ReactElement;
+    canvasElement: unknown;
+  },
+  Args
+> = (Story) => {
   return (
     <BrowserRouter>
       <Routes>
@@ -14,6 +24,16 @@ const reactRouterDecorator = (Story) => {
     </BrowserRouter>
   );
 };
+
+const Items = [
+  { path: 'stats', iconName: 'stats' },
+  { path: 'calendar', iconName: 'calendar' },
+  { path: 'trainings', iconName: 'trainings' },
+  { path: 'measurements', iconName: 'measurements' },
+  { path: 'diet', iconName: 'diet' },
+  { path: 'notification', iconName: 'notification' },
+  { path: 'settings', iconName: 'settings' },
+];
 
 export default {
   title: 'Widgets/NavBar',
@@ -39,16 +59,28 @@ export default {
     ),
   ],
   args: {
-    items: [
-      { path: 'stats', iconName: 'stats' },
-      { path: 'calendar', iconName: 'calendar' },
-      { path: 'trainings', iconName: 'trainings' },
-      { path: 'measurements', iconName: 'measurements' },
-      { path: 'diet', iconName: 'diet' },
-      { path: 'notification', iconName: 'notification' },
-      { path: 'settings', iconName: 'settings' },
-    ],
+    items: Items,
   },
 } as Meta<typeof NavBar>;
 
 export const Default = {};
+
+const VIEWPORTS = {
+  laptop: {
+    name: 'Laptop',
+    styles: {
+      width: '1440px',
+      height: '1080px',
+    },
+  },
+};
+
+export const WideScreen = {
+  component: NavBar,
+  parameters: {
+    viewport: {
+      viewports: VIEWPORTS,
+      defaultViewport: 'laptop',
+    },
+  },
+};

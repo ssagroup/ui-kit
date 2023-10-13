@@ -1,63 +1,123 @@
+export type RGBString = `rgb${string}`;
+
+type MakeColors<T extends Array<string>> = {
+  [K in T[number]]?: RGBString;
+};
+
+type Colors = MakeColors<
+  [
+    'white',
+    'white60',
+    'white80',
+    'white30',
+    'dark',
+    'greyLighter',
+    'greySelectedMenuItem',
+    'greyFocused',
+    'greyFocused40',
+    'grey',
+    'grey20',
+    'grey40',
+    'greyShadow24',
+    'greyDarker',
+    'greyDarker60',
+    'greyDarker14',
+    'greyDark',
+    'greyDisabled',
+    'greyButtonGradient',
+    'greyButtonGradientLight',
+    'greyBackground',
+    'greyBackgroundLight',
+    'greyGraphite',
+    'greyShadow',
+    'greyOutline',
+    'greyShadowHover',
+    'greyDropdownMain',
+    'greyDropdownFocused',
+    'greyDropdownText',
+    'greyArrowSidebar',
+    'greyFilterIcon',
+    'greyCancelClearButton',
+    'redLighter',
+    'redLighter40',
+    'red',
+    'red40',
+    'greenLighter',
+    'greenLighter20',
+    'greenLighter40',
+    'greenLighter60',
+    'green',
+    'green20',
+    'green40',
+    'green60',
+    'pink',
+    'pink20',
+    'pinkDark',
+    'pinkDarker',
+    'pinkShadow40',
+    'pinkLighter',
+    'pinkLighter20',
+    'pinkLighter40',
+    'yellow',
+    'yellow20',
+    'yellowLighter',
+    'yellowLighter20',
+    'yellowLighter40',
+    'yellowWarm',
+    'yellowWarm20',
+    'yellowWarm40',
+    'turquoise',
+    'turquoise20',
+    'turquoiseShadow40',
+    'turquoiseLighter',
+    'turquoiseLighter20',
+    'turquoiseLighter40',
+    'purple',
+    'purple20',
+    'purpleLighter',
+    'purpleLighter20',
+    'purpleLighter40',
+    'purpleDark',
+    'purpleDark40',
+    'blue',
+    'blue20',
+    'blueDark',
+    'blueLightDarker',
+    'blueDropdownWithSelectedItems',
+    'blueDropdownWithSelectedItemsBorder',
+    'blueLighter',
+    'blueLighter20',
+    'blueLighter40',
+    'blueLight',
+    'blueLight20',
+    'blueLightDarker40',
+    'blueLightLighter',
+    'blueLightLighter20',
+    'blueLightLighter40',
+    'blueNotification',
+    'blueNotification40',
+    'blueButtonHoverGradientFrom',
+    'blueButtonHoverGradientTo',
+    'blueButtonActive',
+  ]
+>;
+
+export type ColorsKeys = keyof Colors;
+
+type MediaQueryString = `@media${string}`;
+
 export interface Theme {
-  colors: {
-    white?: string;
-    white60?: string;
-    white30?: string;
-    dark?: string;
-    greyLighter?: string;
-    greySelectedMenuItem?: string;
-    greyFocused?: string;
-    greyFocused40?: string;
-    grey?: string;
-    grey20?: string;
-    grey40?: string;
-    greyShadow24?: string;
-    greyDarker?: string;
-    greyDarker60?: string;
-    greyDarker14?: string;
-    greyDark?: string;
-    greyDisabled: string;
-    greyButtonGradient?: string;
-    greyButtonGradientLight?: string;
-    greyBackground?: string;
-    greyBackgroundLight?: string;
-    greyShadow?: string;
-    greyOutline?: string;
-    greyShadowHover?: string;
-    redLighter?: string;
-    redLighter40?: string;
-    red?: string;
-    red40?: string;
-    greenLighter?: string;
-    greenLighter40?: string;
-    greenLighter60?: string;
-    green?: string;
-    green40?: string;
-    green60?: string;
-    pink?: string;
-    pinkLighter?: string;
-    pinkLighter40?: string;
-    yellow?: string;
-    yellowLighter?: string;
-    yellowLighter40?: string;
-    turquoise?: string;
-    turquoiseLighter?: string;
-    turquoiseLighter40?: string;
-    purple?: string;
-    purpleLighter?: string;
-    purpleLighter40?: string;
-    purpleDark?: string;
-    blue?: string;
-    blueLighter?: string;
-    blueLighter40?: string;
-    blueLight?: string;
-    blueLightLighter?: string;
-    blueLightLighter40?: string;
-  };
+  colors: Colors;
   mediaQueries: {
-    sm;
-    md;
-    lg;
-    xlg;
+    xs: MediaQueryString;
+    sm: MediaQueryString;
+    md: MediaQueryString;
+    lg: MediaQueryString;
+    xlg: MediaQueryString;
   };
+}
+
+export interface CommonProps {
+  as?: React.ElementType;
+  className?: string;
 }

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ColorsKeys } from '../..';
 
 export const ProgressCircleBase = styled.div<{
   gradientId: string;
@@ -18,7 +19,10 @@ export const ProgressCircleBase = styled.div<{
     left: 0;
 
     filter: ${({ theme, color }) =>
-      `drop-shadow(3px 5px 10px ${theme.colors[`${color}Lighter40`]})`};
+      `drop-shadow(3px 5px 10px ${
+        theme.colors[`${color}Lighter40` as ColorsKeys] ||
+        theme.colors[color as ColorsKeys]
+      })`};
   }
 
   circle {

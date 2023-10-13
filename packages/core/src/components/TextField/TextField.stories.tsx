@@ -6,6 +6,8 @@ import Icon from '@components/Icon';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
 
+type Args = Parameters<typeof TextField>[0];
+
 export default {
   title: 'Components/TextField',
   component: TextField,
@@ -25,7 +27,7 @@ export default {
         disable: true,
       },
     },
-    append: {
+    endElement: {
       control: {
         disable: true,
       },
@@ -48,7 +50,7 @@ const mockError: FieldError = {
   message: 'Required field',
 };
 
-export const Basic: StoryObj<typeof TextField> = (args) => {
+export const Basic: StoryObj<typeof TextField> = (args: Args) => {
   const { register } = useForm<FieldValues>();
 
   return <TextField {...args} register={register} />;
@@ -111,7 +113,7 @@ export const Disabled: StoryObj<typeof TextField> = () => {
       register={register}
       helperText="some nice text"
       disabled={true}
-      append={<Icon name="visible" size={16} />}
+      endElement={<Icon name="visible" size={16} />}
     />
   );
 };
@@ -145,7 +147,7 @@ export const WithAction: StoryObj<typeof TextField> = () => {
       name="field6"
       register={register}
       helperText="some nice text"
-      append={
+      endElement={
         <button onClick={() => console.log('calling action...')}>Action</button>
       }
     />
@@ -201,3 +203,19 @@ export const MultilineDisabled: StoryObj<typeof TextField> = () => {
   );
 };
 MultilineDisabled.args = {};
+
+export const Focused: StoryObj<typeof TextField> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <TextField {...args} register={register} />;
+};
+Focused.args = {
+  ...Basic.args,
+  label: 'Focused field',
+};
+
+Focused.parameters = {
+  pseudo: {
+    focus: true,
+  },
+};

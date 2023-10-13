@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { css } from '@emotion/react';
 
 import ColorPicker, { mapColors } from './ColorPicker';
+import { ColorPickerProps, ColorsList } from './types';
 
 export default {
   title: 'Components/ColorPicker',
   component: ColorPicker,
 } as Meta<typeof ColorPicker>;
 
-export const Default: StoryObj<typeof ColorPicker> = () => {
-  const [color, setColor] = useState('');
+export const Default = ({ initColor }: ColorPickerProps) => {
+  const [color, setColor] = useState<ColorsList>(
+    initColor || ('' as ColorsList),
+  );
 
   return (
     <div>
@@ -29,3 +32,17 @@ export const Default: StoryObj<typeof ColorPicker> = () => {
 };
 
 Default.args = {};
+Default.propTypes = {
+  initColor: String,
+};
+
+export const SelectedColor = () => {
+  return (
+    <Default
+      initColor="green"
+      onChange={() => {
+        console.log('onChange');
+      }}
+    />
+  );
+};

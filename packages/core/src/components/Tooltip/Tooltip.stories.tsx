@@ -10,6 +10,8 @@ import TooltipContent from '@components/TooltipContent';
 
 import Tooltip from './index';
 
+type Args = Parameters<typeof Tooltip>[0];
+
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
@@ -42,7 +44,7 @@ export default {
   ],
 } as Meta<typeof Tooltip>;
 
-export const OnClick: StoryObj<typeof Tooltip> = (args) => {
+export const OnClick: StoryObj<typeof Tooltip> = (args: Args) => {
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
@@ -58,7 +60,7 @@ OnClick.args = {
 };
 OnClick.storyName = 'Click';
 
-export const OnHover: StoryObj<typeof Tooltip> = (args) => {
+export const OnHover: StoryObj<typeof Tooltip> = (args: Args) => {
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
@@ -76,7 +78,7 @@ OnHover.args = {
 };
 OnHover.storyName = 'Hover';
 
-export const CustomContent: StoryObj<typeof Tooltip> = (args) => {
+export const CustomContent: StoryObj<typeof Tooltip> = (args: Args) => {
   const theme = useTheme();
 
   return (
@@ -109,7 +111,7 @@ CustomContent.args = {
 };
 CustomContent.storyName = 'Custom content';
 
-export const NoArrow: StoryObj<typeof Tooltip> = (args) => {
+export const NoArrow: StoryObj<typeof Tooltip> = (args: Args) => {
   const theme = useTheme();
 
   return (
@@ -132,3 +134,27 @@ NoArrow.args = {
   placement: 'left',
 };
 NoArrow.storyName = 'No arrow';
+
+export const Opened: StoryObj<typeof Tooltip> = (args: Args) => {
+  return (
+    <Tooltip {...args}>
+      <TooltipTrigger>
+        <Button size="medium" text="Hover over me!" />
+      </TooltipTrigger>
+      <TooltipContent>Tooltip</TooltipContent>
+    </Tooltip>
+  );
+};
+
+Opened.args = {
+  enableClick: false,
+  enableHover: true,
+  size: 'large',
+  isOpen: true,
+};
+Opened.parameters = {
+  pseudo: {
+    hover: true,
+    rootSelector: 'body',
+  },
+};

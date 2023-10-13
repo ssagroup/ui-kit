@@ -51,6 +51,7 @@ export const small = css`
 `;
 
 export const primary = (theme: Theme) => css`
+  color: ${theme.colors.white};
   background: linear-gradient(
     108.3deg,
     ${theme.colors.greyDarker} -0.36%,
@@ -85,6 +86,31 @@ export const primary = (theme: Theme) => css`
   }
 `;
 
+export const info = (theme: Theme) => css`
+  color: ${theme.colors.white};
+  background: linear-gradient(
+    247deg,
+    ${theme.colors.blueLighter} 14.71%,
+    ${theme.colors.blue} 85.29%
+  );
+
+  &:hover {
+    background: linear-gradient(
+      247deg,
+      ${theme.colors.blueButtonHoverGradientFrom} 14.71%,
+      ${theme.colors.blueButtonHoverGradientTo} 85.29%
+    );
+  }
+
+  &:active {
+    background: ${theme.colors.blueButtonActive};
+  }
+
+  &:disabled {
+    background: ${theme.colors.grey};
+  }
+`;
+
 export const secondary = (theme: Theme) => css`
   background: ${theme.colors.greyLighter};
   box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
@@ -114,4 +140,29 @@ export const tertiary = (theme: Theme) => css`
   background: transparent;
 
   ${focusOutline(theme, 'greyOutline')}
+`;
+
+export const attention = (theme: Theme) => css`
+  color: ${theme.colors.white};
+  background: linear-gradient(
+    99.26deg,
+    ${theme.colors.pink} -7.01%,
+    ${theme.colors.pinkLighter} 92.87%
+  );
+
+  &:hover {
+    background: linear-gradient(
+      99.26deg,
+      ${theme.colors.pinkDark} 7.01%,
+      ${theme.colors.pinkDarker} 92.87%
+    );
+  }
+
+  &:active {
+    background: ${theme.colors.pinkDark};
+  }
+
+  &:disabled {
+    background: ${theme.colors.grey};
+  }
 `;

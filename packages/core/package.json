@@ -18,45 +18,41 @@
     "url": "https://github.com/ssagroup/ui-kit.git",
     "directory": "packages/core"
   },
+  "devDependencies": {
+    "@emotion/jest": "^11.11.0",
+    "@nivo/line": "0.83.0",
+    "@playwright/test": "^1.37.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/testing-library__jest-dom": "^5.14.6",
+    "@types/uuid": "^9.0.3",
+    "resolve-tspaths": "^0.8.16",
+    "storybook-addon-pseudo-states": "^2.1.0",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.85.0"
+  },
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@floating-ui/react": "0.22.0",
+    "@floating-ui/react": "0.25.4",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
     "dotenv": "^16.0.3",
     "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
-    "react-hook-form": "^7.43.8",
+    "react-hook-form": "^7.46.1",
     "scheduler": "^0.23.0",
     "uuid": "^9.0.0"
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "./jest-setup.ts"
-    ],
-    "transform": {
-      "^.+\\.(j|t)sx?$": "babel-jest"
-    },
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/components/Icon/icons/",
-      "<rootDir>/dist/"
-    ],
-    "moduleNameMapper": {
-      "^@components(.*)$": "<rootDir>/src/components$1",
-      "^@themes(.*)$": "<rootDir>/src/themes$1",
-      "^@styles/(.*)$": "<rootDir>/src/styles/$1",
-      "^@types/(.*)$": "<rootDir>/src/types/$1"
-    }
-  },
   "scripts": {
     "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "sb:dev": "storybook dev -p 6006",
     "sb:build": "storybook build",
+    "test:e2e": "pnpm exec playwright test --project=chromium",
+    "test:e2e:ui": "pnpm exec playwright test --project=chromium --ui",
+    "test:e2e:debug": "pnpm exec playwright test --project=chromium --debug",
     "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc --noEmit -p ./tsconfig.json",
@@ -67,13 +63,6 @@
     "not dead",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "@emotion/jest": "^11.11.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
-  },
   "peerDependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.0",

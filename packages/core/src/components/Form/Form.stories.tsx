@@ -127,7 +127,7 @@ export const SingIn: StoryObj<typeof Card> = () => {
                 validationSchema={{
                   required: 'Required',
                 }}
-                append={
+                endElement={
                   <Button
                     variant="tertiary"
                     endIcon={
@@ -325,7 +325,7 @@ export const RecoverPasswordTemplate: StoryObj<typeof Card> = () => {
                 validationSchema={{
                   required: 'Required',
                 }}
-                append={
+                endElement={
                   <Button
                     variant="tertiary"
                     endIcon={
@@ -352,7 +352,7 @@ export const RecoverPasswordTemplate: StoryObj<typeof Card> = () => {
                   validationSchema={{
                     required: 'Required',
                   }}
-                  append={
+                  endElement={
                     <Button
                       variant="tertiary"
                       endIcon={

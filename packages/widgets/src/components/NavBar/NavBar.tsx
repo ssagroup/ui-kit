@@ -32,7 +32,9 @@ export const NavBar = ({ items }: INavBarProps) => {
         <NavBarList>
           {items.map(({ path, iconName }) => (
             <NavBarItem key={path}>
-              <NavBarLink to={'/' + path} active={pathname === path}>
+              <NavBarLink
+                to={'/' + path}
+                active={pathname === path ? true : undefined}>
                 <Icon name={iconName} color={theme.colors.grey} />
               </NavBarLink>
             </NavBarItem>

@@ -45,4 +45,14 @@ describe('ColorPicker', () => {
 
     expect(mockOnChange).toBeCalledWith('purple');
   });
+
+  it('Return the correct init color', async () => {
+    const mockOnChange = jest.fn();
+
+    render(<ColorPicker onChange={mockOnChange} initColor="green" />);
+
+    const [, , btnGreen] = await screen.queryAllByRole('button');
+
+    expect(btnGreen).toHaveStyleRule('border', '1.4px solid #fff');
+  });
 });

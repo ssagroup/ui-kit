@@ -12,6 +12,8 @@ import Wrapper from '@components/Wrapper';
 
 import Card from './index';
 import { CardProps } from './types';
+import ResponsiveImage from '@components/ResponsiveImage';
+import { useTheme } from '@emotion/react';
 
 export default {
   title: 'Components/Card',
@@ -61,9 +63,21 @@ export const Basic: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
 Basic.args = {};
 
 export const IconHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
+  const theme = useTheme();
   return (
     <Card noShadow={noShadow}>
-      <CardHeader icon={<Icon name="calendar" size={57} />}>
+      <CardHeader
+        icon={
+          <ResponsiveImage
+            css={{
+              filter: `drop-shadow(0px 5px 5px ${theme.colors.purpleDark}`,
+            }}
+            srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fheart%2Fheart_64.png?alt=media&token=aca1639b-62f5-44ed-a0d1-3cea8e4797e2 64w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fheart%2Fheart_48.png?alt=media&token=7ef68a25-5362-48b9-b359-c46b48d1db54 48w"
+            sizes="(min-width: 1440px) 64px, 48px"
+            src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fheart%2Fheart_48.png?alt=media&token=7ef68a25-5362-48b9-b359-c46b48d1db54"
+            alt="Heart"
+          />
+        }>
         <Typography variant="h2">Card</Typography>
       </CardHeader>
 
@@ -77,6 +91,7 @@ export const IconHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
     </Card>
   );
 };
+
 IconHeader.args = {};
 
 export const FloatHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
@@ -107,7 +122,7 @@ export const ItemCard: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
   return (
     <Card noShadow={noShadow}>
       <Wrapper direction="row" avatarSize={42}>
-        <Avatar size={42} image={image} />
+        <Avatar size={42} image={image} className="lostpixel-ignore" />
 
         <CardContent
           style={{
@@ -145,7 +160,7 @@ export const ItemCardAction: StoryObj<typeof Card> = ({
     <SwitchContextProvider initialState={true}>
       <Card noShadow={noShadow}>
         <Wrapper direction="row">
-          <Avatar size={42} image={image} />
+          <Avatar size={42} image={image} className="lostpixel-ignore" />
 
           <CardContent
             style={{
@@ -183,7 +198,7 @@ export const ItemCardAvatar: StoryObj<typeof Card> = ({
 
   return (
     <Card noShadow={noShadow}>
-      <Avatar size={64} image={image} />
+      <Avatar size={64} image={image} className="lostpixel-ignore" />
 
       <CardContent>
         <Typography variant="body1">

@@ -12,9 +12,9 @@ import {
   useRole,
   useInteractions,
 } from '@floating-ui/react';
-import { UseTooltipArgs } from './types';
+import { UseTooltip } from './types';
 
-export const useTooltip = ({
+export const useTooltip: UseTooltip = ({
   placement,
   enableClick = true,
   enableHover = false,
@@ -22,8 +22,9 @@ export const useTooltip = ({
   size = 'small',
   hasArrow = true,
   arrowProps = {},
-}: UseTooltipArgs) => {
-  const [isOpen, setIsOpen] = useState(false);
+  isOpen: isInitOpen = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const arrowRef = useRef(null);
 
   const floatingData = useFloating({

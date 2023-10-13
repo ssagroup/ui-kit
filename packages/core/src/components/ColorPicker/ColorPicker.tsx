@@ -9,7 +9,7 @@ import {
   yellow,
 } from '@styles/global';
 
-import { ColorPickerProps, Colors } from './types';
+import { ColorPickerProps, Colors, ColorsList } from './types';
 import { ColorMarker } from './styles';
 
 export const mapColors: Colors = {
@@ -22,17 +22,17 @@ export const mapColors: Colors = {
   purple,
 };
 
-const ColorPicker = ({ onChange }: ColorPickerProps) => {
-  const [activeColor, setActiveColor] = useState('');
+const ColorPicker = ({ onChange, initColor }: ColorPickerProps) => {
+  const [activeColor, setActiveColor] = useState(initColor || '');
 
-  const handleColorChange = (color: string) => {
+  const handleColorChange = (color: ColorsList) => {
     onChange(color);
     setActiveColor(color);
   };
 
   return (
     <ul css={{ display: 'flex', gap: 10, listStyle: 'none', padding: 0 }}>
-      {Object.keys(mapColors).map((color) => (
+      {(Object.keys(mapColors) as ColorsList[]).map((color) => (
         <li key={color}>
           <ColorMarker
             active={color === activeColor}

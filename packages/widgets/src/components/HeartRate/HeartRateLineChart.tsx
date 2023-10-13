@@ -1,4 +1,4 @@
-import { ResponsiveLine, LineSvgProps } from '@nivo/line';
+import { ResponsiveLine, LineSvgProps, LineProps } from '@nivo/line';
 import { SimpleChartTooltip } from '@ssa-ui-kit/core';
 
 import { getTime } from './utils';
@@ -6,7 +6,7 @@ import { getTime } from './utils';
 // ScaleSpec is not exported from @nivo/line
 type ScaleSpec = LineSvgProps['xScale'];
 
-const defaults = {
+const defaults: Omit<LineProps, 'data'> = {
   margin: { top: 0, right: 0, bottom: 0, left: 0 },
   xScale: { type: 'point' } as ScaleSpec,
   yScale: {

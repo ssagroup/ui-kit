@@ -10,7 +10,7 @@ import TooltipContent from '@components/TooltipContent';
 
 import Tooltip, { SimpleChartTooltip, ProgressChartTooltip } from './index';
 
-function setup(component) {
+function setup(component: React.ReactElement) {
   const user = userEvent.setup();
   return {
     user,
@@ -35,7 +35,9 @@ describe('Tooltip', () => {
   beforeEach(() => {
     const getComputedStyle = window.getComputedStyle;
     jest.spyOn(window, 'getComputedStyle').mockImplementation((...args) => {
-      const result = getComputedStyle(...args);
+      const result = getComputedStyle(
+        ...(args as [Element, string | null | undefined]),
+      );
 
       const el = args[0];
       if (el instanceof SVGSVGElement) {
@@ -164,6 +166,19 @@ describe('Tooltip', () => {
     (console.error as jest.Mock).mockRestore();
   });
 
+  it('Shows up by default', () => {
+    const { queryByText } = setup(
+      <Tooltip isOpen>
+        <TooltipTrigger>
+          <Button size="medium" text="Click me!" />
+        </TooltipTrigger>
+        <TooltipContent>{tooltipText}</TooltipContent>
+      </Tooltip>,
+    );
+
+    expect(queryByText(tooltipText)).toBeInTheDocument();
+  });
+
   describe('SimpleChartTooltip', () => {
     const point: Point = {
       id: '',
@@ -188,8 +203,13 @@ describe('Tooltip', () => {
     });
 
     it('Renders with a custom formatting', () => {
-      const renderFn = ({ xFormatted, yFormatted }) =>
-        `${xFormatted} - ${yFormatted}`.toUpperCase();
+      const renderFn = ({
+        xFormatted,
+        yFormatted,
+      }: {
+        xFormatted: string | number;
+        yFormatted: string | number;
+      }) => `${xFormatted} - ${yFormatted}`.toUpperCase();
 
       const { getByText } = setup(
         <SimpleChartTooltip point={point} renderValue={renderFn} />,

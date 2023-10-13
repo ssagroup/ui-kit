@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { CommonProps } from '@global-types/emotion';
 
-const Table = styled.table`
+const Table = styled.table<CommonProps>`
   display: table;
 
   width: 100%;

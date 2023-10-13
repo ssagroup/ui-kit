@@ -12,7 +12,7 @@
       "@components/*": ["./src/components/*"],
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
-      "@types/*": ["./src/types/*"]
+      "@global-types/*": ["./src/types/*"]
     }
   },
   "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],

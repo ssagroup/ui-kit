@@ -14,6 +14,8 @@ const markerColor = {
   fat: 'blue',
 };
 
+type MarkerColorKeys = keyof typeof markerColor;
+
 export const MealPlannerCard = ({
   name,
   image,
@@ -42,10 +44,10 @@ export const MealPlannerCard = ({
         <MealPlannerLegends.List>
           {Object.keys(listItems).map((item) => (
             <MealPlannerLegends.Item key={item}>
-              <Marker color={markerColor[item]} />
+              <Marker color={markerColor[item as MarkerColorKeys]} />
 
               <Typography variant="body1">
-                {listItems[item]}% {item}
+                {listItems[item as MarkerColorKeys]}% {item}
               </Typography>
             </MealPlannerLegends.Item>
           ))}
@@ -55,10 +57,13 @@ export const MealPlannerCard = ({
           {Object.keys(listItems).map((item) => (
             <li
               css={css`
-                width: ${listItems[item]}%;
+                width: ${listItems[item as MarkerColorKeys]}%;
               `}
               key={item}>
-              <ProgressBar percentage={100} color={markerColor[item]} />
+              <ProgressBar
+                percentage={100}
+                color={markerColor[item as MarkerColorKeys]}
+              />
             </li>
           ))}
         </MealPlannerBars>

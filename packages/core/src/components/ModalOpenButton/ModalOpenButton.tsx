@@ -4,7 +4,7 @@ import { ModalContext } from '@components/Modal';
 
 import { callAll } from '@ssa-ui-kit/utils';
 
-function ModalOpenButton({ children: child }) {
+function ModalOpenButton({ children: child }: { children: JSX.Element }) {
   const [, setIsOpen] = useContext(ModalContext);
 
   return cloneElement(child, {

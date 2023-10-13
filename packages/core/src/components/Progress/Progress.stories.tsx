@@ -7,6 +7,8 @@ import ProgressLegend from '@components/ProgressLegend';
 
 import Progress from './index';
 
+type Args = Parameters<typeof ProgressBar>[0];
+
 export default {
   title: 'Components/Progress',
   component: Progress,
@@ -33,7 +35,7 @@ export default {
   },
 } as Meta<typeof Progress>;
 
-export const Vertical: StoryObj = (args) => {
+export const Vertical: StoryObj = (args: Args) => {
   return (
     <div
       style={{
@@ -164,9 +166,8 @@ Vertical.args = {
   percentage: 30,
   color: 'blue',
 };
-Vertical.storyName = 'Vertical';
 
-export const Horizontal: StoryObj = (args) => {
+export const Horizontal: StoryObj = (args: Args) => {
   return (
     <div>
       <div
@@ -231,4 +232,3 @@ Horizontal.args = {
   percentage: 80,
   color: 'blue',
 };
-Horizontal.storyName = 'Horizontal';

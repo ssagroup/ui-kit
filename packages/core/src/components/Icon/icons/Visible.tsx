@@ -1,4 +1,4 @@
-import { SVGProps } from '@components/Icon/Icons.types';
+import { SVGProps } from '@components/Icon/types';
 
 export const Visible = ({ fill = '#000', size = 24 }: SVGProps) => (
   <svg

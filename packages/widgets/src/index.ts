@@ -34,3 +34,6 @@ export { default as StepsCounter } from './components/StepsCounter';
 export * from './components/StepsCounter';
 export { default as UserCard } from './components/UserCard';
 export * from './components/UserCard';
+export * from './components/Pagination';
+export * from './components/TradingInfoCard';
+export * from './components/TradingScoreboard';

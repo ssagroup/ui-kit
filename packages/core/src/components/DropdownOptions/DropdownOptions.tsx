@@ -31,7 +31,8 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
 `;
 
 const dropdownOptionButton = css`
-  display: block;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   font: inherit;
   font-size: 0.813rem;
@@ -80,7 +81,7 @@ const DropdownOptions = ({
       <DropdownOption
         key={noItemsMsg.id}
         value={''}
-        onClick={onChange.bind(null, null)}
+        onClick={onChange.bind(null, '')}
         aria-selected={false}>
         <button css={dropdownOptionButton}>{noItemsMsg.value}</button>
       </DropdownOption>,

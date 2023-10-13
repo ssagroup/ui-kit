@@ -11,6 +11,8 @@ const config: JestConfigWithTsJest = {
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
+    '!**/types.ts',
+    '!**/*.e2e.{ts,tsx}',
     '!**/*.spec.{ts,tsx}',
     '!**/*.stories.{ts,tsx}',
     '!**/*.d.{ts,tsx}',
@@ -20,6 +22,9 @@ const config: JestConfigWithTsJest = {
     '!**/jest.config.ts',
     '!./packages/**/dist/**',
     '!**/node_modules/**',
+    '!./playwright.base.config.ts',
+    '!./packages/**/playwright.config.ts',
+    '!./packages/**/lostpixel.config.ts',
   ],
   verbose: true,
   globalSetup: '<rootDir>/global-setup.ts',
@@ -33,7 +38,6 @@ const config: JestConfigWithTsJest = {
         '^.+\\.(ts|tsx)$': [
           'ts-jest',
           {
-            diagnostics: false,
             tsconfig: './packages/core/tsconfig.json',
             // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
             babelConfig: './.babelrc.js',
@@ -99,7 +103,6 @@ const config: JestConfigWithTsJest = {
         '^.+\\.(ts|tsx)$': [
           'ts-jest',
           {
-            diagnostics: false,
             tsconfig: './packages/widgets/tsconfig.json',
             babelConfig: './.babelrc.js',
           },
@@ -129,7 +132,6 @@ const config: JestConfigWithTsJest = {
         '^.+\\.(ts|tsx)$': [
           'ts-jest',
           {
-            diagnostics: false,
             tsconfig: './examples/fitness-dashboard/tsconfig.json',
             babelConfig: './.babelrc.js',
           },

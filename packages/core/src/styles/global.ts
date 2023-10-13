@@ -20,6 +20,16 @@ export const yellow = (theme: Theme) => css`
   box-shadow: -4px 4px 10px ${theme.colors.yellowLighter40};
 `;
 
+export const yellowWarm = (theme: Theme) => css`
+  background-color: ${theme.colors.yellowLighter};
+  background: linear-gradient(
+    90deg,
+    ${theme.colors.yellowLighter},
+    ${theme.colors.yellowWarm}
+  );
+  box-shadow: -4px 4px 10px ${theme.colors.yellowLighter40};
+`;
+
 export const green = (theme: Theme) => css`
   background-color: ${theme.colors.green};
   background: linear-gradient(
@@ -68,4 +78,14 @@ export const blueLight = (theme: Theme) => css`
     ${theme.colors.blueLight}
   );
   box-shadow: -4px 4px 10px ${theme.colors.blueLightLighter40};
+`;
+
+export const blueLightDarker = (theme: Theme) => css`
+  background-color: ${theme.colors.blueLightDarker};
+  background: linear-gradient(
+    247.37deg,
+    ${theme.colors.blueDark},
+    ${theme.colors.blueLightDarker}
+  );
+  box-shadow: -4px 4px 10px ${theme.colors.blueLightDarker40};
 `;

@@ -1,2 +1,3 @@
 export { default } from './Checkbox';
-export * from './types.d';
+export { checkboxStyles } from './styles';
+export * from './types';

@@ -2,7 +2,11 @@ import { css, Theme, useTheme } from '@emotion/react';
 
 import { ModalDialogProps } from './types';
 
-const modalDialogWrapper = (theme: Theme, isOpen, noBackground) => css`
+const modalDialogWrapper = (
+  theme: Theme,
+  isOpen: ModalDialogProps['isOpen'],
+  noBackground: ModalDialogProps['noBackground'],
+) => css`
   display: ${isOpen ? 'flex' : 'none'};
 
   position: fixed;
@@ -16,7 +20,10 @@ const modalDialogWrapper = (theme: Theme, isOpen, noBackground) => css`
   z-index: 1000;
 `;
 
-const modalDialogContent = (theme: Theme, isOpen) => css`
+const modalDialogContent = (
+  theme: Theme,
+  isOpen: ModalDialogProps['isOpen'],
+) => css`
   display: ${isOpen ? 'flex' : 'none'};
 
   flex-direction: column;
@@ -33,7 +40,6 @@ const modalDialogContent = (theme: Theme, isOpen) => css`
 
 const ModalDialog = ({
   isOpen,
-  onDismiss,
   noBackground,
   children,
   'aria-label': ariaLabel,
@@ -45,8 +51,6 @@ const ModalDialog = ({
     <div
       role="button"
       tabIndex={-1}
-      onClick={onDismiss}
-      onKeyDown={onDismiss}
       css={modalDialogWrapper(theme, isOpen, noBackground)}>
       <div
         aria-modal="true"
