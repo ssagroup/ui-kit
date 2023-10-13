@@ -19,7 +19,7 @@
     "directory": "packages/utils"
   },
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
     "ts-check": "tsc -p ./tsconfig.json",
@@ -28,6 +28,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "extend-expect": "^1.0.2",
+    "resolve-tspaths": "^0.8.16",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"
   },

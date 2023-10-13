@@ -13,9 +13,8 @@ export const StoryComponent = () => {
   return (
     <div
       css={{
-        height: '300vh',
+        height: '400px',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
       }}>
       <Popover>

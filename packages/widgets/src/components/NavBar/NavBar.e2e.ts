@@ -3,42 +3,61 @@ import { SCREEN_SIZES } from '../../consts';
 
 test.describe.configure({ mode: 'serial' });
 
-let page: Page;
-
-test.beforeAll(async ({ browser }) => {
-  page = await browser.newPage();
-});
-
-test.afterAll(async () => {
-  await page.close();
-});
-
 const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
+const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-navbar-opened__`;
 
-test('Widgets: NavBar should be visible after icon clicking', async () => {
-  await page.setViewportSize(SCREEN_SIZES[1920]);
-  await page.goto(
+const gotoPage = (page: Page) => {
+  return page.goto(
     'http://localhost:6007/iframe.html?id=widgets-navbar--default&viewMode=story',
   );
-  await page.waitForTimeout(500);
+};
 
-  const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-navbar--mobile-opened__`;
+const clickAndWaitForAnimationEnd = async (page: Page) => {
+  await page.locator('#storybook-root div').nth(1).click();
+  await page
+    .locator('div[class*="NavBarWrapper"]')
+    .evaluate((element) =>
+      Promise.all(
+        element.getAnimations().map((animation) => animation.finished),
+      ),
+    );
+};
+
+test('[1920] Widgets: NavBar should be visible', async ({ page }) => {
+  await page.setViewportSize(SCREEN_SIZES[1920]);
+  await gotoPage(page);
+  await page.locator('nav ul');
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w1920px].png`,
   });
+});
+
+test('[1440] Widgets: NavBar should be visible', async ({ page }) => {
   await page.setViewportSize(SCREEN_SIZES[1440]);
-  await page.waitForTimeout(500);
+  await gotoPage(page);
+  await page.locator('nav ul');
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w1440px].png`,
   });
+});
+
+test('[900] Widgets: NavBar should be visible after icon clicking', async ({
+  page,
+}) => {
   await page.setViewportSize(SCREEN_SIZES[900]);
-  await page.locator('#storybook-root div').nth(1).click();
-  await page.waitForTimeout(500);
+  await gotoPage(page);
+  await clickAndWaitForAnimationEnd(page);
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w900px].png`,
   });
+});
+
+test('[390] Widgets: NavBar should be visible after icon clicking', async ({
+  page,
+}) => {
   await page.setViewportSize(SCREEN_SIZES[390]);
-  await page.waitForTimeout(500);
+  await gotoPage(page);
+  await clickAndWaitForAnimationEnd(page);
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w390px].png`,
   });

@@ -19,7 +19,7 @@
     "directory": "packages/hooks"
   },
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc --build --force",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force && resolve-tspaths",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },
@@ -31,6 +31,7 @@
     "@testing-library/react": "^13.4.0",
     "@types/testing-library__jest-dom": "^5.14.6",
     "extend-expect": "^1.0.2",
+    "resolve-tspaths": "^0.8.16",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"
   },
