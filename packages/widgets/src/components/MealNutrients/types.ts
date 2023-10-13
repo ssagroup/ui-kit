@@ -1,8 +1,8 @@
 import { Point, LineSvgProps, CustomLayerProps } from '@nivo/line';
 import { ScaleTimeSpec } from '@nivo/scales';
-import { MainColors } from '@ssa-ui-kit/core';
+import { MainColors, IDropdownOption } from '@ssa-ui-kit/core';
 
-export interface OptionType {
+export interface OptionType extends IDropdownOption {
   value: 'd' | 'w' | 'm';
   label: string;
   precision: string;

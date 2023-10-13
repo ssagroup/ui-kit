@@ -29,6 +29,11 @@ export type ProgressInfoResp = {
   [key: string]: { [key: string]: ProgressInfoItemProps[] };
 };
 
+export interface IProgressInfoProps {
+  data: ProgressInfoResp;
+  className?: string;
+}
+
 export type PeriodOption = { value: string; id: string };
 
 export type Period = 'daily' | 'weekly' | 'monthly' | 'yearly';
