@@ -1,4 +1,4 @@
-import { mockData } from '@components/TableFilters/stories/mockData';
+import { mockData } from './mockData';
 import { Filters } from '../Filters';
 
 export const StoryComponent = () => {

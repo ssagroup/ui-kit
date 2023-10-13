@@ -1,12 +1,10 @@
 import { Wrapper } from '@ssa-ui-kit/core';
 import { TableFilters } from '@components/TableFilters';
-import {
-  TableFilterConfig,
-  TableFiltersView,
-} from '@components/TableFilters/types';
+import { TableFilterConfig } from '@components/TableFilters/types';
 import { useRef } from 'react';
 import {
   UseTableDataParameters,
+  UseTableDataResult,
   useTableData,
 } from '@components/TableFilters/hooks/useTableData';
 import { FiltersContextProvider } from './FiltersContext';
@@ -19,7 +17,7 @@ export const Filters = ({
   handleSubmit,
   handleCancel,
   handleClear,
-}: Pick<TableFiltersView, 'checkboxData'> &
+}: Pick<UseTableDataResult, 'checkboxData'> &
   Pick<
     UseTableDataParameters,
     'handleSubmit' | 'handleCancel' | 'handleClear'

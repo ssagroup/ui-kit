@@ -1,4 +1,4 @@
-import { mockData } from '@components/TableFilters/stories/mockData';
+import { mockData } from './mockData';
 import { TableFilters } from '../TableFilters';
 import { useTableData } from '../hooks/useTableData';
 
@@ -7,15 +7,7 @@ export const StoryComponent = () => {
     console.log('>>>onSubmit', submitData);
   };
 
-  const {
-    checkboxData,
-    selectedItemsByGroup,
-    selectedGroupsCount,
-    handleCheckboxToggle,
-    onClear,
-    onReset,
-    onSubmit,
-  } = useTableData({
+  const useTableDataResult = useTableData({
     initialState: mockData,
     handleSubmit,
   });
@@ -27,15 +19,7 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <TableFilters
-        checkboxData={checkboxData}
-        selectedItemsByGroup={selectedItemsByGroup}
-        selectedGroupsCount={selectedGroupsCount}
-        handleCheckboxToggle={handleCheckboxToggle}
-        onClear={onClear}
-        onReset={onReset}
-        onSubmit={onSubmit}
-      />
+      <TableFilters {...useTableDataResult} />
     </div>
   );
 };

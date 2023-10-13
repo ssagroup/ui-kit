@@ -1,5 +1,5 @@
 import { pathOr, propOr } from '@ssa-ui-kit/utils';
-import { useState, BaseSyntheticEvent, useEffect } from 'react';
+import { useState, BaseSyntheticEvent, useEffect, useMemo } from 'react';
 import { TableFilterConfig } from '../types';
 import { useVisibility } from '@components/Filters/hooks/useVisibility';
 
@@ -21,12 +21,12 @@ export const useTableData = ({
   const [checkboxData, setCheckboxData] = useState<TableFilterConfig>(
     {} as TableFilterConfig,
   );
-  const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
   const [selectedItemsByGroup, setSelectedItemsByGroup] = useState<
     Record<string, string[]>
   >({});
 
   const useVisibilityResult = useVisibility(checkboxData, wrapperRef);
+  const { elementsRef } = useVisibilityResult;
 
   const addSelectedItemsDraft = () => {
     if (initialState) {
@@ -47,6 +47,39 @@ export const useTableData = ({
     addSelectedItemsDraft();
   }, []);
 
+  const handleIntersection = () => {
+    if (wrapperRef && wrapperRef.current) {
+      useVisibilityResult.processVisibility();
+    }
+  };
+
+  const observer = useMemo(
+    () =>
+      wrapperRef === null
+        ? null
+        : new IntersectionObserver(handleIntersection, {
+            root: wrapperRef?.current,
+            rootMargin: '0px',
+            threshold: 1,
+          }),
+    [wrapperRef?.current],
+  );
+
+  useEffect(() => {
+    Object.keys(elementsRef.current).forEach((keyName) => {
+      const currentRef = elementsRef.current[keyName].element;
+      if (currentRef.current && observer !== null) {
+        observer.observe(currentRef.current);
+      }
+
+      return () => {
+        if (observer !== null) {
+          observer.disconnect();
+        }
+      };
+    });
+  }, [elementsRef.current, observer]);
+
   useEffect(() => {
     const selectedItemsByGroupDraft: Record<string, string[]> = {};
     Object.keys(checkboxData).forEach((groupName) => {
@@ -57,14 +90,15 @@ export const useTableData = ({
     setSelectedItemsByGroup(selectedItemsByGroupDraft);
   }, [checkboxData]);
 
-  useEffect(() => {
-    const length = Object.keys(selectedItemsByGroup)
-      .map((groupName) => {
-        return selectedItemsByGroup[groupName].length;
-      })
-      .filter((length) => length > 0).length;
-    setSelectedGroupsCount(length);
-  }, [selectedItemsByGroup]);
+  const handleCheckboxToggleByGroup = (
+    groupName: string,
+    newState: string[],
+  ) => {
+    setSelectedItemsByGroup({
+      ...selectedItemsByGroup,
+      [groupName]: newState,
+    });
+  };
 
   const handleCheckboxToggle = (groupName: string, name: string) => () => {
     const currentState = propOr<Record<string, any>, string[]>(
@@ -74,20 +108,7 @@ export const useTableData = ({
     const newState = currentState.includes(name)
       ? currentState.filter((stateName: string) => stateName !== name)
       : [...currentState, name];
-    setSelectedItemsByGroup({
-      ...selectedItemsByGroup,
-      [groupName]: newState,
-    });
-  };
-
-  const handleCheckboxToggleByGroup = (
-    groupName: string,
-    newState: string[],
-  ) => {
-    setSelectedItemsByGroup({
-      ...selectedItemsByGroup,
-      [groupName]: newState,
-    });
+    handleCheckboxToggleByGroup(groupName, newState);
   };
 
   const onSubmit = (event: BaseSyntheticEvent) => {
@@ -138,7 +159,6 @@ export const useTableData = ({
   return {
     checkboxData,
     selectedItemsByGroup,
-    selectedGroupsCount,
     wrapperRef,
     ...useVisibilityResult,
     handleCheckboxToggle,

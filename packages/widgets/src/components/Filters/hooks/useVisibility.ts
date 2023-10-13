@@ -14,12 +14,15 @@ export const useVisibility = (
     Record<string, React.MutableRefObject<HTMLElement | null>>
   >({});
 
+  const [areAllFiltersVisible, setAreAllFiltersVisible] = useState(false);
+  const [extraFiltersCount, setExtraFiltersCount] = useState(0);
+  const [hiddenGroups, setHiddenGroups] = useState<string[]>([]);
+
   const getRefs = () =>
     Object.keys(checkboxData).reduce(
       (res: Record<string, ElementInfo>, groupName) => {
         res[groupName] = {
           name: groupName,
-          visibility: false,
           element: createRef<HTMLElement>(),
         };
         if (Object.keys(refsByKey).length > 0) {
@@ -45,14 +48,25 @@ export const useVisibility = (
   };
 
   const processVisibility = () => {
+    const allCount = Object.keys(checkboxData).length;
+    let visibleCount = 0;
+    const hiddenItems: string[] = [];
     for (const itemKey of Object.keys(checkboxData)) {
       const element = elementsRef.current[itemKey].element.current;
       if (element && wrapperRef?.current) {
-        const visibility = element?.offsetLeft < wrapperRef?.current.offsetLeft;
-        element.style.visibility = visibility ? 'hidden' : 'visible';
+        const visibility =
+          element?.offsetLeft >= wrapperRef?.current.offsetLeft;
+        element.style.visibility = visibility ? 'visible' : 'hidden';
         elementsRef.current[itemKey].visibility = visibility;
+        if (visibility) {
+          hiddenItems.push(itemKey);
+          visibleCount++;
+        }
       }
     }
+    setAreAllFiltersVisible(allCount > 0 && visibleCount === allCount);
+    setExtraFiltersCount(allCount - visibleCount);
+    setHiddenGroups(hiddenItems);
   };
 
   const [refs, setRefs] = useState(getRefs());
@@ -87,6 +101,9 @@ export const useVisibility = (
 
   return {
     elementsRef,
+    areAllFiltersVisible,
+    extraFiltersCount,
+    hiddenGroups,
     setElementRef,
     processVisibility,
   };

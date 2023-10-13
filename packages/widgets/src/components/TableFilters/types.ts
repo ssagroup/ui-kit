@@ -1,10 +1,6 @@
-import { BaseSyntheticEvent } from 'react';
-
 export type CheckboxData = Record<string, string[]>;
 
-export type FiltersNames = 'strategy' | 'status' | 'pairs' | 'exchange';
-
-interface SingleItem {
+export interface SingleItem {
   key: string;
   name: string;
   isDisabled?: boolean;
@@ -15,7 +11,7 @@ interface SingleItem {
 }
 
 export interface AccordionInfo {
-  id: FiltersNames;
+  id: string;
   title: string;
   isOpened: boolean;
   ariaControls: string;
@@ -25,17 +21,4 @@ export interface AccordionInfo {
   selectedItemsDraft?: string[];
 }
 
-export type TableFilterConfig = Record<FiltersNames, AccordionInfo>;
-
-export interface TableFiltersView {
-  checkboxData?: TableFilterConfig;
-  selectedItemsByGroup: Record<string, string[]>;
-  selectedGroupsCount: number;
-  // wrapperRef?: React.RefObject<HTMLElement>;
-  // refsByKey?: Record<string, HTMLElement | null>;
-  handleCheckboxToggle: (groupName: string, name: string) => () => void;
-  setConfig?: (config: TableFilterConfig) => void;
-  onReset?: () => void;
-  onClear?: () => void;
-  onSubmit?: (event: BaseSyntheticEvent) => void;
-}
+export type TableFilterConfig = Record<string, AccordionInfo>;
