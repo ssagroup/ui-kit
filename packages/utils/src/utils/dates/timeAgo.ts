@@ -8,11 +8,11 @@ const periodValues: Record<string, number> = {
 };
 
 export const getTimeAgo = (timeValue: string | number) => {
-  const date = new Date(timeValue);
-  if (Number.isNaN(date.getTime())) {
+  const date = new Date(timeValue).getTime();
+  if (Number.isNaN(date)) {
     throw new Error('Invalid date');
   }
-  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  const diff = Math.floor((Date.now() - date) / 1000);
   let interval;
   for (const key in periodValues) {
     interval = Math.floor(diff / periodValues[key]);

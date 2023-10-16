@@ -6,11 +6,11 @@ import {
   notifyTitle,
   notifyText,
   notifyTime,
-} from './style';
-import { INotificationCardProps } from './types';
+} from './styles';
+import { NotificationCardProps } from './types';
 import { timeAgo } from '@ssa-ui-kit/utils';
 
-const NotificationCard = ({
+export const NotificationCard = ({
   title,
   children,
   text,
@@ -19,7 +19,7 @@ const NotificationCard = ({
   iconName,
   time,
   onClick,
-}: INotificationCardProps) => {
+}: NotificationCardProps) => {
   const theme = useTheme();
   const { getTimeAgo } = timeAgo;
 
@@ -63,5 +63,3 @@ const NotificationCard = ({
     </CardBase>
   );
 };
-
-export default NotificationCard;

@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Theme } from '@emotion/react';
 import { Button, IMapIcons, MainColors } from '@ssa-ui-kit/core';
-import NotificationCard from './NotificationCard';
-import { INotificationCardProps } from './types';
+import { NotificationCard } from './NotificationCard';
+import { NotificationCardProps } from './types';
 
 const childrenWrapper = (theme: Theme) => `
   grid-column: 2 / span 2;
@@ -91,7 +91,7 @@ export default {
 } as Meta<typeof NotificationCard>;
 
 export const Default: StoryObj<typeof NotificationCard> = (
-  args: INotificationCardProps,
+  args: NotificationCardProps,
 ) => {
   return (
     <div css={{ padding: '20px', background: '#F2F4F7', borderRadius: '20px' }}>
@@ -108,7 +108,7 @@ export const Default: StoryObj<typeof NotificationCard> = (
             variant="tertiary"
             text="Ignore"
             css={{
-              border: '1px solid #DEE0E8',
+              border: `1px solid #DEE0E8`,
               fontWeight: '600',
               padding: '5px 21px',
 

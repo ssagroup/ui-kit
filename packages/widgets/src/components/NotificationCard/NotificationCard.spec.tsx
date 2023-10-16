@@ -1,18 +1,23 @@
 import userEvent from '@testing-library/user-event';
 import { Button } from '@ssa-ui-kit/core';
-import NotificationCard from './NotificationCard';
+import { NotificationCard } from './NotificationCard';
+import { NotificationCardProps } from './types';
+
+const commonProps: Pick<
+  NotificationCardProps,
+  'title' | 'text' | 'badgeColor' | 'iconName' | 'time'
+> = {
+  title: 'Title',
+  text: 'Text',
+  badgeColor: 'blueLight',
+  iconName: 'information',
+  time: Date.now() - 1200000,
+};
 
 describe('NotificationCard', () => {
   it('Renders with indicator (Unread state)', () => {
     const { getByTestId } = render(
-      <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={false}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}
-      />,
+      <NotificationCard {...commonProps} isRead={false} />,
     );
 
     getByTestId('indicator-left');
@@ -20,14 +25,7 @@ describe('NotificationCard', () => {
 
   it('Renders without indicator (Read state)', () => {
     const { queryByTestId } = render(
-      <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={true}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}
-      />,
+      <NotificationCard {...commonProps} isRead={true} />,
     );
 
     expect(queryByTestId('indicator-left')).not.toBeInTheDocument();
@@ -35,14 +33,7 @@ describe('NotificationCard', () => {
 
   it('Renders with badge and icon', () => {
     const { getByTestId } = render(
-      <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={true}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}
-      />,
+      <NotificationCard {...commonProps} isRead={false} />,
     );
 
     getByTestId('badge');
@@ -51,14 +42,7 @@ describe('NotificationCard', () => {
 
   it('Renders with title and sub-text', () => {
     const { getByText } = render(
-      <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={true}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}
-      />,
+      <NotificationCard {...commonProps} isRead={false} />,
     );
 
     getByText(/title/i);
@@ -67,13 +51,7 @@ describe('NotificationCard', () => {
 
   it('Renders with children prop', () => {
     const { getByText, getAllByRole } = render(
-      <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={true}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}>
+      <NotificationCard {...commonProps} isRead={false}>
         <Button text="test" />
         <Button text="test" />
         Children Content
@@ -87,14 +65,7 @@ describe('NotificationCard', () => {
 
   it('Renders with passed time value', () => {
     const { getByText } = render(
-      <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={true}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}
-      />,
+      <NotificationCard {...commonProps} isRead={false} />,
     );
 
     getByText(/20 mins ago/i);
@@ -105,12 +76,8 @@ describe('NotificationCard', () => {
     const mockOnClick = jest.fn();
     const { getByTestId } = render(
       <NotificationCard
-        title="Title"
-        text="Text"
-        isRead={true}
-        badgeColor="blueLight"
-        iconName="information"
-        time={Date.now() - 1200000}
+        {...commonProps}
+        isRead={false}
         onClick={mockOnClick}
       />,
     );
