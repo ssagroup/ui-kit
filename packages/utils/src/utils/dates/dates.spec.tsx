@@ -1,6 +1,6 @@
 import { dateFormatters } from './index';
-import { getTimeAgo } from './timeAgo';
 
+const { getTimeAgo } = dateFormatters;
 const date = Date.now();
 const timeValuesArr = [
   {
@@ -106,9 +106,7 @@ describe('dates', () => {
         expect(saturday).toEqual('Sat');
       });
     });
-  });
 
-  describe('timeAgo', () => {
     describe('getTimeAgo()', () => {
       it('Returns an error when passing an invalid time value', () => {
         expect(() => getTimeAgo('Date')).toThrow(new Error('Invalid date'));

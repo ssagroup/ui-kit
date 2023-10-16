@@ -1,8 +1,8 @@
 import { IMapIcons, MainColors } from '@ssa-ui-kit/core';
 
-export interface NotificationCardProps {
-  title: React.ReactNode;
-  text: React.ReactNode;
+export interface INotificationCardProps {
+  title: string;
+  text: string;
   isRead: boolean;
   badgeColor: keyof MainColors;
   iconName: keyof IMapIcons;
