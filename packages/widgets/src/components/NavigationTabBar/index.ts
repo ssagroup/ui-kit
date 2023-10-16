@@ -1,1 +1,1 @@
-export { default as NavigationTabBar } from './NavigationTabBar';
+export { NavigationTabBar } from './NavigationTabBar';

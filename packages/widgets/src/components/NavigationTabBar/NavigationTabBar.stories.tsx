@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 
-import NavigationTabBar from './NavigationTabBar';
+import { NavigationTabBar } from './NavigationTabBar';
 
 export default {
   title: 'Widgets/NavigationTabBar',

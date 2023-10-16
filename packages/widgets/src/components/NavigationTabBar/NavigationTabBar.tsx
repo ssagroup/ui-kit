@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 
-import { INavigationTabBarProps } from './types';
+import { NavigationTabBarProps } from './types';
 import { NavigationTabBarBase } from './NavigationTabBarBase';
 
-const NavigationTabBar = ({ as, className, links }: INavigationTabBarProps) => {
+export const NavigationTabBar = ({
+  as,
+  className,
+  links,
+}: NavigationTabBarProps) => {
   return (
     <NavigationTabBarBase as={as} className={className}>
       {links.map(({ id, ...props }) => (
@@ -12,5 +16,3 @@ const NavigationTabBar = ({ as, className, links }: INavigationTabBarProps) => {
     </NavigationTabBarBase>
   );
 };
-
-export default NavigationTabBar;
