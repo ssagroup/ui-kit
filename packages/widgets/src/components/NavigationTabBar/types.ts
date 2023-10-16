@@ -1,8 +1,8 @@
 import { SerializedStyles } from '@emotion/react';
-import type { LinkProps } from 'react-router-dom';
+import type { NavLinkProps } from 'react-router-dom';
 import { CommonProps } from '@ssa-ui-kit/core';
 
-export interface NavTabBarLink extends LinkProps {
+export interface NavTabBarLink extends NavLinkProps {
   id: string;
   css?: SerializedStyles;
 }

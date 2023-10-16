@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { NavigationTabBarProps } from './types';
 import { NavigationTabBarBase } from './NavigationTabBarBase';
@@ -11,7 +11,7 @@ export const NavigationTabBar = ({
   return (
     <NavigationTabBarBase as={as} className={className}>
       {links.map(({ id, ...props }) => (
-        <Link key={id} {...props} />
+        <NavLink key={id} {...props} />
       ))}
     </NavigationTabBarBase>
   );
