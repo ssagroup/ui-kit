@@ -1,6 +1,6 @@
 import { IMapIcons, MainColors } from '@ssa-ui-kit/core';
 
-export interface INotificationCardProps {
+export interface NotificationCardProps {
   title: string;
   text: string;
   isRead: boolean;

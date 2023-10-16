@@ -1,10 +1,10 @@
 import userEvent from '@testing-library/user-event';
 import { Button } from '@ssa-ui-kit/core';
 import { NotificationCard } from './NotificationCard';
-import { INotificationCardProps } from './types';
+import { NotificationCardProps } from './types';
 
 const commonProps: Pick<
-  INotificationCardProps,
+  NotificationCardProps,
   'title' | 'text' | 'badgeColor' | 'iconName' | 'time'
 > = {
   title: 'Title',

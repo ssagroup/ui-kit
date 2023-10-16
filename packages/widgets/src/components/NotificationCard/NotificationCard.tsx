@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import { dateFormatters } from '@ssa-ui-kit/utils';
 import { Badge, CardBase, Icon, Indicator, Typography } from '@ssa-ui-kit/core';
-import { INotificationCardProps } from './types';
+import { NotificationCardProps } from './types';
 import {
   notifyBadge,
   notifyCard,
@@ -19,7 +19,7 @@ export const NotificationCard = ({
   iconName,
   time,
   onClick,
-}: INotificationCardProps) => {
+}: NotificationCardProps) => {
   const theme = useTheme();
   const { getTimeAgo } = dateFormatters;
 
