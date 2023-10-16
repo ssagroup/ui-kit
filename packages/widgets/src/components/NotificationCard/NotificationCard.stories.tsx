@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Theme } from '@emotion/react';
 import { Button, IMapIcons, MainColors } from '@ssa-ui-kit/core';
+import { mainTheme } from '@ssa-ui-kit/core';
 import { NotificationCard } from './NotificationCard';
 import { NotificationCardProps } from './types';
 
@@ -108,12 +109,12 @@ export const Default: StoryObj<typeof NotificationCard> = (
             variant="tertiary"
             text="Ignore"
             css={{
-              border: `1px solid #DEE0E8`,
+              border: `1px solid ${mainTheme.colors.greyDropdownMain}`,
               fontWeight: '600',
               padding: '5px 21px',
 
               ['span']: {
-                color: '#656567',
+                color: mainTheme.colors.greyCancelClearButton,
               },
             }}
           />
