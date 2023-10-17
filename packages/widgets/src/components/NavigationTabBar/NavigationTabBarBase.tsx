@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
 export const NavigationTabBarBase = styled.div`
   display: flex;
@@ -7,9 +6,15 @@ export const NavigationTabBarBase = styled.div`
   justify-content: space-between;
 
   a {
-    font-size: 18px;
+    font-size: 14px;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.greyDropdownFocused};
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    a {
+      font-size: 18px;
+    }
   }
 
   a.active {
@@ -20,6 +25,3 @@ export const NavigationTabBarBase = styled.div`
     text-underline-offset: 8px;
   }
 `;
-// TODO: check text-decoration support
-
-export const LinkStyle = css``;

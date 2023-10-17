@@ -1,7 +1,8 @@
 import { MemoryRouter, Route, Routes, Outlet } from 'react-router-dom';
-import { Meta } from '@storybook/react';
+import { css } from '@emotion/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { NavigationTabBar } from './NavigationTabBar';
+import { NavigationTabBar, NavigationTabBarProps } from './index';
 
 const links = [
   {
@@ -40,7 +41,7 @@ export default {
   component: NavigationTabBar,
   decorators: [
     (Story) => (
-      <div style={{ backgroundColor: '#F5F5F5', width: '562px' }}>
+      <div style={{ width: '562px', padding: '10px' }}>
         <MemoryRouter initialEntries={[links[0].to]}>
           <Routes>
             <Route
@@ -71,3 +72,31 @@ export default {
 } as Meta<typeof NavigationTabBar>;
 
 export const Default = {};
+
+export const WithCustomStyles: StoryObj<typeof NavigationTabBar> = (
+  args: NavigationTabBarProps,
+) => {
+  /**
+   * Colors are from here: https://paletadecolores.online/en/colors/846ef3/
+   * */
+  return (
+    <NavigationTabBar
+      {...args}
+      css={css`
+        a {
+          color: #846ef3;
+          background-color: #dfbcfc;
+          padding: 4px 8px;
+          border-radius: 6px;
+        }
+
+        a.active {
+          color: #7560e3;
+          text-decoration: underline solid #ddf36e;
+          text-underline-offset: 2px;
+        }
+      `}
+    />
+  );
+};
+WithCustomStyles.args = {};
