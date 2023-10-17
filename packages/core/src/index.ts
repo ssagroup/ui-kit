@@ -81,3 +81,4 @@ export { default as Form } from './components/Form';
 export { default as FormGroup } from './components/FormGroup';
 export { default as FormAction } from './components/FormAction';
 export { default as Indicator } from './components/Indicator';
+export * from './components/ButtonGroup';
