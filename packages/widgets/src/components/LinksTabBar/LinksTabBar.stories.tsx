@@ -1,71 +1,14 @@
-import { MemoryRouter, Route, Routes, Outlet } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { LinksTabBar, LinksTabBarProps } from './index';
-
-const links = [
-  {
-    id: 'information',
-    to: '/information',
-    children: 'Information',
-  },
-  {
-    id: 'configuration',
-    to: '/configuration',
-    children: 'Configuration',
-  },
-  {
-    id: 'logs',
-    to: '/logs',
-    children: 'Logs',
-  },
-  {
-    id: 'history',
-    to: '/history',
-    children: 'History',
-  },
-  {
-    id: 'monitor',
-    to: '/monitor',
-    children: 'Monitor',
-  },
-];
-
-const RoutePlaceholder = ({ children }: { children: React.ReactNode }) => (
-  <div>Current route: {children}</div>
-);
+import { links } from './stories/mockData';
+import { MemoryRouterDecorator } from './stories/decorators';
 
 export default {
   title: 'Widgets/LinksTabBar',
   component: LinksTabBar,
-  decorators: [
-    (Story) => (
-      <div style={{ width: '591px', padding: '10px' }}>
-        <MemoryRouter initialEntries={[links[0].to]}>
-          <Routes>
-            <Route
-              element={
-                <div>
-                  <Story />
-                  <div style={{ marginTop: '25px' }}>
-                    <Outlet />
-                  </div>
-                </div>
-              }>
-              {links.map((link, index) => (
-                <Route
-                  key={index}
-                  path={link.to}
-                  element={<RoutePlaceholder>{link.children}</RoutePlaceholder>}
-                />
-              ))}
-            </Route>
-          </Routes>
-        </MemoryRouter>
-      </div>
-    ),
-  ],
+  decorators: [MemoryRouterDecorator],
   args: {
     links,
   },
