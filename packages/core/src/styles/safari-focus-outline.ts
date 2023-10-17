@@ -4,17 +4,7 @@ type OutlineFn = (
   theme: Theme,
   color?: keyof Theme['colors'],
   borderRadius?: string,
-  borderStyle?:
-    | 'none'
-    | 'hidden'
-    | 'dotted'
-    | 'dashed'
-    | 'solid'
-    | 'double'
-    | 'groove'
-    | 'ridge'
-    | 'inset'
-    | 'outset',
+  borderStyle?: React.CSSProperties['borderStyle'],
 ) => SerializedStyles;
 
 /* This is for Safari to make a rounded outline */
