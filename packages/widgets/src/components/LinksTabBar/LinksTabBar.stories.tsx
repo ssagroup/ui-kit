@@ -41,7 +41,7 @@ export default {
   component: LinksTabBar,
   decorators: [
     (Story) => (
-      <div style={{ width: '562px', padding: '10px' }}>
+      <div style={{ width: '591px', padding: '10px' }}>
         <MemoryRouter initialEntries={[links[0].to]}>
           <Routes>
             <Route

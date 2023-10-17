@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { styleUtils } from '@ssa-ui-kit/core';
 
 export const LinksTabBarBase = styled.div`
   display: flex;
@@ -6,6 +7,10 @@ export const LinksTabBarBase = styled.div`
   justify-content: space-between;
 
   a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 8px 4px;
     font-size: 14px;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.greyDropdownFocused};
@@ -23,5 +28,9 @@ export const LinksTabBarBase = styled.div`
     text-decoration: underline solid #2f6ce3;
     text-decoration-thickness: 2px;
     text-underline-offset: 8px;
+  }
+
+  a:focus::before {
+    ${({ theme }) => styleUtils.outlineStyles(theme, 'grey40', '6px', 'dashed')}
   }
 `;
