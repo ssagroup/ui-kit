@@ -1,4 +1,11 @@
 import {
+  BaseSyntheticEvent,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
+import { assocPath, pathOr } from '@ssa-ui-kit/utils';
+import {
   AccordionTitle,
   AccordionGroup,
   AccordionGroupContextProvider,
@@ -18,51 +25,125 @@ import {
   TableFiltersAccordionContent,
   TableFiltersButtons,
 } from '.';
-import { TableFilterConfig } from './types';
-import { UseTableDataResult } from './hooks/useTableData';
-import { useEffect, useState } from 'react';
+import { CheckboxData, TableFilterConfig, TableFiltersView } from './types';
 
+// TODO: combine handlers with useTableData?..
 export const TableFilters = ({
   checkboxData = {} as TableFilterConfig,
-  selectedItemsByGroup,
-  hiddenGroups,
-  areAllFiltersVisible,
-  extraFiltersCount,
   onReset,
   onSubmit,
   onClear,
   handleCheckboxToggle,
-}: UseTableDataResult) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const onOpenChange = (open: boolean) => {
-    setIsOpen(open);
-  };
+}: TableFiltersView) => {
+  const [localCheckboxData, setLocalCheckboxData] =
+    useState<TableFilterConfig>(checkboxData);
+  // TODO: Do we need this state? We use persistentData only once
+  const [persistentData, setPersistentData] = useState<CheckboxData>({});
+  const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
 
-  const handleReset = () => {
-    setIsOpen(false);
-    onReset();
+  const [open, setOpen] = useState(false);
+
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
   };
 
   useEffect(() => {
-    if (extraFiltersCount === 0) {
-      setIsOpen(false);
+    setLocalCheckboxData(checkboxData);
+  }, [checkboxData]);
+
+  useLayoutEffect(() => {
+    const notChangedData: CheckboxData = {};
+    let counter = 0;
+    Object.keys(localCheckboxData).forEach((groupName) => {
+      const selectedItemsDraft =
+        localCheckboxData[groupName].selectedItemsDraft || [];
+      const selectedItems = localCheckboxData[groupName].selectedItems;
+      const currentItems = localCheckboxData[groupName].items;
+      notChangedData[groupName] = [];
+      Object.keys(currentItems).forEach((itemKey) => {
+        const itemInfo = currentItems[itemKey];
+        if (itemInfo.isDisabled && selectedItems.includes(itemInfo.name)) {
+          notChangedData[groupName].push(itemInfo.name);
+        }
+      });
+      if (selectedItemsDraft.length > 0) {
+        counter++;
+      }
+    });
+    setPersistentData(notChangedData);
+    setSelectedGroupsCount(counter);
+
+    if (Object.keys(localCheckboxData).length === 0) {
+      setOpen(false);
     }
-  }, [extraFiltersCount]);
+  }, [localCheckboxData]);
+
+  const onCheckboxChange = (groupName: string, name: string) => () => {
+    const draftPath = [groupName, 'selectedItemsDraft'];
+    const selectedItemsDraft = pathOr<TableFilterConfig, string[]>(
+      [],
+      draftPath,
+    )(localCheckboxData);
+    const newSelectedItems = selectedItemsDraft.includes(name)
+      ? selectedItemsDraft.filter((currentItemName) => currentItemName !== name)
+      : [...selectedItemsDraft, name];
+    setLocalCheckboxData(assocPath(draftPath, newSelectedItems));
+    handleCheckboxToggle?.(groupName, name);
+  };
+
+  const handleSubmit = (event: BaseSyntheticEvent) => {
+    event.preventDefault();
+    let newData = JSON.parse(JSON.stringify(localCheckboxData));
+    const submitData: Record<string, string[]> = {};
+    Object.keys(newData).forEach((groupName) => {
+      newData = assocPath(
+        [groupName, 'selectedItems'],
+        newData[groupName]['selectedItemsDraft'],
+      )(newData);
+      submitData[groupName] = newData[groupName]['selectedItemsDraft'];
+    });
+    setLocalCheckboxData(newData);
+    onSubmit?.();
+  };
+
+  const handleReset = () => {
+    let newData = JSON.parse(JSON.stringify(localCheckboxData));
+    Object.keys(newData).forEach((groupName) => {
+      newData = assocPath(
+        [groupName, 'selectedItemsDraft'],
+        newData[groupName]['selectedItems'],
+      )(newData);
+    });
+    setLocalCheckboxData(newData);
+    onReset?.();
+  };
+
+  const handleClear = () => {
+    let newData = JSON.parse(JSON.stringify(localCheckboxData));
+    Object.keys(persistentData).forEach((groupName) => {
+      newData = assocPath(
+        [groupName, 'selectedItemsDraft'],
+        persistentData[groupName],
+      )(newData);
+    });
+    setLocalCheckboxData(newData);
+    onClear?.();
+  };
 
   return (
     <Popover
       floatingOptions={{
         onOpenChange,
-        open: isOpen,
+        open: open,
       }}>
       <TableFilterTriggerWithNotification
-        count={extraFiltersCount}
-        visible={!areAllFiltersVisible}>
+        count={selectedGroupsCount}
+        visible={!(Object.keys(localCheckboxData).length === 0)}>
         More
       </TableFilterTriggerWithNotification>
       <PopoverContent className="popover" css={tableFilterPopoverContentStyles}>
         <form
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           css={{
             display: 'flex',
             flexDirection: 'column',
@@ -72,37 +153,34 @@ export const TableFilters = ({
           <PopoverDescription variant="body1">
             <AccordionGroupContextProvider>
               <AccordionGroup size="medium">
-                {Object.keys(checkboxData).map((groupName) => {
-                  const accordionInfo = checkboxData[groupName];
-                  const selectedItems = selectedItemsByGroup[groupName];
-                  const isHidden = hiddenGroups.includes(groupName);
+                {Object.keys(localCheckboxData).map((groupName) => {
+                  const accordionInfo = localCheckboxData[groupName];
                   return (
                     <TableFiltersAccordion
                       key={accordionInfo.id}
                       id={accordionInfo.id}
                       title={accordionInfo.title}
                       isOpened={accordionInfo.isOpened}
-                      isHidden={isHidden}
                       ariaControls={accordionInfo.ariaControls}
                       renderContent={(props) => (
                         <TableFiltersAccordionContent {...props}>
                           {Object.keys(accordionInfo.items).map((itemKey) => {
                             const info = accordionInfo.items[itemKey];
                             const extraProps: Partial<ICheckboxProps> = {};
-                            const checked = !!selectedItems?.includes(
-                              info.name,
-                            );
+                            const currentState = !!localCheckboxData?.[
+                              accordionInfo.id
+                            ].selectedItemsDraft?.includes(info.name);
                             if (info.isDisabled) {
-                              extraProps.initialState = checked;
+                              extraProps.initialState = currentState;
                             } else {
-                              extraProps.externalState = checked;
+                              extraProps.externalState = currentState;
                             }
                             return (
                               <TableFilterCheckbox
                                 key={info.key}
                                 name={info.name}
                                 id={info.key}
-                                onChange={handleCheckboxToggle(
+                                onChange={onCheckboxChange(
                                   groupName,
                                   info.name,
                                 )}
@@ -122,7 +200,7 @@ export const TableFilters = ({
             </AccordionGroupContextProvider>
           </PopoverDescription>
           <hr css={tableFilterDividerStyles} />
-          <TableFiltersButtons onClear={onClear} onCancel={handleReset} />
+          <TableFiltersButtons onClear={handleClear} onCancel={handleReset} />
         </form>
       </PopoverContent>
     </Popover>

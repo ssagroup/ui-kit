@@ -1,24 +1,13 @@
-import {
-  DropdownOption,
-  IDropdownOption,
-  MultipleDropdown,
-} from '@ssa-ui-kit/core';
+import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import React, { useEffect, useState } from 'react';
 import { useFiltersContext } from './FiltersContext';
 
 export const FiltersBlock = () => {
-  const {
-    setElementRef,
-    handleCheckboxToggleByGroup,
-    selectedItemsByGroup,
-    checkboxData,
-  } = useFiltersContext();
+  const { setElementRef, handleCheckboxToggle, checkboxData } =
+    useFiltersContext();
   const handleOnChange =
-    (groupName: string) => (items: Array<IDropdownOption>) => {
-      const newState = items
-        .filter((item) => item.isSelected)
-        .map((item) => item.value);
-      handleCheckboxToggleByGroup(groupName, newState as any);
+    (groupName: string) => (item: string | number, isSelected: boolean) => {
+      handleCheckboxToggle(groupName, item);
     };
 
   const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
@@ -32,14 +21,16 @@ export const FiltersBlock = () => {
         value: string;
       }>
     > = {};
-    Object.keys(selectedItemsByGroup).map((groupName) => {
-      const selectedItems = selectedItemsByGroup[groupName];
-      newData[groupName] = selectedItems.map((item) => ({
-        value: item,
-      }));
+    Object.keys(checkboxData).map((groupName) => {
+      const selectedItems = checkboxData[groupName]['selectedItemsDraft'];
+      if (selectedItems) {
+        newData[groupName] = selectedItems.map((item) => ({
+          value: item,
+        }));
+      }
     });
     setSelectedItemsWithValue(newData);
-  }, [selectedItemsByGroup]);
+  }, [checkboxData]);
 
   return (
     <>

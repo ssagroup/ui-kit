@@ -10,7 +10,7 @@ export type IDropdownProps<P extends IDropdownOption> = {
   className?: string;
   isOpen?: boolean;
   label?: string;
-  onChange?: (items: P[]) => void;
+  onChange?: (selectedItem: string | number, isSelected: boolean) => void;
 };
 
 export interface DropdownContextType<T extends IDropdownOption> {

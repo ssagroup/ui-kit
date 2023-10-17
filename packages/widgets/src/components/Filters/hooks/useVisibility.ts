@@ -1,110 +1,102 @@
-import { createRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ElementInfo } from '../types';
 import { TableFilterConfig } from '@components/TableFilters/types';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
 
 export type RefsByKey = Record<string, ElementInfo>;
+type UseVisibilityParams = {
+  checkboxData: TableFilterConfig;
+  refsList: Array<React.MutableRefObject<HTMLElement | null>>;
+  wrapperRef?: React.RefObject<HTMLElement>;
+  onVisibilityProcessed?: () => void;
+};
 
 // TODO: unit test
-export const useVisibility = (
-  checkboxData: TableFilterConfig,
-  wrapperRef?: React.RefObject<HTMLElement>,
-) => {
-  const [refsByKey, setRefsByKey] = useState<
-    Record<string, React.MutableRefObject<HTMLElement | null>>
-  >({});
+export const useVisibility = ({
+  checkboxData,
+  wrapperRef,
+  refsList,
+  onVisibilityProcessed,
+}: UseVisibilityParams) => {
+  const [visibilities, setVisibilities] = useState<boolean[]>(
+    Object.keys(checkboxData).map(() => false),
+  );
+  const handleIntersection = () => {
+    if (wrapperRef && wrapperRef.current) {
+      processVisibility();
+    }
+  };
 
-  const [areAllFiltersVisible, setAreAllFiltersVisible] = useState(false);
-  const [extraFiltersCount, setExtraFiltersCount] = useState(0);
-  const [hiddenGroups, setHiddenGroups] = useState<string[]>([]);
+  const observer = useMemo(
+    () =>
+      wrapperRef === null
+        ? null
+        : new IntersectionObserver(handleIntersection, {
+            root: wrapperRef?.current,
+            rootMargin: '0px',
+            threshold: 1,
+          }),
+    [wrapperRef?.current, refsList],
+  );
 
-  const getRefs = () =>
-    Object.keys(checkboxData).reduce(
-      (res: Record<string, ElementInfo>, groupName) => {
-        res[groupName] = {
-          name: groupName,
-          element: createRef<HTMLElement>(),
-        };
-        if (Object.keys(refsByKey).length > 0) {
-          res[groupName].element.current = refsByKey[groupName].current;
+  useEffect(() => {
+    return () => {
+      if (observer !== null) {
+        observer.disconnect();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (refsList.length === Object.keys(checkboxData).length) {
+      refsList.forEach((currentRef) => {
+        if (currentRef.current && observer !== null) {
+          observer.observe(currentRef.current);
         }
-        return res;
-      },
-      {},
-    );
-
-  const setElementRef = (groupId: string, element: HTMLElement | null) => {
-    if (element !== null && !Object.keys(refsByKey).includes(groupId)) {
-      setRefsByKey((state) => {
-        const newRef: React.MutableRefObject<HTMLElement | null> =
-          createRef<HTMLElement>();
-        newRef.current = element;
-        return {
-          ...state,
-          [groupId]: newRef,
-        };
       });
     }
-  };
-
-  const processVisibility = () => {
-    const allCount = Object.keys(checkboxData).length;
-    let visibleCount = 0;
-    const hiddenItems: string[] = [];
-    for (const itemKey of Object.keys(checkboxData)) {
-      const element = elementsRef.current[itemKey].element.current;
-      if (element && wrapperRef?.current) {
-        const visibility =
-          element?.offsetLeft >= wrapperRef?.current.offsetLeft;
-        element.style.visibility = visibility ? 'visible' : 'hidden';
-        elementsRef.current[itemKey].visibility = visibility;
-        if (visibility) {
-          hiddenItems.push(itemKey);
-          visibleCount++;
+    return () => {
+      refsList.forEach((currentRef) => {
+        if (currentRef.current && observer !== null) {
+          observer.unobserve(currentRef.current);
         }
-      }
-    }
-    setAreAllFiltersVisible(allCount > 0 && visibleCount === allCount);
-    setExtraFiltersCount(allCount - visibleCount);
-    setHiddenGroups(hiddenItems);
-  };
-
-  const [refs, setRefs] = useState(getRefs());
-
-  const elementsRef = useRef(refs);
-
-  useEffect(() => {
-    const newRefs = getRefs();
-    setRefs(newRefs);
-    elementsRef.current = newRefs;
-  }, [checkboxData]);
-
-  useEffect(() => {
-    const groupsCount = Object.keys(checkboxData).length;
-    if (
-      groupsCount > 0 &&
-      Object.keys(refsByKey).length === groupsCount &&
-      Object.keys(elementsRef.current).length > 0
-    ) {
-      for (const groupId of Object.keys(refsByKey)) {
-        elementsRef.current[groupId].element.current =
-          refsByKey[groupId].current;
-      }
-    }
-  }, [refsByKey, elementsRef]);
+      });
+    };
+  }, [refsList, observer]);
 
   const windowSize = useWindowSize();
 
+  const processVisibility = () => {
+    const newVisibilities: boolean[] = [];
+    refsList.forEach((currentRef) => {
+      if (currentRef.current && wrapperRef?.current) {
+        const visibility =
+          currentRef.current?.offsetLeft >= wrapperRef?.current.offsetLeft;
+        newVisibilities.push(visibility);
+        currentRef.current.style.visibility = visibility ? 'visible' : 'hidden';
+      }
+    });
+    setVisibilities(newVisibilities);
+  };
+
+  const memoVisibilities = useMemo(() => {
+    return visibilities;
+  }, [JSON.stringify(visibilities)]);
+
   useEffect(() => {
-    processVisibility();
+    onVisibilityProcessed?.();
+  }, [memoVisibilities]);
+
+  useEffect(() => {
+    if (
+      refsList.length > 0 &&
+      refsList.length === Object.keys(checkboxData).length
+    ) {
+      processVisibility();
+    }
   }, [windowSize.width]);
 
   return {
-    elementsRef,
-    areAllFiltersVisible,
-    extraFiltersCount,
-    hiddenGroups,
-    setElementRef,
     processVisibility,
   };
 };

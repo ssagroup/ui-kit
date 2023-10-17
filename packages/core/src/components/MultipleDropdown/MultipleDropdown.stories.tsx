@@ -83,6 +83,7 @@ export const PlaceholderHidden: StoryObj = (args: Args) => {
 PlaceholderHidden.args = {
   isDisabled: false,
   isMultiple: true,
+  selectedItems: [],
   showPlaceholder: false,
   label: 'Strategy',
 };
@@ -139,13 +140,13 @@ export const Simple: StoryObj = (args: Args) => {
   );
 };
 
-Simple.args = { isDisabled: false, label: 'Strategy' };
+Simple.args = { isDisabled: false, label: 'Strategy', selectedItems: [] };
 
 export const NoItems: StoryObj = () => {
   return <MultipleDropdown label="Strategy">{null}</MultipleDropdown>;
 };
 
-NoItems.args = { isDisabled: false };
+NoItems.args = { isDisabled: false, selectedItems: [] };
 
 export const Custom: StoryObj = (args: Args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1

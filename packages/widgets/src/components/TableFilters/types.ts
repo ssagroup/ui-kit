@@ -1,4 +1,5 @@
 export type CheckboxData = Record<string, string[]>;
+export type NotChangedData = Record<string, Record<string, boolean>>;
 
 export interface SingleItem {
   key: string;
@@ -22,3 +23,11 @@ export interface AccordionInfo {
 }
 
 export type TableFilterConfig = Record<string, AccordionInfo>;
+
+export interface TableFiltersView {
+  onReset?: () => void;
+  onClear?: () => void;
+  onSubmit?: () => void;
+  handleCheckboxToggle?: (groupName: string, name: string) => void;
+  checkboxData?: TableFilterConfig;
+}

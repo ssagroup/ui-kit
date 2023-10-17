@@ -1,7 +1,6 @@
-import { pathOr, propOr } from '@ssa-ui-kit/utils';
-import { useState, BaseSyntheticEvent, useEffect, useMemo } from 'react';
+import { assocPath, pathOr, propOr } from '@ssa-ui-kit/utils';
+import { useState, BaseSyntheticEvent, useEffect, createRef } from 'react';
 import { TableFilterConfig } from '../types';
-import { useVisibility } from '@components/Filters/hooks/useVisibility';
 
 export interface UseTableDataParameters {
   initialState?: TableFilterConfig;
@@ -11,6 +10,13 @@ export interface UseTableDataParameters {
   handleSubmit?: (data: Record<string, string[]>) => void;
 }
 
+// TableFilters
+// unit tests
+//    Filters
+//    TableFilters
+// PlayRight tests?
+//    Filters
+//    TableFilters
 export const useTableData = ({
   initialState,
   wrapperRef,
@@ -21,24 +27,30 @@ export const useTableData = ({
   const [checkboxData, setCheckboxData] = useState<TableFilterConfig>(
     {} as TableFilterConfig,
   );
-  const [selectedItemsByGroup, setSelectedItemsByGroup] = useState<
-    Record<string, string[]>
-  >({});
 
-  const useVisibilityResult = useVisibility(checkboxData, wrapperRef);
-  const { elementsRef } = useVisibilityResult;
+  const [refsList, setRefsList] = useState<
+    Array<React.MutableRefObject<HTMLElement | null>>
+  >([]);
+  const [groupNames, setGroupNames] = useState<string[]>([]);
+
+  const setElementRef = (groupName: string, element: HTMLElement | null) => {
+    if (element !== null && !groupNames.includes(groupName)) {
+      const newRef: React.MutableRefObject<HTMLElement | null> =
+        createRef<HTMLElement>();
+      newRef.current = element;
+      setRefsList((currentList) => [...currentList, newRef]);
+      setGroupNames((currentList) => [...currentList, groupName]);
+    }
+  };
 
   const addSelectedItemsDraft = () => {
     if (initialState) {
       const data = JSON.parse(JSON.stringify(initialState));
-      const selectedItemsByGroupDraft: Record<string, string[]> = {};
       Object.keys(initialState).forEach((groupName) => {
         const groupInfo = propOr({}, groupName)(initialState);
         const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
         data[groupName]['selectedItemsDraft'] = groupInfoSelectedItems;
-        selectedItemsByGroupDraft[groupInfo.id] = groupInfoSelectedItems;
       });
-      setSelectedItemsByGroup(selectedItemsByGroupDraft);
       setCheckboxData(data);
     }
   };
@@ -47,122 +59,72 @@ export const useTableData = ({
     addSelectedItemsDraft();
   }, []);
 
-  const handleIntersection = () => {
-    if (wrapperRef && wrapperRef.current) {
-      useVisibilityResult.processVisibility();
-    }
-  };
-
-  const observer = useMemo(
-    () =>
-      wrapperRef === null
-        ? null
-        : new IntersectionObserver(handleIntersection, {
-            root: wrapperRef?.current,
-            rootMargin: '0px',
-            threshold: 1,
-          }),
-    [wrapperRef?.current],
-  );
-
-  useEffect(() => {
-    Object.keys(elementsRef.current).forEach((keyName) => {
-      const currentRef = elementsRef.current[keyName].element;
-      if (currentRef.current && observer !== null) {
-        observer.observe(currentRef.current);
-      }
-
-      return () => {
-        if (observer !== null) {
-          observer.disconnect();
-        }
-      };
-    });
-  }, [elementsRef.current, observer]);
-
-  useEffect(() => {
-    const selectedItemsByGroupDraft: Record<string, string[]> = {};
-    Object.keys(checkboxData).forEach((groupName) => {
-      const groupInfo = propOr({}, groupName)(checkboxData);
-      const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
-      selectedItemsByGroupDraft[groupInfo.id] = groupInfoSelectedItems;
-    });
-    setSelectedItemsByGroup(selectedItemsByGroupDraft);
-  }, [checkboxData]);
-
-  const handleCheckboxToggleByGroup = (
-    groupName: string,
-    newState: string[],
-  ) => {
-    setSelectedItemsByGroup({
-      ...selectedItemsByGroup,
-      [groupName]: newState,
-    });
-  };
-
-  const handleCheckboxToggle = (groupName: string, name: string) => () => {
-    const currentState = propOr<Record<string, any>, string[]>(
+  const handleCheckboxToggle = (groupName: string, name: string | number) => {
+    const draftPath = [groupName, 'selectedItemsDraft'];
+    const selectedItemsDraft = pathOr<TableFilterConfig, string[]>(
       [],
-      groupName,
-    )(selectedItemsByGroup);
-    const newState = currentState.includes(name)
-      ? currentState.filter((stateName: string) => stateName !== name)
-      : [...currentState, name];
-    handleCheckboxToggleByGroup(groupName, newState);
+      draftPath,
+    )(checkboxData);
+    const newSelectedItems = selectedItemsDraft.includes(`${name}`)
+      ? selectedItemsDraft.filter((currentItemName) => currentItemName !== name)
+      : [...selectedItemsDraft, name];
+    setCheckboxData(assocPath(draftPath, newSelectedItems));
   };
 
-  const onSubmit = (event: BaseSyntheticEvent) => {
-    event.preventDefault();
-
-    const data = JSON.parse(JSON.stringify(checkboxData));
-    Object.keys(checkboxData).forEach((groupName) => {
-      data[groupName]['selectedItems'] = selectedItemsByGroup[groupName];
+  const onSubmit = (event?: BaseSyntheticEvent) => {
+    event?.preventDefault();
+    let newData = JSON.parse(JSON.stringify(checkboxData));
+    const submitData: Record<string, string[]> = {};
+    Object.keys(newData).forEach((groupName) => {
+      newData = assocPath(
+        [groupName, 'selectedItems'],
+        newData[groupName]['selectedItemsDraft'],
+      )(newData);
+      submitData[groupName] = newData[groupName]['selectedItemsDraft'];
     });
-    setCheckboxData(data);
-
-    handleSubmit?.(selectedItemsByGroup);
+    setCheckboxData(newData);
+    handleSubmit?.(submitData);
   };
 
   const onReset = () => {
-    const selectedItemsByGroupDraft: Record<string, string[]> = {};
-    Object.keys(checkboxData).forEach((groupName) => {
-      const groupInfo = propOr({}, groupName)(checkboxData);
-      const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
-      selectedItemsByGroupDraft[groupInfo.id] = groupInfoSelectedItems;
+    let newData = JSON.parse(JSON.stringify(checkboxData));
+    Object.keys(newData).forEach((groupName) => {
+      newData = assocPath(
+        [groupName, 'selectedItemsDraft'],
+        newData[groupName]['selectedItems'],
+      )(newData);
     });
-    setSelectedItemsByGroup(selectedItemsByGroupDraft);
+    setCheckboxData(newData);
     handleCancel?.();
   };
 
   const onClear = () => {
-    const selectedItemsByGroupDraft: Record<string, string[]> = {};
+    let newData = JSON.parse(JSON.stringify(checkboxData));
     Object.keys(checkboxData).forEach((groupName) => {
-      selectedItemsByGroupDraft[groupName] = [];
-      const groupInfo = propOr({}, groupName)(checkboxData);
-      const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
-      for (const itemName of groupInfoSelectedItems) {
-        const isDisabled = pathOr(false, [
-          groupName,
-          'items',
-          itemName,
-          'isDisabled',
-        ])(checkboxData);
-        if (isDisabled) {
-          selectedItemsByGroupDraft[groupName].push(itemName);
+      const notChangedData: string[] = [];
+      const selectedItems = checkboxData[groupName].selectedItems;
+      const currentItems = checkboxData[groupName].items;
+      Object.keys(checkboxData[groupName].items).forEach((itemKey) => {
+        const itemInfo = currentItems[itemKey];
+        if (itemInfo.isDisabled && selectedItems.includes(itemInfo.name)) {
+          notChangedData.push(itemInfo.name);
         }
-      }
+      });
+      newData = assocPath(
+        [groupName, 'selectedItemsDraft'],
+        notChangedData,
+      )(newData);
     });
-    setSelectedItemsByGroup(selectedItemsByGroupDraft);
+    setCheckboxData(newData);
     handleClear?.();
   };
 
   return {
     checkboxData,
-    selectedItemsByGroup,
     wrapperRef,
-    ...useVisibilityResult,
+    refsList,
+    setElementRef,
     handleCheckboxToggle,
-    handleCheckboxToggleByGroup,
     onSubmit,
     onReset,
     onClear,

@@ -59,6 +59,15 @@ function MultipleDropdownInner<T extends IDropdownOption>(
     Record<number | string, T>
   >({});
   const [items, setItems] = useState<Array<React.ReactElement>>([]);
+  const [values, setValues] = useState<Array<unknown>>([]);
+  const [valuesWithoutPlaceholder, setValuesWithoutPlaceholder] = useState<
+    Array<unknown>
+  >([]);
+
+  const memoSelectedItems = React.useMemo(
+    () => selectedItems,
+    [JSON.stringify(selectedItems)],
+  );
 
   const onChange = (item: IDropdownOption) => {
     if (isDisabled || !item) {
@@ -68,12 +77,14 @@ function MultipleDropdownInner<T extends IDropdownOption>(
       return;
     }
     let newOptionsWithKey = {};
+    let isSelected = true;
     if (isMultiple) {
+      isSelected = !optionsWithKey[item.value].isSelected;
       newOptionsWithKey = {
         ...optionsWithKey,
         [item.value]: {
           ...optionsWithKey[item.value],
-          isSelected: !optionsWithKey[item.value].isSelected,
+          isSelected,
         },
       };
       setOptionsWithKey(newOptionsWithKey);
@@ -89,7 +100,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
       setIsOpen(false);
     }
 
-    handleChange && handleChange(Object.values(newOptionsWithKey));
+    handleChange && handleChange(item.value, isSelected);
   };
 
   useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
@@ -119,7 +130,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
     ).map((child, index) => {
       const newOption = {
         ...child.props,
-        isSelected: !!selectedItems.find(
+        isSelected: !!memoSelectedItems.find(
           (selectedItem) => selectedItem.value === child.props.value,
         ),
       };
@@ -135,17 +146,21 @@ function MultipleDropdownInner<T extends IDropdownOption>(
 
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
-  }, [selectedItems]);
+  }, [memoSelectedItems]);
 
   const contextValue: DropdownContextType<IDropdownOption> = React.useMemo(
     () => ({ onChange, allItems: optionsWithKey, isMultiple }),
     [onChange, optionsWithKey, isMultiple],
   );
 
-  const values = getActiveItems({ allItems: optionsWithKey, placeholder });
-  const valuesWithoutPlaceholder = values.filter(
-    (item) => item !== placeholder,
-  );
+  useEffect(() => {
+    const newValues = getActiveItems({ allItems: optionsWithKey, placeholder });
+    const newValuesWithoutPlaceholder = newValues.filter(
+      (item) => item !== placeholder,
+    );
+    setValues(newValues);
+    setValuesWithoutPlaceholder(newValuesWithoutPlaceholder);
+  }, [optionsWithKey]);
 
   return (
     <MultipleDropdownContext.Provider value={contextValue}>

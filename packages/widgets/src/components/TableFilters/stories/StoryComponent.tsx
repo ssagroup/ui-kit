@@ -1,14 +1,20 @@
 import { mockData } from './mockData';
-import { TableFilters } from '../TableFilters';
 import { useTableData } from '../hooks/useTableData';
+import { FiltersContextProvider } from '@components/Filters/FiltersContext';
+import { TableFiltersWrapper } from './TableFiltersWrapper';
+import { useRef } from 'react';
+import { Wrapper } from '@ssa-ui-kit/core';
 
 export const StoryComponent = () => {
   const handleSubmit = (submitData: Record<string, string[]>) => {
     console.log('>>>onSubmit', submitData);
   };
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   const useTableDataResult = useTableData({
     initialState: mockData,
+    wrapperRef,
     handleSubmit,
   });
 
@@ -19,7 +25,11 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <TableFilters {...useTableDataResult} />
+      <FiltersContextProvider {...useTableDataResult}>
+        <Wrapper direction="column" ref={wrapperRef}>
+          <TableFiltersWrapper />
+        </Wrapper>
+      </FiltersContextProvider>
     </div>
   );
 };
