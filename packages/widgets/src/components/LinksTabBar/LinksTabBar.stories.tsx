@@ -2,7 +2,7 @@ import { MemoryRouter, Route, Routes, Outlet } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { NavigationTabBar, NavigationTabBarProps } from './index';
+import { LinksTabBar, LinksTabBarProps } from './index';
 
 const links = [
   {
@@ -37,8 +37,8 @@ const RoutePlaceholder = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default {
-  title: 'Widgets/NavigationTabBar',
-  component: NavigationTabBar,
+  title: 'Widgets/LinksTabBar',
+  component: LinksTabBar,
   decorators: [
     (Story) => (
       <div style={{ width: '562px', padding: '10px' }}>
@@ -69,18 +69,18 @@ export default {
   args: {
     links,
   },
-} as Meta<typeof NavigationTabBar>;
+} as Meta<typeof LinksTabBar>;
 
 export const Default = {};
 
-export const WithCustomStyles: StoryObj<typeof NavigationTabBar> = (
-  args: NavigationTabBarProps,
+export const WithCustomStyles: StoryObj<typeof LinksTabBar> = (
+  args: LinksTabBarProps,
 ) => {
   /**
    * Colors are from here: https://paletadecolores.online/en/colors/846ef3/
    * */
   return (
-    <NavigationTabBar
+    <LinksTabBar
       {...args}
       css={css`
         a {
