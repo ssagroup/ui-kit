@@ -30,7 +30,7 @@ export const LinksTabBarBase = styled.div`
     text-underline-offset: 8px;
   }
 
-  a:focus::before {
+  a:focus-visible::before {
     ${({ theme }) => styleUtils.outlineStyles(theme, 'grey40', '6px', 'dashed')}
   }
 `;
