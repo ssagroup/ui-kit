@@ -11,7 +11,6 @@ type UseVisibilityParams = {
   onVisibilityProcessed?: () => void;
 };
 
-// TODO: unit test
 export const useVisibility = ({
   checkboxData,
   wrapperRef,

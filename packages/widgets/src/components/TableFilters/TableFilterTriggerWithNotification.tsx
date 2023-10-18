@@ -32,7 +32,8 @@ export const TableFilterTriggerWithNotification = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+          data-testid={'trigger-notification'}>
           {count}
         </MultipleDropdownNotification>
       ) : (

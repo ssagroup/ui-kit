@@ -1,5 +1,5 @@
 import { mockData } from './mockData';
-import { Filters } from '../Filters';
+import { Filters } from '..';
 
 export const StoryComponent = () => {
   const handleSubmit = (submitData: Record<string, string[]>) => {

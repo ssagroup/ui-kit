@@ -11,8 +11,9 @@ export const getSubmitData = (checkboxData: TableFilterConfig) => {
       [groupName, 'selectedItems'],
       submitCheckboxData[groupName]['selectedItemsDraft'],
     )(submitCheckboxData);
-    dataForSubmit[groupName] =
-      submitCheckboxData[groupName]['selectedItemsDraft'];
+    dataForSubmit[groupName] = submitCheckboxData[groupName][
+      'selectedItemsDraft'
+    ] as string[];
   });
   return {
     submitCheckboxData,

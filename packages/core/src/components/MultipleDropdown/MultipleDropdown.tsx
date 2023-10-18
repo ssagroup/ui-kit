@@ -13,7 +13,7 @@ import { IDropdownOption } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, IDropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
-import MultipleDropdownNotification from '@components/MultipleDropdownNotification/MultipleDropdownNotification';
+import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
 import styled from '@emotion/styled';
 
 const DropdownPlaceholderLabel = styled.div`

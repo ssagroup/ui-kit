@@ -8,15 +8,10 @@ import { createRef } from 'react';
 
 const mockTableFiltersProps: UseTableDataResult = {
   checkboxData: mockData,
-  areAllFiltersVisible: false,
-  extraFiltersCount: 0,
-  hiddenGroups: [],
   handleCheckboxToggle: jest.fn(),
-  handleCheckboxToggleByGroup: jest.fn(),
-  processVisibility: jest.fn(),
   setElementRef: jest.fn(),
   onSubmit: jest.fn((e) => {
-    e.preventDefault();
+    e?.preventDefault();
     console.log('>>>Submit: completed');
   }),
   onReset: () => {
@@ -25,9 +20,8 @@ const mockTableFiltersProps: UseTableDataResult = {
   onClear: () => {
     console.log('>>>Clear: completed');
   },
-  elementsRef: { current: {} },
   wrapperRef: createRef(),
-  selectedItemsByGroup: {},
+  refsList: [],
 };
 
 describe('TableFilters', () => {
