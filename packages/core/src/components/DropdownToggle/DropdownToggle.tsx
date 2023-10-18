@@ -84,6 +84,7 @@ export const DropdownToggleBase = styled.button<
 
   &:disabled {
     background: ${({ theme }) => theme.colors.grey};
+    cursor: default;
   }
 
   &:focus {

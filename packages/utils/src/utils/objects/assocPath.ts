@@ -1,7 +1,5 @@
-import { PathValue } from '../types';
-
 export const assocPath =
-  <T>([first, ...rest]: string[], value: PathValue) =>
+  <T>([first, ...rest]: string[], value: any) =>
   (sourceObject: T): T =>
     JSON.parse(
       JSON.stringify({

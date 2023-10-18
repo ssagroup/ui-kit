@@ -39,6 +39,7 @@ export type RenderContentProps = Pick<AccordionProps, 'id' | 'size'> &
 export interface AccordionViewProps extends AccordionProps {
   ariaControls?: string;
   isOpened?: boolean;
+  isHidden?: boolean;
   title: string;
   onClick?: () => void;
   children?: React.ReactNode;

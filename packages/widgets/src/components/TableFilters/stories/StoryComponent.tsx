@@ -1,11 +1,23 @@
-import { CheckboxData } from '../types';
-import { TableFilters } from '../TableFilters';
-import { mockData, mockInitialState } from './mockData';
+import { mockData } from './mockData';
+import { useTableData } from '../hooks/useTableData';
+import { FiltersContextProvider } from '@components/Filters/FiltersContext';
+import { TableFiltersWrapper } from './TableFiltersWrapper';
+import { useRef } from 'react';
+import { Wrapper } from '@ssa-ui-kit/core';
 
 export const StoryComponent = () => {
-  const onSubmit = (checkboxData: CheckboxData) => {
-    console.log('>>>onSubmit', checkboxData);
+  const handleSubmit = (submitData: Record<string, string[]>) => {
+    console.log('>>>onSubmit', submitData);
   };
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const useTableDataResult = useTableData({
+    initialState: mockData,
+    wrapperRef,
+    handleSubmit,
+  });
+
   return (
     <div
       css={{
@@ -13,11 +25,11 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <TableFilters
-        data={mockData}
-        initialState={mockInitialState}
-        handleSubmit={onSubmit}
-      />
+      <FiltersContextProvider {...useTableDataResult}>
+        <Wrapper direction="column" ref={wrapperRef}>
+          <TableFiltersWrapper />
+        </Wrapper>
+      </FiltersContextProvider>
     </div>
   );
 };

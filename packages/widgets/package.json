@@ -59,6 +59,7 @@
     "@types/testing-library__jest-dom": "^5.14.6",
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.1",
+    "jsdom-testing-mocks": "^1.11.0",
     "resolve-tspaths": "^0.8.16",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"

@@ -4,7 +4,7 @@ import { MutableRefObject } from 'react';
 export interface ICheckboxProps {
   text?: string;
   id?: string;
-  onChange: (newState: boolean) => void;
+  onChange?: (newState: boolean) => void;
   externalState?: boolean;
   isDisabled?: boolean;
   initialState?: boolean;

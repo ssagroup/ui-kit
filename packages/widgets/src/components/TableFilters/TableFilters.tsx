@@ -4,7 +4,7 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import { PathValue, assocPath, dissocPath, path } from '@ssa-ui-kit/utils';
+import { assocPath } from '@ssa-ui-kit/utils';
 import {
   AccordionTitle,
   AccordionGroup,
@@ -25,80 +25,95 @@ import {
   TableFiltersAccordionContent,
   TableFiltersButtons,
 } from '.';
-import { CheckboxData, TableFiltersView } from './types';
+import { TableFilterConfig, TableFiltersView } from './types';
+import {
+  getCheckboxChangedItems,
+  getClearData,
+  getResetData,
+  getSubmitData,
+} from './utils/handlers';
 
 export const TableFilters = ({
-  handleCancel,
-  handleSubmit,
-  handleClear,
-  initialState = {} as CheckboxData,
-  data,
+  checkboxData = {} as TableFilterConfig,
+  onReset,
+  onSubmit,
+  onClear,
+  handleCheckboxToggle,
 }: TableFiltersView) => {
-  const [checkboxData, setCheckboxData] = useState(initialState);
-  const [persistentData, setPersistentData] = useState({});
+  const [localCheckboxData, setLocalCheckboxData] =
+    useState<TableFilterConfig>(checkboxData);
   const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
+
+  const [open, setOpen] = useState(false);
+
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
+  };
+
+  useEffect(() => {
+    setLocalCheckboxData(checkboxData);
+  }, [checkboxData]);
+
   useLayoutEffect(() => {
     let counter = 0;
-    Object.keys(checkboxData).forEach((groupName) => {
-      const currentItems = checkboxData[groupName];
-      let elementChecked = false;
-      Object.keys(currentItems).forEach((itemName) => {
-        const currentValue = currentItems[itemName];
-        if (elementChecked) {
-          return;
-        }
-        if (currentValue) {
-          elementChecked = true;
-          counter++;
-        }
-      });
+    Object.keys(localCheckboxData).forEach((groupName) => {
+      const selectedItemsDraft =
+        localCheckboxData[groupName].selectedItemsDraft || [];
+      if (selectedItemsDraft.length > 0) {
+        counter++;
+      }
     });
     setSelectedGroupsCount(counter);
-  }, [checkboxData]);
-  useEffect(() => {
-    let notChangedData = {} as CheckboxData;
-    data.forEach((groupInfo) => {
-      groupInfo.items.forEach((itemInfo) => {
-        const initialStateValue = path(itemInfo.content.statePath)(
-          initialState,
-        );
-        if (itemInfo.isDisabled && initialStateValue !== undefined) {
-          notChangedData = assocPath<CheckboxData>(
-            itemInfo.content.statePath,
-            initialStateValue as PathValue,
-          )(notChangedData);
-        }
-      });
-    });
-    setPersistentData(notChangedData);
-  }, [data]);
-  const handleCheckboxChange = (path: string[]) => (newState: boolean) => {
-    if (newState) {
-      setCheckboxData(assocPath(path, newState));
-    } else {
-      setCheckboxData(dissocPath(path));
+
+    if (Object.keys(localCheckboxData).length === 0) {
+      setOpen(false);
     }
+  }, [localCheckboxData]);
+
+  const onCheckboxChange = (groupName: string, name: string) => () => {
+    const { items, path } = getCheckboxChangedItems(
+      localCheckboxData,
+      groupName,
+      name,
+    );
+    setLocalCheckboxData(assocPath(path, items));
+    handleCheckboxToggle?.(groupName, name);
   };
-  const onSubmit = (event: BaseSyntheticEvent) => {
+
+  const handleSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
-    handleSubmit?.(checkboxData);
+    const { submitCheckboxData } = getSubmitData(localCheckboxData);
+    setLocalCheckboxData(submitCheckboxData);
+    onSubmit?.();
   };
-  const onReset = () => {
-    setCheckboxData(() => initialState);
-    handleCancel?.();
+
+  const handleReset = () => {
+    const resetData = getResetData(localCheckboxData);
+    setLocalCheckboxData(resetData);
+    setOpen(false);
+    onReset?.();
   };
-  const onClear = () => {
-    setCheckboxData(persistentData);
-    handleClear?.();
+
+  const handleClear = () => {
+    const newData = getClearData(localCheckboxData);
+    setLocalCheckboxData(newData);
+    onClear?.();
   };
+
   return (
-    <Popover>
-      <TableFilterTriggerWithNotification count={selectedGroupsCount}>
+    <Popover
+      floatingOptions={{
+        onOpenChange,
+        open: open,
+      }}>
+      <TableFilterTriggerWithNotification
+        count={selectedGroupsCount}
+        visible={!(Object.keys(localCheckboxData).length === 0)}>
         More
       </TableFilterTriggerWithNotification>
       <PopoverContent className="popover" css={tableFilterPopoverContentStyles}>
         <form
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           css={{
             display: 'flex',
             flexDirection: 'column',
@@ -108,48 +123,54 @@ export const TableFilters = ({
           <PopoverDescription variant="body1">
             <AccordionGroupContextProvider>
               <AccordionGroup size="medium">
-                {data.map((accordionInfo) => (
-                  <TableFiltersAccordion
-                    key={accordionInfo.id}
-                    id={accordionInfo.id}
-                    title={accordionInfo.title}
-                    isOpened={accordionInfo.isOpened}
-                    ariaControls={accordionInfo.ariaControls}
-                    renderContent={(props) => (
-                      <TableFiltersAccordionContent {...props}>
-                        {accordionInfo.items.map((info) => {
-                          const extraProps: Partial<ICheckboxProps> = {};
-                          if (info.isDisabled) {
-                            extraProps.initialState =
-                              !!checkboxData?.[accordionInfo.id]?.[info.name];
-                          } else {
-                            extraProps.externalState =
-                              !!checkboxData?.[accordionInfo.id]?.[info.name];
-                          }
-                          return (
-                            <TableFilterCheckbox
-                              key={info.key}
-                              name={info.name}
-                              id={info.key}
-                              onChange={handleCheckboxChange(
-                                info.content.statePath,
-                              )}
-                              text={info.content.text}
-                              isDisabled={info.isDisabled}
-                              {...extraProps}
-                            />
-                          );
-                        })}
-                      </TableFiltersAccordionContent>
-                    )}
-                    renderTitle={AccordionTitle}
-                  />
-                ))}
+                {Object.keys(localCheckboxData).map((groupName) => {
+                  const accordionInfo = localCheckboxData[groupName];
+                  return (
+                    <TableFiltersAccordion
+                      key={accordionInfo.id}
+                      id={accordionInfo.id}
+                      title={accordionInfo.title}
+                      isOpened={accordionInfo.isOpened}
+                      ariaControls={accordionInfo.ariaControls}
+                      renderContent={(props) => (
+                        <TableFiltersAccordionContent {...props}>
+                          {Object.keys(accordionInfo.items).map((itemKey) => {
+                            const info = accordionInfo.items[itemKey];
+                            const extraProps: Partial<ICheckboxProps> = {};
+                            const currentState = !!localCheckboxData?.[
+                              accordionInfo.id
+                            ].selectedItemsDraft?.includes(info.name);
+                            if (info.isDisabled) {
+                              extraProps.initialState = currentState;
+                            } else {
+                              extraProps.externalState = currentState;
+                            }
+                            return (
+                              <TableFilterCheckbox
+                                key={info.key}
+                                name={info.name}
+                                id={info.key}
+                                onChange={onCheckboxChange(
+                                  groupName,
+                                  info.name,
+                                )}
+                                text={info.content.text}
+                                isDisabled={info.isDisabled}
+                                {...extraProps}
+                              />
+                            );
+                          })}
+                        </TableFiltersAccordionContent>
+                      )}
+                      renderTitle={AccordionTitle}
+                    />
+                  );
+                })}
               </AccordionGroup>
             </AccordionGroupContextProvider>
           </PopoverDescription>
           <hr css={tableFilterDividerStyles} />
-          <TableFiltersButtons onClear={onClear} onCancel={onReset} />
+          <TableFiltersButtons onClear={handleClear} onCancel={handleReset} />
         </form>
       </PopoverContent>
     </Popover>

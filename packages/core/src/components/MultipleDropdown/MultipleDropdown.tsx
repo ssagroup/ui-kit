@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, useId } from 'react';
+import React, { useState, useEffect, useId, useRef } from 'react';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import { mapObjIndexed } from '@ssa-ui-kit/utils';
+import { useMergeRefs } from '@floating-ui/react';
 
 import DropdownBase from '@components/DropdownBase';
 import DropdownToggle from '@components/DropdownToggle';
@@ -12,7 +13,7 @@ import { IDropdownOption } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, IDropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
-import MultipleDropdownNotification from '@components/MultipleDropdownNotification/MultipleDropdownNotification';
+import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
 import styled from '@emotion/styled';
 
 const DropdownPlaceholderLabel = styled.div`
@@ -32,23 +33,25 @@ const DropdownPlaceholderLabel = styled.div`
  * Aria attributes are set according to
  * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  **/
-const MultipleDropdown = <T extends IDropdownOption>({
-  selectedItems = [],
-  isDisabled,
-  isOpen: isInitOpen,
-  isMultiple = true,
-  placeholder = 'Select something',
-  showPlaceholder = true,
-  label,
-  children,
-  onChange: handleChange,
-  className,
-}: IDropdownProps<T>) => {
+function MultipleDropdownInner<T extends IDropdownOption>(
+  {
+    selectedItems = [],
+    isDisabled,
+    isOpen: isInitOpen,
+    isMultiple = true,
+    placeholder = 'Select something',
+    showPlaceholder = true,
+    label,
+    children,
+    onChange: handleChange,
+    className,
+  }: IDropdownProps<T>,
+  ref?: React.ForwardedRef<HTMLDivElement | null>,
+) {
   const theme = useTheme();
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const dropdownBaseRef: React.MutableRefObject<HTMLDivElement | null> =
+    useRef<HTMLDivElement>(null);
   const dropdownId = useId();
-
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [colors, setColors] = useState<Array<string | undefined>>([]);
@@ -56,6 +59,15 @@ const MultipleDropdown = <T extends IDropdownOption>({
     Record<number | string, T>
   >({});
   const [items, setItems] = useState<Array<React.ReactElement>>([]);
+  const [values, setValues] = useState<Array<unknown>>([]);
+  const [valuesWithoutPlaceholder, setValuesWithoutPlaceholder] = useState<
+    Array<unknown>
+  >([]);
+
+  const memoSelectedItems = React.useMemo(
+    () => selectedItems,
+    [JSON.stringify(selectedItems)],
+  );
 
   const onChange = (item: IDropdownOption) => {
     if (isDisabled || !item) {
@@ -65,12 +77,14 @@ const MultipleDropdown = <T extends IDropdownOption>({
       return;
     }
     let newOptionsWithKey = {};
+    let isSelected = true;
     if (isMultiple) {
+      isSelected = !optionsWithKey[item.value].isSelected;
       newOptionsWithKey = {
         ...optionsWithKey,
         [item.value]: {
           ...optionsWithKey[item.value],
-          isSelected: !optionsWithKey[item.value].isSelected,
+          isSelected,
         },
       };
       setOptionsWithKey(newOptionsWithKey);
@@ -86,10 +100,10 @@ const MultipleDropdown = <T extends IDropdownOption>({
       setIsOpen(false);
     }
 
-    handleChange && handleChange(Object.values(newOptionsWithKey));
+    handleChange && handleChange(item.value, isSelected);
   };
 
-  useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));
+  useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
 
   useEffect(() => {
     if (isDisabled) {
@@ -116,7 +130,7 @@ const MultipleDropdown = <T extends IDropdownOption>({
     ).map((child, index) => {
       const newOption = {
         ...child.props,
-        isSelected: !!selectedItems.find(
+        isSelected: !!memoSelectedItems.find(
           (selectedItem) => selectedItem.value === child.props.value,
         ),
       };
@@ -132,21 +146,27 @@ const MultipleDropdown = <T extends IDropdownOption>({
 
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
-  }, []);
+  }, [memoSelectedItems]);
 
   const contextValue: DropdownContextType<IDropdownOption> = React.useMemo(
     () => ({ onChange, allItems: optionsWithKey, isMultiple }),
     [onChange, optionsWithKey, isMultiple],
   );
 
-  const values = getActiveItems({ allItems: optionsWithKey, placeholder });
-  const valuesWithoutPlaceholder = values.filter(
-    (item) => item !== placeholder,
-  );
+  useEffect(() => {
+    const newValues = getActiveItems({ allItems: optionsWithKey, placeholder });
+    const newValuesWithoutPlaceholder = newValues.filter(
+      (item) => item !== placeholder,
+    );
+    setValues(newValues);
+    setValuesWithoutPlaceholder(newValuesWithoutPlaceholder);
+  }, [optionsWithKey]);
 
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
-      <DropdownBase ref={dropdownRef} data-testid="dropdown">
+      <DropdownBase
+        ref={useMergeRefs([dropdownBaseRef, ref])}
+        data-testid="dropdown">
         <DropdownToggle
           className={className}
           isOpen={isOpen}
@@ -187,6 +207,11 @@ const MultipleDropdown = <T extends IDropdownOption>({
       </DropdownBase>
     </MultipleDropdownContext.Provider>
   );
-};
+}
+
+const MultipleDropdown = React.forwardRef<
+  HTMLDivElement,
+  IDropdownProps<IDropdownOption>
+>(MultipleDropdownInner);
 
 export default MultipleDropdown;
