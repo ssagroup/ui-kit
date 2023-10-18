@@ -37,7 +37,7 @@ export const ButtonItem = (theme: Theme) => css`
     min-width: 65px;
     padding: 12px;
 
-    * {
+    p {
       font-size: 13.3px;
       line-height: 15px;
     }
