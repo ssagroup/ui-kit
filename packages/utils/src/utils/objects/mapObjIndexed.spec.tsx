@@ -1,6 +1,6 @@
 import { mapObjIndexed } from '.';
 
-describe('mapObjIndexed', () => {
+describe('utils => objects => mapObjIndexed', () => {
   it('mapObjIndexed should work', () => {
     const data = {
       a: {

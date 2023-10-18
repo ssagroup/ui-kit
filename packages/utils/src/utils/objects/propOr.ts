@@ -1,6 +1,5 @@
 import { prop } from './prop';
 
-// TODO: unit tests
 export const propOr =
   <T extends Record<string | number, any>, R = any>(
     defaultValue: any,

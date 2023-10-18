@@ -1,6 +1,6 @@
 import { assocPath } from '.';
 
-describe('assocPath', () => {
+describe('utils => objects => assocPath', () => {
   it('assocPath should work', () => {
     const data = {
       a: {

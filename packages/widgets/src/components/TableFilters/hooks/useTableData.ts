@@ -16,13 +16,6 @@ export interface UseTableDataParameters {
   handleSubmit?: (data: Record<string, string[]>) => void;
 }
 
-// TableFilters
-// unit tests
-//    Filters
-//    TableFilters
-// PlayRight tests?
-//    Filters
-//    TableFilters
 export const useTableData = ({
   initialState,
   wrapperRef,

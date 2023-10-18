@@ -11,7 +11,6 @@ import { AccordionGroupProps, AccordionProps } from './types';
 
 const AccordionBase = styled.div``;
 
-// TODO: check this component without children provided
 export const AccordionGroup = ({
   children,
   size = 'empty',

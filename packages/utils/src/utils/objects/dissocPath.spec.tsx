@@ -1,6 +1,6 @@
 import { dissocPath } from '.';
 
-describe('dissocPath', () => {
+describe('utils => objects => dissocPath', () => {
   it('dissocPath should work', () => {
     const data = {
       a: {

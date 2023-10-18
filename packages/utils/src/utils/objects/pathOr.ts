@@ -1,5 +1,5 @@
 import { path as originalPath } from './path';
-// TODO: unit tests
+
 export const pathOr =
   <T extends Record<string | number, any>, R>(
     defaultValue: any,
