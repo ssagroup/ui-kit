@@ -1,12 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { ButtonGroup } from './ButtonGroup';
-
-const items = [
-  { id: 1, text: 'All (10)' },
-  { id: 2, text: 'Running (117)' },
-  { id: 3, text: 'Stopped (2)' },
-];
+import { items } from './helpers';
 
 export default {
   title: 'Components/ButtonGroup',
@@ -31,7 +26,7 @@ export const CustomStyle: StoryObj<typeof ButtonGroup> = () => {
       `}>
       <ButtonGroup
         items={items}
-        cssStyles={css`
+        buttonStyles={css`
           background: ${theme.colors.white};
 
           &:hover {

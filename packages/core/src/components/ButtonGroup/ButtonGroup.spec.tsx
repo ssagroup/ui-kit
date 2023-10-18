@@ -1,11 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { ButtonGroup } from './ButtonGroup';
-
-const items = [
-  { id: 1, text: 'All (10)' },
-  { id: 2, text: 'Running (117)' },
-  { id: 3, text: 'Stopped (2)' },
-];
+import { items } from './helpers';
 
 describe('ButtonGroup', () => {
   it('Renders all buttons', () => {

@@ -1,12 +1,12 @@
 import { SerializedStyles } from '@emotion/react';
 
-export type Item = {
+export type ButtonGroupItem = {
   id: number;
   text: string;
 };
 
 export interface ButtonGroupProps {
-  items: Array<Item>;
-  onClick: (item: Item) => void;
-  cssStyles?: SerializedStyles;
+  items: Array<ButtonGroupItem>;
+  onClick: (item: ButtonGroupItem) => void;
+  buttonStyles?: SerializedStyles;
 }

@@ -1,46 +1,16 @@
 import React, { useState } from 'react';
-import { Theme, css } from '@emotion/react';
 import Button from '@components/Button';
 import Typography from '@components/Typography';
-import { ButtonGroupProps, Item } from './types';
-
-const ButtonItem = (theme: Theme) => css`
-  height: auto;
-  padding: 12px;
-  border-radius: 0;
-  box-shadow: none;
-  user-select: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    box-shadow: none;
-  }
-
-  &:first-of-type {
-    border-radius: 6px 0 0 6px;
-  }
-
-  &:last-child {
-    border-radius: 0 6px 6px 0;
-  }
-
-  &:not(:last-child) {
-    margin-right: 1px;
-  }
-
-  &.active {
-    background: ${theme.colors.greyFocused};
-  }
-`;
+import { ButtonGroupProps, ButtonGroupItem } from './types';
+import { ButtonItem } from './styles';
 
 export const ButtonGroup = ({
   items,
-  cssStyles,
+  buttonStyles,
   onClick,
 }: ButtonGroupProps) => {
   const [activeBtn, setActiveBtn] = useState(items[0]);
-  const handleClick = (item: Item) => {
+  const handleClick = (item: ButtonGroupItem) => () => {
     setActiveBtn(item);
     onClick(item);
   };
@@ -55,10 +25,10 @@ export const ButtonGroup = ({
             aria-pressed={isActive}
             variant="secondary"
             size="small"
-            onClick={() => handleClick(item)}
-            css={[ButtonItem, cssStyles]}
+            onClick={handleClick(item)}
+            css={[ButtonItem, buttonStyles]}
             className={isActive ? 'active' : ''}>
-            <Typography variant="subtitle">{item.text}</Typography>
+            <Typography variant="body1">{item.text}</Typography>
           </Button>
         );
       })}
