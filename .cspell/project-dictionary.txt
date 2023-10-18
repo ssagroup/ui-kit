@@ -74,3 +74,11 @@ VERCEL
 viewports
 vtpit
 xlg
+USD
+btc
+btcfdusd
+Dissoc
+fdusd
+ROI
+PNL
+linkstabbar

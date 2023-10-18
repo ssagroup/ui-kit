@@ -34,6 +34,7 @@ export interface IButtonVariants {
   info: (theme: Theme) => SerializedStyles;
   secondary: (theme: Theme) => SerializedStyles;
   tertiary: (theme: Theme) => SerializedStyles;
+  attention: (theme: Theme) => SerializedStyles;
 }
 
 export type IButtonTextProps = {

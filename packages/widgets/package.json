@@ -35,7 +35,7 @@
   },
   "scripts": {
     "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "sb:dev": "storybook dev -p 6007",
     "sb:build": "storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",
@@ -60,6 +60,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.1",
     "jsdom-testing-mocks": "^1.11.0",
+    "resolve-tspaths": "^0.8.16",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"
   },

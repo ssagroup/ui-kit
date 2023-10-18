@@ -48,6 +48,8 @@ const main: Theme = {
     green60: 'rgba(82, 197, 135, 0.6)', // #52c587
     pink: 'rgba(240, 129, 107, 1)', // #f0816b
     pink20: 'rgba(240, 129, 107, 0.2)', // #f0816b
+    pinkDark: 'rgba(221, 99, 75, 1)', // #DD634B
+    pinkDarker: 'rgba(241, 132, 122, 1)', // #F1847A
     pinkLighter: 'rgba(249, 153, 144, 1)', // #f99990
     pinkLighter20: 'rgba(249, 153, 144, 0.2)', // #f99990
     pinkLighter40: 'rgba(249, 153, 144, 0.4)', // #f99990

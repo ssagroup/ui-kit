@@ -10,6 +10,7 @@ module.exports = () => {
       '@components': path.resolve(__dirname, './src/components'),
       '@themes': path.resolve(__dirname, './src/themes'),
       '@styles': path.resolve(__dirname, './src/styles'),
+      '@global-types': path.resolve(__dirname, './src/types'),
     },
     externals: {
       react: 'react',

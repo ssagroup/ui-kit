@@ -4,6 +4,7 @@ type OutlineFn = (
   theme: Theme,
   color?: keyof Theme['colors'],
   borderRadius?: string,
+  borderStyle?: React.CSSProperties['borderStyle'],
 ) => SerializedStyles;
 
 /* This is for Safari to make a rounded outline */
@@ -21,6 +22,7 @@ export const outlineStyles: OutlineFn = (
   theme,
   color?,
   borderRadius = '12px',
+  borderStyle = 'solid',
 ) => css`
   content: '';
   position: absolute;
@@ -28,7 +30,7 @@ export const outlineStyles: OutlineFn = (
   right: 0px;
   bottom: 0px;
   left: 0px;
-  border-style: solid;
+  border-style: ${borderStyle};
   border-width: 1px;
   border-color: ${theme.colors[color || 'greyDarker']};
   border-radius: ${borderRadius};

@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Typography from '@components/Typography';
@@ -11,7 +10,7 @@ export default {
 
 export const Default: StoryObj<typeof ResponsiveImage> = () => {
   return (
-    <Fragment>
+    <div className="lostpixel-ignore">
       <Typography variant="h6" gutter>
         A simple wrapper over the{' '}
         <span
@@ -27,7 +26,7 @@ export const Default: StoryObj<typeof ResponsiveImage> = () => {
         src="https://placehold.co/48x48"
         alt="Steps"
       />
-    </Fragment>
+    </div>
   );
 };
 

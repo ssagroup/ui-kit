@@ -37,3 +37,5 @@ export * from './components/UserCard';
 export * from './components/Pagination';
 export * from './components/TradingInfoCard';
 export * from './components/TradingScoreboard';
+export * from './components/NotificationCard';
+export * from './components/LinksTabBar';

@@ -153,3 +153,13 @@ export const tertiaryBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
   variant: 'tertiary' as IButtonProps['variant'],
 }));
+
+export const infoBtnSpecs = primaryBtnSpecs.map((s) => ({
+  ...s,
+  variant: 'info' as IButtonProps['variant'],
+}));
+
+export const attentionBtnSpecs = primaryBtnSpecs.map((s) => ({
+  ...s,
+  variant: 'attention' as IButtonProps['variant'],
+}));
