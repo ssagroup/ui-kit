@@ -19,7 +19,7 @@ export interface AccordionInfo {
   isDisabled?: boolean;
   items: Record<string, SingleItem>;
   selectedItems: string[];
-  selectedItemsDraft?: string[];
+  selectedItemsDraft: string[];
 }
 
 export type TableFilterConfig = Record<string, AccordionInfo>;

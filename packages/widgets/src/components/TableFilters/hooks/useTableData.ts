@@ -1,6 +1,12 @@
-import { assocPath, pathOr, propOr } from '@ssa-ui-kit/utils';
+import { assocPath, propOr } from '@ssa-ui-kit/utils';
 import { useState, BaseSyntheticEvent, useEffect, createRef } from 'react';
 import { TableFilterConfig } from '../types';
+import {
+  getCheckboxChangedItems,
+  getClearData,
+  getResetData,
+  getSubmitData,
+} from '../utils/handlers';
 
 export interface UseTableDataParameters {
   initialState?: TableFilterConfig;
@@ -43,7 +49,7 @@ export const useTableData = ({
     }
   };
 
-  const addSelectedItemsDraft = () => {
+  useEffect(() => {
     if (initialState) {
       const data = JSON.parse(JSON.stringify(initialState));
       Object.keys(initialState).forEach((groupName) => {
@@ -53,68 +59,32 @@ export const useTableData = ({
       });
       setCheckboxData(data);
     }
-  };
-
-  useEffect(() => {
-    addSelectedItemsDraft();
   }, []);
 
   const handleCheckboxToggle = (groupName: string, name: string | number) => {
-    const draftPath = [groupName, 'selectedItemsDraft'];
-    const selectedItemsDraft = pathOr<TableFilterConfig, string[]>(
-      [],
-      draftPath,
-    )(checkboxData);
-    const newSelectedItems = selectedItemsDraft.includes(`${name}`)
-      ? selectedItemsDraft.filter((currentItemName) => currentItemName !== name)
-      : [...selectedItemsDraft, name];
-    setCheckboxData(assocPath(draftPath, newSelectedItems));
+    const { items, path } = getCheckboxChangedItems(
+      checkboxData,
+      groupName,
+      name,
+    );
+    setCheckboxData(assocPath(path, items));
   };
 
   const onSubmit = (event?: BaseSyntheticEvent) => {
     event?.preventDefault();
-    let newData = JSON.parse(JSON.stringify(checkboxData));
-    const submitData: Record<string, string[]> = {};
-    Object.keys(newData).forEach((groupName) => {
-      newData = assocPath(
-        [groupName, 'selectedItems'],
-        newData[groupName]['selectedItemsDraft'],
-      )(newData);
-      submitData[groupName] = newData[groupName]['selectedItemsDraft'];
-    });
-    setCheckboxData(newData);
-    handleSubmit?.(submitData);
+    const { submitCheckboxData, dataForSubmit } = getSubmitData(checkboxData);
+    setCheckboxData(submitCheckboxData);
+    handleSubmit?.(dataForSubmit);
   };
 
   const onReset = () => {
-    let newData = JSON.parse(JSON.stringify(checkboxData));
-    Object.keys(newData).forEach((groupName) => {
-      newData = assocPath(
-        [groupName, 'selectedItemsDraft'],
-        newData[groupName]['selectedItems'],
-      )(newData);
-    });
-    setCheckboxData(newData);
+    const resetData = getResetData(checkboxData);
+    setCheckboxData(resetData);
     handleCancel?.();
   };
 
   const onClear = () => {
-    let newData = JSON.parse(JSON.stringify(checkboxData));
-    Object.keys(checkboxData).forEach((groupName) => {
-      const notChangedData: string[] = [];
-      const selectedItems = checkboxData[groupName].selectedItems;
-      const currentItems = checkboxData[groupName].items;
-      Object.keys(checkboxData[groupName].items).forEach((itemKey) => {
-        const itemInfo = currentItems[itemKey];
-        if (itemInfo.isDisabled && selectedItems.includes(itemInfo.name)) {
-          notChangedData.push(itemInfo.name);
-        }
-      });
-      newData = assocPath(
-        [groupName, 'selectedItemsDraft'],
-        notChangedData,
-      )(newData);
-    });
+    const newData = getClearData(checkboxData);
     setCheckboxData(newData);
     handleClear?.();
   };

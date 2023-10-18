@@ -5,10 +5,9 @@ import { useFiltersContext } from './FiltersContext';
 export const FiltersBlock = () => {
   const { setElementRef, handleCheckboxToggle, checkboxData } =
     useFiltersContext();
-  const handleOnChange =
-    (groupName: string) => (item: string | number, isSelected: boolean) => {
-      handleCheckboxToggle(groupName, item);
-    };
+  const handleOnChange = (groupName: string) => (item: string | number) => {
+    handleCheckboxToggle(groupName, item);
+  };
 
   const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
     Record<string, Array<{ value: string }>>

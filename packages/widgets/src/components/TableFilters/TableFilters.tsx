@@ -4,7 +4,7 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import { assocPath, pathOr } from '@ssa-ui-kit/utils';
+import { assocPath } from '@ssa-ui-kit/utils';
 import {
   AccordionTitle,
   AccordionGroup,
@@ -25,9 +25,14 @@ import {
   TableFiltersAccordionContent,
   TableFiltersButtons,
 } from '.';
-import { CheckboxData, TableFilterConfig, TableFiltersView } from './types';
+import { TableFilterConfig, TableFiltersView } from './types';
+import {
+  getCheckboxChangedItems,
+  getClearData,
+  getResetData,
+  getSubmitData,
+} from './utils/handlers';
 
-// TODO: combine handlers with useTableData?..
 export const TableFilters = ({
   checkboxData = {} as TableFilterConfig,
   onReset,
@@ -37,8 +42,6 @@ export const TableFilters = ({
 }: TableFiltersView) => {
   const [localCheckboxData, setLocalCheckboxData] =
     useState<TableFilterConfig>(checkboxData);
-  // TODO: Do we need this state? We use persistentData only once
-  const [persistentData, setPersistentData] = useState<CheckboxData>({});
   const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
 
   const [open, setOpen] = useState(false);
@@ -52,25 +55,14 @@ export const TableFilters = ({
   }, [checkboxData]);
 
   useLayoutEffect(() => {
-    const notChangedData: CheckboxData = {};
     let counter = 0;
     Object.keys(localCheckboxData).forEach((groupName) => {
       const selectedItemsDraft =
         localCheckboxData[groupName].selectedItemsDraft || [];
-      const selectedItems = localCheckboxData[groupName].selectedItems;
-      const currentItems = localCheckboxData[groupName].items;
-      notChangedData[groupName] = [];
-      Object.keys(currentItems).forEach((itemKey) => {
-        const itemInfo = currentItems[itemKey];
-        if (itemInfo.isDisabled && selectedItems.includes(itemInfo.name)) {
-          notChangedData[groupName].push(itemInfo.name);
-        }
-      });
       if (selectedItemsDraft.length > 0) {
         counter++;
       }
     });
-    setPersistentData(notChangedData);
     setSelectedGroupsCount(counter);
 
     if (Object.keys(localCheckboxData).length === 0) {
@@ -79,53 +71,31 @@ export const TableFilters = ({
   }, [localCheckboxData]);
 
   const onCheckboxChange = (groupName: string, name: string) => () => {
-    const draftPath = [groupName, 'selectedItemsDraft'];
-    const selectedItemsDraft = pathOr<TableFilterConfig, string[]>(
-      [],
-      draftPath,
-    )(localCheckboxData);
-    const newSelectedItems = selectedItemsDraft.includes(name)
-      ? selectedItemsDraft.filter((currentItemName) => currentItemName !== name)
-      : [...selectedItemsDraft, name];
-    setLocalCheckboxData(assocPath(draftPath, newSelectedItems));
+    const { items, path } = getCheckboxChangedItems(
+      localCheckboxData,
+      groupName,
+      name,
+    );
+    setLocalCheckboxData(assocPath(path, items));
     handleCheckboxToggle?.(groupName, name);
   };
 
   const handleSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
-    let newData = JSON.parse(JSON.stringify(localCheckboxData));
-    const submitData: Record<string, string[]> = {};
-    Object.keys(newData).forEach((groupName) => {
-      newData = assocPath(
-        [groupName, 'selectedItems'],
-        newData[groupName]['selectedItemsDraft'],
-      )(newData);
-      submitData[groupName] = newData[groupName]['selectedItemsDraft'];
-    });
-    setLocalCheckboxData(newData);
+    const { submitCheckboxData } = getSubmitData(localCheckboxData);
+    setLocalCheckboxData(submitCheckboxData);
     onSubmit?.();
   };
 
   const handleReset = () => {
-    let newData = JSON.parse(JSON.stringify(localCheckboxData));
-    Object.keys(newData).forEach((groupName) => {
-      newData = assocPath(
-        [groupName, 'selectedItemsDraft'],
-        newData[groupName]['selectedItems'],
-      )(newData);
-    });
-    setLocalCheckboxData(newData);
+    const resetData = getResetData(localCheckboxData);
+    setLocalCheckboxData(resetData);
+    setOpen(false);
     onReset?.();
   };
 
   const handleClear = () => {
-    let newData = JSON.parse(JSON.stringify(localCheckboxData));
-    Object.keys(persistentData).forEach((groupName) => {
-      newData = assocPath(
-        [groupName, 'selectedItemsDraft'],
-        persistentData[groupName],
-      )(newData);
-    });
+    const newData = getClearData(localCheckboxData);
     setLocalCheckboxData(newData);
     onClear?.();
   };
