@@ -101,7 +101,7 @@ export const mockData: TableFilterConfig = {
   },
   strategy3: {
     id: 'strategy3',
-    title: 'strategy #3',
+    title: 'Strategy #3',
     isOpened: false,
     ariaControls: 'strategy3-panel',
     selectedItems: [],
