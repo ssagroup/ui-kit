@@ -30,14 +30,13 @@ const ButtonItem = (theme: Theme) => css`
   }
 
   &.active {
-    pointer-events: none;
     background: ${theme.colors.greyFocused};
   }
 `;
 
 export const ButtonGroup = ({
   items,
-  className,
+  cssStyles,
   onClick,
 }: ButtonGroupProps) => {
   const [activeBtn, setActiveBtn] = useState(items[0]);
@@ -57,7 +56,7 @@ export const ButtonGroup = ({
             variant="secondary"
             size="small"
             onClick={() => handleClick(item)}
-            css={[ButtonItem, className]}
+            css={[ButtonItem, cssStyles]}
             className={isActive ? 'active' : ''}>
             <Typography variant="subtitle">{item.text}</Typography>
           </Button>

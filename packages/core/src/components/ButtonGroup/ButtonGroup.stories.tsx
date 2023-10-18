@@ -31,7 +31,7 @@ export const CustomStyle: StoryObj<typeof ButtonGroup> = () => {
       `}>
       <ButtonGroup
         items={items}
-        className={css`
+        cssStyles={css`
           background: ${theme.colors.white};
 
           &:hover {

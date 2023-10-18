@@ -8,5 +8,5 @@ export type Item = {
 export interface ButtonGroupProps {
   items: Array<Item>;
   onClick: (item: Item) => void;
-  className?: SerializedStyles;
+  cssStyles?: SerializedStyles;
 }
