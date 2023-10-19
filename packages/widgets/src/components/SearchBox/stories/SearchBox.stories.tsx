@@ -12,9 +12,21 @@ export default {
 } as Meta<SearchBoxType>;
 
 export const Default: StoryObj<SearchBoxType> = () => {
-  const { register } = useForm<FieldValues>();
+  const { register, control, resetField } = useForm<FieldValues>();
 
-  return <SearchBox register={register} name={'search'} />;
+  const handleCallback = (searchTerm: string) => {
+    console.log('>>>searching for the term...', searchTerm);
+  };
+
+  return (
+    <SearchBox
+      register={register}
+      control={control}
+      resetField={resetField}
+      callback={handleCallback}
+      name={'search'}
+    />
+  );
 };
 
 Default.args = {};
