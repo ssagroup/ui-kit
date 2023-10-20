@@ -1,56 +1,54 @@
 import { Icon } from '@ssa-ui-kit/core';
 import { SearchBoxWrapper } from './SearchBoxWrapper';
 import { SearchBoxInput } from './SearchBoxInput';
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useWatch } from 'react-hook-form';
-import { propOr, debounceThrottle } from '@ssa-ui-kit/utils';
-import { SearchBoxCrossIcon } from './SearchBoxCrossIcon';
+import { debounceThrottle } from '@ssa-ui-kit/utils';
+import { SearchBoxCrossIcon } from '.';
 import { SearchBoxProps } from './types';
 
 export const SearchBox = ({
   name,
   placeholder = 'Search by name',
   control,
-  callbackDelay = 5000,
+  callbackDelay = 500,
+  autoSearchTrigger = true,
   register,
   resetField,
   callback,
   ...rest
 }: SearchBoxProps) => {
   const watchResult = useWatch({ control });
-  const [isEmpty, setIsEmpty] = useState(true);
-  const [enterKeyPressed, setEnterKeyPressed] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [throttledFn, cancel] = debounceThrottle(callback, callbackDelay);
+  const debounceThrottled = useRef(debounceThrottle(callback, callbackDelay));
+  const [throttledFn, cancel] = debounceThrottled.current;
 
   useEffect(() => {
-    const searchTerm = propOr('', name)(watchResult);
-    setIsEmpty(!searchTerm);
+    cancel();
 
-    if (enterKeyPressed) {
-      console.log('>>>cancelling...');
-      cancel();
-      setEnterKeyPressed(false);
-    } else {
-      console.log('>>>calling...');
+    const searchTerm = watchResult[name];
+    if (autoSearchTrigger && searchTerm !== undefined) {
       throttledFn(searchTerm);
     }
-  }, [watchResult, enterKeyPressed]);
+  }, [watchResult]);
 
   const crossIconHandler = () => {
     resetField(name);
     inputRef.current?.focus();
   };
 
-  const EndElement = isEmpty ? (
-    <Icon name="search" size={15} color="#55575A" />
+  const EndElement = !watchResult[name] ? (
+    <div data-testid="search-icon">
+      <Icon name="search" size={15} color="#55575A" />
+    </div>
   ) : (
     <SearchBoxCrossIcon onClick={crossIconHandler} />
   );
 
   const onKeyUp = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
-      setEnterKeyPressed(true);
+      cancel();
+      callback(watchResult[name]);
     }
   };
 

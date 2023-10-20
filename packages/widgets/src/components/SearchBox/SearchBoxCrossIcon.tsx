@@ -13,6 +13,7 @@ export const SearchBoxCrossIcon = ({
       onClick={onClick}
       onKeyDown={undefined}
       tabIndex={0}
+      data-testid="cross-icon"
       css={{
         cursor: 'pointer',
         '& svg path': {
