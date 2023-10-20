@@ -13,6 +13,7 @@ import { Plus } from './Plus';
 import { Minus } from './Minus';
 import { Cross } from './Cross';
 import { Check } from './Check';
+import { CheckCircle } from './CheckCircle';
 import { More } from './More';
 import { Notification } from './Notification';
 import { User } from './User';
@@ -51,6 +52,7 @@ const componentsList = [
   Minus,
   More,
   Check,
+  CheckCircle,
   Cross,
   User,
   Union,
