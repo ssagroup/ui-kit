@@ -2,40 +2,20 @@ import { ResponsivePie } from '@nivo/pie';
 import { PieChartProps } from './types';
 
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
-import { PieChartLegend } from './PieChartLegend';
-
-const mockResponse = [
-  {
-    // cspell:disable-next-line
-    id: 'XlyNrZpVvNp2Z9LqloS6',
-    color: 'rgba(117, 153, 222, 1)',
-    colorTag: 'blueLight',
-    date: '2023-05-03T23:00:00.000Z',
-    value: 88,
-    label: 'stretching',
-  },
-  {
-    // cspell:disable-next-line
-    id: 'YthvgItFS3W0Sa3mRW0X',
-    color: 'rgba(65, 187, 187, 1)',
-    colorTag: 'turquoise',
-    date: '2023-05-03T23:00:00.000Z',
-    value: 55,
-    label: 'cardio',
-  },
-];
 
 export const PieChart = ({
+  data,
   as,
   className,
-  showLegend = true,
   title,
+  children,
+  ...chartProps
 }: PieChartProps) => {
   return (
     <PieChartBase as={as} className={className}>
       <div className="pie-chart-wrapper">
         <ResponsivePie
-          data={mockResponse}
+          data={data}
           isInteractive={false}
           innerRadius={0.8}
           enableArcLinkLabels={false}
@@ -50,10 +30,11 @@ export const PieChart = ({
           arcLinkLabelsColor={{ from: 'color' }}
           arcLabelsSkipAngle={10}
           layers={['arcs']}
+          {...chartProps}
         />
         {title && <PieChartTextBase>{title}</PieChartTextBase>}
       </div>
-      {showLegend && <PieChartLegend data={mockResponse} />}
+      {children}
     </PieChartBase>
   );
 };

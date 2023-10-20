@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 export const PieChartBase = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  background-color: pink;
+  justify-content: space-between;
+  align-items: center;
 
   & > .pie-chart-wrapper {
     position: relative;
@@ -22,4 +22,5 @@ export const PieChartTextBase = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `;

@@ -1,15 +1,23 @@
-import { CommonProps } from '@ssa-ui-kit/core';
+import { CommonProps, MainColors } from '@ssa-ui-kit/core';
+import { ResponsivePie } from '@nivo/pie';
 
-export interface PieChartProps extends CommonProps {
-  data: Array<{ id: string | number; value: number }>;
+export interface PieChartProps
+  extends CommonProps,
+    React.ComponentProps<typeof ResponsivePie> {
   title?: React.ReactNode;
-  // TODO: need to have everything required for the Pie chart and for the Legend
-  colors?: [];
-  showLegend?: boolean;
-  // TODO: Nivo Chart's props for config
+  children?: React.ReactNode;
 }
 
 export interface PieChartLegendProps {
-  // TODO: take from PieChartProps
-  data: Array<{ id: string | number; value: number }>;
+  data: Array<
+    {
+      id: string | number;
+      value: string | number;
+      label: string;
+    } & Record<string | number, unknown>
+  >;
+  // TODO: add the ability to use arbitrary color.
+  // Need to modify Badge for that.
+  colors: Array<keyof MainColors>;
+  // TODO: legend config
 }
