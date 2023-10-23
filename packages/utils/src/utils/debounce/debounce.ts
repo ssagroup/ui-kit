@@ -1,13 +1,24 @@
 type UnknownFn = (...args: any[]) => unknown;
-type DebounceFn = (fn: UnknownFn, delayMs: number) => () => void;
 
-export const debounce: DebounceFn = (fn, delayMs) => {
-  let timeoutId: number | null = null;
-
-  return () => {
+export const debounce = (func: UnknownFn, wait = 200) => {
+  let timeoutId: NodeJS.Timeout | null = null;
+  const executedFunction = (...args: any[]) => {
+    const postponedFn = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      func(...args);
+    };
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(fn, delayMs);
+    timeoutId = setTimeout(postponedFn, wait);
   };
+
+  const cancel = function () {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+  return [executedFunction, cancel];
 };

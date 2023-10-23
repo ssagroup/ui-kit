@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom';
-import { StoryComponent } from '.';
+import { StoryComponent } from './stories/StoryComponent';
 
 describe('SearchBox', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('SearchBox', () => {
     expect(queryByTestId('cross-icon')).not.toBeInTheDocument();
   });
 
-  it('should value and icon be changed', () => {
+  it('should change value and icon', () => {
     const { getByPlaceholderText, getByTestId } = render(<StoryComponent />);
 
     const inputElement = getByPlaceholderText('Search by name');
@@ -47,7 +47,7 @@ describe('SearchBox', () => {
     expect(queryByTestId('search-icon')).not.toBeInTheDocument();
   });
 
-  it('should callback called', () => {
+  it('should call the callback', () => {
     const { getByPlaceholderText } = render(<StoryComponent />);
 
     const consoleLogMock = jest.spyOn(console, 'log').mockImplementation();
@@ -61,19 +61,17 @@ describe('SearchBox', () => {
     consoleLogMock.mockRestore();
   });
 
-  it('should callback called, pressing by the key Enter', () => {
-    const { getByPlaceholderText } = render(<StoryComponent />);
-
-    const consoleLogMock = jest.spyOn(console, 'log').mockImplementation();
+  it('should call the callback by pressing the Enter key', () => {
+    const handleCallback = jest.fn();
+    const { getByPlaceholderText } = render(
+      <StoryComponent handleCallback={handleCallback} />,
+    );
 
     const inputElement = getByPlaceholderText('Search by name');
     fireEvent.change(inputElement, { target: { value: 'test' } });
     fireEvent.keyUp(inputElement, {
       key: 'Enter',
     });
-    expect(consoleLogMock.mock.calls).toEqual([
-      ['Searching for the term...', 'test'],
-    ]);
-    consoleLogMock.mockRestore();
+    expect(handleCallback.mock.calls).toEqual([['test']]);
   });
 });

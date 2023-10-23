@@ -1,27 +1,25 @@
 import { useTheme } from '@emotion/react';
-import { Icon } from '@ssa-ui-kit/core';
+import { Button, Icon } from '@ssa-ui-kit/core';
 
 export const SearchBoxCrossIcon = ({
   onClick,
 }: {
-  onClick: React.MouseEventHandler<HTMLDivElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }) => {
   const theme = useTheme();
   return (
-    <div
-      role="button"
+    <Button
       onClick={onClick}
-      onKeyDown={undefined}
-      tabIndex={0}
+      variant="custom"
       data-testid="cross-icon"
       css={{
-        cursor: 'pointer',
+        padding: 0,
         '& svg path': {
           strokeWidth: 1,
           stroke: theme.colors.greyFilterIcon,
         },
       }}>
       <Icon name="cross" size={15} color="#55575A" />
-    </div>
+    </Button>
   );
 };

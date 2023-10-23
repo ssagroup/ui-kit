@@ -1,9 +1,9 @@
-import { Icon } from '@ssa-ui-kit/core';
-import { SearchBoxWrapper } from './SearchBoxWrapper';
-import { SearchBoxInput } from './SearchBoxInput';
 import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useWatch } from 'react-hook-form';
-import { debounceThrottle } from '@ssa-ui-kit/utils';
+import { Icon } from '@ssa-ui-kit/core';
+import { debounce } from '@ssa-ui-kit/utils';
+import { SearchBoxWrapper } from './SearchBoxWrapper';
+import { SearchBoxInput } from './SearchBoxInput';
 import { SearchBoxCrossIcon } from '.';
 import { SearchBoxProps } from './types';
 
@@ -20,12 +20,10 @@ export const SearchBox = ({
 }: SearchBoxProps) => {
   const watchResult = useWatch({ control });
   const inputRef = useRef<HTMLInputElement>(null);
-  const debounceThrottled = useRef(debounceThrottle(callback, callbackDelay));
+  const debounceThrottled = useRef(debounce(callback, callbackDelay));
   const [throttledFn, cancel] = debounceThrottled.current;
 
   useEffect(() => {
-    cancel();
-
     const searchTerm = watchResult[name];
     if (autoSearchTrigger && searchTerm !== undefined) {
       throttledFn(searchTerm);
