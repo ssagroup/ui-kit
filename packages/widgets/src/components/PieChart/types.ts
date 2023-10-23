@@ -8,15 +8,16 @@ export interface PieChartProps
   children?: React.ReactNode;
 }
 
+export type PieChartLegendItem = {
+  id: string | number;
+  value: string | number;
+  label: string;
+  [key: string | number | symbol]: unknown;
+};
+
 export interface PieChartLegendProps {
-  data: Array<{
-    id: string | number;
-    value: string | number;
-    label: string;
-    [key: string | number | symbol]: unknown;
-  }>;
-  // TODO: add the ability to use arbitrary color.
-  // Need to modify Badge for that.
+  data: Array<PieChartLegendItem>;
   colors: Array<keyof MainColors>;
+  renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
   // TODO: legend config
 }

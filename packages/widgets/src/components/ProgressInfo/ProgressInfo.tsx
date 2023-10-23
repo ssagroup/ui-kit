@@ -108,6 +108,7 @@ export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
               ({ colorTag }) =>
                 colorTag || ('purple' as unknown as keyof MainColors),
             )}
+            renderValue={({ value }) => value + ' hrs'}
           />
         </PieChart>
       ) : null}

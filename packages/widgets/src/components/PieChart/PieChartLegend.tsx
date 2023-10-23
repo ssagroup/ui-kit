@@ -37,7 +37,11 @@ export const PieChartLegendList = styled.ul`
 `;
 
 // TODO: this should be configurable
-export const PieChartLegend = ({ data, colors }: PieChartLegendProps) => {
+export const PieChartLegend = ({
+  data,
+  colors,
+  renderValue,
+}: PieChartLegendProps) => {
   const theme = useTheme();
   return (
     <Fragment>
@@ -53,10 +57,12 @@ export const PieChartLegend = ({ data, colors }: PieChartLegendProps) => {
         ))}
       </PieChartLegendList>
       <PieChartLegendList>
-        {data.map(({ id, value }) => (
-          <li key={`subtitle-${id}`}>
+        {data.map((item) => (
+          <li key={`subtitle-${item.id}`}>
             <Typography variant="subtitle" color={theme.colors.greyDarker60}>
-              {value} hrs
+              {typeof renderValue === 'function'
+                ? renderValue(item)
+                : item.value}
             </Typography>
           </li>
         ))}

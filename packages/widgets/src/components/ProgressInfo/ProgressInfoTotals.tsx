@@ -10,7 +10,6 @@ export const ProgressInfoTotals = withTheme(
         variant="body2"
         weight="regular"
         color={theme.colors.greyDarker60}
-        as={'div'}
         css={css`
           font-size: 13px;
           line-height: 16px;
@@ -26,9 +25,11 @@ export const ProgressInfoTotals = withTheme(
           variant="body2"
           weight="bold"
           color={theme.colors.greyDarker}
+          as={'span'}
           css={css`
             font-size: 19px;
             line-height: 23px;
+            display: block;
 
             ${theme.mediaQueries.md} {
               font-size: 27.65px;
