@@ -9,6 +9,7 @@ import {
 } from '@ssa-ui-kit/core';
 import { tableBotsData } from './stories/mockData';
 import styled from '@emotion/styled';
+import { Exchange } from './components';
 
 export default {
   title: 'Widgets/TableBots',
@@ -66,6 +67,21 @@ const TableBot = styled(Table)`
 `;
 
 export const Default: StoryObj<typeof Table> = () => {
+  /*
+    tableBotsData.map
+    children => map
+    children => pass to the props
+    Story: about the same content do
+    menu => click on the row => optional do in the story
+
+    Status column => give output idea from the Indicator component?
+
+    Icons probably will be external
+
+    svg do in the base64 encoding
+
+    table rows in the children do
+  */
   return (
     <Wrapper
       css={{
@@ -93,7 +109,9 @@ export const Default: StoryObj<typeof Table> = () => {
               isDisabled={item.isDisabled}>
               <TableCellBot>{item.name}</TableCellBot>
               <TableCellBot>{item.creationDate}</TableCellBot>
-              <TableCellBot>{item.exchange}</TableCellBot>
+              <TableCellBot>
+                <Exchange exchangeType={item.exchange} />
+              </TableCellBot>
               <TableCellBot>{item.status}</TableCellBot>
               <TableCellBot>{item.pair}</TableCellBot>
               <TableCellBot>{item.pnl.amount}</TableCellBot>

@@ -1,4 +1,6 @@
-const commonStructure = {
+import { TableBotItem } from '../types';
+
+const commonStructure: TableBotItem = {
   id: 1,
   name: 'Bot name 1',
   creationDate: '27.07.23',
@@ -23,7 +25,7 @@ const binanceData = new Array(5).fill(null).map((value, index) => ({
   name: `Bot name ${index + 1}`,
 }));
 
-export const tableBotsData = [
+export const tableBotsData: TableBotItem[] = [
   ...binanceData,
   {
     ...commonStructure,
