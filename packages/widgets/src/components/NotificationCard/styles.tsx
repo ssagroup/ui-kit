@@ -64,7 +64,7 @@ export const notifyTitle = (theme: Theme) => css`
 
 export const notifyText = (theme: Theme) => css`
   grid-row: 2;
-  grid-column: 2;
+  grid-column: 2 / span 3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

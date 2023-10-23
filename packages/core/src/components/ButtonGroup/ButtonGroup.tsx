@@ -18,7 +18,7 @@ export const ButtonGroup = ({
   return (
     <React.Fragment>
       {items.map((item) => {
-        const isActive = activeBtn.id === item.id;
+        const isActive = activeBtn.id === item.id && !item.isDisabled;
         return (
           <Button
             key={item.id}

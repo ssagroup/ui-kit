@@ -31,6 +31,7 @@ type Colors = MakeColors<
     'greyBackgroundLight',
     'greyPopoverLight',
     'greyGraphite',
+    'greyGraphite70',
     'greyShadow',
     'greyOutline',
     'greyShadowHover',
