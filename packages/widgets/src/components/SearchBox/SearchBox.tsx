@@ -21,12 +21,12 @@ export const SearchBox = ({
   const watchResult = useWatch({ control });
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceThrottled = useRef(debounce(callback, callbackDelay));
-  const [throttledFn, cancel] = debounceThrottled.current;
+  const [debouncedFn, cancel] = debounceThrottled.current;
 
   useEffect(() => {
     const searchTerm = watchResult[name];
     if (autoSearchTrigger && searchTerm !== undefined) {
-      throttledFn(searchTerm);
+      debouncedFn(searchTerm);
     }
   }, [watchResult]);
 
