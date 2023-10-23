@@ -1,28 +1,13 @@
+import { Theme } from '@emotion/react';
 import { MainColors } from '@ssa-ui-kit/core';
 
-export interface ProgressInfoItemProps {
+export type ProgressInfoItemProps = {
   id: string;
   date: string;
   label: string;
   value: number;
   color: string;
   colorTag: keyof MainColors | undefined;
-}
-export interface ProgressInfoMetricProps {
-  textPosition: TextPositionMap;
-  total: number;
-  size: string;
-}
-
-type PositionSizeCoordinates = {
-  [size: string]: {
-    x: number;
-    y: number;
-  };
-};
-
-export type TextPositionMap = {
-  [key: string]: PositionSizeCoordinates;
 };
 
 export type ProgressInfoResp = {
@@ -32,6 +17,11 @@ export type ProgressInfoResp = {
 export interface IProgressInfoProps {
   data: ProgressInfoResp;
   className?: string;
+}
+
+export interface ProgressInfoTotalsProps {
+  theme: Theme;
+  total: number;
 }
 
 export type PeriodOption = { value: string; id: string };

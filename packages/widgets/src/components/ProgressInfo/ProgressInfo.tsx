@@ -1,35 +1,32 @@
-import { Fragment, useEffect, useState } from 'react';
-import { css } from '@emotion/react';
-import { PieCustomLayerProps, ResponsivePie } from '@nivo/pie';
-
+import { useEffect, useState } from 'react';
+import { css, useTheme } from '@emotion/react';
 import {
   Card,
   CardHeader,
   Typography,
   IDropdownOption,
+  Dropdown,
+  DropdownOption,
+  MainColors,
 } from '@ssa-ui-kit/core';
 
-import { useWindowSize } from '@ssa-ui-kit/hooks';
-
-import ProgressInfoContent from './ProgressInfoContent';
-import ProgressInfoLegends from './ProgressInfoLegends';
-import ProgressInfoMetric from './ProgressInfoMetric';
+import { PieChart, PieChartLegend } from '@components/PieChart';
+import { ProgressInfoTotals } from './ProgressInfoTotals';
 
 import {
   ProgressInfoItemProps,
-  TextPositionMap,
   Period,
   IProgressInfoProps,
   PeriodOption,
 } from './types';
-import { Dropdown } from '@ssa-ui-kit/core';
-import { DropdownOption } from '@ssa-ui-kit/core';
+
+import { getPieChartStyles } from './styles';
 
 export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
-  const { width: windowWidth } = useWindowSize();
   const [options, setOptions] = useState<PeriodOption[]>([]);
   const [selected, setSelected] = useState<PeriodOption>();
   const [response, setResponse] = useState<ProgressInfoItemProps[]>([]);
+  const theme = useTheme();
 
   useEffect(() => {
     if (Object.keys(data).length > 0) {
@@ -74,44 +71,6 @@ export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
     filterData(e.value as Period);
   };
 
-  /* istanbul ignore next */
-  const CenteredMetric = ({
-    dataWithArc,
-    centerX,
-    centerY,
-  }: PieCustomLayerProps<ProgressInfoItemProps>) => {
-    let total = 0;
-
-    dataWithArc.forEach((datum) => {
-      total += datum.value;
-    });
-
-    const size = windowWidth < 900 ? 'small' : 'large';
-
-    const textPosition: TextPositionMap = {
-      caption: {
-        small: { x: centerX, y: centerY - 15 },
-        large: { x: centerX, y: centerY - 20 },
-      },
-      value: {
-        small: { x: centerX - 12, y: centerY + 6 },
-        large: { x: centerX - 12, y: centerY + 5 },
-      },
-      unit: {
-        small: { x: centerX + 20, y: centerY + 7 },
-        large: { x: centerX + 35, y: centerY + 9 },
-      },
-    };
-
-    return (
-      <ProgressInfoMetric
-        textPosition={textPosition}
-        total={total}
-        size={size}
-      />
-    );
-  };
-
   return (
     <Card
       css={css`
@@ -133,33 +92,25 @@ export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
           </Dropdown>
         )}
       </CardHeader>
-      <ProgressInfoContent>
-        {response.length > 0 ? (
-          <Fragment>
-            <div>
-              <ResponsivePie
-                data={response}
-                isInteractive={false}
-                innerRadius={0.8}
-                enableArcLinkLabels={false}
-                enableArcLabels={false}
-                padAngle={2}
-                cornerRadius={16}
-                activeOuterRadiusOffset={8}
-                colors={{ datum: 'data.color' }}
-                arcLinkLabelsSkipAngle={10}
-                arcLinkLabelsTextColor="#333333"
-                arcLinkLabelsThickness={2}
-                arcLinkLabelsColor={{ from: 'color' }}
-                arcLabelsSkipAngle={10}
-                layers={['arcs', CenteredMetric]}
-              />
-            </div>
-
-            <ProgressInfoLegends data={response} />
-          </Fragment>
-        ) : null}
-      </ProgressInfoContent>
+      {response.length > 0 ? (
+        <PieChart
+          data={response}
+          css={getPieChartStyles(theme)}
+          title={
+            <ProgressInfoTotals
+              theme={theme}
+              total={response.reduce((sum, { value }) => sum + value, 0)}
+            />
+          }>
+          <PieChartLegend
+            data={response}
+            colors={response.map(
+              ({ colorTag }) =>
+                colorTag || ('purple' as unknown as keyof MainColors),
+            )}
+          />
+        </PieChart>
+      ) : null}
     </Card>
   );
 };
