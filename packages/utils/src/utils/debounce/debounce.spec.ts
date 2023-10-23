@@ -45,7 +45,7 @@ describe('debounce', () => {
     expect(fn).toHaveBeenCalledTimes(1);
   });
 
-  it('throttles and delayed a function call', () => {
+  it('delays a function call', () => {
     const fn = jest.fn();
     const [debouncedFn, cancel] = debounce(fn, 100);
 
