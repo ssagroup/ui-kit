@@ -32,6 +32,16 @@ export const tableBotsData: TableBotItem[] = [
     id: 6,
     name: 'Bot name 6',
     exchange: 'kraken',
+    status: 'pending',
+    pnl: {
+      amount: 100,
+      currency: 'USD',
+      isIncreasing: false,
+    },
+    roi: {
+      amount: 15,
+      isIncreasing: false,
+    },
   },
   {
     ...commonStructure,
@@ -46,6 +56,15 @@ export const tableBotsData: TableBotItem[] = [
     name: 'Bot name 8',
     exchange: 'bittrex',
     status: 'liquidation',
+    pnl: {
+      amount: 70,
+      currency: 'USD',
+      isIncreasing: false,
+    },
+    roi: {
+      amount: 10,
+      isIncreasing: false,
+    },
   },
   {
     ...commonStructure,

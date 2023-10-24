@@ -1,12 +1,13 @@
-import { ExchangeType } from './components/Exchange/types';
+import { ExchangeType } from './stories/components/Exchange/types';
+import { TradeType } from './stories/components/Trade/types';
 
-interface PNL {
+export interface PNL {
   amount: number;
   currency: string;
   isIncreasing: boolean;
 }
 
-interface ROI {
+export interface ROI {
   amount: number;
   isIncreasing: boolean;
 }
@@ -16,9 +17,13 @@ export interface TableBotItem {
   name: string;
   creationDate: string;
   exchange: ExchangeType;
-  status: string;
+  status: TradeType;
   pair: string;
   pnl: PNL;
   roi: ROI;
   isDisabled: boolean;
+}
+
+export interface TableBotsProps {
+  children: React.ReactElement<React.PropsWithChildren<TableBotItem>>[];
 }

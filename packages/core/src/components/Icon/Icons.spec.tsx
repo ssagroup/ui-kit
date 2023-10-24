@@ -1,34 +1,7 @@
-import { screen, waitFor } from '../../../customTest';
-
 import Icon from '@components/Icon';
+import { iconsList } from '@components/Icon';
+import { screen, waitFor } from '../../../customTest';
 import { IMapIcons } from './types';
-
-const IconsList = [
-  'diet',
-  'calendar',
-  'home',
-  'stats',
-  'sleep',
-  'trainings',
-  'measurements',
-  'settings',
-  'plus',
-  'minus',
-  'more',
-  'check',
-  'cross',
-  'user',
-  'union',
-  'notification',
-  'visible',
-  'invisible',
-  'carrot-down',
-  'carrot-up',
-  'carrot-left',
-  'carrot-right',
-  'arrow-up',
-  'arrow-down',
-];
 
 const renderIcon = async (icon: keyof IMapIcons) => {
   render(<Icon name={icon} size={12} color="#fff" />);
@@ -59,7 +32,7 @@ const checkFillOrStrokeAttrs = (
 };
 
 describe('Icons', () => {
-  IconsList.forEach((iconName) => {
+  iconsList.forEach((iconName) => {
     it(`Render ${iconName} icon with attributes`, async () => {
       const [icon, path] = await renderIcon(iconName as keyof IMapIcons);
 

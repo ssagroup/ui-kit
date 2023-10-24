@@ -14,6 +14,7 @@ import { Minus } from './Minus';
 import { Cross } from './Cross';
 import { Check } from './Check';
 import { More } from './More';
+import { MoreVertical } from './MoreVertical';
 import { Notification } from './Notification';
 import { User } from './User';
 import { Union } from './Union';
@@ -50,6 +51,7 @@ const componentsList = [
   Plus,
   Minus,
   More,
+  MoreVertical,
   Check,
   Cross,
   User,

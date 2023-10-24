@@ -1,4 +1,4 @@
-export const ExchangeIcons = {
+export const exchangeIcons = {
   binance: {
     icon: () => (
       <svg
@@ -154,4 +154,4 @@ export const ExchangeIcons = {
   },
 };
 
-export type ExchangeIconsType = typeof ExchangeIcons;
+export type ExchangeIconsType = typeof exchangeIcons;
