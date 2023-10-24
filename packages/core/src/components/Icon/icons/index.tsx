@@ -35,8 +35,8 @@ import { ArrowUp } from './ArrowUp';
 import { ArrowDown } from './ArrowDown';
 
 import { iconsList } from './iconsList';
-
 import { Filter } from './Filter';
+import { Search } from './Search';
 
 const componentsList = [
   Diet,
@@ -69,6 +69,7 @@ const componentsList = [
   ArrowUp,
   ArrowDown,
   Filter,
+  Search,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {
