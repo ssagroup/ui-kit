@@ -6,7 +6,6 @@ export interface NotificationMenuProps {
   children: React.ReactNode;
   onClick: () => void;
   isLoading: boolean;
-  notificationChildren?: React.ReactNode;
-  rightButton?: string | JSX.Element;
   leftButton?: string | JSX.Element | null;
+  rightButton?: string | JSX.Element;
 }

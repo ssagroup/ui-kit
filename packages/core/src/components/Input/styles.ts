@@ -64,6 +64,8 @@ export const success = (theme: Theme) =>
     },
   });
 
+export const custom = () => css({});
+
 export const inputStatus = css`
   position: absolute;
   top: 34%;

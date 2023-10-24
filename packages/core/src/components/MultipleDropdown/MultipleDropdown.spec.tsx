@@ -222,15 +222,7 @@ describe('MultipleDropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
     expect(dropdownToggleEl).toHaveTextContent(getListItemValue(items[0]));
-    expect(mockOnChange).toHaveBeenCalledWith([
-      { children: items[0].label, isSelected: true, value: 1 },
-      { children: items[1].label, isSelected: false, value: 2 },
-      { children: items[2].label, isSelected: true, value: 3 },
-      { children: items[3].label, isSelected: false, value: 4 },
-      { children: items[4].label, isSelected: true, value: 5 },
-      { children: items[5].label, isSelected: false, value: 6 },
-      { children: items[6].label, isSelected: false, value: 7 },
-    ]);
+    expect(mockOnChange).toHaveBeenCalledWith(1, true);
     expect(queryByRole('listbox')).toBeInTheDocument();
 
     await within(dropdownToggleEl).findByTitle('Carrot up');
@@ -257,15 +249,7 @@ describe('MultipleDropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
     expect(dropdownToggleEl).toHaveTextContent(getListItemValue(items[0]));
-    expect(mockOnChange).toHaveBeenCalledWith([
-      { children: items[0].label, isSelected: true, value: 1 },
-      { children: items[1].label, isSelected: false, value: 2 },
-      { children: items[2].label, isSelected: false, value: 3 },
-      { children: items[3].label, isSelected: false, value: 4 },
-      { children: items[4].label, isSelected: false, value: 5 },
-      { children: items[5].label, isSelected: false, value: 6 },
-      { children: items[6].label, isSelected: false, value: 7 },
-    ]);
+    expect(mockOnChange).toHaveBeenCalledWith(1, true);
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
     await within(dropdownToggleEl).findByTitle('Carrot down');

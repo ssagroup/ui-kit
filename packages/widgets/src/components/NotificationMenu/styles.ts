@@ -1,4 +1,5 @@
 import { Theme, css } from '@emotion/react';
+import { mainTheme } from '@ssa-ui-kit/core';
 
 export const ResetBtnStyles = css`
   padding: 0;
@@ -13,40 +14,6 @@ export const ResetBtnStyles = css`
 
     &::before {
       border: none;
-    }
-  }
-`;
-
-export const ChildrenWrapper = (theme: Theme) => `
-  grid-column: 2 / span 2;
-  margin-top: 10px;
-
-  button {
-    height: 31px;
-    border-radius: 6px;
-    font-weight: 700;
-
-    &:focus::before {
-      content: none;
-    }
-
-    &:not(:last-child) {
-      margin-right: 20px;
-    }
-  }
-
-  ${theme.mediaQueries.md} {
-    margin-top: 13px;
-  }
-
-  ${theme.mediaQueries.xs} {
-    button {
-      height: 28px;
-      padding: 10px;
-
-      &:not(:last-child) {
-        margin-right: 5px;
-      }
     }
   }
 `;
@@ -103,11 +70,16 @@ export const ButtonsWrapper = (theme: Theme) => css`
   }
 `;
 
-export const Close = css`
+export const Close = (theme: Theme) => css`
   position: absolute;
-  right: 26px;
-  top: 26px;
+  right: 10px;
+  top: 15px;
   ${ResetBtnStyles};
+
+  ${theme.mediaQueries.md} {
+    right: 26px;
+    top: 26px;
+  }
 `;
 
 export const Loading = (theme: Theme) => css`
@@ -132,6 +104,22 @@ export const Loading = (theme: Theme) => css`
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+`;
+
+export const ButtonGroupCustom = css`
+  margin: 12px 0 11px;
+  background: ${mainTheme.colors.white};
+  &:hover {
+    background: ${mainTheme.colors.greyLighter};
+  }
+
+  &[aria-disabled='true'] {
+    background: none;
+    box-shadow: none;
+    &:hover {
+      background: none;
     }
   }
 `;

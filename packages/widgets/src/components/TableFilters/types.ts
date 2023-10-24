@@ -1,6 +1,7 @@
-export type CheckboxData = Record<string, Record<string, boolean>>;
+export type CheckboxData = Record<string, string[]>;
+export type NotChangedData = Record<string, Record<string, boolean>>;
 
-interface SingleItem {
+export interface SingleItem {
   key: string;
   name: string;
   isDisabled?: boolean;
@@ -15,13 +16,18 @@ export interface AccordionInfo {
   title: string;
   isOpened: boolean;
   ariaControls: string;
-  items: SingleItem[];
+  isDisabled?: boolean;
+  items: Record<string, SingleItem>;
+  selectedItems: string[];
+  selectedItemsDraft?: string[];
 }
 
+export type TableFilterConfig = Record<string, AccordionInfo>;
+
 export interface TableFiltersView {
-  handleCancel?: () => void;
-  handleClear?: () => void;
-  handleSubmit?: (checkboxData: CheckboxData) => void;
-  initialState?: CheckboxData;
-  data: AccordionInfo[];
+  onReset?: () => void;
+  onClear?: () => void;
+  onSubmit?: () => void;
+  handleCheckboxToggle?: (groupName: string, name: string) => void;
+  checkboxData?: TableFilterConfig;
 }

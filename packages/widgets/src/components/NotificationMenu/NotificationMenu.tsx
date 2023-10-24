@@ -26,13 +26,12 @@ export const NotificationMenu = ({
   children,
   onClick,
   isLoading,
-  notificationChildren,
   rightButton,
   leftButton,
 }: NotificationMenuProps) => {
   const theme = useTheme();
   return (
-    <Popover placement="bottom-end" initialOpen={true}>
+    <Popover placement="bottom-end">
       <PopoverTrigger onClick={onClick} css={ResetBtnStyles}>
         {trigger}
       </PopoverTrigger>
@@ -48,7 +47,7 @@ export const NotificationMenu = ({
             <div css={Loading}></div>
           ) : (
             <PopoverDescription variant="body1">
-              <div>{children}</div>
+              <div data-testid="button-group">{children}</div>
               <div css={List}>
                 {notifications.map((item, index) => {
                   return (
@@ -59,9 +58,8 @@ export const NotificationMenu = ({
                       iconName={item.iconName}
                       time={item.time}
                       isRead={item.isRead}
-                      badgeColor={item.badgeColor}>
-                      {item.children ? notificationChildren : null}
-                    </NotificationCard>
+                      badgeColor={item.badgeColor}
+                    />
                   );
                 })}
               </div>

@@ -24,6 +24,7 @@ const main: Theme = {
     greyDarker14: 'rgba(43, 45, 49, 0.14)', // #2b2d31
     greyDark: 'rgb(64, 72, 83)', // #404853
     greyDisabled: 'rgba(85, 87, 90, 1)', // #55575a
+    greyDisabledCheckbox: 'rgba(164, 167, 171, 1)', // #A4A7AB
     greyButtonGradient: 'rgba(77, 82, 87, 1)', // #4d5257
     greyButtonGradientLight: 'rgba(94, 103, 114, 1)', // #5e6772
     greyBackground: 'rgb(64, 68, 73)', // #404449

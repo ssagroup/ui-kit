@@ -7,20 +7,24 @@ interface IDropdownItemProps extends CommonProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   isActive?: boolean;
   isMultiple?: boolean;
+  isDisabled?: boolean;
   noHover?: boolean;
-  value?: string | number;
+  value?: string | number | boolean;
   label?: string | number;
   children?: React.ReactNode;
 }
 
 interface MultipleStylesProps {
   theme: Theme;
+  isDisabled?: boolean;
 }
 
-const multipleStyles = ({ theme }: MultipleStylesProps) => {
+const multipleStyles = ({ theme, isDisabled }: MultipleStylesProps) => {
   return css`
     background: none;
-    color: ${theme.colors.greyDisabled};
+    color: ${isDisabled
+      ? theme.colors.greyDisabledCheckbox
+      : theme.colors.greyDisabled};
     &:hover {
       background: none;
     }
@@ -41,10 +45,11 @@ const DropdownOption = styled.li<IDropdownItemProps>`
     background: ${({ theme }) => theme.colors.greyLighter};
   }
 
-  ${({ isMultiple, theme }) =>
+  ${({ isMultiple, isDisabled, theme }) =>
     isMultiple &&
     multipleStyles({
       theme,
+      isDisabled,
     })}
 `;
 

@@ -1,6 +1,6 @@
 import { css, useTheme } from '@emotion/react';
 import { Button, Icon, Indicator } from '@ssa-ui-kit/core';
-import { ChildrenWrapper, ResetBtnStyles } from '../styles';
+import { ResetBtnStyles } from '../styles';
 
 interface CommonNotificationPops {
   onClick: () => void;
@@ -48,33 +48,5 @@ export const MarkAllReadButton = ({ onClick }: CommonNotificationPops) => {
       }
       text="Mark all as read"
     />
-  );
-};
-
-export const NotificationCardButtons = () => {
-  const theme = useTheme();
-  return (
-    <div css={ChildrenWrapper}>
-      <Button
-        size="small"
-        variant="tertiary"
-        text="Ignore"
-        css={{
-          border: `1px solid ${theme.colors.greyDropdownMain}`,
-          fontWeight: '600',
-          padding: '5px 21px',
-
-          ['span']: {
-            color: theme.colors.greyCancelClearButton,
-          },
-        }}
-      />
-      <Button
-        size="small"
-        variant="attention"
-        text="Stop bot"
-        css={{ padding: '5px 26px' }}
-      />
-    </div>
   );
 };

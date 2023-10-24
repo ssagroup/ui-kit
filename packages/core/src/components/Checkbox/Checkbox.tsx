@@ -50,7 +50,7 @@ const Checkbox = ({
         onChange={() => {
           const newIsChecked = !isChecked;
           setIsChecked(newIsChecked);
-          onChange(newIsChecked);
+          onChange?.(newIsChecked);
         }}
         disabled={isDisabled}
         ref={(node: HTMLInputElement) => {

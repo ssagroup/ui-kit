@@ -8,8 +8,7 @@ type ThrottleFn = (
 
 export const throttle: ThrottleFn = (fn, delayMs) => {
   let isThrottled = false;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let savedArgs: any = null;
+  let savedArgs: unknown[] | null = null;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
   function throttledFn(...args: unknown[]) {

@@ -31,6 +31,7 @@
     "dotenv": "^16.0.3",
     "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
+    "react-hook-form": "^7.46.1",
     "scheduler": "^0.23.0"
   },
   "scripts": {
@@ -59,6 +60,7 @@
     "@types/testing-library__jest-dom": "^5.14.6",
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.1",
+    "jsdom-testing-mocks": "^1.11.0",
     "resolve-tspaths": "^0.8.16",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.85.0"

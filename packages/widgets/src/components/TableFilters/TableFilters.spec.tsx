@@ -1,9 +1,32 @@
 import { fireEvent } from '@testing-library/dom';
+import { mockIntersectionObserver } from 'jsdom-testing-mocks';
 import { StoryComponent } from './stories/StoryComponent';
 import { TableFilters } from '.';
-import { mockData, mockInitialState } from './stories/mockData';
+import { UseTableDataResult } from './hooks/useTableData';
+import { mockData } from './stories/mockData';
+import { createRef } from 'react';
+
+const mockTableFiltersProps: UseTableDataResult = {
+  checkboxData: mockData,
+  handleCheckboxToggle: jest.fn(),
+  setElementRef: jest.fn(),
+  onSubmit: jest.fn((e) => {
+    e?.preventDefault();
+    console.log('>>>Submit: completed');
+  }),
+  onReset: () => {
+    console.log('>>>Cancel: completed');
+  },
+  onClear: () => {
+    console.log('>>>Clear: completed');
+  },
+  wrapperRef: createRef(),
+  refsList: [],
+};
 
 describe('TableFilters', () => {
+  mockIntersectionObserver();
+
   it('Should be correctly rendered', () => {
     const { getByText, getByRole, queryByText } = render(<StoryComponent />);
 
@@ -76,19 +99,7 @@ describe('TableFilters', () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <TableFilters
-          data={mockData}
-          initialState={mockInitialState}
-          handleSubmit={() => {
-            console.log('>>>Submit: completed');
-          }}
-          handleCancel={() => {
-            console.log('>>>Cancel: completed');
-          }}
-          handleClear={() => {
-            console.log('>>>Clear: completed');
-          }}
-        />
+        <TableFilters {...mockTableFiltersProps} />
       </div>,
     );
 
@@ -116,16 +127,16 @@ describe('TableFilters', () => {
     const logSpy = jest.spyOn(console, 'log');
     fireEvent.click(getByText('Apply'));
     expect(logSpy).toHaveBeenCalledWith('>>>onSubmit', {
-      exchange: { binance: true },
-      pairs: { btcfdusd: true },
-      status: { running: true },
-      strategy: {
-        checkbox1: true,
-        checkbox2: true,
-        checkbox3: true,
-        checkbox4: true,
-        checkbox5: true,
-      },
+      exchange: ['binance'],
+      pairs: ['btcfdusd'],
+      status: ['running'],
+      strategy: [
+        'checkbox1',
+        'checkbox4',
+        'checkbox2',
+        'checkbox3',
+        'checkbox5',
+      ],
     });
   });
   it('Should be submitted by default', () => {
@@ -136,7 +147,7 @@ describe('TableFilters', () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <TableFilters data={mockData} initialState={mockInitialState} />
+        <TableFilters {...mockTableFiltersProps} />
       </div>,
     );
 
@@ -144,7 +155,8 @@ describe('TableFilters', () => {
     fireEvent.click(buttonEl);
 
     const formEl = getByTestId('table-filters-form');
-    formEl.onsubmit = jest.fn(() => {
+    formEl.onsubmit = jest.fn((e) => {
+      e.preventDefault();
       console.log('>>>Form submitted');
     });
     const logSpy = jest.spyOn(console, 'log');
