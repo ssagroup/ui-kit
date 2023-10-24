@@ -1,33 +1,42 @@
+import { useMergeRefs } from '@floating-ui/react';
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
 import { InputProps, InputStatusColors } from './types';
 import { InputStatusError } from './InputStatusError';
 import { InputStatusSuccess } from './InputStatusSuccess';
 import * as S from './styles';
+import { forwardRef } from 'react';
 
 const mapColors: InputStatusColors = {
   basic: S.basic,
   error: S.error,
   success: S.success,
+  custom: S.custom,
 };
 
-const Input = ({
-  name,
-  type = 'text',
-  placeholder,
-  register,
-  validationSchema,
-  status = 'basic',
-  disabled = false,
-  startElement,
-  endElement,
-  className,
-}: InputProps) => {
+const InputInner = (
+  {
+    name,
+    type = 'text',
+    placeholder,
+    validationSchema,
+    status = 'basic',
+    disabled = false,
+    startElement,
+    endElement,
+    className,
+    register,
+    onKeyUp,
+  }: InputProps,
+  inputRef?: React.ForwardedRef<HTMLInputElement | null>,
+) => {
   if (!register) {
     throw new Error('Input component must be used within a Form component');
   }
 
   const showStatusIcon = () => !disabled && !endElement;
+
+  const registerResult = register(name, validationSchema);
   return (
     <InputGroup css={[mapColors[status]]} disabled={disabled}>
       {startElement ? <div css={S.startElement}>{startElement}</div> : null}
@@ -41,7 +50,9 @@ const Input = ({
           paddingRight: endElement && 40,
         }}
         className={className}
+        onKeyUp={onKeyUp}
         {...register(name, validationSchema)}
+        ref={useMergeRefs([registerResult.ref, inputRef])}
       />
 
       {status === 'error' && showStatusIcon() ? <InputStatusError /> : null}
@@ -51,5 +62,7 @@ const Input = ({
     </InputGroup>
   );
 };
+
+const Input = forwardRef<HTMLInputElement, InputProps>(InputInner);
 
 export default Input;
