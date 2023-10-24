@@ -14,6 +14,7 @@ export const SearchBoxCrossIcon = ({
       data-testid="cross-icon"
       css={{
         padding: 0,
+        background: 'none',
         '& svg path': {
           strokeWidth: 1,
           stroke: theme.colors.greyFilterIcon,
