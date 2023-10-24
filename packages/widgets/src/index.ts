@@ -39,4 +39,5 @@ export * from './components/TradingInfoCard';
 export * from './components/TradingScoreboard';
 export * from './components/NotificationCard';
 export * from './components/LinksTabBar';
+export * from './components/SearchBox';
 export * from './components/PieChart';
