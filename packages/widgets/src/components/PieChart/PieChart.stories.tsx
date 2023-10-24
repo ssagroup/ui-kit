@@ -10,7 +10,6 @@ export default {
   component: PieChart,
 } as Meta<typeof PieChart>;
 
-// TODO: rename to "example1"
 export const FitnessExample: StoryObj<typeof PieChart> = () => {
   const theme = useTheme();
   const colorNames = ['blueLight', 'turquoise'] as unknown as Array<
@@ -26,6 +25,7 @@ export const FitnessExample: StoryObj<typeof PieChart> = () => {
       <PieChart
         data={fitnessData}
         colors={pieChartColors}
+        animate={false}
         title={
           <Typography
             variant="body2"
@@ -70,11 +70,20 @@ FitnessExample.args = {};
 
 export const AccountExample: StoryObj<typeof PieChart> = () => {
   const theme = useTheme();
-  const colorNames = ['blueLight', 'turquoise'] as unknown as Array<
-    keyof MainColors
-  >;
+  const colorNames = [
+    'yellow',
+    'blue',
+    'green',
+    'yellowWarm',
+    'blueLight',
+    'turquoise',
+  ] as unknown as Array<keyof MainColors>;
   const pieChartColors = [
-    theme.colors.blueLighter,
+    theme.colors.yellow,
+    theme.colors.blue,
+    theme.colors.green,
+    theme.colors.yellowLighter,
+    theme.colors.blueLight,
     theme.colors.turquoise,
   ] as unknown as string[];
 
@@ -83,17 +92,27 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
       <PieChart
         data={accountData}
         colors={pieChartColors}
+        animate={false}
         title={
           <Typography
             variant="body2"
-            weight="regular"
-            color={theme.colors.greyDarker60}
+            weight="bold"
+            color={theme.colors.greyDarker}
             css={css`
-              font-size: 16px;
-              line-height: 16px;
-              margin-top: -5px;
+              font-size: 20px;
+              line-height: 25px;
             `}>
-            140000 USD
+            147358 &nbsp;
+            <Typography
+              variant="body2"
+              weight="regular"
+              as="span"
+              color={theme.colors.greyDarker80}
+              css={css`
+                font-size: 14px;
+              `}>
+              USD
+            </Typography>
           </Typography>
         }>
         <PieChartLegend
@@ -102,6 +121,20 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
           renderValue={({ value, label }) =>
             label === 'Other' ? value + ' USD' : value + ' ' + label
           }
+          markerStyles={css`
+            width: 10px;
+            height: 10px;
+          `}
+          labelListStyles={css`
+            h6 {
+              font-weight: 700;
+            }
+          `}
+          valueListStyles={css`
+            h6 {
+              color: ${theme.colors.greyDarker80};
+            }
+          `}
         />
       </PieChart>
     </div>

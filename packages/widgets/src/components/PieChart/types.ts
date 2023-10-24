@@ -1,3 +1,4 @@
+import { SerializedStyles } from '@emotion/react';
 import { CommonProps, MainColors } from '@ssa-ui-kit/core';
 import { ResponsivePie } from '@nivo/pie';
 
@@ -19,5 +20,8 @@ export interface PieChartLegendProps {
   data: Array<PieChartLegendItem>;
   colors: Array<keyof MainColors>;
   renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
-  // TODO: legend config
+  className?: string;
+  markerStyles?: SerializedStyles;
+  labelListStyles?: SerializedStyles;
+  valueListStyles?: SerializedStyles;
 }
