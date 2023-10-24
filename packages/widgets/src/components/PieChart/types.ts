@@ -20,6 +20,7 @@ export interface PieChartLegendProps {
   data: Array<PieChartLegendItem>;
   colors: Array<keyof MainColors>;
   renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
+  renderLabel?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
   className?: string;
   markerStyles?: SerializedStyles;
   labelListStyles?: SerializedStyles;

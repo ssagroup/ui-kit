@@ -41,3 +41,4 @@ export * from './components/NotificationCard';
 export * from './components/LinksTabBar';
 export * from './components/SearchBox';
 export * from './components/PieChart';
+export * from './components/AccountBalance';
