@@ -8,7 +8,7 @@ describe('NotificationMenu', () => {
     const user = userEvent.setup();
     const { getByTestId } = render(<StoryComponent />);
     await user.click(getByTestId('trigger-button'));
-    const buttonGroup = getByTestId('button-group');
+    const buttonGroup = getByTestId('element-wrapper');
 
     notificationData.groupButtonItems.forEach((item) => {
       within(buttonGroup).getByRole('button', { name: item.text });

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Button, ButtonGroup, ButtonGroupItem } from '@ssa-ui-kit/core';
+import { NotificationCardProps } from '@components/NotificationCard';
 import { NotificationMenu } from '../NotificationMenu';
 import { MarkAllReadButton, Trigger } from './StoryContent';
-import { NotificationCardProps } from '@components/NotificationCard';
 import {
   disableButton,
   divideOnSubArr,
@@ -51,7 +51,7 @@ export const StoryComponent = () => {
   };
 
   return (
-    <MemoryRouter initialEntries={['/*']}>
+    <MemoryRouter>
       <Routes>
         <Route
           path="/*"

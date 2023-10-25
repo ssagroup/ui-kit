@@ -1,6 +1,14 @@
 import { useTheme } from '@emotion/react';
 import { dateFormatters } from '@ssa-ui-kit/utils';
-import { Badge, CardBase, Icon, Indicator, Typography } from '@ssa-ui-kit/core';
+import {
+  Badge,
+  CardBase,
+  IMapIcons,
+  Icon,
+  Indicator,
+  MainColors,
+  Typography,
+} from '@ssa-ui-kit/core';
 import { NotificationCardProps } from './types';
 import {
   notifyBadge,
@@ -10,13 +18,27 @@ import {
   notifyTime,
 } from './styles';
 
+export const notificationTypes: Record<string, { [key: string]: string }> = {
+  Informational: {
+    icon: 'information',
+    color: 'blueLight',
+  },
+  Warning: {
+    icon: 'warning',
+    color: 'yellowWarm',
+  },
+  Error: {
+    icon: 'attention',
+    color: 'pink',
+  },
+};
+
 export const NotificationCard = ({
   title,
   children,
   text,
   isRead,
-  badgeColor,
-  iconName,
+  type,
   time,
   onClick,
 }: NotificationCardProps) => {
@@ -34,8 +56,15 @@ export const NotificationCard = ({
         }
       }}>
       <Indicator isVisible={!isRead}>
-        <Badge data-testid="badge" color={badgeColor} css={notifyBadge}>
-          <Icon name={iconName} color={theme.colors.white} size={14} />
+        <Badge
+          data-testid="badge"
+          color={notificationTypes[type].color as keyof MainColors}
+          css={notifyBadge}>
+          <Icon
+            name={notificationTypes[type].icon as keyof IMapIcons}
+            color={theme.colors.white}
+            size={14}
+          />
         </Badge>
       </Indicator>
       <Typography

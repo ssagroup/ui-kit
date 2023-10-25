@@ -9,46 +9,19 @@ const gotoPage = (page: Page) => {
   );
 };
 
-test('[1920] Widgets: NotificationMenu is opened', async ({ page }) => {
-  await gotoPage(page);
-  await page.setViewportSize(SCREEN_SIZES[1920]);
-  await page.getByTestId('trigger-button').click();
+for (const resolution of Object.keys(SCREEN_SIZES)) {
+  const viewportSize =
+    SCREEN_SIZES[resolution as unknown as keyof typeof SCREEN_SIZES];
+  test(`[${resolution}] Widgets: NotificationMenu is opened`, async ({
+    page,
+  }) => {
+    await gotoPage(page);
+    await page.setViewportSize(viewportSize);
+    await page.getByTestId('trigger-button').click();
 
-  const SCREENSHOT_PREFIX = `${CUSTOM_SHOTS_PATH}widgets-notification-menu--is-opened__`;
-  await page.screenshot({
-    path: `${SCREENSHOT_PREFIX}[w1920px].png`,
+    const SCREENSHOT_PREFIX = `${CUSTOM_SHOTS_PATH}widgets-notification-menu--is-opened__`;
+    await page.screenshot({
+      path: `${SCREENSHOT_PREFIX}[w${resolution}px].png`,
+    });
   });
-});
-
-test('[1440] Widgets: NotificationMenu is opened', async ({ page }) => {
-  await gotoPage(page);
-  await page.setViewportSize(SCREEN_SIZES[1440]);
-  await page.getByTestId('trigger-button').click();
-
-  const SCREENSHOT_PREFIX = `${CUSTOM_SHOTS_PATH}widgets-notification-menu--is-opened__`;
-  await page.screenshot({
-    path: `${SCREENSHOT_PREFIX}[w1440px].png`,
-  });
-});
-
-test('[900] Widgets: NotificationMenu is opened', async ({ page }) => {
-  await gotoPage(page);
-  await page.setViewportSize(SCREEN_SIZES[900]);
-  await page.getByTestId('trigger-button').click();
-
-  const SCREENSHOT_PREFIX = `${CUSTOM_SHOTS_PATH}widgets-notification-menu--is-opened__`;
-  await page.screenshot({
-    path: `${SCREENSHOT_PREFIX}[w900px].png`,
-  });
-});
-
-test('[390] Widgets: NotificationMenu is opened', async ({ page }) => {
-  await gotoPage(page);
-  await page.setViewportSize(SCREEN_SIZES[390]);
-  await page.getByTestId('trigger-button').click();
-
-  const SCREENSHOT_PREFIX = `${CUSTOM_SHOTS_PATH}widgets-notification-menu--is-opened__`;
-  await page.screenshot({
-    path: `${SCREENSHOT_PREFIX}[w390px].png`,
-  });
-});
+}

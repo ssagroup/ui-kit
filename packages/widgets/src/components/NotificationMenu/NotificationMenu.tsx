@@ -8,6 +8,7 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
+import { NotificationCard } from '@components/NotificationCard';
 import { NotificationMenuProps } from './types';
 import {
   ResetBtnStyles,
@@ -18,7 +19,6 @@ import {
   PopoverWrapper,
   PopoverContentWrapper,
 } from './styles';
-import { NotificationCard } from '@components/NotificationCard';
 
 export const NotificationMenu = ({
   trigger,
@@ -47,7 +47,7 @@ export const NotificationMenu = ({
             <div css={Loading}></div>
           ) : (
             <PopoverDescription variant="body1">
-              <div data-testid="button-group">{children}</div>
+              <div data-testid="element-wrapper">{children}</div>
               <div css={List}>
                 {notifications.map((item, index) => {
                   return (
@@ -55,10 +55,9 @@ export const NotificationMenu = ({
                       key={index}
                       title={item.title}
                       text={item.text}
-                      iconName={item.iconName}
+                      type={item.type}
                       time={item.time}
                       isRead={item.isRead}
-                      badgeColor={item.badgeColor}
                     />
                   );
                 })}

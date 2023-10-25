@@ -11,7 +11,7 @@ export const Trigger = () => {
   return (
     <Indicator
       position="right"
-      isVisible={true}
+      isVisible
       text={
         <span
           css={{
