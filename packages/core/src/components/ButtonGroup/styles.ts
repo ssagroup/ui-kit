@@ -33,6 +33,14 @@ export const ButtonItem = (theme: Theme) => css`
     background: ${theme.colors.greyFocused};
   }
 
+  &:disabled {
+    background: ${theme.colors.grey};
+
+    p {
+      color: ${theme.colors.grey40};
+    }
+  }
+
   ${theme.mediaQueries.md} {
     min-width: 65px;
     padding: 12px;

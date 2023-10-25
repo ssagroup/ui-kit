@@ -3,6 +3,7 @@ import { SerializedStyles } from '@emotion/react';
 export type ButtonGroupItem = {
   id: number;
   text: string;
+  isDisabled?: boolean;
 };
 
 export interface ButtonGroupProps {

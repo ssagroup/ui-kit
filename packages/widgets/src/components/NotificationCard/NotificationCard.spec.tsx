@@ -5,12 +5,11 @@ import { NotificationCardProps } from './types';
 
 const commonProps: Pick<
   NotificationCardProps,
-  'title' | 'text' | 'badgeColor' | 'iconName' | 'time'
+  'title' | 'text' | 'type' | 'time'
 > = {
   title: 'Title',
   text: 'Text',
-  badgeColor: 'blueLight',
-  iconName: 'information',
+  type: 'Informational',
   time: Date.now() - 1200000,
 };
 

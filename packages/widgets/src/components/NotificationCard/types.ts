@@ -1,11 +1,8 @@
-import { IMapIcons, MainColors } from '@ssa-ui-kit/core';
-
 export interface NotificationCardProps {
   title: string;
   text: string;
   isRead: boolean;
-  badgeColor: keyof MainColors;
-  iconName: keyof IMapIcons;
+  type: 'Informational' | 'Warning' | 'Error';
   time: string | number;
   children?: React.ReactNode;
   onClick?: () => void;
