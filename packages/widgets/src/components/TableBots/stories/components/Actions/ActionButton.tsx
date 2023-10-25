@@ -21,6 +21,10 @@ export const ActionButton = (props: Parameters<typeof Button>[0]) => (
         border: 'none',
         boxShadow: 'none',
       },
+      '&:disabled': {
+        background: 'none',
+        cursor: 'default',
+      },
     }}>
     {props.children}
   </Button>

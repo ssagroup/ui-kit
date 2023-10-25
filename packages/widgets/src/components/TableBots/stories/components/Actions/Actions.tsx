@@ -1,27 +1,25 @@
-import { useTheme } from '@emotion/react';
-import { Wrapper, Icon } from '@ssa-ui-kit/core';
+import { SyntheticEvent } from 'react';
+import { Wrapper } from '@ssa-ui-kit/core';
 import { TableBotItem } from '@components/TableBots/types';
-import { actionsIcons } from './consts';
 import { ActionButton } from './ActionButton';
+import { actionsIcons } from './consts';
+import { ActionMore } from './ActionMore';
 
-export const Actions = ({ status }: Pick<TableBotItem, 'status'>) => {
-  const theme = useTheme();
+export const Actions = ({ row }: { row: TableBotItem }) => {
+  const { status, isDisabled } = row;
   const ActionIcon = actionsIcons[status];
-  const actionIconHandler = () => {
-    console.log('>>>action...');
+  const actionIconHandler = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    alert('action...');
   };
   return (
     <Wrapper>
-      <ActionButton onClick={actionIconHandler}>
+      <ActionButton
+        onClick={isDisabled ? undefined : actionIconHandler}
+        isDisabled={isDisabled}>
         <ActionIcon />
       </ActionButton>
-      <ActionButton onClick={actionIconHandler}>
-        <Icon
-          name="more-vertical"
-          size={15}
-          color={theme.colors.greyDropdownFocused}
-        />
-      </ActionButton>
+      <ActionMore row={row} />
     </Wrapper>
   );
 };

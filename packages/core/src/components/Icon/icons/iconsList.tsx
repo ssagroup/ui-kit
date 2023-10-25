@@ -40,4 +40,8 @@ export const iconsList = [
   'arrow-down',
   'filter',
   'search',
+  'archive',
+  'bin',
+  'change',
+  'copy',
 ] as const;

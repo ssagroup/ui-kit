@@ -20,7 +20,7 @@ export type SetIDs = {
 };
 
 export interface PopoverTriggerProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   asChild?: boolean;
 }
 

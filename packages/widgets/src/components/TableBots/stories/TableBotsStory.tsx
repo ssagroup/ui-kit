@@ -1,18 +1,25 @@
 import { Wrapper } from '@ssa-ui-kit/core';
 import { TableBots, TableCellBot, TableRowBot } from '..';
-import { Exchange, Trade, PNL, ROI } from './components';
-import { tableBotsData } from './mockData';
 import { TableBotItem } from '../types';
+import { Exchange, PNL, ROI, Trade } from './components';
 import { Actions } from './components/Actions/Actions';
-import { SyntheticEvent } from 'react';
+import { tableBotsData } from './mockData';
 
-export const Story = () => {
-  // TODO: don't trigger handle if clicked by the action row
-  const handleRowClick =
-    (row: TableBotItem) => (event: SyntheticEvent<HTMLDivElement>) => {
-      console.log('>>>event', event);
-      alert(JSON.stringify(row));
-    };
+export const TableBotsStory = () => {
+  const handleRowClick = (row: TableBotItem) => () => {
+    alert(JSON.stringify(row));
+  };
+
+  const columns = [
+    'Name',
+    'Creation Date',
+    'Exchange',
+    'Status',
+    'Pair',
+    'PNL',
+    'ROI',
+    '',
+  ];
 
   return (
     <Wrapper
@@ -20,13 +27,13 @@ export const Story = () => {
         width: '100%',
         height: '100%',
       }}>
-      <TableBots>
+      <TableBots columns={columns}>
         {tableBotsData.map((item) => (
           <TableRowBot
             aria-disabled={item.isDisabled}
             key={item.id}
             isDisabled={item.isDisabled}
-            onClick={handleRowClick(item)}>
+            onClick={item.isDisabled ? undefined : handleRowClick(item)}>
             <TableCellBot>{item.name}</TableCellBot>
             <TableCellBot>{item.creationDate}</TableCellBot>
             <TableCellBot>
@@ -43,7 +50,7 @@ export const Story = () => {
               <ROI {...item.roi} />
             </TableCellBot>
             <TableCellBot>
-              <Actions status={item.status} />
+              <Actions row={item} />
             </TableCellBot>
           </TableRowBot>
         ))}

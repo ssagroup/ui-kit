@@ -26,4 +26,5 @@ export interface TableBotItem {
 
 export interface TableBotsProps {
   children: React.ReactElement<React.PropsWithChildren<TableBotItem>>[];
+  columns: string[];
 }

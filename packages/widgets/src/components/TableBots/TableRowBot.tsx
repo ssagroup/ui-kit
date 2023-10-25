@@ -9,6 +9,8 @@ export const TableRowBot = styled(TableRow)<{ isDisabled?: boolean }>`
   ${({ isDisabled }) =>
     isDisabled && {
       opacity: 0.6,
+      cursor: 'default',
+      userSelect: 'none',
     }}
   ${TableCellBot}:first-of-type {
     padding-left: 18px;
