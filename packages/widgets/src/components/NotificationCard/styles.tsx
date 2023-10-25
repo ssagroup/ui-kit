@@ -1,5 +1,39 @@
 import { Theme, css } from '@emotion/react';
 
+export const childrenWrapper = (theme: Theme) => `
+  grid-column: 2 / span 2;
+  margin-top: 10px;
+
+  button {
+    height: 31px;
+    border-radius: 6px;
+    font-weight: 700;
+
+    &:focus::before {
+      content: none;
+    }
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+
+  ${theme.mediaQueries.md} {
+    margin-top: 13px;
+  }
+
+  ${theme.mediaQueries.xs} {
+    button {
+      height: 28px;
+      padding: 10px;
+
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
+`;
+
 export const notifyCard = (theme: Theme) => css`
   position: relative;
   display: grid;
@@ -64,7 +98,7 @@ export const notifyTitle = (theme: Theme) => css`
 
 export const notifyText = (theme: Theme) => css`
   grid-row: 2;
-  grid-column: 2;
+  grid-column: 2 / span 3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

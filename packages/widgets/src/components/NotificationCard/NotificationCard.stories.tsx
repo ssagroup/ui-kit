@@ -1,63 +1,22 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Theme } from '@emotion/react';
-import { Button, IMapIcons, MainColors } from '@ssa-ui-kit/core';
+import { Button } from '@ssa-ui-kit/core';
 import { mainTheme } from '@ssa-ui-kit/core';
 import { NotificationCard } from './NotificationCard';
 import { NotificationCardProps } from './types';
+import { childrenWrapper } from './styles';
 
-const childrenWrapper = (theme: Theme) => `
-  grid-column: 2 / span 2;
-  margin-top: 10px;
-
-  button {
-    height: 31px;
-    border-radius: 6px;
-    font-weight: 700;
-
-    &:focus::before {
-      content: none;
-    }
-
-    &:not(:last-child) {
-      margin-right: 20px;
-    }
-  }
-
-  ${theme.mediaQueries.md} {
-    margin-top: 13px;
-  }
-
-  ${theme.mediaQueries.xs} {
-    button {
-      height: 28px;
-      padding: 10px;
-
-      &:not(:last-child) {
-        margin-right: 5px;
-      }
-    }
-  }
-`;
-
-const notifyValues: Array<{
-  badgeColor: keyof MainColors;
-  iconName: keyof IMapIcons;
-  time: number;
-}> = [
+const notifyValues: Array<Pick<NotificationCardProps, 'type' | 'time'>> = [
   {
-    badgeColor: 'blueLight',
-    iconName: 'information',
+    type: 'Informational',
     time: Date.now() - 600000,
   },
   {
-    badgeColor: 'yellowWarm',
-    iconName: 'warning',
+    type: 'Warning',
     time: Date.now() - 1600000,
   },
 
   {
-    badgeColor: 'pink',
-    iconName: 'attention',
+    type: 'Error',
     time: Date.now() - 2600000,
   },
 ];
@@ -69,15 +28,9 @@ export default {
     isRead: {
       control: 'boolean',
     },
-    badgeColor: {
-      options: ['blueLight', 'yellowWarm', 'pink'],
-      control: {
-        type: 'select',
-      },
-    },
 
-    iconName: {
-      options: ['information', 'warning', 'attention'],
+    type: {
+      options: ['Informational', 'Warning', 'Error'],
       control: {
         type: 'select',
       },
@@ -100,8 +53,7 @@ export const Default: StoryObj<typeof NotificationCard> = (
         title={args.title}
         text={args.text}
         isRead={args.isRead}
-        badgeColor={args.badgeColor}
-        iconName={args.iconName}
+        type={args.type}
         time={args.time}>
         <div css={childrenWrapper}>
           <Button
@@ -134,8 +86,7 @@ Default.args = {
   title: 'CyberVeinToken is Now Available on Exchange',
   text: 'You have an error with Bot name 1. Do you want to stop this bot?',
   isRead: false,
-  badgeColor: 'blueLight',
-  iconName: 'information',
+  type: 'Informational',
   time: Date.now() - 1200000,
 };
 
@@ -149,8 +100,7 @@ export const NotificationList: StoryObj<typeof NotificationCard> = () => {
             title="CyberVeinToken is Now Available"
             text="With our newest listing, we’re welcoming Wrapped "
             isRead={false}
-            badgeColor={value.badgeColor}
-            iconName={value.iconName}
+            type={value.type}
             time={value.time}
           />
         );

@@ -2,6 +2,7 @@ import { Theme } from '@emotion/react';
 
 const main: Theme = {
   colors: {
+    black25: 'rgba(0, 0, 0, 0.25)', // #000000
     white: 'rgba(255, 255, 255, 1)', //  #ffffff
     white80: 'rgba(255, 255, 255, 0.8)', //  #ffffff
     white60: 'rgba(255, 255, 255, 0.6)', //  #ffffff
@@ -28,7 +29,9 @@ const main: Theme = {
     greyButtonGradientLight: 'rgba(94, 103, 114, 1)', // #5e6772
     greyBackground: 'rgb(64, 68, 73)', // #404449
     greyBackgroundLight: 'rgb(76, 84, 93)', // #4c545d
+    greyPopoverLight: 'rgba(242, 244, 247, 1)', // #F2F4F7
     greyGraphite: 'rgba(71, 74, 80, 1)', //#474a50
+    greyGraphite70: 'rgb(122, 124, 127, 0.7)', // #7a7c7f
     greyShadow: 'rgba(42, 48, 57, 0.08)', // #2a3039
     greyShadowHover: 'rgba(93, 102, 112, 0.24)', // #5d6670
     greyOutline: 'rgba(208,	210,	220, 1)', // #d0d2dc
