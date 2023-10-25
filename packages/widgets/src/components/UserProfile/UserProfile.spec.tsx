@@ -1,10 +1,12 @@
 import userEvent from '@testing-library/user-event';
-import { StoryComponent } from './stories/StoryComponent';
+import { UserProfile } from './UserProfile';
 
 describe('UserProfile', () => {
   it('Renders with a user name and email values', async () => {
     const user = userEvent.setup();
-    const { getByText, getByTestId } = render(<StoryComponent />);
+    const { getByText, getByTestId } = render(
+      <UserProfile name="Josh Li" email="Josh@gmail.com" trigger="Trigger" />,
+    );
     await user.click(getByTestId('trigger-button'));
 
     getByText(/Josh Li/i);
@@ -13,10 +15,11 @@ describe('UserProfile', () => {
 
   it('Renders with a Log out link button', async () => {
     const user = userEvent.setup();
-    const { getByRole, getByTestId } = render(<StoryComponent />);
+    const { getByRole, getByTestId } = render(
+      <UserProfile name="Josh Li" email="Josh@gmail.com" trigger="Trigger" />,
+    );
     await user.click(getByTestId('trigger-button'));
 
-    const linkBtn = getByRole('link', { name: new RegExp('Log Out', 'i') });
-    expect(linkBtn).toHaveAttribute('href', '/sing-up');
+    getByRole('button', { name: new RegExp('Log Out', 'i') });
   });
 });

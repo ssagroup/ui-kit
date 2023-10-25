@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import {
   Button,
@@ -18,12 +17,7 @@ import {
   CustomButton,
 } from './styles';
 
-export const UserProfile = ({
-  name,
-  email,
-  trigger,
-  link,
-}: UserProfileProps) => {
+export const UserProfile = ({ name, email, trigger }: UserProfileProps) => {
   const theme = useTheme();
   return (
     <Popover placement="bottom-end">
@@ -41,12 +35,10 @@ export const UserProfile = ({
           </PopoverDescription>
         </div>
         <div css={LogoutWrapper}>
-          <Link to={link} css={{ textDecoration: 'none' }}>
-            <Button variant="info" css={CustomButton}>
-              <Icon name="log-out" size={15} color={theme.colors.white} />
-              Log Out
-            </Button>
-          </Link>
+          <Button variant="info" css={CustomButton}>
+            <Icon name="log-out" size={15} color={theme.colors.white} />
+            Log Out
+          </Button>
         </div>
       </PopoverContent>
     </Popover>
