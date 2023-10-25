@@ -2,6 +2,8 @@ import { withTheme, css } from '@emotion/react';
 import { Typography, MainColors } from '@ssa-ui-kit/core';
 
 import { PieChart, PieChartLegend } from '@components/PieChart';
+import { useTextResize } from './useTextResize';
+
 import { BalancePieChartProps, BalancePieChartTitleProps } from './types';
 
 const colorNames = [
@@ -14,35 +16,41 @@ const colorNames = [
 ] as unknown as Array<keyof MainColors>;
 
 const BalancePieChartTitle = withTheme(
-  ({ total, currency, theme }: BalancePieChartTitleProps) => (
-    <Typography
-      variant="body2"
-      weight="bold"
-      color={theme.colors.greyDarker}
-      css={css`
-        font-size: 14px;
-        ${theme.mediaQueries.md} {
-          font-size: 16px;
-        }
-        line-height: 25px;
-      `}>
-      {total}
+  ({ total, currency, theme }: BalancePieChartTitleProps) => {
+    const ref = useTextResize();
+    return (
       <Typography
+        ref={ref}
         variant="body2"
-        weight="regular"
-        as="span"
-        color={theme.colors.greyDarker80}
+        weight="bold"
+        color={theme.colors.greyDarker}
         css={css`
-          display: block;
-          font-size: 12px;
+          font-size: 14px;
+          padding: 0 12px;
           ${theme.mediaQueries.md} {
-            font-size: 14px;
+            font-size: 16px;
           }
+          line-height: 1;
         `}>
-        {currency}
+        {total}
+        <Typography
+          variant="body2"
+          weight="regular"
+          as="span"
+          color={theme.colors.greyDarker80}
+          css={css`
+            display: block;
+            font-size: 12px;
+            ${theme.mediaQueries.md} {
+              font-size: 14px;
+            }
+            line-height: 25px;
+          `}>
+          {currency}
+        </Typography>
       </Typography>
-    </Typography>
-  ),
+    );
+  },
 );
 
 export const BalancePieChart = withTheme(

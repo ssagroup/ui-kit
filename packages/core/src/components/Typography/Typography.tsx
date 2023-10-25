@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { css } from '@emotion/react';
 
 import { TypographyProps } from './types';
@@ -17,19 +18,23 @@ const variantsMapping = {
   caption: 'span',
 };
 
-const Typography = ({
-  children,
-  weight = 'regular',
-  variant = 'body1',
-  gutter = false,
-  color = 'rgba(43, 45, 49, 1)',
-  as,
-  ...props
-}: TypographyProps) => {
+const Typography = forwardRef<HTMLElement, TypographyProps>(function Typography(
+  {
+    children,
+    weight = 'regular',
+    variant = 'body1',
+    gutter = false,
+    color = 'rgba(43, 45, 49, 1)',
+    as,
+    ...props
+  },
+  ref,
+) {
   const Component = as || variantsMapping[variant];
 
   return (
     <Component
+      ref={ref}
       css={[
         style[variant],
         style[weight],
@@ -42,6 +47,6 @@ const Typography = ({
       {children}
     </Component>
   );
-};
+});
 
 export default Typography;
