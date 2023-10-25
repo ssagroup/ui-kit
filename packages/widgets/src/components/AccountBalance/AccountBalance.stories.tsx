@@ -9,8 +9,9 @@ export default {
 
 export const Default: StoryObj<typeof AccountBalance> = {};
 Default.args = {
-  total: 48700.5356,
+  total: 48700.53569,
   currency: 'USDT',
+  onClick: () => alert('Clicked!'),
   data: [
     {
       id: 'BTC', // coinName

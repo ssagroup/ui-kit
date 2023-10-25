@@ -19,4 +19,11 @@ export interface BalancePieChartProps extends WithTheme, BalanceBase {}
 
 export interface AccountBalanceProps extends BalanceBase {
   title?: string;
+  className?: string;
+  onClick?: () => void;
 }
+
+export type BalancePieChartTitleProps = Pick<
+  BalancePieChartProps,
+  'total' | 'currency' | 'theme'
+>;
