@@ -18,7 +18,7 @@ describe('UserProfile', () => {
     getByText(/Josh@gmail.com/i);
   });
 
-  it('Renders with a Log out link button', async () => {
+  it('Renders with a Log out button', async () => {
     const user = userEvent.setup();
     const { getByRole, getByTestId } = render(
       <UserProfile
