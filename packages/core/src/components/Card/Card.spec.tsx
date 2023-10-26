@@ -1,3 +1,4 @@
+import { userEvent } from '@storybook/testing-library';
 import { screen } from '../../../customTest';
 
 import Icon from '@components/Icon';
@@ -74,5 +75,20 @@ describe('Card', () => {
     const cardHeader = screen.getByText(/card/i).closest('div');
 
     expect(cardHeader).toHaveStyle('background: transparent');
+  });
+
+  it('Handles click on a Card', async () => {
+    const onClick = jest.fn();
+    render(
+      <Card onClick={onClick}>
+        <CardHeader>Header</CardHeader>
+        <CardContent>Content</CardContent>
+      </Card>,
+    );
+
+    const cardBtnEl = screen.getByRole('button', { name: 'Header Content' });
+    await userEvent.click(cardBtnEl);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });
