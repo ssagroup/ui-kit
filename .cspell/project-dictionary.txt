@@ -38,6 +38,7 @@ IBMP
 ipsum
 jsdom
 ligula
+linkstabbar
 lobortis
 Lorem
 lostpixel
@@ -74,11 +75,4 @@ VERCEL
 viewports
 vtpit
 xlg
-USD
-btc
-btcfdusd
-Dissoc
-fdusd
-ROI
-PNL
-linkstabbar
+Yevgen

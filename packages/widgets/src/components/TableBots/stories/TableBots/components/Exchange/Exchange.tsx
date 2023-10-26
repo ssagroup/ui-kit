@@ -4,11 +4,14 @@ import { pathOr } from '@ssa-ui-kit/utils';
 import { Wrapper } from '@ssa-ui-kit/core';
 import { exchangeIcons, ExchangeIconsType } from './consts';
 
-export const Exchange = ({ exchangeType }: ExchangeProps) => {
+export const Exchange = ({ exchangeType, showTitle = true }: ExchangeProps) => {
   const ExchangeIcon = exchangeIcons[exchangeType]['icon'];
   const title = pathOr<ExchangeIconsType, string>('', [exchangeType, 'title'])(
     exchangeIcons,
   );
+  if (!showTitle) {
+    return <ExchangeIcon />;
+  }
   return (
     <Wrapper>
       <div

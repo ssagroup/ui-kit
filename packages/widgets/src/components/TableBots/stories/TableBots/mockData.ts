@@ -1,4 +1,4 @@
-import { TableBotItem } from '../types';
+import { TableBotItem } from '../../types';
 
 const commonStructure: TableBotItem = {
   id: 1,

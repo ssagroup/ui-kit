@@ -21,14 +21,14 @@ export const ActionMore = ({ row: { isDisabled } }: { row: TableBotItem }) => {
   const actionMoreHandler: MouseEventHandler<HTMLElement> = (event) => {
     event.stopPropagation();
   };
-  const actionCopyHandler: MouseEventHandler<HTMLElement> = (event) => {
-    event.stopPropagation();
-    alert('action copy');
-  };
-  const actionArchiveHandler: MouseEventHandler<HTMLElement> = (event) => {
-    event.stopPropagation();
-    alert('action archive');
-  };
+
+  const actionHandler =
+    (actionName: string): MouseEventHandler<HTMLElement> =>
+    (event) => {
+      event.stopPropagation();
+      alert(`action ${actionName}`);
+    };
+
   return (
     <Popover
       floatingOptions={{
@@ -65,7 +65,7 @@ export const ActionMore = ({ row: { isDisabled } }: { row: TableBotItem }) => {
                   color={theme.colors.greyFilterIcon}
                 />
               }
-              onClick={actionCopyHandler}>
+              onClick={actionHandler('copy')}>
               Copy
             </ActionItem>
             <ActionItem
@@ -76,7 +76,7 @@ export const ActionMore = ({ row: { isDisabled } }: { row: TableBotItem }) => {
                   color={theme.colors.greyFilterIcon}
                 />
               }
-              onClick={actionArchiveHandler}>
+              onClick={actionHandler('archive')}>
               Archive
             </ActionItem>
           </ActionsWrapper>

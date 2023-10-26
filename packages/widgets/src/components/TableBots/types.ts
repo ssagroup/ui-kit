@@ -1,5 +1,6 @@
-import { ExchangeType } from './stories/components/Exchange/types';
-import { TradeType } from './stories/components/Trade/types';
+import { Interpolation, Theme } from '@emotion/react';
+import { ExchangeType } from './stories/TableBots/components/Exchange/types';
+import { TradeType } from './stories/TableBots/components/Trade/types';
 
 export interface PNL {
   amount: number;
@@ -27,4 +28,21 @@ export interface TableBotItem {
 export interface TableBotsProps {
   children: React.ReactElement<React.PropsWithChildren<TableBotItem>>[];
   columns: string[];
+  className?: string;
+  css?: Interpolation<Theme>;
+}
+
+export interface NoControlOrdersItem {
+  id: number;
+  exchange: ExchangeType;
+  account: string;
+  botName: string;
+  botRun: string;
+  orderId: string;
+  status: boolean;
+  reason: string;
+  pair: string;
+  orderSize: string;
+  orderType: 'SELL';
+  isDisabled: boolean;
 }

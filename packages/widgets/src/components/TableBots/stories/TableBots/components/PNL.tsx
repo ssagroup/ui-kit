@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Wrapper } from '@ssa-ui-kit/core';
 import { useTheme } from '@emotion/react';
-import * as Types from '../../types';
+import * as Types from '../../../types';
 
 export const PNL = ({ amount, currency, isIncreasing }: Types.PNL) => {
   const theme = useTheme();

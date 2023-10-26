@@ -1,6 +1,6 @@
 import { Wrapper } from '@ssa-ui-kit/core';
-import { TableBots, TableCellBot, TableRowBot } from '..';
-import { TableBotItem } from '../types';
+import { TableBots, TableCellBot, TableRowBot } from '../..';
+import { TableBotItem } from '../../types';
 import { Exchange, PNL, ROI, Trade } from './components';
 import { Actions } from './components/Actions/Actions';
 import { tableBotsData } from './mockData';
