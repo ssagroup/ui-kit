@@ -1,3 +1,4 @@
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Meta, StoryObj } from '@storybook/react';
 import { AddNewAccountCard } from './AddNewAccountCard';
 
@@ -7,7 +8,30 @@ export default {
 } as Meta<typeof AddNewAccountCard>;
 
 export const Default: StoryObj<typeof AddNewAccountCard> = () => {
-  return <AddNewAccountCard />;
+  return (
+    <div css={{ width: '100%', maxWidth: '500px' }}>
+      <AddNewAccountCard onclick={() => alert('click!')} />
+    </div>
+  );
 };
 
-Default.storyName = 'AddNewAccountCard';
+Default.args = {};
+
+export const WithLink: StoryObj<typeof AddNewAccountCard> = () => {
+  return (
+    <MemoryRouter>
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            <div css={{ width: '100%', maxWidth: '500px' }}>
+              <AddNewAccountCard link="/link" />
+            </div>
+          }
+        />
+      </Routes>
+    </MemoryRouter>
+  );
+};
+
+WithLink.args = {};

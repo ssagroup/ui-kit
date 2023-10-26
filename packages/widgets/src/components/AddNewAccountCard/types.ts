@@ -1,3 +1,4 @@
 export interface AddNewAccountCardProps {
-  children?: React.ReactNode;
+  link?: string;
+  onclick?: () => void;
 }

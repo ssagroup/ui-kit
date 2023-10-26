@@ -30,6 +30,7 @@ export const iconsList = [
   'attention',
   'visible',
   'invisible',
+  'log-out',
   'carrot-down',
   'carrot-up',
   'carrot-left',
