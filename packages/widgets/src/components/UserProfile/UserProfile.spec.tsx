@@ -9,7 +9,7 @@ describe('UserProfile', () => {
         name="Josh Li"
         email="Josh@gmail.com"
         trigger="Trigger"
-        onClick={() => console.log('Clicked!')}
+        onClick={jest.fn()}
       />,
     );
     await user.click(getByTestId('trigger-button'));
@@ -25,7 +25,7 @@ describe('UserProfile', () => {
         name="Josh Li"
         email="Josh@gmail.com"
         trigger="Trigger"
-        onClick={() => console.log('Clicked!')}
+        onClick={jest.fn()}
       />,
     );
     await user.click(getByTestId('trigger-button'));
