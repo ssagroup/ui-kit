@@ -1,31 +1,8 @@
 import { css, useTheme } from '@emotion/react';
-import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, Typography } from '@ssa-ui-kit/core';
 import { BalancePieChart } from './BalancePieChart';
+import { WithLink } from './WithLink';
 import { AccountBalanceProps } from './types';
-
-const WithLink = ({
-  link,
-  onClick,
-  children,
-}: Pick<AccountBalanceProps, 'link' | 'onClick'> & {
-  children: React.ReactNode;
-}) =>
-  link ? (
-    <Link
-      to={link}
-      onClick={onClick}
-      css={css`
-        text-decoration: none;
-        div {
-          cursor: pointer;
-        }
-      `}>
-      {children}
-    </Link>
-  ) : (
-    children
-  );
 
 export const AccountBalance = ({
   title = 'Balance',
