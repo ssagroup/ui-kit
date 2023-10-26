@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
-import { AccountBalance } from './index';
+import { AccountBalance, AccountBalanceProps } from './index';
 
 export default {
   title: 'Widgets/AccountBalance',
@@ -38,4 +39,20 @@ Default.args = {
       value: 1513.9956,
     },
   ],
+};
+
+export const WithLink: StoryObj<typeof AccountBalance> = (
+  args: AccountBalanceProps,
+) => {
+  return (
+    <MemoryRouter>
+      <Routes>
+        <Route path="/*" element={<AccountBalance {...args} />} />
+      </Routes>
+    </MemoryRouter>
+  );
+};
+WithLink.args = {
+  ...Default.args,
+  link: '/',
 };

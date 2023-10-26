@@ -26,7 +26,7 @@ const BalancePieChartTitle = withTheme(
         color={theme.colors.greyDarker}
         css={css`
           font-size: 14px;
-          padding: 0 12px;
+          padding: 0 13px;
           ${theme.mediaQueries.md} {
             font-size: 16px;
           }
