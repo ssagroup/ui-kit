@@ -13,6 +13,7 @@ export const Default: StoryObj<typeof UserProfile> = () => {
       name="Josh Li"
       email="Josh@gmail.com"
       trigger={<Avatar size={42} image="https://via.placeholder.com/42x42" />}
+      onClick={() => alert('Clicked!')}
     />
   );
 };

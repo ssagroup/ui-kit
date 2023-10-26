@@ -17,7 +17,12 @@ import {
   CustomButton,
 } from './styles';
 
-export const UserProfile = ({ name, email, trigger }: UserProfileProps) => {
+export const UserProfile = ({
+  name,
+  email,
+  trigger,
+  onClick,
+}: UserProfileProps) => {
   const theme = useTheme();
   return (
     <Popover placement="bottom-end">
@@ -35,7 +40,7 @@ export const UserProfile = ({ name, email, trigger }: UserProfileProps) => {
           </PopoverDescription>
         </div>
         <div css={LogoutWrapper}>
-          <Button variant="info" css={CustomButton}>
+          <Button variant="info" css={CustomButton} onClick={onClick}>
             <Icon name="log-out" size={15} color={theme.colors.white} />
             Log Out
           </Button>
