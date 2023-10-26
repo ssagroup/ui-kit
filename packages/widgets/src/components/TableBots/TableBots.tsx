@@ -1,7 +1,7 @@
-import { TableBot, TableCellBot, TableHeadBot, TableRowBot } from '.';
+import { Children, cloneElement, isValidElement } from 'react';
 import { TableBody } from '@ssa-ui-kit/core';
 import { TableBotsProps } from './types';
-import { Children, cloneElement, isValidElement } from 'react';
+import { TableBot, TableCellBot, TableHeadBot, TableRowBot } from '.';
 
 export const TableBots = ({ children, columns, className }: TableBotsProps) => (
   <TableBot className={className}>

@@ -1,3 +1,4 @@
 export * from './ActionMore';
 export * from './Reason';
-export * from './TableBotsNoControlOrders';
+export * from './TableBotsList';
+export * from './TableBotsItem';

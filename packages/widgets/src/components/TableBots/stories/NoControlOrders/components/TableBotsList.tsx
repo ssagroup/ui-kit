@@ -1,10 +1,7 @@
 import { TableBotsProps } from '@components/TableBots/types';
-import { TableBots } from '../../..';
+import { TableBots } from '@components/TableBots';
 
-export const TableBotsNoControlOrders = ({
-  children,
-  ...rest
-}: TableBotsProps) => (
+export const TableBotsList = ({ children, ...rest }: TableBotsProps) => (
   <TableBots
     css={{
       '& thead tr': {

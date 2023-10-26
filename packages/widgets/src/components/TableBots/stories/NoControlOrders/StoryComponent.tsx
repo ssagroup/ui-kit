@@ -1,8 +1,6 @@
 import { Wrapper } from '@ssa-ui-kit/core';
-import { TableCellBot, TableRowBot } from '../..';
-import { Exchange, TableTag } from '../TableBots/components';
 import { noControlOrdersData } from './mockData';
-import { ActionMore, TableBotsNoControlOrders, Reason } from './components';
+import { TableBotsList, TableBotsItem } from './components';
 
 export const NoControlOrdersStory = () => {
   const columns = [
@@ -27,36 +25,11 @@ export const NoControlOrdersStory = () => {
         overflowX: 'auto',
         whiteSpace: 'nowrap',
       }}>
-      <TableBotsNoControlOrders columns={columns}>
+      <TableBotsList columns={columns}>
         {noControlOrdersData.map((item) => (
-          <TableRowBot
-            aria-disabled={item.isDisabled}
-            key={item.id}
-            isDisabled={item.isDisabled}>
-            <TableCellBot>
-              <Exchange exchangeType={item.exchange} showTitle={false} />
-            </TableCellBot>
-            <TableCellBot>{item.account}</TableCellBot>
-            <TableCellBot>{item.botName}</TableCellBot>
-            <TableCellBot>{item.botRun}</TableCellBot>
-            <TableCellBot>{item.orderId}</TableCellBot>
-            <TableCellBot>
-              <TableTag color={item.status ? 'green' : 'pink'}>
-                {item.status ? 'Active' : 'Inactive'}
-              </TableTag>
-            </TableCellBot>
-            <TableCellBot>
-              <Reason>{item.reason}</Reason>
-            </TableCellBot>
-            <TableCellBot>{item.pair}</TableCellBot>
-            <TableCellBot>{item.orderSize}</TableCellBot>
-            <TableCellBot>{item.orderType}</TableCellBot>
-            <TableCellBot>
-              <ActionMore row={item} />
-            </TableCellBot>
-          </TableRowBot>
+          <TableBotsItem key={item.id} {...item} />
         ))}
-      </TableBotsNoControlOrders>
+      </TableBotsList>
     </Wrapper>
   );
 };

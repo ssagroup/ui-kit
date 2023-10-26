@@ -1,8 +1,7 @@
 import { Wrapper } from '@ssa-ui-kit/core';
-import { TableBots, TableCellBot, TableRowBot } from '../..';
-import { TableBotItem } from '../../types';
-import { Exchange, PNL, ROI, Trade } from './components';
-import { Actions } from './components/Actions/Actions';
+import { TableBots, TableCellBot, TableRowBot } from '@components/TableBots';
+import { TableBotItem } from '@components/TableBots/types';
+import { Exchange, PNL, ROI, Trade, Actions } from './components';
 import { tableBotsData } from './mockData';
 
 export const TableBotsStory = () => {

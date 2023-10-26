@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect, useState } from 'react';
+import { SubmitHandler, useForm, FieldValues } from 'react-hook-form';
 import {
   Button,
   Input,
@@ -11,7 +12,6 @@ import {
 } from '@ssa-ui-kit/core';
 import { TableBotItem } from '@components/TableBots/types';
 import { actionsIcons } from './consts';
-import { SubmitHandler, useForm, FieldValues } from 'react-hook-form';
 
 export const ActionRun = ({ row }: { row: TableBotItem }) => {
   const { status, isDisabled } = row;

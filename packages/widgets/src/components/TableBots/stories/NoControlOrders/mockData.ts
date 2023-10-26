@@ -1,4 +1,4 @@
-import { NoControlOrdersItem } from '../../types';
+import { NoControlOrdersItem } from '@components/TableBots/types';
 
 const commonStructure: NoControlOrdersItem = {
   id: 1,

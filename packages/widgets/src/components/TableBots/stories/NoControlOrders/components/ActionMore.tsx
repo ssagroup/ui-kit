@@ -8,9 +8,11 @@ import {
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
 import { NoControlOrdersItem } from '@components/TableBots/types';
-import { ActionItem } from '../../TableBots/components/Actions/ActionItem';
-import { ActionsWrapper } from '../../TableBots/components/Actions//ActionsWrapper';
-import { ActionIcon } from '../../TableBots/components/Actions/ActionIcon';
+import {
+  ActionItem,
+  ActionsWrapper,
+  ActionIcon,
+} from '@components/TableBots/stories/TableBots';
 
 export const ActionMore = ({
   row: { isDisabled },

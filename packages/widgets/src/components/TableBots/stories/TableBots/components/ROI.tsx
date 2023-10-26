@@ -1,7 +1,6 @@
-import React from 'react';
 import { Icon, Wrapper } from '@ssa-ui-kit/core';
 import { useTheme } from '@emotion/react';
-import * as Types from '../../../types';
+import * as Types from '@components/TableBots/types';
 
 export const ROI = ({ amount, isIncreasing }: Types.ROI) => {
   const theme = useTheme();
