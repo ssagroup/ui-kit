@@ -17,10 +17,8 @@ export const TableBots = ({ children, columns, className }: TableBotsProps) => (
     <TableBody>
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
-          const { id } = child.props;
-
           return cloneElement(child, {
-            key: id,
+            key: child.props.id,
           });
         }
       })}

@@ -3,7 +3,6 @@ import { tradeStatuses } from './consts';
 import { TableTag } from '../TableTag';
 
 export const Trade = ({ tradeType }: TradeProps) => {
-  const color = tradeStatuses[tradeType]['color'];
-  const title = tradeStatuses[tradeType]['title'];
+  const { color, title } = tradeStatuses[tradeType];
   return <TableTag color={color}>{title}</TableTag>;
 };

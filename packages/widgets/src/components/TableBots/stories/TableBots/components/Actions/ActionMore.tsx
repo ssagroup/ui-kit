@@ -27,6 +27,7 @@ export const ActionMore = ({ row: { isDisabled } }: { row: TableBotItem }) => {
     (event) => {
       event.stopPropagation();
       alert(`action ${actionName}`);
+      setOpen(false);
     };
 
   return (

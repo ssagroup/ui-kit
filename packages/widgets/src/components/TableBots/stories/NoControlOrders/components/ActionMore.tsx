@@ -22,9 +22,6 @@ export const ActionMore = ({
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const onOpenChange = (open: boolean) => {
-    setOpen(open);
-  };
   const actionMoreHandler: MouseEventHandler<HTMLElement> = (event) => {
     event.stopPropagation();
   };
@@ -33,12 +30,13 @@ export const ActionMore = ({
     (event) => {
       event.stopPropagation();
       alert(`action ${actionName}`);
+      setOpen(false);
     };
 
   return (
     <Popover
       floatingOptions={{
-        onOpenChange,
+        onOpenChange: setOpen,
         open,
       }}
       placement="top-start">
