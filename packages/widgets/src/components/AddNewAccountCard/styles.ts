@@ -8,13 +8,12 @@ export const AccountCard = css`
   align-items: center;
   gap: 6px;
   width: 100%;
-  padding: 21px 0;
+  padding: 21px 10px;
   color: ${mainTheme.colors.blueRoyal};
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
   letter-spacing: 0;
-  text-decoration: none;
   border-radius: 20px;
   padding: 21px 0;
   background: ${mainTheme.colors.greyLighter};
