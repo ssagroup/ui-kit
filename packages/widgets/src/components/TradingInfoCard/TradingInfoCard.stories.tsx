@@ -1,6 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
-
 import { Icon } from '@ssa-ui-kit/core';
 import TradingInfoCard from './TradingInfoCard';
 import { ITradingInfoCardProps } from './types';
@@ -34,7 +33,7 @@ export const WithLink: StoryObj<typeof TradingInfoCard> = (
   args: ITradingInfoCardProps,
 ) => {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <Routes>
         <Route
           path="/*"
@@ -44,12 +43,12 @@ export const WithLink: StoryObj<typeof TradingInfoCard> = (
               unit={args.unit}
               title={args.title}
               icon={args.icon}
-              link={'/'}
+              link={'/link'}
             />
           }
         />
       </Routes>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 };
 

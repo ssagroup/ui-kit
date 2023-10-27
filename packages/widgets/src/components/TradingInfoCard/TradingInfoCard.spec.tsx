@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '../../../customTest';
 
@@ -99,7 +99,7 @@ describe('TradingInfoCard', () => {
 
   it('Renders with link prop', () => {
     const { getByRole } = render(
-      <BrowserRouter>
+      <MemoryRouter>
         <Routes>
           <Route
             path="/*"
@@ -108,7 +108,7 @@ describe('TradingInfoCard', () => {
             }
           />
         </Routes>
-      </BrowserRouter>,
+      </MemoryRouter>,
     );
 
     expect(getByRole('link')).toHaveAttribute('href', '/');
