@@ -81,4 +81,5 @@ Dissoc
 fdusd
 ROI
 PNL
+LTC
 linkstabbar

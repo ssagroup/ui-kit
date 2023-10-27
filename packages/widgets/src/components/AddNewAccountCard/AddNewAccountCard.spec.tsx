@@ -24,11 +24,7 @@ describe('AddNewAccountCard', () => {
         <Routes>
           <Route
             path="/*"
-            element={
-              <div css={{ width: '100%', maxWidth: '500px' }}>
-                <AddNewAccountCard link="/link">Text</AddNewAccountCard>
-              </div>
-            }
+            element={<AddNewAccountCard link="/link">Text</AddNewAccountCard>}
           />
         </Routes>
       </MemoryRouter>,

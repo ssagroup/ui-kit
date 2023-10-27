@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const ProgressInfoList = styled.ul`
+export const PieChartLegendList = styled.ul`
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -14,9 +14,6 @@ const ProgressInfoList = styled.ul`
   li {
     display: flex;
     align-items: center;
-
     height: 20px;
   }
 `;
-
-export default ProgressInfoList;
