@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { Title, Description, Source } from '@storybook/addon-docs';
 
@@ -17,11 +17,11 @@ const reactRouterDecorator: DecoratorFunction<
   Args
 > = (Story) => {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <Routes>
         <Route path="/*" element={<Story />} />
       </Routes>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 };
 
