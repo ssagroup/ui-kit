@@ -8,9 +8,15 @@ export const AddNewAccountCard = ({
   link,
   onClick,
 }: AddNewAccountCardProps) => {
-  return (
-    <Card onClick={onClick} noShadow css={AccountCard}>
-      {link ? <Link to={link}>{children}</Link> : <span>{children}</span>}
+  return link ? (
+    <Link css={{ textDecoration: 'none' }} to={link} onClick={onClick}>
+      <Card css={AccountCard} noShadow>
+        {children}
+      </Card>
+    </Link>
+  ) : (
+    <Card css={AccountCard} noShadow onClick={onClick}>
+      {children}
     </Card>
   );
 };

@@ -11,7 +11,7 @@ export default {
 export const Default: StoryObj<typeof AddNewAccountCard> = () => {
   return (
     <div css={{ width: '100%', maxWidth: '500px' }}>
-      <AddNewAccountCard onClick={() => alert('click!')}>
+      <AddNewAccountCard onClick={() => alert('Clicked!')}>
         <Icon name="plus" size={12} color={mainTheme.colors.blueRoyal} />
         Add new account
       </AddNewAccountCard>
