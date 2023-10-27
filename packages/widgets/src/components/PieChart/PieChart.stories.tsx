@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { MainColors, Typography } from '@ssa-ui-kit/core';
 
-import { PieChart, PieChartLegend } from './index';
+import { PieChart, PieChartLegend, pieChartPalettes } from './index';
 import { fitnessData, accountData } from './stories/fixtures';
 
 export default {
@@ -70,22 +70,8 @@ FitnessExample.args = {};
 
 export const AccountExample: StoryObj<typeof PieChart> = () => {
   const theme = useTheme();
-  const colorNames = [
-    'yellow',
-    'blue',
-    'green',
-    'yellowWarm',
-    'blueLight',
-    'turquoise',
-  ] as unknown as Array<keyof MainColors>;
-  const pieChartColors = [
-    theme.colors.yellow,
-    theme.colors.blue,
-    theme.colors.green,
-    theme.colors.yellowLighter,
-    theme.colors.blueLight,
-    theme.colors.turquoise,
-  ] as unknown as string[];
+  const { legendColorNames, pieChartColors } =
+    pieChartPalettes.getBalancePalette(theme);
 
   return (
     <div style={{ width: '400px' }}>
@@ -117,7 +103,7 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
         }>
         <PieChartLegend
           data={accountData}
-          colors={colorNames}
+          colors={legendColorNames}
           renderValue={({ value, label }) =>
             label === 'Other' ? value + ' USD' : value + ' ' + label
           }

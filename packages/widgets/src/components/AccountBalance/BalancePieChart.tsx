@@ -1,30 +1,18 @@
 import { withTheme, css } from '@emotion/react';
-import { MainColors } from '@ssa-ui-kit/core';
 
-import { PieChart, PieChartLegend } from '@components/PieChart';
+import {
+  PieChart,
+  PieChartLegend,
+  pieChartPalettes,
+} from '@components/PieChart';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';
 
-const colorNames = [
-  'yellow',
-  'blue',
-  'green',
-  'yellowWarm',
-  'blueLight',
-  'turquoise',
-] as unknown as Array<keyof MainColors>;
-
 export const BalancePieChart = withTheme(
   ({ total, currency, data, theme }: BalancePieChartProps) => {
-    const pieChartColors = [
-      theme.colors.yellow,
-      theme.colors.blue,
-      theme.colors.green,
-      theme.colors.yellowLighter,
-      theme.colors.blueLight,
-      theme.colors.turquoise,
-    ] as unknown as string[];
+    const { legendColorNames, pieChartColors } =
+      pieChartPalettes.getBalancePalette(theme);
 
     return (
       <PieChart
@@ -53,7 +41,7 @@ export const BalancePieChart = withTheme(
         `}>
         <PieChartLegend
           data={data}
-          colors={colorNames}
+          colors={legendColorNames}
           markerStyles={css`
             width: 10px;
             height: 10px;
