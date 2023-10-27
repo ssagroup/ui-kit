@@ -76,3 +76,12 @@ viewports
 vtpit
 xlg
 Yevgen
+USD
+btc
+btcfdusd
+Dissoc
+fdusd
+ROI
+PNL
+LTC
+linkstabbar

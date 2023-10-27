@@ -10,7 +10,11 @@ const preview = {
     controls: { expanded: true, hideNoControlsWarning: true },
   },
   decorators: [
-    (Story) => <ThemeProvider theme={mainTheme}>{Story()}</ThemeProvider>,
+    (Story) => (
+      <ThemeProvider theme={mainTheme}>
+        <Story />
+      </ThemeProvider>
+    ),
   ],
 };
 

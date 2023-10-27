@@ -12,6 +12,9 @@ const CardBase = styled.div<{ noShadow?: boolean }>`
   box-shadow: ${({ theme, noShadow }) =>
     !noShadow && `0px 10px 40px ${theme.colors.greyDarker60}`};
   border-radius: 10px;
+  border: none;
+
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
 `;
 
 export default CardBase;
