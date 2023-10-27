@@ -1,10 +1,10 @@
 import { withTheme, css } from '@emotion/react';
-import { Typography, MainColors } from '@ssa-ui-kit/core';
+import { MainColors } from '@ssa-ui-kit/core';
 
 import { PieChart, PieChartLegend } from '@components/PieChart';
-import { useTextResize } from './useTextResize';
+import { BalancePieChartTitle } from './BalancePieChartTitle';
 
-import { BalancePieChartProps, BalancePieChartTitleProps } from './types';
+import { BalancePieChartProps } from './types';
 
 const colorNames = [
   'yellow',
@@ -14,44 +14,6 @@ const colorNames = [
   'blueLight',
   'turquoise',
 ] as unknown as Array<keyof MainColors>;
-
-const BalancePieChartTitle = withTheme(
-  ({ total, currency, theme }: BalancePieChartTitleProps) => {
-    const ref = useTextResize();
-    return (
-      <Typography
-        ref={ref}
-        variant="body2"
-        weight="bold"
-        color={theme.colors.greyDarker}
-        css={css`
-          font-size: 14px;
-          padding: 0 13px;
-          ${theme.mediaQueries.md} {
-            font-size: 16px;
-          }
-          line-height: 1;
-        `}>
-        {total}
-        <Typography
-          variant="body2"
-          weight="regular"
-          as="span"
-          color={theme.colors.greyDarker80}
-          css={css`
-            display: block;
-            font-size: 12px;
-            ${theme.mediaQueries.md} {
-              font-size: 14px;
-            }
-            line-height: 25px;
-          `}>
-          {currency}
-        </Typography>
-      </Typography>
-    );
-  },
-);
 
 export const BalancePieChart = withTheme(
   ({ total, currency, data, theme }: BalancePieChartProps) => {
