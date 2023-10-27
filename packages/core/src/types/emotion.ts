@@ -6,6 +6,7 @@ type MakeColors<T extends Array<string>> = {
 
 type Colors = MakeColors<
   [
+    'black25',
     'white',
     'white60',
     'white80',
@@ -30,7 +31,9 @@ type Colors = MakeColors<
     'greyButtonGradientLight',
     'greyBackground',
     'greyBackgroundLight',
+    'greyPopoverLight',
     'greyGraphite',
+    'greyGraphite70',
     'greyShadow',
     'greyOutline',
     'greyShadowHover',

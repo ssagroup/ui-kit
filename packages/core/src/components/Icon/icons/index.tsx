@@ -13,12 +13,14 @@ import { Plus } from './Plus';
 import { Minus } from './Minus';
 import { Cross } from './Cross';
 import { Check } from './Check';
+import { CheckCircle } from './CheckCircle';
 import { More } from './More';
 import { Notification } from './Notification';
 import { User } from './User';
 import { Union } from './Union';
 import { Visible } from './Visible';
 import { Invisible } from './Invisible';
+import { LogOut } from './LogOut';
 import { Information } from './Information';
 import { Warning } from './Warning';
 import { Attention } from './Attention';
@@ -51,6 +53,7 @@ const componentsList = [
   Minus,
   More,
   Check,
+  CheckCircle,
   Cross,
   User,
   Union,
@@ -60,6 +63,7 @@ const componentsList = [
   Attention,
   Visible,
   Invisible,
+  LogOut,
   CarrotDown,
   CarrotUp,
   CarrotLeft,

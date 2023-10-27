@@ -39,6 +39,8 @@ export * from './components/TradingInfoCard';
 export * from './components/TradingScoreboard';
 export * from './components/NotificationCard';
 export * from './components/LinksTabBar';
+export * from './components/NotificationMenu';
 export * from './components/SearchBox';
+export * from './components/UserProfile';
 export * from './components/PieChart';
 export * from './components/AccountBalance';
