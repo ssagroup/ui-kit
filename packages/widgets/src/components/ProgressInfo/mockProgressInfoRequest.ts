@@ -155,7 +155,7 @@ export const progressInfoData: ProgressInfoResp = {
       {
         // cspell:disable-next-line
         id: 'twtiFqUQ1yZpv3pcTkCp',
-        color: 'rgba(117, 153, 222, 1',
+        color: 'rgba(117, 153, 222, 1)',
         colorTag: 'blueLight',
         date: '2023-02-17T00:00:00.000Z',
         value: 12,

@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { screen } from '../../../customTest';
 import Typography from './index';
 
@@ -238,5 +239,21 @@ describe('Typography', () => {
     expect(textRegular).toHaveStyle(`font-size: 2.488rem`);
     expect(textRegular).toHaveStyle(`font-weight: 500`);
     expect(textRegular).toHaveStyle('margin-block-end: 1rem');
+  });
+
+  it('Accepts a ref', () => {
+    const ref = createRef<HTMLElement>();
+
+    render(
+      <Typography variant="h1" weight="bold" ref={ref}>
+        A text
+      </Typography>,
+    );
+
+    expect(ref.current).toBeTruthy();
+    (ref.current as HTMLElement).style.backgroundColor = 'Indigo';
+
+    const h1El = screen.getByRole('heading');
+    expect(h1El).toHaveStyle(`background-color: Indigo`);
   });
 });

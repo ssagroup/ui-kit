@@ -22,6 +22,7 @@ type Colors = MakeColors<
     'greyShadow24',
     'greyDarker',
     'greyDarker60',
+    'greyDarker80',
     'greyDarker14',
     'greyDark',
     'greyDisabled',

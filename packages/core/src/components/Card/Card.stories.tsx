@@ -230,3 +230,24 @@ export const NoShadow: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
   );
 };
 NoShadow.args = {};
+
+export const Clickable: StoryObj<typeof Card> = ({ onClick }: CardProps) => {
+  return (
+    <Card onClick={onClick}>
+      <CardHeader>
+        <Typography variant="h2">A clickable card</Typography>
+      </CardHeader>
+
+      <CardContent>
+        <Typography variant="body1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          eleifend, dui in commodo porttitor, neque metus lobortis sem, at
+          suscipit arcu ligula non enim.
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+};
+Clickable.args = {
+  onClick: () => alert('Clicked!'),
+};
