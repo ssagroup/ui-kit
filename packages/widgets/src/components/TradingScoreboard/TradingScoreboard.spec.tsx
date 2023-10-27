@@ -1,89 +1,22 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-import { Button, Icon } from '@ssa-ui-kit/core';
-import TradingScoreboard from './TradingScoreboard';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-
-const itemsArr = [
-  {
-    value: 'Binance',
-    title: 'Exchange',
-  },
-  {
-    value: 'Account name',
-    title: 'Account',
-  },
-  {
-    value: 'Grid v7',
-    title: 'Strategy',
-  },
-  {
-    value: 'ETH/USDT',
-    title: 'Pairs',
-  },
-  {
-    value: '25',
-    title: 'Orders',
-  },
-  {
-    value: '27.07.23',
-    unit: '4:22:23 pm',
-    title: 'Start Date',
-  },
-  {
-    value: '30.07.23',
-    unit: '4:22:23 pm',
-    title: 'End date',
-  },
-  {
-    value: '4d 5h 36m 2s',
-    title: 'Launch duration',
-  },
-  {
-    value: '25',
-    unit: '%',
-    title: 'ROI',
-    icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-  },
-  {
-    value: '340.025',
-    unit: 'USD',
-    title: 'PNL',
-    icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
-  },
-];
-
-const linkItemsArr = [
-  {
-    value: 'Binance',
-    title: 'Exchange',
-    link: '/Exchange',
-  },
-  {
-    value: 'Account name',
-    title: 'Account',
-    link: '/Account',
-  },
-  {
-    value: 'Grid v7',
-    title: 'Strategy',
-    link: '/Strategy',
-  },
-];
+import { Button } from '@ssa-ui-kit/core';
+import TradingScoreboard from './TradingScoreboard';
+import { defaultBoardArr, linkBoardArr } from './helpers';
 
 describe('TradingScoreboard', () => {
   it('Renders all items', () => {
     const { getAllByRole, getByRole } = render(
       <TradingScoreboard
         itemsPerRow={5}
-        items={itemsArr}
+        items={defaultBoardArr}
         onClick={(item) => item}
       />,
     );
     const itemsEls = getAllByRole('button');
-    expect(itemsEls.length).toBe(itemsArr.length);
+    expect(itemsEls.length).toBe(defaultBoardArr.length);
 
-    for (const item of itemsArr) {
+    for (const item of defaultBoardArr) {
       getByRole('button', { name: new RegExp(item.title, 'i') });
     }
   });
@@ -92,7 +25,7 @@ describe('TradingScoreboard', () => {
     const { getAllByTestId } = render(
       <TradingScoreboard
         itemsPerRow={5}
-        items={itemsArr}
+        items={defaultBoardArr}
         renderCard={(item) => (
           <Button data-testid="trading-board">
             <span>
@@ -104,10 +37,10 @@ describe('TradingScoreboard', () => {
       />,
     );
     const itemsEls = getAllByTestId('trading-board');
-    expect(itemsEls.length).toBe(itemsArr.length);
+    expect(itemsEls.length).toBe(defaultBoardArr.length);
 
     for (let i = 0; i < itemsEls.length; i++) {
-      expect(itemsEls[i]).toHaveTextContent(itemsArr[i].value);
+      expect(itemsEls[i]).toHaveTextContent(defaultBoardArr[i].title);
     }
   });
 
@@ -118,12 +51,12 @@ describe('TradingScoreboard', () => {
     const { getByRole } = render(
       <TradingScoreboard
         itemsPerRow={5}
-        items={itemsArr}
+        items={defaultBoardArr}
         onClick={mockOnClick}
       />,
     );
 
-    for (const item of itemsArr) {
+    for (const item of defaultBoardArr) {
       const buttonEl = getByRole('button', {
         name: new RegExp(item.title, 'i'),
       });
@@ -131,22 +64,22 @@ describe('TradingScoreboard', () => {
       expect(mockOnClick).toHaveBeenCalledWith(item);
     }
 
-    expect(mockOnClick).toBeCalledTimes(itemsArr.length);
+    expect(mockOnClick).toBeCalledTimes(defaultBoardArr.length);
   });
 
   it('Renders with link prop', () => {
     const { getByRole } = render(
-      <BrowserRouter>
+      <MemoryRouter>
         <Routes>
           <Route
             path="/*"
-            element={<TradingScoreboard itemsPerRow={5} items={linkItemsArr} />}
+            element={<TradingScoreboard itemsPerRow={5} items={linkBoardArr} />}
           />
         </Routes>
-      </BrowserRouter>,
+      </MemoryRouter>,
     );
 
-    for (const item of linkItemsArr) {
+    for (const item of linkBoardArr) {
       getByRole('link', { name: new RegExp(item.title, 'i') });
     }
   });
@@ -158,7 +91,7 @@ describe('TradingScoreboard', () => {
     const { getAllByTestId } = render(
       <TradingScoreboard
         itemsPerRow={5}
-        items={itemsArr}
+        items={defaultBoardArr}
         onClick={mockOnClick}
         renderCard={(item, onClick) => (
           <Button data-testid="trading-board" onClick={() => onClick?.(item)}>
@@ -174,13 +107,13 @@ describe('TradingScoreboard', () => {
     );
 
     const itemsEls = getAllByTestId('trading-board');
-    expect(itemsEls.length).toBe(itemsArr.length);
+    expect(itemsEls.length).toBe(defaultBoardArr.length);
 
     for (let i = 0; i < itemsEls.length; i++) {
       await user.click(itemsEls[i]);
-      expect(mockOnClick).toHaveBeenCalledWith(itemsArr[i]);
+      expect(mockOnClick).toHaveBeenCalledWith(defaultBoardArr[i]);
     }
 
-    expect(mockOnClick).toBeCalledTimes(itemsArr.length);
+    expect(mockOnClick).toBeCalledTimes(defaultBoardArr.length);
   });
 });
