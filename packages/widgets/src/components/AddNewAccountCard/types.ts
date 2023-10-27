@@ -1,4 +1,7 @@
+import { To } from 'react-router-dom';
+
 export interface AddNewAccountCardProps {
-  link?: string;
-  onclick?: () => void;
+  children: React.ReactNode;
+  link?: To;
+  onClick?: () => void;
 }

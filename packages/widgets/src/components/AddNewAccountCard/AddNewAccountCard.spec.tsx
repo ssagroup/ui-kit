@@ -6,10 +6,12 @@ describe('AddNewAccountCard', () => {
   it('Renders with onClick and button element', async () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
-    const { getByRole } = render(<AddNewAccountCard onclick={mockOnClick} />);
+    const { getByRole } = render(
+      <AddNewAccountCard onClick={mockOnClick}>Text</AddNewAccountCard>,
+    );
 
     const buttonEl = getByRole('button', {
-      name: new RegExp('Add new account', 'i'),
+      name: new RegExp('Text', 'i'),
     });
 
     await user.click(buttonEl);
@@ -24,7 +26,7 @@ describe('AddNewAccountCard', () => {
             path="/*"
             element={
               <div css={{ width: '100%', maxWidth: '500px' }}>
-                <AddNewAccountCard link="/link" />
+                <AddNewAccountCard link="/link">Text</AddNewAccountCard>
               </div>
             }
           />
@@ -33,7 +35,7 @@ describe('AddNewAccountCard', () => {
     );
 
     const linkEl = getByRole('link', {
-      name: new RegExp('Add new account', 'i'),
+      name: new RegExp('Text', 'i'),
     });
 
     expect(linkEl).toHaveAttribute('href', '/link');
