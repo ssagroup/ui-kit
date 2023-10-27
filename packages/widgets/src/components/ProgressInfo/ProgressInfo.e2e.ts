@@ -10,17 +10,6 @@ const gotoPage = (page: Page) => {
   );
 };
 
-const waitForAnimationEnd = async (page: Page) => {
-  await page
-    .locator('svg')
-    .filter({ hasText: 'Total143hrs' })
-    .evaluate((element) =>
-      Promise.all(
-        element.getAnimations().map((animation) => animation.finished),
-      ),
-    );
-};
-
 test.describe('Widgets: ProgressInfo', () => {
   for (const resolution of Object.keys(SCREEN_SIZES)) {
     const viewportSize =
@@ -29,7 +18,6 @@ test.describe('Widgets: ProgressInfo', () => {
     test(`[${resolution}] Renders on extra large screens`, async ({ page }) => {
       await page.setViewportSize(viewportSize);
       await gotoPage(page);
-      await waitForAnimationEnd(page);
       await page.screenshot({
         path: `${SCREENSHOT_PREFIX}[w${resolution}px].png`,
       });
