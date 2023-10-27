@@ -38,11 +38,4 @@ export const AccountCard = css`
     background: ${mainTheme.colors.greyLighter};
     box-shadow: 5px 5px 20px 0px ${mainTheme.colors.black25};
   }
-
-  ${mainTheme.mediaQueries.md} {
-    a,
-    span {
-      padding: 91px 0 101px;
-    }
-  }
 `;
