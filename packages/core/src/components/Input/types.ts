@@ -2,6 +2,10 @@ import type { UseFormReturn } from 'react-hook-form';
 import type { Interpolation, Theme } from '@emotion/react';
 import { BaseSyntheticEvent, KeyboardEventHandler } from 'react';
 
+interface ExtendedInputProps extends React.HTMLAttributes<HTMLInputElement> {
+  'data-testid'?: string;
+}
+
 export interface InputProps
   extends Partial<Pick<UseFormReturn, 'register' | 'control' | 'setValue'>> {
   name: string;
@@ -15,6 +19,7 @@ export interface InputProps
   startElement?: React.ReactElement;
   endElement?: React.ReactElement;
   css?: Interpolation<Theme>;
+  inputProps?: ExtendedInputProps;
   onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
   onStartElementClick?: (event: BaseSyntheticEvent) => void;
   onEndElementClick?: (event: BaseSyntheticEvent) => void;

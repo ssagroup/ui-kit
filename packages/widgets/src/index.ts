@@ -42,3 +42,4 @@ export * from './components/LinksTabBar';
 export * from './components/NotificationMenu';
 export * from './components/SearchBox';
 export * from './components/UserProfile';
+export * from './components/TableBots';

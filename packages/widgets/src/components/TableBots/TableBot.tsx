@@ -1,25 +1,22 @@
 import styled from '@emotion/styled';
-import { Table, TableBody } from '@ssa-ui-kit/core';
-import { TableHeadBot } from './TableHeadBot';
-import { TableCellBot } from './TableCellBot';
-import { TableRowBot } from './TableRowBot';
+import { Table } from '@ssa-ui-kit/core';
 
 export const TableBot = styled(Table)`
   background: none;
-  ${TableHeadBot} ${TableCellBot}:first-of-type {
+  & thead td:first-of-type {
     border-top-left-radius: 20px;
   }
-  ${TableHeadBot} ${TableCellBot}:last-child {
+  & thead td:last-child {
     border-top-right-radius: 20px;
   }
-  ${TableBody} ${TableRowBot}:last-child ${TableCellBot}:first-of-type {
+  & tbody tr:last-child td:first-of-type {
     border-bottom-left-radius: 20px;
   }
-  ${TableBody} ${TableRowBot}:last-child ${TableCellBot}:last-child {
+  & tbody tr:last-child td:last-child {
     border-bottom-right-radius: 20px;
   }
-  ${TableBody} ${TableRowBot}:not([aria-disabled='true']):hover {
-    ${TableCellBot} {
+  & tbody tr:not([aria-disabled='true']):hover {
+    & td {
       background-color: #eef1f7;
     }
   }

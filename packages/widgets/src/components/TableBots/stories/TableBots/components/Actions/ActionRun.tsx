@@ -1,5 +1,5 @@
 import { MouseEventHandler, useEffect, useState } from 'react';
-import { SubmitHandler, useForm, FieldValues } from 'react-hook-form';
+import { useForm, FieldValues } from 'react-hook-form';
 import {
   Button,
   Input,
@@ -19,10 +19,11 @@ export const ActionRun = ({ row }: { row: TableBotItem }) => {
 
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, resetField } = useForm<FieldValues>();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    alert('Submitting...' + JSON.stringify(data));
-    setOpen(false);
-  };
+
+  // const onSubmit = handleSubmit((data) => {
+  //   alert('Submitting... ' + JSON.stringify(data));
+  //   setOpen(false);
+  // });
 
   const onOpenChange = (open: boolean) => {
     if (['pending', 'liquidation'].includes(status)) {
@@ -37,6 +38,7 @@ export const ActionRun = ({ row }: { row: TableBotItem }) => {
       resetField('reason');
     };
   }, []);
+
   return (
     <Popover
       floatingOptions={{
@@ -72,7 +74,16 @@ export const ActionRun = ({ row }: { row: TableBotItem }) => {
               boxShadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.10)',
             }}
             onClick={(event) => event.stopPropagation()}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={(event) => {
+                event.stopPropagation();
+                handleSubmit((data) => {
+                  alert('Submitting... ' + JSON.stringify(data));
+                  console.log('Submitting... ' + JSON.stringify(data));
+                })(event);
+                setOpen(false);
+                resetField('reason');
+              }}>
               <Typography
                 variant="h6"
                 css={{
@@ -102,6 +113,7 @@ export const ActionRun = ({ row }: { row: TableBotItem }) => {
                 />
                 <Button
                   variant="info"
+                  type="submit"
                   css={{
                     width: 90,
                     height: 40,
@@ -112,8 +124,7 @@ export const ActionRun = ({ row }: { row: TableBotItem }) => {
                     justifyContent: 'center',
                     background:
                       'linear-gradient(247deg, #7599DE 14.71%, #4178E1 85.29%)',
-                  }}
-                  onClick={handleSubmit(onSubmit)}>
+                  }}>
                   Run
                 </Button>
               </Wrapper>

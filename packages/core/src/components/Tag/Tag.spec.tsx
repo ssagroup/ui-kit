@@ -61,6 +61,17 @@ describe('tag', () => {
     expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.yellow}`);
   });
 
+  it('Render with color yellowWarm', () => {
+    render(<Tag color="yellowWarm">tag</Tag>);
+
+    const tag = screen.getByText(/tag/i);
+
+    expect(tag).toHaveStyle(
+      `background-color: ${theme.colors.yellowLighter20}`,
+    );
+    expect(tag).toHaveStyle(`border: 1px solid ${theme.colors.yellowWarm}`);
+  });
+
   it('Render with color green', () => {
     render(<Tag color="green">tag</Tag>);
 

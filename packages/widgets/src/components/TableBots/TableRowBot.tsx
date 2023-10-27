@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { TableRow } from '@ssa-ui-kit/core';
-import { TableCellBot } from './TableCellBot';
 
 export const TableRowBot = styled(TableRow)<{ isDisabled?: boolean }>`
   border: none;
@@ -12,7 +11,7 @@ export const TableRowBot = styled(TableRow)<{ isDisabled?: boolean }>`
       cursor: 'default',
       userSelect: 'none',
     }}
-  ${TableCellBot}:first-of-type {
+  & tr:first-of-type {
     padding-left: 18px;
   }
 `;
