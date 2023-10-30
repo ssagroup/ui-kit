@@ -1,4 +1,3 @@
-export * from './ActionButton';
 export * from './ActionIcon';
 export * from './ActionItem';
 export * from './ActionMore';

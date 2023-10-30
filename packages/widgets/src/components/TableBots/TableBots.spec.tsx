@@ -1,7 +1,7 @@
 import { fireEvent, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { TableBotsStory } from './stories/TableBots/StoryComponent';
-// import { NoControlOrdersStory } from './stories/NoControlOrders/StoryComponent';
+import { NoControlOrdersStory } from './stories/NoControlOrders/StoryComponent';
 
 describe('TableBots', () => {
   it('Should be correctly rendered', () => {
@@ -91,5 +91,35 @@ describe('TableBots', () => {
     expect(alertMock).toHaveBeenCalledWith('action copy');
   });
 });
-// describe('TableBots: NoControlOrdersStory', () => {
-// });
+
+describe('TableBots: NoControlOrdersStory', () => {
+  it('Should be correctly rendered', () => {
+    const { getAllByText } = render(<NoControlOrdersStory />);
+
+    getAllByText('Yevgen 2');
+    getAllByText('bot1');
+    getAllByText('New Run - 12/8/2023');
+    getAllByText('1A2B3C');
+    getAllByText('Active');
+    getAllByText('Less than minute ago');
+    getAllByText('BTC/TUSD');
+    getAllByText('0.003 BTC');
+  });
+
+  it('Should be clicked by the more dropdown item', async () => {
+    const user = userEvent.setup();
+    const alertMock = jest.spyOn(window, 'alert');
+    const { container } = render(<NoControlOrdersStory />);
+    const threeDotsButton = container.querySelector(
+      'tbody > tr:nth-child(6) > td:last-child button:last-child',
+    );
+    fireEvent.click(threeDotsButton as Node);
+    fireEvent.keyDown(threeDotsButton as Node, {
+      key: 'ArrowDown',
+      code: 'ArrowDown',
+    });
+    await user.keyboard('{ArrowDown}');
+    await user.keyboard('{Enter}');
+    expect(alertMock).toHaveBeenCalledWith('action liquidate');
+  });
+});

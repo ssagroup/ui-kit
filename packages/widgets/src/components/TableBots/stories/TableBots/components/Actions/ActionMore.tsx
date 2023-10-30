@@ -40,6 +40,7 @@ export const ActionMore = ({ row: { isDisabled } }: { row: TableBotItem }) => {
       <PopoverTrigger
         variant="custom"
         isDisabled={isDisabled}
+        dataTestId="more-trigger-button"
         css={{
           marginLeft: 10,
           padding: '0 10px',

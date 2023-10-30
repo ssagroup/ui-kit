@@ -22,6 +22,7 @@ export type SetIDs = {
 export interface PopoverTriggerProps {
   children?: React.ReactNode;
   asChild?: boolean;
+  dataTestId?: string;
 }
 
 type UseInteractions = ReturnType<typeof useInteractions>;

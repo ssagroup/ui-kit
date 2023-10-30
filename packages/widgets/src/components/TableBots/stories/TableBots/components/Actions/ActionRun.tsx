@@ -49,6 +49,7 @@ export const ActionRun = ({ row }: { row: TableBotItem }) => {
       <PopoverTrigger
         variant="custom"
         isDisabled={isDisabled}
+        dataTestId="run-reason-trigger-button"
         css={{
           marginLeft: 10,
           padding: '0 10px',

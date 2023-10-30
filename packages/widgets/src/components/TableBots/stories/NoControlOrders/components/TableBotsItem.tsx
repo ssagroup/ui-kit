@@ -5,7 +5,7 @@ import { NoControlOrdersItem } from '@components/TableBots/types';
 import { ActionMore } from './ActionMore';
 import { Reason } from './Reason';
 
-export const TableBotsItem = (item: NoControlOrdersItem) => (
+export const TableBotsRow = (item: NoControlOrdersItem) => (
   <TableRowBot aria-disabled={item.isDisabled} isDisabled={item.isDisabled}>
     <TableCellBot>
       <Exchange exchangeType={item.exchange} showTitle={false} />

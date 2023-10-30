@@ -1,6 +1,6 @@
 import { Wrapper } from '@ssa-ui-kit/core';
 import { noControlOrdersData } from './mockData';
-import { TableBotsList, TableBotsItem } from './components';
+import { TableBotsList, TableBotsRow } from './components';
 
 export const NoControlOrdersStory = () => {
   const columns = [
@@ -27,7 +27,7 @@ export const NoControlOrdersStory = () => {
       }}>
       <TableBotsList columns={columns}>
         {noControlOrdersData.map((item) => (
-          <TableBotsItem key={item.id} {...item} />
+          <TableBotsRow key={item.id} {...item} />
         ))}
       </TableBotsList>
     </Wrapper>
