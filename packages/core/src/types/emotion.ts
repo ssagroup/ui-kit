@@ -104,6 +104,7 @@ type Colors = MakeColors<
     'blueButtonHoverGradientFrom',
     'blueButtonHoverGradientTo',
     'blueButtonActive',
+    'blueRoyal',
   ]
 >;
 
