@@ -44,3 +44,4 @@ export * from './components/SearchBox';
 export * from './components/UserProfile';
 export * from './components/PieChart';
 export * from './components/AccountBalance';
+export * from './components/ExchangeAccount';
