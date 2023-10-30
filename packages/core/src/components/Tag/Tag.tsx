@@ -36,10 +36,10 @@ const mapColors: MainColors = {
 const Tag = ({
   color = 'purple',
   size = 'medium',
-  extraCSS,
+  className,
   children,
 }: TagsProps) => (
-  <Badge color={color} size={size} css={[mapColors[color], extraCSS]}>
+  <Badge color={color} size={size} css={mapColors[color]} className={className}>
     {children}
   </Badge>
 );
