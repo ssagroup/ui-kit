@@ -43,5 +43,6 @@ export * from './components/NotificationMenu';
 export * from './components/SearchBox';
 export * from './components/UserProfile';
 export * from './components/BotsTable';
+export * from './components/AddNewAccountCard';
 export * from './components/PieChart';
 export * from './components/AccountBalance';
