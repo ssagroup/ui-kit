@@ -7,12 +7,12 @@ import {
   PopoverDescription,
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
-import { NoControlOrdersItem } from '../types';
 import {
   ActionItem,
   ActionsWrapper,
   ActionIcon,
 } from '@components/BotsTable/stories/BotsTable';
+import { NoControlOrdersItem } from '../types';
 
 export const ActionMore = ({
   row: { isDisabled },

@@ -1,5 +1,5 @@
-import { Icon, Wrapper } from '@ssa-ui-kit/core';
 import { useTheme } from '@emotion/react';
+import { Icon, Wrapper } from '@ssa-ui-kit/core';
 import * as Types from '@components/BotsTable/types';
 
 export const PNL = ({ amount, currency, isIncreasing }: Types.PNL) => {

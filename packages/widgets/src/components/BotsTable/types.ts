@@ -1,4 +1,3 @@
-import { Interpolation, Theme } from '@emotion/react';
 import { ExchangeType } from './stories/BotsTable/components/Exchange/types';
 import { TradeType } from './stories/BotsTable/components/Trade/types';
 
@@ -29,5 +28,4 @@ export interface BotsTableProps {
   children: React.ReactElement<React.PropsWithChildren<BotsTableItem>>[];
   columns: string[];
   className?: string;
-  css?: Interpolation<Theme>;
 }

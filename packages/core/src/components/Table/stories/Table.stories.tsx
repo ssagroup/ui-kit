@@ -17,8 +17,8 @@ import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
 import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
-import { TableSortingComponent } from './components/TableSortingComponent';
-import { SortInfo } from './components/mock';
+import { SortableTable } from './SortableTable';
+import { SortInfo } from './types';
 
 export default {
   title: 'Components/Table',
@@ -88,7 +88,7 @@ export const TableSorting: StoryObj<typeof Table> = () => {
   const handleSortingChange = (sortInfo: SortInfo) => {
     alert('Sorting changed to ' + JSON.stringify(sortInfo));
   };
-  return <TableSortingComponent onSortingChange={handleSortingChange} />;
+  return <SortableTable onSortingChange={handleSortingChange} />;
 };
 
 TableSorting.args = {};

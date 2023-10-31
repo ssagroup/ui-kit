@@ -74,7 +74,7 @@ describe('BotsTable', () => {
     });
   });
 
-  it('Should be clicked by the three dots button', async () => {
+  it('Should have the three dots button clicked', async () => {
     const user = userEvent.setup();
     const alertMock = jest.spyOn(window, 'alert');
     const { container } = render(<BotsTableStory />);
@@ -106,7 +106,7 @@ describe('BotsTable: NoControlOrdersStory', () => {
     getAllByText('0.003 BTC');
   });
 
-  it('Should be clicked by the three dots button', async () => {
+  it('Should have the three dots button clicked', async () => {
     const user = userEvent.setup();
     const alertMock = jest.spyOn(window, 'alert');
     const { container } = render(<NoControlOrdersStory />);

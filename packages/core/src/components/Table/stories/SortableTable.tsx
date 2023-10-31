@@ -6,21 +6,17 @@ import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
 import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
-import {
-  SortInfo,
-  defaultSort,
-  RowKeys,
-  headers,
-  dataForTableSorting,
-} from './mock';
+import { RowKeys, headers, dataForTableSorting } from './mock';
 import { capitalizeFirstLetter } from './utils';
+import { SortInfo } from './types';
+import { DEFAULT_SORT } from './consts';
 
-export const TableSortingComponent = ({
+export const SortableTable = ({
   onSortingChange,
 }: {
   onSortingChange?: (sortInfo: SortInfo) => void;
 }) => {
-  const [sortInfo, setSortInfo] = useState<SortInfo>(defaultSort);
+  const [sortInfo, setSortInfo] = useState<SortInfo>(DEFAULT_SORT);
 
   const handleSorting = (name: RowKeys) => () => {
     const newOrder =

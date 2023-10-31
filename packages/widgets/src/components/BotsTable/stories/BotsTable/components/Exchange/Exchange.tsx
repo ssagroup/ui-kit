@@ -1,7 +1,6 @@
-import { ExchangeProps } from './types';
-
 import { Wrapper } from '@ssa-ui-kit/core';
 import { exchangeIcons } from './consts';
+import { ExchangeProps } from './types';
 
 export const Exchange = ({ exchangeType, showTitle = true }: ExchangeProps) => {
   const { icon: ExchangeIcon, title } = exchangeIcons[exchangeType];
