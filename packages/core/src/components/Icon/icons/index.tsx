@@ -39,6 +39,13 @@ import { ArrowDown } from './ArrowDown';
 import { iconsList } from './iconsList';
 import { Filter } from './Filter';
 import { Search } from './Search';
+import { Archive } from './Archive';
+import { Bin } from './Bin';
+import { Change } from './Change';
+import { Copy } from './Copy';
+import { Robot } from './Robot';
+import { Chart } from './Chart';
+import { Clock } from './Clock';
 
 const componentsList = [
   Diet,
@@ -74,6 +81,13 @@ const componentsList = [
   ArrowDown,
   Filter,
   Search,
+  Archive,
+  Bin,
+  Change,
+  Copy,
+  Robot,
+  Chart,
+  Clock,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {

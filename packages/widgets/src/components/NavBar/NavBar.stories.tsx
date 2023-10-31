@@ -1,10 +1,12 @@
 import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Title, Description, Source } from '@storybook/addon-docs';
 
 import { NavBar } from './NavBar';
 import { DecoratorFunction } from '@storybook/types';
+import { NavBarExtended } from './NavBarExtended';
+import { INavBarExtendedProps } from './types';
 
 type Args = Parameters<typeof NavBar>[0];
 
@@ -84,3 +86,29 @@ export const WideScreen = {
     },
   },
 };
+
+const extendedItems: INavBarExtendedProps['items'] = [
+  { path: '', iconName: 'home', title: 'Dashboard' },
+  { path: 'bots', iconName: 'robot', title: 'Bots' },
+  {
+    prefix: 'statistics/',
+    iconName: 'chart',
+    title: 'Statistics',
+    items: [
+      { path: 'balance', title: 'Balance' },
+      { path: 'max-in-work', title: 'Max in Work' },
+      { path: 'orders', title: 'Orders' },
+      { path: 'pnl', title: 'PNL' },
+      { path: 'turnover', title: 'Turnover' },
+      { path: 'hourly-pnl', title: 'Hourly PNL' },
+    ],
+  },
+  { path: 'history', iconName: 'clock', title: 'History' },
+  { path: 'settings', iconName: 'settings', title: 'Settings' },
+];
+
+export const Extended: StoryObj<typeof NavBar> = () => (
+  <NavBarExtended items={extendedItems} />
+);
+
+Extended.parameters = {};
