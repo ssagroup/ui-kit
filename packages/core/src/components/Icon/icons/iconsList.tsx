@@ -19,6 +19,7 @@ export const iconsList = [
   'plus',
   'minus',
   'more',
+  'more-vertical',
   'check',
   'check-circle',
   'cross',

@@ -25,6 +25,7 @@ const InputInner = (
     startElement,
     endElement,
     className,
+    inputProps = {},
     register,
     onKeyUp,
   }: InputProps,
@@ -51,6 +52,7 @@ const InputInner = (
         }}
         className={className}
         onKeyUp={onKeyUp}
+        {...inputProps}
         {...register(name, validationSchema)}
         ref={useMergeRefs([registerResult.ref, inputRef])}
       />
