@@ -38,6 +38,7 @@ IBMP
 ipsum
 jsdom
 ligula
+linkstabbar
 lobortis
 Lorem
 lostpixel
@@ -74,6 +75,7 @@ VERCEL
 viewports
 vtpit
 xlg
+Yevgen
 USD
 btc
 btcfdusd

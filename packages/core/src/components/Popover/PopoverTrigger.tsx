@@ -8,7 +8,10 @@ import { IButtonProps } from '@components/Button/types';
 export const PopoverTrigger = React.forwardRef<
   HTMLElement,
   React.HTMLProps<HTMLElement> & IButtonProps & PopoverTriggerProps
->(function PopoverTrigger({ children, asChild = false, ...props }, propRef) {
+>(function PopoverTrigger(
+  { children, asChild = false, dataTestId = 'trigger-button', ...props },
+  propRef,
+) {
   const context = usePopoverContext();
   const childrenRef = (
     children as React.ReactNode & { ref: React.Ref<unknown> }
@@ -33,7 +36,7 @@ export const PopoverTrigger = React.forwardRef<
       css={{
         color: '#fff',
       }}
-      data-testid={'trigger-button'}
+      data-testid={dataTestId}
       ref={ref}
       // The user can style the trigger based on the state
       data-state={context?.open ? 'open' : 'closed'}

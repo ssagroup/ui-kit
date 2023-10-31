@@ -19,6 +19,7 @@ export const iconsList = [
   'plus',
   'minus',
   'more',
+  'more-vertical',
   'check',
   'check-circle',
   'cross',
@@ -41,4 +42,8 @@ export const iconsList = [
   'arrow-down',
   'filter',
   'search',
+  'archive',
+  'bin',
+  'change',
+  'copy',
 ] as const;
