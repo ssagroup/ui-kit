@@ -22,6 +22,7 @@ export const iconsList = [
   'check',
   'check-circle',
   'cross',
+  'delete',
   'user',
   'union',
   'notification',

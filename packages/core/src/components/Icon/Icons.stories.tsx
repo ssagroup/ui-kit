@@ -97,6 +97,10 @@ export const Default: StoryObj<typeof Icon> = (
         <Typography variant="body1">cross</Typography>
       </div>
       <div css={iconWrapper}>
+        <Icon name="delete" size={args.size} color={args.color} />
+        <Typography variant="body1">delete</Typography>
+      </div>
+      <div css={iconWrapper}>
         <Icon name="notification" size={args.size} color={args.color} />
         <Typography variant="body1">notification</Typography>
       </div>

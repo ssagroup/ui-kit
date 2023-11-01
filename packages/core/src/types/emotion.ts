@@ -7,6 +7,7 @@ type MakeColors<T extends Array<string>> = {
 type Colors = MakeColors<
   [
     'black25',
+    'black45',
     'white',
     'white60',
     'white80',
@@ -55,6 +56,8 @@ type Colors = MakeColors<
     'green20',
     'green40',
     'green60',
+    'greenMint',
+    'greenDark',
     'pink',
     'pink20',
     'pinkDark',

@@ -14,6 +14,7 @@ import { Minus } from './Minus';
 import { Cross } from './Cross';
 import { Check } from './Check';
 import { CheckCircle } from './CheckCircle';
+import { Delete } from './Delete';
 import { More } from './More';
 import { Notification } from './Notification';
 import { User } from './User';
@@ -55,6 +56,7 @@ const componentsList = [
   Check,
   CheckCircle,
   Cross,
+  Delete,
   User,
   Union,
   Notification,
