@@ -1,3 +1,4 @@
+import { To } from 'react-router-dom';
 import { AccountBalanceProps } from '@components/AccountBalance';
 
 export interface ExchangeAccountProps {
@@ -5,7 +6,7 @@ export interface ExchangeAccountProps {
   title: string;
   status: 'Active' | 'NotAvailable';
   onClick?: () => void;
-  deleteOnClick: () => void;
-  link?: string;
+  onDelete: () => void;
+  link?: To;
   data: Omit<AccountBalanceProps, 'title' | 'className' | 'onClick' | 'link'>;
 }

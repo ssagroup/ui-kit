@@ -9,14 +9,7 @@ import {
 } from '@ssa-ui-kit/core';
 import { BalancePieChart, WithLink } from '@components/AccountBalance';
 import { ExchangeAccountProps } from './types';
-import {
-  CardWrapper,
-  HeadWrapper,
-  PlatformWrapper,
-  RemoveButton,
-  StatusWrapper,
-  ChartWrapper,
-} from './styles';
+import * as S from './styles';
 
 export const ExchangeAccount = ({
   platform,
@@ -25,29 +18,29 @@ export const ExchangeAccount = ({
   link,
   data,
   onClick,
-  deleteOnClick,
+  onDelete,
 }: ExchangeAccountProps) => {
   const theme = useTheme();
-
+  const isActive = status === 'Active';
   const handleClickDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    deleteOnClick();
+    onDelete();
   };
 
   return (
     <WithLink link={link} onClick={onClick}>
       <CardBase
         noShadow
-        css={CardWrapper}
+        css={S.CardBaseWrapper}
         data-testid="card"
         onClick={link ? undefined : onClick}>
-        <CardHeader css={HeadWrapper}>
+        <CardHeader css={S.CardHeaderWrapper}>
           <Typography
             variant="subtitle"
             weight="bold"
             color={theme.colors.greyDarker}
-            css={PlatformWrapper}>
+            css={S.PlatformWrapper}>
             {platform}
           </Typography>
           <Typography
@@ -56,7 +49,7 @@ export const ExchangeAccount = ({
             weight="regular">
             {title}
           </Typography>
-          <Button css={RemoveButton} onClick={(e) => handleClickDelete(e)}>
+          <Button css={S.RemoveButton} onClick={(e) => handleClickDelete(e)}>
             <Icon
               name="bin"
               color={theme.colors.greyDropdownFocused}
@@ -65,13 +58,13 @@ export const ExchangeAccount = ({
           </Button>
         </CardHeader>
         <Typography
-          css={StatusWrapper}
-          className={status}
+          css={S.StatusWrapper}
+          className={isActive ? 'active' : 'not-available'}
           variant="body1"
           weight="regular">
-          {status === 'NotAvailable' ? 'Not available' : status}
+          {isActive ? status : 'Not available'}
         </Typography>
-        <CardContent css={ChartWrapper} direction="column">
+        <CardContent css={S.CardContentWrapper} direction="column">
           <BalancePieChart theme={theme} {...data} />
         </CardContent>
       </CardBase>

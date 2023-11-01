@@ -19,7 +19,7 @@ export const Default: StoryObj<typeof ExchangeAccount> = () => {
       status={dataValues[0].status}
       data={dataValues[0].data}
       onClick={() => alert('Card is clicked!')}
-      deleteOnClick={() => alert('Card is deleted!')}
+      onDelete={() => alert('Card is deleted!')}
     />
   );
 };
@@ -40,7 +40,7 @@ export const WithLink: StoryObj<typeof ExchangeAccount> = () => {
               data={dataValues[0].data}
               link="/link"
               onClick={() => alert('Card is clicked!')}
-              deleteOnClick={() => alert('Card is deleted!')}
+              onDelete={() => alert('Card is deleted!')}
             />
           }
         />
@@ -78,7 +78,7 @@ export const List: StoryObj<typeof ExchangeAccount> = () => {
             status={item.status}
             data={item.data}
             onClick={() => alert('Card is clicked!')}
-            deleteOnClick={() => alert('Card is deleted!')}
+            onDelete={() => alert('Card is deleted!')}
           />
         );
       })}

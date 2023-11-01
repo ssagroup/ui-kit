@@ -3,7 +3,7 @@ import { Icon } from '@ssa-ui-kit/core';
 import { ExchangeAccountProps } from './types';
 
 export const dataValues: Array<
-  Omit<ExchangeAccountProps, 'onClick' | 'deleteOnClick'>
+  Omit<ExchangeAccountProps, 'onClick' | 'onDelete'>
 > = [
   {
     platform: (
