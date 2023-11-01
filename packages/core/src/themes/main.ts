@@ -3,6 +3,7 @@ import { Theme } from '@emotion/react';
 const main: Theme = {
   colors: {
     black25: 'rgba(0, 0, 0, 0.25)', // #000000
+    black45: 'rgba(0, 0, 0, 0.45)', // #000000
     white: 'rgba(255, 255, 255, 1)', //  #ffffff
     white80: 'rgba(255, 255, 255, 0.8)', //  #ffffff
     white60: 'rgba(255, 255, 255, 0.6)', //  #ffffff
@@ -50,6 +51,8 @@ const main: Theme = {
     green20: 'rgba(82, 197, 135, 0.2)', // #52c587
     green40: 'rgba(82, 197, 135, 0.4)', // #52c587
     green60: 'rgba(82, 197, 135, 0.6)', // #52c587
+    greenMint: 'rgba(236, 253, 243, 1)', // #ecfdf3
+    greenDark: 'rgba(11, 159, 67, 1)', // #0b9f43
     pink: 'rgba(240, 129, 107, 1)', // #f0816b
     pink20: 'rgba(240, 129, 107, 0.2)', // #f0816b
     pinkDark: 'rgba(221, 99, 75, 1)', // #DD634B
