@@ -1,6 +1,6 @@
 import { Theme, css } from '@emotion/react';
 
-export const CardBaseWrapper = (theme: Theme) => css`
+export const CardBase = (theme: Theme) => css`
   max-width: 500px;
   padding: 0;
   border-radius: 20px;
@@ -12,7 +12,7 @@ export const CardBaseWrapper = (theme: Theme) => css`
   }
 `;
 
-export const CardHeaderWrapper = (theme: Theme) => css`
+export const CardHeader = (theme: Theme) => css`
   display: grid;
   grid-template-columns: auto 1fr 20px;
   align-items: center;
@@ -53,14 +53,14 @@ export const RemoveButton = (theme: Theme) => css`
   }
 `;
 
-export const PlatformWrapper = css`
+export const Platform = css`
   display: flex;
   align-items: center;
   gap: 9px;
   margin-right: 13px;
 `;
 
-export const StatusWrapper = (theme: Theme) => css`
+export const Status = (theme: Theme) => css`
   width: 100%;
   text-align: center;
   padding: 4px;
@@ -81,7 +81,7 @@ export const StatusWrapper = (theme: Theme) => css`
   }
 `;
 
-export const CardContentWrapper = (theme: Theme) => css`
+export const CardContent = (theme: Theme) => css`
   width: 100%;
   padding: 10px 20px;
 

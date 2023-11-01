@@ -32,15 +32,15 @@ export const ExchangeAccount = ({
     <WithLink link={link} onClick={onClick}>
       <CardBase
         noShadow
-        css={S.CardBaseWrapper}
+        css={S.CardBase}
         data-testid="card"
         onClick={link ? undefined : onClick}>
-        <CardHeader css={S.CardHeaderWrapper}>
+        <CardHeader css={S.CardHeader}>
           <Typography
             variant="subtitle"
             weight="bold"
             color={theme.colors.greyDarker}
-            css={S.PlatformWrapper}>
+            css={S.Platform}>
             {platform}
           </Typography>
           <Typography
@@ -58,13 +58,13 @@ export const ExchangeAccount = ({
           </Button>
         </CardHeader>
         <Typography
-          css={S.StatusWrapper}
+          css={S.Status}
           className={isActive ? 'active' : 'not-available'}
           variant="body1"
           weight="regular">
           {isActive ? status : 'Not available'}
         </Typography>
-        <CardContent css={S.CardContentWrapper} direction="column">
+        <CardContent css={S.CardContent} direction="column">
           <BalancePieChart theme={theme} {...data} />
         </CardContent>
       </CardBase>
