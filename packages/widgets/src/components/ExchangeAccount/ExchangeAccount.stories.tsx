@@ -61,6 +61,7 @@ export const List: StoryObj<typeof ExchangeAccount> = () => {
         gap: 10px;
 
         ${theme.mediaQueries.md} {
+          max-width: 1542px;
           grid-template-columns: repeat(3, minmax(200px, 1fr));
           gap: 20px;
         }
