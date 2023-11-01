@@ -1,6 +1,7 @@
-import { useId } from 'react';
+import React, { useId } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import * as S from './styles';
 
 import {
   Accordion,
@@ -9,14 +10,15 @@ import {
   AccordionGroupContextProvider,
   AccordionTitle,
   Icon,
+  Wrapper,
 } from '@ssa-ui-kit/core';
 
-import NavBarBase from '../NavBar/NavBarBase';
-import NavBarWrapper from '../NavBar/NavBarWrapper';
-import NavBarList from '../NavBar/NavBarList';
-import NavBarItem from '../NavBar/NavBarItem';
-import NavBarLink from '../NavBar/NavBarLink';
-import NavToggle from '../NavBar/NavToggle';
+import CollapsibleNavBarBase from './CollapsibleNavBarBase';
+import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
+import CollapsibleNavBarList from './CollapsibleNavBarList';
+import CollapsibleNavBarItem from './CollapsibleNavBarItem';
+import CollapsibleNavBarLink from './CollapsibleNavBarLink';
+import CollapsibleNavToggle from './CollapsibleNavToggle';
 
 import { INavBarExtendedProps } from './types';
 
@@ -24,18 +26,16 @@ import { INavBarExtendedProps } from './types';
  * UI Component that shows the collapsible navigation bar
  */
 export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
-  const toggleId = useId();
   const { pathname } = useLocation();
+  const toggleId = useId();
   const theme = useTheme();
 
   return (
-    <NavBarBase>
-      <input type="checkbox" id={toggleId} />
+    <CollapsibleNavBarBase>
+      <CollapsibleNavToggle id={toggleId} />
 
-      <NavToggle htmlFor={toggleId} />
-
-      <NavBarWrapper>
-        <NavBarList>
+      <CollapsibleNavBarWrapper>
+        <CollapsibleNavBarList>
           {items.map((item) => {
             if ('items' in item) {
               const { iconName, title, items, prefix } = item;
@@ -43,9 +43,12 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
               const accordionUniqName = uniqName + 'accordion';
               return (
                 <AccordionGroupContextProvider key={uniqName}>
-                  <NavBarItem>
-                    <Icon name={iconName} color={theme.colors.grey} />
-                    <AccordionGroup size="small">
+                  <CollapsibleNavBarItem>
+                    <AccordionGroup
+                      size="small"
+                      css={{
+                        width: '100%',
+                      }}>
                       <Accordion
                         id={accordionUniqName}
                         title={title}
@@ -55,13 +58,9 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                           padding: 0,
                         }}
                         renderContent={(props) => (
-                          <AccordionContent
-                            {...props}
-                            css={{
-                              alignItems: 'flex-start',
-                            }}>
+                          <AccordionContent {...props} css={S.AccordionContent}>
                             {items.map((subMenuItem) => (
-                              <NavBarLink
+                              <CollapsibleNavBarLink
                                 key={`${accordionUniqName}-link-${subMenuItem.title
                                   .replace(' ', '')
                                   .toLowerCase()}`}
@@ -72,31 +71,57 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                                     : undefined
                                 }>
                                 {subMenuItem.title}
-                              </NavBarLink>
+                              </CollapsibleNavBarLink>
                             ))}
                           </AccordionContent>
                         )}
-                        renderTitle={AccordionTitle}
+                        renderTitle={(data) => (
+                          <Wrapper
+                            onClick={data.onClick}
+                            css={{
+                              cursor: 'pointer',
+                              alignItems: 'flex-start',
+                            }}>
+                            <div css={S.IconWrapper}>
+                              <Icon
+                                name={iconName}
+                                color={theme.colors.grey}
+                                size={24}
+                              />
+                            </div>
+                            <AccordionTitle
+                              {...data}
+                              css={{
+                                padding: '0 14px 0 20px',
+                              }}
+                            />
+                          </Wrapper>
+                        )}
                       />
                     </AccordionGroup>
-                  </NavBarItem>
+                  </CollapsibleNavBarItem>
                 </AccordionGroupContextProvider>
               );
             } else {
-              const { path, iconName } = item;
+              const { path, iconName, title } = item;
               return (
-                <NavBarItem key={path}>
-                  <NavBarLink
+                <CollapsibleNavBarItem key={path}>
+                  <CollapsibleNavBarLink
                     to={'/' + path}
                     active={pathname === path ? true : undefined}>
-                    <Icon name={iconName} color={theme.colors.grey} />
-                  </NavBarLink>
-                </NavBarItem>
+                    <Icon
+                      name={iconName}
+                      color={theme.colors.grey}
+                      css={{ marginRight: 20 }}
+                    />
+                    <span>{title}</span>
+                  </CollapsibleNavBarLink>
+                </CollapsibleNavBarItem>
               );
             }
           })}
-        </NavBarList>
-      </NavBarWrapper>
-    </NavBarBase>
+        </CollapsibleNavBarList>
+      </CollapsibleNavBarWrapper>
+    </CollapsibleNavBarBase>
   );
 };

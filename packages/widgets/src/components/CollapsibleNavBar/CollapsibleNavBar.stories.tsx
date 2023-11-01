@@ -50,9 +50,10 @@ export default {
   title: 'Widgets/CollapsibleNavBar',
   component: CollapsibleNavBar,
   parameters: {
-    // viewport: {
-    //   defaultViewport: 'mobile2',
-    // },
+    layout: 'fullscreen',
+    viewport: {
+      defaultViewport: 'mobile2',
+    },
     docs: {
       page: () => (
         <Fragment>

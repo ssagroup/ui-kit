@@ -16,6 +16,7 @@ export interface AccordionGroupProps {
   children: AccordionGroupChildren | AccordionGroupChildren[];
   size?: AccordionSize;
   accordionsStayOpen?: boolean;
+  className?: string;
 }
 
 export interface AccordionProps {
