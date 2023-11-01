@@ -33,8 +33,13 @@ const mapColors: MainColors = {
   yellowWarm: [yellowWarm, yellowWarmBorder],
 };
 
-const Tag = ({ color = 'purple', size = 'medium', children }: TagsProps) => (
-  <Badge color={color} size={size} css={mapColors[color]}>
+const Tag = ({
+  color = 'purple',
+  size = 'medium',
+  className,
+  children,
+}: TagsProps) => (
+  <Badge color={color} size={size} css={mapColors[color]} className={className}>
     {children}
   </Badge>
 );

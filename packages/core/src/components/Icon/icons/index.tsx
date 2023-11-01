@@ -14,8 +14,8 @@ import { Minus } from './Minus';
 import { Cross } from './Cross';
 import { Check } from './Check';
 import { CheckCircle } from './CheckCircle';
-import { Delete } from './Delete';
 import { More } from './More';
+import { MoreVertical } from './MoreVertical';
 import { Notification } from './Notification';
 import { User } from './User';
 import { Union } from './Union';
@@ -40,6 +40,10 @@ import { ArrowDown } from './ArrowDown';
 import { iconsList } from './iconsList';
 import { Filter } from './Filter';
 import { Search } from './Search';
+import { Archive } from './Archive';
+import { Bin } from './Bin';
+import { Change } from './Change';
+import { Copy } from './Copy';
 
 const componentsList = [
   Diet,
@@ -53,10 +57,10 @@ const componentsList = [
   Plus,
   Minus,
   More,
+  MoreVertical,
   Check,
   CheckCircle,
   Cross,
-  Delete,
   User,
   Union,
   Notification,
@@ -76,6 +80,10 @@ const componentsList = [
   ArrowDown,
   Filter,
   Search,
+  Archive,
+  Bin,
+  Change,
+  Copy,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {

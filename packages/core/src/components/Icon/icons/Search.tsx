@@ -7,6 +7,7 @@ export const Search = ({ fill = '#55575A', size = 24 }: SVGProps) => (
     height={`${size}px`}
     viewBox={`0 0 ${size} ${size}`}
     fill="none">
+    <title>Search</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

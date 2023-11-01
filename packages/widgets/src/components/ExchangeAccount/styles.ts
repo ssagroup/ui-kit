@@ -115,6 +115,7 @@ export const ChartWrapper = (theme: Theme) => css`
   ${theme.mediaQueries.md} {
     > div {
       display: flex;
+      justify-content: space-around;
 
       .pie-chart-wrapper {
         margin: 0 10px 0 0;
@@ -127,14 +128,7 @@ export const ChartWrapper = (theme: Theme) => css`
     }
 
     ul:last-child {
-      margin-left: 0;
-    }
-  }
-
-  ${theme.mediaQueries.lg} {
-    > div {
-      justify-content: center;
-      gap: 40px;
+      margin-left: 10px;
     }
   }
 `;

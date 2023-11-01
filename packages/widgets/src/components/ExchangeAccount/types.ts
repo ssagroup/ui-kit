@@ -7,5 +7,5 @@ export interface ExchangeAccountProps {
   onClick?: () => void;
   deleteOnClick: () => void;
   link?: string;
-  data: AccountBalanceProps;
+  data: Omit<AccountBalanceProps, 'title' | 'className' | 'onClick' | 'link'>;
 }

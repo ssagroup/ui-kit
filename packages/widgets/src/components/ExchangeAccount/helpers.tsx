@@ -1,5 +1,5 @@
-import { Icon } from '@ssa-ui-kit/core';
 import React from 'react';
+import { Icon } from '@ssa-ui-kit/core';
 import { ExchangeAccountProps } from './types';
 
 export const dataValues: Array<

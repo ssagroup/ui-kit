@@ -5,13 +5,14 @@ const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?id=widgets-searchbox--default&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=widgets-searchbox--default&viewMode=story',
   );
 };
 
 test('Widgets: SearchBox should be opened correctly', async ({ page }) => {
-  await gotoPage(page);
   await page.setViewportSize(SCREEN_SIZES[900]);
+  await gotoPage(page);
+  await page.waitForSelector('#formElement-search');
 
   const inputElement = await page.getByPlaceholder('Search by name');
   expect(inputElement).toBeVisible();

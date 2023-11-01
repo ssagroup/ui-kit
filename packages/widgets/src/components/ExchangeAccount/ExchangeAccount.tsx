@@ -37,7 +37,11 @@ export const ExchangeAccount = ({
 
   return (
     <WithLink link={link} onClick={onClick}>
-      <CardBase noShadow css={CardWrapper} onClick={link ? undefined : onClick}>
+      <CardBase
+        noShadow
+        css={CardWrapper}
+        data-testid="card"
+        onClick={link ? undefined : onClick}>
         <CardHeader css={HeadWrapper}>
           <Typography
             variant="subtitle"
@@ -54,7 +58,7 @@ export const ExchangeAccount = ({
           </Typography>
           <Button css={RemoveButton} onClick={(e) => handleClickDelete(e)}>
             <Icon
-              name="delete"
+              name="bin"
               color={theme.colors.greyDropdownFocused}
               size={20}
             />

@@ -1,8 +1,6 @@
 import { useForm } from 'react-hook-form';
 import userEvent from '@testing-library/user-event';
-
 import Radio from '@components/Radio';
-
 import FormRadioGroup from './FormRadioGroup';
 
 describe('FormRadioGroup', () => {
