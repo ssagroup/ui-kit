@@ -46,3 +46,4 @@ export * from './components/BotsTable';
 export * from './components/AddNewAccountCard';
 export * from './components/PieChart';
 export * from './components/AccountBalance';
+export * from './components/ExchangeAccount';
