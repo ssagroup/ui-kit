@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-
+import NavBarBase from '@components/NavBar/NavBarBase';
 import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
 import CollapsibleNavToggleWrapper from './CollapsibleNavToggleWrapper';
-import NavBarBase from '@components/NavBar/NavBarBase';
 
 const CollapsibleNavBarBase = styled(NavBarBase)`
   padding: 15px 0 0 15px;
@@ -48,6 +47,12 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
         }
       }
     }
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: 85px;
+    padding: 0;
+    height: 100%;
   }
 `;
 

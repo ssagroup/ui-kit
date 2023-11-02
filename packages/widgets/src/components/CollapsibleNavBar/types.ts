@@ -1,12 +1,12 @@
 import { IMapIcons } from '@ssa-ui-kit/core';
 
-type CollapsibleNavBarItem = {
+export type CollapsibleNavBarItem = {
   path: string;
   iconName: keyof IMapIcons;
   title: string;
 };
 
-type CollapsibleNavBarGroup = {
+export type CollapsibleNavBarGroup = {
   prefix?: string;
   iconName: keyof IMapIcons;
   title: string;

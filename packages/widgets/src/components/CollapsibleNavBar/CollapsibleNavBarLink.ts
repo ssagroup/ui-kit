@@ -1,5 +1,5 @@
-import NavBarLink from '@components/NavBar/NavBarLink';
 import styled from '@emotion/styled';
+import NavBarLink from '@components/NavBar/NavBarLink';
 
 const CollapsibleNavBarLink = styled(NavBarLink)<{ active?: boolean }>`
   text-decoration: none;
@@ -30,6 +30,10 @@ const CollapsibleNavBarLink = styled(NavBarLink)<{ active?: boolean }>`
 
   & > span {
     color: ${({ theme }) => theme.colors.white80};
+
+    ${({ theme }) => theme.mediaQueries.sm} {
+      display: none;
+    }
   }
 `;
 
