@@ -3,6 +3,6 @@ export interface ExchangeAccountKeysProps {
   apiKey: string;
   secretKey: string;
   onDelete: () => void;
-  onVisibilityChange: () => void;
+  onVisibilityChange: (e: boolean) => void;
   isDisabled?: boolean;
 }

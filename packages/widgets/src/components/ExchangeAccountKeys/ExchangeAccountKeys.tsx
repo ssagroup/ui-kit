@@ -9,6 +9,7 @@ import {
 } from '@ssa-ui-kit/core';
 import { ExchangeAccountKeysProps } from './types';
 import * as S from './styles';
+import { useState } from 'react';
 
 export const ExchangeAccountKeys = ({
   title,
@@ -18,7 +19,13 @@ export const ExchangeAccountKeys = ({
   onVisibilityChange,
   isDisabled,
 }: ExchangeAccountKeysProps) => {
+  const [isVisible, setIsVisible] = useState(true);
   const theme = useTheme();
+
+  const handleClickVisible = () => {
+    setIsVisible((prev) => !prev);
+    onVisibilityChange(isVisible);
+  };
 
   return (
     <Card noShadow css={S.Card} className={isDisabled ? 'disabled' : ''}>
@@ -44,10 +51,10 @@ export const ExchangeAccountKeys = ({
             Secret Key
           </Typography>
           <Typography variant="h5" weight="bold" css={S.SecretKey}>
-            {secretKey ? secretKey : <span>******</span>}
-            <Button css={S.VisibleButton} onClick={onVisibilityChange}>
+            {secretKey || <span>******</span>}
+            <Button css={S.VisibleButton} onClick={() => handleClickVisible()}>
               <Icon
-                name={secretKey ? 'visible' : 'invisible'}
+                name={isVisible ? 'invisible' : 'visible'}
                 size={20}
                 color={theme.colors.greyDropdownFocused}
               />

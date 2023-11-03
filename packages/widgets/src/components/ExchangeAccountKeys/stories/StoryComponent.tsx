@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ExchangeAccountKeys } from '../ExchangeAccountKeys';
 import { getMockData } from '../helpers';
 
@@ -7,11 +7,10 @@ interface onDelete {
 }
 
 export const StoryComponent = ({ onDelete }: onDelete) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [secretKey, setSecretKey] = useState('');
 
-  useEffect(() => {
+  const handleClickVisible = (isVisible: boolean) => {
     if (isVisible) {
       setIsDisabled(true);
       getMockData().then((data) => {
@@ -19,8 +18,8 @@ export const StoryComponent = ({ onDelete }: onDelete) => {
         setIsDisabled(false);
       });
     }
-    setSecretKey('');
-  }, [isVisible]);
+    setSecretKey('******');
+  };
 
   return (
     <ExchangeAccountKeys
@@ -28,7 +27,7 @@ export const StoryComponent = ({ onDelete }: onDelete) => {
       apiKey="123456789012345678901234567890"
       secretKey={secretKey}
       onDelete={onDelete}
-      onVisibilityChange={() => setIsVisible((prev) => !prev)}
+      onVisibilityChange={handleClickVisible}
       isDisabled={isDisabled}
     />
   );
