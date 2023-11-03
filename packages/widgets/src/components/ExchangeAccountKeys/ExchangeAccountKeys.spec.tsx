@@ -18,13 +18,14 @@ describe('ExchangeAccountKeys', () => {
     expect(mockOnClick).toBeCalledTimes(1);
   });
 
-  it('Renders with API key', () => {
+  it('Renders with API key and hidden Secret key', () => {
     const { getByText } = render(<StoryComponent onDelete={jest.fn()} />);
 
     getByText('123456789012345678901234567890');
+    getByText('******');
   });
 
-  it('Clicks on hide/unhidden secret key', async () => {
+  it('Clicks on hidden/unhidden secret key', async () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
     const { getByRole, getByText } = render(

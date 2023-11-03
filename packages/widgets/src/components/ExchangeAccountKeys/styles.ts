@@ -3,6 +3,10 @@ import { Theme, css } from '@emotion/react';
 export const Card = (theme: Theme) => css`
   box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
   padding: 0;
+
+  &.disabled {
+    pointer-events: none;
+  }
 `;
 
 export const CardHeader = (theme: Theme) => css`
@@ -79,11 +83,6 @@ export const SecretKey = css`
 
   span {
     padding: 4px 0 0;
-  }
-
-  &.loading {
-    pointer-events: none;
-    opacity: 0.5;
   }
 `;
 

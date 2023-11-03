@@ -8,15 +8,15 @@ interface onDelete {
 
 export const StoryComponent = ({ onDelete }: onDelete) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [secretKey, setSecretKey] = useState('');
 
   useEffect(() => {
     if (isVisible) {
-      setIsLoading(true);
+      setIsDisabled(true);
       getMockData().then((data) => {
         setSecretKey(data);
-        setIsLoading(false);
+        setIsDisabled(false);
       });
     }
     setSecretKey('');
@@ -28,8 +28,8 @@ export const StoryComponent = ({ onDelete }: onDelete) => {
       apiKey="123456789012345678901234567890"
       secretKey={secretKey}
       onDelete={onDelete}
-      onVisible={() => setIsVisible((prev) => !prev)}
-      isLoading={isLoading}
+      onVisibilityChange={() => setIsVisible((prev) => !prev)}
+      isDisabled={isDisabled}
     />
   );
 };

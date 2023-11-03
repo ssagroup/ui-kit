@@ -15,13 +15,13 @@ export const ExchangeAccountKeys = ({
   apiKey,
   secretKey,
   onDelete,
-  onVisible,
-  isLoading,
+  onVisibilityChange,
+  isDisabled,
 }: ExchangeAccountKeysProps) => {
   const theme = useTheme();
 
   return (
-    <Card noShadow css={S.Card}>
+    <Card noShadow css={S.Card} className={isDisabled ? 'disabled' : ''}>
       <CardHeader css={S.CardHeader}>
         <Typography variant="h5" weight="bold">
           {title}
@@ -43,13 +43,9 @@ export const ExchangeAccountKeys = ({
           <Typography variant="h6" color={theme.colors.greyDropdownFocused}>
             Secret Key
           </Typography>
-          <Typography
-            className={isLoading ? 'loading' : ''}
-            variant="h5"
-            weight="bold"
-            css={S.SecretKey}>
+          <Typography variant="h5" weight="bold" css={S.SecretKey}>
             {secretKey ? secretKey : <span>******</span>}
-            <Button css={S.VisibleButton} onClick={onVisible}>
+            <Button css={S.VisibleButton} onClick={onVisibilityChange}>
               <Icon
                 name={secretKey ? 'visible' : 'invisible'}
                 size={20}
