@@ -17,8 +17,6 @@ export const StoryComponent = ({ onDelete }: onDelete) => {
         setSecretKey(data);
         setIsDisabled(false);
       });
-    } else {
-      setSecretKey('******');
     }
   };
 

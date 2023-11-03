@@ -21,6 +21,7 @@ export const ExchangeAccountKeys = ({
 }: ExchangeAccountKeysProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const theme = useTheme();
+  const placeholder = <span>******</span>;
 
   const handleClickVisible = () => {
     setIsVisible((prev) => !prev);
@@ -51,7 +52,7 @@ export const ExchangeAccountKeys = ({
             Secret Key
           </Typography>
           <Typography variant="h5" weight="bold" css={S.SecretKey}>
-            {secretKey || <span>******</span>}
+            {isVisible ? placeholder : secretKey || placeholder}
             <Button css={S.VisibleButton} onClick={() => handleClickVisible()}>
               <Icon
                 name={isVisible ? 'invisible' : 'visible'}
