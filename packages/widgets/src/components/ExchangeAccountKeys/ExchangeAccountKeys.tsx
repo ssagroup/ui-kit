@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import {
   Button,
@@ -9,7 +10,6 @@ import {
 } from '@ssa-ui-kit/core';
 import { ExchangeAccountKeysProps } from './types';
 import * as S from './styles';
-import { useEffect, useState } from 'react';
 
 export const ExchangeAccountKeys = ({
   title,
