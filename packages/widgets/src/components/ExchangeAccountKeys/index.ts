@@ -1,2 +1,2 @@
 export { ExchangeAccountKeys } from './ExchangeAccountKeys';
-export * from './ExchangeAccountKeys';
+export * from './types';
