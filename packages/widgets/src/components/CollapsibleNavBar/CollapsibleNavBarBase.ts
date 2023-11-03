@@ -2,11 +2,35 @@ import styled from '@emotion/styled';
 import NavBarBase from '@components/NavBar/NavBarBase';
 import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
 import CollapsibleNavToggleWrapper from './CollapsibleNavToggleWrapper';
+import CollapsibleNavBarItem from './CollapsibleNavBarItem';
+import { css } from '@emotion/react';
+
+const popupIconsToggle = (isVisible: boolean) => css`
+  & a > button {
+    display: ${isVisible ? 'block' : 'none'};
+  }
+  & > div > div > div > div:first-of-type {
+    display: ${isVisible ? 'block' : 'none'};
+  }
+`;
+
+const staticIconsToggle = (isVisible: boolean) => css`
+  & a > div {
+    display: ${isVisible ? 'block' : 'none'};
+  }
+  & > div > div > div > div:nth-child(2) {
+    display: ${isVisible ? 'block' : 'none'};
+  }
+`;
 
 const CollapsibleNavBarBase = styled(NavBarBase)`
   padding: 15px 0 0 15px;
 
-  &:has(input[type='checkbox']:checked) {
+  & li {
+    ${popupIconsToggle(false)}
+  }
+
+  &:has(> input[type='checkbox']:checked) {
     background: linear-gradient(
       108.3deg,
       ${({ theme }) => theme.colors.greyDarker} -0.36%,
@@ -15,7 +39,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     height: 100%;
   }
 
-  input[type='checkbox'] {
+  & > input[type='checkbox'] {
     &:checked {
       & ~ ${CollapsibleNavToggleWrapper} {
         background-color: #4a4d51;
@@ -53,6 +77,37 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     width: 85px;
     padding: 0;
     height: 100%;
+    & li {
+      ${staticIconsToggle(false)}
+      ${popupIconsToggle(true)}
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    &:has(#contentToggler:checked) {
+      width: 240px;
+      background: #f00;
+
+      & ${CollapsibleNavBarWrapper} {
+        width: 240px;
+        padding-left: 34px;
+        & img {
+          margin-left: 0;
+        }
+        & ${CollapsibleNavBarItem} {
+          justify-content: flex-start;
+          & button {
+            display: flex;
+          }
+          ${staticIconsToggle(true)}
+          ${popupIconsToggle(false)}
+
+          & > a > span {
+            display: block;
+          }
+        }
+      }
+    }
   }
 `;
 

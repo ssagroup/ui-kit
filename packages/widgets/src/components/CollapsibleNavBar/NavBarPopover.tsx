@@ -43,7 +43,8 @@ export const CollapsibleNavBarPopover = ({
           }),
         ],
       }}
-      placement="right-start">
+      placement="right-start"
+      interactionsEnabled="both">
       <PopoverTrigger
         variant="custom"
         dataTestId="collapsible-nav-bar-trigger-button"

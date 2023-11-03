@@ -1,10 +1,25 @@
 import { Theme, css } from '@emotion/react';
 
+export const SVGHoverShadow = (theme: Theme) => css`
+  filter: drop-shadow(-4px 4px 14px ${theme.colors.white});
+  & path {
+    fill: ${theme.colors.white};
+  }
+  & circle {
+    stroke: ${theme.colors.white};
+  }
+`;
+
 export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
   align-items: flex-start;
   ${theme.mediaQueries.sm} {
     justify-content: center;
+  }
+  &:hover {
+    & > svg {
+      ${SVGHoverShadow(theme)}
+    }
   }
 `;
 
@@ -61,13 +76,7 @@ export const IconWrapper = (theme: Theme) => css`
     }
   }
   &:hover svg {
-    filter: drop-shadow(-4px 4px 14px ${theme.colors.white});
-    & path {
-      fill: ${theme.colors.white};
-    }
-    & circle {
-      stroke: ${theme.colors.white};
-    }
+    ${SVGHoverShadow(theme)}
   }
 `;
 
@@ -80,5 +89,45 @@ export const ResponsiveLogo = (theme: Theme) => css`
   display: none;
   ${theme.mediaQueries.sm} {
     display: block;
+  }
+  ${theme.mediaQueries.md} {
+    width: 55px;
+    height: 48px;
+    margin-left: 7px;
+    &:has(~ div > input[type='checkbox']:checked) {
+      margin-left: 34px;
+    }
+  }
+`;
+
+export const LogoWrapper = (theme: Theme) => css`
+  position: relative;
+  ${theme.mediaQueries.sm} {
+    justify-content: center;
+  }
+  ${theme.mediaQueries.md} {
+    justify-content: flex-start;
+  }
+`;
+
+export const ContentToggle = (theme: Theme) => css`
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  right: -17px;
+  width: 34px;
+  height: 34px;
+  background: ${theme.colors.greyLighter};
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  & input {
+    display: none;
+  }
+  & svg {
+    cursor: pointer;
+  }
+  ${theme.mediaQueries.md} {
+    display: flex;
   }
 `;

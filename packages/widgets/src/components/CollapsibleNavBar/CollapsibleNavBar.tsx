@@ -1,6 +1,4 @@
-import { useId } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useTheme } from '@emotion/react';
 import * as S from './styles';
 
 import {
@@ -8,7 +6,6 @@ import {
   AccordionGroup,
   AccordionGroupContextProvider,
   AccordionTitle,
-  Icon,
   ResponsiveImage,
   Wrapper,
 } from '@ssa-ui-kit/core';
@@ -21,29 +18,32 @@ import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import CollapsibleNavToggle from './CollapsibleNavToggle';
 
 import { INavBarExtendedProps } from './types';
-import { CollapsibleNavBarAccordionContent } from './CollapsibleNavBarAccordionContent';
-import { CollapsibleNavBarPopover } from './CollapsibleNavBarPopover';
+import { NavBarAccordionContent } from './NavBarAccordionContent';
+import { CollapsibleNavBarPopover } from './NavBarPopover';
+import { NavContentToggle } from './CollapsibleNavContentToggle';
+import { TriggerIcon } from './TriggerIcon';
 
 /**
  * UI Component that shows the collapsible navigation bar
  */
 export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
   const { pathname } = useLocation();
-  const toggleId = useId();
-  const theme = useTheme();
 
   return (
     <CollapsibleNavBarBase>
-      <CollapsibleNavToggle id={toggleId} />
+      <CollapsibleNavToggle />
 
       <CollapsibleNavBarWrapper>
-        <ResponsiveImage
-          css={S.ResponsiveLogo}
-          srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FCTP_Large_Left.png?alt=media&token=b6fe7ab8-fd0b-475f-bb08-360311f27693 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FCTP_Medium_Left.png?alt=media&token=a1aeba69-7c07-40c9-aeac-c2477640870d 55w"
-          sizes="(min-width: 1440px) 69px, 55px"
-          src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FCTP_Small_Left.png?alt=media&token=bff7149e-3b90-4657-8a11-040e83990e6f"
-          alt="SSA CTP logo"
-        />
+        <Wrapper css={S.LogoWrapper}>
+          <ResponsiveImage
+            css={S.ResponsiveLogo}
+            srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FCTP_Large_Left.png?alt=media&token=b6fe7ab8-fd0b-475f-bb08-360311f27693 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FCTP_Medium_Left.png?alt=media&token=a1aeba69-7c07-40c9-aeac-c2477640870d 55w"
+            sizes="(min-width: 900px) 55px, (min-width: 1440px) 69px"
+            src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FCTP_Small_Left.png?alt=media&token=bff7149e-3b90-4657-8a11-040e83990e6f"
+            alt="SSA CTP logo"
+          />
+          <NavContentToggle id={'contentToggler'} />
+        </Wrapper>
         <CollapsibleNavBarList>
           {items.map((item) => {
             if ('items' in item) {
@@ -67,7 +67,7 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                           padding: 0,
                         }}
                         renderContent={(props) => (
-                          <CollapsibleNavBarAccordionContent
+                          <NavBarAccordionContent
                             items={items}
                             accordionUniqName={accordionUniqName}
                             prefix={prefix}
@@ -80,18 +80,14 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                           <Wrapper
                             onClick={data.onClick}
                             css={S.AccordionTitleWrapper}>
-                            <div css={S.IconWrapper}>
+                            <div css={S.IconWrapper} className="icon-wrapper">
                               <CollapsibleNavBarPopover
                                 triggerIcon={
-                                  <Icon
-                                    name={iconName}
-                                    color={theme.colors.grey}
-                                    size={24}
-                                  />
+                                  <TriggerIcon iconName={iconName} />
                                 }
                                 title={data.title}
                                 content={
-                                  <CollapsibleNavBarAccordionContent
+                                  <NavBarAccordionContent
                                     items={items}
                                     accordionUniqName={accordionUniqName}
                                     prefix={prefix}
@@ -103,6 +99,7 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                                 }
                               />
                             </div>
+                            <TriggerIcon iconName={iconName} />
                             <AccordionTitle {...data} css={S.AccordionTitle} />
                           </Wrapper>
                         )}
@@ -120,13 +117,16 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                     active={pathname === path ? true : undefined}>
                     <CollapsibleNavBarPopover
                       triggerIcon={
-                        <Icon
-                          name={iconName}
-                          color={theme.colors.grey}
+                        <TriggerIcon
+                          iconName={iconName}
                           css={{ marginRight: 20 }}
                         />
                       }
                       title={title}
+                    />
+                    <TriggerIcon
+                      iconName={iconName}
+                      css={{ marginRight: 20 }}
                     />
                     <span>{title}</span>
                   </CollapsibleNavBarLink>

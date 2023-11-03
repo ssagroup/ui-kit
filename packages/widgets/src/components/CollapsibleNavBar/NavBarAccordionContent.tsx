@@ -3,7 +3,7 @@ import { RenderContentProps } from '@ssa-ui-kit/core/dist/components/AccordionGr
 import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import * as S from './styles';
 
-export const CollapsibleNavBarAccordionContent = ({
+export const NavBarAccordionContent = ({
   items,
   accordionUniqName,
   prefix,
