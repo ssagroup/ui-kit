@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/core",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
@@ -41,7 +41,6 @@
     "dotenv": "^16.0.3",
     "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
-    "react-hook-form": "^7.46.1",
     "scheduler": "^0.23.0",
     "uuid": "^9.0.0"
   },
@@ -69,7 +68,8 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "react": "18.x",
-    "react-dom": "18.x"
+    "react-dom": "18.x",
+    "react-hook-form": "^7.46.1"
   },
   "peerDependenciesMeta": {
     "@types/react": {
