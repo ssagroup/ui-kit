@@ -24,7 +24,7 @@ export const AccordionTitleWrapper = (theme: Theme) => css`
 `;
 
 export const AccordionTitle = (theme: Theme) => css`
-  padding: 0 14px 0 20px;
+  padding: 0 14px 0 22px;
   ${theme.mediaQueries.sm} {
     display: none;
   }
@@ -37,12 +37,9 @@ export const AccordionContent = (theme: Theme) => css`
   padding-left: 44px;
   & a {
     width: 100%;
-    padding: 5px 0 5px 0;
+    padding: 4.8px 0;
     &:first-of-type {
       padding-top: 15px;
-    },
-    &:last-child {
-      padding-bottom: 10px;
     },
   },
   ${theme.mediaQueries.xs} {
@@ -50,7 +47,6 @@ export const AccordionContent = (theme: Theme) => css`
   }
   ${theme.mediaQueries.sm} {
     display: none;
-    justify-content: center;
   }
 `;
 

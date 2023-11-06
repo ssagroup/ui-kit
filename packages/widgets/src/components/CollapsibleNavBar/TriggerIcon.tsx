@@ -4,9 +4,11 @@ import * as S from './styles';
 
 export const TriggerIcon = ({
   iconName,
+  iconSize,
   className,
 }: {
   iconName: keyof IMapIcons;
+  iconSize?: number;
   className?: string;
 }) => {
   const theme = useTheme();
@@ -15,6 +17,7 @@ export const TriggerIcon = ({
       css={css`
         width: 24px;
         height: 24px;
+        justify-content: center;
         &:hover {
           ${S.SVGHoverShadow(theme)}
         }
@@ -24,6 +27,7 @@ export const TriggerIcon = ({
         name={iconName}
         color={theme.colors.grey}
         css={{ marginRight: 20 }}
+        size={iconSize}
         className={className}
       />
     </Wrapper>

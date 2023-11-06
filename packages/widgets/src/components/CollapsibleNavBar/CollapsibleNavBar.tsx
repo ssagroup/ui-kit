@@ -25,6 +25,7 @@ import { TriggerIcon } from './TriggerIcon';
 
 /**
  * UI Component that shows the collapsible navigation bar
+ *
  */
 export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
   const { pathname } = useLocation();
@@ -47,7 +48,7 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
         <CollapsibleNavBarList>
           {items.map((item) => {
             if ('items' in item) {
-              const { iconName, title, items, prefix } = item;
+              const { iconName, iconSize, title, items, prefix } = item;
               const uniqName = iconName + title.replace(' ', '').toLowerCase();
               const accordionUniqName = uniqName + 'accordion';
               return (
@@ -65,6 +66,9 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                         ariaControls={`${accordionUniqName}-panel`}
                         css={{
                           padding: 0,
+                          '& ul li:last-child': {
+                            paddingBottom: 10,
+                          },
                         }}
                         renderContent={(props) => (
                           <NavBarAccordionContent
@@ -83,7 +87,10 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                             <div css={S.IconWrapper} className="icon-wrapper">
                               <CollapsibleNavBarPopover
                                 triggerIcon={
-                                  <TriggerIcon iconName={iconName} />
+                                  <TriggerIcon
+                                    iconName={iconName}
+                                    iconSize={iconSize}
+                                  />
                                 }
                                 title={data.title}
                                 content={
@@ -99,7 +106,10 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                                 }
                               />
                             </div>
-                            <TriggerIcon iconName={iconName} />
+                            <TriggerIcon
+                              iconName={iconName}
+                              iconSize={iconSize}
+                            />
                             <AccordionTitle {...data} css={S.AccordionTitle} />
                           </Wrapper>
                         )}
@@ -109,7 +119,7 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                 </AccordionGroupContextProvider>
               );
             } else {
-              const { path, iconName, title } = item;
+              const { path, iconName, title, iconSize } = item;
               return (
                 <CollapsibleNavBarItem key={path}>
                   <CollapsibleNavBarLink
@@ -119,6 +129,7 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                       triggerIcon={
                         <TriggerIcon
                           iconName={iconName}
+                          iconSize={iconSize}
                           css={{ marginRight: 20 }}
                         />
                       }
@@ -126,6 +137,7 @@ export const CollapsibleNavBar = ({ items }: INavBarExtendedProps) => {
                     />
                     <TriggerIcon
                       iconName={iconName}
+                      iconSize={iconSize}
                       css={{ marginRight: 20 }}
                     />
                     <span>{title}</span>

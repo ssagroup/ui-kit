@@ -11,6 +11,9 @@ const popupIconsToggle = (isVisible: boolean) => css`
   }
   & > div > div > div > div:first-of-type {
     display: ${isVisible ? 'block' : 'none'};
+    & > button {
+      display: ${isVisible ? 'block' : 'none'};
+    }
   }
 `;
 
@@ -86,7 +89,6 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
   ${({ theme }) => theme.mediaQueries.md} {
     &:has(#contentToggler:checked) {
       width: 240px;
-      background: #f00;
 
       & ${CollapsibleNavBarWrapper} {
         width: 240px;
