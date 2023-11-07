@@ -1,8 +1,5 @@
 import styled from '@emotion/styled';
 import NavBarBase from '@components/NavBar/NavBarBase';
-import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
-import CollapsibleNavToggleWrapper from './CollapsibleNavToggleWrapper';
-import CollapsibleNavBarItem from './CollapsibleNavBarItem';
 import { css } from '@emotion/react';
 
 const popupIconsToggle = (isVisible: boolean) => css`
@@ -19,9 +16,9 @@ const popupIconsToggle = (isVisible: boolean) => css`
 
 const staticIconsToggle = (isVisible: boolean) => css`
   & a > div {
-    display: ${isVisible ? 'block' : 'none'};
+    display: ${isVisible ? 'flex' : 'none'};
   }
-  & > div > div > div > div:nth-child(2) {
+  & > div > div > div > div:nth-of-type(2) {
     display: ${isVisible ? 'block' : 'none'};
   }
 `;
@@ -44,7 +41,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
 
   & > input[type='checkbox'] {
     &:checked {
-      & ~ ${CollapsibleNavToggleWrapper} {
+      & ~ div:first-of-type {
         background-color: #4a4d51;
 
         & label span {
@@ -63,7 +60,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
         }
       }
 
-      & ~ ${CollapsibleNavBarWrapper} {
+      & ~ div:nth-of-type(2) {
         opacity: 1;
         border-radius: 12px 12px 0 0;
         height: calc(100vh - 60px);
@@ -90,13 +87,13 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     &:has(#contentToggler:checked) {
       width: 240px;
 
-      & ${CollapsibleNavBarWrapper} {
+      & > div:nth-of-type(2) {
         width: 240px;
-        padding-left: 34px;
+        padding-left: 31px;
         & img {
           margin-left: 0;
         }
-        & ${CollapsibleNavBarItem} {
+        & li {
           justify-content: flex-start;
           & button {
             display: flex;
@@ -106,6 +103,10 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
 
           & > a > span {
             display: block;
+          }
+
+          & div > div > div:nth-of-type(2) {
+            display: flex;
           }
         }
       }

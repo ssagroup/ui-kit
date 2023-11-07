@@ -15,6 +15,9 @@ const CollapsibleNavBarItem = styled(NavBarItem)`
     padding-bottom: 0;
   }
   width: 100%;
+  & > a {
+    height: 26px;
+  }
   ${({ theme }) => theme.mediaQueries.sm} {
     justify-content: center;
     padding: 20px 0;

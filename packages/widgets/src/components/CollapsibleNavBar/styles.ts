@@ -10,14 +10,26 @@ export const SVGHoverShadow = (theme: Theme) => css`
   }
 `;
 
+export const SVGMainStyle = (theme: Theme) => css`
+  & svg {
+    & path {
+      fill: ${theme.colors.greyDisabledCheckbox};
+    }
+    & circle {
+      stroke: ${theme.colors.greyDisabledCheckbox};
+    }
+  }
+`;
+
 export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
   align-items: flex-start;
+  ${SVGMainStyle(theme)}
   ${theme.mediaQueries.sm} {
     justify-content: center;
   }
   &:hover {
-    & > svg {
+    & > div:nth-of-type(2) > svg {
       ${SVGHoverShadow(theme)}
     }
   }
@@ -25,6 +37,11 @@ export const AccordionTitleWrapper = (theme: Theme) => css`
 
 export const AccordionTitle = (theme: Theme) => css`
   padding: 0 14px 0 22px;
+  & svg {
+    & path {
+      fill: none;
+    }
+  }
   ${theme.mediaQueries.sm} {
     display: none;
   }
@@ -63,14 +80,7 @@ export const AccordionContentPopover = (theme: Theme) => css`
 export const IconWrapper = (theme: Theme) => css`
   width: 24px;
   height: 24px;
-  & svg {
-    & path {
-      fill: #a4a7ab;
-    }
-    & circle {
-      stroke: #a4a7ab;
-    }
-  }
+  ${SVGMainStyle(theme)}
   &:hover svg {
     ${SVGHoverShadow(theme)}
   }

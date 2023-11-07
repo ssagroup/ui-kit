@@ -4,8 +4,8 @@ import { Meta } from '@storybook/react';
 import { Title, Description, Source } from '@storybook/addon-docs';
 
 import { DecoratorFunction } from '@storybook/types';
-import { CollapsibleNavBar } from './CollapsibleNavBar';
-import { INavBarExtendedProps } from './types';
+import { CollapsibleNavBar } from '../CollapsibleNavBar';
+import { INavBarExtendedProps } from '../types';
 
 type Args = Parameters<typeof CollapsibleNavBar>[0];
 
@@ -26,7 +26,7 @@ const reactRouterDecorator: DecoratorFunction<
   );
 };
 
-const Items: INavBarExtendedProps['items'] = [
+export const Items: INavBarExtendedProps['items'] = [
   { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
   { path: 'bots', iconName: 'robot', iconSize: 24, title: 'Bots' },
   {
@@ -52,9 +52,6 @@ export default {
   component: CollapsibleNavBar,
   parameters: {
     layout: 'fullscreen',
-    viewport: {
-      defaultViewport: 'mobile2',
-    },
     docs: {
       page: () => (
         <Fragment>

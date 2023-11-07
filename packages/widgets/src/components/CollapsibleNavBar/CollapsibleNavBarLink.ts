@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import NavBarLink from '@components/NavBar/NavBarLink';
+import * as S from './styles';
 
 const CollapsibleNavBarLink = styled(NavBarLink)<{ active?: boolean }>`
   text-decoration: none;
@@ -7,14 +8,7 @@ const CollapsibleNavBarLink = styled(NavBarLink)<{ active?: boolean }>`
   gap: 20px;
   color: ${({ theme }) => theme.colors.white80};
 
-  & svg {
-    & path: {
-      fill: #a4a7ab;
-    }
-    & circle: {
-      stroke: #a4a7ab;
-    }
-  }
+  ${({ theme }) => S.SVGMainStyle(theme)};
   &:hover {
     svg {
       filter: ${({ theme }) =>
