@@ -1,11 +1,11 @@
 import { fireEvent } from '@testing-library/dom';
-import { Items } from './stories/CollapsibleNavBar.stories';
+import { ITEMS } from './stories/consts';
 import { StoryComponent } from './stories/StoryComponent';
 
 describe('CollapsibleNavBar', () => {
   it('Should be correctly rendered', () => {
     const { queryByText, getAllByText } = render(
-      <StoryComponent items={Items} />,
+      <StoryComponent items={ITEMS} />,
     );
 
     queryByText('Dashboard');
@@ -17,7 +17,7 @@ describe('CollapsibleNavBar', () => {
   });
 
   it('Should be expanded the group', () => {
-    const { container } = render(<StoryComponent items={Items} />);
+    const { container } = render(<StoryComponent items={ITEMS} />);
 
     const statisticsArrow = container.querySelector(
       'button#chartstatisticsaccordion',
@@ -31,7 +31,7 @@ describe('CollapsibleNavBar', () => {
   });
 
   it('Sidebar should be expanded', () => {
-    const { container } = render(<StoryComponent items={Items} />);
+    const { container } = render(<StoryComponent items={ITEMS} />);
 
     const contentToggler = container.querySelector('label[for=contentToggler]');
     const arrow = contentToggler?.querySelector('title');
