@@ -16,6 +16,7 @@ const Checkbox = ({
   name = '',
   isRequired = false,
   ref,
+  register,
   ...rest
 }: ICheckboxProps) => {
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
@@ -40,7 +41,7 @@ const Checkbox = ({
   }, [externalState]);
 
   const checkboxId = id || autoGenId;
-  const register = rest.register;
+  // const register = rest.register;
 
   return (
     <CheckboxBase htmlFor={checkboxId} {...rest}>
