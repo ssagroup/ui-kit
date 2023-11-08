@@ -18,13 +18,10 @@ const CollapsibleNavBarItem = styled(NavBarItem)`
   & > a {
     height: 26px;
   }
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     justify-content: center;
     padding: 20px 0;
     width: 100%;
-  }
-  ${({ theme }) => theme.mediaQueries.xs} {
-    padding: 12.5px 0;
   }
 `;
 

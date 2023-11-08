@@ -6,6 +6,7 @@ import { Title, Description, Source } from '@storybook/addon-docs';
 import { DecoratorFunction } from '@storybook/types';
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
+import { Logo } from './Logo';
 
 type Args = Parameters<typeof CollapsibleNavBar>[0];
 
@@ -49,6 +50,7 @@ export default {
   ],
   args: {
     items: ITEMS,
+    renderLogo: <Logo />,
   },
 } as Meta<typeof CollapsibleNavBar>;
 

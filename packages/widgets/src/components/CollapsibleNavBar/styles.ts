@@ -25,7 +25,7 @@ export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
   align-items: flex-start;
   ${SVGMainStyle(theme)}
-  ${theme.mediaQueries.sm} {
+  ${theme.mediaQueries.md} {
     justify-content: center;
   }
   &:hover {
@@ -42,7 +42,7 @@ export const AccordionTitle = (theme: Theme) => css`
       fill: none;
     }
   }
-  ${theme.mediaQueries.sm} {
+  ${theme.mediaQueries.md} {
     display: none;
   }
 `;
@@ -59,20 +59,20 @@ export const AccordionContent = (theme: Theme) => css`
       padding-top: 15px;
     },
   },
-  ${theme.mediaQueries.xs} {
+  ${theme.mediaQueries.md} {
     display: none;
   }
-  ${theme.mediaQueries.sm} {
+  ${theme.mediaQueries.lg} {
     display: none;
   }
 `;
 
 export const AccordionContentPopover = (theme: Theme) => css`
   display: flex;
-  ${theme.mediaQueries.xs} {
+  ${theme.mediaQueries.md} {
     display: flex;
   }
-  ${theme.mediaQueries.sm} {
+  ${theme.mediaQueries.lg} {
     display: flex;
   }
 `;
@@ -86,32 +86,12 @@ export const IconWrapper = (theme: Theme) => css`
   }
 `;
 
-export const ResponsiveLogo = (theme: Theme) => css`
-  width: 48px;
-  height: 42px;
-  &:hover: {
-    filter: drop-shadow(0px 5px 5px ${theme.colors.grey});
-  }
-  display: none;
-  ${theme.mediaQueries.sm} {
-    display: block;
-  }
-  ${theme.mediaQueries.md} {
-    width: 55px;
-    height: 48px;
-    margin-left: 7px;
-    &:has(~ div > input[type='checkbox']:checked) {
-      margin-left: 34px;
-    }
-  }
-`;
-
 export const LogoWrapper = (theme: Theme) => css`
   position: relative;
-  ${theme.mediaQueries.sm} {
+  ${theme.mediaQueries.md} {
     justify-content: center;
   }
-  ${theme.mediaQueries.md} {
+  ${theme.mediaQueries.lg} {
     justify-content: flex-start;
   }
 `;
@@ -133,7 +113,7 @@ export const ContentToggle = (theme: Theme) => css`
   & svg {
     cursor: pointer;
   }
-  ${theme.mediaQueries.md} {
+  ${theme.mediaQueries.lg} {
     display: flex;
   }
 `;

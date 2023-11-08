@@ -1,18 +1,17 @@
-import { AccordionContent } from '@ssa-ui-kit/core';
-import { RenderContentProps } from '@ssa-ui-kit/core/dist/components/AccordionGroup/types';
+import { AccordionContent, RenderContentProps } from '@ssa-ui-kit/core';
 import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import * as S from './styles';
 
 export const NavBarAccordionContent = ({
   items,
-  accordionUniqName,
+  accordionUniqueName,
   prefix,
   pathname,
   isPopover,
   ...rest
 }: RenderContentProps & {
   items: Array<{ path: string; title: string }>;
-  accordionUniqName: string;
+  accordionUniqueName: string;
   prefix?: string;
   pathname: string;
   isPopover?: boolean;
@@ -22,7 +21,7 @@ export const NavBarAccordionContent = ({
     css={[S.AccordionContent, isPopover && S.AccordionContentPopover]}>
     {items.map((subMenuItem) => (
       <CollapsibleNavBarLink
-        key={`${accordionUniqName}-link-${subMenuItem.title
+        key={`${accordionUniqueName}-link-${subMenuItem.title
           .replace(' ', '')
           .toLowerCase()}`}
         to={'/' + prefix + subMenuItem.path}

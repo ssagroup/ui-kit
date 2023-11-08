@@ -7,7 +7,7 @@ const CollapsibleNavBarWrapper = styled(NavBarWrapper)`
 
   opacity: 0;
   width: 100%;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     display: flex;
     flex-direction: column;
     align-items: center;

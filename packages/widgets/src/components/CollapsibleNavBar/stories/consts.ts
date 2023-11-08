@@ -1,6 +1,6 @@
-import { INavBarExtendedProps } from '../types';
+import { CollapsibleNavBarExtendedProps } from '../types';
 
-export const ITEMS: INavBarExtendedProps['items'] = [
+export const ITEMS: CollapsibleNavBarExtendedProps['items'] = [
   { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
   { path: 'bots', iconName: 'robot', iconSize: 24, title: 'Bots' },
   {

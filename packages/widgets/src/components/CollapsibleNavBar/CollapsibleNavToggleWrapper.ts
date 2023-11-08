@@ -8,7 +8,7 @@ const CollapsibleNavToggleWrapper = styled(NavToggleWrapper)`
   height: 40px;
   width: 40px;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     display: none;
   }
 `;

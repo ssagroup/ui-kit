@@ -21,16 +21,21 @@ const staticIconsToggle = (isVisible: boolean) => css`
   & > div > div > div > div:nth-of-type(2) {
     display: ${isVisible ? 'block' : 'none'};
   }
+  & > div > div > div:nth-of-type(2) {
+    display: ${isVisible ? 'block' : 'none'};
+  }
 `;
 
 const CollapsibleNavBarBase = styled(NavBarBase)`
   padding: 15px 0 0 15px;
+  position: absolute;
 
   & li {
     ${popupIconsToggle(false)}
   }
 
   &:has(> input[type='checkbox']:checked) {
+    position: static;
     background: linear-gradient(
       108.3deg,
       ${({ theme }) => theme.colors.greyDarker} -0.36%,
@@ -65,7 +70,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
         border-radius: 12px 12px 0 0;
         height: calc(100vh - 60px);
 
-        ${({ theme }) => theme.mediaQueries.lg} {
+        ${({ theme }) => theme.mediaQueries.xlg} {
           border-radius: 0;
           height: 100vh;
         }
@@ -73,7 +78,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     }
   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     width: 85px;
     padding: 0;
     height: 100%;
@@ -83,7 +88,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     }
   }
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.lg} {
     &:has(#contentToggler:checked) {
       width: 240px;
 

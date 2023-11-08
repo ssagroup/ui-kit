@@ -1,20 +1,14 @@
-import { IMapIcons } from '@ssa-ui-kit/core';
+import { NavBarExtendedGroup, NavBarExtendedItem } from '../..';
 
-export type CollapsibleNavBarItem = {
-  path: string;
-  iconName: keyof IMapIcons;
+export interface CollapsibleNavBarItem extends NavBarExtendedItem {
   iconSize: number;
-  title: string;
-};
+}
 
-export type CollapsibleNavBarGroup = {
-  prefix?: string;
-  iconName: keyof IMapIcons;
+export interface CollapsibleNavBarGroup extends NavBarExtendedGroup {
   iconSize: number;
-  title: string;
-  items: Array<{ path: string; title: string }>;
-};
+}
 
-export interface INavBarExtendedProps {
+export interface CollapsibleNavBarExtendedProps {
   items: Array<CollapsibleNavBarItem | CollapsibleNavBarGroup>;
+  renderLogo: React.ReactElement;
 }

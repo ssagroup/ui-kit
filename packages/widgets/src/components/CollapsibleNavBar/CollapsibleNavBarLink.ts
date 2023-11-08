@@ -25,7 +25,7 @@ const CollapsibleNavBarLink = styled(NavBarLink)<{ active?: boolean }>`
   & > span {
     color: ${({ theme }) => theme.colors.white80};
 
-    ${({ theme }) => theme.mediaQueries.sm} {
+    ${({ theme }) => theme.mediaQueries.md} {
       display: none;
     }
   }

@@ -4,13 +4,13 @@ export interface INavBarProps {
   items: Array<{ path: string; iconName: keyof IMapIcons }>;
 }
 
-type NavBarExtendedItem = {
+export type NavBarExtendedItem = {
   path: string;
   iconName: keyof IMapIcons;
   title: string;
 };
 
-type NavBarExtendedGroup = {
+export type NavBarExtendedGroup = {
   prefix?: string;
   iconName: keyof IMapIcons;
   title: string;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { offset } from '@floating-ui/react';
+import { useTheme } from '@emotion/react';
 import {
   Popover,
   PopoverContent,
@@ -7,7 +8,6 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
-import { useTheme } from '@emotion/react';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
 
 export const CollapsibleNavBarPopover = ({

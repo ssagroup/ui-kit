@@ -5,12 +5,12 @@ const CollapsibleNavBarList = styled(NavBarList)`
   height: auto;
   padding: 0 0 0 15px;
   margin: 14px 0 0 0;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     margin-top: 90px;
     width: 100%;
     padding: 0;
   }
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.lg} {
     margin-top: 84px;
   }
 `;
