@@ -41,7 +41,6 @@ const Checkbox = ({
   }, [externalState]);
 
   const checkboxId = id || autoGenId;
-  // const register = rest.register;
 
   return (
     <CheckboxBase htmlFor={checkboxId} {...rest}>
