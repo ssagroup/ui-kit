@@ -40,6 +40,7 @@ const Checkbox = ({
   }, [externalState]);
 
   const checkboxId = id || autoGenId;
+  const register = rest.register;
 
   return (
     <CheckboxBase htmlFor={checkboxId} {...rest}>
@@ -61,6 +62,7 @@ const Checkbox = ({
         }}
         name={name}
         required={isRequired}
+        {...register}
       />
       <div>
         {isIndeterminate ? (

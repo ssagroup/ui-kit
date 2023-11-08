@@ -3,6 +3,7 @@ import { Theme, css } from '@emotion/react';
 export const Card = (theme: Theme) => css`
   box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
   padding: 0;
+  border-radius: 20px;
 
   &.disabled {
     pointer-events: none;

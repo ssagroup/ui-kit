@@ -13,6 +13,7 @@ export interface TextFieldProps
   disabled?: boolean;
   rows?: number;
   endElement?: React.ReactElement;
+  startElement?: React.ReactElement;
   multirow?: boolean;
   maxLength?: number;
   className?: string;
