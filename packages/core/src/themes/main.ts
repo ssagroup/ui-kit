@@ -105,7 +105,7 @@ const main: Theme = {
     blueRoyal: 'rgba(72, 125, 225, 1)', //#487de1
   },
   mediaQueries: {
-    xs: '@media screen and (max-width: 390px)',
+    xs: '@media screen and (max-width: 389px)',
     sm: '@media screen and (min-width: 390px)',
     md: '@media screen and (min-width: 900px)',
     lg: '@media screen and (min-width: 1440px)',

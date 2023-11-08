@@ -1,6 +1,6 @@
 export const SCREEN_SIZES = {
   390: {
-    width: 390,
+    width: 389,
     height: 844,
   },
   900: {

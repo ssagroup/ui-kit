@@ -11,6 +11,7 @@ catmullRom
 chartstatisticsaccordion
 cjs
 clldjub
+collapsiblenavbar
 commodo
 consectetur
 consts
@@ -43,6 +44,7 @@ linkstabbar
 lobortis
 Lorem
 lostpixel
+LTC
 Mauris
 metus
 msedge
@@ -77,12 +79,3 @@ viewports
 vtpit
 xlg
 Yevgen
-USD
-btc
-btcfdusd
-Dissoc
-fdusd
-ROI
-PNL
-LTC
-linkstabbar
