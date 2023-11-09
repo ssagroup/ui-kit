@@ -5,12 +5,15 @@ import {
   UseFloatingOptions,
 } from '@floating-ui/react';
 
+export type InteractionsEnabled = 'click' | 'hover' | 'both';
+
 export interface PopoverOptions {
   initialOpen?: boolean;
   placement?: Placement;
   modal?: boolean;
   open?: boolean;
   floatingOptions?: Partial<UseFloatingOptions>;
+  interactionsEnabled?: InteractionsEnabled;
   onOpenChange?: (open: boolean) => void;
 }
 

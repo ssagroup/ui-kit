@@ -18,11 +18,11 @@ const NavBarWrapper = styled.div`
   transform: translateY(-200vh);
   transition: height 475ms ease, transform 450ms ease, border-radius 450ms ease;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     width: 64px;
   }
 
-  ${({ theme }) => theme.mediaQueries.lg} {
+  ${({ theme }) => theme.mediaQueries.xlg} {
     display: flex;
     position: fixed;
 

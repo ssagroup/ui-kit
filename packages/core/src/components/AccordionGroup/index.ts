@@ -6,3 +6,4 @@ export {
 } from './AccordionContext';
 export { AccordionTitle } from './AccordionTitle';
 export { Accordion } from './Accordion';
+export * from './types';

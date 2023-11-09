@@ -9,6 +9,8 @@ import {
   useDismiss,
   useRole,
   useInteractions,
+  useHover,
+  safePolygon,
 } from '@floating-ui/react';
 import { PopoverOptions, UsePopover } from '../types';
 
@@ -19,6 +21,7 @@ export const usePopover: UsePopover = ({
   open: controlledOpen,
   onOpenChange: setControlledOpen,
   floatingOptions = {},
+  interactionsEnabled = 'click',
 }: PopoverOptions = {}) => {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
   const [labelId, setLabelId] = React.useState<string | undefined>();
@@ -52,8 +55,28 @@ export const usePopover: UsePopover = ({
   });
   const dismiss = useDismiss(context);
   const role = useRole(context);
+  const hover = useHover(context, {
+    enabled: controlledOpen == null,
+    handleClose: safePolygon(),
+  });
 
-  const interactions = useInteractions([click, dismiss, role]);
+  const interactionsHooks = [dismiss, role];
+
+  switch (interactionsEnabled) {
+    case 'click': {
+      interactionsHooks.push(click);
+      break;
+    }
+    case 'hover': {
+      interactionsHooks.push(hover);
+      break;
+    }
+    default: {
+      interactionsHooks.push(click, hover);
+    }
+  }
+
+  const interactions = useInteractions(interactionsHooks);
 
   const result = React.useMemo(
     () => ({
