@@ -1,8 +1,5 @@
 import styled from '@emotion/styled';
 
-import NavBarWrapper from './NavBarWrapper';
-import NavToggleWrapper from './NavToggleWrapper';
-
 const NavBarBase = styled.nav`
   align-items: center;
   justify-content: center;
@@ -15,11 +12,11 @@ const NavBarBase = styled.nav`
     display: none;
 
     &:checked {
-      & ~ ${NavToggleWrapper} {
+      & ~ div:first-of-type {
         background-color: #dee1ec;
       }
 
-      & ~ ${NavBarWrapper} {
+      & ~ div:nth-of-type(2) {
         transform: translateY(0);
         border-radius: 12px 12px 0 0;
         height: calc(100vh - 60px);

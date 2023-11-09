@@ -46,4 +46,7 @@ export const iconsList = [
   'bin',
   'change',
   'copy',
+  'robot',
+  'chart',
+  'clock',
 ] as const;

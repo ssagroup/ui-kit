@@ -7,11 +7,16 @@ export type SizeStyles = {
   [K in AccordionSize]: SerializedStyles;
 };
 
+type AccordionGroupChildren = React.ReactElement<
+  React.PropsWithChildren<AccordionViewProps>
+>;
+
 export interface AccordionGroupProps {
   id?: string;
-  children: React.ReactElement<React.PropsWithChildren<AccordionViewProps>>[];
+  children: AccordionGroupChildren | AccordionGroupChildren[];
   size?: AccordionSize;
   accordionsStayOpen?: boolean;
+  className?: string;
 }
 
 export interface AccordionProps {

@@ -92,7 +92,7 @@ export const CardContent = (theme: Theme) => css`
     }
   }
 
-  ${theme.mediaQueries.sm} {
+  ${theme.mediaQueries.md} {
     > div {
       display: block;
       text-align: center;
@@ -112,7 +112,7 @@ export const CardContent = (theme: Theme) => css`
     }
   }
 
-  ${theme.mediaQueries.md} {
+  ${theme.mediaQueries.lg} {
     > div {
       display: flex;
       justify-content: space-around;

@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
-import CardHeaderBase from '@components/CardHeader/CardHeaderBase';
-import { AccordionProps } from './types';
 import { useTheme } from '@emotion/react';
+import CardHeaderBase from '@components/CardHeader/CardHeaderBase';
 import Icon from '@components/Icon';
+import { AccordionProps } from './types';
 import { createTitleStyles } from './styles';
 
 const CardHeaderBaseButton = CardHeaderBase.withComponent('button');
@@ -13,6 +13,7 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
   id,
   isOpened,
   ariaControls,
+  className,
   onClick,
 }) => {
   const theme = useTheme();
@@ -22,6 +23,7 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
       type="button"
       data-testid="accordion-title"
       css={styles[size]}
+      className={className}
       id={`${id}`}
       aria-expanded={isOpened}
       aria-controls={ariaControls}
