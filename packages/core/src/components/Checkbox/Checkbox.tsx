@@ -16,6 +16,7 @@ const Checkbox = ({
   name = '',
   isRequired = false,
   ref,
+  register,
   ...rest
 }: ICheckboxProps) => {
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
@@ -61,6 +62,7 @@ const Checkbox = ({
         }}
         name={name}
         required={isRequired}
+        {...register}
       />
       <div>
         {isIndeterminate ? (
