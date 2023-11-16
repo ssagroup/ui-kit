@@ -1,7 +1,7 @@
+import { useRef, useState } from 'react';
 import { Wrapper } from '@ssa-ui-kit/core';
 import { TableFilters } from '@components/TableFilters';
 import { TableFilterConfig } from '@components/TableFilters/types';
-import { useRef, useState } from 'react';
 import {
   UseTableDataParameters,
   UseTableDataResult,
@@ -15,11 +15,13 @@ import { useVisibility } from './hooks/useVisibility';
 
 export const Filters = ({
   checkboxData: initialState = {} as TableFilterConfig,
+  updatedCheckboxData,
   handleSubmit,
   handleCancel,
   handleClear,
-}: Pick<UseTableDataResult, 'checkboxData'> &
-  Pick<
+}: Pick<UseTableDataResult, 'checkboxData'> & {
+  updatedCheckboxData?: TableFilterConfig;
+} & Pick<
     UseTableDataParameters,
     'handleSubmit' | 'handleCancel' | 'handleClear'
   >) => {
@@ -27,8 +29,11 @@ export const Filters = ({
   const [hiddenCheckboxData, setHiddenCheckboxData] =
     useState<TableFilterConfig>({});
 
+  const [isMoreButtonVisible, setIsMoreButtonVisible] = useState(false);
+
   const useTableDataResult = useTableData({
     initialState,
+    updatedCheckboxData,
     wrapperRef,
     handleSubmit,
     handleCancel,
@@ -50,6 +55,10 @@ export const Filters = ({
     setHiddenCheckboxData(newHiddenCheckboxData);
   };
 
+  const handleMoreButtonVisibleChange = (isVisible: boolean) => {
+    setIsMoreButtonVisible(isVisible);
+  };
+
   useVisibility({
     checkboxData,
     refsList,
@@ -58,7 +67,7 @@ export const Filters = ({
   });
 
   return (
-    <FiltersWrapper ref={wrapperRef}>
+    <FiltersWrapper ref={wrapperRef} isMoreButtonVisible={isMoreButtonVisible}>
       <FiltersContextProvider {...useTableDataResult}>
         <FilterBlockWrapper>
           <FiltersBlock />
@@ -67,6 +76,7 @@ export const Filters = ({
           <TableFilters
             {...useTableDataResult}
             checkboxData={hiddenCheckboxData}
+            handleMoreButtonVisibleChange={handleMoreButtonVisibleChange}
           />
         </Wrapper>
       </FiltersContextProvider>

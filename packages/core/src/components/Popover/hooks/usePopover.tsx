@@ -51,12 +51,14 @@ export const usePopover: UsePopover = ({
   const context = data.context;
 
   const click = useClick(context, {
-    enabled: controlledOpen == null,
+    enabled:
+      controlledOpen == null && ['click', 'both'].includes(interactionsEnabled),
   });
   const dismiss = useDismiss(context);
   const role = useRole(context);
   const hover = useHover(context, {
-    enabled: controlledOpen == null,
+    enabled:
+      controlledOpen == null && ['hover', 'both'].includes(interactionsEnabled),
     handleClose: safePolygon(),
   });
 
