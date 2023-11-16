@@ -3,7 +3,8 @@ import userEvent from '@testing-library/user-event';
 
 import DropdownOption from '@components/DropdownOption';
 
-import MultipleDropdown from './index';
+import MultipleDropdown from '.';
+import { DynamicallyChangedItems } from './stories/MultipleDropdown.stories';
 
 interface Item {
   value: number;
@@ -377,5 +378,37 @@ describe('MultipleDropdown', () => {
     const { queryByRole } = setup({ isOpen: true });
 
     expect(queryByRole('listbox')).toBeInTheDocument();
+  });
+
+  it('New item should be rendered correctly', async () => {
+    const args = {
+      isDisabled: false,
+      isMultiple: true,
+      selectedItems: [],
+      label: 'Strategy',
+    };
+    const mockOnChange = jest.fn();
+    const { getByTestId, getByText, getByRole } = render(
+      <DynamicallyChangedItems {...args} />,
+    );
+
+    expect(mockOnChange).not.toBeCalled();
+
+    const dropdownEl = getByTestId('dropdown');
+
+    let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+    await userEvent.click(dropdownToggleEl);
+
+    let listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    expect(listItemEls.length).toEqual(3);
+
+    const updateItemsButton = getByText('Update items');
+    await userEvent.click(updateItemsButton);
+
+    dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+    await userEvent.click(dropdownToggleEl);
+
+    listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    expect(listItemEls.length).toEqual(4);
   });
 });

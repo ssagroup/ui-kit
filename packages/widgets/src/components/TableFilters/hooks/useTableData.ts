@@ -1,5 +1,5 @@
-import { assocPath, propOr } from '@ssa-ui-kit/utils';
 import { useState, BaseSyntheticEvent, useEffect, createRef } from 'react';
+import { assocPath, propOr } from '@ssa-ui-kit/utils';
 import { TableFilterConfig } from '../types';
 import {
   getCheckboxChangedItems,
@@ -11,6 +11,7 @@ import {
 export interface UseTableDataParameters {
   initialState?: TableFilterConfig;
   wrapperRef?: React.RefObject<HTMLElement>;
+  updatedCheckboxData?: TableFilterConfig;
   handleCancel?: () => void;
   handleClear?: () => void;
   handleSubmit?: (data: Record<string, string[]>) => void;
@@ -19,6 +20,7 @@ export interface UseTableDataParameters {
 export const useTableData = ({
   initialState,
   wrapperRef,
+  updatedCheckboxData,
   handleCancel,
   handleSubmit,
   handleClear,
@@ -42,17 +44,26 @@ export const useTableData = ({
     }
   };
 
-  useEffect(() => {
-    if (initialState) {
-      const data = JSON.parse(JSON.stringify(initialState));
-      Object.keys(initialState).forEach((groupName) => {
-        const groupInfo = propOr({}, groupName)(initialState);
+  const proceedSettingCheckboxData = (newCheckboxData?: TableFilterConfig) => {
+    console.log('>>>proceedSettingCheckboxData', newCheckboxData);
+    if (newCheckboxData) {
+      const data = JSON.parse(JSON.stringify(newCheckboxData));
+      Object.keys(newCheckboxData).forEach((groupName) => {
+        const groupInfo = propOr({}, groupName)(newCheckboxData);
         const groupInfoSelectedItems = propOr([], 'selectedItems')(groupInfo);
         data[groupName]['selectedItemsDraft'] = groupInfoSelectedItems;
       });
       setCheckboxData(data);
     }
+  };
+
+  useEffect(() => {
+    proceedSettingCheckboxData(initialState);
   }, []);
+
+  useEffect(() => {
+    proceedSettingCheckboxData(updatedCheckboxData);
+  }, [updatedCheckboxData]);
 
   const handleCheckboxToggle = (groupName: string, name: string | number) => {
     const { items, path } = getCheckboxChangedItems(

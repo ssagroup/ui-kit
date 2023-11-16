@@ -38,11 +38,13 @@ export const TableFilters = ({
   onReset,
   onSubmit,
   onClear,
+  handleMoreButtonVisibleChange,
   handleCheckboxToggle,
 }: TableFiltersView) => {
   const [localCheckboxData, setLocalCheckboxData] =
     useState<TableFilterConfig>(checkboxData);
   const [selectedGroupsCount, setSelectedGroupsCount] = useState(0);
+  const [isMoreButtonVisible, setIsMoreButtonVisible] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -68,7 +70,15 @@ export const TableFilters = ({
     if (Object.keys(localCheckboxData).length === 0) {
       setOpen(false);
     }
+    const isMoreButtonVisibleLocal = !(
+      Object.keys(localCheckboxData).length === 0
+    );
+    setIsMoreButtonVisible(isMoreButtonVisibleLocal);
   }, [localCheckboxData]);
+
+  useEffect(() => {
+    handleMoreButtonVisibleChange?.(isMoreButtonVisible);
+  }, [isMoreButtonVisible]);
 
   const onCheckboxChange = (groupName: string, name: string) => () => {
     const { items, path } = getCheckboxChangedItems(
@@ -108,7 +118,7 @@ export const TableFilters = ({
       }}>
       <TableFilterTriggerWithNotification
         count={selectedGroupsCount}
-        visible={!(Object.keys(localCheckboxData).length === 0)}>
+        visible={isMoreButtonVisible}>
         More
       </TableFilterTriggerWithNotification>
       <PopoverContent className="popover" css={tableFilterPopoverContentStyles}>

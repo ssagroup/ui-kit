@@ -1,18 +1,15 @@
+import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import styled from '@emotion/styled';
-
-import DropdownOption from '@components/DropdownOption';
-
-import MultipleDropdown from './MultipleDropdown';
 import { css } from '@emotion/react';
 
-type Args = Parameters<typeof MultipleDropdown>[0];
+import DropdownOption from '@components/DropdownOption';
+import Button from '@components/Button';
 
-const items = [
-  { value: 1, label: 'One lorem ipsum One lorem ipsum', subText: 'subtext' },
-  { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
-];
+import MultipleDropdown from '../MultipleDropdown';
+import { items } from './consts';
+
+type Args = Parameters<typeof MultipleDropdown>[0];
 
 export default {
   title: 'Components/MultipleDropdown',
@@ -203,4 +200,40 @@ export const Custom: StoryObj = (args: Args) => {
 
 Custom.args = {
   isDisabled: false,
+};
+
+export const DynamicallyChangedItems = (args: Args) => {
+  const [localItems, setLocalItems] = useState(items);
+
+  const handleUpdate = () => {
+    setLocalItems((state) => [
+      ...state,
+      {
+        value: state[state.length - 1].value + 1,
+        label: `#${state[state.length - 1].value + 1} lorem ipsum`,
+        subText: 'subtext',
+      },
+    ]);
+  };
+  return (
+    <div>
+      <MultipleDropdown {...args}>
+        {localItems.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+      <Button variant="info" css={{ marginLeft: 10 }} onClick={handleUpdate}>
+        Update items
+      </Button>
+    </div>
+  );
+};
+
+DynamicallyChangedItems.args = {
+  isDisabled: false,
+  isMultiple: true,
+  selectedItems: [items[0], items[2]],
+  label: 'Strategy2',
 };
