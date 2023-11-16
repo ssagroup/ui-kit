@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Popover } from '..';
 import { StoryComponent } from './StoryComponent';
+import { PopoverOptions } from '../types';
 
 type PopoverType = typeof Popover;
 export type Args = Parameters<PopoverType>[0];
@@ -16,3 +17,23 @@ export const Default: StoryObj<PopoverType> = () => {
 };
 
 Default.args = {};
+
+export const InteractionsEnabledOnHover: StoryObj<PopoverType> = (
+  args: PopoverOptions,
+) => {
+  return <StoryComponent {...args} />;
+};
+
+InteractionsEnabledOnHover.args = {
+  interactionsEnabled: 'hover',
+};
+
+export const InteractionsEnabledOnHoverAndClick: StoryObj<PopoverType> = (
+  args: PopoverOptions,
+) => {
+  return <StoryComponent {...args} />;
+};
+
+InteractionsEnabledOnHoverAndClick.args = {
+  interactionsEnabled: 'both',
+};
