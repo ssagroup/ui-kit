@@ -45,7 +45,6 @@ export const useTableData = ({
   };
 
   const proceedSettingCheckboxData = (newCheckboxData?: TableFilterConfig) => {
-    console.log('>>>proceedSettingCheckboxData', newCheckboxData);
     if (newCheckboxData) {
       const data = JSON.parse(JSON.stringify(newCheckboxData));
       Object.keys(newCheckboxData).forEach((groupName) => {
