@@ -1,8 +1,4 @@
+import type { ModalDialogProps } from '@components/ModalDialog';
 export type ModalContextProps = [boolean, (isOpen: boolean) => void];
 
-export interface ModalProps {
-  'aria-label'?: string;
-  noBackground?: boolean;
-  isOpen?: boolean;
-  children?: React.ReactNode;
-}
+export type ModalProps = Partial<ModalDialogProps>;

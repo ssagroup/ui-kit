@@ -1,7 +1,13 @@
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import {
+  Control,
+  FieldPath,
+  FieldValues,
+  UseFormReturn,
+} from 'react-hook-form';
 import { MutableRefObject } from 'react';
 
-export interface ICheckboxProps {
+export interface ICheckboxProps
+  extends Partial<Pick<UseFormReturn, 'register'>> {
   text?: string;
   id?: string;
   onChange?: (newState: boolean) => void;

@@ -52,4 +52,40 @@ describe('UserProfile', () => {
 
     expect(mockOnClick).toBeCalledTimes(1);
   });
+
+  it('renders with custom text', async () => {
+    const user = userEvent.setup();
+    const { getByRole, queryByRole, getByTestId } = render(
+      <UserProfile
+        name="Josh Li"
+        email="Josh@gmail.com"
+        trigger="Trigger"
+        logOutText="Leave"
+        onClick={jest.fn()}
+      />,
+    );
+
+    await user.click(getByTestId('trigger-button'));
+
+    getByRole('button', { name: 'Log out Leave' });
+    expect(queryByRole('button', { name: 'Log Out' })).not.toBeInTheDocument();
+  });
+
+  it('renders with custom styles', async () => {
+    const user = userEvent.setup();
+    const { getByRole, getByTestId } = render(
+      <UserProfile
+        name="Josh Li"
+        email="Josh@gmail.com"
+        trigger="Trigger"
+        onClick={jest.fn()}
+        css={{ backgroundColor: 'pink' }}
+      />,
+    );
+
+    await user.click(getByTestId('trigger-button'));
+
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toHaveStyle(`background-color: pink`);
+  });
 });

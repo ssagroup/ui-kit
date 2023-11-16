@@ -21,7 +21,10 @@ import { User } from './User';
 import { Union } from './Union';
 import { Visible } from './Visible';
 import { Invisible } from './Invisible';
+import { LogIn } from './LogIn';
 import { LogOut } from './LogOut';
+import { Email } from './Email';
+import { Lock } from './Lock';
 import { Information } from './Information';
 import { Warning } from './Warning';
 import { Attention } from './Attention';
@@ -73,6 +76,9 @@ const componentsList = [
   Visible,
   Invisible,
   LogOut,
+  LogIn,
+  Email,
+  Lock,
   CarrotDown,
   CarrotUp,
   CarrotLeft,

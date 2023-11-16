@@ -49,3 +49,5 @@ export * from './components/AccountBalance';
 export * from './components/ExchangeAccount';
 export * from './components/CollapsibleNavBar';
 export * from './components/ExchangeAccountKeys';
+export * from './components/Filters';
+export * from './components/TableFilters';
