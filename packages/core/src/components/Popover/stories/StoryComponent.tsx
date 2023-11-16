@@ -7,8 +7,11 @@ import {
   PopoverDescription,
   PopoverClose,
 } from '..';
+import { PopoverOptions } from '../types';
 
-export const StoryComponent = () => {
+export const StoryComponent = ({
+  interactionsEnabled = 'click',
+}: Pick<PopoverOptions, 'interactionsEnabled'>) => {
   const theme = useTheme();
   return (
     <div
@@ -17,7 +20,7 @@ export const StoryComponent = () => {
         display: 'flex',
         justifyContent: 'center',
       }}>
-      <Popover>
+      <Popover interactionsEnabled={interactionsEnabled}>
         <PopoverTrigger>Trigger</PopoverTrigger>
         <PopoverContent
           className="popover"

@@ -49,29 +49,35 @@ export const usePopover: UsePopover = ({
   });
 
   const context = data.context;
-
-  const click = useClick(context, {
-    enabled: controlledOpen == null,
-  });
   const dismiss = useDismiss(context);
   const role = useRole(context);
-  const hover = useHover(context, {
-    enabled: controlledOpen == null,
-    handleClose: safePolygon(),
-  });
 
   const interactionsHooks = [dismiss, role];
 
   switch (interactionsEnabled) {
     case 'click': {
+      const click = useClick(context, {
+        enabled: controlledOpen == null,
+      });
       interactionsHooks.push(click);
       break;
     }
     case 'hover': {
+      const hover = useHover(context, {
+        enabled: controlledOpen == null,
+        handleClose: safePolygon(),
+      });
       interactionsHooks.push(hover);
       break;
     }
     default: {
+      const click = useClick(context, {
+        enabled: controlledOpen == null,
+      });
+      const hover = useHover(context, {
+        enabled: controlledOpen == null,
+        handleClose: safePolygon(),
+      });
       interactionsHooks.push(click, hover);
     }
   }
