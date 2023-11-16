@@ -31,7 +31,9 @@ export const SearchBox = ({
   }, [watchResult]);
 
   const crossIconHandler = () => {
-    resetField(name);
+    resetField(name, {
+      defaultValue: '',
+    });
     inputRef.current?.focus();
   };
 
