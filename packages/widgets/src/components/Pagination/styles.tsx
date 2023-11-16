@@ -67,7 +67,7 @@ export const arrowBtnStyles = (theme: Theme) => css`
   ${baseBtnStyles(theme)}
 
   padding: 0 8px;
-  background: #fff;
+  background: ${theme.colors.white};
 
   &:disabled {
     cursor: default;
