@@ -22,12 +22,14 @@ export const UserProfile = ({
   email,
   trigger,
   onClick,
+  logOutText = 'Log Out',
+  className,
 }: UserProfileProps) => {
   const theme = useTheme();
   return (
     <Popover placement="bottom-end">
       <PopoverTrigger css={ResetBtnStyles}>{trigger}</PopoverTrigger>
-      <PopoverContent css={ContentWrapper}>
+      <PopoverContent css={ContentWrapper} className={className}>
         <div css={UserInfo}>
           <PopoverHeading variant="h5" weight="bold">
             {name}
@@ -42,7 +44,7 @@ export const UserProfile = ({
         <div css={LogoutWrapper}>
           <Button variant="info" css={CustomButton} onClick={onClick}>
             <Icon name="log-out" size={15} color={theme.colors.white} />
-            Log Out
+            {logOutText}
           </Button>
         </div>
       </PopoverContent>

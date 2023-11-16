@@ -10,7 +10,6 @@ import ModalOpenButton from '@components/ModalOpenButton';
 import ModalDismissButton from '@components/ModalDismissButton';
 
 import Typography from '@components/Typography';
-import React from 'react';
 
 export default {
   title: 'Components/Modal',

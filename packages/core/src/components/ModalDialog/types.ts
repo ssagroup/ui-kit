@@ -3,4 +3,5 @@ export interface ModalDialogProps {
   noBackground?: boolean;
   'aria-label'?: string;
   children?: React.ReactNode;
+  className?: string;
 }

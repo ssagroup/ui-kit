@@ -3,4 +3,6 @@ export interface UserProfileProps {
   email: string;
   trigger: string | JSX.Element;
   onClick: () => void;
+  logOutText?: string;
+  className?: string;
 }
