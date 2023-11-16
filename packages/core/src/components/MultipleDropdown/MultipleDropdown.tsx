@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useId, useRef } from 'react';
 import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import { mapObjIndexed } from '@ssa-ui-kit/utils';
 import { useMergeRefs } from '@floating-ui/react';
@@ -14,7 +15,6 @@ import { IDropdownOption } from '@components/DropdownOptions/types';
 import { DropdownContextType, IDropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
 import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
-import styled from '@emotion/styled';
 
 const DropdownPlaceholderLabel = styled.div`
   white-space: nowrap;
@@ -146,7 +146,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
 
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
-  }, [memoSelectedItems]);
+  }, [memoSelectedItems, children]);
 
   const contextValue: DropdownContextType<IDropdownOption> = React.useMemo(
     () => ({ onChange, allItems: optionsWithKey, isMultiple }),
