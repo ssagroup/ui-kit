@@ -1,8 +1,5 @@
+import type { ModalDialogProps } from '@components/ModalDialog';
 export type ModalContextProps = [boolean, (isOpen: boolean) => void];
 
-export interface ModalProps {
-  'aria-label'?: string;
-  noBackground?: boolean;
-  isOpen?: boolean;
-  children?: React.ReactNode;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ModalProps extends Partial<ModalDialogProps> {}
