@@ -38,8 +38,8 @@ export const TableFilters = ({
   onReset,
   onSubmit,
   onClear,
+  onCheckboxToggle,
   handleMoreButtonVisibleChange,
-  handleCheckboxToggle,
 }: TableFiltersView) => {
   const [localCheckboxData, setLocalCheckboxData] =
     useState<TableFilterConfig>(checkboxData);
@@ -87,7 +87,7 @@ export const TableFilters = ({
       name,
     );
     setLocalCheckboxData(assocPath(path, items));
-    handleCheckboxToggle?.(groupName, name);
+    onCheckboxToggle?.(groupName, name);
   };
 
   const handleSubmit = (event: BaseSyntheticEvent) => {

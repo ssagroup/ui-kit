@@ -1,6 +1,6 @@
+import { within, fireEvent } from '@testing-library/dom';
 import { mockIntersectionObserver } from 'jsdom-testing-mocks';
 import { StoryComponent } from './stories/StoryComponent';
-import { within, fireEvent } from '@testing-library/dom';
 
 describe('Filters', () => {
   mockIntersectionObserver();
@@ -30,9 +30,18 @@ describe('Filters', () => {
     const listItemEls = within(listboxEl).getAllByRole('listitem');
     expect(listItemEls.length).toBe(5);
 
+    const logSpy = jest.spyOn(console, 'log');
     await fireEvent.click(listItemEls[0]);
 
     dropdownToggleEl = within(dropdownElement).getByRole('combobox');
     expect(dropdownToggleEl).toHaveTextContent('Strategy: checkbox4Carrot up');
+    expect(logSpy).toHaveBeenCalledWith('>>>Filters onSubmit', {
+      exchange: ['binance'],
+      pairs: ['btcfdusd'],
+      status: ['running'],
+      strategy: ['checkbox4'],
+      strategy2: ['strategy2Checkbox1'],
+      strategy3: [],
+    });
   });
 });

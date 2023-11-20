@@ -16,7 +16,7 @@ export const wrapperStyles = {
     min-height: 70px;
     border-radius: 20px;
     padding: 0;
-    &:last-child: {
+    &:last-child {
       margin-bottom: 0;
     }
   `,
@@ -95,6 +95,7 @@ export const createBaseContentStyles = (isActive?: boolean) => css`
   height: ${isActive ? 'auto' : 0};
   max-height: ${isActive ? 'initial' : 0};
   overflow: ${isActive ? 'visible' : 'hidden'};
+  align-items: flex-start;
 `;
 
 export const createContentStyles = (theme: Theme, isActive?: boolean) => ({

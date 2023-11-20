@@ -15,6 +15,11 @@ export interface UseTableDataParameters {
   handleCancel?: () => void;
   handleClear?: () => void;
   handleSubmit?: (data: Record<string, string[]>) => void;
+  handleDropdownChange?: (data: {
+    groupName: string;
+    name: string | number;
+    checked: boolean;
+  }) => void;
 }
 
 export const useTableData = ({
@@ -24,6 +29,7 @@ export const useTableData = ({
   handleCancel,
   handleSubmit,
   handleClear,
+  handleDropdownChange,
 }: UseTableDataParameters) => {
   const [checkboxData, setCheckboxData] = useState<TableFilterConfig>(
     {} as TableFilterConfig,
@@ -64,13 +70,36 @@ export const useTableData = ({
     proceedSettingCheckboxData(updatedCheckboxData);
   }, [updatedCheckboxData]);
 
-  const handleCheckboxToggle = (groupName: string, name: string | number) => {
+  const onCheckboxToggle = (groupName: string, name: string | number) => {
     const { items, path } = getCheckboxChangedItems(
       checkboxData,
       groupName,
       name,
     );
     setCheckboxData(assocPath(path, items));
+  };
+
+  const onDropdownChange = (groupName: string, name: string | number) => {
+    const { items, path } = getCheckboxChangedItems(
+      checkboxData,
+      groupName,
+      name,
+    );
+    const newCheckboxData = assocPath<TableFilterConfig>(
+      path,
+      items,
+    )(checkboxData);
+    handleDropdownChange?.({
+      groupName,
+      name,
+      checked: items.includes(name),
+    });
+
+    const { submitCheckboxData, dataForSubmit } =
+      getSubmitData(newCheckboxData);
+
+    setCheckboxData(submitCheckboxData);
+    handleSubmit?.(dataForSubmit);
   };
 
   const onSubmit = (event?: BaseSyntheticEvent) => {
@@ -97,7 +126,8 @@ export const useTableData = ({
     wrapperRef,
     refsList,
     setElementRef,
-    handleCheckboxToggle,
+    onCheckboxToggle,
+    onDropdownChange,
     onSubmit,
     onReset,
     onClear,
