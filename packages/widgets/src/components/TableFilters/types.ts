@@ -28,7 +28,7 @@ export interface TableFiltersView {
   onReset?: () => void;
   onClear?: () => void;
   onSubmit?: () => void;
-  handleCheckboxToggle?: (groupName: string, name: string) => void;
+  onCheckboxToggle?: (groupName: string, name: string) => void;
   handleMoreButtonVisibleChange?: (isVisible: boolean) => void;
   checkboxData?: TableFilterConfig;
 }

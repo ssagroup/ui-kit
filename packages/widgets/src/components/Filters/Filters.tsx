@@ -19,11 +19,12 @@ export const Filters = ({
   handleSubmit,
   handleCancel,
   handleClear,
+  handleDropdownChange,
 }: Pick<UseTableDataResult, 'checkboxData'> & {
   updatedCheckboxData?: TableFilterConfig;
 } & Pick<
     UseTableDataParameters,
-    'handleSubmit' | 'handleCancel' | 'handleClear'
+    'handleSubmit' | 'handleCancel' | 'handleClear' | 'handleDropdownChange'
   >) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [hiddenCheckboxData, setHiddenCheckboxData] =
@@ -38,6 +39,7 @@ export const Filters = ({
     handleSubmit,
     handleCancel,
     handleClear,
+    handleDropdownChange,
   });
 
   const { checkboxData, refsList } = useTableDataResult;

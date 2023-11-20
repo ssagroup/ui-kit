@@ -1,12 +1,11 @@
-import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import React, { useEffect, useState } from 'react';
+import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import { useFiltersContext } from './FiltersContext';
 
 export const FiltersBlock = () => {
-  const { setElementRef, handleCheckboxToggle, checkboxData } =
-    useFiltersContext();
+  const { setElementRef, onDropdownChange, checkboxData } = useFiltersContext();
   const handleOnChange = (groupName: string) => (item: string | number) => {
-    handleCheckboxToggle(groupName, item);
+    onDropdownChange(groupName, item);
   };
 
   const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<

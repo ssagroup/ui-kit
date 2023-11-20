@@ -8,8 +8,11 @@ export const FiltersWrapper = styled.div<{ isMoreButtonVisible?: boolean }>`
   flex-direction: ${({ isMoreButtonVisible }) =>
     isMoreButtonVisible ? 'row' : 'row-reverse'};
 
-  & > div:first-child > div:last-child {
+  & > div:first-of-type > div:last-child {
     margin-right: ${({ isMoreButtonVisible }) =>
       isMoreButtonVisible ? '10px' : 0};
+    ul: {
+      right: ${({ isMoreButtonVisible }) => (isMoreButtonVisible ? 'auto' : 0)};
+    }
   }
 `;

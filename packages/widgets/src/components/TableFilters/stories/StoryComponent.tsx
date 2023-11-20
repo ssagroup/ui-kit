@@ -1,13 +1,13 @@
-import { mockData } from './mockData';
-import { useTableData } from '../hooks/useTableData';
-import { FiltersContextProvider } from '@components/Filters/FiltersContext';
-import { TableFiltersWrapper } from './TableFiltersWrapper';
 import { useRef } from 'react';
 import { Wrapper } from '@ssa-ui-kit/core';
+import { FiltersContextProvider } from '@components/Filters/FiltersContext';
+import { mockData } from './mockData';
+import { useTableData } from '../hooks/useTableData';
+import { TableFiltersWrapper } from './TableFiltersWrapper';
 
 export const StoryComponent = () => {
   const handleSubmit = (submitData: Record<string, string[]>) => {
-    console.log('>>>onSubmit', submitData);
+    console.log('>>>TableFilters onSubmit', submitData);
   };
 
   const wrapperRef = useRef<HTMLDivElement>(null);

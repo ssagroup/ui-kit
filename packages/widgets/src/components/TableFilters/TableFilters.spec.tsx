@@ -8,7 +8,8 @@ import { createRef } from 'react';
 
 const mockTableFiltersProps: UseTableDataResult = {
   checkboxData: mockData,
-  handleCheckboxToggle: jest.fn(),
+  onCheckboxToggle: jest.fn(),
+  onDropdownChange: jest.fn(),
   setElementRef: jest.fn(),
   onSubmit: jest.fn((e) => {
     e?.preventDefault();
@@ -26,6 +27,10 @@ const mockTableFiltersProps: UseTableDataResult = {
 
 describe('TableFilters', () => {
   mockIntersectionObserver();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('Should be correctly rendered', () => {
     const { getByText, getByRole, queryByText } = render(<StoryComponent />);
@@ -126,7 +131,7 @@ describe('TableFilters', () => {
 
     const logSpy = jest.spyOn(console, 'log');
     fireEvent.click(getByText('Apply'));
-    expect(logSpy).toHaveBeenCalledWith('>>>onSubmit', {
+    expect(logSpy).toHaveBeenCalledWith('>>>TableFilters onSubmit', {
       exchange: ['binance'],
       pairs: ['btcfdusd'],
       status: ['running'],

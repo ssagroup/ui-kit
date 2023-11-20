@@ -10,7 +10,10 @@ import {
 export const FiltersContext = createContext<UseTableDataResult>({
   checkboxData: mockData,
   selectedItemsByGroup: {},
-  handleCheckboxToggle: (groupName: string, name: string | number) => () => {
+  onCheckboxToggle: (groupName: string, name: string | number) => () => {
+    // no action
+  },
+  onDropdownChange: (groupName: string, name: string | number) => () => {
     // no action
   },
   onClear: () => {
