@@ -27,7 +27,7 @@ export const UserProfile = ({
 }: UserProfileProps) => {
   const theme = useTheme();
   return (
-    <Popover placement="bottom-end">
+    <Popover placement="bottom-end" interactionsEnabled="both">
       <PopoverTrigger css={ResetBtnStyles}>{trigger}</PopoverTrigger>
       <PopoverContent css={ContentWrapper} className={className}>
         <div css={UserInfo}>
