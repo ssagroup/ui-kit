@@ -48,3 +48,13 @@ export const LastPageSelected = {
     selectedPage: 10,
   },
 };
+
+export const Disabled = {
+  args: {
+    pagesCount: 10,
+    isDisabled: true,
+  },
+  parameters: {
+    selectedPage: 5,
+  },
+};
