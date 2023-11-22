@@ -7,6 +7,10 @@ const baseBtnStyles = (theme: Theme) => css`
   ${theme.mediaQueries.md} {
     height: 25px;
   }
+
+  &:disabled {
+    cursor: default;
+  }
 `;
 
 export const pageBtnStyles = (theme: Theme) => css`
@@ -21,9 +25,14 @@ export const pageBtnStyles = (theme: Theme) => css`
     padding: 0 9px;
   }
 
-  &:hover,
-  &:active,
-  &:focus {
+  &:disabled {
+    background: unset;
+    box-shadow: unset;
+  }
+
+  &:not(:disabled):hover,
+  &:not(:disabled):active,
+  &:not(:disabled):focus {
     background: #eef1f7;
     box-shadow: unset;
   }
@@ -36,6 +45,15 @@ const selectedBtnBg = (theme: Theme) => css`
     ${theme.colors.blueDark},
     ${theme.colors.blueLightDarker}
   );
+
+  &:disabled {
+    background: ${theme.colors.blueLightDarker};
+    background: linear-gradient(
+      247.37deg,
+      ${theme.colors.blueDark},
+      ${theme.colors.blueLightDarker}
+    );
+  }
 `;
 
 export const selectedPageBtnStyles = (theme: Theme) => css`
@@ -51,15 +69,15 @@ export const selectedPageBtnStyles = (theme: Theme) => css`
     padding: 0 10px;
   }
 
-  &:hover {
-    box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.3);
-    cursor: default;
-  }
-
   &:hover,
   &:active,
   &:focus {
     ${selectedBtnBg(theme)}
+  }
+
+  &:not(:disabled):hover {
+    box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.3);
+    cursor: default;
   }
 `;
 
@@ -70,7 +88,6 @@ export const arrowBtnStyles = (theme: Theme) => css`
   background: ${theme.colors.white};
 
   &:disabled {
-    cursor: default;
     background: unset;
   }
 

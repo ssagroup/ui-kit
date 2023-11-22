@@ -215,4 +215,14 @@ describe('Pagination', () => {
     expect(document.body.children.length).toBe(1);
     expect(document.body.children[0]?.tagName).toBe('DIV');
   });
+
+  it('Renders in a disabled state', () => {
+    setup(<Pagination pagesCount={3} isDisabled={true} />, 2);
+
+    const buttonEls = screen.getAllByRole('button');
+    expect(buttonEls.length).toBe(5); // "previous" "1" "2" "3" "next"
+    for (const btnEl of buttonEls) {
+      expect(btnEl).toBeDisabled();
+    }
+  });
 });

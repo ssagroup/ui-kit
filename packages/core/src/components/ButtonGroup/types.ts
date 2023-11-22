@@ -1,7 +1,7 @@
 import { SerializedStyles } from '@emotion/react';
 
 export type ButtonGroupItem = {
-  id: number;
+  id: string | number;
   text: string;
   isDisabled?: boolean;
 };

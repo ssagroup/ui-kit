@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 import { dateFormatters } from '@ssa-ui-kit/utils';
 import {
@@ -33,22 +34,22 @@ export const notificationTypes: Record<string, { [key: string]: string }> = {
   },
 };
 
-export const NotificationCard = ({
-  title,
-  children,
-  text,
-  isRead,
-  type,
-  time,
-  onClick,
-}: NotificationCardProps) => {
+export const NotificationCard = forwardRef<
+  HTMLDivElement,
+  NotificationCardProps
+>(function NotificationCard(
+  { title, children, text, isRead, type, time, onClick, className },
+  ref,
+) {
   const theme = useTheme();
   const { getTimeAgo } = dateFormatters;
 
   return (
     <CardBase
+      ref={ref}
       data-testid="notification"
       css={notifyCard}
+      className={className}
       noShadow
       onClick={() => {
         if (typeof onClick === 'function') {
@@ -91,4 +92,4 @@ export const NotificationCard = ({
       </Typography>
     </CardBase>
   );
-};
+});

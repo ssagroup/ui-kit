@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import userEvent from '@testing-library/user-event';
 import { Button } from '@ssa-ui-kit/core';
 import { NotificationCard } from './NotificationCard';
@@ -86,5 +87,27 @@ describe('NotificationCard', () => {
     await user.click(notification);
 
     expect(mockOnClick).toBeCalledTimes(1);
+  });
+
+  it('Renders with ref', () => {
+    const ref = createRef<HTMLDivElement>();
+    render(<NotificationCard {...commonProps} isRead={false} ref={ref} />);
+
+    expect(ref.current?.querySelector('h6')?.textContent).toBe('Title');
+  });
+
+  it('Renders with custom styles', () => {
+    const { getByTestId } = render(
+      <NotificationCard
+        {...commonProps}
+        isRead={false}
+        css={{
+          backgroundColor: 'blue',
+        }}
+      />,
+    );
+
+    const notification = getByTestId('notification');
+    expect(notification).toHaveStyleRule('background-color', 'blue');
   });
 });
