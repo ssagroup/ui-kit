@@ -7,7 +7,12 @@ import { IPaginationButtonsProps, IPageButtonProps } from './types';
 
 const Break = () => <span css={{ cursor: 'default' }}>...</span>;
 
-const PageButton = ({ onClick, isSelected, page }: IPageButtonProps) => {
+const PageButton = ({
+  onClick,
+  isSelected,
+  page,
+  isDisabled,
+}: IPageButtonProps) => {
   const theme = useTheme();
   const styles = useMemo(() => {
     return isSelected ? selectedPageBtnStyles(theme) : pageBtnStyles(theme);
@@ -17,6 +22,7 @@ const PageButton = ({ onClick, isSelected, page }: IPageButtonProps) => {
     <Button
       size="small"
       variant="secondary"
+      isDisabled={isDisabled}
       onClick={
         isSelected
           ? () => {
@@ -36,6 +42,7 @@ export const PaginationButtons = ({
   range,
   selectedPage,
   onClick,
+  isDisabled,
 }: IPaginationButtonsProps) => {
   return (
     Array.isArray(range) &&
@@ -48,6 +55,7 @@ export const PaginationButtons = ({
           page={page}
           isSelected={page === selectedPage}
           onClick={() => onClick(page)}
+          isDisabled={isDisabled}
         />
       );
     })

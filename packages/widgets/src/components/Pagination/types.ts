@@ -3,12 +3,14 @@ import { CommonProps } from '@ssa-ui-kit/core';
 export interface IPaginationProps extends CommonProps {
   pagesCount: number;
   ariaLabel?: string;
+  isDisabled?: boolean;
 }
 
 export interface IPaginationButtonsProps {
   range: number[];
   selectedPage?: number;
   onClick: (page: number) => void;
+  isDisabled?: boolean;
 }
 
 export interface IArrowButtonProps {
@@ -22,6 +24,7 @@ export interface IPageButtonProps {
   onClick: () => void;
   page: number | string;
   isSelected: boolean;
+  isDisabled?: boolean;
 }
 
 export interface IPaginationContext {

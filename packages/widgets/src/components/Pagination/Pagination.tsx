@@ -14,6 +14,7 @@ const Pagination = ({
   className,
   as,
   ariaLabel,
+  isDisabled,
 }: IPaginationProps) => {
   const { page, setPage } = usePaginationContext();
   const range = usePaginationRange({ pagesCount, selectedPage: page });
@@ -28,11 +29,20 @@ const Pagination = ({
           }
         }}
         isDisabled={
-          pagesCount == null || pagesCount <= 1 || page == null || page === 1
+          isDisabled ||
+          pagesCount == null ||
+          pagesCount <= 1 ||
+          page == null ||
+          page === 1
         }
         css={{ marginRight: '12px' }}
       />
-      <PaginationButtons range={range} selectedPage={page} onClick={setPage} />
+      <PaginationButtons
+        range={range}
+        selectedPage={page}
+        onClick={setPage}
+        isDisabled={isDisabled}
+      />
       <ArrowButton
         direction="right"
         onClick={() => {
@@ -41,6 +51,7 @@ const Pagination = ({
           }
         }}
         isDisabled={
+          isDisabled ||
           pagesCount == null ||
           pagesCount <= 1 ||
           page == null ||
