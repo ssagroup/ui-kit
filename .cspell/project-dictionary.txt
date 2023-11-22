@@ -79,3 +79,4 @@ viewports
 vtpit
 xlg
 Yevgen
+ramda
