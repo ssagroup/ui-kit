@@ -1,7 +1,6 @@
 import { Theme, css } from '@emotion/react';
 
 export const CardBase = (theme: Theme) => css`
-  max-width: 500px;
   padding: 0;
   border-radius: 20px;
   box-shadow: 0px 10px 40px 0px ${theme.colors.greyShadow};

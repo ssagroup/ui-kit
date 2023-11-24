@@ -7,9 +7,10 @@ import { ButtonItem } from './styles';
 export const ButtonGroup = ({
   items,
   buttonStyles,
+  selectedItem,
   onClick,
 }: ButtonGroupProps) => {
-  const [activeBtn, setActiveBtn] = useState(items[0]);
+  const [activeBtn, setActiveBtn] = useState(selectedItem || items[0]);
   const handleClick = (item: ButtonGroupItem) => () => {
     setActiveBtn(item);
     onClick(item);

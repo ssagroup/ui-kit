@@ -14,6 +14,9 @@ describe('ButtonGroup', () => {
     for (const item of items) {
       getByRole('button', { name: item.text });
     }
+
+    const activeItem = getByRole('button', { pressed: true });
+    expect(activeItem.textContent).toBe(items[0].text);
   });
 
   it('Calls onClick handlers when clicked', async () => {
@@ -33,5 +36,25 @@ describe('ButtonGroup', () => {
     }
 
     expect(mockOnClick).toBeCalledTimes(items.length);
+  });
+
+  it('Renders with the selected item', () => {
+    const { getAllByRole, getByRole } = render(
+      <ButtonGroup
+        items={items}
+        onClick={(item) => item}
+        selectedItem={items[1]}
+      />,
+    );
+
+    const itemsEls = getAllByRole('button');
+    expect(itemsEls.length).toBe(items.length);
+
+    for (const item of items) {
+      getByRole('button', { name: item.text });
+    }
+
+    const activeItem = getByRole('button', { pressed: true });
+    expect(activeItem.textContent).toBe(items[1].text);
   });
 });
