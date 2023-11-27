@@ -13,13 +13,17 @@ const gotoPage = (page: Page) => {
 test.describe('Widgets: TableFilters', () => {
   test('Renders correctly', async ({ page }) => {
     await gotoPage(page);
-    await expect(page.getByText('More')).toBeVisible();
+    const triggerButton = page.getByTestId('trigger-button');
+    const beforeContent = await triggerButton.evaluate((el) => {
+      return window.getComputedStyle(el, ':before').content;
+    });
+    expect(beforeContent).toEqual('"More"');
   });
 
   test('Opens popover', async ({ page }) => {
     await page.setViewportSize(SCREEN_SIZES[1920]);
     await gotoPage(page);
-    await page.getByText('More').click();
+    await page.getByTestId('trigger-button').click();
 
     await page.screenshot({
       path: `${SCREENSHOT_PREFIX}[w1920px].png`,

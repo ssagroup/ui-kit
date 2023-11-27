@@ -68,7 +68,7 @@ export const useTableData = ({
 
   useEffect(() => {
     proceedSettingCheckboxData(updatedCheckboxData);
-  }, [updatedCheckboxData]);
+  }, [JSON.stringify(updatedCheckboxData)]);
 
   const onCheckboxToggle = (groupName: string, name: string | number) => {
     const { items, path } = getCheckboxChangedItems(
