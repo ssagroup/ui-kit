@@ -48,7 +48,7 @@ test('Widgets: Filters - Filter button should be shown', async ({ page }) => {
   expect(buttonText).toEqual('4');
   const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--filter-button__`;
   await page.screenshot({
-    path: `${SCREENSHOT_PREFIX}[w900px].png`,
+    path: `${SCREENSHOT_PREFIX}[w390px].png`,
   });
 });
 
