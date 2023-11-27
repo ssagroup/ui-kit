@@ -14,6 +14,17 @@ export const filterButtonStyles = (theme: Theme) => css`
   gap: 5px;
   user-select: none;
 
+  &::before {
+    display: block;
+    content: 'Filter';
+  }
+
+  @media screen and (min-width: 900px) {
+    &::before {
+      content: 'More';
+    }
+  }
+
   &:hover {
     border-color: ${theme.colors.greyDropdownFocused};
   }
@@ -28,10 +39,11 @@ export const filterButtonStyles = (theme: Theme) => css`
 `;
 
 export const TableFilterTrigger = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   children,
   ...rest
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   as?: string;
   className?: string;
 }) => {

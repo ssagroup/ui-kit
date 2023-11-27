@@ -1,13 +1,13 @@
+import { Interpolation, Theme, useTheme } from '@emotion/react';
 import { MultipleDropdownNotification } from '@ssa-ui-kit/core';
 import { TableFilterTrigger } from './TableFilterTrigger';
-import { Interpolation, Theme, useTheme } from '@emotion/react';
 
 export const TableFilterTriggerWithNotification = ({
   children,
   count,
   visible = true,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   count?: number;
   visible?: boolean;
 }) => {

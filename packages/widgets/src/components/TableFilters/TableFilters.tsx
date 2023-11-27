@@ -118,9 +118,8 @@ export const TableFilters = ({
       }}>
       <TableFilterTriggerWithNotification
         count={selectedGroupsCount}
-        visible={isMoreButtonVisible}>
-        More
-      </TableFilterTriggerWithNotification>
+        visible={isMoreButtonVisible}
+      />
       <PopoverContent className="popover" css={tableFilterPopoverContentStyles}>
         <form
           onSubmit={handleSubmit}
