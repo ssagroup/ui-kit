@@ -114,6 +114,7 @@ const DropdownToggle = ({
   onFocus,
   isOpen,
   isMultiple,
+  type,
   selectedCount,
   disabled,
   children,
@@ -126,6 +127,7 @@ const DropdownToggle = ({
     className={className}
     colors={colors}
     isOpen={isOpen}
+    type={type}
     isMultiple={isMultiple}
     selectedCount={selectedCount}
     onClick={(e) => {

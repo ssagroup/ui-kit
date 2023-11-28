@@ -31,6 +31,7 @@ const DropdownBase = styled.div`
 const Dropdown = <T extends IDropdownOption>({
   selectedItem,
   isDisabled,
+  type,
   isOpen: isInitOpen,
   children,
   onChange: handleChange,
@@ -116,6 +117,7 @@ const Dropdown = <T extends IDropdownOption>({
         <DropdownToggle
           className={className}
           isOpen={isOpen}
+          type={type}
           disabled={isDisabled}
           onClick={setIsOpen.bind(null, !isOpen)}
           onFocus={setIsFocused.bind(null, true)}

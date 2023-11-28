@@ -7,6 +7,7 @@ export interface IDropdownToggleProps extends CommonProps {
   onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;
   isOpen: boolean;
   isMultiple?: boolean;
+  type?: 'submit' | 'reset' | 'button';
   disabled?: boolean;
   children?: React.ReactNode;
   ariaLabelledby: string;
