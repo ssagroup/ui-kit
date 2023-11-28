@@ -126,6 +126,7 @@ const DropdownToggle = ({
     className={className}
     colors={colors}
     isOpen={isOpen}
+    type="button"
     isMultiple={isMultiple}
     selectedCount={selectedCount}
     onClick={(e) => {
