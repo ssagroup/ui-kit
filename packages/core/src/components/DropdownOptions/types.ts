@@ -1,6 +1,6 @@
 import { CommonProps } from '@global-types/emotion';
 
-export type IDropdownOption = Record<string, string | number | JSX.Element>;
+export type IDropdownOption = Record<string, string | number>;
 
 export interface IDropdownItemsListProps extends CommonProps {
   ariaLabelledby?: string;
