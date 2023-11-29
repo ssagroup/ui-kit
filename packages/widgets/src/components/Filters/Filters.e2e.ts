@@ -36,17 +36,19 @@ test('Widgets: Filters - More button should be shown', async ({ page }) => {
   });
 });
 
-test('Widgets: Filters - Filter button should be shown', async ({ page }) => {
+test('Widgets: Filters - More button should be shown when items selected', async ({
+  page,
+}) => {
   await gotoPage(page);
   await page.setViewportSize(SCREEN_SIZES[390]);
   const triggerButton = page.getByTestId('trigger-button');
   const beforeContent = await triggerButton.evaluate((el) => {
     return window.getComputedStyle(el, ':before').content;
   });
-  expect(beforeContent).toEqual('"Filter"');
+  expect(beforeContent).toEqual('"More"');
   const buttonText = await triggerButton.innerText();
   expect(buttonText).toEqual('4');
-  const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--filter-button__`;
+  const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--more-button-items-selected__`;
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w390px].png`,
   });
@@ -57,7 +59,7 @@ test('Widgets: Filters - More button count notification should be changed', asyn
 }) => {
   await gotoPage(page);
   await page.setViewportSize(SCREEN_SIZES[900]);
-  let triggerButton = page.getByTestId('trigger-button');
+  let triggerButton = await page.getByTestId('trigger-button');
   let beforeContent = await triggerButton.evaluate((el) => {
     return window.getComputedStyle(el, ':before').content;
   });
@@ -79,4 +81,35 @@ test('Widgets: Filters - More button count notification should be changed', asyn
   expect(beforeContent).toEqual('"More"');
   buttonText = await triggerButton.innerText();
   expect(buttonText).toEqual('3');
+});
+
+test('Widgets: Filters - Filter button should be shown when items not selected', async ({
+  page,
+}) => {
+  await page.goto(
+    'http://localhost:6007/iframe.html?args=&id=widgets-filters--all-items-enabled&viewMode=story',
+  );
+  await page.setViewportSize(SCREEN_SIZES[390]);
+  const triggerButton = page.getByTestId('trigger-button');
+  let beforeContent = await triggerButton.evaluate((el) => {
+    return window.getComputedStyle(el, ':before').content;
+  });
+  expect(beforeContent).toEqual('"More"');
+  const buttonText = await triggerButton.innerText();
+  expect(buttonText).toEqual('1');
+
+  await page.getByTestId('trigger-button').click();
+  /* cSpell:disable */
+  await page.locator('label').filter({ hasText: 'Checkcheckbox1' }).click();
+  await page.locator('label').filter({ hasText: 'Checkcheckbox4' }).click();
+
+  beforeContent = await triggerButton.evaluate((el) => {
+    return window.getComputedStyle(el, ':before').content;
+  });
+  expect(beforeContent).toEqual('"Filter"');
+
+  const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--filter-button-items-not-selected__`;
+  await page.screenshot({
+    path: `${SCREENSHOT_PREFIX}[w390px].png`,
+  });
 });

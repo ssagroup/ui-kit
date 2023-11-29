@@ -1,7 +1,7 @@
 import { mockData } from './mockData';
 import { Filters } from '..';
 
-export const StoryComponent = () => {
+export const StoryComponent = ({ data = mockData }) => {
   const handleSubmit = (submitData: Record<string, string[]>) => {
     console.log('>>>Filters onSubmit', submitData);
   };
@@ -13,7 +13,7 @@ export const StoryComponent = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Filters handleSubmit={handleSubmit} checkboxData={mockData} />
+      <Filters handleSubmit={handleSubmit} checkboxData={data} />
     </div>
   );
 };
