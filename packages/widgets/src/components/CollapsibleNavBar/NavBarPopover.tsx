@@ -64,6 +64,7 @@ export const CollapsibleNavBarPopover = ({
           [theme.mediaQueries.md]: {
             display: 'block',
           },
+          zIndex: 2,
         }}>
         <PopoverHeading
           css={{
