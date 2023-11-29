@@ -75,8 +75,8 @@ export default {
         css={{
           display: 'flex',
           minHeight: '100vh',
+          position: 'relative',
         }}>
-        {/*<div css={{ backgroundColor: '#ccc' }}>123</div> */}
         {Story()}
         <Main>
           {new Array(200).fill(1).map((_, index) => (
