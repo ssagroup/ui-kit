@@ -323,4 +323,10 @@ describe('Dropdown', () => {
 
     expect(queryByRole('listbox')).toBeInTheDocument();
   });
+
+  it('Renders with "button" type', () => {
+    const { getByRole } = setup();
+
+    expect(getByRole('combobox')).toHaveAttribute('type', 'button');
+  });
 });
