@@ -20,7 +20,7 @@ export const TableFilterTriggerWithNotification = ({
     css.borderColor = theme.colors.blueDropdownWithSelectedItemsBorder;
   }
   return (
-    <TableFilterTrigger css={css}>
+    <TableFilterTrigger css={css} count={count}>
       {children}
       {count ? (
         <MultipleDropdownNotification
