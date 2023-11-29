@@ -7,6 +7,7 @@ import { DecoratorFunction } from '@storybook/types';
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
 import { Logo } from './Logo';
+import { Layout } from './Layout';
 
 type Args = Parameters<typeof CollapsibleNavBar>[0];
 
@@ -42,12 +43,7 @@ export default {
       ),
     },
   },
-  decorators: [
-    reactRouterDecorator,
-    (Story) => (
-      <div style={{ height: '100vh', position: 'relative' }}>{Story()}</div>
-    ),
-  ],
+  decorators: [reactRouterDecorator, (Story) => <Layout>{Story()}</Layout>],
   args: {
     items: ITEMS,
     renderLogo: <Logo />,
