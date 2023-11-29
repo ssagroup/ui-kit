@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-const NavBarLink = styled(Link)<{ active?: boolean }>`
+const NavBarLink = styled(NavLink)`
   cursor: pointer;
 
   &:hover {
@@ -11,17 +11,15 @@ const NavBarLink = styled(Link)<{ active?: boolean }>`
     }
   }
 
-  ${({ active, theme }) =>
-    active &&
-    `
-      svg {
-        filter: drop-shadow(-4px 4px 14px ${theme.colors.white});
-        
-        path {
-          fill: ${theme.colors.white};
-        }
+  &.active {
+    svg {
+      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
+
+      path {
+        fill: ${({ theme }) => theme.colors.white};
       }
-    `}
+    }
+  }
 `;
 
 export default NavBarLink;
