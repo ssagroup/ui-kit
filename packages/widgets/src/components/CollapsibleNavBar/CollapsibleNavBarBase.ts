@@ -35,12 +35,13 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
   }
 
   &:has(> input[type='checkbox']:checked) {
-    position: static;
     background: linear-gradient(
       108.3deg,
       ${({ theme }) => theme.colors.greyDarker} -0.36%,
       ${({ theme }) => theme.colors.greyDarker} 100%
     );
+    min-width: 100%;
+    width: 100%;
     height: 100%;
   }
 
@@ -66,7 +67,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
       }
 
       & ~ div:nth-of-type(2) {
-        opacity: 1;
+        display: block;
         border-radius: 12px 12px 0 0;
         height: calc(100vh - 60px);
 
@@ -81,7 +82,10 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
   ${({ theme }) => theme.mediaQueries.md} {
     width: 85px;
     padding: 0;
-    height: 100%;
+    position: static;
+    z-index: 0;
+    height: auto;
+
     & li {
       ${staticIconsToggle(false)}
       ${popupIconsToggle(true)}
