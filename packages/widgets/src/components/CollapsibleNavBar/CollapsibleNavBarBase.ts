@@ -34,7 +34,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     ${popupIconsToggle(false)}
   }
 
-  &:has(> input[type='checkbox']:checked) {
+  &.opened {
     background: linear-gradient(
       108.3deg,
       ${({ theme }) => theme.colors.greyDarker} -0.36%,
@@ -85,6 +85,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     position: static;
     z-index: 0;
     height: auto;
+    min-width: unset;
 
     & li {
       ${staticIconsToggle(false)}
@@ -93,7 +94,8 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    &:has(#contentToggler:checked) {
+    &.opened {
+      min-width: unset;
       width: 240px;
 
       & > div:nth-of-type(2) {

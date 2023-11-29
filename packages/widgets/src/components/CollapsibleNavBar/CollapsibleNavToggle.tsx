@@ -1,14 +1,11 @@
-import React, { useId } from 'react';
+import { Fragment } from 'react';
 import { css } from '@emotion/react';
 
 import CollapsibleNavToggleWrapper from './CollapsibleNavToggleWrapper';
 
-const CollapsibleNavToggle = () => {
-  const id = useId();
+const CollapsibleNavToggle = ({ id }: { id: string }) => {
   return (
-    <>
-      <input type="checkbox" id={id} />
-
+    <Fragment>
       <CollapsibleNavToggleWrapper>
         <label
           htmlFor={id}
@@ -45,7 +42,7 @@ const CollapsibleNavToggle = () => {
           <span></span>
         </label>
       </CollapsibleNavToggleWrapper>
-    </>
+    </Fragment>
   );
 };
 
