@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '@emotion/react';
 import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import { useFiltersContext } from './FiltersContext';
-import { useTheme } from '@emotion/react';
 
 export const FiltersBlock = () => {
   const { setElementRef, onDropdownChange, checkboxData } = useFiltersContext();
