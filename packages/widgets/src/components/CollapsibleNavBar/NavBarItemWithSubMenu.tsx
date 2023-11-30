@@ -1,3 +1,5 @@
+import { useMatch } from 'react-router-dom';
+import styled from '@emotion/styled';
 import {
   AccordionGroupContextProvider,
   AccordionGroup,
@@ -12,16 +14,39 @@ import { TriggerIcon } from './TriggerIcon';
 import { CollapsibleNavBarGroup } from './types';
 import * as S from './styles';
 
+const IconWrapper = styled.div`
+  width: 24px;
+  height: 24px;
+  ${({ theme }) => S.SVGMainStyle(theme)}
+
+  &:hover svg {
+    ${({ theme }) => S.SVGHoverShadow(theme)}
+  }
+
+  /* This is the duplicate from <NavBarLink /> */
+  &.active {
+    filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
+    color: ${({ theme }) => theme.colors.white};
+
+    svg {
+      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
+      path {
+        fill: ${({ theme }) => theme.colors.white};
+      }
+    }
+  }
+`;
+
 export const NavBarItemWithSubMenu = ({
   item,
-  pathname,
 }: {
   item: CollapsibleNavBarGroup;
-  pathname: string;
 }) => {
   const { iconName, iconSize, title, items, prefix } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
+  const match = useMatch(prefix + ':id');
+
   return (
     <AccordionGroupContextProvider key={uniqName}>
       <CollapsibleNavBarItem>
@@ -46,14 +71,14 @@ export const NavBarItemWithSubMenu = ({
                 items={items}
                 accordionUniqueName={accordionUniqName}
                 prefix={prefix}
-                pathname={pathname}
                 isPopover={false}
                 {...props}
               />
             )}
             renderTitle={(data) => (
               <Wrapper onClick={data.onClick} css={S.AccordionTitleWrapper}>
-                <div css={S.IconWrapper} className="icon-wrapper">
+                <IconWrapper
+                  className={`icon-wrapper${match ? ' active' : undefined}`}>
                   <CollapsibleNavBarPopover
                     triggerIcon={
                       <TriggerIcon iconName={iconName} iconSize={iconSize} />
@@ -64,14 +89,13 @@ export const NavBarItemWithSubMenu = ({
                         items={items}
                         accordionUniqueName={accordionUniqName}
                         prefix={prefix}
-                        pathname={pathname}
                         id={accordionUniqName}
                         isOpened
                         isPopover
                       />
                     }
                   />
-                </div>
+                </IconWrapper>
                 <TriggerIcon iconName={iconName} iconSize={iconSize} />
                 <AccordionTitle {...data} css={S.AccordionTitle} />
               </Wrapper>

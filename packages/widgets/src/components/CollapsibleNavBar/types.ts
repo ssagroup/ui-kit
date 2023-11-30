@@ -4,7 +4,7 @@ export interface CollapsibleNavBarItem extends NavBarExtendedItem {
   iconSize: number;
 }
 
-export interface CollapsibleNavBarGroup extends NavBarExtendedGroup {
+export interface CollapsibleNavBarGroup extends Required<NavBarExtendedGroup> {
   iconSize: number;
 }
 

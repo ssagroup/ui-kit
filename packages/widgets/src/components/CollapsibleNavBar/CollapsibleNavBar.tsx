@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import { useState, useId, useEffect } from 'react';
 import { Wrapper } from '@ssa-ui-kit/core';
 import * as S from './styles';
@@ -21,7 +20,6 @@ export const CollapsibleNavBar = ({
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
   const [isChecked, onToggle] = useState(false);
-  const { pathname } = useLocation();
 
   useEffect(() => {
     const onResize = () => {
@@ -57,17 +55,9 @@ export const CollapsibleNavBar = ({
             const { iconName, title } = item;
             const keyName = iconName + title.replace(' ', '').toLowerCase();
             return 'items' in item ? (
-              <NavBarItemWithSubMenu
-                item={item}
-                pathname={pathname}
-                key={keyName}
-              />
+              <NavBarItemWithSubMenu item={item} key={keyName} />
             ) : (
-              <NavBarItemWithoutSubMenu
-                item={item}
-                pathname={pathname}
-                key={keyName}
-              />
+              <NavBarItemWithoutSubMenu item={item} key={keyName} />
             );
           })}
         </CollapsibleNavBarList>

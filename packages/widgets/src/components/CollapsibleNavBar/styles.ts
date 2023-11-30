@@ -52,6 +52,7 @@ export const AccordionContent = (theme: Theme) => css`
   align-items: flex-start;
   width: 100%;
   padding-left: 44px;
+  overflow: hidden;
   & a {
     width: 100%;
     padding: 4.8px 0;
@@ -74,15 +75,6 @@ export const AccordionContentPopover = (theme: Theme) => css`
   }
   ${theme.mediaQueries.lg} {
     display: flex;
-  }
-`;
-
-export const IconWrapper = (theme: Theme) => css`
-  width: 24px;
-  height: 24px;
-  ${SVGMainStyle(theme)}
-  &:hover svg {
-    ${SVGHoverShadow(theme)}
   }
 `;
 

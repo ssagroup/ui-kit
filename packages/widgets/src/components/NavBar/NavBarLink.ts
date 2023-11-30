@@ -12,9 +12,11 @@ const NavBarLink = styled(NavLink)`
   }
 
   &.active {
+    filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
+    color: ${({ theme }) => theme.colors.white};
+
     svg {
       filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
-
       path {
         fill: ${({ theme }) => theme.colors.white};
       }
