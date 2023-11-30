@@ -5,6 +5,9 @@ export const BotsTableCell = styled(TableCell)`
   border: none;
   padding: 0 16px;
   background: #fff;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    font-size: 14px;
+  }
 `;

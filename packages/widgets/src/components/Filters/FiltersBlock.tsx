@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '@emotion/react';
 import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import { useFiltersContext } from './FiltersContext';
 
@@ -11,6 +12,8 @@ export const FiltersBlock = () => {
   const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
     Record<string, Array<{ value: string }>>
   >({});
+
+  const theme = useTheme();
 
   useEffect(() => {
     const newData: Record<
@@ -46,8 +49,12 @@ export const FiltersBlock = () => {
             onChange={handleOnChange(groupName)}
             selectedItems={selectedItems}
             css={{
+              padding: '11px 15px 9px 10px',
               '& + ul': {
                 minWidth: 150,
+              },
+              [theme.mediaQueries.md]: {
+                padding: '0 15px 0 10px',
               },
             }}>
             {Object.keys(accordionInfo.items).map((itemKey) => {
