@@ -34,21 +34,16 @@ describe('CollapsibleNavBar', () => {
   });
 
   it('Should be expanded', () => {
-    const { container } = render(
+    const { queryByLabelText, getByLabelText } = render(
       <StoryComponent items={ITEMS} renderLogo={<Logo />} />,
     );
 
-    const contentToggler = container.querySelector('label[for=contentToggler]');
-    const arrow = contentToggler?.querySelector('title');
-
-    expect(arrow?.textContent).toEqual('Carrot right');
+    const contentToggler = getByLabelText('Carrot right');
 
     fireEvent.click(contentToggler as Node);
 
-    expect(
-      container
-        .querySelector('label[for=contentToggler]')
-        ?.querySelector('title')?.textContent,
-    ).toEqual('Carrot left');
+    expect(queryByLabelText('Carrot right')).not.toBeInTheDocument();
+
+    getByLabelText('Carrot left');
   });
 });

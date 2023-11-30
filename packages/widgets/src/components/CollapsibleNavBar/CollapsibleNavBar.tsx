@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useState, useId, useEffect } from 'react';
 import { Wrapper } from '@ssa-ui-kit/core';
 import * as S from './styles';
 
@@ -13,39 +13,51 @@ import { NavBarItemWithoutSubMenu } from './NavBarItemWithoutSubMenu';
 
 /**
  * UI Component that shows the collapsible navigation bar
- *
  */
 export const CollapsibleNavBar = ({
   items,
   renderLogo,
 }: CollapsibleNavBarExtendedProps) => {
-  const { pathname } = useLocation();
+  const toggleId = useId();
+  const [isChecked, onToggle] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      onToggle(false);
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
 
   return (
-    <CollapsibleNavBarBase>
-      <CollapsibleNavToggle />
+    <CollapsibleNavBarBase className={isChecked ? 'opened' : undefined}>
+      <input
+        type="checkbox"
+        id={toggleId}
+        checked={isChecked}
+        onChange={() => {
+          onToggle(!isChecked);
+        }}
+      />
+
+      <CollapsibleNavToggle id={toggleId} />
 
       <CollapsibleNavBarWrapper>
         <Wrapper css={S.LogoWrapper}>
           {renderLogo}
-          <NavContentToggle id={'contentToggler'} />
+          <NavContentToggle id={toggleId} isChecked={isChecked} />
         </Wrapper>
         <CollapsibleNavBarList>
           {items.map((item) => {
             const { iconName, title } = item;
             const keyName = iconName + title.replace(' ', '').toLowerCase();
             return 'items' in item ? (
-              <NavBarItemWithSubMenu
-                item={item}
-                pathname={pathname}
-                key={keyName}
-              />
+              <NavBarItemWithSubMenu item={item} key={keyName} />
             ) : (
-              <NavBarItemWithoutSubMenu
-                item={item}
-                pathname={pathname}
-                key={keyName}
-              />
+              <NavBarItemWithoutSubMenu item={item} key={keyName} />
             );
           })}
         </CollapsibleNavBarList>

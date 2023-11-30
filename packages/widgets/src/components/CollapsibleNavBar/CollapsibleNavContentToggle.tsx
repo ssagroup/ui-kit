@@ -1,12 +1,15 @@
 import { Icon } from '@ssa-ui-kit/core';
 import * as S from './styles';
-import { useState } from 'react';
 
-export const NavContentToggle = ({ id }: { id: string }) => {
-  const [checked, setChecked] = useState(false);
+export const NavContentToggle = ({
+  id,
+  isChecked,
+}: {
+  id: string;
+  isChecked: boolean;
+}) => {
   return (
     <div css={S.ContentToggle}>
-      <input type="checkbox" id={id} onChange={() => setChecked(!checked)} />
       <label
         htmlFor={id}
         css={{
@@ -17,7 +20,7 @@ export const NavContentToggle = ({ id }: { id: string }) => {
           justifyContent: 'center',
           cursor: 'pointer',
         }}>
-        <Icon name={checked ? 'carrot-left' : 'carrot-right'} size={14} />
+        <Icon name={isChecked ? 'carrot-left' : 'carrot-right'} size={14} />
       </label>
     </div>
   );
