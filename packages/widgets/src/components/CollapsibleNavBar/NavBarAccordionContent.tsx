@@ -5,7 +5,7 @@ import * as S from './styles';
 
 const Link = styled(CollapsibleNavBarLink)`
   &:hover {
-    filter: unset;
+    filter: initial;
   }
 
   &.active {

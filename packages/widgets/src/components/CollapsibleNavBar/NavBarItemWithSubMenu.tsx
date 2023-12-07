@@ -1,5 +1,4 @@
 import { useMatch } from 'react-router-dom';
-import styled from '@emotion/styled';
 import {
   AccordionGroupContextProvider,
   AccordionGroup,
@@ -13,29 +12,6 @@ import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
 import { CollapsibleNavBarGroup } from './types';
 import * as S from './styles';
-
-const IconWrapper = styled.div`
-  width: 24px;
-  height: 24px;
-  ${({ theme }) => S.SVGMainStyle(theme)}
-
-  &:hover svg {
-    ${({ theme }) => S.SVGHoverShadow(theme)}
-  }
-
-  /* This is the duplicate from <NavBarLink /> */
-  &.active {
-    filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
-    color: ${({ theme }) => theme.colors.white};
-
-    svg {
-      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
-      path {
-        fill: ${({ theme }) => theme.colors.white};
-      }
-    }
-  }
-`;
 
 export const NavBarItemWithSubMenu = ({
   item,
@@ -77,8 +53,7 @@ export const NavBarItemWithSubMenu = ({
             )}
             renderTitle={(data) => (
               <Wrapper onClick={data.onClick} css={S.AccordionTitleWrapper}>
-                <IconWrapper
-                  className={`icon-wrapper${match ? ' active' : undefined}`}>
+                <div>
                   <CollapsibleNavBarPopover
                     triggerIcon={
                       <TriggerIcon iconName={iconName} iconSize={iconSize} />
@@ -95,7 +70,7 @@ export const NavBarItemWithSubMenu = ({
                       />
                     }
                   />
-                </IconWrapper>
+                </div>
                 <TriggerIcon iconName={iconName} iconSize={iconSize} />
                 <AccordionTitle {...data} css={S.AccordionTitle} />
               </Wrapper>

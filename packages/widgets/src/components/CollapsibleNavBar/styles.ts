@@ -1,37 +1,10 @@
 import { Theme, css } from '@emotion/react';
 
-export const SVGHoverShadow = (theme: Theme) => css`
-  filter: drop-shadow(-4px 4px 14px ${theme.colors.white});
-  & path {
-    fill: ${theme.colors.white};
-  }
-  & circle {
-    stroke: ${theme.colors.white};
-  }
-`;
-
-export const SVGMainStyle = (theme: Theme) => css`
-  & svg {
-    & path {
-      fill: ${theme.colors.greyDisabledCheckbox};
-    }
-    & circle {
-      stroke: ${theme.colors.greyDisabledCheckbox};
-    }
-  }
-`;
-
 export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
   align-items: flex-start;
-  ${SVGMainStyle(theme)}
   ${theme.mediaQueries.md} {
     justify-content: center;
-  }
-  &:hover {
-    & > div:nth-of-type(2) > svg {
-      ${SVGHoverShadow(theme)}
-    }
   }
 `;
 

@@ -18,9 +18,6 @@ export const TriggerIcon = ({
         width: 24px;
         height: 24px;
         justify-content: center;
-        &:hover {
-          ${S.SVGHoverShadow(theme)}
-        }
       `}
       className="trigger-icon">
       <Icon
