@@ -53,6 +53,7 @@ export const CollapsibleNavBarPopover = ({
           padding: 0,
           cursor: 'pointer',
           backgroundColor: 'unset',
+          borderRadius: 0,
         }}
         startIcon={triggerIcon}
       />
