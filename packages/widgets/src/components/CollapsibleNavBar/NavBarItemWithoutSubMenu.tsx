@@ -9,25 +9,16 @@ export const NavBarItemWithoutSubMenu = ({
 }: {
   item: T.CollapsibleNavBarItem;
 }) => {
-  const { path, iconName, title, iconSize } = item;
+  const { path, iconName, title, iconSize, css } = item;
+  const Icon = () => (
+    <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
+  );
+
   return (
     <CollapsibleNavBarItem key={path}>
       <CollapsibleNavBarLink to={'/' + path}>
-        <CollapsibleNavBarPopover
-          triggerIcon={
-            <TriggerIcon
-              iconName={iconName}
-              iconSize={iconSize}
-              css={{ marginRight: 20 }}
-            />
-          }
-          title={title}
-        />
-        <TriggerIcon
-          iconName={iconName}
-          iconSize={iconSize}
-          css={{ marginRight: 20 }}
-        />
+        <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
+        <Icon />
         <span>{title}</span>
       </CollapsibleNavBarLink>
     </CollapsibleNavBarItem>

@@ -45,7 +45,13 @@ export const Default: StoryObj<typeof Icon> = (
       `}>
       {iconsList.map((iconName) => (
         <div css={iconWrapper} key={iconName}>
-          <Icon name={iconName} size={args.size} color={args.color} />
+          <Icon
+            name={iconName}
+            size={
+              args.size && (iconName === 'robot' ? args.size * 2 : args.size)
+            }
+            color={args.color}
+          />
           <Typography variant="body1">{iconName}</Typography>
         </div>
       ))}

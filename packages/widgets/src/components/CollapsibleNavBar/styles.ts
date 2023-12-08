@@ -8,13 +8,17 @@ export const AccordionTitleWrapper = (theme: Theme) => css`
   }
 `;
 
-export const AccordionTitle = (theme: Theme) => css`
-  padding: 0 14px 0 22px;
+/*
+ *
   & svg {
     & path {
       fill: none;
     }
   }
+ *
+ * */
+export const AccordionTitle = (theme: Theme) => css`
+  padding: 0 14px 0 22px;
   ${theme.mediaQueries.md} {
     display: none;
   }

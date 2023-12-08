@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
+import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 
 export const CollapsibleNavBarPopover = ({
   triggerIcon,
@@ -51,6 +52,7 @@ export const CollapsibleNavBarPopover = ({
         css={{
           height: 'auto',
           padding: 0,
+          margin: 0,
           cursor: 'pointer',
           backgroundColor: 'unset',
           borderRadius: 0,

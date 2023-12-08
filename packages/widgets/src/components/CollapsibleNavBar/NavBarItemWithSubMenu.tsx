@@ -7,21 +7,28 @@ import {
   AccordionTitle,
 } from '@ssa-ui-kit/core';
 import CollapsibleNavBarItem from './CollapsibleNavBarItem';
+import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import { NavBarAccordionContent } from './NavBarAccordionContent';
 import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
 import { CollapsibleNavBarGroup } from './types';
 import * as S from './styles';
 
+const Link = CollapsibleNavBarLink.withComponent('div');
+
 export const NavBarItemWithSubMenu = ({
   item,
 }: {
   item: CollapsibleNavBarGroup;
 }) => {
-  const { iconName, iconSize, title, items, prefix } = item;
+  const { iconName, iconSize, title, items, prefix, css } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
   const match = useMatch(prefix + ':id');
+
+  const Icon = () => (
+    <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
+  );
 
   return (
     <AccordionGroupContextProvider key={uniqName}>
@@ -53,11 +60,11 @@ export const NavBarItemWithSubMenu = ({
             )}
             renderTitle={(data) => (
               <Wrapper onClick={data.onClick} css={S.AccordionTitleWrapper}>
-                <div>
+                <Link
+                  to=""
+                  className={`icon-wrapper${match ? ' active' : undefined}`}>
                   <CollapsibleNavBarPopover
-                    triggerIcon={
-                      <TriggerIcon iconName={iconName} iconSize={iconSize} />
-                    }
+                    triggerIcon={<Icon />}
                     title={data.title}
                     content={
                       <NavBarAccordionContent
@@ -70,8 +77,8 @@ export const NavBarItemWithSubMenu = ({
                       />
                     }
                   />
-                </div>
-                <TriggerIcon iconName={iconName} iconSize={iconSize} />
+                </Link>
+                <Icon />
                 <AccordionTitle {...data} css={S.AccordionTitle} />
               </Wrapper>
             )}

@@ -1,12 +1,13 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Copy = ({ fill = '#000', size = 15 }: SVGProps) => (
+export const Copy = ({ fill = '#000', size = 15, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
     height={`${size}px`}
     viewBox="0 0 15 15"
-    fill="none">
+    fill="none"
+    {...props}>
     <title>Copy</title>
     <g clipPath="url(#clip0_532_12716)">
       <path

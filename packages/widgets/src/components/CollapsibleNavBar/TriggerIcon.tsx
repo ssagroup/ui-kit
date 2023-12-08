@@ -1,6 +1,5 @@
 import { css, useTheme } from '@emotion/react';
 import { Wrapper, Icon, IMapIcons } from '@ssa-ui-kit/core';
-import * as S from './styles';
 
 export const TriggerIcon = ({
   iconName,
@@ -12,18 +11,20 @@ export const TriggerIcon = ({
   className?: string;
 }) => {
   const theme = useTheme();
+  console.log(iconName, className);
   return (
     <Wrapper
       css={css`
-        width: 24px;
-        height: 24px;
+        width: auto;
         justify-content: center;
+        overflow: visible;
+        position: relative;
+        height: 26px;
       `}
       className="trigger-icon">
       <Icon
         name={iconName}
         color={theme.colors.grey}
-        css={{ marginRight: 20 }}
         size={iconSize}
         className={className}
       />

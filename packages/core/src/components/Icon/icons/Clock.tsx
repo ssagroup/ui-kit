@@ -1,12 +1,13 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Clock = ({ fill = '#000', size = 15 }: SVGProps) => (
+export const Clock = ({ fill = '#000', size = 15, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
     height={`${size}px`}
     viewBox="0 0 24 24"
-    fill="none">
+    fill="none"
+    {...props}>
     <title>Clock</title>
     <circle
       cx="12.1001"
