@@ -46,7 +46,7 @@ export const ExchangeAccountKeys = ({
           <Typography variant="h6" color={theme.colors.greyDropdownFocused}>
             API Key
           </Typography>
-          <Typography variant="h5" weight="bold" css={S.NoWrapText}>
+          <Typography variant="h5" weight="bold" css={S.LetterWrap}>
             {apiKey}
           </Typography>
         </div>
@@ -55,7 +55,9 @@ export const ExchangeAccountKeys = ({
             Secret Key
           </Typography>
           <Typography variant="h5" weight="bold" css={S.SecretKey}>
-            {isVisible ? secretKey || placeholder : placeholder}
+            <span css={S.LetterWrap}>
+              {isVisible ? secretKey || placeholder : placeholder}
+            </span>
             <Button css={S.VisibleButton} onClick={handleClickVisible}>
               <Icon
                 name={isVisible ? 'visible' : 'invisible'}
