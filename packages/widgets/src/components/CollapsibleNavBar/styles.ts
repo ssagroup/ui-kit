@@ -14,6 +14,12 @@ export const AccordionTitleWrapper = (theme: Theme) => css`
     gap: 0;
   }
 
+  & div.icon-wrapper:not(.active):hover > button svg path,
+  & div.icon-wrapper.active > button svg path {
+    stroke: #fff;
+    fill: none;
+  }
+
   & .trigger-icon {
     height: 22px;
   }
