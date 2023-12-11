@@ -9,6 +9,7 @@ const CollapsibleNavBarLink = styled(NavBarLink)`
   color: ${({ theme }) => theme.colors.white80};
 
   svg {
+    backdrop-filter: blur(0);
   }
 
   &:not(.active):hover {
@@ -18,7 +19,6 @@ const CollapsibleNavBarLink = styled(NavBarLink)`
     color: ${({ theme }) => theme.colors.white};
 
     svg {
-      filter: initial;
       & path {
         fill: ${({ theme }) => theme.colors.white};
       }

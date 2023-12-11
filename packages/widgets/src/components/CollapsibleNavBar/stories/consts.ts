@@ -13,6 +13,12 @@ export const ITEMS: CollapsibleNavBarExtendedProps['items'] = [
     },
   },
   {
+    path: 'notifications',
+    iconName: 'notification',
+    iconSize: 24,
+    title: 'Notifications',
+  },
+  {
     prefix: 'statistics/',
     iconName: 'chart',
     iconSize: 22,
