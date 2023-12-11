@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import NavBarBase from '@components/NavBar/NavBarBase';
 import { css } from '@emotion/react';
 
+// TODO: refactor this
 const popupIconsToggle = (isVisible: boolean) => css`
   & a > button {
     display: ${isVisible ? 'block' : 'none'};
@@ -14,12 +15,13 @@ const popupIconsToggle = (isVisible: boolean) => css`
   }
 `;
 
+// TODO: refactor this
 const staticIconsToggle = (isVisible: boolean) => css`
   & a > div {
     display: ${isVisible ? 'flex' : 'none'};
   }
   & > div > div > div > div:nth-of-type(2) {
-    display: ${isVisible ? 'block' : 'none'};
+    display: ${isVisible ? 'flex' : 'none'};
   }
   & > div > div > div:nth-of-type(2) {
     display: ${isVisible ? 'block' : 'none'};

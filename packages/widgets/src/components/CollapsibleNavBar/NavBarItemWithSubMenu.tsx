@@ -60,7 +60,7 @@ export const NavBarItemWithSubMenu = ({
             )}
             renderTitle={(data) => (
               <Wrapper onClick={data.onClick} css={S.AccordionTitleWrapper}>
-                <Link to="" className={`icon-wrapper${match ? ' active' : ''}`}>
+                <Link to="" className={match ? ' active' : ''}>
                   <CollapsibleNavBarPopover
                     triggerIcon={<Icon />}
                     title={data.title}
@@ -76,8 +76,11 @@ export const NavBarItemWithSubMenu = ({
                     }
                   />
                 </Link>
-                <Icon />
-                <AccordionTitle {...data} css={S.AccordionTitle} />
+
+                <Link to="" className={`icon-wrapper${match ? ' active' : ''}`}>
+                  <Icon />
+                  <AccordionTitle {...data} css={S.AccordionTitle} />
+                </Link>
               </Wrapper>
             )}
           />

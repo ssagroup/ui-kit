@@ -3,8 +3,15 @@ import { Theme, css } from '@emotion/react';
 export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
   align-items: center;
+
   ${theme.mediaQueries.md} {
+    display: flex;
     justify-content: center;
+  }
+
+  & div.icon-wrapper {
+    width: 100%;
+    gap: 0;
   }
 
   & .trigger-icon {
