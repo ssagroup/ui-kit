@@ -4,13 +4,20 @@ import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import * as S from './styles';
 
 const Link = styled(CollapsibleNavBarLink)`
-  &:hover {
+  width: 100%;
+  padding: 4.8px 0;
+
+  &:first-of-type {
+    padding-top: 15px;
+  }
+
+  &:not(.active):hover {
     filter: initial;
   }
 
   &.active {
     text-decoration: underline;
-    filter: unset;
+    filter: initial;
   }
 `;
 

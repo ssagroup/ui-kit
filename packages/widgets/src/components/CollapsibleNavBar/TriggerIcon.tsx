@@ -11,11 +11,11 @@ export const TriggerIcon = ({
   className?: string;
 }) => {
   const theme = useTheme();
-  console.log(iconName, className);
   return (
     <Wrapper
       css={css`
         width: auto;
+        min-width: 22px;
         justify-content: center;
         overflow: visible;
         position: relative;

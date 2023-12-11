@@ -8,15 +8,6 @@ export const AccordionTitleWrapper = (theme: Theme) => css`
   }
 `;
 
-/*
- *
-  & svg {
-    & path {
-      fill: none;
-    }
-  }
- *
- * */
 export const AccordionTitle = (theme: Theme) => css`
   padding: 0 14px 0 22px;
   ${theme.mediaQueries.md} {
@@ -30,13 +21,8 @@ export const AccordionContent = (theme: Theme) => css`
   width: 100%;
   padding-left: 44px;
   overflow: hidden;
-  & a {
-    width: 100%;
-    padding: 4.8px 0;
-    &:first-of-type {
-      padding-top: 15px;
-    },
-  },
+  perspective: 1px;
+
   ${theme.mediaQueries.md} {
     display: none;
   }

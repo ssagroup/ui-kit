@@ -110,9 +110,6 @@ export const CollapsibleNavBarPopover = ({
                 '&:first-of-type': {
                   paddingTop: 5,
                 },
-                '&:last-of-type': {
-                  paddingBottom: 9,
-                },
                 '&:hover': {
                   background: '#62656B',
                 },
