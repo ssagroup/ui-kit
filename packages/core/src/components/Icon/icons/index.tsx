@@ -103,13 +103,13 @@ const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {
   return res;
 }, {} as IMapIcons);
 
-const IconMapComponent = ({ name, color, size, ...props }: IconProps) => {
+const IconMapComponent = ({ name, color, ...props }: IconProps) => {
   const Component = iconsMap[name];
 
   if (Component == null) {
     return null;
   }
 
-  return <Component fill={color} size={size} {...props} />;
+  return <Component fill={color} {...props} />;
 };
 export default IconMapComponent;
