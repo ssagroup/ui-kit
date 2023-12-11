@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import NavBarLink from '@components/NavBar/NavBarLink';
 
-// backdrop-filter: blur(0);
 const CollapsibleNavBarLink = styled(NavBarLink)`
   text-decoration: none;
   display: inline-flex;
+  align-items: center;
   gap: 20px;
   color: ${({ theme }) => theme.colors.white80};
 

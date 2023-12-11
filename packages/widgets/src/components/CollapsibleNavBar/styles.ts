@@ -2,9 +2,13 @@ import { Theme, css } from '@emotion/react';
 
 export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
-  align-items: flex-start;
+  align-items: center;
   ${theme.mediaQueries.md} {
     justify-content: center;
+  }
+
+  & .trigger-icon {
+    height: 22px;
   }
 `;
 
