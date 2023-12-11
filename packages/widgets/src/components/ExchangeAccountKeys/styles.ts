@@ -80,18 +80,8 @@ export const SecretKey = css`
   display: flex;
   align-items: center;
   gap: 7px;
-  height: 24px;
-
-  span {
-    padding: 4px 0 0;
-  }
 `;
 
-export const NoWrapText = (theme: Theme) => css`
-  white-space: nowrap;
-  overflow-x: auto;
-
-  ${theme.mediaQueries.md} {
-    overflow-x: visible;
-  }
+export const LetterWrap = css`
+  overflow-wrap: anywhere;
 `;
