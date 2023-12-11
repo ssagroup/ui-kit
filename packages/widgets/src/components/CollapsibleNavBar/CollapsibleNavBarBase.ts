@@ -42,9 +42,14 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
       ${({ theme }) => theme.colors.greyDarker} -0.36%,
       ${({ theme }) => theme.colors.greyDarker} 100%
     );
+    align-items: flex-start;
     min-width: 100%;
     width: 100%;
     height: 100%;
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      height: initial;
+    }
   }
 
   & > input[type='checkbox'] {
@@ -86,7 +91,6 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     padding: 0;
     position: static;
     z-index: 0;
-    height: auto;
     min-width: unset;
 
     & li {
