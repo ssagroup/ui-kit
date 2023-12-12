@@ -52,6 +52,7 @@ export const FiltersBlock = () => {
               padding: '11px 15px 9px 10px',
               '& + ul': {
                 minWidth: 150,
+                maxHeight: '50vh',
               },
               [theme.mediaQueries.md]: {
                 padding: '0 15px 0 10px',
