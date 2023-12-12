@@ -1,13 +1,14 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const LogIn = ({ fill = '#000', size = 24 }: SVGProps) => (
+export const LogIn = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
     fill="none"
     viewBox="0 0 15 20"
     xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink">
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    {...props}>
     <title>Log in</title>
     <path
       d="M7.39504 9.17067C8.58623 9.17067 9.61771 8.74344 10.4605 7.90051C11.3033 7.05773 11.7305 6.02652 11.7305 4.8352C11.7305 3.64428 11.3033 2.61294 10.4604 1.76988C9.61743 0.92723 8.58609 0.5 7.39504 0.5C6.20371 0.5 5.17251 0.92723 4.32972 1.77002C3.48694 2.6128 3.05957 3.64414 3.05957 4.8352C3.05957 6.02652 3.48694 7.05786 4.32986 7.90065C5.17279 8.7433 6.20413 9.17067 7.39504 9.17067Z"

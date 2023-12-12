@@ -1,5 +1,4 @@
 import { useMatch } from 'react-router-dom';
-import styled from '@emotion/styled';
 import {
   AccordionGroupContextProvider,
   AccordionGroup,
@@ -8,44 +7,28 @@ import {
   AccordionTitle,
 } from '@ssa-ui-kit/core';
 import CollapsibleNavBarItem from './CollapsibleNavBarItem';
+import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import { NavBarAccordionContent } from './NavBarAccordionContent';
 import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
 import { CollapsibleNavBarGroup } from './types';
 import * as S from './styles';
 
-const IconWrapper = styled.div`
-  width: 24px;
-  height: 24px;
-  ${({ theme }) => S.SVGMainStyle(theme)}
-
-  &:hover svg {
-    ${({ theme }) => S.SVGHoverShadow(theme)}
-  }
-
-  /* This is the duplicate from <NavBarLink /> */
-  &.active {
-    filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
-    color: ${({ theme }) => theme.colors.white};
-
-    svg {
-      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
-      path {
-        fill: ${({ theme }) => theme.colors.white};
-      }
-    }
-  }
-`;
+const Link = CollapsibleNavBarLink.withComponent('div');
 
 export const NavBarItemWithSubMenu = ({
   item,
 }: {
   item: CollapsibleNavBarGroup;
 }) => {
-  const { iconName, iconSize, title, items, prefix } = item;
+  const { iconName, iconSize, title, items, prefix, css } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
   const match = useMatch(prefix + ':id');
+
+  const Icon = () => (
+    <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
+  );
 
   return (
     <AccordionGroupContextProvider key={uniqName}>
@@ -77,12 +60,9 @@ export const NavBarItemWithSubMenu = ({
             )}
             renderTitle={(data) => (
               <Wrapper onClick={data.onClick} css={S.AccordionTitleWrapper}>
-                <IconWrapper
-                  className={`icon-wrapper${match ? ' active' : undefined}`}>
+                <Link to="" className={match ? ' active' : ''}>
                   <CollapsibleNavBarPopover
-                    triggerIcon={
-                      <TriggerIcon iconName={iconName} iconSize={iconSize} />
-                    }
+                    triggerIcon={<Icon />}
                     title={data.title}
                     content={
                       <NavBarAccordionContent
@@ -95,9 +75,12 @@ export const NavBarItemWithSubMenu = ({
                       />
                     }
                   />
-                </IconWrapper>
-                <TriggerIcon iconName={iconName} iconSize={iconSize} />
-                <AccordionTitle {...data} css={S.AccordionTitle} />
+                </Link>
+
+                <Link to="" className={`icon-wrapper${match ? ' active' : ''}`}>
+                  <Icon />
+                  <AccordionTitle {...data} css={S.AccordionTitle} />
+                </Link>
               </Wrapper>
             )}
           />

@@ -1,12 +1,13 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const ArrowUp = ({ fill = '#000', size = 24 }: SVGProps) => (
+export const ArrowUp = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
     viewBox="0 0 7 8"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg">
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}>
     <title>Arrow Up</title>
     <path
       d="M3.17757 0.92293L3.17757 7.07727"

@@ -1,13 +1,14 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Invisible = ({ fill = '#000', size = 24 }: SVGProps) => (
+export const Invisible = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink">
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    {...props}>
     <title>Invisible</title>
     <path
       d="M14.5299 9.46992L9.46992 14.5299C8.81992 13.8799 8.41992 12.9899 8.41992 11.9999C8.41992 10.0199 10.0199 8.41992 11.9999 8.41992C12.9899 8.41992 13.8799 8.81992 14.5299 9.46992Z"

@@ -1,13 +1,14 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Plus = ({ fill = '#000', size = 24 }: SVGProps) => (
+export const Plus = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
     viewBox="0 0 10 10"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink">
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    {...props}>
     <title>Plus</title>
     <path
       d="M1 5H9"

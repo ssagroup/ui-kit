@@ -1,18 +1,14 @@
 import React from 'react';
-import { CommonProps } from '@global-types/emotion';
 import { iconsList } from './icons/iconsList';
 
-export interface IconProps extends CommonProps {
-  name: keyof IMapIcons;
-  color?: string;
+export interface SVGProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
+}
+
+export interface IconProps extends Omit<SVGProps, 'fill'> {
+  name: keyof IMapIcons;
 }
 
 export type IMapIcons = {
   [key in (typeof iconsList)[number]]: React.ElementType;
 };
-
-export interface SVGProps {
-  fill?: string;
-  size?: number;
-}

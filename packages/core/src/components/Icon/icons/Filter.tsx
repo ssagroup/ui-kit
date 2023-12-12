@@ -1,12 +1,13 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Filter = ({ fill = '#000', size = 24 }: SVGProps) => (
+export const Filter = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
     height={`${size}px`}
     viewBox="0 0 21 20"
-    fill="none">
+    fill="none"
+    {...props}>
     <title>Filter</title>
     <path
       fillRule="evenodd"

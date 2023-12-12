@@ -5,15 +5,16 @@ import { Logo } from './stories/Logo';
 
 describe('CollapsibleNavBar', () => {
   it('Should be correctly rendered', () => {
-    const { queryByText, getAllByText } = render(
+    const { getByText, getAllByText } = render(
       <StoryComponent items={ITEMS} renderLogo={<Logo />} />,
     );
 
-    queryByText('Dashboard');
-    queryByText('Bots');
-    queryByText('Statistics');
-    queryByText('Max in Work');
-    queryByText('History');
+    getByText('Dashboard');
+    getByText('Bots');
+    getByText('Notifications');
+    getByText('Statistics');
+    getByText('Max in Work');
+    getByText('History');
     getAllByText('Settings');
   });
 

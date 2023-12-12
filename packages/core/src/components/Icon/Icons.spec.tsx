@@ -1,10 +1,15 @@
+import { css, SerializedStyles } from '@emotion/react';
 import Icon from '@components/Icon';
 import { iconsList } from '@components/Icon';
-import { screen, waitFor } from '../../../customTest';
+import { screen } from '../../../customTest';
 import { IMapIcons } from './types';
 
-const renderIcon = async (icon: keyof IMapIcons) => {
-  render(<Icon name={icon} size={12} color="#fff" />);
+const renderIcon = async (
+  icon: keyof IMapIcons,
+  size?: number,
+  css?: SerializedStyles,
+) => {
+  render(<Icon name={icon} size={size} color="#fff" css={css} />);
 
   const iconTitle = new RegExp(icon.replace('-', ' '), 'i');
 
@@ -29,35 +34,56 @@ const checkFillOrStrokeAttrs = (
     try {
       expect(el).toHaveAttribute('stroke');
     } catch (e) {
-      throw new Error(`the icon ${name} is missing attribute fill or stroke`);
+      throw new Error(`the icon "${name}" is missing attribute fill or stroke`);
     }
   }
 };
 
 describe('Icons', () => {
   iconsList.forEach((iconName) => {
-    it(`Render ${iconName} icon with attributes`, async () => {
-      const [icon, path] = await renderIcon(iconName as keyof IMapIcons);
+    it(`Renders "${iconName}" icon with attributes`, async () => {
+      const [, path] = await renderIcon(iconName as keyof IMapIcons);
 
-      await waitFor(() => {
-        expect(icon).toBeInTheDocument();
-        expect(icon).toHaveAttribute('height', '12px');
-
-        checkFillOrStrokeAttrs(path, iconName);
-      });
+      checkFillOrStrokeAttrs(path, iconName);
     });
-  });
 
-  it('Default render with 24px', async () => {
-    render(<Icon name="calendar" color="#fff" />);
+    it(`Renders "${iconName}" icon with custom styles`, async () => {
+      const [icon] = await renderIcon(
+        iconName as keyof IMapIcons,
+        undefined,
+        css`
+          background-color: magenta;
+        `,
+      );
 
-    await waitFor(() => {
-      const icon = screen
-        .getByTitle('Calendar')
-        .closest('svg') as unknown as HTMLElement;
+      expect(icon).toHaveStyle(`
+        background-color: magenta;
+      `);
+    });
+
+    it(`Renders "${iconName}" icon with the default size`, async () => {
+      const [icon] = await renderIcon(iconName as keyof IMapIcons);
 
       expect(icon).toBeInTheDocument();
-      expect(icon).toHaveAttribute('height', '24px');
+      const width = (icon as unknown as SVGElement).getAttribute('width');
+      const height = (icon as unknown as SVGElement).getAttribute('height');
+
+      const sizeRegEx = /^\d+px$/;
+      expect(width).toMatch(sizeRegEx);
+      expect(height).toMatch(sizeRegEx);
+    });
+
+    it(`Renders "${iconName}" icon with a custom size`, async () => {
+      const [icon] = await renderIcon(iconName as keyof IMapIcons, 12);
+
+      expect(icon).toBeInTheDocument();
+
+      if (iconName === 'more-vertical') {
+        expect(icon).toHaveAttribute('width', '3px');
+      } else {
+        expect(icon).toHaveAttribute('width', '12px');
+      }
+      expect(icon).toHaveAttribute('height', '12px');
     });
   });
 });

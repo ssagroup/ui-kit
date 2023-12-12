@@ -1,47 +1,32 @@
 import { Theme, css } from '@emotion/react';
 
-export const SVGHoverShadow = (theme: Theme) => css`
-  filter: drop-shadow(-4px 4px 14px ${theme.colors.white});
-  & path {
-    fill: ${theme.colors.white};
-  }
-  & circle {
-    stroke: ${theme.colors.white};
-  }
-`;
-
-export const SVGMainStyle = (theme: Theme) => css`
-  & svg {
-    & path {
-      fill: ${theme.colors.greyDisabledCheckbox};
-    }
-    & circle {
-      stroke: ${theme.colors.greyDisabledCheckbox};
-    }
-  }
-`;
-
 export const AccordionTitleWrapper = (theme: Theme) => css`
   cursor: pointer;
-  align-items: flex-start;
-  ${SVGMainStyle(theme)}
+  align-items: center;
+
   ${theme.mediaQueries.md} {
+    display: flex;
     justify-content: center;
   }
-  &:hover {
-    & > div:nth-of-type(2) > svg {
-      ${SVGHoverShadow(theme)}
-    }
+
+  & div.icon-wrapper {
+    width: 100%;
+    gap: 0;
+  }
+
+  & div.icon-wrapper:not(.active):hover > button svg path,
+  & div.icon-wrapper.active > button svg path {
+    stroke: #fff;
+    fill: none;
+  }
+
+  & .trigger-icon {
+    height: 22px;
   }
 `;
 
 export const AccordionTitle = (theme: Theme) => css`
   padding: 0 14px 0 22px;
-  & svg {
-    & path {
-      fill: none;
-    }
-  }
   ${theme.mediaQueries.md} {
     display: none;
   }
@@ -53,13 +38,8 @@ export const AccordionContent = (theme: Theme) => css`
   width: 100%;
   padding-left: 44px;
   overflow: hidden;
-  & a {
-    width: 100%;
-    padding: 4.8px 0;
-    &:first-of-type {
-      padding-top: 15px;
-    },
-  },
+  perspective: 1px;
+
   ${theme.mediaQueries.md} {
     display: none;
   }

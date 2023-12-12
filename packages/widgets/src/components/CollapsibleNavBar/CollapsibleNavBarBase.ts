@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import NavBarBase from '@components/NavBar/NavBarBase';
 import { css } from '@emotion/react';
 
+// TODO: refactor this
 const popupIconsToggle = (isVisible: boolean) => css`
   & a > button {
     display: ${isVisible ? 'block' : 'none'};
@@ -14,12 +15,13 @@ const popupIconsToggle = (isVisible: boolean) => css`
   }
 `;
 
+// TODO: refactor this
 const staticIconsToggle = (isVisible: boolean) => css`
   & a > div {
     display: ${isVisible ? 'flex' : 'none'};
   }
   & > div > div > div > div:nth-of-type(2) {
-    display: ${isVisible ? 'block' : 'none'};
+    display: ${isVisible ? 'flex' : 'none'};
   }
   & > div > div > div:nth-of-type(2) {
     display: ${isVisible ? 'block' : 'none'};
@@ -40,9 +42,14 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
       ${({ theme }) => theme.colors.greyDarker} -0.36%,
       ${({ theme }) => theme.colors.greyDarker} 100%
     );
+    align-items: flex-start;
     min-width: 100%;
     width: 100%;
     height: 100%;
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      height: initial;
+    }
   }
 
   & > input[type='checkbox'] {
@@ -84,7 +91,6 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
     padding: 0;
     position: static;
     z-index: 0;
-    height: auto;
     min-width: unset;
 
     & li {

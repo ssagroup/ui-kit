@@ -1,13 +1,18 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Information = ({ fill = '#000', size = 24 }: SVGProps) => (
+export const Information = ({
+  fill = '#000',
+  size = 24,
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
     fill="none"
     viewBox="0 0 20 20"
     xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink">
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    {...props}>
     <title>Information</title>
     <path
       d="M9.99998 17.8889C14.3651 17.8889 17.9365 14.3175 17.9365 9.95238C17.9365 5.5873 14.3651 2.01587 9.99998 2.01587C5.6349 2.01587 2.06348 5.5873 2.06348 9.95238C2.06348 14.3175 5.6349 17.8889 9.99998 17.8889Z"
