@@ -1,8 +1,9 @@
+import { BaseSyntheticEvent, KeyboardEventHandler } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import type { Interpolation, Theme } from '@emotion/react';
-import { BaseSyntheticEvent, KeyboardEventHandler } from 'react';
 
-interface ExtendedInputProps extends React.HTMLAttributes<HTMLInputElement> {
+interface ExtendedInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   'data-testid'?: string;
 }
 

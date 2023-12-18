@@ -8,7 +8,8 @@ export const TextareaBase = styled.textarea`
   background-origin: border-box;
   background-clip: padding-box, border-box;
 
-  border: ${({ theme }) => `1px solid ${theme.colors.grey}`};
+  border: none;
+  box-shadow: ${({ theme }) => `inset 0 0 1.5px 0 ${theme.colors.grey}`};
 
   color: ${({ theme }) => theme.colors.greyDarker};
 
@@ -25,16 +26,17 @@ export const TextareaBase = styled.textarea`
   }
 
   &:hover {
-    border: ${({ theme }) => `1.4px solid ${theme.colors.greyDarker60};`};
+    box-shadow: ${({ theme }) =>
+      `inset 0 0 1.5px 0 ${theme.colors.greyDarker60}`};
   }
 
   &:focus {
-    border: ${({ theme }) => `2px solid ${theme.colors.grey40};`};
+    box-shadow: ${({ theme }) => `inset 0 0 1.5px 0 ${theme.colors.grey40}`};
   }
 
   &:disabled {
     color: ${({ theme }) => `${theme.colors.grey}`};
-    border: ${({ theme }) => `1px solid  ${theme.colors.grey}`};
+    box-shadow: ${({ theme }) => `inset 0 0 1.5px 0 ${theme.colors.grey}`};
     background: ${({ theme }) => theme.colors.greyLighter};
 
     &::placeholder {
