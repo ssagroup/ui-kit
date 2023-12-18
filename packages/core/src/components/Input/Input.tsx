@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
@@ -5,7 +6,6 @@ import { InputProps, InputStatusColors } from './types';
 import { InputStatusError } from './InputStatusError';
 import { InputStatusSuccess } from './InputStatusSuccess';
 import * as S from './styles';
-import { forwardRef } from 'react';
 
 const mapColors: InputStatusColors = {
   basic: S.basic,

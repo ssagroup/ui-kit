@@ -1,9 +1,6 @@
-export { AccordionGroup } from './AccordionGroup';
-export { AccordionContent } from './AccordionContent';
-export {
-  AccordionGroupContext,
-  AccordionGroupContextProvider,
-} from './AccordionContext';
-export { AccordionTitle } from './AccordionTitle';
-export { Accordion } from './Accordion';
+export * from './AccordionGroup';
+export * from './AccordionContent';
+export * from './AccordionContext';
+export * from './AccordionTitle';
+export * from './Accordion';
 export * from './types';
