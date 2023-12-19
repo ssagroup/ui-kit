@@ -11,5 +11,6 @@ export interface TextareaProps
   maxLength?: number;
   as?: React.ElementType;
   className?: string;
+  title?: string;
   setCountChar?: ReactEventHandler;
 }
