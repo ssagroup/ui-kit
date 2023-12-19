@@ -35,6 +35,7 @@ export const Basic: StoryObj<typeof Textarea> = (args: Args) => {
 
 Basic.args = {
   placeholder: 'Textarea',
+  title: 'Textarea title',
   name: 'textarea',
   validationSchema: {
     required: 'Required',

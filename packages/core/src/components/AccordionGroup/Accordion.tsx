@@ -13,12 +13,7 @@ export const Accordion = ({
   onClick,
   ...rest
 }: AccordionViewProps) => (
-  <CardBase
-    role="region"
-    tabIndex={0}
-    title={title}
-    css={wrapperStyles[size]}
-    {...rest}>
+  <CardBase role="region" tabIndex={0} css={wrapperStyles[size]} {...rest}>
     {renderTitle({ id, isOpened, title, size, ariaControls, onClick })}
     {renderContent({
       id: `${ariaControls}`,

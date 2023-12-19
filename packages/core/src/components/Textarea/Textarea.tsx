@@ -12,6 +12,7 @@ const Textarea = ({
   rows = 10,
   setCountChar,
   maxLength,
+  title,
 }: TextareaProps) => {
   if (!register) {
     throw new Error('Input component must be used within a Form component');
@@ -27,6 +28,7 @@ const Textarea = ({
       rows={rows}
       maxLength={maxLength}
       onChange={callAll(setCountChar, onChange)}
+      title={title}
       {...options}
     />
   );
