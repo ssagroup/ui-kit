@@ -105,7 +105,9 @@ const componentAccordionTests: ComponentAccordionTests = (
         const textContents = getAccordionText(accordion);
 
         expect(accordionGroupEl).toHaveTextContent(textContents);
-        expect(accordionGroupEl.getAttribute('title')).toEqual(accordion.title);
+        expect(accordionGroupEl.querySelector('button')).toHaveTextContent(
+          accordion.title,
+        );
       }
     });
 
@@ -141,7 +143,9 @@ const componentAccordionTests: ComponentAccordionTests = (
           'aria-controls',
           accordions[i].ariaControls,
         );
-        expect(accordionGroupEl.getAttribute('title')).toEqual(accordion.title);
+        expect(accordionGroupEl.querySelector('button')).toHaveTextContent(
+          accordion.title,
+        );
       }
     });
 
