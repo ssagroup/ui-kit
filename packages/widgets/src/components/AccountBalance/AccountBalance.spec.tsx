@@ -91,7 +91,7 @@ describe('AccountBalance', () => {
             label: 'BTC',
             legendValue: 1,
             value: 871.23,
-            customLegendItem: <span>5,244.37 USD</span>,
+            customLegendItem: <span>5,243.37 USD</span>,
           },
           {
             id: 'LTC',
@@ -104,7 +104,7 @@ describe('AccountBalance', () => {
       />,
     );
 
-    getByText('4,244.37 USD');
+    getByText('4,243.37 USD');
     getByText('5,243.37 USD');
   });
 });
