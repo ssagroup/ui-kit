@@ -38,13 +38,18 @@ export const PieChartLegend = ({
                     : label}
                 </Typography>
               ) : (
-                <Typography variant="subtitle" css={{ lineHeight: '12px' }}>
-                  <p>
+                <Typography
+                  variant="subtitle"
+                  css={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}>
+                  <span>
                     {legendValue as React.ReactNode} {label}
-                  </p>
-                  <p css={{ fontWeight: '400' }}>
+                  </span>
+                  <span css={{ fontWeight: '400' }}>
                     {value} {currency}
-                  </p>
+                  </span>
                 </Typography>
               )}
             </li>
@@ -53,20 +58,15 @@ export const PieChartLegend = ({
       </PieChartLegendList>
       {isValueList && (
         <PieChartLegendList css={valueListStyles}>
-          {data.map(
-            (item) =>
-              !item.customLegendItem && (
-                <li key={`subtitle-${item.id}`}>
-                  <Typography
-                    variant="subtitle"
-                    color={theme.colors.greyDarker60}>
-                    {typeof renderValue === 'function'
-                      ? renderValue(item)
-                      : item.value}
-                  </Typography>
-                </li>
-              ),
-          )}
+          {data.map((item) => (
+            <li key={`subtitle-${item.id}`}>
+              <Typography variant="subtitle" color={theme.colors.greyDarker60}>
+                {typeof renderValue === 'function'
+                  ? renderValue(item)
+                  : item.value}
+              </Typography>
+            </li>
+          ))}
         </PieChartLegendList>
       )}
     </Fragment>

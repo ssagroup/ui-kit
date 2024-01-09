@@ -5,6 +5,7 @@ import { mainTheme } from '@ssa-ui-kit/core';
 import { data } from './stories/fixtures';
 
 import { AccountBalance, AccountBalanceProps } from './index';
+import { css } from '@emotion/react';
 
 export default {
   title: 'Widgets/AccountBalance',
@@ -35,12 +36,29 @@ WithLink.args = {
   link: '/',
 };
 
-export const Custom: StoryObj<typeof AccountBalance> = {};
+export const Custom: StoryObj<typeof AccountBalance> = (
+  args: AccountBalanceProps,
+) => {
+  return (
+    <AccountBalance
+      {...args}
+      css={css`
+        ul li {
+          height: auto;
+        }
+      `}
+    />
+  );
+};
+
 Custom.args = {
   total: 48700.53569,
   currency: 'USDT',
   variant: 'withoutValueList',
-  chartColorPalette: [`${mainTheme.colors.blue}`, `${mainTheme.colors.green}`],
+  chartColorPalette: [
+    mainTheme.colors.blue as string,
+    mainTheme.colors.green as string,
+  ],
   legendColorPalette: ['blue', 'green'],
   data: [
     {
