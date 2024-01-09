@@ -10,6 +10,7 @@ type BalanceBase = {
   currency: string;
   legendColorPalette?: Array<keyof MainColors>;
   chartColorPalette?: string[];
+  variant?: 'valueList' | 'withoutValueList';
   data: Array<{
     id: string | number;
     value: number;

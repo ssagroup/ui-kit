@@ -17,6 +17,7 @@ export const BalancePieChart = withTheme(
     theme,
     chartColorPalette,
     legendColorPalette,
+    variant = 'valueList',
   }: BalancePieChartProps) => {
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
@@ -48,6 +49,8 @@ export const BalancePieChart = withTheme(
         <PieChartLegend
           data={data}
           colors={legendColorPalette || legendColorNames}
+          variant={variant}
+          currency={currency}
           markerStyles={css`
             width: 10px;
             height: 10px;

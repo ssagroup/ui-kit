@@ -9,6 +9,7 @@ export const AccountBalance = ({
   className,
   onClick,
   link,
+  variant = 'valueList',
   ...props
 }: AccountBalanceProps) => {
   const theme = useTheme();
@@ -55,7 +56,7 @@ export const AccountBalance = ({
             width: 100%;
             display: block;
           `}>
-          <BalancePieChart theme={theme} {...props} />
+          <BalancePieChart theme={theme} variant={variant} {...props} />
         </CardContent>
       </Card>
     </WithLink>

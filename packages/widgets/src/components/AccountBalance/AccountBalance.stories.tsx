@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { mainTheme } from '@ssa-ui-kit/core';
 
 import { data } from './stories/fixtures';
 
@@ -32,4 +33,27 @@ export const WithLink: StoryObj<typeof AccountBalance> = (
 WithLink.args = {
   ...Default.args,
   link: '/',
+};
+
+export const Custom: StoryObj<typeof AccountBalance> = {};
+Custom.args = {
+  total: 48700.53569,
+  currency: 'USDT',
+  variant: 'withoutValueList',
+  chartColorPalette: [`${mainTheme.colors.blue}`, `${mainTheme.colors.green}`],
+  legendColorPalette: ['blue', 'green'],
+  data: [
+    {
+      id: 'BTC',
+      label: 'BTC',
+      value: 571.23,
+      legendValue: 12323,
+    },
+    {
+      id: 'LTC',
+      label: 'LTC',
+      value: 530.25,
+      legendValue: 12323,
+    },
+  ],
 };

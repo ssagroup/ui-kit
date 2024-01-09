@@ -80,31 +80,32 @@ describe('AccountBalance', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('Renders with a custom values', () => {
+  it('Renders without value list', () => {
     const { getByText } = render(
       <AccountBalance
         total="798"
         currency="USDT"
+        variant="withoutValueList"
         data={[
           {
             id: 'BTC',
             label: 'BTC',
             legendValue: 1,
             value: 871.23,
-            customLegendItem: <span>5,243.37 USD</span>,
           },
           {
             id: 'LTC',
             label: 'LTC',
             legendValue: 7,
             value: 530.25,
-            customLegendItem: <span>4,243.37 USD</span>,
           },
         ]}
       />,
     );
 
-    getByText('4,243.37 USD');
-    getByText('5,243.37 USD');
+    getByText('1 BTC');
+    getByText('871.23 USDT');
+    getByText('7 LTC');
+    getByText('530.25 USDT');
   });
 });
