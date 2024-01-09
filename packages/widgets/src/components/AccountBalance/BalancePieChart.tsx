@@ -10,14 +10,21 @@ import { BalancePieChartTitle } from './BalancePieChartTitle';
 import { BalancePieChartProps } from './types';
 
 export const BalancePieChart = withTheme(
-  ({ total, currency, data, theme }: BalancePieChartProps) => {
+  ({
+    total,
+    currency,
+    data,
+    theme,
+    chartColorPalette,
+    legendColorPalette,
+    variant = 'valueList',
+  }: BalancePieChartProps) => {
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
-
     return (
       <PieChart
         data={data}
-        colors={pieChartColors}
+        colors={chartColorPalette || pieChartColors}
         animate={false}
         title={
           <BalancePieChartTitle
@@ -41,7 +48,9 @@ export const BalancePieChart = withTheme(
         `}>
         <PieChartLegend
           data={data}
-          colors={legendColorNames}
+          colors={legendColorPalette || legendColorNames}
+          variant={variant}
+          currency={currency}
           markerStyles={css`
             width: 10px;
             height: 10px;

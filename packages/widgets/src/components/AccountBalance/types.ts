@@ -1,4 +1,4 @@
-import { Theme } from '@ssa-ui-kit/core';
+import { MainColors, Theme } from '@ssa-ui-kit/core';
 import type { To } from 'react-router-dom';
 
 interface WithTheme {
@@ -8,6 +8,9 @@ interface WithTheme {
 type BalanceBase = {
   total: number | string;
   currency: string;
+  legendColorPalette?: Array<keyof MainColors>;
+  chartColorPalette?: string[];
+  variant?: 'valueList' | 'withoutValueList';
   data: Array<{
     id: string | number;
     value: number;
