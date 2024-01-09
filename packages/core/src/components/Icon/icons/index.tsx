@@ -44,6 +44,7 @@ import { iconsList } from './iconsList';
 import { Filter } from './Filter';
 import { Search } from './Search';
 import { Archive } from './Archive';
+import { UnArchive } from './UnArchive';
 import { Bin } from './Bin';
 import { Change } from './Change';
 import { Copy } from './Copy';
@@ -96,6 +97,7 @@ const componentsList = [
   Robot,
   Chart,
   Clock,
+  UnArchive,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {

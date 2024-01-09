@@ -52,4 +52,5 @@ export const iconsList = [
   'robot',
   'chart',
   'clock',
+  'unarchive',
 ] as const;
