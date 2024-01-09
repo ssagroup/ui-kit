@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { css } from '@emotion/react';
 import { mainTheme } from '@ssa-ui-kit/core';
 
 import { data } from './stories/fixtures';
 
 import { AccountBalance, AccountBalanceProps } from './index';
-import { css } from '@emotion/react';
 
 export default {
   title: 'Widgets/AccountBalance',
