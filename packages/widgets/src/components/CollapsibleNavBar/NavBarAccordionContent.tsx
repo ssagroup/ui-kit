@@ -26,12 +26,14 @@ export const NavBarAccordionContent = ({
   accordionUniqueName,
   prefix,
   isPopover,
+  onClick,
   ...rest
 }: RenderContentProps & {
   items: Array<{ path: string; title: string }>;
   accordionUniqueName: string;
   prefix?: string;
   isPopover?: boolean;
+  onClick?: () => void;
 }) => (
   <AccordionContent
     {...rest}
@@ -41,6 +43,7 @@ export const NavBarAccordionContent = ({
         key={`${accordionUniqueName}-link-${subMenuItem.title
           .replace(' ', '')
           .toLowerCase()}`}
+        onClick={onClick}
         to={'/' + prefix + subMenuItem.path}>
         {subMenuItem.title}
       </Link>

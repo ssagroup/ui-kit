@@ -6,8 +6,10 @@ import * as T from './types';
 
 export const NavBarItemWithoutSubMenu = ({
   item,
+  onClick,
 }: {
   item: T.CollapsibleNavBarItem;
+  onClick?: () => void;
 }) => {
   const { path, iconName, title, iconSize, css } = item;
   const Icon = () => (
@@ -16,7 +18,7 @@ export const NavBarItemWithoutSubMenu = ({
 
   return (
     <CollapsibleNavBarItem key={path}>
-      <CollapsibleNavBarLink to={'/' + path}>
+      <CollapsibleNavBarLink to={'/' + path} onClick={onClick}>
         <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
         <Icon />
         <span>{title}</span>

@@ -18,8 +18,10 @@ const Link = CollapsibleNavBarLink.withComponent('div');
 
 export const NavBarItemWithSubMenu = ({
   item,
+  onClick,
 }: {
   item: CollapsibleNavBarGroup;
+  onClick?: () => void;
 }) => {
   const { iconName, iconSize, title, items, prefix, css } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
@@ -55,6 +57,7 @@ export const NavBarItemWithSubMenu = ({
                 accordionUniqueName={accordionUniqName}
                 prefix={prefix}
                 isPopover={false}
+                onClick={onClick}
                 {...props}
               />
             )}
