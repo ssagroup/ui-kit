@@ -1,7 +1,9 @@
 import { useState, useId, useEffect } from 'react';
 import { Wrapper } from '@ssa-ui-kit/core';
+import { useWindowSize } from '@ssa-ui-kit/hooks';
 import * as S from './styles';
 
+import { SCREEN_SIZES } from '../../consts';
 import CollapsibleNavBarBase from './CollapsibleNavBarBase';
 import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
 import CollapsibleNavBarList from './CollapsibleNavBarList';
@@ -10,7 +12,6 @@ import { CollapsibleNavBarExtendedProps } from './types';
 import { NavContentToggle } from './CollapsibleNavContentToggle';
 import { NavBarItemWithSubMenu } from './NavBarItemWithSubMenu';
 import { NavBarItemWithoutSubMenu } from './NavBarItemWithoutSubMenu';
-
 /**
  * UI Component that shows the collapsible navigation bar
  */
@@ -19,18 +20,19 @@ export const CollapsibleNavBar = ({
   renderLogo,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
+  const { width } = useWindowSize();
   const [isChecked, onToggle] = useState(false);
+  const isMobile = width < SCREEN_SIZES['900'].width;
 
   useEffect(() => {
-    const onResize = () => {
-      onToggle(false);
-    };
+    onToggle(false);
+  }, [width]);
 
-    window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, []);
+  const handleCloseMobileMenu = () => {
+    if (isMobile) {
+      onToggle(!isChecked);
+    }
+  };
 
   return (
     <CollapsibleNavBarBase className={isChecked ? 'opened' : undefined}>
@@ -55,9 +57,17 @@ export const CollapsibleNavBar = ({
             const { iconName, title } = item;
             const keyName = iconName + title.replace(' ', '').toLowerCase();
             return 'items' in item ? (
-              <NavBarItemWithSubMenu item={item} key={keyName} />
+              <NavBarItemWithSubMenu
+                item={item}
+                key={keyName}
+                onClick={handleCloseMobileMenu}
+              />
             ) : (
-              <NavBarItemWithoutSubMenu item={item} key={keyName} />
+              <NavBarItemWithoutSubMenu
+                item={item}
+                key={keyName}
+                onClick={handleCloseMobileMenu}
+              />
             );
           })}
         </CollapsibleNavBarList>
