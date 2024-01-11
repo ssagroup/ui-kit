@@ -40,5 +40,11 @@ Please refer to our [CONTRIBUTING.md](https://github.com/ssagroup/ui-kit/blob/ma
 
 [MIT](https://github.com/ssagroup/ui-kit/blob/main/LICENSE)  
 
+## Thanks
+
+<a href="https://www.lost-pixel.com/"><img src="https://user-images.githubusercontent.com/29632358/168112844-77e76a0d-b96f-4bc8-b753-cd39f4afd428.png" width="100" height="100" alt="Lost Pixel" /></a>
+
+Thanks to [Lost Pixel](https://www.lost-pixel.com/) for providing the visual testing platform that helps us review UI changes and catch visual regressions.
+
 
 
