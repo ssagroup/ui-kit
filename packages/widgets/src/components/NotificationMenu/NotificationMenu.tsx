@@ -42,12 +42,12 @@ export const NotificationMenu = ({
           </PopoverClose>
           <PopoverHeading variant="h5" weight="bold">
             Notification
-            <div data-testid="element-wrapper">{children}</div>
           </PopoverHeading>
-          {isLoading ? (
-            <div css={Loading}></div>
-          ) : (
-            <PopoverDescription variant="body1">
+          <PopoverDescription variant="body1">
+            <div data-testid="element-wrapper">{children}</div>
+            {isLoading ? (
+              <div css={Loading}></div>
+            ) : (
               <div css={List}>
                 {notifications.map((item, index) => {
                   return (
@@ -62,8 +62,8 @@ export const NotificationMenu = ({
                   );
                 })}
               </div>
-            </PopoverDescription>
-          )}
+            )}
+          </PopoverDescription>
         </div>
         {rightButton || leftButton ? (
           <div css={ButtonsWrapper}>
