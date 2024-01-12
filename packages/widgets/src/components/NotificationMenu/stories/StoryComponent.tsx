@@ -8,6 +8,7 @@ import {
   disableButton,
   divideOnSubArr,
   getMockData,
+  notificationData,
   readAll,
 } from '../helpers';
 import { ButtonGroupCustom } from '../styles';
@@ -26,11 +27,11 @@ export const StoryComponent = () => {
 
   const handleClickOpen = () => () => {
     if (!isLoading) return;
+    setButtonItems(notificationData.groupButtonItems);
     getMockData().then((data) => {
       setIsLoading(false);
       setNotifications(data.notificationItems);
       setReadNotifications(data.notificationItems);
-      setButtonItems(data.groupButtonItems);
     });
   };
 
