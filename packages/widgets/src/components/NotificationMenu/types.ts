@@ -4,7 +4,7 @@ export interface NotificationMenuProps {
   trigger: string | JSX.Element;
   notifications: Array<NotificationCardProps>;
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   isLoading: boolean;
   leftButton?: string | JSX.Element | null;
   rightButton?: string | JSX.Element;
