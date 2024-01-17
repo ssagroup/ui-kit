@@ -51,6 +51,7 @@ import { Copy } from './Copy';
 import { Robot } from './Robot';
 import { Chart } from './Chart';
 import { Clock } from './Clock';
+import { Cogwheel } from './Cogwheel';
 
 const componentsList = [
   Diet,
@@ -98,6 +99,7 @@ const componentsList = [
   Chart,
   Clock,
   UnArchive,
+  Cogwheel,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {
