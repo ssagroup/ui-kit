@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { ButtonGroup } from './ButtonGroup';
 import { items } from './helpers';
+import { ExternalStateStory } from './stories/ExternalState';
 
 export default {
   title: 'Components/ButtonGroup',
@@ -13,6 +14,12 @@ export const Default: StoryObj<typeof ButtonGroup> = () => {
 };
 
 Default.args = {};
+
+export const ExternalState: StoryObj<typeof ButtonGroup> = () => {
+  return <ExternalStateStory />;
+};
+
+ExternalState.args = {};
 
 export const CustomStyle: StoryObj<typeof ButtonGroup> = () => {
   const theme = useTheme();
