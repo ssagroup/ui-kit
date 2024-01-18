@@ -12,5 +12,6 @@ export interface TextareaProps
   as?: React.ElementType;
   className?: string;
   title?: string;
+  onPaste?: React.ClipboardEventHandler<HTMLTextAreaElement>;
   setCountChar?: ReactEventHandler;
 }

@@ -14,6 +14,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       rows = 10,
       maxLength,
       title,
+      onPaste,
       register,
       setCountChar,
     }: TextareaProps,
@@ -33,6 +34,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         rows={rows}
         maxLength={maxLength}
         onChange={callAll(setCountChar, onChange)}
+        onPaste={onPaste}
         title={title}
         {...options}
         ref={useMergeRefs([options.ref, ref])}
