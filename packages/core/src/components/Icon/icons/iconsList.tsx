@@ -55,4 +55,7 @@ export const iconsList = [
   'unarchive',
   'cogwheel',
   'circular',
+  'ban-user',
+  'confirm-email',
+  'unlock',
 ] as const;

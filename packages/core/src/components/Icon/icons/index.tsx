@@ -53,6 +53,9 @@ import { Chart } from './Chart';
 import { Clock } from './Clock';
 import { Cogwheel } from './Cogwheel';
 import { Circular } from './Circular';
+import { BanUser } from './BanUser';
+import { ConfirmEmail } from './ConfirmEmail';
+import { Unlock } from './Unlock';
 
 const componentsList = [
   Diet,
@@ -102,6 +105,9 @@ const componentsList = [
   UnArchive,
   Cogwheel,
   Circular,
+  BanUser,
+  ConfirmEmail,
+  Unlock,
 ];
 
 const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {
