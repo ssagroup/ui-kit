@@ -54,5 +54,5 @@ export const iconsList = [
   'clock',
   'unarchive',
   'cogwheel',
-  'rebalance',
+  'circular',
 ] as const;
