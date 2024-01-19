@@ -23,7 +23,7 @@ export const NavBarItemWithSubMenu = ({
   item: CollapsibleNavBarGroup;
   onClick?: () => void;
 }) => {
-  const { iconName, iconSize, title, items, prefix, css } = item;
+  const { iconName, iconSize, title, items, prefix, css, CustomIcon } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
   const match = useMatch(prefix + ':id');
@@ -81,7 +81,7 @@ export const NavBarItemWithSubMenu = ({
                 </Link>
 
                 <Link to="" className={`icon-wrapper${match ? ' active' : ''}`}>
-                  <Icon />
+                  {CustomIcon ? <CustomIcon /> : <Icon />}
                   <AccordionTitle {...data} css={S.AccordionTitle} />
                 </Link>
               </Wrapper>

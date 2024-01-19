@@ -11,9 +11,14 @@ export const NavBarItemWithoutSubMenu = ({
   item: T.CollapsibleNavBarItem;
   onClick?: () => void;
 }) => {
-  const { path, iconName, title, iconSize, css } = item;
+  const { path, iconName, title, iconSize, css, CustomIcon } = item;
   const Icon = () => (
-    <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
+    <TriggerIcon
+      iconName={iconName}
+      iconSize={iconSize}
+      CustomIcon={CustomIcon}
+      css={{ ...css }}
+    />
   );
 
   return (
