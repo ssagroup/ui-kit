@@ -1,3 +1,4 @@
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { IMapIcons } from '@ssa-ui-kit/core';
 
 export interface INavBarProps {
@@ -5,12 +6,14 @@ export interface INavBarProps {
 }
 
 export type NavBarExtendedItem = {
+  CustomIcon?: () => EmotionJSX.Element;
   path: string;
   iconName: keyof IMapIcons;
   title: string;
 };
 
 export type NavBarExtendedGroup = {
+  CustomIcon?: () => EmotionJSX.Element;
   prefix?: string;
   iconName: keyof IMapIcons;
   title: string;

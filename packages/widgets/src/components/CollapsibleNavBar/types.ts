@@ -5,9 +5,10 @@ export interface CollapsibleNavBarItem extends NavBarExtendedItem {
   css?: React.CSSProperties;
 }
 
-export interface CollapsibleNavBarGroup extends Required<NavBarExtendedGroup> {
+export interface CollapsibleNavBarGroup extends NavBarExtendedGroup {
   iconSize: number;
   css?: React.CSSProperties;
+  prefix: string;
 }
 
 export interface CollapsibleNavBarExtendedProps {

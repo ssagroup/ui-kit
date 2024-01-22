@@ -8,6 +8,7 @@ import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
 import { Logo } from './Logo';
 import { Layout } from './Layout';
+import { CustomIcon } from './CustomIcon';
 
 type Args = Parameters<typeof CollapsibleNavBar>[0];
 
@@ -51,3 +52,22 @@ export default {
 } as Meta<typeof CollapsibleNavBar>;
 
 export const Default = {};
+
+export const WithCustomIcon = {
+  title: 'With Custom Icon',
+  component: CollapsibleNavBar,
+  parameters: {
+    layout: 'fullscreen',
+  },
+  args: {
+    items: [
+      ...ITEMS,
+      {
+        path: 'custom',
+        CustomIcon,
+        title: 'Item with custom icon',
+      },
+    ],
+    renderLogo: <Logo />,
+  },
+} as Meta<typeof CollapsibleNavBar>;
