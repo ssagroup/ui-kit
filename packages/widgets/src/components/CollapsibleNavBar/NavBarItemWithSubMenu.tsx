@@ -23,7 +23,16 @@ export const NavBarItemWithSubMenu = ({
   item: CollapsibleNavBarGroup;
   onClick?: () => void;
 }) => {
-  const { iconName, iconSize, title, items, prefix, css, CustomIcon } = item;
+  const {
+    iconName,
+    iconSize,
+    title,
+    items,
+    prefix,
+    css,
+    CustomIcon,
+    mainAxisOffset,
+  } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
   const match = useMatch(prefix + ':id');
@@ -67,6 +76,7 @@ export const NavBarItemWithSubMenu = ({
                   <CollapsibleNavBarPopover
                     triggerIcon={<Icon />}
                     title={data.title}
+                    mainAxisOffset={mainAxisOffset}
                     content={
                       <NavBarAccordionContent
                         items={items}

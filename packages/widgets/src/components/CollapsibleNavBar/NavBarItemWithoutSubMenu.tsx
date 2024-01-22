@@ -11,20 +11,24 @@ export const NavBarItemWithoutSubMenu = ({
   item: T.CollapsibleNavBarItem;
   onClick?: () => void;
 }) => {
-  const { path, iconName, title, iconSize, css, CustomIcon } = item;
-  const Icon = () => (
-    <TriggerIcon
-      iconName={iconName}
-      iconSize={iconSize}
-      CustomIcon={CustomIcon}
-      css={{ ...css }}
-    />
-  );
+  const { path, iconName, title, iconSize, css, CustomIcon, mainAxisOffset } =
+    item;
+  const Icon = () => {
+    return CustomIcon ? (
+      <TriggerIcon CustomIcon={CustomIcon} css={{ ...css }} />
+    ) : (
+      <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
+    );
+  };
 
   return (
     <CollapsibleNavBarItem key={path}>
       <CollapsibleNavBarLink to={'/' + path} onClick={onClick}>
-        <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
+        <CollapsibleNavBarPopover
+          triggerIcon={<Icon />}
+          title={title}
+          mainAxisOffset={mainAxisOffset}
+        />
         <Icon />
         <span>{title}</span>
       </CollapsibleNavBarLink>

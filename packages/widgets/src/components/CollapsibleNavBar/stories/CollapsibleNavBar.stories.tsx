@@ -66,6 +66,7 @@ export const WithCustomIcon = {
         path: 'custom',
         CustomIcon,
         title: 'Item with custom icon',
+        mainAxisOffset: 24.5,
       },
     ],
     renderLogo: <Logo />,

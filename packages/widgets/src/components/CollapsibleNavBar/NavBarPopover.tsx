@@ -14,10 +14,12 @@ export const CollapsibleNavBarPopover = ({
   triggerIcon,
   title,
   content,
+  mainAxisOffset = 37,
 }: {
   triggerIcon: React.ReactElement;
   title: string;
   content?: React.ReactElement;
+  mainAxisOffset?: number;
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -39,7 +41,7 @@ export const CollapsibleNavBarPopover = ({
         open,
         middleware: [
           offset({
-            mainAxis: 37,
+            mainAxis: mainAxisOffset,
           }),
         ],
       }}
