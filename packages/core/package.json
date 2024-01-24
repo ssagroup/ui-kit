@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/core",
-  "version": "0.0.18-alpha",
+  "version": "0.0.19-alpha",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
