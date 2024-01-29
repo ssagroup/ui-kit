@@ -24,7 +24,7 @@ export const Default: StoryObj<typeof TradingInfoCard> = (
 };
 
 Default.args = {
-  value: '500',
+  value: 500.55,
   unit: 'USD',
   title: 'Turnover',
 };
