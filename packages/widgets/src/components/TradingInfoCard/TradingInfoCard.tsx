@@ -5,39 +5,45 @@ import TradingInfoCardTooltip from './TradingInfoCardTooltip';
 import TradingInfoCardWrapper from './TradingInfoCardWrapper';
 import { ITradingInfoCardProps } from './types';
 
-const TradingInfoCard = ({
+const TradingInfoCardView = ({
   value,
   unit,
   title,
-  onClick,
   icon,
   link,
+  onClick,
 }: ITradingInfoCardProps) => {
   const number = Number(value);
-  const isInteger = Number.isInteger(number);
-  const currentValue = Number.isNaN(number) ? value : Math.floor(number);
+  const currentValue = Number.isNaN(number)
+    ? value
+    : number.toFixed(1).includes('.0')
+    ? Math.floor(number)
+    : number.toFixed(1);
 
   return (
     <TradingInfoCardWrapper onClick={onClick} link={link}>
-      {isInteger || Number.isNaN(number) ? (
-        <TradingInfoCardContent value={currentValue} unit={unit} icon={icon} />
-      ) : (
-        <TradingInfoCardTooltip
-          trigger={
-            <TradingInfoCardContent
-              value={currentValue}
-              unit={unit}
-              icon={icon}
-            />
-          }>
-          {value} {unit}
-        </TradingInfoCardTooltip>
-      )}
+      <TradingInfoCardContent value={currentValue} unit={unit} icon={icon} />
       <CardContent>
         <Typography css={{ fontSize: '12px' }}>{title}</Typography>
       </CardContent>
     </TradingInfoCardWrapper>
   );
+};
+
+const TradingInfoCard = (props: ITradingInfoCardProps) => {
+  const { value, unit } = props;
+  const number = Number(value);
+  const isInteger = Number.isInteger(number);
+
+  if (isInteger || Number.isNaN(number)) {
+    return <TradingInfoCardView {...props} />;
+  } else {
+    return (
+      <TradingInfoCardTooltip trigger={<TradingInfoCardView {...props} />}>
+        {value} {unit}
+      </TradingInfoCardTooltip>
+    );
+  }
 };
 
 export default TradingInfoCard;

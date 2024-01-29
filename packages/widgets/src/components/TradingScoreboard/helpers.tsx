@@ -68,7 +68,7 @@ export const oneLineBoardArr = [
     title: 'Orders',
   },
   {
-    value: '500.025',
+    value: '500.125',
     unit: 'USD',
     title: 'Turnover',
   },
