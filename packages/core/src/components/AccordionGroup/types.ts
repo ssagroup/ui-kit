@@ -39,7 +39,7 @@ export type RenderContentProps = Pick<AccordionProps, 'id' | 'size'> &
     isOpened?: boolean;
     as?: React.ElementType;
     className?: string;
-  };
+  } & Record<string, any>;
 
 export interface AccordionViewProps extends AccordionProps {
   ariaControls?: string;
@@ -48,6 +48,7 @@ export interface AccordionViewProps extends AccordionProps {
   title: string;
   onClick?: () => void;
   children?: React.ReactNode;
+  contentProps?: Record<string, any>;
 }
 
 export interface IAccordionGroupContext {

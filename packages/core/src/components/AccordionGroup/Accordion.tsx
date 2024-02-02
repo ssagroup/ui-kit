@@ -8,6 +8,7 @@ export const Accordion = ({
   ariaControls,
   id,
   size = 'empty',
+  contentProps,
   renderTitle,
   renderContent,
   onClick,
@@ -19,6 +20,7 @@ export const Accordion = ({
       id: `${ariaControls}`,
       isOpened,
       size,
+      ...contentProps,
       ...{ ['aria-labelledby']: `${id}` },
     })}
   </CardBase>
