@@ -57,3 +57,25 @@ Focused.parameters = {
     focus: true,
   },
 };
+
+export const Disabled: StoryObj<typeof Textarea> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+
+Disabled.args = {
+  ...Basic.args,
+  disabled: true,
+};
+
+export const ReadOnly: StoryObj<typeof Textarea> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+
+ReadOnly.args = {
+  ...Basic.args,
+  readOnly: true,
+};
