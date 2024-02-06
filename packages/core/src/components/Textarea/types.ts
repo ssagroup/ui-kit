@@ -7,6 +7,7 @@ export interface TextareaProps
   placeholder?: string;
   validationSchema?: Record<string, unknown>;
   disabled?: boolean;
+  readOnly?: boolean;
   rows?: number;
   maxLength?: number;
   as?: React.ElementType;
