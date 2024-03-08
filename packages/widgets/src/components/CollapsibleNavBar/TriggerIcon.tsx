@@ -1,17 +1,15 @@
 import { css, useTheme } from '@emotion/react';
-import { Wrapper, Icon, IMapIcons, SVGProps } from '@ssa-ui-kit/core';
+import { Wrapper, Icon } from '@ssa-ui-kit/core';
+import { TriggerIconProps } from './types';
+
+type IconName = Parameters<typeof Icon>[0]['name'];
 
 export const TriggerIcon = ({
   iconName,
   iconSize,
   className,
   CustomIcon,
-}: {
-  iconName: keyof IMapIcons;
-  iconSize?: number;
-  className?: string;
-  CustomIcon?: (props: Omit<SVGProps, 'fill'>) => JSX.Element;
-}) => {
+}: TriggerIconProps) => {
   const theme = useTheme();
   return (
     <Wrapper
@@ -32,7 +30,7 @@ export const TriggerIcon = ({
         />
       ) : (
         <Icon
-          name={iconName}
+          name={iconName as IconName}
           color={theme.colors.grey}
           size={iconSize}
           className={className}

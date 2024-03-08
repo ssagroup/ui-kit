@@ -10,6 +10,7 @@ export type NavBarExtendedItem = {
   path: string;
   iconName: keyof IMapIcons;
   title: string;
+  mainAxisOffset?: number;
 };
 
 export type NavBarExtendedGroup = {
@@ -18,6 +19,7 @@ export type NavBarExtendedGroup = {
   iconName: keyof IMapIcons;
   title: string;
   items: Array<{ path: string; title: string }>;
+  mainAxisOffset?: number;
 };
 
 export interface INavBarExtendedProps {
