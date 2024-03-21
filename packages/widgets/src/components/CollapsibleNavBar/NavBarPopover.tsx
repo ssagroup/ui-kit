@@ -67,7 +67,8 @@ export const CollapsibleNavBarPopover = ({
             display: 'block',
           },
           zIndex: 2,
-        }}>
+        }}
+        isFocusManagerDisabled={true}>
         <PopoverHeading
           css={{
             color: theme.colors.white,

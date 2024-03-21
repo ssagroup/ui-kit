@@ -9,8 +9,13 @@ import Wrapper from '@components/Wrapper';
 
 export const PopoverContent = React.forwardRef<
   HTMLDivElement,
-  React.HTMLProps<HTMLDivElement>
->(function PopoverContent({ style, ...props }, propRef) {
+  React.HTMLProps<HTMLDivElement> & {
+    isFocusManagerDisabled?: boolean;
+  }
+>(function PopoverContent(
+  { style, isFocusManagerDisabled = false, ...props },
+  propRef,
+) {
   const { context: floatingContext, ...context } = usePopoverContext();
   const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
@@ -18,7 +23,10 @@ export const PopoverContent = React.forwardRef<
 
   return (
     <FloatingPortal>
-      <FloatingFocusManager context={floatingContext} modal={context.modal}>
+      <FloatingFocusManager
+        context={floatingContext}
+        modal={context.modal}
+        disabled={isFocusManagerDisabled}>
         <Wrapper
           ref={ref}
           css={{
