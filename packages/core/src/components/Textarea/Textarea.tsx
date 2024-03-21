@@ -11,6 +11,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       placeholder,
       validationSchema,
       disabled = false,
+      readOnly = false,
       rows = 10,
       maxLength,
       title,
@@ -31,6 +32,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         id={`formElement-${name}`}
         placeholder={placeholder}
         disabled={disabled}
+        readOnly={readOnly}
         rows={rows}
         maxLength={maxLength}
         onChange={callAll(setCountChar, onChange)}
