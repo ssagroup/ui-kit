@@ -9,6 +9,7 @@
       "../../node_modules/@types"
     ],
     "paths": {
+      "@components": ["./src/components/index"],
       "@components/*": ["./src/components/*"],
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
