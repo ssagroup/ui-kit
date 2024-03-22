@@ -54,7 +54,10 @@ export const usePopover: UsePopover = ({
     enabled:
       controlledOpen == null && ['click', 'both'].includes(interactionsEnabled),
   });
-  const dismiss = useDismiss(context);
+  const dismiss = useDismiss(context, {
+    referencePress: true,
+    ancestorScroll: true,
+  });
   const role = useRole(context);
   const hover = useHover(context, {
     enabled:
