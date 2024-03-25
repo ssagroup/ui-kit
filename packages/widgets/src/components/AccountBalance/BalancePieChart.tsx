@@ -39,7 +39,7 @@ export const BalancePieChart = withTheme(
             height: 100px;
           }
 
-          ${theme.mediaQueries.md} {
+          ${theme.mediaQueries.lg} {
             div:nth-of-type(1) {
               width: 120px;
               height: 120px;
