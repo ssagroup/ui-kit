@@ -13,9 +13,12 @@ export const BalancePieChartTitle = withTheme(
         weight="bold"
         color={theme.colors.greyDarker}
         css={css`
-          font-size: 14px;
+          font-size: 13px;
           padding: 0 14px;
           ${theme.mediaQueries.md} {
+            font-size: 14px;
+          }
+          ${theme.mediaQueries.lg} {
             font-size: 16px;
           }
           line-height: 1;
@@ -30,6 +33,9 @@ export const BalancePieChartTitle = withTheme(
             display: block;
             font-size: 12px;
             ${theme.mediaQueries.md} {
+              font-size: 13px;
+            }
+            ${theme.mediaQueries.lg} {
               font-size: 14px;
             }
             line-height: 25px;
