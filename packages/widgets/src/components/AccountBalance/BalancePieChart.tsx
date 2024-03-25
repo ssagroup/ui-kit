@@ -60,7 +60,13 @@ export const BalancePieChart = withTheme(
             gap: 5px;
             h6 {
               font-weight: 700;
-              font-size: 14px;
+              font-size: 12px;
+              ${theme.mediaQueries.md} {
+                font-size: 13px;
+              }
+              ${theme.mediaQueries.lg} {
+                font-size: 14px;
+              }
             }
 
             ${theme.mediaQueries.lg} {
@@ -71,7 +77,10 @@ export const BalancePieChart = withTheme(
             gap: 5px;
             h6 {
               color: ${theme.colors.greyDarker80};
-              font-size: 12px;
+              font-size: 11px;
+              ${theme.mediaQueries.lg} {
+                font-size: 12px;
+              }
             }
           `}
           renderValue={({ id, legendValue }) =>
