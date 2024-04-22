@@ -2,7 +2,6 @@ import { useState, useId, useEffect } from 'react';
 import { Wrapper } from '@ssa-ui-kit/core';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
 import * as S from './styles';
-
 import { SCREEN_SIZES } from '../../consts';
 import CollapsibleNavBarBase from './CollapsibleNavBarBase';
 import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
@@ -18,6 +17,7 @@ import { NavBarItemWithoutSubMenu } from './NavBarItemWithoutSubMenu';
 export const CollapsibleNavBar = ({
   items,
   renderLogo,
+  onChange,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
   const { width } = useWindowSize();
@@ -27,6 +27,10 @@ export const CollapsibleNavBar = ({
   useEffect(() => {
     onToggle(false);
   }, [width]);
+
+  useEffect(() => {
+    onChange?.(isChecked);
+  }, [isChecked]);
 
   const handleCloseMobileMenu = () => {
     if (isMobile) {

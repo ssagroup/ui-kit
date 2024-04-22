@@ -11,7 +11,13 @@ export const StoryComponent = ({
         path="/*"
         element={
           <div style={{ height: '100vh', position: 'relative' }}>
-            <CollapsibleNavBar items={items} renderLogo={<Logo />} />
+            <CollapsibleNavBar
+              items={items}
+              renderLogo={<Logo />}
+              onChange={(isChecked) => {
+                console.log('>>>checked ', isChecked);
+              }}
+            />
           </div>
         }
       />

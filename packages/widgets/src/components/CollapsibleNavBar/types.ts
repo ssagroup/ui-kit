@@ -14,4 +14,5 @@ export interface CollapsibleNavBarGroup extends NavBarExtendedGroup {
 export interface CollapsibleNavBarExtendedProps {
   items: Array<CollapsibleNavBarItem | CollapsibleNavBarGroup>;
   renderLogo: React.ReactElement;
+  onChange?: (isChecked: boolean) => void;
 }
