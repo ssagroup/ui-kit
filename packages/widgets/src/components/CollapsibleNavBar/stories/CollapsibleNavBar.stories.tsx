@@ -48,6 +48,9 @@ export default {
   args: {
     items: ITEMS,
     renderLogo: <Logo />,
+    onChange: (isChecked) => {
+      console.log('>>>onChange', isChecked);
+    },
   },
 } as Meta<typeof CollapsibleNavBar>;
 
@@ -69,5 +72,8 @@ export const WithCustomIcon = {
       },
     ],
     renderLogo: <Logo />,
+    onChange: (isChecked) => {
+      console.log('>>>onChange', isChecked);
+    },
   },
 } as Meta<typeof CollapsibleNavBar>;
