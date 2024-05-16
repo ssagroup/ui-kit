@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useTheme } from '@emotion/react';
 
@@ -51,13 +50,7 @@ export const OnClick: StoryObj<typeof Tooltip> = (args: Args) => {
       <TooltipTrigger>
         <Button size="medium" text="Click me!" />
       </TooltipTrigger>
-      <TooltipContent allowTags>
-        <Fragment>
-          <u>
-            <b>Tooltip</b>
-          </u>
-        </Fragment>
-      </TooltipContent>
+      <TooltipContent>Tooltip</TooltipContent>
     </Tooltip>
   );
 };
@@ -73,9 +66,7 @@ export const OnHover: StoryObj<typeof Tooltip> = (args: Args) => {
       <TooltipTrigger>
         <Button size="medium" text="Hover over me!" />
       </TooltipTrigger>
-      <TooltipContent>
-        <Fragment>Tooltip</Fragment>
-      </TooltipContent>
+      <TooltipContent>Tooltip</TooltipContent>
     </Tooltip>
   );
 };
@@ -99,18 +90,16 @@ export const CustomContent: StoryObj<typeof Tooltip> = (args: Args) => {
         />
       </TooltipTrigger>
       <TooltipContent css={{ textAlign: 'center' }}>
-        <Fragment>
-          <Typography variant="h6">Your progress</Typography>
-          <div css={{ margin: '0 auto', width: '60px' }}>
-            <ProgressCircle
-              max={100}
-              currentValue={80}
-              color="purple"
-              infoContent="80%"
-              size={60}
-            />
-          </div>
-        </Fragment>
+        <Typography variant="h6">Your progress</Typography>
+        <div css={{ margin: '0 auto', width: '60px' }}>
+          <ProgressCircle
+            max={100}
+            currentValue={80}
+            color="purple"
+            infoContent="80%"
+            size={60}
+          />
+        </div>
       </TooltipContent>
     </Tooltip>
   );
@@ -134,9 +123,7 @@ export const NoArrow: StoryObj<typeof Tooltip> = (args: Args) => {
           text="Action"
         />
       </TooltipTrigger>
-      <TooltipContent>
-        <Fragment>No arrow</Fragment>
-      </TooltipContent>
+      <TooltipContent>No arrow</TooltipContent>
     </Tooltip>
   );
 };
@@ -154,9 +141,7 @@ export const Opened: StoryObj<typeof Tooltip> = (args: Args) => {
       <TooltipTrigger>
         <Button size="medium" text="Hover over me!" />
       </TooltipTrigger>
-      <TooltipContent>
-        <Fragment>Tooltip</Fragment>
-      </TooltipContent>
+      <TooltipContent>Tooltip</TooltipContent>
     </Tooltip>
   );
 };

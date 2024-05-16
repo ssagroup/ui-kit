@@ -19,7 +19,6 @@ csstype
 Dissoc
 dolor
 domcontentloaded
-dompurify
 Donec
 dui
 ecdeldbxe
@@ -56,7 +55,6 @@ nisl
 nivo
 PNL
 porttitor
-ramda
 ROI
 sem
 SENDERID
@@ -81,3 +79,4 @@ viewports
 vtpit
 xlg
 Yevgen
+ramda
