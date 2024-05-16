@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/core",
-  "version": "0.0.24-alpha",
+  "version": "0.0.25-alpha",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
@@ -23,7 +23,6 @@
     "@nivo/line": "0.83.0",
     "@playwright/test": "^1.37.1",
     "@testing-library/jest-dom": "^5.16.5",
-    "@types/dompurify": "^3.0.5",
     "@types/testing-library__jest-dom": "^5.14.6",
     "@types/uuid": "^9.0.3",
     "resolve-tspaths": "^0.8.16",
@@ -39,7 +38,6 @@
     "@floating-ui/react": "0.25.4",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
-    "dompurify": "^3.1.3",
     "dotenv": "^16.0.3",
     "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
