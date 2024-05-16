@@ -56,9 +56,11 @@ export type TooltipArrowProps = Omit<
 >;
 
 export interface ITooltipContentProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   className?: string;
   style?: React.CSSProperties;
+  allowTags?: boolean;
+  allowedTags?: string[];
 }
 
 export interface ITooltipContentSizes {
