@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import { useFiltersContext } from './FiltersContext';
