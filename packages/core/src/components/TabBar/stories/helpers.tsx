@@ -1,9 +1,9 @@
 import React from 'react';
 import { Fragment, useLayoutEffect } from 'react';
-import { useTabBarContext, TabBarContextProvider } from '@components/TabBar';
-import { ITab } from '../types';
-import TabBar from '../TabBar';
 import { DecoratorFunction } from '@storybook/types';
+import { useTabBarContext, TabBarContextProvider } from '@components/TabBar';
+import TabBar from '../TabBar';
+import { TabProps } from '../types';
 
 type Args = Parameters<typeof TabBar>[0];
 
@@ -13,8 +13,8 @@ export const TabBarWrapper = ({
   renderContent,
 }: {
   children: React.ReactNode;
-  selectedTabId?: ITab['tabId'];
-  renderContent?: ITab['renderContent'];
+  selectedTabId?: TabProps['tabId'];
+  renderContent?: TabProps['renderContent'];
 }) => {
   const { activeTab, setActiveTab } = useTabBarContext();
   useLayoutEffect(() => {

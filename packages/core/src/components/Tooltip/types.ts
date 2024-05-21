@@ -5,14 +5,14 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { PointTooltipProps, Point } from '@nivo/line';
-import { IMapIcons } from '@components/Icon/types';
+import { MapIconsType } from '@components/Icon/types';
 import { ProgressBarProps } from '@components/ProgressBar/types';
 import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 
 export type TooltipSize = 'small' | 'medium' | 'large';
 
-export interface ITooltipProps extends CommonProps {
+export interface TooltipProps extends CommonProps {
   children: React.ReactNode;
   placement?: Placement;
   enableHover?: boolean;
@@ -25,7 +25,7 @@ export interface ITooltipProps extends CommonProps {
   isOpen?: boolean;
 }
 
-export type UseTooltipArgs = Omit<ITooltipProps, 'children'>;
+export type UseTooltipArgs = Omit<TooltipProps, 'children'>;
 
 type UseInteractions = ReturnType<typeof useInteractions>;
 
@@ -34,7 +34,7 @@ interface MutableRefObject<T> {
 }
 
 export type UseTooltip = (props: UseTooltipArgs) => Pick<
-  ITooltipProps,
+  TooltipProps,
   'size' | 'hasArrow' | 'arrowProps'
 > & {
   arrowRef: MutableRefObject<null>;
@@ -47,7 +47,7 @@ export type TooltipContextType =
       ReturnType<typeof useInteractions> & {
         isOpen: boolean;
         arrowRef: React.Ref<SVGSVGElement>;
-      } & Pick<ITooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
+      } & Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
   | null;
 
 export type TooltipArrowProps = Omit<
@@ -55,33 +55,33 @@ export type TooltipArrowProps = Omit<
   'context'
 >;
 
-export interface ITooltipContentProps {
+export interface TooltipContentProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
 }
 
-export interface ITooltipContentSizes {
+export interface TooltipContentSizes {
   small: SerializedStyles;
   medium: SerializedStyles;
   large: SerializedStyles;
 }
 
-export interface ITooltipTriggerProps {
+export interface TooltipTriggerProps {
   children: React.ReactNode;
 }
 
 export type SimpleChartTooltipProps =
   | PointTooltipProps &
-      Pick<ITooltipProps, 'size'> & {
+      Pick<TooltipProps, 'size'> & {
         renderValue?: (data: Point['data']) => React.ReactNode;
       };
 
-export interface IProgressChartTooltipProps {
+export interface ProgressChartTooltipProps {
   caption: string;
   value: number;
   valueFormatted: string;
-  iconName?: keyof IMapIcons;
+  iconName?: keyof MapIconsType;
   barProps?: Partial<Omit<ProgressBarProps, 'currentValue'>>;
 }
 

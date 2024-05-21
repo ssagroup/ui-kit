@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import type { Meta } from '@storybook/react';
 import Typography from '@components/Typography';
-import Checkbox, { ICheckboxProps } from './index';
+import Checkbox, { CheckboxProps } from './index';
 
 export default {
   title: 'Components/Checkbox',
@@ -27,7 +27,7 @@ export default {
 
 export const Default = {};
 
-const checkboxPropsVariants: Array<ICheckboxProps & { caption?: string }> = [
+const checkboxPropsVariants: Array<CheckboxProps & { caption?: string }> = [
   {
     id: 'checked',
     caption: 'Checked by default',

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import Icon from '@components/Icon';
 
 import Button from './index';
-import { IButtonProps } from './types';
+import { ButtonProps } from './types';
 import {
   primaryBtnSpecs,
   secondaryBtnSpecs,
@@ -23,7 +23,7 @@ function setup(component: JSX.Element) {
 const getElTestId = (
   elType: string,
   isDisabled?: boolean,
-  variant?: IButtonProps['variant'],
+  variant?: ButtonProps['variant'],
   isHovered?: boolean,
 ) => {
   const prefix = isDisabled
@@ -60,9 +60,9 @@ const testButton = async (spec: TestPropsType) => {
 
   const { user, getByRole, getByTestId, findByTitle } = setup(
     <Button
-      type={type as IButtonProps['type']}
-      size={size as IButtonProps['size']}
-      variant={variant as IButtonProps['variant']}
+      type={type as ButtonProps['type']}
+      size={size as ButtonProps['size']}
+      variant={variant as ButtonProps['variant']}
       text={text}
       endIcon={appendIcon}
       startIcon={prependIcon}
@@ -116,9 +116,9 @@ const testTertiaryBtnHoverState = async (spec: TestPropsType) => {
 
   const { user, getByRole, getByTestId, findByTitle } = setup(
     <Button
-      type={type as IButtonProps['type']}
-      size={size as IButtonProps['size']}
-      variant={variant as IButtonProps['variant']}
+      type={type as ButtonProps['type']}
+      size={size as ButtonProps['size']}
+      variant={variant as ButtonProps['variant']}
       text={text}
       endIcon={appendIcon}
       startIcon={prependIcon}

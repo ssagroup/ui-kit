@@ -6,7 +6,7 @@ import Typography from '@components/Typography';
 import Button from '@components/Button';
 import Radio from '@components/Radio';
 
-import { IFormRadioGroupProps } from './types';
+import { FormRadioGroupProps } from './types';
 import FormRadioGroup from './FormRadioGroup';
 
 export default {
@@ -42,7 +42,7 @@ type DemoForm = {
   tree: string;
 };
 
-export const FormRadioGroupStory = (args: IFormRadioGroupProps<DemoForm>) => {
+export const FormRadioGroupStory = (args: FormRadioGroupProps<DemoForm>) => {
   const { name, isRequired, initialState } = args;
 
   const { handleSubmit, control } = useForm<DemoForm>();

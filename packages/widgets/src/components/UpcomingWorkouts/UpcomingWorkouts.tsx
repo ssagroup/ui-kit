@@ -4,9 +4,9 @@ import CardList from '@components/CardList';
 
 import { UpcomingWorkoutCard } from './UpcomingWorkoutCard';
 
-import { IUpcomingWorkoutsProps } from './types';
+import { UpcomingWorkoutsProps } from './types';
 
-export const UpcomingWorkouts = ({ workouts }: IUpcomingWorkoutsProps) => (
+export const UpcomingWorkouts = ({ workouts }: UpcomingWorkoutsProps) => (
   <CardList
     title="Upcoming Workout"
     items={workouts}

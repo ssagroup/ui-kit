@@ -1,7 +1,7 @@
 import { ProgressChartTooltip } from '@ssa-ui-kit/core';
-import type { IMapIcons } from '@ssa-ui-kit/core';
+import type { MapIconsType } from '@ssa-ui-kit/core';
 
-import { IMealNutrientsTooltipProps } from './types';
+import { MealNutrientsTooltipProps } from './types';
 
 const capitalize = (str: string) =>
   `${str[0].toUpperCase()}${str.substring(1)}`;
@@ -9,13 +9,13 @@ const capitalize = (str: string) =>
 export const MealNutrientsTooltip = ({
   colorName,
   point,
-}: IMealNutrientsTooltipProps) => {
+}: MealNutrientsTooltipProps) => {
   const caption = capitalize(String(point.serieId));
   const {
     data: { y, comp, unit },
   } = point;
   const iconName =
-    ((comp && `arrow-${comp > 0 ? 'up' : 'down'}`) as keyof IMapIcons) ||
+    ((comp && `arrow-${comp > 0 ? 'up' : 'down'}`) as keyof MapIconsType) ||
     undefined;
 
   return (

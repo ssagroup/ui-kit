@@ -3,7 +3,7 @@ import Icon from '@components/Icon';
 import Typography from '@components/Typography';
 
 import { TooltipContentBase } from './TooltipContentBase';
-import { IProgressChartTooltipProps } from './types';
+import { ProgressChartTooltipProps } from './types';
 import { mapSizes } from './utils';
 
 export const ProgressChartTooltip = ({
@@ -12,7 +12,7 @@ export const ProgressChartTooltip = ({
   valueFormatted,
   iconName,
   barProps = {},
-}: IProgressChartTooltipProps) => {
+}: ProgressChartTooltipProps) => {
   const { color } = barProps;
 
   return (

@@ -4,7 +4,7 @@ import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
 
 import { RadioBase } from './RadioBase';
-import { IRadioProps } from './types';
+import { RadioProps } from './types';
 
 const Radio = ({
   id,
@@ -16,7 +16,7 @@ const Radio = ({
   onChange,
   text,
   className,
-}: IRadioProps) => {
+}: RadioProps) => {
   const theme = useTheme();
 
   const autoGenId = useId();

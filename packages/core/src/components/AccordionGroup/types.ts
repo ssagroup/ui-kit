@@ -51,7 +51,7 @@ export interface AccordionViewProps extends AccordionProps {
   contentProps?: Record<string, any>;
 }
 
-export interface IAccordionGroupContext {
+export interface AccordionGroupContextProps {
   openedAccordions: Array<AccordionProps> | [];
   stayOpen: boolean;
   setOpenedAccordions: (accordions: Array<AccordionProps>) => void;

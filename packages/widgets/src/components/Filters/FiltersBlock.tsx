@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { DropdownOption, MultipleDropdown } from '@ssa-ui-kit/core';
 import { useFiltersContext } from './FiltersContext';

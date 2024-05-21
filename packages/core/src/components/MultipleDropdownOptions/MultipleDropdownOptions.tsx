@@ -5,8 +5,8 @@ import Checkbox from '@components/Checkbox';
 import { useMultipleDropdownContext } from '@components/MultipleDropdown/MultipleDropdown.context';
 import DropdownOption from '@components/DropdownOption';
 
-import { IDropdownItemsListProps } from './types';
 import { checkboxStyles } from '@components/Checkbox/styles';
+import { DropdownItemsListProps } from './types';
 
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   position: absolute;
@@ -83,7 +83,7 @@ const MultipleDropdownOptions = ({
   ariaLabelledby,
   id,
   children,
-}: IDropdownItemsListProps) => {
+}: DropdownItemsListProps) => {
   const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
 
   const toggleItem = (value: string | number, isDisabled: boolean) => {

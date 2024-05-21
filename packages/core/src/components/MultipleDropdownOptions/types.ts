@@ -1,6 +1,6 @@
-export type IDropdownOption = Record<string, string | number>;
+export type DropdownOptionType = Record<string, string | number>;
 
-export interface IDropdownItemsListProps {
+export interface DropdownItemsListProps {
   ariaLabelledby?: string;
   id?: string;
   children?: React.ReactNode;

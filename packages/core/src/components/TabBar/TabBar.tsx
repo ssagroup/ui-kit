@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Children, cloneElement, isValidElement } from 'react';
 import { useTabBarContext } from './TabBarContext';
-import { ITabBarProps } from './types';
+import { TabBarProps } from './types';
 
 const TabBarBase = styled.div``;
 
@@ -12,7 +12,7 @@ const TabBarBase = styled.div``;
  * component to decide where to render the contents of the
  * selected tab.
  * */
-const TabBar = ({ children }: ITabBarProps) => {
+const TabBar = ({ children }: TabBarProps) => {
   const { activeTab, setActiveTab } = useTabBarContext();
   const activeTabId = activeTab?.tabId;
 

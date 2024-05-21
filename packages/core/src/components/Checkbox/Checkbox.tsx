@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import { CheckboxBase } from './CheckboxBase';
 import Icon from '@components/Icon';
 
-import { ICheckboxProps } from './types';
+import { CheckboxProps } from './types';
 
 const Checkbox = ({
   text,
@@ -18,7 +18,7 @@ const Checkbox = ({
   ref,
   register,
   ...rest
-}: ICheckboxProps) => {
+}: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
   const autoGenId = useId();
   const theme = useTheme();

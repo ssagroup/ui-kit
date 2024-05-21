@@ -6,7 +6,7 @@ import {
 } from 'react-hook-form';
 import { MutableRefObject } from 'react';
 
-export interface ICheckboxProps
+export interface CheckboxProps
   extends Partial<Pick<UseFormReturn, 'register'>> {
   text?: string;
   id?: string;
@@ -24,7 +24,7 @@ export interface ICheckboxProps
 }
 
 export type IFormCheckboxProps<T extends FieldValues> = Omit<
-  ICheckboxProps,
+  CheckboxProps,
   'onChange' | 'name'
 > & {
   name: FieldPath<T>;

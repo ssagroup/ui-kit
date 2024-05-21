@@ -1,11 +1,11 @@
 import { css, SerializedStyles } from '@emotion/react';
 import Icon from '@components/Icon';
 import { iconsList } from '@components/Icon';
+import { MapIconsType } from './types';
 import { screen } from '../../../customTest';
-import { IMapIcons } from './types';
 
 const renderIcon = async (
-  icon: keyof IMapIcons,
+  icon: keyof MapIconsType,
   size?: number,
   css?: SerializedStyles,
 ) => {
@@ -42,14 +42,14 @@ const checkFillOrStrokeAttrs = (
 describe('Icons', () => {
   iconsList.forEach((iconName) => {
     it(`Renders "${iconName}" icon with attributes`, async () => {
-      const [, path] = await renderIcon(iconName as keyof IMapIcons);
+      const [, path] = await renderIcon(iconName as keyof MapIconsType);
 
       checkFillOrStrokeAttrs(path, iconName);
     });
 
     it(`Renders "${iconName}" icon with custom styles`, async () => {
       const [icon] = await renderIcon(
-        iconName as keyof IMapIcons,
+        iconName as keyof MapIconsType,
         undefined,
         css`
           background-color: magenta;
@@ -62,7 +62,7 @@ describe('Icons', () => {
     });
 
     it(`Renders "${iconName}" icon with the default size`, async () => {
-      const [icon] = await renderIcon(iconName as keyof IMapIcons);
+      const [icon] = await renderIcon(iconName as keyof MapIconsType);
 
       expect(icon).toBeInTheDocument();
       const width = (icon as unknown as SVGElement).getAttribute('width');
@@ -74,7 +74,7 @@ describe('Icons', () => {
     });
 
     it(`Renders "${iconName}" icon with a custom size`, async () => {
-      const [icon] = await renderIcon(iconName as keyof IMapIcons, 12);
+      const [icon] = await renderIcon(iconName as keyof MapIconsType, 12);
 
       expect(icon).toBeInTheDocument();
 

@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { css } from '@emotion/react';
 import { Button } from '@ssa-ui-kit/core';
 import TradingScoreboard from './TradingScoreboard';
-import { ITradingScoreboardProps } from './types';
+import { TradingScoreboardProps } from './types';
 import { defaultBoardArr, linkBoardArr, oneLineBoardArr } from './helpers';
 
 export default {
@@ -12,7 +12,7 @@ export default {
 } as Meta<typeof TradingScoreboard>;
 
 export const Default: StoryObj<typeof TradingScoreboard> = (
-  args: ITradingScoreboardProps,
+  args: TradingScoreboardProps,
 ) => {
   return (
     <TradingScoreboard
@@ -32,7 +32,7 @@ Default.args = {
 };
 
 export const OneLine: StoryObj<typeof TradingScoreboard> = (
-  args: ITradingScoreboardProps,
+  args: TradingScoreboardProps,
 ) => {
   return (
     <TradingScoreboard
@@ -52,7 +52,7 @@ OneLine.args = {
 };
 
 export const WithCustomComponent: StoryObj<typeof TradingScoreboard> = (
-  args: ITradingScoreboardProps,
+  args: TradingScoreboardProps,
 ) => {
   return (
     <TradingScoreboard
@@ -91,7 +91,7 @@ WithCustomComponent.args = {
 };
 
 export const WithLink: StoryObj<typeof TradingScoreboard> = (
-  args: ITradingScoreboardProps,
+  args: TradingScoreboardProps,
 ) => {
   return (
     <MemoryRouter>

@@ -1,6 +1,6 @@
 import { CommonProps } from '@global-types/emotion';
 
-export interface IFormHelperText extends CommonProps {
+export interface FormHelperTextProps extends CommonProps {
   children: React.ReactNode;
   role?: string;
   status?: string;

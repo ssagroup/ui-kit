@@ -1,9 +1,9 @@
 import { cloneElement, isValidElement } from 'react';
 
-import { ITooltipTriggerProps } from '@components/Tooltip/types';
+import { TooltipTriggerProps } from '@components/Tooltip/types';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 
-const TooltipTrigger = ({ children }: ITooltipTriggerProps) => {
+const TooltipTrigger = ({ children }: TooltipTriggerProps) => {
   const tooltipCtx = useTooltipContext();
 
   if (isValidElement(children)) {

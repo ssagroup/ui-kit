@@ -3,7 +3,7 @@ export type Item = {
   [prop: string | number | symbol]: unknown;
 };
 
-export interface ICardListProps<ItemType extends Item> {
+export interface CardListProps<ItemType extends Item> {
   title: string;
   items: Array<ItemType>;
   renderItem: (item: ItemType) => React.ReactNode;

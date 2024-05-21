@@ -3,7 +3,7 @@ import { Theme, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { CommonProps } from '@global-types/emotion';
 
-interface IDropdownItemProps extends CommonProps {
+interface DropdownItemProps extends CommonProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   isActive?: boolean;
   isMultiple?: boolean;
@@ -31,7 +31,7 @@ const multipleStyles = ({ theme, isDisabled }: MultipleStylesProps) => {
   `;
 };
 
-const DropdownOption = styled.li<IDropdownItemProps>`
+const DropdownOption = styled.li<DropdownItemProps>`
   overflow: hidden;
 
   height: 34px;

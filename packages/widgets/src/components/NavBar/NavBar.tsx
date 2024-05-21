@@ -10,12 +10,12 @@ import NavBarItem from './NavBarItem';
 import NavBarLink from './NavBarLink';
 import NavToggle from './NavToggle';
 
-import { INavBarProps } from './types';
+import { NavBarProps } from './types';
 
 /**
  * UI Component that shows the navigation bar
  */
-export const NavBar = ({ items }: INavBarProps) => {
+export const NavBar = ({ items }: NavBarProps) => {
   const toggleId = useId();
   const theme = useTheme();
 

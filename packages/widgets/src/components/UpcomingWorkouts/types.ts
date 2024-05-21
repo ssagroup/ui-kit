@@ -1,4 +1,4 @@
-export interface IUpcomingWorkoutCardProps {
+export interface UpcomingWorkoutCardProps {
   image: string;
   title: string;
   workoutTime: string;
@@ -18,6 +18,6 @@ export type Workout = {
   };
 };
 
-export interface IUpcomingWorkoutsProps {
+export interface UpcomingWorkoutsProps {
   workouts: Array<Workout>;
 }

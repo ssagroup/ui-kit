@@ -2,7 +2,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon } from '@ssa-ui-kit/core';
 import TradingInfoCard from './TradingInfoCard';
-import { ITradingInfoCardProps } from './types';
+import { TradingInfoCardProps } from './types';
 
 export default {
   title: 'Widgets/TradingInfoCard',
@@ -10,7 +10,7 @@ export default {
 } as Meta<typeof TradingInfoCard>;
 
 export const Default: StoryObj<typeof TradingInfoCard> = (
-  args: ITradingInfoCardProps,
+  args: TradingInfoCardProps,
 ) => {
   return (
     <TradingInfoCard
@@ -30,7 +30,7 @@ Default.args = {
 };
 
 export const WithLink: StoryObj<typeof TradingInfoCard> = (
-  args: ITradingInfoCardProps,
+  args: TradingInfoCardProps,
 ) => {
   return (
     <MemoryRouter>
@@ -59,7 +59,7 @@ WithLink.args = {
 };
 
 export const WithTooltip: StoryObj<typeof TradingInfoCard> = (
-  args: ITradingInfoCardProps,
+  args: TradingInfoCardProps,
 ) => {
   return (
     <TradingInfoCard
@@ -79,7 +79,7 @@ WithTooltip.args = {
 };
 
 export const WithIcon: StoryObj<typeof TradingInfoCard> = (
-  args: ITradingInfoCardProps,
+  args: TradingInfoCardProps,
 ) => {
   return (
     <TradingInfoCard
@@ -100,7 +100,7 @@ WithIcon.args = {
 };
 
 export const WithoutUnit: StoryObj<typeof TradingInfoCard> = (
-  args: ITradingInfoCardProps,
+  args: TradingInfoCardProps,
 ) => {
   return (
     <TradingInfoCard

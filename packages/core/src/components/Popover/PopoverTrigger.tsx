@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import Button from '@components/Button';
-import { PopoverTriggerProps } from './types';
+import { ButtonProps } from '@components/Button/types';
 import { usePopoverContext } from './hooks/usePopoverContext';
-import { IButtonProps } from '@components/Button/types';
+import { PopoverTriggerProps } from './types';
 
 export const PopoverTrigger = React.forwardRef<
   HTMLElement,
-  React.HTMLProps<HTMLElement> & IButtonProps & PopoverTriggerProps
+  React.HTMLProps<HTMLElement> & ButtonProps & PopoverTriggerProps
 >(function PopoverTrigger(
   { children, asChild = false, dataTestId = 'trigger-button', ...props },
   propRef,

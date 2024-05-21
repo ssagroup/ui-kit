@@ -13,7 +13,7 @@ import {
 
 import { throttle } from '@ssa-ui-kit/utils';
 
-import { IHeartRateProps } from './types';
+import { HeartRateProps } from './types';
 import { HeartRateLineChart } from './HeartRateLineChart';
 import { BPM } from './BPM';
 
@@ -28,7 +28,7 @@ export const HeartRate = ({
   data,
   caption = 'Heart Rate',
   color,
-}: IHeartRateProps) => {
+}: HeartRateProps) => {
   const [bpmValue, setBpmValue] = useState<number>(
     data?.data?.[0]?.y as number,
   );

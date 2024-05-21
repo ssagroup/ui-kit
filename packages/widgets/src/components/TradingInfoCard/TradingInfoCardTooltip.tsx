@@ -6,12 +6,12 @@ import {
   Typography,
 } from '@ssa-ui-kit/core';
 
-import { ITradingInfoCardTooltipProps } from './types';
+import { TradingInfoCardTooltipProps } from './types';
 
 const TradingInfoCardTooltip = ({
   trigger,
   children,
-}: ITradingInfoCardTooltipProps) => {
+}: TradingInfoCardTooltipProps) => {
   const theme = useTheme();
   return (
     <Tooltip

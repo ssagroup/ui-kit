@@ -9,7 +9,7 @@ export type Goal = {
   color: keyof MainColors;
 };
 
-export interface IListGoalsProps {
+export interface ListGoalsProps {
   goals: Array<Goal>;
 }
 
@@ -17,7 +17,7 @@ export type ProgressProps = Partial<
   React.ComponentProps<typeof ProgressCircle>
 >;
 
-export interface IItemCardProps {
+export interface ItemCardProps {
   image: string;
   title: string;
   details: string;

@@ -1,4 +1,4 @@
-export interface IRadioProps {
+export interface RadioProps {
   id?: string;
   value: string;
   name?: string;

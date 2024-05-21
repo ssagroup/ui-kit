@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface ITradingInfoCardProps {
+export interface TradingInfoCardProps {
   value: React.ReactNode;
   title: string;
   unit?: string;
@@ -10,18 +10,18 @@ export interface ITradingInfoCardProps {
 }
 
 export type TradingInfoContent = Pick<
-  ITradingInfoCardProps,
+  TradingInfoCardProps,
   'value' | 'unit' | 'icon'
 >;
 
-export type ITradingInfoCardWrapperProps = Pick<
-  ITradingInfoCardProps,
+export type TradingInfoCardWrapperProps = Pick<
+  TradingInfoCardProps,
   'onClick' | 'link'
 > & {
   children?: React.ReactNode;
 };
 
-export interface ITradingInfoCardTooltipProps {
+export interface TradingInfoCardTooltipProps {
   trigger: string | number | JSX.Element;
   children: React.ReactNode;
 }

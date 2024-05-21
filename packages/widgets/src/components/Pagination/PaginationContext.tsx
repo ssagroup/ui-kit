@@ -1,8 +1,11 @@
 import { createContext, useState, useContext } from 'react';
-import { IPaginationContext, IPaginationContextProviderProps } from './types';
+import {
+  PaginationContextProps,
+  PaginationContextProviderProps,
+} from './types';
 
-export const PaginationContext = createContext<IPaginationContext>(
-  {} as IPaginationContext,
+export const PaginationContext = createContext<PaginationContextProps>(
+  {} as PaginationContextProps,
 );
 
 export const usePaginationContext = () => useContext(PaginationContext);
@@ -10,7 +13,7 @@ export const usePaginationContext = () => useContext(PaginationContext);
 export const PaginationContextProvider = ({
   selectedPage,
   children,
-}: IPaginationContextProviderProps) => {
+}: PaginationContextProviderProps) => {
   const [page, setPage] = useState(selectedPage);
   return (
     <PaginationContext.Provider value={{ page, setPage }}>

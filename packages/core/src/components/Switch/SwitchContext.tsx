@@ -1,11 +1,11 @@
 import { createContext, useState, useCallback, useContext } from 'react';
 
-export interface ISwitchContext {
+export interface SwitchContext {
   isOn: boolean;
   toggle: () => void;
 }
 
-export const SwitchContext = createContext<ISwitchContext>({
+export const SwitchContext = createContext<SwitchContext>({
   isOn: true,
   toggle: () => {
     /* default no-op */

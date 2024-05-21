@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { ILargeTabProps } from '@components/TabBar/types';
+import { LargeTabProps } from '@components/TabBar/types';
 
-export const LargeTabBase = styled.button<Pick<ILargeTabProps, 'isActive'>>`
+export const LargeTabBase = styled.button<Pick<LargeTabProps, 'isActive'>>`
   width: 100px;
   max-width: 100px;
   height: 60px;

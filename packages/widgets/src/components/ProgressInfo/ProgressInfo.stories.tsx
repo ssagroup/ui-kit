@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { progressInfoData as data } from './mockProgressInfoRequest';
 
-import { default as ProgressInfo, IProgressInfoProps } from './index';
+import { default as ProgressInfo, ProgressInfoProps } from './index';
 
 export default {
   title: 'Widgets/ProgressInfo',
@@ -24,7 +24,7 @@ export default {
 } as Meta<typeof ProgressInfo>;
 
 export const Default: StoryObj<typeof ProgressInfo> = (
-  args: IProgressInfoProps,
+  args: ProgressInfoProps,
 ) => {
   return <ProgressInfo {...args} />;
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import type { Meta } from '@storybook/react';
 
 import { MealNutrients } from './index';
-import { IMealNutrientsProps } from './types';
+import { MealNutrientsProps } from './types';
 
 import { mockStaticApi } from './mockMealNutrientsRequest';
 const { getData, getOptions } = mockStaticApi;
@@ -13,8 +13,8 @@ export default {
 } as Meta<typeof MealNutrients>;
 
 export const Default = () => {
-  const [options, setOptions] = useState<IMealNutrientsProps['options']>([]);
-  const [data, setData] = useState<IMealNutrientsProps['data']>([]);
+  const [options, setOptions] = useState<MealNutrientsProps['options']>([]);
+  const [data, setData] = useState<MealNutrientsProps['data']>([]);
 
   useEffect(() => {
     getOptions()

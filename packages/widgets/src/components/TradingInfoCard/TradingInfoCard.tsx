@@ -3,7 +3,7 @@ import { CardContent, Typography } from '@ssa-ui-kit/core';
 import TradingInfoCardContent from './TradingInfoCardContent';
 import TradingInfoCardTooltip from './TradingInfoCardTooltip';
 import TradingInfoCardWrapper from './TradingInfoCardWrapper';
-import { ITradingInfoCardProps } from './types';
+import { TradingInfoCardProps } from './types';
 
 const TradingInfoCardView = ({
   value,
@@ -12,7 +12,7 @@ const TradingInfoCardView = ({
   icon,
   link,
   onClick,
-}: ITradingInfoCardProps) => {
+}: TradingInfoCardProps) => {
   const number = Number(value);
   const currentValue = Number.isNaN(number)
     ? value
@@ -30,7 +30,7 @@ const TradingInfoCardView = ({
   );
 };
 
-const TradingInfoCard = (props: ITradingInfoCardProps) => {
+const TradingInfoCard = (props: TradingInfoCardProps) => {
   const { value, unit } = props;
   const number = Number(value);
   const isInteger = Number.isInteger(number);

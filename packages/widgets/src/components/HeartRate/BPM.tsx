@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Theme, useTheme } from '@emotion/react';
 import { css } from '@emotion/react';
-import { IBMPProps } from './types';
+import { BMPProps } from './types';
 
 const BPMBase = styled.div`
   text-align: center;
@@ -32,7 +32,7 @@ const getBPMLabelStyles = (theme: Theme) => css`
   }
 `;
 
-export const BPM = ({ value }: IBMPProps) => {
+export const BPM = ({ value }: BMPProps) => {
   const theme = useTheme();
   return (
     <BPMBase>

@@ -9,14 +9,14 @@ import {
   ResponsiveImage,
 } from '@ssa-ui-kit/core';
 
-import { ICaloriesProps } from './types';
+import { CaloriesProps } from './types';
 import { InnerContent } from './innerContent';
 
 /**
  *
  * UI Component that shows how many calories the user has burned
  */
-export const Calories = ({ max, currentValue }: ICaloriesProps) => {
+export const Calories = ({ max, currentValue }: CaloriesProps) => {
   const theme = useTheme();
 
   return (

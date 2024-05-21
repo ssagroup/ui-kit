@@ -1,8 +1,8 @@
 import { useTheme } from '@emotion/react';
 
-import { IColoredButtonTextProps, IButtonTextProps } from './types';
+import { ColoredButtonTextProps, ButtonTextProps } from './types';
 
-export const ButtonText = ({ text, className, testId }: IButtonTextProps) => {
+export const ButtonText = ({ text, className, testId }: ButtonTextProps) => {
   return (
     <span className={className} data-testid={testId}>
       {text}
@@ -10,7 +10,7 @@ export const ButtonText = ({ text, className, testId }: IButtonTextProps) => {
   );
 };
 
-export const WhiteButtonText = ({ text }: IColoredButtonTextProps) => {
+export const WhiteButtonText = ({ text }: ColoredButtonTextProps) => {
   const theme = useTheme();
 
   return (
@@ -24,7 +24,7 @@ export const WhiteButtonText = ({ text }: IColoredButtonTextProps) => {
   );
 };
 
-export const GreyButtonText = ({ text }: IColoredButtonTextProps) => {
+export const GreyButtonText = ({ text }: ColoredButtonTextProps) => {
   const theme = useTheme();
 
   return (
@@ -38,7 +38,7 @@ export const GreyButtonText = ({ text }: IColoredButtonTextProps) => {
   );
 };
 
-export const GreyLightButtonText = ({ text }: IColoredButtonTextProps) => {
+export const GreyLightButtonText = ({ text }: ColoredButtonTextProps) => {
   const theme = useTheme();
 
   return (
@@ -52,7 +52,7 @@ export const GreyLightButtonText = ({ text }: IColoredButtonTextProps) => {
   );
 };
 
-export const DisabledButtonText = ({ text }: IColoredButtonTextProps) => {
+export const DisabledButtonText = ({ text }: ColoredButtonTextProps) => {
   const theme = useTheme();
 
   return (

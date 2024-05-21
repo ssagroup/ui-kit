@@ -17,7 +17,7 @@ export { default as DropdownBase } from './DropdownBase';
 export { default as DropdownOption } from './DropdownOption';
 export { default as DropdownOptions } from './DropdownOptions';
 export { default as DropdownToggle } from './DropdownToggle';
-export type { IDropdownOption } from './DropdownOptions';
+export type { DropdownOptionProps } from './DropdownOptions';
 export { default as Icon } from './Icon';
 export * from './Icon';
 export * from './Icon/types';

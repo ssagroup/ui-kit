@@ -1,4 +1,4 @@
-export interface ICaloriesProps {
+export interface CaloriesProps {
   max: number;
   currentValue: number;
 }

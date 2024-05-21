@@ -3,7 +3,7 @@ import { Children, isValidElement, cloneElement, useState } from 'react';
 import Radio from '@components/Radio';
 
 import { RadioGroupBase } from './RadioGroupBase';
-import { IRadioGroupProps } from './types';
+import { RadioGroupProps } from './types';
 
 const RadioGroup = ({
   name,
@@ -12,7 +12,7 @@ const RadioGroup = ({
   onChange,
   children,
   className,
-}: IRadioGroupProps) => {
+}: RadioGroupProps) => {
   const [activeValue, setActiveValue] = useState(initialState);
 
   const onRadioValueChange = (value: string) => {

@@ -4,7 +4,7 @@ import {
   Card,
   CardHeader,
   Typography,
-  IDropdownOption,
+  DropdownOptionProps,
   Dropdown,
   DropdownOption,
   MainColors,
@@ -16,13 +16,13 @@ import { ProgressInfoTotals } from './ProgressInfoTotals';
 import {
   ProgressInfoItemProps,
   Period,
-  IProgressInfoProps,
+  ProgressInfoProps,
   PeriodOption,
 } from './types';
 
 import { getPieChartStyles } from './styles';
 
-export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
+export const ProgressInfo = ({ data, className }: ProgressInfoProps) => {
   const [options, setOptions] = useState<PeriodOption[]>([]);
   const [selected, setSelected] = useState<PeriodOption>();
   const [response, setResponse] = useState<ProgressInfoItemProps[]>([]);
@@ -67,7 +67,7 @@ export const ProgressInfo = ({ data, className }: IProgressInfoProps) => {
     setResponse(response);
   };
 
-  const handleChange = (e: IDropdownOption) => {
+  const handleChange = (e: DropdownOptionProps) => {
     filterData(e.value as Period);
   };
 

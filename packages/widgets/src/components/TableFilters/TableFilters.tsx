@@ -12,7 +12,7 @@ import {
   Popover,
   PopoverContent,
   PopoverDescription,
-  ICheckboxProps,
+  CheckboxProps,
 } from '@ssa-ui-kit/core';
 import {
   tableFilterDividerStyles,
@@ -145,7 +145,7 @@ export const TableFilters = ({
                         <TableFiltersAccordionContent {...props}>
                           {Object.keys(accordionInfo.items).map((itemKey) => {
                             const info = accordionInfo.items[itemKey];
-                            const extraProps: Partial<ICheckboxProps> = {};
+                            const extraProps: Partial<CheckboxProps> = {};
                             const currentState = !!localCheckboxData?.[
                               accordionInfo.id
                             ].selectedItemsDraft?.includes(info.name);

@@ -1,13 +1,13 @@
 import { createContext, useState, useContext } from 'react';
-import { AccordionProps, IAccordionGroupContext } from './types';
+import { AccordionProps, AccordionGroupContextProps } from './types';
 
-export const AccordionGroupContext = createContext<IAccordionGroupContext>(
-  {} as IAccordionGroupContext,
+export const AccordionGroupContext = createContext<AccordionGroupContextProps>(
+  {} as AccordionGroupContextProps,
 );
 
 export const useAccordionGroupContext = () => useContext(AccordionGroupContext);
 
-const useAccordionGroup = (): IAccordionGroupContext => {
+const useAccordionGroup = (): AccordionGroupContextProps => {
   const [openedAccordions, setOpenedAccordions] = useState<AccordionProps[]>(
     [],
   );

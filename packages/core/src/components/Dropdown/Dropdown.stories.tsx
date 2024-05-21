@@ -5,10 +5,10 @@ import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 
 import Dropdown from './Dropdown';
-import { IDropdownProps } from './types';
-import { IDropdownOption } from '../..';
+import { DropdownProps } from './types';
+import { DropdownOptionProps } from '../..';
 
-type Args = IDropdownProps<IDropdownOption>;
+type Args = DropdownProps<DropdownOptionProps>;
 
 const items = [
   { id: 1, value: 'One lorem ipsum', subText: 'subtext' },
