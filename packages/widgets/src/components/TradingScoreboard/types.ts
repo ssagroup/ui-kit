@@ -1,12 +1,12 @@
-import { ITradingInfoCardProps } from '@components/TradingInfoCard/types';
+import { TradingInfoCardProps } from '@components/TradingInfoCard/types';
 import { SerializedStyles } from '@emotion/react';
 
 type TradingScoreboardItem = Pick<
-  ITradingInfoCardProps,
+  TradingInfoCardProps,
   'value' | 'unit' | 'title' | 'icon' | 'link'
 >;
 
-export interface ITradingScoreboardProps {
+export interface TradingScoreboardProps {
   itemsPerRow: number;
   items: Array<TradingScoreboardItem>;
   onClick?: (item: TradingScoreboardItem) => void;

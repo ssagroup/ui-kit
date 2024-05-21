@@ -1,5 +1,5 @@
 import { css, useTheme } from '@emotion/react';
-import { Wrapper, Icon, IMapIcons, SVGProps } from '@ssa-ui-kit/core';
+import { Wrapper, Icon, MapIconsType, SVGProps } from '@ssa-ui-kit/core';
 
 export const TriggerIcon = ({
   iconName,
@@ -7,7 +7,7 @@ export const TriggerIcon = ({
   className,
   CustomIcon,
 }: {
-  iconName: keyof IMapIcons;
+  iconName: keyof MapIconsType;
   iconSize?: number;
   className?: string;
   CustomIcon?: (props: Omit<SVGProps, 'fill'>) => JSX.Element;

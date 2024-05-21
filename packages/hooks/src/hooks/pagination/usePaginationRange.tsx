@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { IUsePaginationRangeProps } from './types';
 import { generateRange } from '@ssa-ui-kit/utils';
+import { UsePaginationRangeProps } from './types';
 
 const usePaginationRange = ({
   pagesCount,
   selectedPage,
-}: IUsePaginationRangeProps) => {
+}: UsePaginationRangeProps) => {
   return useMemo(
     () => generateRange(pagesCount, selectedPage),
     [pagesCount, selectedPage],

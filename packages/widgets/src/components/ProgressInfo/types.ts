@@ -14,7 +14,7 @@ export type ProgressInfoResp = {
   [key: string]: { [key: string]: ProgressInfoItemProps[] };
 };
 
-export interface IProgressInfoProps {
+export interface ProgressInfoProps {
   data: ProgressInfoResp;
   className?: string;
 }

@@ -1,21 +1,21 @@
 import { Point, LineSvgProps, CustomLayerProps } from '@nivo/line';
 import { ScaleTimeSpec } from '@nivo/scales';
-import { MainColors, IDropdownOption } from '@ssa-ui-kit/core';
+import { MainColors, DropdownOptionProps } from '@ssa-ui-kit/core';
 
-export interface OptionType extends IDropdownOption {
+export interface OptionType extends DropdownOptionProps {
   value: 'd' | 'w' | 'm';
   label: string;
   precision: string;
 }
 
-export interface IMealNutrientsProps {
+export interface MealNutrientsProps {
   caption?: string;
   options: OptionType[];
   data: LineSvgProps['data'];
   onOptionChange?: (option: OptionType) => void;
 }
 
-export interface IMealNutrientsTooltipProps {
+export interface MealNutrientsTooltipProps {
   colorName: keyof MainColors;
   point: Exclude<Point, 'data'> & {
     data: Point['data'] & { comp?: number; unit?: string };

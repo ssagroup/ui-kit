@@ -7,9 +7,9 @@ import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
-import { IDropdownOption } from '@components/DropdownOptions/types';
+import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
-import { DropdownContextType, IDropdownProps } from './types';
+import { DropdownContextType, DropdownProps } from './types';
 
 /**
  * The structure of the component:
@@ -28,14 +28,14 @@ const DropdownBase = styled.div`
   position: relative;
 `;
 
-const Dropdown = <T extends IDropdownOption>({
+const Dropdown = <T extends DropdownOptionProps>({
   selectedItem,
   isDisabled,
   isOpen: isInitOpen,
   children,
   onChange: handleChange,
   className,
-}: IDropdownProps<T>) => {
+}: DropdownProps<T>) => {
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
 

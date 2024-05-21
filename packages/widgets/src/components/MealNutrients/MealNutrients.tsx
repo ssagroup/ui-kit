@@ -11,7 +11,7 @@ import {
 
 import { MealNutrientsLineChart } from './MealNutrientsLineChart';
 import useChartConfig from './useChartConfig';
-import { IMealNutrientsProps, UseChartConfig, OptionType } from './types';
+import { MealNutrientsProps, UseChartConfig, OptionType } from './types';
 
 /**
  *
@@ -22,7 +22,7 @@ export const MealNutrients = ({
   options,
   data,
   onOptionChange,
-}: IMealNutrientsProps) => {
+}: MealNutrientsProps) => {
   const [selectedOption, setSelectedOption] = useState<OptionType>();
   const containerRef = useRef<HTMLDivElement>(null);
 

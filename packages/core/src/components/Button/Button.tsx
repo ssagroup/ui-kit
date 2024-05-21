@@ -10,7 +10,7 @@ import {
   GreyLightButtonText,
   DisabledButtonText,
 } from './ButtonText';
-import { IButtonProps, IButtonVariants } from './types';
+import { ButtonProps, ButtonVariants } from './types';
 import {
   large,
   medium,
@@ -31,7 +31,7 @@ const mapSizes: MainSizes = {
   large,
 };
 
-const mapVariants: IButtonVariants = {
+const mapVariants: ButtonVariants = {
   primary,
   secondary,
   tertiary,
@@ -39,7 +39,7 @@ const mapVariants: IButtonVariants = {
   attention,
 };
 
-export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {
       block = false,

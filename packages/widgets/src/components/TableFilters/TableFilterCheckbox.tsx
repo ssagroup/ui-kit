@@ -1,4 +1,4 @@
-import { ICheckboxProps, Checkbox, checkboxStyles } from '@ssa-ui-kit/core';
+import { CheckboxProps, Checkbox, checkboxStyles } from '@ssa-ui-kit/core';
 import { Theme, css, useTheme } from '@emotion/react';
 
 const getStyles = (theme: Theme) => css`
@@ -17,7 +17,7 @@ const getStyles = (theme: Theme) => css`
   ${checkboxStyles.blueInput(theme)}
 `;
 
-export const TableFilterCheckbox = (props: ICheckboxProps) => {
+export const TableFilterCheckbox = (props: CheckboxProps) => {
   const theme = useTheme();
   const styles = getStyles(theme);
   return <Checkbox {...props} css={styles} />;

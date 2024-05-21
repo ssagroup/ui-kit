@@ -10,7 +10,7 @@ import {
   Icon,
 } from '@ssa-ui-kit/core';
 
-import { IUpcomingWorkoutCardProps } from './types';
+import { UpcomingWorkoutCardProps } from './types';
 import { contentWrapper } from './style';
 
 /**
@@ -23,7 +23,7 @@ export const UpcomingWorkoutCard = ({
   workoutTime,
   renderDetails,
   onClick,
-}: IUpcomingWorkoutCardProps) => {
+}: UpcomingWorkoutCardProps) => {
   const theme = useTheme();
   return (
     <Card noShadow>

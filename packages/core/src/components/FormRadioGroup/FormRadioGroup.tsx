@@ -3,7 +3,7 @@ import type { FieldValues } from 'react-hook-form';
 
 import RadioGroup from '@components/RadioGroup';
 
-import { IFormRadioGroupProps } from './types';
+import { FormRadioGroupProps } from './types';
 import { ChangeEvent } from 'react';
 
 const FormRadioGroup = <T extends FieldValues>({
@@ -12,7 +12,7 @@ const FormRadioGroup = <T extends FieldValues>({
   control,
   children,
   ...props
-}: IFormRadioGroupProps<T>) => {
+}: FormRadioGroupProps<T>) => {
   const { field } = useController<T>({
     control,
     name,

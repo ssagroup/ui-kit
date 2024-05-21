@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import Checkbox from '@components/Checkbox';
 import FormCheckbox from '@components/FormCheckbox';
 
-import { ICheckboxProps } from './types';
+import { CheckboxProps } from './types';
 import { getByRole } from '@testing-library/dom';
 
 const checkLabel = () => {
@@ -50,7 +50,7 @@ const checkToggle = async (
   checkIcon(labelEl, newIsChecked);
 };
 
-function setup(props: Omit<ICheckboxProps, 'onChange'> = {}) {
+function setup(props: Omit<CheckboxProps, 'onChange'> = {}) {
   const mockOnChange = jest.fn();
   return {
     user: userEvent.setup(),

@@ -7,7 +7,7 @@ import {
   CardHeader,
   Typography,
   Wrapper,
-  IDropdownOption,
+  DropdownOptionProps,
 } from '@ssa-ui-kit/core';
 
 import { ActivityResp } from './types';
@@ -19,7 +19,7 @@ import { Dropdown } from '@ssa-ui-kit/core';
 
 export const Activity = ({ data }: { data: ActivityResp }) => {
   const [selected, setSelected] = useState<string>('');
-  const [options, setOptions] = useState<IDropdownOption[]>([]);
+  const [options, setOptions] = useState<DropdownOptionProps[]>([]);
 
   useEffect(() => {
     if (data == null || typeof data !== 'object') {
@@ -40,7 +40,7 @@ export const Activity = ({ data }: { data: ActivityResp }) => {
     }
   }, [options]);
 
-  const handleChange = (e: IDropdownOption) => {
+  const handleChange = (e: DropdownOptionProps) => {
     const value = e.value.toString().toLowerCase();
 
     setSelected(value);

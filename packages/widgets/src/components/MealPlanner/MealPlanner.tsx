@@ -8,7 +8,7 @@ import {
   Typography,
   Dropdown,
   DropdownOption,
-  IDropdownOption,
+  DropdownOptionProps,
 } from '@ssa-ui-kit/core';
 
 import { MealPlannerCard } from './MealPlannerCard';
@@ -24,9 +24,9 @@ const CustomOption = styled(DropdownOption)`
 
 export const MealPlanner = ({ data }: MealPlannerProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [options, setOptions] = useState<IDropdownOption[]>([]);
+  const [options, setOptions] = useState<DropdownOptionProps[]>([]);
 
-  const handleChange = (e: IDropdownOption) => {
+  const handleChange = (e: DropdownOptionProps) => {
     const value = e.value.toString().toLowerCase();
 
     setSelectedOption(value);

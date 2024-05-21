@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 import { useDropdownContext } from '@components/Dropdown/Dropdown.context';
 import DropdownOption from '@components/DropdownOption';
 
-import { IDropdownItemsListProps } from './types';
+import { DropdownItemsListProps } from './types';
 
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   position: absolute;
@@ -54,7 +54,7 @@ const DropdownOptions = ({
   ariaLabelledby,
   id,
   children,
-}: IDropdownItemsListProps) => {
+}: DropdownItemsListProps) => {
   const { onChange, activeItem } = useDropdownContext();
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);

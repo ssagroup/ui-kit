@@ -8,7 +8,7 @@ import {
   Avatar,
   Button,
   Icon,
-  IMapIcons,
+  MapIconsType,
 } from '@ssa-ui-kit/core';
 
 import { useApi } from '@ssa-ui-kit/hooks';
@@ -26,19 +26,19 @@ import API from '@apis/index';
 import { Layout, Nav, Sidebar } from './layout/NavTwoColumns';
 
 const routes = [
-  { path: 'stats', iconName: 'stats' as unknown as keyof IMapIcons },
-  { path: 'calendar', iconName: 'calendar' as unknown as keyof IMapIcons },
-  { path: 'trainings', iconName: 'trainings' as unknown as keyof IMapIcons },
+  { path: 'stats', iconName: 'stats' as unknown as keyof MapIconsType },
+  { path: 'calendar', iconName: 'calendar' as unknown as keyof MapIconsType },
+  { path: 'trainings', iconName: 'trainings' as unknown as keyof MapIconsType },
   {
     path: 'measurements',
-    iconName: 'measurements' as unknown as keyof IMapIcons,
+    iconName: 'measurements' as unknown as keyof MapIconsType,
   },
-  { path: 'diet', iconName: 'diet' as unknown as keyof IMapIcons },
+  { path: 'diet', iconName: 'diet' as unknown as keyof MapIconsType },
   {
     path: 'notification',
-    iconName: 'notification' as unknown as keyof IMapIcons,
+    iconName: 'notification' as unknown as keyof MapIconsType,
   },
-  { path: 'settings', iconName: 'settings' as unknown as keyof IMapIcons },
+  { path: 'settings', iconName: 'settings' as unknown as keyof MapIconsType },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

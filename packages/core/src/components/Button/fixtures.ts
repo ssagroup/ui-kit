@@ -1,8 +1,8 @@
 import Icon from '@components/Icon';
-import { IButtonProps } from './types';
+import { ButtonProps } from './types';
 
 export type TestPropsType = Omit<
-  IButtonProps,
+  ButtonProps,
   'isDisabled' | 'startIcon' | 'endIcon'
 > & {
   disabled?: boolean;
@@ -125,41 +125,41 @@ const baseSpecs: TestPropsType[] = [
 export const primaryBtnSpecs = [
   ...baseSpecs,
   ...baseSpecs.map((s) => ({ ...s, size: undefined })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'medium' as IButtonProps['size'] })),
-  ...baseSpecs.map((s) => ({ ...s, size: 'large' as IButtonProps['size'] })),
+  ...baseSpecs.map((s) => ({ ...s, size: 'medium' as ButtonProps['size'] })),
+  ...baseSpecs.map((s) => ({ ...s, size: 'large' as ButtonProps['size'] })),
   ...baseSpecs.map((s) => ({
     ...s,
-    size: 'small' as IButtonProps['size'],
-    type: 'submit' as IButtonProps['type'],
+    size: 'small' as ButtonProps['size'],
+    type: 'submit' as ButtonProps['type'],
   })),
   ...baseSpecs.map((s) => ({
     ...s,
-    size: 'medium' as IButtonProps['size'],
-    type: 'submit' as IButtonProps['type'],
+    size: 'medium' as ButtonProps['size'],
+    type: 'submit' as ButtonProps['type'],
   })),
   ...baseSpecs.map((s) => ({
     ...s,
-    size: 'large' as IButtonProps['size'],
-    type: 'submit' as IButtonProps['type'],
+    size: 'large' as ButtonProps['size'],
+    type: 'submit' as ButtonProps['type'],
   })),
 ];
 
 export const secondaryBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'secondary' as IButtonProps['variant'],
+  variant: 'secondary' as ButtonProps['variant'],
 }));
 
 export const tertiaryBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'tertiary' as IButtonProps['variant'],
+  variant: 'tertiary' as ButtonProps['variant'],
 }));
 
 export const infoBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'info' as IButtonProps['variant'],
+  variant: 'info' as ButtonProps['variant'],
 }));
 
 export const attentionBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'attention' as IButtonProps['variant'],
+  variant: 'attention' as ButtonProps['variant'],
 }));

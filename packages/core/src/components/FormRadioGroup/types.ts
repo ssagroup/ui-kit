@@ -1,10 +1,10 @@
 import { FieldPath, Control, FieldValues } from 'react-hook-form';
 
-import { IRadioGroupProps } from '@components/RadioGroup/types';
+import { RadioGroupProps } from '@components/RadioGroup/types';
 import { CommonProps } from '@global-types/emotion';
 
-export type IFormRadioGroupProps<T extends FieldValues> = Omit<
-  IRadioGroupProps,
+export type FormRadioGroupProps<T extends FieldValues> = Omit<
+  RadioGroupProps,
   'name' | 'onChange'
 > & {
   name: FieldPath<T>;

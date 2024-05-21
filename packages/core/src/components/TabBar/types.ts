@@ -1,6 +1,6 @@
 import { CommonProps } from '@global-types/emotion';
 
-export interface ITab extends CommonProps {
+export interface TabProps extends CommonProps {
   tabId: number | string;
   renderContent: (
     tab?: {
@@ -11,29 +11,26 @@ export interface ITab extends CommonProps {
     },
     arg?: unknown,
   ) => React.ReactNode;
-  [prop: string | number | symbol]: unknown;
-}
-
-export interface ITabProps extends ITab {
   isActive?: boolean;
   onClick?: () => void;
   ariaControls?: string;
+  [prop: string | number | symbol]: unknown;
 }
 
-export interface ISmallTabProps extends ITabProps {
+export interface SmallTabProps extends TabProps {
   text: string;
 }
 
-export interface ILargeTabProps extends ITabProps {
+export interface LargeTabProps extends TabProps {
   topText: string;
   bottomText: string;
 }
 
-export interface ITabBarProps {
-  children: React.ReactElement<React.PropsWithChildren<ITabProps>>[];
+export interface TabBarProps {
+  children: React.ReactElement<React.PropsWithChildren<TabProps>>[];
 }
 
-export interface ITabBarContext {
-  activeTab?: ITab;
-  setActiveTab: (tab?: ITab) => void;
+export interface TabBarContextProps {
+  activeTab?: TabProps;
+  setActiveTab: (tab?: TabProps) => void;
 }

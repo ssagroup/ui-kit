@@ -2,13 +2,13 @@ import CardList from '@components/CardList';
 
 import { ListGoalsCard } from './ListGoalsCard';
 
-import { IListGoalsProps } from './types';
+import { ListGoalsProps } from './types';
 
 /**
  *
  * UI Component that uses CardList to render a list of goals
  */
-export const ListGoals = ({ goals }: IListGoalsProps) => {
+export const ListGoals = ({ goals }: ListGoalsProps) => {
   return (
     <CardList
       title="Goals"

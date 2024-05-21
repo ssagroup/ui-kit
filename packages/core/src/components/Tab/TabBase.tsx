@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
+import { SmallTabProps } from '@components/TabBar/types';
 
-import { ISmallTabProps } from '@components/TabBar/types';
-
-export const TabBase = styled.button<Pick<ISmallTabProps, 'isActive'>>`
+export const TabBase = styled.button<Pick<SmallTabProps, 'isActive'>>`
   height: 34px;
   border: 0;
   outline: 0;

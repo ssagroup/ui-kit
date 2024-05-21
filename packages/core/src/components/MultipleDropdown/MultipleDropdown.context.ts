@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { DropdownContextType } from './types';
-import { IDropdownOption } from '@components/MultipleDropdownOptions';
+import { DropdownOptionType } from '@components/MultipleDropdownOptions';
 
 const MultipleDropdownContext = React.createContext<
-  DropdownContextType<IDropdownOption>
+  DropdownContextType<DropdownOptionType>
 >({
   allItems: {},
   isMultiple: false,
@@ -13,7 +13,7 @@ const MultipleDropdownContext = React.createContext<
   },
 });
 
-export function useMultipleDropdownContext(): DropdownContextType<IDropdownOption> {
+export function useMultipleDropdownContext(): DropdownContextType<DropdownOptionType> {
   return React.useContext(MultipleDropdownContext);
 }
 

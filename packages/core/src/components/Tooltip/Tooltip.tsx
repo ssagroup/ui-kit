@@ -1,6 +1,6 @@
 import { useTooltip } from './useTooltip';
 import { TooltipContext } from './useTooltipContext';
-import { ITooltipProps } from './types';
+import { TooltipProps } from './types';
 
 /*
  * <Tooltip>
@@ -10,7 +10,7 @@ import { ITooltipProps } from './types';
  *   <TooltipContent>Tooltip</TooltipContent>
  * </Tooltip>
  * */
-const Tooltip = ({ children, ...props }: ITooltipProps) => {
+const Tooltip = ({ children, ...props }: TooltipProps) => {
   const tooltip = useTooltip(props);
 
   return (

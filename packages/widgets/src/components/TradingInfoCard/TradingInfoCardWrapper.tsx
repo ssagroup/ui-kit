@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Theme, css } from '@emotion/react';
 import { CardBase } from '@ssa-ui-kit/core';
-import { ITradingInfoCardWrapperProps } from './types';
+import { TradingInfoCardWrapperProps } from './types';
 
 const infoCardWrapper = (theme: Theme) => css`
   position: relative;
@@ -45,7 +45,7 @@ const TradingInfoCardWrapper = ({
   onClick,
   link,
   children,
-}: ITradingInfoCardWrapperProps) => {
+}: TradingInfoCardWrapperProps) => {
   return (
     <React.Fragment>
       {link ? (

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import Label from '@components/Label';
 import { checkboxStyles } from './styles';
-import { ICheckboxProps } from './types';
+import { CheckboxProps } from './types';
 
-export const CheckboxBase = styled(Label)<Pick<ICheckboxProps, 'color'>>`
+export const CheckboxBase = styled(Label)<Pick<CheckboxProps, 'color'>>`
   position: relative;
   display: inline-flex;
   flex-grow: 0;

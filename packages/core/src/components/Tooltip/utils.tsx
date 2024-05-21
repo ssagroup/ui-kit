@@ -1,7 +1,7 @@
-import { ITooltipContentSizes } from './types';
+import { TooltipContentSizes } from './types';
 import { small, medium, large } from './styles';
 
-export const mapSizes: ITooltipContentSizes = {
+export const mapSizes: TooltipContentSizes = {
   small,
   medium,
   large,

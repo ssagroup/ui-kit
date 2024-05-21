@@ -6,9 +6,9 @@ export interface SVGProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export interface IconProps extends Omit<SVGProps, 'fill'> {
-  name: keyof IMapIcons;
+  name: keyof MapIconsType;
 }
 
-export type IMapIcons = {
+export type MapIconsType = {
   [key in (typeof iconsList)[number]]: React.ElementType;
 };

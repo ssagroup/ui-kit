@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 
 import { Typography } from '@ssa-ui-kit/core';
 
-import { ICardListProps, Item } from './types';
+import { CardListProps, Item } from './types';
 
 /**
  *
@@ -13,7 +13,7 @@ export const CardList = <ItemType extends Item>({
   title,
   items,
   renderItem,
-}: ICardListProps<ItemType>) => {
+}: CardListProps<ItemType>) => {
   return (
     <Fragment>
       <Typography variant="h5" weight="bold">

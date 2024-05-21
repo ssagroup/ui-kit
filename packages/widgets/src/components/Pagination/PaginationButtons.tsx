@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import { Button } from '@ssa-ui-kit/core';
 
 import { pageBtnStyles, selectedPageBtnStyles } from './styles';
-import { IPaginationButtonsProps, IPageButtonProps } from './types';
+import { PaginationButtonsProps, PageButtonProps } from './types';
 
 const Break = () => <span css={{ cursor: 'default' }}>...</span>;
 
@@ -12,7 +12,7 @@ const PageButton = ({
   isSelected,
   page,
   isDisabled,
-}: IPageButtonProps) => {
+}: PageButtonProps) => {
   const theme = useTheme();
   const styles = useMemo(() => {
     return isSelected ? selectedPageBtnStyles(theme) : pageBtnStyles(theme);
@@ -43,7 +43,7 @@ export const PaginationButtons = ({
   selectedPage,
   onClick,
   isDisabled,
-}: IPaginationButtonsProps) => {
+}: PaginationButtonsProps) => {
   return (
     Array.isArray(range) &&
     range.map((page, index) => {

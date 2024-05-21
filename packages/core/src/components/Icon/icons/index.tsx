@@ -1,4 +1,4 @@
-import { IconProps, IMapIcons } from '../types';
+import { IconProps, MapIconsType } from '../types';
 
 import { Calendar } from './Calendar';
 import { Diet } from './Diet';
@@ -110,10 +110,10 @@ const componentsList = [
   Unlock,
 ];
 
-const iconsMap: IMapIcons = iconsList.reduce((res, name, index) => {
+const iconsMap: MapIconsType = iconsList.reduce((res, name, index) => {
   res[name] = componentsList[index];
   return res;
-}, {} as IMapIcons);
+}, {} as MapIconsType);
 
 const IconMapComponent = ({ name, color, ...props }: IconProps) => {
   const Component = iconsMap[name];

@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 
-import { ILargeTabProps } from '@components/TabBar/types';
+import { LargeTabProps } from '@components/TabBar/types';
 
 import { LargeTabBase } from './LargeTabBase';
 
@@ -13,7 +13,7 @@ const LargeTab = ({
   onClick,
   ariaControls,
   tabId,
-}: ILargeTabProps) => {
+}: LargeTabProps) => {
   const theme = useTheme();
   return (
     <LargeTabBase

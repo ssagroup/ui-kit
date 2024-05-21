@@ -7,10 +7,10 @@ import LargeTab from '@components/LargeTab';
 
 import { TabBarWrapper, TabContents } from './stories/helpers';
 import TabBar, { TabBarContextProvider } from './index';
-import { ISmallTabProps, ITab } from './types';
+import { SmallTabProps, TabProps } from './types';
 import { ReactNode } from 'react';
 
-interface TabTest extends Pick<ISmallTabProps, 'tabId'> {
+interface TabTest extends Pick<SmallTabProps, 'tabId'> {
   controls: string;
   topText?: string;
   bottomText?: string;
@@ -187,7 +187,7 @@ const componentTabBarTests: ComponentTabBarTests = (
 };
 
 describe('TabBar', () => {
-  const renderContent = (tab?: ISmallTabProps): React.ReactNode => {
+  const renderContent = (tab?: SmallTabProps): React.ReactNode => {
     return (
       <TabContents
         id={tab?.ariaControls}
@@ -216,7 +216,7 @@ describe('TabBar', () => {
         tabId={tab.tabId}
         text={tab.text || ''}
         ariaControls={tab.controls}
-        renderContent={tab.renderContent as ITab['renderContent']}
+        renderContent={tab.renderContent as TabProps['renderContent']}
       />
     ),
     (tab) => [tab.text || ''],
@@ -282,7 +282,7 @@ describe('TabBar', () => {
         topText={tab.topText || ''}
         bottomText={tab.bottomText || ''}
         ariaControls={tab.controls}
-        renderContent={tab.renderContent as ITab['renderContent']}
+        renderContent={tab.renderContent as TabProps['renderContent']}
       />
     ),
     (tab) => [tab.topText || '', tab.bottomText || ''],

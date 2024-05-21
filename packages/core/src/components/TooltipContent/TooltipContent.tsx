@@ -7,11 +7,11 @@ import {
 
 import { TooltipArrow } from '@components/Tooltip/TooltipArrow';
 import { TooltipContentBase } from '@components/Tooltip/TooltipContentBase';
-import { ITooltipContentProps, TooltipSize } from '@components/Tooltip/types';
+import { TooltipContentProps, TooltipSize } from '@components/Tooltip/types';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { mapSizes } from '@components/Tooltip/utils';
 
-const TooltipContent = forwardRef<HTMLDivElement, ITooltipContentProps>(
+const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
   function TooltipContent({ children, className, style }, refProp) {
     const tooltipCtx = useTooltipContext();
     const ref = useMergeRefs([tooltipCtx?.refs.setFloating, refProp]);

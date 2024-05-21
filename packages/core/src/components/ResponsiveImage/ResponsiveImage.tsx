@@ -1,4 +1,4 @@
-import { IResponsiveImageProps } from './types';
+import { ResponsiveImageProps } from './types';
 
 /**
  * A simple wrapper over the `<img />` tag.
@@ -7,7 +7,7 @@ import { IResponsiveImageProps } from './types';
  * when testing srcSet, and use Hard Reload to force the
  * browser to load an image of another resolution.
  * */
-const ResponsiveImage = ({ src, alt, ...props }: IResponsiveImageProps) => {
+const ResponsiveImage = ({ src, alt, ...props }: ResponsiveImageProps) => {
   return <img src={src} alt={alt} {...props} />;
 };
 

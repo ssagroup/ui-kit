@@ -10,14 +10,14 @@ import {
 } from '@ssa-ui-kit/core';
 
 import { content } from './styles';
-import { IItemCardProps, ProgressProps } from './types';
+import { ItemCardProps, ProgressProps } from './types';
 
 export const ListGoalsCard = ({
   image,
   title,
   details,
   progressProps,
-}: IItemCardProps) => {
+}: ItemCardProps) => {
   const {
     size = 50,
     max = 100,

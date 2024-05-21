@@ -1,4 +1,4 @@
-import { IDropdownOption } from '../..';
+import { DropdownOptionProps } from '../..';
 
 const getActiveItem = <T>({
   activeItem,
@@ -20,7 +20,7 @@ interface GetActiveItems<T> {
   placeholder: string;
 }
 export const getActiveItems = <
-  T extends Record<string | number, IDropdownOption>,
+  T extends Record<string | number, DropdownOptionProps>,
 >({
   allItems = {} as T,
   placeholder,

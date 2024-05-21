@@ -1,15 +1,15 @@
 import { Serie } from '@nivo/line';
 
-export interface IHeartRateProps {
+export interface HeartRateProps {
   data: Serie;
   caption?: string;
   color?: string;
 }
 
-export interface IBMPProps {
+export interface BMPProps {
   value: number;
 }
 
-export interface IHeartRateCaptionProps {
+export interface HeartRateCaptionProps {
   caption: string;
 }

@@ -1,4 +1,4 @@
-export interface ISwitchProps {
+export interface SwitchProps {
   label: string;
   isDisabled?: boolean;
 }

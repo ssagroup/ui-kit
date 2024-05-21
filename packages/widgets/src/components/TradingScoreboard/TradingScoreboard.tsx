@@ -1,13 +1,13 @@
 import { TradingInfoCard } from '@components/TradingInfoCard';
 import TradingScoreboardBase from './TradingScoreboardBase';
-import { ITradingScoreboardProps } from './types';
+import { TradingScoreboardProps } from './types';
 
 const TradingScoreboard = ({
   items,
   onClick,
   renderCard,
   ...props
-}: ITradingScoreboardProps) => {
+}: TradingScoreboardProps) => {
   return (
     <div>
       <TradingScoreboardBase {...props}>

@@ -1,4 +1,4 @@
-export interface IResponsiveImageProps {
+export interface ResponsiveImageProps {
   src: string;
   srcSet: string;
   sizes: string;

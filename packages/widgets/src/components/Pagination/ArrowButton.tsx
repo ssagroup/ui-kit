@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import { Button, Icon } from '@ssa-ui-kit/core';
 
-import { IArrowButtonProps } from './types';
+import { ArrowButtonProps } from './types';
 import { arrowBtnStyles } from './styles';
 
 export const ArrowButton = ({
@@ -9,7 +9,7 @@ export const ArrowButton = ({
   onClick,
   isDisabled,
   className,
-}: IArrowButtonProps) => {
+}: ArrowButtonProps) => {
   const theme = useTheme();
   return (
     <Button

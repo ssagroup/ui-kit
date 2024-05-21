@@ -1,9 +1,9 @@
 import { useTheme } from '@emotion/react';
 import { Typography, Wrapper } from '@ssa-ui-kit/core';
 
-import { ICaloriesProps } from './types';
+import { CaloriesProps } from './types';
 
-export const InnerContent = ({ currentValue, max }: ICaloriesProps) => {
+export const InnerContent = ({ currentValue, max }: CaloriesProps) => {
   const theme = useTheme();
   return (
     <div

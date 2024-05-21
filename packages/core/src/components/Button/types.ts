@@ -15,13 +15,13 @@ type ButtonAriaProps = Pick<
   | 'aria-current'
 >;
 
-export interface IButtonProps extends ButtonAriaProps {
+export interface ButtonProps extends ButtonAriaProps {
   block?: boolean;
   size?: keyof MainSizes;
   text?: string;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
-  variant?: keyof IButtonVariants | 'custom';
+  variant?: keyof ButtonVariants | 'custom';
   type?: 'button' | 'reset' | 'submit';
   isDisabled?: boolean;
   className?: string;
@@ -29,7 +29,7 @@ export interface IButtonProps extends ButtonAriaProps {
   children?: React.ReactNode;
 }
 
-export interface IButtonVariants {
+export interface ButtonVariants {
   primary: (theme: Theme) => SerializedStyles;
   info: (theme: Theme) => SerializedStyles;
   secondary: (theme: Theme) => SerializedStyles;
@@ -37,12 +37,12 @@ export interface IButtonVariants {
   attention: (theme: Theme) => SerializedStyles;
 }
 
-export type IButtonTextProps = {
+export type ButtonTextProps = {
   text: string;
   className?: string;
   testId?: string;
 };
 
-export type IColoredButtonTextProps = Required<Pick<IButtonProps, 'size'>> & {
+export type ColoredButtonTextProps = Required<Pick<ButtonProps, 'size'>> & {
   text: string;
 };

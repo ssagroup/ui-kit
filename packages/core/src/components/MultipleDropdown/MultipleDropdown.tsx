@@ -10,9 +10,9 @@ import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
 import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
-import { IDropdownOption } from '@components/DropdownOptions/types';
+import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
-import { DropdownContextType, IDropdownProps } from './types';
+import { DropdownContextType, DropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
 import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
 
@@ -33,7 +33,7 @@ const DropdownPlaceholderLabel = styled.div`
  * Aria attributes are set according to
  * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  **/
-function MultipleDropdownInner<T extends IDropdownOption>(
+function MultipleDropdownInner<T extends DropdownOptionProps>(
   {
     selectedItems = [],
     isDisabled,
@@ -45,7 +45,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
     children,
     onChange: handleChange,
     className,
-  }: IDropdownProps<T>,
+  }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
   const theme = useTheme();
@@ -69,7 +69,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
     [JSON.stringify(selectedItems)],
   );
 
-  const onChange = (item: IDropdownOption) => {
+  const onChange = (item: DropdownOptionProps) => {
     if (isDisabled || !item) {
       return;
     }
@@ -148,7 +148,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
     setItems(childItems);
   }, [memoSelectedItems, children]);
 
-  const contextValue: DropdownContextType<IDropdownOption> = React.useMemo(
+  const contextValue: DropdownContextType<DropdownOptionProps> = React.useMemo(
     () => ({ onChange, allItems: optionsWithKey, isMultiple }),
     [onChange, optionsWithKey, isMultiple],
   );
@@ -211,7 +211,7 @@ function MultipleDropdownInner<T extends IDropdownOption>(
 
 const MultipleDropdown = React.forwardRef<
   HTMLDivElement,
-  IDropdownProps<IDropdownOption>
+  DropdownProps<DropdownOptionProps>
 >(MultipleDropdownInner);
 
 export default MultipleDropdown;

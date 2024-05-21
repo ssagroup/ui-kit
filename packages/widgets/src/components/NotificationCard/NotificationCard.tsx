@@ -4,7 +4,7 @@ import { dateFormatters } from '@ssa-ui-kit/utils';
 import {
   Badge,
   CardBase,
-  IMapIcons,
+  MapIconsType,
   Icon,
   Indicator,
   MainColors,
@@ -62,7 +62,7 @@ export const NotificationCard = forwardRef<
           color={notificationTypes[type].color as keyof MainColors}
           css={notifyBadge}>
           <Icon
-            name={notificationTypes[type].icon as keyof IMapIcons}
+            name={notificationTypes[type].icon as keyof MapIconsType}
             color={theme.colors.white}
             size={14}
           />

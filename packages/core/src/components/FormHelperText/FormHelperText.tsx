@@ -1,4 +1,4 @@
-import { IFormHelperText } from './types';
+import { FormHelperTextProps } from './types';
 import { FormHelperTextBase } from './FormHelperTextBase';
 
 const FormHelperText = ({
@@ -6,7 +6,7 @@ const FormHelperText = ({
   status,
   disabled,
   children,
-}: IFormHelperText) => {
+}: FormHelperTextProps) => {
   status = disabled ? 'basic' : status;
   return (
     <FormHelperTextBase role={role} status={status}>

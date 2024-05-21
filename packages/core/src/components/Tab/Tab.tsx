@@ -1,4 +1,4 @@
-import { ISmallTabProps } from '@components/TabBar/types';
+import { SmallTabProps } from '@components/TabBar/types';
 
 import { TabBase } from './TabBase';
 
@@ -8,7 +8,7 @@ const Tab = ({
   text,
   ariaControls,
   tabId,
-}: ISmallTabProps) => {
+}: SmallTabProps) => {
   return (
     <TabBase
       role="tab"

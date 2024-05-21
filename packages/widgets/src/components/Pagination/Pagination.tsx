@@ -4,7 +4,7 @@ import { usePaginationRange } from '@ssa-ui-kit/hooks';
 import { ArrowButton } from './ArrowButton';
 import { PaginationButtons } from './PaginationButtons';
 
-import { IPaginationProps } from './types';
+import { PaginationProps } from './types';
 import { usePaginationContext } from './PaginationContext';
 
 const Nav = styled.nav``;
@@ -15,7 +15,7 @@ const Pagination = ({
   as,
   ariaLabel,
   isDisabled,
-}: IPaginationProps) => {
+}: PaginationProps) => {
   const { page, setPage } = usePaginationContext();
   const range = usePaginationRange({ pagesCount, selectedPage: page });
 
