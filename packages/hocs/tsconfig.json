@@ -2,11 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsxImportSource": "@emotion/react",
-    "emitDeclarationOnly": false,
+    "noEmit": false,
     "outDir": "./dist",
     "tsBuildInfoFile": "./tsbuildcache",
     "typeRoots": [
-      "./src/types",
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
