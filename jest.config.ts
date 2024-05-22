@@ -95,6 +95,26 @@ const config: JestConfigWithTsJest = {
       },
     },
     {
+      displayName: 'UI Kit HOCs',
+      testEnvironment: 'jsdom',
+      transform: {
+        '^.+\\.(ts|tsx)$': [
+          'ts-jest',
+          {
+            tsconfig: './packages/hocs/tsconfig.json',
+            babelConfig: './.babelrc.js',
+          },
+        ],
+      },
+      testMatch: [
+        '<rootDir>/packages/hocs/src/**/*.spec.ts',
+        '<rootDir>/packages/hocs/src/**/*.spec.tsx',
+      ],
+      moduleNameMapper: {
+        '^@(hocs)/(.*)$': ['<rootDir>/packages/hocs/src/$1/$2'],
+      },
+    },
+    {
       preset: 'ts-jest',
       displayName: 'UI Kit Widgets',
       testEnvironment: 'jsdom',

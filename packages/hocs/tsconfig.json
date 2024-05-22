@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsxImportSource": "@emotion/react",
+    "emitDeclarationOnly": false,
+    "outDir": "./dist",
+    // "rootDir": "./src",
+    "tsBuildInfoFile": "./tsbuildcache",
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@hocs/*": ["./src/hocs/*"]
+    }
+  },
+  "include": ["src/**/*", "./jest-setup.ts", "customTest.tsx"],
+  "exclude": ["dist/**/*"]
+}
