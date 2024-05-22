@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ThemeProvider } from '@emotion/react';
-import { mainTheme } from '@ssa-ui-kit/core';
 import { WithVisibleSM } from '.';
+import { mainTheme } from '../..';
 
 jest.mock('d3-color', () => ({}));
 

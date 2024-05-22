@@ -2,6 +2,5 @@ packages:
   - 'packages/core'
   - 'packages/utils'
   - 'packages/hooks'
-  - 'packages/hocs'
   - 'packages/widgets'
   - 'examples/fitness-dashboard'

@@ -1,4 +1,4 @@
-import { PaginationContextProvider } from '@ssa-ui-kit/widgets';
+import { PaginationContextProvider } from '.';
 
 export const WithPagination = <T extends object>(
   Component: React.ComponentType<T>,

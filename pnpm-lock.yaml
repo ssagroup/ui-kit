@@ -404,49 +404,6 @@ importers:
         specifier: ^5.85.0
         version: 5.85.0(@swc/core@1.3.79)(esbuild@0.18.20)(webpack-cli@5.1.1)
 
-  packages/hocs:
-    dependencies:
-      '@emotion/core':
-        specifier: ^11.0.0
-        version: 11.0.0
-      '@emotion/css':
-        specifier: ^11.11.2
-        version: 11.11.2
-      '@emotion/react':
-        specifier: ^11.11.1
-        version: 11.11.1(@types/react@18.2.21)(react@18.2.0)
-      '@emotion/styled':
-        specifier: ^11.11.0
-        version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.21)(react@18.2.0)
-      '@ssa-ui-kit/core':
-        specifier: workspace:^
-        version: link:../core
-      '@ssa-ui-kit/widgets':
-        specifier: workspace:^
-        version: link:../widgets
-      react:
-        specifier: 18.x
-        version: 18.2.0
-    devDependencies:
-      '@testing-library/react':
-        specifier: ^15.0.7
-        version: 15.0.7(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
-      '@types/react':
-        specifier: ^18.2.8
-        version: 18.2.21
-      '@types/react-dom':
-        specifier: ^18.2.4
-        version: 18.2.4
-      resolve-tspaths:
-        specifier: ^0.8.16
-        version: 0.8.16(typescript@5.1.3)
-      terser-webpack-plugin:
-        specifier: ^5.3.9
-        version: 5.3.9(@swc/core@1.3.79)(esbuild@0.18.20)(webpack@5.85.0)
-      webpack:
-        specifier: ^5.85.0
-        version: 5.85.0(@swc/core@1.3.79)(esbuild@0.18.20)(webpack-cli@5.1.1)
-
   packages/hooks:
     dependencies:
       '@ssa-ui-kit/utils':
@@ -3639,27 +3596,6 @@ packages:
   /@emotion/memoize@0.8.1:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
 
-  /@emotion/react@11.11.1(@types/react@18.2.21)(react@18.2.0):
-    resolution: {integrity: sha512-5mlW1DquU5HaxjLkfkGN1GA/fvVGdyHURRiX/0FHl2cfIfRxSOfmxEH5YS43edp0OldZrZ+dkBKbngxcNCdZvA==}
-    peerDependencies:
-      '@types/react': '*'
-      react: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.21.5
-      '@emotion/babel-plugin': 11.11.0
-      '@emotion/cache': 11.11.0
-      '@emotion/serialize': 1.1.2
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
-      '@emotion/utils': 1.2.1
-      '@emotion/weak-memoize': 0.3.1
-      '@types/react': 18.2.21
-      hoist-non-react-statics: 3.3.2
-      react: 18.2.0
-    dev: false
-
   /@emotion/react@11.11.1(@types/react@18.2.8)(react@18.2.0):
     resolution: {integrity: sha512-5mlW1DquU5HaxjLkfkGN1GA/fvVGdyHURRiX/0FHl2cfIfRxSOfmxEH5YS43edp0OldZrZ+dkBKbngxcNCdZvA==}
     peerDependencies:
@@ -3692,27 +3628,6 @@ packages:
 
   /@emotion/sheet@1.2.2:
     resolution: {integrity: sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA==}
-    dev: false
-
-  /@emotion/styled@11.11.0(@emotion/react@11.11.1)(@types/react@18.2.21)(react@18.2.0):
-    resolution: {integrity: sha512-hM5Nnvu9P3midq5aaXj4I+lnSfNi7Pmd4EWk1fOZ3pxookaQTNew6bp4JaCBYM4HVFZF9g7UjJmsUmC2JlxOng==}
-    peerDependencies:
-      '@emotion/react': ^11.0.0-rc.0
-      '@types/react': '*'
-      react: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.21.5
-      '@emotion/babel-plugin': 11.11.0
-      '@emotion/is-prop-valid': 1.2.1
-      '@emotion/react': 11.11.1(@types/react@18.2.21)(react@18.2.0)
-      '@emotion/serialize': 1.1.2
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
-      '@emotion/utils': 1.2.1
-      '@types/react': 18.2.21
-      react: 18.2.0
     dev: false
 
   /@emotion/styled@11.11.0(@emotion/react@11.11.1)(@types/react@18.2.8)(react@18.2.0):
@@ -7535,20 +7450,6 @@ packages:
     resolution: {integrity: sha512-3Oq9V7tRV5+hlKHPr/8RpByJ1HXB4mAbZxh/sKAjyvNRBxTASjBx4j+gN9iXMBTllhZCZgYUfOqvbCtU3tqOHQ==}
     dev: true
 
-  /@testing-library/dom@10.1.0:
-    resolution: {integrity: sha512-wdsYKy5zupPyLCW2Je5DLHSxSfbIp6h80WoHOQc+RPtmPGA52O9x5MJEkv92Sjonpq+poOAtUKhh1kBGAXBrNA==}
-    engines: {node: '>=18'}
-    dependencies:
-      '@babel/code-frame': 7.22.13
-      '@babel/runtime': 7.21.5
-      '@types/aria-query': 5.0.1
-      aria-query: 5.3.0
-      chalk: 4.1.2
-      dom-accessibility-api: 0.5.16
-      lz-string: 1.5.0
-      pretty-format: 27.5.1
-    dev: true
-
   /@testing-library/dom@8.19.0:
     resolution: {integrity: sha512-6YWYPPpxG3e/xOo6HIWwB/58HukkwIVTOaZ0VwdMVjhRUX/01E4FtQbck9GazOOj7MXHc5RBzMrU86iBJHbI+A==}
     engines: {node: '>=12'}
@@ -7601,25 +7502,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.5
       '@testing-library/dom': 8.19.0
-      '@types/react-dom': 18.2.4
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: true
-
-  /@testing-library/react@15.0.7(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-cg0RvEdD1TIhhkm1IeYMQxrzy0MtUNfa3minv4MjbgcYzJAZ7yD0i0lwoPOTPr+INtiXFezt2o8xMSnyHhEn2Q==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@types/react': ^18.0.0
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.21.5
-      '@testing-library/dom': 10.1.0
-      '@types/react': 18.2.21
       '@types/react-dom': 18.2.4
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -8635,12 +8517,6 @@ packages:
 
   /aria-query@5.2.1:
     resolution: {integrity: sha512-7uFg4b+lETFgdaJyETnILsXgnnzVnkHcgRbwbPwevm5x/LmUlt3MjczMRe1zg824iBgXZNRPTBftNYyRSKLp2g==}
-    dependencies:
-      dequal: 2.0.3
-    dev: true
-
-  /aria-query@5.3.0:
-    resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
     dependencies:
       dequal: 2.0.3
     dev: true
