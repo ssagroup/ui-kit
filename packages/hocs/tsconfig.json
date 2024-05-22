@@ -4,7 +4,6 @@
     "jsxImportSource": "@emotion/react",
     "emitDeclarationOnly": false,
     "outDir": "./dist",
-    // "rootDir": "./src",
     "tsBuildInfoFile": "./tsbuildcache",
     "typeRoots": [
       "./src/types",
