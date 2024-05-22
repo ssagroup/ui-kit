@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore .",
-    "build:all": "pnpm build:utils && pnpm build:hooks && pnpm build:hocs && pnpm build:core && pnpm build:widgets",
+    "build:all": "pnpm build:utils && pnpm build:hooks && pnpm build:core && pnpm build:widgets && pnpm build:hocs",
     "build:utils": "pnpm --filter ./packages/utils build",
     "build:hooks": "pnpm --filter ./packages/hooks build",
     "build:hocs": "pnpm --filter ./packages/hocs build",
