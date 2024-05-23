@@ -80,3 +80,7 @@ export { default as FormHelperText } from './FormHelperText';
 export { default as Indicator } from './Indicator';
 export * from './ButtonGroup';
 export { default as Link } from './Link';
+export * from './WithVisibleLG';
+export * from './WithVisibleMD';
+export * from './WithVisibleSM';
+export * from './WithVisibleUpToLG';
