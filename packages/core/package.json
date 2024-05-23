@@ -33,8 +33,8 @@
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@floating-ui/react": "0.25.4",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
@@ -64,9 +64,9 @@
   ],
   "peerDependencies": {
     "@emotion/core": "^11.0.0",
-    "@emotion/css": "^11.11.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/css": "^11.11.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "react": "18.x",
     "react-dom": "18.x",
     "react-hook-form": "^7.46.1"

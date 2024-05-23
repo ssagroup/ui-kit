@@ -14,8 +14,8 @@
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@floating-ui/react": "0.25.4",
     "@nivo/core": "^0.83.0",
     "@nivo/line": "^0.83.0",
