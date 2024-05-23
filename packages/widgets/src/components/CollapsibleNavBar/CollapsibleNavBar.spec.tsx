@@ -2,6 +2,7 @@ import { fireEvent } from '@testing-library/dom';
 import { ITEMS } from './stories/consts';
 import { StoryComponent } from './stories/StoryComponent';
 import { Logo } from './stories/Logo';
+import { act } from '@testing-library/react';
 
 describe('CollapsibleNavBar', () => {
   it('Should be correctly rendered', () => {
@@ -29,7 +30,9 @@ describe('CollapsibleNavBar', () => {
 
     expect(statisticsArrow as Node).toHaveAttribute('aria-expanded', 'false');
 
-    fireEvent.click(statisticsArrow as Node);
+    act(() => {
+      fireEvent.click(statisticsArrow as Node);
+    });
 
     expect(statisticsArrow as Node).toHaveAttribute('aria-expanded', 'true');
   });

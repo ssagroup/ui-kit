@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useTextSizeDecrease } from './useTextSizeDecrease';
 
@@ -36,9 +36,8 @@ describe('Hook: useTextSizeDecrease', () => {
   });
 
   it("Decreases element's font size", () => {
-    render(<TestComponent />);
-
-    const p = screen.getByRole('paragraph');
+    const { container } = render(<TestComponent />);
+    const p = container.querySelector('p');
     expect(p).toHaveStyle(`font-size: 11px`);
     expect(p).toHaveStyle('word-break: break-all');
   });

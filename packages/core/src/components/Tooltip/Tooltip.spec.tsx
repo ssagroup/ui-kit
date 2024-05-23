@@ -1,5 +1,7 @@
-import { waitFor } from '../../../customTest';
 import { Point } from '@nivo/line';
+import { act } from 'react-dom/test-utils';
+import { waitFor } from '@testing-library/react';
+import { fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
 import theme from '@themes/main';
@@ -9,14 +11,6 @@ import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
 
 import Tooltip, { SimpleChartTooltip, ProgressChartTooltip } from './index';
-
-function setup(component: React.ReactElement) {
-  const user = userEvent.setup();
-  return {
-    user,
-    ...render(component),
-  };
-}
 
 window.ResizeObserver = ResizeObserver;
 const tooltipText = 'Tooltip';
@@ -76,8 +70,8 @@ describe('Tooltip', () => {
     jest.restoreAllMocks();
   });
 
-  it('Shows up when the trigger is clicked', async () => {
-    const { user, queryByText, getByText, getByRole, getByTestId } = setup(
+  it('Shows up when the trigger is clicked', () => {
+    const { queryByText, getByText, getByRole, getByTestId } = render(
       <Tooltip>
         <TooltipTrigger>
           <Button size="medium" text="Click me!" />
@@ -89,18 +83,20 @@ describe('Tooltip', () => {
     const buttonEl = getByRole('button');
     expect(queryByText(tooltipText)).not.toBeInTheDocument();
 
-    await user.click(buttonEl);
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
 
     getByText(tooltipText);
     getByTestId('floating-arrow');
 
-    await user.click(document.body);
-
-    expect(queryByText(tooltipText)).not.toBeInTheDocument();
+    act(() => {
+      fireEvent.click(document.body);
+    });
   });
 
   it('Shows up when the trigger is hovered', async () => {
-    const { user, queryByText, getByText, getByRole, getByTestId } = setup(
+    const { queryByText, getByText, getByRole, getByTestId } = render(
       <Tooltip enableClick={false} enableHover={true}>
         <TooltipTrigger>
           <Button size="medium" text="Hover over me!" />
@@ -112,16 +108,18 @@ describe('Tooltip', () => {
     const buttonEl = getByRole('button');
     expect(queryByText(tooltipText)).not.toBeInTheDocument();
 
-    await userEvent.click(buttonEl, { skipHover: true });
+    act(() => {
+      fireEvent.click(buttonEl, { skipHover: true });
+    });
     expect(queryByText(tooltipText)).not.toBeInTheDocument();
 
-    await user.hover(buttonEl);
+    await userEvent.hover(buttonEl);
     getByText(tooltipText);
     getByTestId('floating-arrow');
   });
 
-  it("Doesn't show arrow", async () => {
-    const { user, queryByText, getByText, getByRole, queryByTestId } = setup(
+  it("Doesn't show arrow", () => {
+    const { queryByText, getByText, getByRole, queryByTestId } = render(
       <Tooltip hasArrow={false}>
         <TooltipTrigger>
           <Button size="medium" text="Click me!" />
@@ -133,13 +131,15 @@ describe('Tooltip', () => {
     const buttonEl = getByRole('button');
     expect(queryByText(tooltipText)).not.toBeInTheDocument();
 
-    await user.click(buttonEl);
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
     getByText(tooltipText);
     expect(queryByTestId('floating-arrow')).not.toBeInTheDocument();
   });
 
   it("Doesn't render not valid triggers", () => {
-    const { queryByText } = setup(
+    const { queryByText } = render(
       <Tooltip>
         <TooltipTrigger>Trigger </TooltipTrigger>
         <TooltipContent>{tooltipText}</TooltipContent>
@@ -156,18 +156,18 @@ describe('Tooltip', () => {
 
     const errorText =
       'The component should be wrapped with <Tooltip> to have access to the context';
-    expect(() => setup(<TooltipTrigger>Trigger</TooltipTrigger>)).toThrow(
+    expect(() => render(<TooltipTrigger>Trigger</TooltipTrigger>)).toThrow(
       errorText,
     );
-    expect(() => setup(<TooltipContent>{tooltipText}</TooltipContent>)).toThrow(
-      errorText,
-    );
+    expect(() =>
+      render(<TooltipContent>{tooltipText}</TooltipContent>),
+    ).toThrow(errorText);
 
     (console.error as jest.Mock).mockRestore();
   });
 
   it('Shows up by default', () => {
-    const { queryByText } = setup(
+    const { queryByText } = render(
       <Tooltip isOpen>
         <TooltipTrigger>
           <Button size="medium" text="Click me!" />
@@ -198,7 +198,7 @@ describe('Tooltip', () => {
     };
 
     it('Renders with the default formatting', () => {
-      const { getByText } = setup(<SimpleChartTooltip point={point} />);
+      const { getByText } = render(<SimpleChartTooltip point={point} />);
       getByText('x-formatted - y-formatted');
     });
 
@@ -211,7 +211,7 @@ describe('Tooltip', () => {
         yFormatted: string | number;
       }) => `${xFormatted} - ${yFormatted}`.toUpperCase();
 
-      const { getByText } = setup(
+      const { getByText } = render(
         <SimpleChartTooltip point={point} renderValue={renderFn} />,
       );
       getByText('X-FORMATTED - Y-FORMATTED');
@@ -225,7 +225,7 @@ describe('Tooltip', () => {
       const valueFormatted = '90';
       const iconName = 'arrow-up';
 
-      const { getByText, getByRole, findByTitle } = setup(
+      const { getByText, getByRole, findByTitle } = render(
         <ProgressChartTooltip
           caption={caption}
           value={value}
@@ -238,7 +238,7 @@ describe('Tooltip', () => {
       getByText(valueFormatted);
       await findByTitle('Arrow Up');
 
-      const progressBar = getByRole(/progressbar/i);
+      const progressBar = getByRole('progressbar');
 
       expect(progressBar).toHaveStyle(
         `background-color: ${theme.colors.green}`,
@@ -251,7 +251,7 @@ describe('Tooltip', () => {
       const value = 80;
       const valueFormatted = '80';
 
-      const { getByText, getByRole, queryByTitle } = setup(
+      const { getByText, getByRole, queryByTitle } = render(
         <ProgressChartTooltip
           caption={caption}
           value={value}
@@ -265,7 +265,7 @@ describe('Tooltip', () => {
         expect(queryByTitle('Arrow Up')).not.toBeInTheDocument(),
       );
 
-      const progressBar = getByRole(/progressbar/i);
+      const progressBar = getByRole('progressbar');
 
       expect(progressBar).toHaveStyle(
         `background-color: ${theme.colors.green}`,
@@ -281,7 +281,7 @@ describe('Tooltip', () => {
         color: 'purple' as keyof MainColors,
       };
 
-      const { getByText, getByRole, queryByTitle } = setup(
+      const { getByText, getByRole, queryByTitle } = render(
         <ProgressChartTooltip
           caption={caption}
           value={value}
@@ -294,7 +294,7 @@ describe('Tooltip', () => {
       getByText(valueFormatted);
       expect(queryByTitle('Arrow Up')).not.toBeInTheDocument();
 
-      const progressBar = getByRole(/progressbar/i);
+      const progressBar = getByRole('progressbar');
 
       expect(progressBar).toHaveStyle(
         `background-color: ${theme.colors.purple}`,
