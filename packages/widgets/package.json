@@ -61,7 +61,7 @@
     "html-webpack-plugin": "^5.5.1",
     "jsdom-testing-mocks": "^1.11.0",
     "resolve-tspaths": "^0.8.16",
-    "terser-webpack-plugin": "^5.3.9",
+    "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.85.0"
   },
   "peerDependencies": {
@@ -75,8 +75,8 @@
     "@nivo/scales": "^0.83.0",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-router-dom": "6.x",
-    "react-hook-form": "7.x"
+    "react-hook-form": "7.x",
+    "react-router-dom": "6.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {
