@@ -29,10 +29,10 @@ const getElTestId = (
   const prefix = isDisabled
     ? 'disabled'
     : ['primary', 'info', 'attention'].includes(variant || '')
-    ? 'white'
-    : variant === 'tertiary' && isHovered
-    ? 'greylight'
-    : 'grey';
+      ? 'white'
+      : variant === 'tertiary' && isHovered
+        ? 'greylight'
+        : 'grey';
 
   return `${prefix}-button-${elType}`;
 };

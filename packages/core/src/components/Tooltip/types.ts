@@ -71,11 +71,10 @@ export interface TooltipTriggerProps {
   children: React.ReactNode;
 }
 
-export type SimpleChartTooltipProps =
-  | PointTooltipProps &
-      Pick<TooltipProps, 'size'> & {
-        renderValue?: (data: Point['data']) => React.ReactNode;
-      };
+export type SimpleChartTooltipProps = PointTooltipProps &
+  Pick<TooltipProps, 'size'> & {
+    renderValue?: (data: Point['data']) => React.ReactNode;
+  };
 
 export interface ProgressChartTooltipProps {
   caption: string;

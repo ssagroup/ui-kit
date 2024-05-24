@@ -43,7 +43,9 @@
     "sb:deploy:fitness": "pnpm sb:build:widgets && firebase deploy --only hosting:fitness",
     "sb:deploy:core": "pnpm sb:build:core && firebase deploy --only hosting:core",
     "deploy:dashboard": "pnpm --filter ./examples/fitness-dashboard build && firebase deploy --only hosting:fitness-dashboard",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier:check": "npx prettier . --check",
+    "prettier:write": "npx prettier . --write"
   },
   "keywords": [
     "react",
@@ -81,6 +83,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.2.5",
+    "@types/ramda": "^0.30.0",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "@types/testing-library__jest-dom": "^5.14.6",
@@ -107,8 +110,8 @@
     "lint-staged": "^15.2.4",
     "lost-pixel": "3.6.0",
     "postcss-styled-syntax": "^0.6.4",
-    "prettier": "^2.8.8",
-    "ramda": "^0.29.0",
+    "prettier": "^3.2.5",
+    "ramda": "^0.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-refresh": "^0.14.0",
