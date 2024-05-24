@@ -1,3 +1,4 @@
+import { Interpolation, Theme } from '@emotion/react';
 import CollapsibleNavBarItem from './CollapsibleNavBarItem';
 import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
@@ -17,7 +18,7 @@ export const NavBarItemWithoutSubMenu = ({
       iconName={iconName}
       iconSize={iconSize}
       CustomIcon={CustomIcon}
-      css={{ ...css }}
+      css={{ ...css } as Interpolation<Theme>}
     />
   );
 
