@@ -28,7 +28,7 @@
     "resolve-tspaths": "^0.8.16",
     "storybook-addon-pseudo-states": "^2.1.0",
     "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.85.0"
+    "webpack": "^5.91.0"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
