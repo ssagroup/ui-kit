@@ -26,7 +26,7 @@
     "ts-check-build": "tsc -p ./tsconfig.build.json"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^6.4.5",
     "extend-expect": "^1.0.2",
     "resolve-tspaths": "^0.8.16",
     "terser-webpack-plugin": "^5.3.10",
