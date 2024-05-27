@@ -72,6 +72,7 @@ swp
 testid
 translatex
 tsbuildcache
+tseslint
 umd
 unhover
 USD
