@@ -23,10 +23,9 @@
     "@nivo/line": "0.83.0",
     "@playwright/test": "^1.44.1",
     "@testing-library/jest-dom": "^6.4.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
-    "@types/uuid": "^9.0.3",
-    "resolve-tspaths": "^0.8.16",
-    "storybook-addon-pseudo-states": "^2.1.0",
+    "@types/uuid": "^9.0.8",
+    "resolve-tspaths": "^0.8.19",
+    "storybook-addon-pseudo-states": "^3.1.1",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.91.0"
   },
@@ -35,14 +34,14 @@
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@floating-ui/react": "0.25.4",
+    "@floating-ui/react": "0.26.16",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
-    "dotenv": "^16.0.3",
-    "js-tokens": "^4.0.0",
+    "dotenv": "^16.4.5",
+    "js-tokens": "^9.0.0",
     "loose-envify": "^1.4.0",
-    "scheduler": "^0.23.0",
-    "uuid": "^9.0.0"
+    "scheduler": "^0.23.2",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "test": "jest -i --no-cache",

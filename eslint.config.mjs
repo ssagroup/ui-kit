@@ -9,7 +9,7 @@ import extendTypescriptESLint from 'typescript-eslint';
 import { fixupConfigRules } from '@eslint/compat';
 import extendReactRecommended from 'eslint-plugin-react/configs/recommended.js';
 import extendPrettier from 'eslint-plugin-prettier/recommended';
-// import extendStorybookConfig from 'eslint-plugin-storybook';
+import extendStorybookConfig from 'eslint-plugin-storybook';
 
 export default [
   {
@@ -22,10 +22,14 @@ export default [
       '@types',
       '.babelrc.js',
       '**/.storybook/*',
+      '**/tasks/*',
+      '**/webpack.**.js',
+      '**/.babelrc.js',
     ],
   },
   ...extendTypescriptESLint.configs.recommended,
   ...fixupConfigRules(extendReactRecommended),
+  ...extendStorybookConfig.configs['flat/recommended'],
   // reactPlugin.configs.recommended, // need to add, when it will be ready for ESLint 9
   // extendPrettier, // need to add, when it will be ready for ESLint 9
   // reactPlugin.configs["jsx-runtime"], // need to add, when it will be ready for ESLint 9
@@ -43,6 +47,8 @@ export default [
     rules: {
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-unused-expressions': 'warn',
     },
   },
   {

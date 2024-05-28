@@ -24,14 +24,14 @@
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@floating-ui/react": "0.25.4",
+    "@floating-ui/react": "0.26.16",
     "@ssa-ui-kit/core": "workspace:^",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
-    "dotenv": "^16.0.3",
-    "js-tokens": "^4.0.0",
+    "dotenv": "^16.4.5",
+    "js-tokens": "^9.0.0",
     "loose-envify": "^1.4.0",
-    "scheduler": "^0.23.0"
+    "scheduler": "^0.23.2"
   },
   "scripts": {
     "test": "jest -i --no-cache",
@@ -56,11 +56,10 @@
     "@playwright/test": "^1.44.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.13",
     "@testing-library/jest-dom": "^6.4.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
     "copy-webpack-plugin": "^12.0.2",
     "html-webpack-plugin": "^5.6.0",
-    "jsdom-testing-mocks": "^1.11.0",
-    "resolve-tspaths": "^0.8.16",
+    "jsdom-testing-mocks": "^1.13.0",
+    "resolve-tspaths": "^0.8.19",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.91.0"
   },
