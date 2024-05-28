@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
 import { MainSizes as MS, MainColors as MC } from './global';
 
 declare global {

@@ -40,7 +40,6 @@ export const filterButtonStyles = (count?: number) => (theme: Theme) => css`
 `;
 
 export const TableFilterTrigger = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   children,
   count,
   ...rest

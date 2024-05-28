@@ -2,6 +2,7 @@ adipiscing
 amet
 arcu
 auctor
+autodocs
 BMI
 BmiHeatbar
 btc
@@ -30,6 +31,7 @@ fdusd
 firebase
 firestore
 fns
+gfm
 greylight
 HIIT
 HMR

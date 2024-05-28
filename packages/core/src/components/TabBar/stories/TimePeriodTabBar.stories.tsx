@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Meta, StoryObj } from '@storybook/react';
 import TabBar from '@components/TabBar';
 import Tab from '@components/Tab';

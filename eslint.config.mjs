@@ -12,22 +12,46 @@ import extendPrettier from 'eslint-plugin-prettier/recommended';
 // import extendStorybookConfig from 'eslint-plugin-storybook';
 
 export default [
-  js.configs.recommended,
+  {
+    ignores: [
+      '**/node_modules/*',
+      '**/storybook-static/*',
+      '**/coverage/*',
+      '**/dist/*',
+      '.gitignore',
+      '@types',
+      '.babelrc.js',
+      '**/.storybook/*',
+    ],
+  },
   ...extendTypescriptESLint.configs.recommended,
   ...fixupConfigRules(extendReactRecommended),
-  {
-    rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...extendPrettier.rules,
-      ...reactPlugin.configs['jsx-runtime'].rules,
-    },
-  },
   // reactPlugin.configs.recommended, // need to add, when it will be ready for ESLint 9
   // extendPrettier, // need to add, when it will be ready for ESLint 9
   // reactPlugin.configs["jsx-runtime"], // need to add, when it will be ready for ESLint 9
   // jsxAllyPlugin.configs.recommended, // only plugin
   // ...fixupConfigRules(extendStorybookConfig), // need to add, when it will be ready for ESLint 9
   {
+    files: [
+      '**/src/**/*.js',
+      '**/src/**/*.jsx',
+      '**/src/**/*.ts',
+      '**/src/**/*.tsx',
+    ],
+  },
+  {
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
+  {
+    ...js.configs.recommended,
+    rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...extendPrettier.rules,
+      ...reactPlugin.configs['jsx-runtime'].rules,
+    },
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -72,17 +96,5 @@ export default [
         },
       ],
     },
-  },
-  {
-    ignores: [
-      'node_modules',
-      './coverage',
-      './dist',
-      './storybook-static',
-      '.gitignore',
-      '@types',
-      '!.babelrc.js',
-      '!.storybook',
-    ],
   },
 ];

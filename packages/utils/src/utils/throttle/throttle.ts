@@ -4,7 +4,6 @@ type ThrottleFn = (
   fn: UnknownFn,
   delayMs: number,
 ) => [(...args: unknown[]) => void, () => void];
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export const throttle: ThrottleFn = (fn, delayMs) => {
   let isThrottled = false;
