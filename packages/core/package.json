@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@emotion/jest": "^11.11.0",
-    "@nivo/line": "0.83.0",
+    "@nivo/line": "0.87.0",
     "@playwright/test": "^1.44.1",
     "@testing-library/jest-dom": "^6.4.5",
     "@types/uuid": "^9.0.8",
