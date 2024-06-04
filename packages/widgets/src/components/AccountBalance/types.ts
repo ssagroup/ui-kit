@@ -1,4 +1,4 @@
-import { MainColors, Theme } from '@ssa-ui-kit/core';
+import type { MainColors, Theme } from '@ssa-ui-kit/core';
 import type { To } from 'react-router-dom';
 
 interface WithTheme {

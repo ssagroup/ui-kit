@@ -1,10 +1,8 @@
+import React from 'react';
 import type { Meta } from '@storybook/react';
-
 import Icon from '@components/Icon';
-
 import Button from './index';
 import { GridWrapper, HeaderTitle, sizes, variants } from './helpers';
-import React from 'react';
 
 export default {
   title: 'Components/Button',

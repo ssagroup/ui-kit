@@ -8,13 +8,13 @@ const AllTheProviders = ({
   theme,
 }: {
   children: React.ReactNode;
-  theme: Theme;
+  theme: Pick<Theme, 'colors' | 'mediaQueries'>;
 }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 const customRender = (
-  theme: Theme,
+  theme: Pick<Theme, 'colors' | 'mediaQueries'>,
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>,
 ) =>
@@ -37,7 +37,7 @@ function mockUseForm() {
   };
 }
 
-export const initRender = (theme: Theme) => {
+export const initRender = (theme: Pick<Theme, 'colors' | 'mediaQueries'>) => {
   return customRender.bind(null, theme);
 };
 

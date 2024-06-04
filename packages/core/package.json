@@ -1,8 +1,16 @@
 {
   "name": "@ssa-ui-kit/core",
+  "type": "module",
   "version": "0.0.27-alpha",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -22,12 +30,12 @@
     "@emotion/jest": "^11.11.0",
     "@nivo/line": "0.87.0",
     "@playwright/test": "^1.44.1",
+    "@storybook/addon-docs": "^8.1.5",
     "@testing-library/jest-dom": "^6.4.5",
     "@types/uuid": "^9.0.8",
+    "resize-observer-polyfill": "^1.5.1",
     "resolve-tspaths": "^0.8.19",
-    "storybook-addon-pseudo-states": "^3.1.1",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.91.0"
+    "storybook-addon-pseudo-states": "^3.1.1"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
@@ -45,7 +53,7 @@
   },
   "scripts": {
     "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "build": "vite build",
     "sb:dev": "storybook dev -p 6006",
     "sb:build": "storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",

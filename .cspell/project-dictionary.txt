@@ -16,6 +16,7 @@ collapsiblenavbar
 commodo
 consectetur
 consts
+csf
 csstype
 Dissoc
 dolor
@@ -70,6 +71,7 @@ ssagroup
 SSAHOCs
 stylelint
 suscipit
+swc
 swp
 testid
 translatex

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import type { Meta } from '@storybook/react';
 import { css } from '@emotion/react';
 
-import ColorPicker, { mapColors } from './ColorPicker';
+import ColorPicker from './ColorPicker';
 import { ColorPickerProps, ColorsList } from './types';
+import { mapColors } from './constants';
 
 export default {
   title: 'Components/ColorPicker',

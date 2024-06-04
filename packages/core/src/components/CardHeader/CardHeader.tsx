@@ -5,6 +5,7 @@ export interface CardProps extends CommonProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   transparent?: boolean;
+  className?: string;
 }
 
 const CardHeader = ({ children, icon, transparent, ...props }: CardProps) => (

@@ -20,7 +20,6 @@ export default [
       '**/dist/*',
       '.gitignore',
       '@types',
-      '.babelrc.js',
       '**/.storybook/*',
       '**/tasks/*',
       '**/webpack.**.js',

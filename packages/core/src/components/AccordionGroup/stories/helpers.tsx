@@ -1,6 +1,3 @@
-import React from 'react';
-import { DecoratorFunction } from '@storybook/types';
-import { AccordionGroupContextProvider } from '../AccordionContext';
 import Typography from '@components/Typography';
 import {
   Accordion,
@@ -9,23 +6,6 @@ import {
   AccordionContent,
 } from '@components/AccordionGroup';
 import { AccordionGroupProps } from '../types';
-
-type Args = Parameters<typeof AccordionGroup>[0];
-
-export const AccordionGroupDecorator: DecoratorFunction<
-  {
-    component: typeof AccordionGroup;
-    storyResult: React.ReactElement;
-    canvasElement: unknown;
-  },
-  Args
-> = (Story, { args }) => {
-  return (
-    <AccordionGroupContextProvider>
-      <Story {...args} />
-    </AccordionGroupContextProvider>
-  );
-};
 
 export const AccordionTemplate = (
   args: Pick<AccordionGroupProps, 'size' | 'accordionsStayOpen'>,

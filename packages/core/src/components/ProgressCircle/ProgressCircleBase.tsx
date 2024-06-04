@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ColorsKeys } from '../..';
+import { ColorsKeys } from '@global-types/emotion';
 
 export const ProgressCircleBase = styled.div<{
   gradientId: string;

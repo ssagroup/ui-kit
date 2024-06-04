@@ -3,11 +3,10 @@
     "incremental": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "noEmit": false,
     "allowJs": true,
 
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "target": "es6",
@@ -38,7 +37,5 @@
     "src/**/*.spec.tsx",
     "src/**/*.e2e.ts",
     "src/**/*.e2e.tsx",
-    "src/**/*.stories.tsx",
-    "src/**/*.stories.ts"
   ]
 }

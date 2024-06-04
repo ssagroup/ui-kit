@@ -1,8 +1,7 @@
-import '@storybook/react-webpack5';
-
+import React from 'react';
+import '@storybook/react-vite';
 import { ThemeProvider } from '@emotion/react';
 import { mainTheme } from '@ssa-ui-kit/core';
-
 import './style.css';
 
 const preview = {
@@ -16,6 +15,7 @@ const preview = {
       </ThemeProvider>
     ),
   ],
+  tags: ['autodocs']
 };
 
 export default preview;

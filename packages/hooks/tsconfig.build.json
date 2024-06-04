@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+
+    "strict": true,
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "target": "es6",
+    "module": "esnext",
+    "noImplicitAny": false,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./tsbuildcache",
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@hooks/*": ["./src/hooks/*"],
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist/**/*"]
+}

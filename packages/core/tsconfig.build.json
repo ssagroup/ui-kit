@@ -3,11 +3,10 @@
     "incremental": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "noEmit": false,
     "allowJs": false,
 
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "target": "es6",
@@ -22,6 +21,8 @@
     "tsBuildInfoFile": "./tsbuildcache",
     "typeRoots": [
       "./src/types",
+      "./src/types/emotion.d.ts",
+      "./src/types/global.d.ts",
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
@@ -35,11 +36,8 @@
   },
 
   "include": ["src/**/*"],
-  "exclude": [
-    "dist/**/*",
+  "exclude": ["dist/**/*",
     "src/**/*.spec.ts",
     "src/**/*.spec.tsx",
-    "src/**/*.stories.tsx",
-    "src/**/*.stories.ts"
   ]
 }

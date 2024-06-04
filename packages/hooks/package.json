@@ -1,8 +1,17 @@
 {
   "name": "@ssa-ui-kit/hooks",
+  "type": "module",
   "version": "0.0.2-alpha",
-  "main": "dist/index.js",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
+  },
   "types": "dist/index.d.ts",
+  "files": ["dist"],
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -19,7 +28,7 @@
     "directory": "packages/hooks"
   },
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc --build --force && resolve-tspaths",
+    "build": "vite build",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },
@@ -29,9 +38,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.5",
     "extend-expect": "^3.0.0",
-    "resolve-tspaths": "^0.8.19",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.91.0"
+    "resolve-tspaths": "^0.8.19"
   },
   "peerDependencies": {
     "react": "18.x"

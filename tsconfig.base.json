@@ -4,10 +4,9 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "allowJs": true,
-    "noEmit": true,
 
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "target": "es6",

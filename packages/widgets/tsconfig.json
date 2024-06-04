@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "preserveSymlinks": true,
     "jsxImportSource": "@emotion/react",
+    "declarationDir": "./dist/src",
     "emitDeclarationOnly": false,
     "typeRoots": [
       "./src/types",
@@ -13,5 +15,6 @@
     }
   },
   "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],
-  "exclude": ["dist/**/*"]
+  "exclude": ["dist/**/*"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

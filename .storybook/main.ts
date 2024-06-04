@@ -1,6 +1,6 @@
-import type { StorybookConfig } from '@storybook/react-webpack5';
-const IS_PROD = process.env.STORYBOOK_ENV === 'production';
+import type { StorybookConfig } from "@storybook/react-vite";
 
+const IS_PROD = process.env.STORYBOOK_ENV === 'production';
 const refs = {
   '@ssa-ui-kit/core': {
     title: 'Core',
@@ -11,17 +11,28 @@ const refs = {
     url: IS_PROD ? 'https://ui-kit-fitness.web.app/' : 'http://localhost:6007',
   },
 };
+
 const config: StorybookConfig = {
-  framework: '@storybook/react-webpack5',
+  framework: {
+    name: "@storybook/react-vite",
+    options: {},
+  },
   stories: ['./intro.mdx'],
-  addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {},
+  addons: [{
+    name: '@storybook/addon-docs',
+    options: {
+      csfPluginOptions: null,
+      mdxPluginOptions: {
+        mdxCompileOptions: {
+          remarkPlugins: [],
+        },
+      },
     },
-    '@storybook/addon-mdx-gfm',
-  ],
+  }, "@storybook/addon-links", "@storybook/addon-essentials", "@chromatic-com/storybook", "@storybook/addon-interactions", "@storybook/addon-themes"],
   refs,
+  typescript: {
+    reactDocgen: 'react-docgen-typescript'
+  },
   docs: {
     autodocs: false,
   },

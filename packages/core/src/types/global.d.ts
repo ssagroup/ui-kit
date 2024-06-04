@@ -1,6 +1,20 @@
-import { MainSizes as MS, MainColors as MC } from './global';
+import type { Theme, SerializedStyles, Interpolation } from '@emotion/react';
 
 declare global {
-  export interface MainSizes extends MS {}
-  export interface MainColors extends MC {}
+  export interface MainSizes {
+    small: SerializedStyles;
+    medium: SerializedStyles;
+    large: SerializedStyles;
+  }
+  
+  export interface MainColors {
+    pink: Interpolation<Theme>;
+    yellow: Interpolation<Theme>;
+    yellowWarm: Interpolation<Theme>;
+    green: Interpolation<Theme>;
+    turquoise: Interpolation<Theme>;
+    purple: Interpolation<Theme>;
+    blueLight: Interpolation<Theme>;
+    blue: Interpolation<Theme>;
+  }
 }

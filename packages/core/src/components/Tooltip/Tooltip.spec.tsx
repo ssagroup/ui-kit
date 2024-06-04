@@ -4,7 +4,7 @@ import { waitFor } from '@testing-library/react';
 import { fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
-import theme from '@themes/main';
+import theme, { MainColors } from '@themes/main';
 
 import Button from '@components/Button';
 import TooltipTrigger from '@components/TooltipTrigger';
