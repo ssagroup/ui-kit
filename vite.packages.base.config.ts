@@ -1,7 +1,7 @@
 import { resolve } from "path"
 import { defineConfig } from 'vite'
 import dts from "vite-plugin-dts"
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 
 const isProduction = process.env.NODE_ENV == 'production';
 

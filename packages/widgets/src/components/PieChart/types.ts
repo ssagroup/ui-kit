@@ -1,5 +1,5 @@
 import { SerializedStyles } from '@emotion/react';
-import { CommonProps, MainColors } from '@ssa-ui-kit/core';
+import { MainColors } from '@ssa-ui-kit/core';
 import { ResponsivePie } from '@nivo/pie';
 
 export interface PieChartProps

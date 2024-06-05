@@ -1,3 +1,5 @@
+import { Interpolation, Theme } from "@emotion/react";
+
 export type RGBString = `rgb${string}`;
 
 type MakeColors<T extends Array<string>> = {
@@ -118,4 +120,5 @@ export type MediaQueryString = `@media${string}`;
 export interface CommonProps {
   as?: React.ElementType;
   className?: string;
+  css?: Interpolation<Theme>;
 }

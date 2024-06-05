@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { ResponsiveLine, LineSvgProps, LineProps } from '@nivo/line';
 import { useTheme } from '@emotion/react';
 import type { ColorsKeys, MainColors } from '@ssa-ui-kit/core';
-
 import { defaults } from './chartDefaultConfig';
 import { MealNutrientsTooltip } from './MealNutrientsTooltip';
 

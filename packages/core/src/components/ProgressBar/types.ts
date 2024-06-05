@@ -1,5 +1,3 @@
-import { MainColors } from "../..";
-
 export interface ProgressBarProps {
   percentage: number;
   color?: keyof MainColors;

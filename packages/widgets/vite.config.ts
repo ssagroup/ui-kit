@@ -1,7 +1,7 @@
-import react from '@vitejs/plugin-react-swc'
 import { resolve } from "path"
 import { defineConfig } from 'vite'
 import dts from "vite-plugin-dts"
+import react from '@vitejs/plugin-react'
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -29,6 +29,10 @@ export default defineConfig({
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
+          "@emotion/core": "EmotionCore",
+          "@emotion/css": "EmotionCSS",
+          "@emotion/react": "EmotionReact",
+          "@emotion/styled": "EmotionStyled",
         },
       },
     },
@@ -40,6 +44,8 @@ export default defineConfig({
         comments: false,
       },
       sourceMap: isProduction ? true : false,
+      compress: true,
+      mangle: true,
     }
   },
   plugins: [

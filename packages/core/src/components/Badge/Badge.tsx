@@ -13,7 +13,6 @@ import {
 import BadgeBase from './BadgeBase';
 import { BadgeProps } from './types';
 import { large, medium, small } from './styles';
-import { MainColors, MainSizes } from '../..';
 
 const mapSizes: MainSizes = {
   small,

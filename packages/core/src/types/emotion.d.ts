@@ -1,15 +1,15 @@
 import '@emotion/react';
-import type { Colors, MediaQueryString } from './emotion';
+import type { Colors } from './emotion';
 
 declare module '@emotion/react' {
   export interface Theme {
     colors: Colors;
     mediaQueries: {
-      xs: MediaQueryString;
-      sm: MediaQueryString;
-      md: MediaQueryString;
-      lg: MediaQueryString;
-      xlg: MediaQueryString;
+      xs: string;
+      sm: string;
+      md: string;
+      lg: string;
+      xlg: string;
     };
   }
 }

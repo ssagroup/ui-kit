@@ -1,7 +1,7 @@
 import './injectGlobal';
 export * from './types/global';
 
-import './types/global.d';
+import '../index.d';
 import './types/emotion.d';
 
 import { default as mainTheme } from './themes/main';

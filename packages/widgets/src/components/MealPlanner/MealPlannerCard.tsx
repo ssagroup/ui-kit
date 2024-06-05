@@ -44,7 +44,7 @@ export const MealPlannerCard = ({
         <MealPlannerLegends.List>
           {Object.keys(listItems).map((item) => (
             <MealPlannerLegends.Item key={item}>
-              <Marker color={markerColor[item as MarkerColorKeys]} />
+              <Marker color={markerColor[item as MarkerColorKeys] as keyof MainColors} />
 
               <Typography variant="body1">
                 {listItems[item as MarkerColorKeys]}% {item}
@@ -62,7 +62,7 @@ export const MealPlannerCard = ({
               key={item}>
               <ProgressBar
                 percentage={100}
-                color={markerColor[item as MarkerColorKeys]}
+                color={markerColor[item as MarkerColorKeys] as keyof MainColors}
               />
             </li>
           ))}

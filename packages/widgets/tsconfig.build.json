@@ -3,7 +3,7 @@
     "incremental": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "allowJs": true,
+    "allowJs": false,
 
     "strict": true,
     "moduleResolution": "bundler",
@@ -12,8 +12,8 @@
     "target": "es6",
     "module": "esnext",
     "noImplicitAny": false,
-    "jsxImportSource": "@emotion/react",
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "resolveJsonModule": true,
     "lib": ["dom", "dom.iterable", "esnext"],
 

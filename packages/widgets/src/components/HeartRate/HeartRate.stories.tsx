@@ -1,5 +1,4 @@
 import type { Meta } from '@storybook/react';
-import '@storybook/types';
 
 import { HeartRate } from './index';
 import { heartRateData as data } from './mockHeartRateRequest';

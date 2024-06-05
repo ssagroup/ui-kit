@@ -11,7 +11,9 @@
     }
   },
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -37,9 +39,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.5",
     "extend-expect": "^3.0.0",
-    "resolve-tspaths": "^0.8.19",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.91.0"
+    "resolve-tspaths": "^0.8.19"
   },
   "browserslist": [
     ">0.1%",

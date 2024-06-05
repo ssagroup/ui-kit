@@ -1,5 +1,3 @@
-import { MainColors } from "../..";
-
 export interface ProgressCircleProps {
   max: number;
   currentValue: number;

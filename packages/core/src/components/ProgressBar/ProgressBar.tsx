@@ -11,7 +11,6 @@ import {
 
 import { ProgressBarProps } from './types';
 import { wrapper, bar } from './styles';
-import { MainColors } from '../..';
 
 const mapColors: MainColors = {
   pink,
