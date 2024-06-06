@@ -3,7 +3,7 @@
     "incremental": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "allowJs": false,
+    "allowJs": true,
 
     "strict": true,
     "moduleResolution": "bundler",
@@ -37,5 +37,7 @@
     "src/**/*.spec.tsx",
     "src/**/*.e2e.ts",
     "src/**/*.e2e.tsx",
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts"
   ]
 }

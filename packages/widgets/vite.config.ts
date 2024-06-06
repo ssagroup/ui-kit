@@ -1,38 +1,47 @@
+import react from '@vitejs/plugin-react'
 import { resolve } from "path"
 import { defineConfig } from 'vite'
 import dts from "vite-plugin-dts"
-import react from '@vitejs/plugin-react'
+import babel from 'vite-plugin-babel'
 
 const isProduction = process.env.NODE_ENV == 'production';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    'process.env': process.env,
+  },
   build: {
     lib: {
       entry: resolve(__dirname, "./src/index.ts"),
       name: "SSAWidgets",
-      formats: ['es'],
+      formats: ['umd'],
     },
     rollupOptions: {
       external: [
         "react",
         "react-dom",
+        "react-router-dom",
         "@emotion/core",
         "@emotion/css",
         "@emotion/react",
         "@emotion/styled",
+        "@nivo/core",
+        "@nivo/line",
+        "@nivo/pie",
+        "@nivo/scales"
       ],
       output: {
         dir: resolve(__dirname, 'dist'),
         entryFileNames: 'index.js',
-        format: 'es',
+        format: 'umd',
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
-          "@emotion/core": "EmotionCore",
-          "@emotion/css": "EmotionCSS",
-          "@emotion/react": "EmotionReact",
-          "@emotion/styled": "EmotionStyled",
+          "@emotion/core": "@emotion/core",
+          "@emotion/css": "@emotion/css",
+          "@emotion/react": "@emotion/react",
+          "@emotion/styled": "@emotion/styled",
         },
       },
     },
@@ -49,12 +58,14 @@ export default defineConfig({
     }
   },
   plugins: [
+    babel(),
     react({
       jsxImportSource: '@emotion/react'
     }),
     dts({
+      outDir: './dist',
       copyDtsFiles: true,
-      entryRoot: '',
+      insertTypesEntry: true,
     }),
   ],
   resolve: {

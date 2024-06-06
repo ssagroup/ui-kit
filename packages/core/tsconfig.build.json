@@ -37,8 +37,11 @@
   },
 
   "include": ["src/**/*"],
-  "exclude": ["dist/**/*",
+  "exclude": [ 
+    "dist/**/*",
     "src/**/*.spec.ts",
     "src/**/*.spec.tsx",
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts"
   ]
 }

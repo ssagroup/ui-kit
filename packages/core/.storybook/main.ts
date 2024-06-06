@@ -8,7 +8,6 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     '@storybook/addon-themes',
-    "@chromatic-com/storybook",
     'storybook-addon-pseudo-states',
     {
       name: '@storybook/addon-docs',
@@ -31,7 +30,6 @@ const config: StorybookConfig = {
   },
   typescript: {
     check: false,
-    checkOptions: {},
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       compilerOptions: {
@@ -56,7 +54,6 @@ const config: StorybookConfig = {
           external: [
             "react",
             "react-dom",
-            "@emotion/core",
             "@emotion/css",
             "@emotion/react",
             "@emotion/styled",

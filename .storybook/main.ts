@@ -28,7 +28,7 @@ const config: StorybookConfig = {
         },
       },
     },
-  }, "@storybook/addon-links", "@storybook/addon-essentials", "@chromatic-com/storybook", "@storybook/addon-interactions", "@storybook/addon-themes"],
+  }, "@storybook/addon-links", "@storybook/addon-essentials", "@storybook/addon-interactions", "@storybook/addon-themes"],
   refs,
   typescript: {
     reactDocgen: 'react-docgen-typescript'

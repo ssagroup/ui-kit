@@ -1,8 +1,8 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "emitDeclarationOnly": false,
     "jsxImportSource": "@emotion/react",
+    "emitDeclarationOnly": false,
     "declarationDir": "./dist/src",
     "typeRoots": [
       "./src/types",
@@ -16,7 +16,6 @@
       "@global-types/*": ["./src/types/*"]
     }
   },
-  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx", "index.d.ts"],
+  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx", "index.d.ts", "vite.config.ts"],
   "exclude": ["dist/**/*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
 }
