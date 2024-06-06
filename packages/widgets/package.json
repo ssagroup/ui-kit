@@ -1,8 +1,16 @@
 {
   "name": "@ssa-ui-kit/widgets",
+  "type": "module",
   "version": "0.0.30-alpha",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -19,23 +27,29 @@
     "url": "https://github.com/ssagroup/ui-kit.git",
     "directory": "packages/widgets"
   },
+  "devDependencies": {
+    "@emotion/jest": "^11.11.0",
+    "@playwright/test": "^1.44.1",
+    "@testing-library/jest-dom": "^6.4.5",
+    "jsdom-testing-mocks": "^1.13.0",
+    "resolve-tspaths": "^0.8.19"
+  },
   "dependencies": {
-    "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@floating-ui/react": "0.25.4",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@floating-ui/react": "0.26.16",
     "@ssa-ui-kit/core": "workspace:^",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
-    "dotenv": "^16.0.3",
-    "js-tokens": "^4.0.0",
+    "dotenv": "^16.4.5",
+    "js-tokens": "^9.0.0",
     "loose-envify": "^1.4.0",
-    "scheduler": "^0.23.0"
+    "scheduler": "^0.23.2"
   },
   "scripts": {
     "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "build": "vite build",
     "sb:dev": "storybook dev -p 6007",
     "sb:build": "storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",
@@ -51,32 +65,18 @@
     "not dead",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "@emotion/jest": "^11.11.0",
-    "@playwright/test": "^1.37.1",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
-    "copy-webpack-plugin": "^11.0.0",
-    "html-webpack-plugin": "^5.5.1",
-    "jsdom-testing-mocks": "^1.11.0",
-    "resolve-tspaths": "^0.8.16",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
-  },
   "peerDependencies": {
-    "@emotion/core": "^11.0.0",
-    "@emotion/css": "^11.11.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/css": "11.x",
+    "@emotion/react": "11.x",
+    "@emotion/styled": "11.x",
     "@nivo/core": "^0.83.0",
     "@nivo/line": "^0.83.0",
     "@nivo/pie": "^0.83.0",
     "@nivo/scales": "^0.83.0",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-router-dom": "6.x",
-    "react-hook-form": "^7.46.1"
+    "react-hook-form": "7.x",
+    "react-router-dom": "6.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {

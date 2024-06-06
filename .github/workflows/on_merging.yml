@@ -4,7 +4,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
         with:
           version: 8
           run_install: true
-      
+
       - name: Getting pnpm store directory...
         shell: bash
         run: |
@@ -53,10 +53,10 @@ jobs:
 
       - name: Running unit tests...
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: '--max_old_space_size=4096'
         run: pnpm test:coverage
 
-      - name: "Building storybook: Core"
+      - name: 'Building storybook: Core'
         run: pnpm sb:build:core
         env:
           CI: true
@@ -80,10 +80,10 @@ jobs:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/core
 
-      - name: "Building storybook: Widgets"
+      - name: 'Building storybook: Widgets'
         run: pnpm sb:build:widgets
 
-      - name: "Running storybook: Widgets"
+      - name: 'Running storybook: Widgets'
         run: pnpm sb:widgets &
 
       - name: Installing Playwright Browsers...
@@ -105,7 +105,7 @@ jobs:
       - name: Installing firebase tools...
         run: curl -sL https://firebase.tools | bash
 
-      - name: "Deploying: storybook root"
+      - name: 'Deploying: storybook root'
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -118,13 +118,13 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
 
-      - name: "Deploying: storybook fitness"
+      - name: 'Deploying: storybook fitness'
         run: pnpm sb:deploy:fitness
 
-      - name: "Deploying: storybook core"
+      - name: 'Deploying: storybook core'
         run: pnpm sb:deploy:core
 
-      - name: "Deploying: fitness dashboard"
+      - name: 'Deploying: fitness dashboard'
         run: pnpm deploy:dashboard
 
   finalize:

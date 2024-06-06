@@ -4,10 +4,9 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "allowJs": true,
-    "noEmit": true,
 
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "target": "es6",
@@ -16,6 +15,6 @@
     "strictNullChecks": true,
     "jsx": "react-jsx",
     "resolveJsonModule": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext"]
   }
 }

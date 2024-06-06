@@ -5,7 +5,7 @@ export const TableTag = ({
   color,
 }: {
   children: string;
-  color: string;
+  color: keyof MainColors;
 }) => (
   <Tag
     color={color}

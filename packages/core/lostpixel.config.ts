@@ -9,6 +9,8 @@ const coreConfig: Partial<CustomProjectConfig> & {
     breakpoints: number[];
   };
 } = {
+  // TODO: check it
+  // https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#storyshots-has-been-removed
   storybookShots: {
     storybookUrl: './packages/core/storybook-static',
     breakpoints,

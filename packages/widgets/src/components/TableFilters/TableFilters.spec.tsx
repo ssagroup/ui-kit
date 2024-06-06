@@ -1,4 +1,5 @@
 import { fireEvent } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 import { mockIntersectionObserver } from 'jsdom-testing-mocks';
 import { StoryComponent } from './stories/StoryComponent';
 import { TableFilters } from '.';
@@ -38,21 +39,33 @@ describe('TableFilters', () => {
     const buttonEl = getByRole('button');
     let cancelButtonEl = queryByText('Cancel');
     expect(cancelButtonEl).not.toBeInTheDocument();
-    fireEvent.click(buttonEl);
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
     cancelButtonEl = getByText('Cancel');
     getByText('Strategy');
     getByText('checkbox1');
-    fireEvent.click(cancelButtonEl);
+    act(() => {
+      fireEvent.click(cancelButtonEl as HTMLButtonElement);
+    });
     expect(queryByText('Cancel')).not.toBeInTheDocument();
   });
   it('Should be all checked (Strategy group)', () => {
     const { getByText, getByRole } = render(<StoryComponent />);
 
     const buttonEl = getByRole('button');
-    fireEvent.click(buttonEl);
-    fireEvent.click(getByText('checkbox2'));
-    fireEvent.click(getByText('checkbox3'));
-    fireEvent.click(getByText('checkbox5'));
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox2'));
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox3'));
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox5'));
+    });
     const checkboxes = document.querySelectorAll<HTMLInputElement>(
       'div[role=region][title=Strategy] input',
     );
@@ -64,17 +77,28 @@ describe('TableFilters', () => {
     const { getByText, getByRole } = render(<StoryComponent />);
 
     const buttonEl = getByRole('button');
-    fireEvent.click(buttonEl);
-    fireEvent.click(getByText('checkbox2'));
-    fireEvent.click(getByText('checkbox3'));
-    fireEvent.click(getByText('checkbox5'));
+
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox2'));
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox3'));
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox5'));
+    });
     let strategyCheckboxes = document.querySelectorAll<HTMLInputElement>(
       'div[role=region][title=Strategy] input',
     );
     strategyCheckboxes.forEach((checkbox) => {
       expect(checkbox.checked).toEqual(true);
     });
-    fireEvent.click(getByText('Clear'));
+    act(() => {
+      fireEvent.click(getByText('Clear'));
+    });
     strategyCheckboxes = document.querySelectorAll<HTMLInputElement>(
       'div[role=region][title=Strategy] input',
     );
@@ -110,27 +134,49 @@ describe('TableFilters', () => {
 
     const logSpy = jest.spyOn(console, 'log');
     const buttonEl = getByRole('button');
-    fireEvent.click(buttonEl);
-    fireEvent.click(getByText('checkbox2'));
-    fireEvent.click(getByText('Clear'));
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox2'));
+    });
+    act(() => {
+      fireEvent.click(getByText('Clear'));
+    });
     expect(logSpy).toHaveBeenCalledWith('>>>Clear: completed');
-    fireEvent.click(getByText('checkbox2'));
-    fireEvent.click(getByText('Apply'));
+    act(() => {
+      fireEvent.click(getByText('checkbox2'));
+    });
+    act(() => {
+      fireEvent.click(getByText('Apply'));
+    });
     expect(logSpy).toHaveBeenCalledWith('>>>Submit: completed');
-    fireEvent.click(getByText('Cancel'));
+    act(() => {
+      fireEvent.click(getByText('Cancel'));
+    });
     expect(logSpy).toHaveBeenCalledWith('>>>Cancel: completed');
   });
   it('Should be submitted with callback', () => {
     const { getByText, getByRole } = render(<StoryComponent />);
 
     const buttonEl = getByRole('button');
-    fireEvent.click(buttonEl);
-    fireEvent.click(getByText('checkbox2'));
-    fireEvent.click(getByText('checkbox3'));
-    fireEvent.click(getByText('checkbox5'));
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox2'));
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox3'));
+    });
+    act(() => {
+      fireEvent.click(getByText('checkbox5'));
+    });
 
     const logSpy = jest.spyOn(console, 'log');
-    fireEvent.click(getByText('Apply'));
+    act(() => {
+      fireEvent.click(getByText('Apply'));
+    });
     expect(logSpy).toHaveBeenCalledWith('>>>TableFilters onSubmit', {
       exchange: ['binance'],
       pairs: ['btcfdusd'],
@@ -157,7 +203,9 @@ describe('TableFilters', () => {
     );
 
     const buttonEl = getByRole('button');
-    fireEvent.click(buttonEl);
+    act(() => {
+      fireEvent.click(buttonEl);
+    });
 
     const formEl = getByTestId('table-filters-form');
     formEl.onsubmit = jest.fn((e) => {
@@ -165,7 +213,9 @@ describe('TableFilters', () => {
       console.log('>>>Form submitted');
     });
     const logSpy = jest.spyOn(console, 'log');
-    fireEvent.click(getByText('Apply'));
+    act(() => {
+      fireEvent.click(getByText('Apply'));
+    });
     expect(logSpy).toHaveBeenCalledWith('>>>Form submitted');
   });
 });

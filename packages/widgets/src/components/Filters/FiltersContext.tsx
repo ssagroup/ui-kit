@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { UseTableDataResult } from '@components/TableFilters/hooks/useTableData';
 import { mockData } from '@components/TableFilters/stories/mockData';
 import {

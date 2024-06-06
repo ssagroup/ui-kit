@@ -1,4 +1,8 @@
+// import { Theme as EmotionTheme } from '@emotion/react';
 import { Theme } from '@emotion/react';
+export type * from '../types/global'
+
+// export type Theme = Pick<EmotionTheme, 'colors' | 'mediaQueries'>;
 
 const main: Theme = {
   colors: {
@@ -113,4 +117,5 @@ const main: Theme = {
   },
 };
 
+export type { Theme };
 export default main;

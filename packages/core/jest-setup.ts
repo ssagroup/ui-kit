@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import { createSerializer, matchers } from '@emotion/jest';
 
 import { initRender } from './customTest';

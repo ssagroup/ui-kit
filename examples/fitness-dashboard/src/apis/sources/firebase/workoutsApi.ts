@@ -13,7 +13,7 @@ export const workouts = {
         ({
           id: d.id,
           ...d.data(),
-        } as Workout),
+        }) as Workout,
     );
   },
 };

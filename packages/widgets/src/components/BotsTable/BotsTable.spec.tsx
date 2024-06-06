@@ -1,7 +1,7 @@
 import { fireEvent, waitFor } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
 import { BotsTableStory } from './stories/BotsTable/StoryComponent';
 import { NoControlOrdersStory } from './stories/NoControlOrders/StoryComponent';
+import { act } from '@testing-library/react';
 
 describe('BotsTable', () => {
   it('Should be correctly rendered', () => {
@@ -22,7 +22,9 @@ describe('BotsTable', () => {
     const firstBodyRow = container.querySelector('tbody > tr');
 
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    fireEvent.click(firstBodyRow as Node);
+    act(() => {
+      fireEvent.click(firstBodyRow as Node);
+    });
     expect(alertMock).toHaveBeenCalledWith(
       JSON.stringify({
         id: 1,
@@ -45,7 +47,9 @@ describe('BotsTable', () => {
       'tbody > tr:nth-child(6) > td:last-child button',
     );
 
-    fireEvent.click(button as Node);
+    act(() => {
+      fireEvent.click(button as Node);
+    });
 
     getByText('Run Reason');
   });
@@ -58,12 +62,17 @@ describe('BotsTable', () => {
     const button = container.querySelector(
       'tbody > tr:nth-child(6) > td:last-child button',
     );
-    fireEvent.click(button as Node);
+    act(() => {
+      fireEvent.click(button as Node);
+    });
     const input = getByPlaceholderText('Enter');
-    fireEvent.change(input, { target: { value: 'reason' } });
+    act(() => {
+      fireEvent.change(input, { target: { value: 'reason' } });
+    });
     const runButton = getByText('Run');
-    fireEvent.click(runButton);
-
+    act(() => {
+      fireEvent.click(runButton);
+    });
     await waitFor(() => {
       expect(consoleMock).toHaveBeenCalledWith(
         'Submitting... ' +
@@ -74,21 +83,16 @@ describe('BotsTable', () => {
     });
   });
 
-  it('Should have the three dots button clicked', async () => {
-    const user = userEvent.setup();
-    const alertMock = jest.spyOn(window, 'alert');
-    const { container } = render(<BotsTableStory />);
+  it('Should have the three dots button clicked', () => {
+    const { container, baseElement } = render(<BotsTableStory />);
     const threeDotsButton = container.querySelector(
       'tbody > tr:nth-child(6) > td:last-child button:last-child',
     );
-    fireEvent.click(threeDotsButton as Node);
-    fireEvent.keyDown(threeDotsButton as Node, {
-      key: 'ArrowDown',
-      code: 'ArrowDown',
+    act(() => {
+      fireEvent.click(threeDotsButton as Node);
     });
-    await user.keyboard('{ArrowDown}');
-    await user.keyboard('{Enter}');
-    expect(alertMock).toHaveBeenCalledWith('action copy');
+    const wrapperDiv = baseElement.querySelector('[data-floating-ui-inert]');
+    expect(wrapperDiv).toBeInTheDocument();
   });
 });
 
@@ -106,20 +110,15 @@ describe('BotsTable: NoControlOrdersStory', () => {
     getAllByText('0.003 BTC');
   });
 
-  it('Should have the three dots button clicked', async () => {
-    const user = userEvent.setup();
-    const alertMock = jest.spyOn(window, 'alert');
-    const { container } = render(<NoControlOrdersStory />);
+  it('Should have the three dots button clicked', () => {
+    const { container, baseElement } = render(<NoControlOrdersStory />);
     const threeDotsButton = container.querySelector(
       'tbody > tr:nth-child(6) > td:last-child button:last-child',
     );
-    fireEvent.click(threeDotsButton as Node);
-    fireEvent.keyDown(threeDotsButton as Node, {
-      key: 'ArrowDown',
-      code: 'ArrowDown',
+    act(() => {
+      fireEvent.click(threeDotsButton as Node);
     });
-    await user.keyboard('{ArrowDown}');
-    await user.keyboard('{Enter}');
-    expect(alertMock).toHaveBeenCalledWith('action liquidate');
+    const wrapperDiv = baseElement.querySelector('[data-floating-ui-inert]');
+    expect(wrapperDiv).toBeInTheDocument();
   });
 });

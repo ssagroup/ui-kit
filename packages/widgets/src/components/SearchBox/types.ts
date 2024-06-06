@@ -1,4 +1,4 @@
-import { InputProps } from '@ssa-ui-kit/core/dist/components/Input/types';
+import type { InputProps } from '@ssa-ui-kit/core';
 import { UseFormReturn } from 'react-hook-form';
 
 export type SearchBoxProps = InputProps &

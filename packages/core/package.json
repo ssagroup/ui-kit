@@ -1,8 +1,16 @@
 {
   "name": "@ssa-ui-kit/core",
+  "type": "module",
   "version": "0.0.27-alpha",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -20,33 +28,29 @@
   },
   "devDependencies": {
     "@emotion/jest": "^11.11.0",
-    "@nivo/line": "0.83.0",
-    "@playwright/test": "^1.37.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
-    "@types/uuid": "^9.0.3",
-    "resolve-tspaths": "^0.8.16",
-    "storybook-addon-pseudo-states": "^2.1.0",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
+    "@nivo/line": "0.87.0",
+    "@playwright/test": "^1.44.1",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@types/uuid": "^9.0.8",
+    "resolve-tspaths": "^0.8.19",
+    "storybook-addon-pseudo-states": "^3.1.1"
   },
   "dependencies": {
-    "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@floating-ui/react": "0.25.4",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@floating-ui/react": "0.26.16",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
-    "dotenv": "^16.0.3",
-    "js-tokens": "^4.0.0",
+    "dotenv": "^16.4.5",
+    "js-tokens": "^9.0.0",
     "loose-envify": "^1.4.0",
-    "scheduler": "^0.23.0",
-    "uuid": "^9.0.0"
+    "scheduler": "^0.23.2",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "build": "vite build",
     "sb:dev": "storybook dev -p 6006",
     "sb:build": "storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",
@@ -63,13 +67,12 @@
     "not op_mini all"
   ],
   "peerDependencies": {
-    "@emotion/core": "^11.0.0",
-    "@emotion/css": "^11.11.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/css": "11.x",
+    "@emotion/react": "11.x",
+    "@emotion/styled": "11.x",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-hook-form": "^7.46.1"
+    "react-hook-form": "7.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {

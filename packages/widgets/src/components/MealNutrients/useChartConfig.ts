@@ -58,8 +58,8 @@ const useChartConfig: UseChartConfig = (elRef, data, precision = 'day') => {
           precision === 'hour'
             ? formatTime
             : precision === 'week'
-            ? formatDayOfWeek
-            : formatDate,
+              ? formatDayOfWeek
+              : formatDate,
       },
     }),
     [data, width, precision],

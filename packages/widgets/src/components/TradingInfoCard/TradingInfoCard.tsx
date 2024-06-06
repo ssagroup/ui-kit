@@ -17,8 +17,8 @@ const TradingInfoCardView = ({
   const currentValue = Number.isNaN(number)
     ? value
     : number.toFixed(1).includes('.0')
-    ? Math.floor(number)
-    : number.toFixed(1);
+      ? Math.floor(number)
+      : number.toFixed(1);
 
   return (
     <TradingInfoCardWrapper onClick={onClick} link={link}>

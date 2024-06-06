@@ -4,7 +4,7 @@ import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
 import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
-import { fireEvent } from '@storybook/testing-library';
+import { fireEvent } from '@storybook/test';
 import { SortableTable } from './stories/SortableTable';
 import { screen } from '../../../customTest';
 

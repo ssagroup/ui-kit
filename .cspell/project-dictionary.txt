@@ -2,6 +2,7 @@ adipiscing
 amet
 arcu
 auctor
+autodocs
 BMI
 BmiHeatbar
 btc
@@ -15,6 +16,7 @@ collapsiblenavbar
 commodo
 consectetur
 consts
+csf
 csstype
 Dissoc
 dolor
@@ -30,6 +32,7 @@ fdusd
 firebase
 firestore
 fns
+gfm
 greylight
 HIIT
 HMR
@@ -37,6 +40,7 @@ hocs
 homescreen
 HTMLSVGElement
 IBMP
+iife
 ipsum
 jsdom
 ligula
@@ -47,6 +51,7 @@ lostpixel
 LTC
 Mauris
 metus
+MQS
 msedge
 multirow
 mxschmitt
@@ -56,6 +61,7 @@ nivo
 PNL
 porttitor
 ramda
+RGBS
 ROI
 sem
 SENDERID
@@ -68,10 +74,12 @@ ssagroup
 SSAHOCs
 stylelint
 suscipit
+swc
 swp
 testid
 translatex
 tsbuildcache
+tseslint
 umd
 unhover
 USD

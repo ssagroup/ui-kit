@@ -4,5 +4,5 @@ import { TableTag } from '../TableTag';
 
 export const Trade = ({ tradeType }: TradeProps) => {
   const { color, title } = tradeStatuses[tradeType];
-  return <TableTag color={color}>{title}</TableTag>;
+  return <TableTag color={color as keyof MainColors}>{title}</TableTag>;
 };

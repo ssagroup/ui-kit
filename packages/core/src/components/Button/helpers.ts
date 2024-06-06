@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ButtonVariants } from './types';
+import { MainSizes } from '../..';
 
 export const sizes: Array<keyof MainSizes> = ['small', 'medium', 'large'];
 export const variants: Array<keyof ButtonVariants> = [

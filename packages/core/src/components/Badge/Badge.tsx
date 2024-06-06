@@ -36,7 +36,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(function Badge(
   ref,
 ) {
   return (
-    <BadgeBase ref={ref} css={[mapColors[color], mapSizes[size]]} {...props}>
+    <BadgeBase ref={ref} css={[mapColors[color as keyof typeof mapColors], mapSizes[size as keyof typeof mapSizes]]} {...props}>
       {children ? children : null}
     </BadgeBase>
   );

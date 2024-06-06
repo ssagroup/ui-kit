@@ -1,26 +1,8 @@
 import { useState } from 'react';
-import {
-  blue,
-  green,
-  blueLight,
-  pink,
-  purple,
-  turquoise,
-  yellow,
-} from '@styles/global';
 
-import { ColorPickerProps, Colors, ColorsList } from './types';
+import { ColorPickerProps, ColorsList } from './types';
+import { mapColors } from './constants';
 import { ColorMarker } from './styles';
-
-export const mapColors: Colors = {
-  pink,
-  yellow,
-  green,
-  turquoise,
-  blueLight,
-  blue,
-  purple,
-};
 
 const ColorPicker = ({ onChange, initColor }: ColorPickerProps) => {
   const [activeColor, setActiveColor] = useState(initColor || '');

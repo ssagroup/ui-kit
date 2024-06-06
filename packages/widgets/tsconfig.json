@@ -3,6 +3,7 @@
   "compilerOptions": {
     "jsxImportSource": "@emotion/react",
     "emitDeclarationOnly": false,
+    "declarationDir": "./dist/src",
     "typeRoots": [
       "./src/types",
       "./node_modules/@types",
@@ -13,5 +14,5 @@
     }
   },
   "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],
-  "exclude": ["dist/**/*"]
+  "exclude": ["dist/**/*", "playwright.config.ts", "src/**/*.e2e.ts", "vite.config.ts"],
 }

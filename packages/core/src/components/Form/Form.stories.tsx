@@ -1,14 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-  Title,
-  Subtitle,
-  Description,
-  Primary,
-  Stories,
-} from '@storybook/addon-docs';
-import { within, userEvent } from '@storybook/testing-library';
+import { within, userEvent } from '@storybook/test';
 import {
   useForm,
   SubmitHandler,
@@ -34,20 +27,6 @@ import Form from './Form';
 export default {
   title: 'Forms/Samples',
   component: Form,
-  parameters: {
-    controls: { disable: true },
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle />
-          <Description />
-          <Primary />
-          <Stories />
-        </>
-      ),
-    },
-  },
   decorators: [
     (Story) => (
       <div

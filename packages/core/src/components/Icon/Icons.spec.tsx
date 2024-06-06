@@ -33,6 +33,7 @@ const checkFillOrStrokeAttrs = (
   } catch {
     try {
       expect(el).toHaveAttribute('stroke');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       throw new Error(`the icon "${name}" is missing attribute fill or stroke`);
     }

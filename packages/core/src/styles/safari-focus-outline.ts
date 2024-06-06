@@ -1,7 +1,7 @@
 import { css, Theme, SerializedStyles } from '@emotion/react';
 
 type OutlineFn = (
-  theme: Theme,
+  theme: Pick<Theme, 'colors' | 'mediaQueries'>,
   color?: keyof Theme['colors'],
   borderRadius?: string,
   borderStyle?: React.CSSProperties['borderStyle'],

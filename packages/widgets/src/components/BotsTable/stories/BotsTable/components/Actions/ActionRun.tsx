@@ -32,6 +32,7 @@ export const ActionRun = ({ row }: { row: BotsTableItem }) => {
     return () => {
       resetField('reason');
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -69,7 +70,7 @@ export const ActionRun = ({ row }: { row: BotsTableItem }) => {
               background: '#fff',
               boxShadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.10)',
             }}
-            onClick={(event) => event.stopPropagation()}>
+            onClick={(event: React.MouseEvent<HTMLDivElement>) => event.stopPropagation()}>
             <form
               onSubmit={(event) => {
                 event.stopPropagation();

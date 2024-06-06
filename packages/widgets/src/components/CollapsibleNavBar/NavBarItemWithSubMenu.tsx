@@ -1,4 +1,5 @@
 import { useMatch } from 'react-router-dom';
+import { Interpolation, Theme } from '@emotion/react';
 import {
   AccordionGroupContextProvider,
   AccordionGroup,
@@ -29,7 +30,11 @@ export const NavBarItemWithSubMenu = ({
   const match = useMatch(prefix + ':id');
 
   const Icon = () => (
-    <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
+    <TriggerIcon
+      iconName={iconName}
+      iconSize={iconSize}
+      css={{ ...css } as Interpolation<Theme>}
+    />
   );
 
   return (

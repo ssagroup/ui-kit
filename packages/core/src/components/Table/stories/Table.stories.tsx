@@ -1,13 +1,5 @@
-import { Fragment } from 'react';
 import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-  Title,
-  Subtitle,
-  Description,
-  Primary,
-  Stories,
-} from '@storybook/addon-docs';
 
 import Badge from '@components/Badge';
 import Icon from '@components/Icon';
@@ -25,20 +17,6 @@ export default {
   component: Table,
   parameters: {
     controls: { disable: true },
-    docs: {
-      source: {
-        type: 'code',
-      },
-      page: () => (
-        <Fragment>
-          <Title />
-          <Subtitle />
-          <Description />
-          <Primary />
-          <Stories />
-        </Fragment>
-      ),
-    },
   },
 } as Meta<typeof Table>;
 

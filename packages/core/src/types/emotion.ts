@@ -1,10 +1,12 @@
+import { Interpolation, Theme } from "@emotion/react";
+
 export type RGBString = `rgb${string}`;
 
 type MakeColors<T extends Array<string>> = {
   [K in T[number]]?: RGBString;
 };
 
-type Colors = MakeColors<
+export type Colors = MakeColors<
   [
     'black25',
     'black45',
@@ -113,20 +115,10 @@ type Colors = MakeColors<
 
 export type ColorsKeys = keyof Colors;
 
-type MediaQueryString = `@media${string}`;
-
-export interface Theme {
-  colors: Colors;
-  mediaQueries: {
-    xs: MediaQueryString;
-    sm: MediaQueryString;
-    md: MediaQueryString;
-    lg: MediaQueryString;
-    xlg: MediaQueryString;
-  };
-}
+export type MediaQueryString = `@media${string}`;
 
 export interface CommonProps {
   as?: React.ElementType;
   className?: string;
+  css?: Interpolation<Theme>;
 }

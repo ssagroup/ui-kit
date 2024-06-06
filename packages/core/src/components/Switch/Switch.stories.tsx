@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { Meta } from '@storybook/react';
-import '@storybook/types';
 
 import Switch, { SwitchContextProvider } from './index';
 import Typography from '@components/Typography';

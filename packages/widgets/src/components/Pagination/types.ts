@@ -1,5 +1,3 @@
-import { CommonProps } from '@ssa-ui-kit/core';
-
 export interface PaginationProps extends CommonProps {
   pagesCount: number;
   ariaLabel?: string;

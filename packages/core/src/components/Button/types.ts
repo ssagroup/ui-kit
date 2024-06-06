@@ -1,6 +1,6 @@
-import { AriaAttributes } from 'react';
+import { AriaAttributes, MouseEventHandler } from 'react';
 import { SerializedStyles, Theme } from '@emotion/react';
-import { MouseEventHandler } from 'react';
+import { MainSizes } from '../..';
 
 /**
  * https://www.w3.org/WAI/ARIA/apg/patterns/button/

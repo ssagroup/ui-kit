@@ -1,6 +1,7 @@
 import { within, fireEvent } from '@testing-library/dom';
 import { mockIntersectionObserver } from 'jsdom-testing-mocks';
 import { StoryComponent } from './stories/StoryComponent';
+import { act } from '@testing-library/react';
 
 describe('Filters', () => {
   mockIntersectionObserver();
@@ -12,7 +13,7 @@ describe('Filters', () => {
     expect(queryByTestId('trigger-notification')).not.toBeInTheDocument();
   });
 
-  it('Should be correctly changed the item', async () => {
+  it('Should be correctly changed the item', () => {
     const { queryByRole, getByRole, queryAllByTestId } = render(
       <StoryComponent />,
     );
@@ -24,14 +25,19 @@ describe('Filters', () => {
     let listboxEl = queryByRole('listbox');
     expect(listboxEl).not.toBeInTheDocument();
 
-    await fireEvent.click(dropdownToggleEl);
+    act(() => {
+      fireEvent.click(dropdownToggleEl);
+    });
 
     listboxEl = getByRole('listbox');
     const listItemEls = within(listboxEl).getAllByRole('listitem');
     expect(listItemEls.length).toBe(5);
 
     const logSpy = jest.spyOn(console, 'log');
-    await fireEvent.click(listItemEls[0]);
+
+    act(() => {
+      fireEvent.click(listItemEls[0]);
+    });
 
     dropdownToggleEl = within(dropdownElement).getByRole('combobox');
     expect(dropdownToggleEl).toHaveTextContent('Strategy: checkbox4Carrot up');

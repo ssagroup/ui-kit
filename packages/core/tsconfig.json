@@ -3,19 +3,19 @@
   "compilerOptions": {
     "jsxImportSource": "@emotion/react",
     "emitDeclarationOnly": false,
+    "declarationDir": "./dist/src",
     "typeRoots": [
       "./src/types",
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
     "paths": {
-      "@components": ["./src/components/index"],
       "@components/*": ["./src/components/*"],
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
       "@global-types/*": ["./src/types/*"]
     }
   },
-  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],
-  "exclude": ["dist/**/*"]
+  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx", "index.d.ts", "vite.config.ts"],
+  "exclude": ["dist/**/*"],
 }

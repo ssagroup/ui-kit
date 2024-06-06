@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AccordionGroup } from '../index';
-import { AccordionGroupDecorator } from './helpers';
+import { AccordionGroup, AccordionGroupContextProvider } from '../index';
 import { css, useTheme } from '@emotion/react';
 import { AccordionTemplate } from './helpers';
 
@@ -17,12 +16,16 @@ export default {
       },
     },
   },
-  decorators: [AccordionGroupDecorator],
+  decorators: [(Story, { args }) => (
+    <AccordionGroupContextProvider>
+      <Story {...args} />
+    </AccordionGroupContextProvider>
+  )],
   argTypes: {},
-} as Meta<typeof AccordionGroup>;
+} satisfies Meta<typeof AccordionGroup>;
 
 const StoryTemplate: Args = {
-  render: ({ ...args }) => <AccordionTemplate {...(args as any)} />,
+  render: ({ ...args }) => <AccordionTemplate {...(args)} />,
 };
 
 export const Large = {
