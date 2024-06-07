@@ -3,7 +3,7 @@ import { ExchangeAccountKeys } from './ExchangeAccountKeys';
 import { StoryComponent } from './stories/StoryComponent';
 
 export default {
-  title: 'Widgets/ExchangeAccountKeys',
+  title: 'Industry-specific widgets/Training/ExchangeAccountKeys',
   component: ExchangeAccountKeys,
 } as Meta<typeof ExchangeAccountKeys>;
 

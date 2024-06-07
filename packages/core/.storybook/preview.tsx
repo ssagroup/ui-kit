@@ -1,5 +1,6 @@
 import React from 'react';
 import '@storybook/react-webpack5';
+import '@emotion/react';
 
 import { ThemeProvider } from '@emotion/react';
 import theme from '../src/themes/main';

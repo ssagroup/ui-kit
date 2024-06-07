@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 import { StepsCounter } from './StepsCounter';
 
 export default {
-  title: 'Widgets/StepsCounter',
+  title: 'Industry-specific widgets/Fitness/StepsCounter',
   component: StepsCounter,
 } as Meta<typeof StepsCounter>;
 

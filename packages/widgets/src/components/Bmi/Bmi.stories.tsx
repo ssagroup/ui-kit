@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 import Bmi from './index';
 
 export default {
-  title: 'Widgets/BMI',
+  title: 'Industry-specific widgets/BMI',
   component: Bmi,
 } as Meta<typeof Bmi>;
 
