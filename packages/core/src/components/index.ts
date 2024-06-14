@@ -88,7 +88,6 @@ export { default as NavBar } from './NavBar';
 export * from './NavBar';
 export { default as ProgressInfo } from './ProgressInfo';
 export * from './ProgressInfo';
-export { default as CardList } from './CardList';
 export * from './CardList';
 export * from './Pagination';
 export * from './NotificationCard';

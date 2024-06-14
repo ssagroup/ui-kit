@@ -345,6 +345,9 @@ importers:
       '@nivo/core':
         specifier: ^0.83.0
         version: 0.83.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+      '@nivo/pie':
+        specifier: 0.83.0
+        version: 0.83.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       '@ssa-ui-kit/hooks':
         specifier: workspace:^
         version: link:../hooks
@@ -382,9 +385,6 @@ importers:
       '@nivo/line':
         specifier: 0.83.0
         version: 0.83.0(react-dom@18.2.0)(react@18.2.0)
-      '@nivo/pie':
-        specifier: ^0.83.0
-        version: 0.83.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       '@playwright/test':
         specifier: ^1.37.1
         version: 1.37.1
@@ -5139,6 +5139,7 @@ packages:
     transitivePeerDependencies:
       - prop-types
       - react-dom
+    dev: false
 
   /@nivo/axes@0.83.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-rHMl+DdXQlY2wl7VCSQNcJi4QNISUWOkcWzJeJeVaYR73Z13SVGgiC7kW0czJuogDTSnDAJ/EcFCGmyGVuznGQ==}
@@ -5251,6 +5252,7 @@ packages:
     transitivePeerDependencies:
       - prop-types
       - react-dom
+    dev: false
 
   /@nivo/recompose@0.83.0(react@18.2.0):
     resolution: {integrity: sha512-3cLEoi9ZoE4LTn6B98oUVd0MRAy5bWK7W3yb0u4EkjLoXXCRvUAI08Wr2AAagOzVOg5PmvghIDgvkz1tlFZTGQ==}
@@ -17122,7 +17124,7 @@ packages:
       memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.2.1
-      schema-utils: 4.1.0
+      schema-utils: 4.2.0
       webpack: 5.85.0(@swc/core@1.3.79)(esbuild@0.18.20)(webpack-cli@5.1.1)
     dev: true
 

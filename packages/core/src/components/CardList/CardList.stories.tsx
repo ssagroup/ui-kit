@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
-import { Card, CardContent, Typography } from '@components';
-
+import Typography from '@components/Typography';
+import Card from '@components/Card';
+import CardContent from '@components/CardContent';
 import { CardList } from './CardList';
 
 export default {

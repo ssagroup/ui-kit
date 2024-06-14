@@ -1,8 +1,6 @@
 import { Fragment } from 'react';
 import { css } from '@emotion/react';
-
-import { Typography } from '@components';
-
+import Typography from '@components/Typography';
 import { CardListProps, Item } from './types';
 
 /**
