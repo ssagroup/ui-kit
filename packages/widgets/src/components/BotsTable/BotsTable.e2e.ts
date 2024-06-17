@@ -6,11 +6,11 @@ let SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-bots-table--`;
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-botstable--bots-table&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=industry-specific-widgets-training-botstable--bots-table&viewMode=story',
   );
 };
 
-test.describe('Widgets: BotsTable', () => {
+test.describe('Industry Specific Widgets - Training - BotsTable', () => {
   test('Renders correctly', async ({ page }) => {
     await page.setViewportSize(SCREEN_SIZES[1920]);
     await gotoPage(page);
@@ -50,13 +50,13 @@ test.describe('Widgets: BotsTable', () => {
 
 const gotoPageNoControlOrders = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-botstable--no-control-orders&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=industry-specific-widgets-training-botstable--no-control-orders&viewMode=story',
   );
 };
 
 SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-bots-table--no-control-orders--`;
 
-test.describe('Widgets: BotsTable (NoControlOrders)', () => {
+test.describe('Industry Specific Widgets - Training - BotsTable (NoControlOrders)', () => {
   test('Renders correctly', async ({ page }) => {
     await page.setViewportSize(SCREEN_SIZES[1920]);
     await gotoPageNoControlOrders(page);

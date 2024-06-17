@@ -1,4 +1,4 @@
-import { ResponsiveImage } from '@components';
+import ResponsiveImage from '@components/ResponsiveImage';
 import * as S from './styles';
 
 export const Logo = () => (

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTheme } from '@emotion/react';
-import { Button } from '@components';
+import Button from '@components/Button';
 
 import { pageBtnStyles, selectedPageBtnStyles } from './styles';
 import { PaginationButtonsProps, PageButtonProps } from './types';

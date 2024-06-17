@@ -1,5 +1,7 @@
 import { css, useTheme } from '@emotion/react';
-import { Button, Icon, Indicator } from '@components';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
+import Indicator from '@components/Indicator';
 import { ResetBtnStyles } from '../styles';
 
 interface CommonNotificationPops {

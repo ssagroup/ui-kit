@@ -8,7 +8,7 @@ const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-navbar-opened__`;
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?id=widgets-navbar--default&viewMode=story',
+    'http://localhost:6006/iframe.html?id=widgets-navbar--default&viewMode=story',
   );
 };
 

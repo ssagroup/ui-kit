@@ -1,5 +1,6 @@
 import { useTheme } from '@emotion/react';
-import { Button, Icon } from '@components';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
 
 import { ArrowButtonProps } from './types';
 import { arrowBtnStyles } from './styles';

@@ -1,5 +1,5 @@
-import getFirebase from './initFirebase';
 import { User } from '@ssa-ui-kit/widgets';
+import getFirebase from './initFirebase';
 
 export const user = {
   async get(): Promise<User | null> {

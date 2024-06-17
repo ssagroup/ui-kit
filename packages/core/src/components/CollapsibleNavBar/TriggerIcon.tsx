@@ -1,5 +1,7 @@
 import { css, useTheme } from '@emotion/react';
-import { Wrapper, Icon, MapIconsType, SVGProps } from '@components';
+import Wrapper from '@components/Wrapper';
+import Icon from '@components/Icon';
+import type { MapIconsType, SVGProps } from '@components/Icon/types';
 
 export const TriggerIcon = ({
   iconName,

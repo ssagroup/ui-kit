@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
-import { Typography } from '@components';
+import Typography from '@components/Typography';
 
 import { PieChart, PieChartLegend, pieChartPalettes } from './index';
 import { fitnessData, accountData } from './stories/fixtures';

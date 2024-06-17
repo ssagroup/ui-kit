@@ -1,5 +1,6 @@
 import { css, useTheme } from '@emotion/react';
-import { PopoverTrigger, Icon } from '@components';
+import { PopoverTrigger } from '@components/Popover';
+import Icon from '@components/Icon';
 import { Theme } from '@emotion/react';
 
 export const filterButtonStyles = (count?: number) => (theme: Theme) =>

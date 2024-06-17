@@ -1,5 +1,5 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { Icon, AddNewAccountCard } from '@ssa-ui-kit/core';
 import { ExchangeAccount } from './ExchangeAccount';

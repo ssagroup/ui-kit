@@ -1,6 +1,6 @@
 import { useState, useId, useEffect } from 'react';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
-import { Wrapper } from '@components';
+import Wrapper from '@components/Wrapper';
 import * as S from './styles';
 import CollapsibleNavBarBase from './CollapsibleNavBarBase';
 import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';

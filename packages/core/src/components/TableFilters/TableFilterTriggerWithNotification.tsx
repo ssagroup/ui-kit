@@ -1,5 +1,5 @@
 import { Interpolation, Theme, useTheme } from '@emotion/react';
-import { MultipleDropdownNotification } from '@components';
+import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
 import { TableFilterTrigger } from './TableFilterTrigger';
 
 export const TableFilterTriggerWithNotification = ({

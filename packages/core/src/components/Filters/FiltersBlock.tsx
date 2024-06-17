@@ -1,7 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
-import { DropdownOption, MultipleDropdown } from '@components';
+import DropdownOption from '@components/DropdownOption';
+import MultipleDropdown from '@components/MultipleDropdown';
 import { useFiltersContext } from './FiltersContext';
 
 export const FiltersBlock = () => {

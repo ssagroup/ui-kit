@@ -1,4 +1,4 @@
-import { Typography } from '@components';
+import Typography from '@components/Typography';
 import { withTheme, css } from '@emotion/react';
 
 import { ProgressInfoTotalsProps } from './types';

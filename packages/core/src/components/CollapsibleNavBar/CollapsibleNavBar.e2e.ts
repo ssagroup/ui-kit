@@ -9,7 +9,7 @@ const MOBILE_SIZE = { width: 899, height: 1200 };
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-collapsiblenavbar--default&viewMode=story',
+    'http://localhost:6006/iframe.html?args=&id=widgets-collapsiblenavbar--default&viewMode=story',
   );
 };
 

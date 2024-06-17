@@ -1,14 +1,12 @@
 import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 import { dateFormatters } from '@ssa-ui-kit/utils';
-import {
-  Badge,
-  CardBase,
-  MapIconsType,
-  Icon,
-  Indicator,
-  Typography,
-} from '@components';
+import Badge from '@components/Badge';
+import CardBase from '@components/Card/CardBase';
+import Icon from '@components/Icon';
+import { MapIconsType } from '@components/Icon/types';
+import Indicator from '@components/Indicator';
+import Typography from '@components/Typography';
 import { NotificationCardProps } from './types';
 import {
   notifyBadge,

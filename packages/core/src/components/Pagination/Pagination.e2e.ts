@@ -5,12 +5,12 @@ const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
 
 const TEST_CASES = [
   {
-    url: 'http://localhost:6007/iframe.html?args=&id=widgets-pagination--page-selected&viewMode=story',
+    url: 'http://localhost:6006/iframe.html?args=&id=widgets-pagination--page-selected&viewMode=story',
     testTitle: 'Widgets: Pagination hover',
     screenshotPrefix: 'widgets-pagination--',
   },
   {
-    url: 'http://localhost:6007/iframe.html?args=&id=widgets-pagination--disabled&viewMode=story',
+    url: 'http://localhost:6006/iframe.html?args=&id=widgets-pagination--disabled&viewMode=story',
     testTitle: 'Widgets: Disabled pagination hover',
     screenshotPrefix: 'widgets-pagination-disabled--',
   },

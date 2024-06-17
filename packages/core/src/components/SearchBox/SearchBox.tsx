@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useWatch } from 'react-hook-form';
-import { Icon } from '@components';
+import Icon from '@components/Icon';
 import { debounce } from '@ssa-ui-kit/utils';
 import { SearchBoxWrapper } from './SearchBoxWrapper';
 import { SearchBoxInput } from './SearchBoxInput';

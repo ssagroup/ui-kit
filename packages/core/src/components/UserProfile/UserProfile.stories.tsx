@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { Avatar } from '@components';
+import type { Meta, StoryObj } from '@storybook/react';
+import Avatar from '@components/Avatar';
 import { UserProfile } from './UserProfile';
 
 export default {

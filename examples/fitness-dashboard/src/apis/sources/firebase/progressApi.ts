@@ -3,7 +3,7 @@ import {
   ProgressInfoResp,
   ProgressInfoItemProps,
   Period,
-} from '@ssa-ui-kit/widgets';
+} from '@ssa-ui-kit/core';
 
 type DatePeriod = Record<Period, Array<ProgressInfoItemProps>>;
 

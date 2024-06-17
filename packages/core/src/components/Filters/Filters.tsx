@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Wrapper } from '@components';
+import Wrapper from '@components/Wrapper';
 import { TableFilters } from '@components/TableFilters';
 import { TableFilterConfig } from '@components/TableFilters/types';
 import {

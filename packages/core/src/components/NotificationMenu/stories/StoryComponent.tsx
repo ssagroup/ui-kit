@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { Button, ButtonGroup, ButtonGroupItem } from '@components';
+import Button from '@components/Button';
+import { ButtonGroup, ButtonGroupItem } from '@components/ButtonGroup';
 import { NotificationCardProps } from '@components/NotificationCard';
 import { NotificationMenu } from '../NotificationMenu';
 import { MarkAllReadButton, Trigger } from './StoryContent';

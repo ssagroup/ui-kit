@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import { useTheme } from '@emotion/react';
 
-import { Icon } from '@components';
+import Icon from '@components/Icon';
 
 import NavBarBase from './NavBarBase';
 import NavBarWrapper from './NavBarWrapper';

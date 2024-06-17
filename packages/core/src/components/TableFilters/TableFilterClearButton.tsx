@@ -1,4 +1,4 @@
-import { Button } from '@components';
+import Button from '@components/Button';
 import { Theme, css, useTheme } from '@emotion/react';
 import { baseButtonStyle } from './styles';
 

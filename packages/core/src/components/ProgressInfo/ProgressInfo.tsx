@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { css, useTheme } from '@emotion/react';
-import {
-  Card,
-  CardHeader,
-  Typography,
-  DropdownOptionProps,
-  Dropdown,
-  DropdownOption,
-} from '@components';
+import Dropdown from '@components/Dropdown';
+import DropdownOption from '@components/DropdownOption';
+import type { DropdownOptionProps } from '@components/DropdownOptions';
+import Card from '@components/Card';
+import CardHeader from '@components/CardHeader';
+import Typography from '@components/Typography';
 
 import { PieChart, PieChartLegend } from '@components/PieChart';
 import { ProgressInfoTotals } from './ProgressInfoTotals';

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Wrapper } from '@components';
+import Wrapper from '@components/Wrapper';
 import { FiltersContextProvider } from '@components/Filters/FiltersContext';
 import { mockData } from './mockData';
 import { useTableData } from '../hooks/useTableData';

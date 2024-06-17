@@ -1,4 +1,4 @@
-import { Accordion, AccordionViewProps } from '@components';
+import { Accordion, AccordionViewProps } from '@components/AccordionGroup';
 
 export const TableFiltersAccordion = (props: AccordionViewProps) => (
   <Accordion

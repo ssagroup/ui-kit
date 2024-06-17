@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { MapIconsType } from '@components';
+import { MapIconsType } from '@components/Icon/types';
 
 export interface NavBarProps {
   items: Array<{ path: string; iconName: keyof MapIconsType }>;

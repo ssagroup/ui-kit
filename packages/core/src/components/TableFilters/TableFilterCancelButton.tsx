@@ -1,4 +1,4 @@
-import { PopoverClose } from '@components';
+import { PopoverClose } from '@components/Popover';
 import { Theme, css, useTheme } from '@emotion/react';
 import { baseButtonStyle } from './styles';
 

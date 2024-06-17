@@ -6,7 +6,7 @@ const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-progressInfo__`;
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-progressinfo--default&viewMode=story',
+    'http://localhost:6006/iframe.html?args=&id=charts-progressinfo--default&viewMode=story',
   );
 };
 

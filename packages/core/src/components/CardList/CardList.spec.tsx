@@ -1,6 +1,6 @@
 import { screen } from '../../../customTest';
 
-import CardList from './index';
+import { CardList } from './index';
 
 describe('CardList', () => {
   it('Render component', async () => {

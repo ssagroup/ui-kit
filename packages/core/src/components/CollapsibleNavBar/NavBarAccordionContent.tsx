@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
-import { AccordionContent, RenderContentProps } from '@components';
+import {
+  AccordionContent,
+  RenderContentProps,
+} from '@components/AccordionGroup';
 import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import * as S from './styles';
 

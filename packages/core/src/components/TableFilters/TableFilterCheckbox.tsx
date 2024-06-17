@@ -1,4 +1,5 @@
-import { CheckboxProps, Checkbox, checkboxStyles } from '@components';
+import Checkbox from '@components/Checkbox';
+import { CheckboxProps, checkboxStyles } from '@components/Checkbox';
 import { Theme, css, useTheme } from '@emotion/react';
 
 const getStyles = (theme: Theme) => css`

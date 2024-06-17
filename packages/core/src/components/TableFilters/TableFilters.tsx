@@ -9,11 +9,13 @@ import {
   AccordionTitle,
   AccordionGroup,
   AccordionGroupContextProvider,
+} from '@components/AccordionGroup';
+import {
   Popover,
   PopoverContent,
   PopoverDescription,
-  CheckboxProps,
-} from '@components';
+} from '@components/Popover';
+import { CheckboxProps } from '@components/Checkbox';
 import {
   tableFilterDividerStyles,
   tableFilterPopoverContentStyles,

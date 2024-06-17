@@ -1,4 +1,7 @@
-import { AccordionContent, RenderContentProps } from '@components';
+import {
+  AccordionContent,
+  RenderContentProps,
+} from '@components/AccordionGroup';
 
 export const TableFiltersAccordionContent = ({
   isOpened,

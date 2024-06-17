@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@components';
+import type { Meta, StoryObj } from '@storybook/react';
+import Button from '@components/Button';
 import { mainTheme } from '../..';
 import { NotificationCard } from './NotificationCard';
 import { NotificationCardProps } from './types';

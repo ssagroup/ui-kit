@@ -7,7 +7,7 @@ import {
   PopoverDescription,
   PopoverHeading,
   PopoverTrigger,
-} from '@components';
+} from '@components/Popover';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
 
 export const CollapsibleNavBarPopover = ({

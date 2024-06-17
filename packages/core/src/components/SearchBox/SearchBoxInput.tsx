@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Input } from '@components';
+import Input from '@components/Input';
 
 export const SearchBoxInput = styled(Input)`
   height: 30px;

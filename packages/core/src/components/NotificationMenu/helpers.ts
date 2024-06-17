@@ -1,5 +1,5 @@
-import { ButtonGroupItem } from '@components';
-import { NotificationCardProps } from '@components/NotificationCard';
+import type { ButtonGroupItem } from '@components/ButtonGroup';
+import type { NotificationCardProps } from '@components/NotificationCard';
 
 export interface DataProps {
   notificationItems: NotificationCardProps[];

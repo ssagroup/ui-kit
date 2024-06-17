@@ -1,6 +1,6 @@
 import { createRef } from 'react';
 import userEvent from '@testing-library/user-event';
-import { Button } from '@components';
+import Button from '@components/Button';
 import { NotificationCard } from './NotificationCard';
 import { NotificationCardProps } from './types';
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Wrapper } from '@components';
+import Wrapper from '@components/Wrapper';
 
 export const FilterBlockWrapper = styled(Wrapper)`
   justify-content: end;

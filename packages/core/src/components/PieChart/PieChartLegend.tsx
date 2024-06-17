@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { Fragment } from 'react';
-import { Typography } from '@components';
+import Typography from '@components/Typography';
 
 import { PieChartLegendMarker } from './PieChartLegendMarker';
 import { PieChartLegendList } from './PieChartLegendList';

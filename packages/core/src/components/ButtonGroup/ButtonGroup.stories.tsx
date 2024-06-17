@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { ButtonGroup } from './ButtonGroup';
 import { items } from './helpers';

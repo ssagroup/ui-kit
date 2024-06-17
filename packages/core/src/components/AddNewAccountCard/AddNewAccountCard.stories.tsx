@@ -1,5 +1,5 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Icon from '@components/Icon';
 import mainTheme from '@themes/main';
 import { AddNewAccountCard } from './AddNewAccountCard';

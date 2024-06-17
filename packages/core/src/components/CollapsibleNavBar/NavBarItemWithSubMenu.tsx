@@ -3,9 +3,9 @@ import {
   AccordionGroupContextProvider,
   AccordionGroup,
   Accordion,
-  Wrapper,
   AccordionTitle,
-} from '@components';
+} from '@components/AccordionGroup';
+import Wrapper from '@components/Wrapper';
 import CollapsibleNavBarItem from './CollapsibleNavBarItem';
 import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import { NavBarAccordionContent } from './NavBarAccordionContent';

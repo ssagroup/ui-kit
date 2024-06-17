@@ -1,13 +1,13 @@
 import { useTheme } from '@emotion/react';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
 import {
-  Button,
-  Icon,
   Popover,
   PopoverContent,
   PopoverDescription,
   PopoverHeading,
   PopoverTrigger,
-} from '@components';
+} from '@components/Popover';
 import { UserProfileProps } from './types';
 import {
   UserInfo,

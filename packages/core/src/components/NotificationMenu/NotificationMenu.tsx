@@ -1,13 +1,13 @@
 import { useTheme } from '@emotion/react';
+import Icon from '@components/Icon';
 import {
-  Icon,
   Popover,
   PopoverClose,
   PopoverContent,
   PopoverDescription,
   PopoverHeading,
   PopoverTrigger,
-} from '@components';
+} from '@components/Popover';
 import { NotificationCard } from '@components/NotificationCard';
 import { NotificationMenuProps } from './types';
 import {
