@@ -17,6 +17,7 @@ commodo
 consectetur
 consts
 csstype
+cubehelix
 Dissoc
 dolor
 domcontentloaded

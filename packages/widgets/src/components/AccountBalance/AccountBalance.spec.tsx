@@ -3,21 +3,15 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { data } from './stories/fixtures';
 import { AccountBalance } from './index';
 
-const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
-
-jest.mock('@nivo/pie', () => ({
-  PieCustomLayerProps: {},
-  ResponsivePie: ResponsivePieMock,
-}));
-
 describe('AccountBalance', () => {
   it('Renders', () => {
-    const { getByRole, getByText, getByTestId } = render(
+    const { getByRole, getByText, container } = render(
       <AccountBalance total="798" currency="USDT" data={data} />,
     );
+    const pieChartWrapper = container.querySelector('.pie-chart-wrapper');
+    expect(pieChartWrapper).toBeInTheDocument();
 
     getByRole('heading', { name: 'Balance' });
-    getByTestId('responsive-pie');
     getByText('798');
     getByText('USDT');
 

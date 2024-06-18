@@ -5,8 +5,6 @@ import { MemoryRouterDecorator } from './stories/decorators';
 
 import { LinksTabBar } from './index';
 
-jest.mock('d3-color', () => ({}));
-
 function setup(Component: React.ElementType) {
   return {
     user: userEvent.setup(),

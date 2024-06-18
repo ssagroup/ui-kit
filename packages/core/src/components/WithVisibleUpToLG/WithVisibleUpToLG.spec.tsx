@@ -4,8 +4,6 @@ import { ThemeProvider } from '@emotion/react';
 import { WithVisibleUpToLG } from '.';
 import { mainTheme } from '../..';
 
-jest.mock('d3-color', () => ({}));
-
 const TestComponent = () => {
   return <p>Test</p>;
 };

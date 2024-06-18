@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/widgets",
-  "version": "0.0.32-alpha",
+  "version": "0.0.33-alpha",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
@@ -71,6 +71,7 @@
     "@nivo/core": "^0.83.0",
     "@nivo/line": "^0.83.0",
     "@nivo/scales": "^0.83.0",
+    "@nivo/pie": "^0.83.0",
     "react": "18.x",
     "react-dom": "18.x",
     "react-hook-form": "^7.46.1",
