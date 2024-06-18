@@ -5,7 +5,7 @@ import { mealPlannerData as data } from './mockMealPlannerRequest';
 import MealPlanner from './index';
 
 export default {
-  title: 'Industry-specific widgets/Fitness/MealPlanner',
+  title: 'Fitness/MealPlanner',
   component: MealPlanner,
   args: {
     data,

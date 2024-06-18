@@ -6,7 +6,7 @@ import { ExchangeAccount } from './ExchangeAccount';
 import { dataValues } from './helpers';
 
 export default {
-  title: 'Industry-specific widgets/Training/ExchangeAccount',
+  title: 'Trading/ExchangeAccount',
   component: ExchangeAccount,
 } as Meta<typeof ExchangeAccount>;
 

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { UpcomingWorkouts } from './UpcomingWorkouts';
 
 export default {
-  title: 'Industry-specific widgets/Fitness/UpcomingWorkouts',
+  title: 'Fitness/UpcomingWorkouts',
   component: UpcomingWorkouts,
 } as Meta<typeof UpcomingWorkouts>;
 

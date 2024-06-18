@@ -8,7 +8,7 @@ import { mockStaticApi } from './mockMealNutrientsRequest';
 const { getData, getOptions } = mockStaticApi;
 
 export default {
-  title: 'Industry-specific widgets/Fitness/MealNutrients',
+  title: 'Fitness/MealNutrients',
   component: MealNutrients,
 } as Meta<typeof MealNutrients>;
 

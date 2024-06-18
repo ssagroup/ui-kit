@@ -24,7 +24,7 @@ const MOUSE_POSITIONS = {
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=industry-specific-widgets-fitness-mealnutrients--default&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=fitness-mealnutrients--default&viewMode=story',
   );
 };
 

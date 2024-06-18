@@ -7,7 +7,7 @@ const refs = {
     url: IS_PROD ? 'https://ui-kit-core.web.app' : 'http://localhost:6006',
   },
   '@ssa-ui-kit/fitness': {
-    title: 'Fitness Widgets',
+    title: 'Industry-specific widgets',
     url: IS_PROD ? 'https://ui-kit-fitness.web.app/' : 'http://localhost:6007',
   },
 };

@@ -7,7 +7,7 @@ import { TradingScoreboardProps } from './types';
 import { defaultBoardArr, linkBoardArr, oneLineBoardArr } from './helpers';
 
 export default {
-  title: 'Industry-specific widgets/Training/TradingScoreboard',
+  title: 'Trading/TradingScoreboard',
   component: TradingScoreboard,
 } as Meta<typeof TradingScoreboard>;
 

@@ -6,7 +6,7 @@ let SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-bots-table--`;
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=industry-specific-widgets-training-botstable--bots-table&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=trading-botstable--bots-table&viewMode=story',
   );
 };
 
@@ -50,7 +50,7 @@ test.describe('Industry Specific Widgets - Training - BotsTable', () => {
 
 const gotoPageNoControlOrders = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=industry-specific-widgets-training-botstable--no-control-orders&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=trading-botstable--no-control-orders&viewMode=story',
   );
 };
 
