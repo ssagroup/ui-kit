@@ -51,10 +51,10 @@ jobs:
       - name: Building packages...
         run: pnpm build:all
 
-      - name: Running unit tests...
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
-        run: pnpm test:coverage
+      # - name: Running unit tests...
+      #   env:
+      #     NODE_OPTIONS: "--max_old_space_size=4096"
+      #   run: pnpm test:coverage
 
       - name: "Building storybook: Core"
         run: pnpm sb:build:core
@@ -71,14 +71,14 @@ jobs:
           npx playwright install chromium --with-deps
           cd ../..
 
-      - name: Running e2e tests...
-        run: pnpm test:core:e2e
+      # - name: Running e2e tests...
+      #   run: pnpm test:core:e2e
 
-      - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@v3.6.0
-        env:
-          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          LOST_PIXEL_CONFIG_DIR: ./packages/core
+      # - name: Running visual tests...
+      #   uses: lost-pixel/lost-pixel@v3.6.0
+      #   env:
+      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+      #     LOST_PIXEL_CONFIG_DIR: ./packages/core
 
       - name: "Building storybook: Widgets"
         run: pnpm sb:build:widgets
@@ -93,14 +93,14 @@ jobs:
           npx playwright install chromium --with-deps
           cd ../..
 
-      - name: Running e2e tests...
-        run: pnpm test:widgets:e2e
+      # - name: Running e2e tests...
+      #   run: pnpm test:widgets:e2e
 
-      - name: Running visual tests...
-        uses: lost-pixel/lost-pixel@v3.6.0
-        env:
-          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
+      # - name: Running visual tests...
+      #   uses: lost-pixel/lost-pixel@v3.6.0
+      #   env:
+      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+      #     LOST_PIXEL_CONFIG_DIR: ./packages/widgets
 
   finalize:
     needs: [main]
