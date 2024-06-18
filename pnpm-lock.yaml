@@ -485,6 +485,9 @@ importers:
       '@nivo/line':
         specifier: ^0.83.0
         version: 0.83.0(react-dom@18.2.0)(react@18.2.0)
+      '@nivo/pie':
+        specifier: ^0.83.0
+        version: 0.83.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       '@nivo/scales':
         specifier: ^0.83.0
         version: 0.83.0
