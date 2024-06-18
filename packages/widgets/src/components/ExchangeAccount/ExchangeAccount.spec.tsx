@@ -11,13 +11,6 @@ const commonProps = {
   onDelete: jest.fn(),
 };
 
-const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
-
-jest.mock('@nivo/pie', () => ({
-  PieCustomLayerProps: {},
-  ResponsivePie: ResponsivePieMock,
-}));
-
 describe('ExchangeAccount', () => {
   it('Renders with platform', () => {
     const { getByText } = render(<ExchangeAccount {...commonProps} />);
@@ -42,9 +35,10 @@ describe('ExchangeAccount', () => {
   });
 
   it('Renders with BalancePieChart component', () => {
-    const { getByTestId } = render(<ExchangeAccount {...commonProps} />);
+    const { container } = render(<ExchangeAccount {...commonProps} />);
 
-    getByTestId('responsive-pie');
+    const pieChartWrapper = container.querySelector('.pie-chart-wrapper');
+    expect(pieChartWrapper).toBeInTheDocument();
   });
 
   it('Clicks on delete button', async () => {
