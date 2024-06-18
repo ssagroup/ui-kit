@@ -25,7 +25,7 @@ const MOUSE_POSITIONS = {
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-heartrate--default&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=fitness-heartrate--default&viewMode=story',
   );
 };
 
@@ -43,7 +43,7 @@ const replaceBPMValue = (page: Page) => {
     .evaluate((element: HTMLSpanElement) => (element.textContent = 'N'));
 };
 
-test.describe('Widgets: HeartRate', () => {
+test.describe('Industry Specific Widgets - Fitness - HeartRate', () => {
   test('Renders correctly', async ({ page }) => {
     await gotoPage(page);
     await expect(

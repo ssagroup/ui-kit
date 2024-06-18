@@ -8,7 +8,7 @@ import { data } from './stories/fixtures';
 import { AccountBalance, AccountBalanceProps } from './index';
 
 export default {
-  title: 'Widgets/AccountBalance',
+  title: 'Trading/AccountBalance',
   component: AccountBalance,
 } as Meta<typeof AccountBalance>;
 

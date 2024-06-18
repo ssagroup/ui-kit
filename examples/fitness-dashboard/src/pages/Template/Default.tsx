@@ -9,15 +9,17 @@ import {
   Button,
   Icon,
   MapIconsType,
+  NavBar,
 } from '@ssa-ui-kit/core';
 
 import { useApi } from '@ssa-ui-kit/hooks';
 
-import { UpcomingWorkouts } from '@ssa-ui-kit/widgets';
-import { ListGoals } from '@ssa-ui-kit/widgets';
-import { Bmi } from '@ssa-ui-kit/widgets';
-import { UserCard } from '@ssa-ui-kit/widgets';
-import { NavBar } from '@ssa-ui-kit/widgets';
+import {
+  UpcomingWorkouts,
+  ListGoals,
+  Bmi,
+  UserCard,
+} from '@ssa-ui-kit/widgets';
 
 import { useAuth } from '@hooks/useAuth';
 

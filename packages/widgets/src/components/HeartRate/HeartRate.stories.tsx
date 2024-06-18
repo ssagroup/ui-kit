@@ -5,7 +5,7 @@ import { HeartRate } from './index';
 import { heartRateData as data } from './mockHeartRateRequest';
 
 export default {
-  title: 'Widgets/HeartRate',
+  title: 'Fitness/HeartRate',
   component: HeartRate,
   argTypes: {
     color: {

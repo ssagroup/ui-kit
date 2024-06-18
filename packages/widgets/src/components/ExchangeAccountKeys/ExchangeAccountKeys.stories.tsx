@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { ExchangeAccountKeys } from './ExchangeAccountKeys';
 import { StoryComponent } from './stories/StoryComponent';
 
 export default {
-  title: 'Widgets/ExchangeAccountKeys',
+  title: 'Trading/ExchangeAccountKeys',
   component: ExchangeAccountKeys,
 } as Meta<typeof ExchangeAccountKeys>;
 

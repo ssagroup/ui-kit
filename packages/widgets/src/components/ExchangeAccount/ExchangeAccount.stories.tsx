@@ -1,13 +1,12 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
-import { Icon } from '@ssa-ui-kit/core';
-import { AddNewAccountCard } from '@components/AddNewAccountCard';
+import { Icon, AddNewAccountCard } from '@ssa-ui-kit/core';
 import { ExchangeAccount } from './ExchangeAccount';
 import { dataValues } from './helpers';
 
 export default {
-  title: 'Widgets/ExchangeAccount',
+  title: 'Trading/ExchangeAccount',
   component: ExchangeAccount,
 } as Meta<typeof ExchangeAccount>;
 

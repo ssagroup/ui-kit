@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 import { Calories } from './Calories';
 
 export default {
-  title: 'Widgets/Calories',
+  title: 'Fitness/Calories',
   component: Calories,
   argTypes: {
     max: {

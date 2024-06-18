@@ -19,6 +19,8 @@ module.exports = () => {
       '@emotion/css': '@emotion/css',
       '@emotion/react': '@emotion/react',
       '@emotion/styled': '@emotion/styled',
+      '@nivo/core': '@nivo/core',
+      '@nivo/pie': '@nivo/pie',
     },
   });
 

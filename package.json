@@ -104,6 +104,7 @@
     "jest-cli": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4",
     "jest-watch-typeahead": "^2.2.2",
+    "jsdom-testing-mocks": "1.11.0",
     "lint-staged": "^13.2.3",
     "lost-pixel": "3.6.0",
     "postcss-styled-syntax": "^0.4.0",
@@ -128,5 +129,6 @@
     "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^5.1.1",
     "webpack-dev-server": "^4.15.0"
-  }
+  },
+  "packageManager": "pnpm@6.35.1+sha256.ffe9cfa6596d23de240060781ed3a95d6e91b0fc06c0341a556a5e8c5164f8d7"
 }

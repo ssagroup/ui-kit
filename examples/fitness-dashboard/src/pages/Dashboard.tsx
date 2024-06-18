@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { css, Theme } from '@emotion/react';
 
-import { Typography, ResponsiveImage } from '@ssa-ui-kit/core';
+import { Typography, ResponsiveImage, ProgressInfo } from '@ssa-ui-kit/core';
 import { useApi } from '@ssa-ui-kit/hooks';
-
-import { HeartRate } from '@ssa-ui-kit/widgets';
-import { Activity } from '@ssa-ui-kit/widgets';
-import { Calories } from '@ssa-ui-kit/widgets';
-import { MealPlanner } from '@ssa-ui-kit/widgets';
-import { ProgressInfo } from '@ssa-ui-kit/widgets';
-import { StepsCounter } from '@ssa-ui-kit/widgets';
-import { WaterConsume } from '@ssa-ui-kit/widgets';
+import {
+  HeartRate,
+  Activity,
+  Calories,
+  MealPlanner,
+  StepsCounter,
+  WaterConsume,
+} from '@ssa-ui-kit/widgets';
 
 import { default as MealNutrients } from './components/MealNutrients';
 

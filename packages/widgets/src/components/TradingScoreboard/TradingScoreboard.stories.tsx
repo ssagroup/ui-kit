@@ -1,5 +1,5 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { css } from '@emotion/react';
 import { Button } from '@ssa-ui-kit/core';
 import TradingScoreboard from './TradingScoreboard';
@@ -7,7 +7,7 @@ import { TradingScoreboardProps } from './types';
 import { defaultBoardArr, linkBoardArr, oneLineBoardArr } from './helpers';
 
 export default {
-  title: 'Widgets/TradingScoreboard',
+  title: 'Trading/TradingScoreboard',
   component: TradingScoreboard,
 } as Meta<typeof TradingScoreboard>;
 

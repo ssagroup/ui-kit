@@ -1,6 +1,8 @@
+import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
-appWebpackConfig = initWebpackConfig();
+import initBabelConfig from '../../../.babelrc';
+const appWebpackConfig: Configuration = initWebpackConfig();
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
@@ -16,7 +18,7 @@ const config: StorybookConfig = {
     options: {},
   },
   typescript: {
-    check: false,
+    check: true,
     checkOptions: {},
     reactDocgen: 'react-docgen-typescript', //cspell:disable-line
     //cspell:disable-next-line
@@ -27,13 +29,30 @@ const config: StorybookConfig = {
       },
     },
   },
+  babel: (options) => ({
+    ...options,
+    ...initBabelConfig,
+  }),
   webpackFinal: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      ...appWebpackConfig.resolve.alias,
+    const newConfig: Configuration = {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve?.alias,
+          ...appWebpackConfig.resolve?.alias,
+        },
+      },
+      module: {
+        ...config.module,
+        rules: [
+          ...(config.module?.rules || []),
+          ...(appWebpackConfig.module?.rules || []),
+        ],
+      },
     };
 
-    return config;
+    return newConfig;
   },
   docs: {
     autodocs: true, //cspell:disable-line

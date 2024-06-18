@@ -4,7 +4,7 @@ import { MainColors } from '@ssa-ui-kit/core';
 import { ListGoals } from './ListGoals';
 
 export default {
-  title: 'Widgets/ListGoals',
+  title: 'Fitness/ListGoals',
   component: ListGoals,
 } as Meta<typeof ListGoals>;
 

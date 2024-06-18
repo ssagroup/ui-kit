@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 import { WaterConsume } from './WaterConsume';
 
 export default {
-  title: 'Widgets/WaterConsume',
+  title: 'Fitness/WaterConsume',
   component: WaterConsume,
 } as Meta<typeof WaterConsume>;
 

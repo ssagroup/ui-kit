@@ -1,4 +1,4 @@
-import CardList from '@components/CardList';
+import { CardList } from '@ssa-ui-kit/core';
 
 import { ListGoalsCard } from './ListGoalsCard';
 

@@ -1,10 +1,6 @@
 import { withTheme, css } from '@emotion/react';
 
-import {
-  PieChart,
-  PieChartLegend,
-  pieChartPalettes,
-} from '@components/PieChart';
+import { PieChart, PieChartLegend, pieChartPalettes } from '@ssa-ui-kit/core';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';

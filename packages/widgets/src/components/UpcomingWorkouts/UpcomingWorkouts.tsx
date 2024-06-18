@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import CardList from '@components/CardList';
+import { CardList } from '@ssa-ui-kit/core';
 
 import { UpcomingWorkoutCard } from './UpcomingWorkoutCard';
 

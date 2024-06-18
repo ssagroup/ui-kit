@@ -4,7 +4,7 @@ import { BotsTableStory } from './BotsTable/StoryComponent';
 import { NoControlOrdersStory } from './NoControlOrders/StoryComponent';
 
 export default {
-  title: 'Widgets/BotsTable',
+  title: 'Trading/BotsTable',
   component: Table,
 } as Meta<typeof Table>;
 

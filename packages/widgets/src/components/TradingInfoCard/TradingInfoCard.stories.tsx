@@ -5,7 +5,7 @@ import TradingInfoCard from './TradingInfoCard';
 import { TradingInfoCardProps } from './types';
 
 export default {
-  title: 'Widgets/TradingInfoCard',
+  title: 'Trading/TradingInfoCard',
   component: TradingInfoCard,
 } as Meta<typeof TradingInfoCard>;
 

@@ -5,7 +5,7 @@ import { mealActivityData as data } from './mockActivityRequest';
 import { Activity } from './Activity';
 
 export default {
-  title: 'Widgets/Activity',
+  title: 'Fitness/Activity',
   component: Activity,
   args: {
     data,

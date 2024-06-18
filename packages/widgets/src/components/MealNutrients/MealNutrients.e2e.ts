@@ -24,11 +24,11 @@ const MOUSE_POSITIONS = {
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=widgets-mealnutrients--default&viewMode=story',
+    'http://localhost:6007/iframe.html?args=&id=fitness-mealnutrients--default&viewMode=story',
   );
 };
 
-test.describe('Widgets: MealNutrients', () => {
+test.describe('Industry Specific Widgets - Fitness - MealNutrients', () => {
   test('Should be rendered', async ({ page }) => {
     await gotoPage(page);
 

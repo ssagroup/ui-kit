@@ -1,8 +1,7 @@
 import { useEffect, createContext, useContext } from 'react';
-import API from '@apis/index';
 import { User } from '@ssa-ui-kit/widgets';
-
 import { useApi } from '@ssa-ui-kit/hooks';
+import API from '@apis/index';
 
 /**
  * Inspired by https://usehooks.com/useAuth/
