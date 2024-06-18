@@ -34,11 +34,9 @@
   "include": ["src/**/*"],
   "exclude": [
     "dist/**/*",
-    "src/**/*.spec.ts",
-    "src/**/*.spec.tsx",
-    "src/**/*.e2e.ts",
-    "src/**/*.e2e.tsx",
-    "src/**/*.stories.tsx",
-    "src/**/*.stories.ts"
+    "src/**/*.spec.*",
+    "src/**/*.spec.old.*",
+    "src/**/*.e2e.*",
+    "src/**/*.stories.*"
   ]
 }
