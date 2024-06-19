@@ -36,9 +36,10 @@ export const ProgressInfo = ({ data, className }: ProgressInfoProps) => {
       });
 
       setOptions(options);
-      setSelected(options[0]);
-
-      filterData(options[0].id as Period);
+      if (options.length > 0) {
+        setSelected(options[0]);
+        filterData(options[0].id as Period);
+      }
     }
   }, [data]);
 

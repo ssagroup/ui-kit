@@ -8,17 +8,17 @@ import {
 type DatePeriod = Record<Period, Array<ProgressInfoItemProps>>;
 
 const groupByDate = (data: Array<ProgressInfoItemProps>) => {
+  const minDate = new Date('2023-02-17T00:00:00.000Z').getTime();
   const hoursMilliseconds = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
   const offsetWeek = hoursMilliseconds * 7;
   const offsetMonth = hoursMilliseconds * 30;
   const offsetYear = hoursMilliseconds * 365;
 
-  const today = new Date();
   const offset: Record<Period, Date> = {
-    daily: new Date(new Date().setTime(today.getTime() - hoursMilliseconds)),
-    weekly: new Date(new Date().setTime(today.getTime() - offsetWeek)),
-    monthly: new Date(new Date().setTime(today.getTime() - offsetMonth)),
-    yearly: new Date(new Date().setTime(today.getTime() - offsetYear)),
+    daily: new Date(new Date().setTime(minDate + hoursMilliseconds)),
+    weekly: new Date(new Date().setTime(minDate + offsetWeek)),
+    monthly: new Date(new Date().setTime(minDate + offsetMonth)),
+    yearly: new Date(new Date().setTime(minDate + offsetYear)),
   };
 
   const dataPeriod: DatePeriod = {} as DatePeriod;
@@ -26,7 +26,7 @@ const groupByDate = (data: Array<ProgressInfoItemProps>) => {
   (Object.keys(offset) as Array<Period>).forEach((period) => {
     dataPeriod[period] = data.filter((item) => {
       const date = new Date(item.date);
-      return date > offset[period];
+      return date < offset[period];
     });
   });
 
