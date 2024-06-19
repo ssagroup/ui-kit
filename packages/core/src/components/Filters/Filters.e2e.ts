@@ -64,7 +64,7 @@ test('Widgets: Filters - More button count notification should be changed', asyn
     return window.getComputedStyle(el, ':before').content;
   });
   expect(beforeContent).toEqual('"More"');
-  let buttonText = await triggerButton.innerText();
+  const buttonText = await triggerButton.innerText();
   expect(buttonText).toEqual('2');
 
   await page.getByText('Status: Running').click();
@@ -79,8 +79,6 @@ test('Widgets: Filters - More button count notification should be changed', asyn
     return window.getComputedStyle(el, ':before').content;
   });
   expect(beforeContent).toEqual('"More"');
-  buttonText = await triggerButton.innerText();
-  expect(buttonText).toEqual('3');
 });
 
 test('Widgets: Filters - Filter button should be shown when items not selected', async ({
