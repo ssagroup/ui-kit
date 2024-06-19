@@ -22,7 +22,7 @@ const NavBarWrapper = styled.div`
     width: 64px;
   }
 
-  ${({ theme }) => theme.mediaQueries.xlg} {
+  ${({ theme }) => theme.mediaQueries.lg} {
     display: flex;
     position: fixed;
 
