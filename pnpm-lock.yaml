@@ -375,6 +375,9 @@ importers:
       react-hook-form:
         specifier: ^7.46.1
         version: 7.46.1(react@18.2.0)
+      react-router-dom:
+        specifier: 6.x
+        version: 6.11.2(react-dom@18.2.0)(react@18.2.0)
       scheduler:
         specifier: ^0.23.0
         version: 0.23.0
