@@ -25,5 +25,9 @@ const config: StorybookConfig = {
   docs: {
     autodocs: false,
   },
+  managerHead: (head) => `
+    ${head}
+    <meta name="description" content="SSA UI kit is an open-source React-based library that accelerates frontend development of dashboard and administrative panels" />
+  `,
 };
 export default config;
