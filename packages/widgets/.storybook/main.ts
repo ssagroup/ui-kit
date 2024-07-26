@@ -38,6 +38,10 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true, // cspell:disable-line
   },
+  managerHead: (head) => `
+    ${head}
+    <meta name="description" content="SSA UI kit is an open-source React-based library that accelerates frontend development of dashboard and administrative panels" />
+  `,
 };
 
 export default config;
