@@ -56,6 +56,10 @@ import { Circular } from './Circular';
 import { BanUser } from './BanUser';
 import { ConfirmEmail } from './ConfirmEmail';
 import { Unlock } from './Unlock';
+import { Edit } from './Edit';
+import { Import } from './Import';
+import { Pages } from './Pages';
+import { Roles } from './Roles';
 
 const componentsList = [
   Diet,
@@ -108,6 +112,10 @@ const componentsList = [
   BanUser,
   ConfirmEmail,
   Unlock,
+  Edit,
+  Import,
+  Pages,
+  Roles,
 ];
 
 const iconsMap: MapIconsType = iconsList.reduce((res, name, index) => {

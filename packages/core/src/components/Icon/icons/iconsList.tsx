@@ -58,4 +58,8 @@ export const iconsList = [
   'ban-user',
   'confirm-email',
   'unlock',
+  'edit',
+  'import',
+  'pages',
+  'roles',
 ] as const;
