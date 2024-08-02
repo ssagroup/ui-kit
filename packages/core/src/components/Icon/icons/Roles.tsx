@@ -9,6 +9,7 @@ export const Roles = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
+    <title>Roles</title>
     <g id="Contacts">
       <g id="Vector">
         <path
