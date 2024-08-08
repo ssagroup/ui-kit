@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const UnArchive = ({ fill = '#000', size = 20, ...props }: SVGProps) => (
+export const UnArchive = ({
+  fill = '#000',
+  size = 20,
+  tooltip = 'Unarchive',
+  ...props
+}: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -8,7 +13,7 @@ export const UnArchive = ({ fill = '#000', size = 20, ...props }: SVGProps) => (
     viewBox="0 0 21 20"
     fill="none"
     {...props}>
-    <title>Unarchive</title>
+    <title>{tooltip}</title>
     <g clipPath="url(#clip0_1141_12546)">
       <path
         d="M16.8271 18.9582H3.49382C2.88616 18.9577 2.30352 18.7161 1.87385 18.2865C1.44417 17.8568 1.20259 17.2742 1.20215 16.6665V6.6665C1.20215 6.50074 1.268 6.34177 1.38521 6.22456C1.50242 6.10735 1.66139 6.0415 1.82715 6.0415H18.4938C18.6596 6.0415 18.8185 6.10735 18.9358 6.22456C19.053 6.34177 19.1188 6.50074 19.1188 6.6665V16.6665C19.1184 17.2742 18.8768 17.8568 18.4471 18.2865C18.0174 18.7161 17.4348 18.9577 16.8271 18.9582ZM2.45215 7.2915V16.6665C2.45259 16.9426 2.56248 17.2073 2.75773 17.4026C2.95299 17.5978 3.21768 17.7077 3.49382 17.7082H16.8271C17.1033 17.7077 17.368 17.5978 17.5632 17.4026C17.7585 17.2073 17.8684 16.9426 17.8688 16.6665V7.2915H2.45215Z"
@@ -43,3 +48,5 @@ export const UnArchive = ({ fill = '#000', size = 20, ...props }: SVGProps) => (
     </defs>
   </svg>
 );
+
+export const ICON_NAME = 'unarchive';

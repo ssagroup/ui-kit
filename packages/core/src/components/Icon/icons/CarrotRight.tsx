@@ -3,6 +3,7 @@ import { SVGProps } from '@components/Icon/types';
 export const CarrotRight = ({
   fill = '#000',
   size = 24,
+  tooltip = 'Carrot right',
   ...props
 }: SVGProps) => (
   <svg
@@ -12,7 +13,7 @@ export const CarrotRight = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>Carrot right</title>
+    <title>{tooltip}</title>
     <path
       d="M1.5 0.999999L9.5 9L1.5 17"
       stroke={fill}
@@ -23,3 +24,5 @@ export const CarrotRight = ({
     />
   </svg>
 );
+
+export const ICON_NAME = 'carrot-right';

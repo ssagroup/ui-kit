@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Warning = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const Warning = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Warning',
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -9,7 +14,7 @@ export const Warning = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>Warning</title>
+    <title>{tooltip}</title>
     <path
       d="M9.65357 1.32393C9.80753 1.05726 10.1924 1.05726 10.3464 1.32393L18.5118 15.4668C18.6657 15.7334 18.4733 16.0668 18.1654 16.0668H1.8346C1.52668 16.0668 1.33423 15.7334 1.48819 15.4668L9.65357 1.32393Z"
       stroke={fill}
@@ -21,3 +26,5 @@ export const Warning = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'warning';

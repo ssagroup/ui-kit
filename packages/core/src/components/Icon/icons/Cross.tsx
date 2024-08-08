@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Cross = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const Cross = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Cross',
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -9,7 +14,7 @@ export const Cross = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>Cross</title>
+    <title>{tooltip}</title>
     <path
       d="M1 6.66L6.66 1"
       stroke={fill}
@@ -26,3 +31,5 @@ export const Cross = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'cross';

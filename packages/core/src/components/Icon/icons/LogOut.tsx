@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const LogOut = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const LogOut = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Log out',
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -9,7 +14,7 @@ export const LogOut = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>Log out</title>
+    <title>{tooltip}</title>
     <path
       d="M7.9751 13.7292H2.36876C2.0249 13.7292 1.74585 13.4502 1.74585 13.1063V1.89369C1.74585 1.54983 2.02493 1.27078 2.36876 1.27078H7.9751C8.31957 1.27078 8.59801 0.992344 8.59801 0.647871C8.59801 0.303398 8.31957 0.0249023 7.9751 0.0249023H2.36876C1.33845 0.0249023 0.5 0.863379 0.5 1.89369V13.1063C0.5 14.1366 1.33845 14.9751 2.36876 14.9751H7.9751C8.31957 14.9751 8.59801 14.6966 8.59801 14.3522C8.59801 14.0077 8.31957 13.7292 7.9751 13.7292Z"
       fill={fill}
@@ -20,3 +25,5 @@ export const LogOut = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'log-out';
