@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Filter = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const Filter = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Filter',
+  ...props
+}: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -8,7 +13,7 @@ export const Filter = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     viewBox="0 0 21 20"
     fill="none"
     {...props}>
-    <title>Filter</title>
+    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -17,3 +22,5 @@ export const Filter = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'filter';

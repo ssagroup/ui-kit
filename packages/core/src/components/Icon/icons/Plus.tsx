@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Plus = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const Plus = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Plus',
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -9,7 +14,7 @@ export const Plus = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>Plus</title>
+    <title>{tooltip}</title>
     <path
       d="M1 5H9"
       stroke={fill}
@@ -26,3 +31,5 @@ export const Plus = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'plus';

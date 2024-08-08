@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Invisible = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const Invisible = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Invisible',
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -9,7 +14,7 @@ export const Invisible = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>Invisible</title>
+    <title>{tooltip}</title>
     <path
       d="M14.5299 9.46992L9.46992 14.5299C8.81992 13.8799 8.41992 12.9899 8.41992 11.9999C8.41992 10.0199 10.0199 8.41992 11.9999 8.41992C12.9899 8.41992 13.8799 8.81992 14.5299 9.46992Z"
       stroke={fill}
@@ -54,3 +59,5 @@ export const Invisible = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'invisible';

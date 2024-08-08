@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Search = ({ fill = '#55575A', size = 24, ...props }: SVGProps) => (
+export const Search = ({
+  fill = '#55575A',
+  size = 24,
+  tooltip = 'Search',
+  ...props
+}: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -8,7 +13,7 @@ export const Search = ({ fill = '#55575A', size = 24, ...props }: SVGProps) => (
     viewBox="0 0 20 20"
     fill="none"
     {...props}>
-    <title>Search</title>
+    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -17,3 +22,5 @@ export const Search = ({ fill = '#55575A', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'search';

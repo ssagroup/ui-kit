@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const User = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const User = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'User',
+  ...props
+}: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -9,7 +14,7 @@ export const User = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>User</title>
+    <title>{tooltip}</title>
     <path
       d="M12.1202 12.78C12.0502 12.77 11.9602 12.77 11.8802 12.78C10.1202 12.72 8.72021 11.28 8.72021 9.50998C8.72021 7.69998 10.1802 6.22998 12.0002 6.22998C13.8102 6.22998 15.2802 7.69998 15.2802 9.50998C15.2702 11.28 13.8802 12.72 12.1202 12.78Z"
       stroke={fill}
@@ -33,3 +38,5 @@ export const User = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'user';

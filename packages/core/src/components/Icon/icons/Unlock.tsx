@@ -1,6 +1,11 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Unlock = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
+export const Unlock = ({
+  fill = '#000',
+  size = 24,
+  tooltip = 'Unlock',
+  ...props
+}: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -8,7 +13,7 @@ export const Unlock = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     viewBox="0 0 15 15"
     fill="none"
     {...props}>
-    <title>Unlock</title>
+    <title>{tooltip}</title>
     <path
       d="M6.65912 9.39867C6.65912 8.92244 7.02368 8.55788 7.49991 8.55788C7.97614 8.55788 8.3407 8.92244 8.3407 9.39867C8.3407 9.65047 8.22903 9.87161 8.06044 10.0117V10.8C8.06044 11.1087 7.80864 11.3605 7.49991 11.3605C7.19118 11.3605 6.93939 11.1087 6.93939 10.8V10.0117C6.77079 9.87161 6.65912 9.65047 6.65912 9.39867Z"
       fill={fill}
@@ -21,3 +26,5 @@ export const Unlock = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     />
   </svg>
 );
+
+export const ICON_NAME = 'unlock';
