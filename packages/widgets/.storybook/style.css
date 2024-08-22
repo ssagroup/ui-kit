@@ -29,3 +29,12 @@ p {
 .language-jsx span {
   color: white;
 }
+
+#storybook-docs .sbdocs-preview,
+#storybook-docs .docs-story {
+  overflow: visible;
+}
+
+#storybook-docs .docs-story > div:first-of-type {
+  overflow: visible;
+}

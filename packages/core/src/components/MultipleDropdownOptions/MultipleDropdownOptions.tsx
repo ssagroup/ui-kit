@@ -23,7 +23,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   overflow-x: hidden;
   overflow-y: auto;
 
-  z-index: 2;
+  z-index: 1;
 
   filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};

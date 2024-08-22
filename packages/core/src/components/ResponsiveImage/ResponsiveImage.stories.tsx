@@ -21,10 +21,12 @@ export const Default: StoryObj<typeof ResponsiveImage> = () => {
         tag
       </Typography>
       <ResponsiveImage
-        srcSet="https://placehold.co/64x64 64w, https://placehold.co/48x48 48w"
-        sizes="(min-width: 1440px) 64px, 48px"
-        src="https://placehold.co/48x48"
-        alt="Steps"
+        srcSet={`
+          https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Medium_90_51.png?alt=media&token=6761e4f3-b985-4322-8824-0c9668a2e2d9 90w, 
+          https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_80_49.png?alt=media&token=910e7a01-8127-4e2e-88e6-1b85805d7beb 80w`}
+        sizes="(max-width: 900px) 80px, (min-width: 900px) 90px"
+        src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_80_49.png?alt=media&token=910e7a01-8127-4e2e-88e6-1b85805d7beb"
+        alt="SSA UI Kit"
       />
     </div>
   );
