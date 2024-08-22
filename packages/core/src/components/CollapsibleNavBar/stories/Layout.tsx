@@ -36,7 +36,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       }}>
       {children}
       <Main>
-        {new Array(100).fill(1).map((_, index) => (
+        {new Array(30).fill(1).map((_, index) => (
           <NotificationCard
             key={index}
             title="CyberVeinToken is Now Available"

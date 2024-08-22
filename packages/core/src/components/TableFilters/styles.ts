@@ -6,6 +6,7 @@ export const tableFilterPopoverContentStyles = (theme: Theme) => css`
   padding: 20px 20px 14px 18px;
   width: 340px;
   background: ${theme.colors.white};
+  z-index: 1;
 `;
 
 export const tableFilterDividerStyles = (theme: Theme) => css`

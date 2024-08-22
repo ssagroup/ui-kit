@@ -74,7 +74,7 @@ export const Filters = ({
         <FilterBlockWrapper>
           <FiltersBlock />
         </FilterBlockWrapper>
-        <Wrapper css={{ width: 110 }}>
+        <Wrapper css={{ width: 110, zIndex: 1 }}>
           <TableFilters
             {...useTableDataResult}
             checkboxData={hiddenCheckboxData}

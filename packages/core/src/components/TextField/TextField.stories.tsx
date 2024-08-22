@@ -148,7 +148,14 @@ export const WithAction: StoryObj<typeof TextField> = () => {
       register={register}
       helperText="some nice text"
       endElement={
-        <button onClick={() => console.log('calling action...')}>Action</button>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            console.log('calling action...');
+          }}>
+          Action
+        </button>
       }
     />
   );

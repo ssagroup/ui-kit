@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import { Meta } from '@storybook/react';
-import { Title, Description, Source } from '@storybook/addon-docs';
+import { Meta, StoryObj } from '@storybook/react';
+import { Title, Description, Subtitle, Stories } from '@storybook/addon-docs';
 
 import { DecoratorFunction } from '@storybook/types';
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
@@ -35,11 +35,17 @@ export default {
   parameters: {
     layout: 'fullscreen',
     docs: {
+      source: {
+        type: 'code',
+      },
       page: () => (
         <Fragment>
           <Title />
+          <Subtitle />
           <Description />
-          <Source code={`<CollapsibleNavBar />`} />
+          <div css={{ height: 300 }}>
+            <Stories />
+          </div>
         </Fragment>
       ),
     },
@@ -54,26 +60,42 @@ export default {
   },
 } as Meta<typeof CollapsibleNavBar>;
 
-export const Default = {};
+export const Default: StoryObj<typeof CollapsibleNavBar> = () => {
+  return (
+    <CollapsibleNavBar
+      items={ITEMS}
+      renderLogo={<Logo />}
+      onChange={(isChecked) => {
+        console.log('>>>onChange', isChecked);
+      }}
+    />
+  );
+};
 
-export const WithCustomIcon = {
-  title: 'With Custom Icon',
-  component: CollapsibleNavBar,
-  parameters: {
-    layout: 'fullscreen',
-  },
-  args: {
-    items: [
-      ...ITEMS,
-      {
-        path: 'custom',
-        CustomIcon,
-        title: 'Item with custom icon',
-      },
-    ],
-    renderLogo: <Logo />,
-    onChange: (isChecked) => {
-      console.log('>>>onChange', isChecked);
-    },
-  },
-} as Meta<typeof CollapsibleNavBar>;
+Default.args = {};
+
+export const WithCustomIcon: Meta<typeof CollapsibleNavBar> = () => {
+  return (
+    <CollapsibleNavBar
+      items={[
+        ...ITEMS,
+        {
+          path: 'custom',
+          CustomIcon,
+          title: 'Item with custom icon',
+          iconSize: 22,
+          iconName: 'archive',
+        },
+      ]}
+      renderLogo={<Logo />}
+      onChange={(isChecked) => {
+        console.log('>>>onChange', isChecked);
+      }}
+    />
+  );
+};
+
+WithCustomIcon.title = 'With Custom Icon';
+WithCustomIcon.parameters = {
+  layout: 'fullscreen',
+};
