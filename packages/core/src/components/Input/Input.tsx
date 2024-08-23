@@ -25,6 +25,7 @@ const InputInner = (
     startElement,
     endElement,
     className,
+    wrapperClassName,
     inputProps = {},
     register,
     onKeyUp,
@@ -39,7 +40,10 @@ const InputInner = (
 
   const registerResult = register(name, validationSchema);
   return (
-    <InputGroup css={[mapColors[status]]} disabled={disabled}>
+    <InputGroup
+      css={[mapColors[status]]}
+      className={wrapperClassName}
+      disabled={disabled}>
       {startElement ? <div css={S.startElement}>{startElement}</div> : null}
       <InputBase
         type={type}

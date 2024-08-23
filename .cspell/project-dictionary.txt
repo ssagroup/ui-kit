@@ -11,6 +11,8 @@ btn
 catmullRom
 chartstatisticsaccordion
 cjs
+Classname
+subcomponents
 clldjub
 collapsiblenavbar
 commodo
@@ -76,6 +78,7 @@ swp
 testid
 translatex
 tsbuildcache
+Typeahead
 umd
 unhover
 USD
