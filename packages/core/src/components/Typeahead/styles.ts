@@ -26,8 +26,11 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   }
 `;
 
-export const TypeaheadTrigger = styled(PopoverTrigger)`
-  border-radius: 0;
+export const TypeaheadTrigger = styled(PopoverTrigger)<{
+  isOpen: boolean;
+}>`
+  position: relative;
+  border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.greyDropdownMain};
   min-height: 44px;
   height: auto;
@@ -36,11 +39,13 @@ export const TypeaheadTrigger = styled(PopoverTrigger)`
   padding: 5px 8px;
   width: 200px;
   flex-wrap: wrap;
+  border: ${({ isOpen }) => isOpen && '1.4px solid rgba(43, 45, 49, 0.6)'};
   &:active,
   &:focus,
   &:hover {
     background: #fff;
     box-shadow: none;
+    border: 0.67 solid rgb(73, 80, 87);
   }
 `;
 
@@ -50,12 +55,30 @@ export const TypeaheadInput = css`
     border-radius: 0;
     height: 34px;
     cursor: pointer;
+    padding: 0;
+    background: transparent;
   }
 `;
 
-export const TypeaheadInputWrapper = css`
+export const TypeaheadInputPlaceholder = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: rgba(0, 0, 0, 0.54);
+`;
+
+export const TypeaheadInputsGroupWrapper = css`
+  position: relative;
   flex: 1 1 0%;
+`;
+
+export const TypeaheadInputWrapper = css`
   height: 34px;
+  z-index: 1;
+  background: transparent;
 `;
 
 export const TypeaheadItem = styled.div`

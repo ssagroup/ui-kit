@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
-import { useClickOutside } from '@ssa-ui-kit/hooks';
+import { pathOr } from '@ssa-ui-kit/utils';
 import Input from '@components/Input';
 import { TypeaheadContextType, TypeaheadProps } from './types';
 import {
@@ -19,6 +19,7 @@ import * as S from './styles';
 import { TypeaheadContext } from './Typeahead.context';
 import { TypeaheadOptions } from './TypeaheadOptions';
 import Icon from '@components/Icon';
+import Wrapper from '@components/Wrapper';
 
 // TODO: Let's check:
 /**
@@ -42,9 +43,10 @@ export const Typeahead = ({
   isMultiple = true,
   label,
   children,
-  onChange: handleChange,
   className,
   optionsClassname,
+  onChange: handleChange,
+  renderOption,
 }: TypeaheadProps) => {
   const theme = useTheme();
   const dropdownBaseRef: React.MutableRefObject<HTMLDivElement | null> =
@@ -62,12 +64,18 @@ export const Typeahead = ({
     Record<number | string, Record<string, string | number>>
   >({});
   const [items, setItems] = useState<Array<React.ReactElement>>([]);
-  const { register } = useForm<FieldValues>();
+  const { register, watch, setValue } = useForm<FieldValues>();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const inputWatch = watch('typeahead-input');
+  const [firstSuggestion, setFirstSuggestion] = useState('');
+
   const onOpenChange = (open: boolean) => {
     setIsOpen(open);
   };
 
   const onChange = (changingValue: string | number) => {
+    console.log('>>>changingValue', changingValue);
     if (isDisabled || changingValue === undefined) {
       return;
     }
@@ -83,10 +91,13 @@ export const Typeahead = ({
       setSelected(isChangingItemSelected ? [] : [changingValue]);
     }
     setIsOpen(false);
+    setFirstSuggestion('');
+    setValue('typeahead-input', '');
+    inputRef.current?.focus();
     handleChange && handleChange(changingValue, isNewSelected);
   };
 
-  useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
+  // useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
 
   useEffect(() => {
     if (isDisabled) {
@@ -112,7 +123,9 @@ export const Typeahead = ({
     > = {};
     const childItems = (childrenArray as React.ReactElement[]).map(
       (child, index) => {
-        keyedOptions[child.props.value] = { ...child.props };
+        keyedOptions[child.props.value] = {
+          ...child.props,
+        };
 
         return React.cloneElement(child, {
           index,
@@ -124,13 +137,67 @@ export const Typeahead = ({
     setItems(childItems);
   }, [initialSelectedItems, children]);
 
+  useEffect(() => {
+    const childrenArray = React.Children.toArray(children).filter((child) => {
+      const label = pathOr<Record<string, any>, string>('', ['props', 'label'])(
+        child as unknown as Record<string, any>,
+      );
+      return (
+        child && label.toLowerCase().includes(`${inputWatch}`.toLowerCase())
+      );
+    });
+    const childItems = (childrenArray as React.ReactElement[]).map(
+      (child, index) => {
+        const { id, label } = child.props;
+        return React.cloneElement(child, {
+          index,
+          ...child.props,
+          children: renderOption
+            ? renderOption({ value: id, input: inputWatch, label })
+            : children,
+        });
+      },
+    );
+    setItems(childItems);
+  }, [inputWatch]);
+
+  useEffect(() => {
+    if (inputWatch) {
+      const newFirstSuggestion = items.find((item) => {
+        const label = pathOr<Record<string, any>, string>('', [
+          'props',
+          'label',
+        ])(item as Record<string, any>);
+        const value = pathOr<Record<string, any>, string>('', [
+          'props',
+          'value',
+        ])(item as Record<string, any>);
+        return (
+          label.toLowerCase().startsWith(inputWatch.toLowerCase()) &&
+          !selected.includes(value)
+        );
+      });
+      const firstSuggestionLabel = pathOr<Record<string, any>, string>('', [
+        'props',
+        'label',
+      ])(newFirstSuggestion as unknown as Record<string, any>);
+      const humanSuggestionLabel = inputWatch.concat(
+        firstSuggestionLabel.slice(inputWatch.length),
+      );
+      setFirstSuggestion(humanSuggestionLabel);
+    } else {
+      setFirstSuggestion('');
+      setValue('typeahead-input', '');
+    }
+  }, [inputWatch, items, selected]);
+
   const contextValue: TypeaheadContextType = React.useMemo(
     () => ({
-      onChange,
-      setSelectedItems: setSelected,
       allItems: optionsWithKey,
       isMultiple,
       selectedItems: selected,
+      onChange,
+      setSelectedItems: setSelected,
     }),
     [onChange, setSelected, optionsWithKey, isMultiple, selected],
   );
@@ -141,6 +208,28 @@ export const Typeahead = ({
     event.stopPropagation();
     event.preventDefault();
     setIsOpen(true);
+  };
+
+  const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    if (event.code === 'Tab' && firstSuggestion) {
+      const foundItem = items.find(
+        (item) =>
+          item.props?.label.toLowerCase() === firstSuggestion.toLowerCase(),
+      );
+      onChange(foundItem?.props.value);
+      event.preventDefault();
+      return false;
+    }
+    if (event.code === 'Backspace' && selected.length > 0 && !firstSuggestion) {
+      onChange(selected[selected.length - 1]);
+      event.preventDefault();
+      return false;
+    }
+    if (!isOpen) {
+      setIsOpen(true);
+    }
   };
 
   const handleSelectedClick: React.MouseEventHandler<HTMLDivElement> = (
@@ -165,18 +254,20 @@ export const Typeahead = ({
         as="div"
         onFocus={setIsFocused.bind(null, true)}
         ref={triggerRef}
-        className={className}>
+        className={className}
+        isOpen={isOpen}>
         {Object.values(optionsWithKey).length > 0 &&
-          selected.map((selectedItem) => {
+          selected.map((selectedItem, index) => {
             const currentOption = optionsWithKey[selectedItem];
             const optionText = currentOption
               ? currentOption.children ||
                 currentOption.label ||
                 currentOption.value
               : '';
+
             return (
               <S.TypeaheadItem
-                key={`typeahead-selected-selectedItem-${optionText}`}
+                key={`typeahead-selected-selectedItem-${index}`}
                 onClick={handleSelectedClick}>
                 <S.TypeaheadItemLabel>{optionText}</S.TypeaheadItemLabel>
                 <S.TypeaheadItemCross
@@ -192,19 +283,36 @@ export const Typeahead = ({
               </S.TypeaheadItem>
             );
           })}
-        <Input
-          name="typeahead-input"
-          status={'custom'}
-          inputProps={{
-            onClick: handleInputClick,
-            autoComplete: 'off',
-            className: ['typeahead-input', S.TypeaheadInput].join(' '),
-          }}
-          register={register}
-          wrapperClassName={S.TypeaheadInputWrapper}
-        />
+        <Wrapper className={S.TypeaheadInputsGroupWrapper}>
+          <Input
+            name="typeahead-input"
+            status={'custom'}
+            inputProps={{
+              onClick: handleInputClick,
+              onKeyDown: handleInputKeyDown,
+              autoComplete: 'off',
+              className: ['typeahead-input', S.TypeaheadInput].join(' '),
+            }}
+            register={register}
+            wrapperClassName={S.TypeaheadInputWrapper}
+            ref={inputRef}
+          />
+          <input
+            type="text"
+            aria-hidden
+            readOnly
+            value={firstSuggestion}
+            className={[
+              'typeahead-input',
+              S.TypeaheadInput,
+              S.TypeaheadInputPlaceholder,
+            ].join(' ')}
+          />
+        </Wrapper>
       </S.TypeaheadTrigger>
-      <PopoverContent css={{ width: triggerRef.current?.clientWidth }}>
+      <PopoverContent
+        css={{ width: triggerRef.current?.clientWidth }}
+        isFocusManagerDisabled>
         <PopoverDescription css={{ width: '100%' }}>
           <TypeaheadContext.Provider value={contextValue}>
             {/*

@@ -3,14 +3,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Typeahead } from '.';
 import { TypeaheadProps } from './types';
 import * as S from './styles';
+import { highlightInputMatch } from './utils';
 
 const items = [
-  { id: 1, value: 'First', subText: 'subtext' },
-  { id: 2, value: 'Second', subText: 'subtext' },
-  { id: 3, value: 'Third', subText: 'subtext' },
-  { id: 4, value: 'Fourth', subText: 'subtext' },
-  { id: 5, value: 'Fifth', subText: 'subtext' },
-  { id: 6, value: 'Sixth', subText: 'subtext' },
+  { id: 1, value: 'First' },
+  { id: 2, value: 'Second' },
+  { id: 3, value: 'Third' },
+  { id: 4, value: 'Fourth' },
+  { id: 5, value: 'Fifth' },
+  { id: 6, value: 'Sixth' },
 ];
 
 export default {
@@ -67,10 +68,11 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
     <Typeahead
       selectedItems={[items[2].id, items[1].id]}
       isMultiple
-      isDisabled={args.isDisabled}>
-      {items.map((item) => (
-        <S.TypeaheadOption key={item.id} value={item.id}>
-          {item.value}
+      isDisabled={args.isDisabled}
+      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+      {items.map(({ value, id }) => (
+        <S.TypeaheadOption key={id} value={id} label={value}>
+          {value}
         </S.TypeaheadOption>
       ))}
     </Typeahead>

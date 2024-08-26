@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useEffect } from 'react';
+import React, { BaseSyntheticEvent } from 'react';
 import { TypeaheadItemsListProps } from './types';
 import { useTypeaheadContext } from './Typeahead.context';
 import * as S from './styles';
@@ -7,7 +7,7 @@ export const TypeaheadOptions = ({
   ariaLabelledby,
   id,
   children,
-  noItemsMessage = 'No items',
+  noItemsMessage = 'No matches found',
 }: TypeaheadItemsListProps) => {
   const { allItems, onChange, isMultiple, selectedItems } =
     useTypeaheadContext();

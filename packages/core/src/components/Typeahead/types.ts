@@ -14,13 +14,18 @@ export type TypeaheadProps = {
   isOpen?: boolean;
   label?: string;
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
+  renderOption?: (data: {
+    value: string | number;
+    input: string;
+    label: string;
+  }) => React.ReactNode;
 };
 
 export interface TypeaheadContextType {
-  onChange: (item: string | number) => void;
   isMultiple?: boolean;
   allItems: Record<number | string, Record<string, string | number>>;
   selectedItems: Array<TypeaheadValue>;
+  onChange: (item: string | number) => void;
   setSelectedItems: (selectedItems: Array<TypeaheadValue>) => void;
 }
 
@@ -32,12 +37,12 @@ export interface TypeaheadItemsListProps extends CommonProps {
 }
 
 export interface TypeaheadItemProps extends CommonProps {
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   isActive?: boolean; // TODO: check
   isMultiple?: boolean; // TODO: check
   isDisabled?: boolean; // TODO: check
   noHover?: boolean; // TODO: check
   value?: string | number | boolean;
-  label?: string | number; // TODO: check
+  label?: string | number;
   children?: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
