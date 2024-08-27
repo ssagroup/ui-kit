@@ -1,18 +1,37 @@
 import * as React from 'react';
+import { UseTypeaheadResult } from './useTypeahead';
 
-import { TypeaheadContextType } from './types';
-
-export const TypeaheadContext = React.createContext<TypeaheadContextType>({
-  allItems: {},
+export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
+  optionsWithKey: {},
   isMultiple: false,
   selectedItems: [],
-  onChange: () => {
+  typeaheadId: '',
+  firstSuggestion: '',
+  inputRef: { current: null },
+  triggerRef: { current: null },
+  isOpen: false,
+  items: [],
+  className: undefined,
+  useFormResult: {} as any,
+  handleChange: () => {
     /* no-op */
   },
-  setSelectedItems: () => {
+  handleInputClick: () => {
+    /* no-op */
+  },
+  handleInputKeyDown: () => {
+    /* no-op */
+  },
+  handleOpenChange: () => {
+    /* no-op */
+  },
+  handleRemoveSelectedClick: () => () => {
+    /* no-op */
+  },
+  handleSelectedClick: () => {
     /* no-op */
   },
 });
 
-export const useTypeaheadContext = (): TypeaheadContextType =>
+export const useTypeaheadContext = (): UseTypeaheadResult =>
   React.useContext(TypeaheadContext);

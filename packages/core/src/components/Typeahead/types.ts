@@ -5,14 +5,13 @@ export type TypeaheadValue = string | number;
 export type TypeaheadOptionProps = Record<string, TypeaheadValue>;
 
 export type TypeaheadProps = {
-  selectedItems?: Array<TypeaheadValue>;
+  initialSelectedItems?: Array<TypeaheadValue>;
   isMultiple?: boolean;
   isDisabled?: boolean;
   children?: React.ReactNode;
   className?: string;
   optionsClassname?: string;
   isOpen?: boolean;
-  label?: string;
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
   renderOption?: (data: {
     value: string | number;
@@ -20,14 +19,6 @@ export type TypeaheadProps = {
     label: string;
   }) => React.ReactNode;
 };
-
-export interface TypeaheadContextType {
-  isMultiple?: boolean;
-  allItems: Record<number | string, Record<string, string | number>>;
-  selectedItems: Array<TypeaheadValue>;
-  onChange: (item: string | number) => void;
-  setSelectedItems: (selectedItems: Array<TypeaheadValue>) => void;
-}
 
 export interface TypeaheadItemsListProps extends CommonProps {
   ariaLabelledby?: string;

@@ -12,7 +12,6 @@ catmullRom
 chartstatisticsaccordion
 cjs
 Classname
-subcomponents
 clldjub
 collapsiblenavbar
 commodo
@@ -40,6 +39,7 @@ HIIT
 HMR
 hocs
 homescreen
+hookform
 HTMLSVGElement
 IBMP
 ipsum
@@ -73,6 +73,7 @@ ssa
 ssagroup
 SSAHOCs
 stylelint
+subcomponents
 suscipit
 swp
 testid

@@ -9,12 +9,12 @@ export const TypeaheadOptions = ({
   children,
   noItemsMessage = 'No matches found',
 }: TypeaheadItemsListProps) => {
-  const { allItems, onChange, isMultiple, selectedItems } =
+  const { optionsWithKey, handleChange, isMultiple, selectedItems } =
     useTypeaheadContext();
 
   const toggleItem = (value: string | number, isDisabled: boolean) => {
     if (!isDisabled) {
-      onChange(value);
+      handleChange(value);
     }
   };
 
@@ -22,8 +22,8 @@ export const TypeaheadOptions = ({
   const filteredOptions = (childrenArray as React.ReactElement[]).filter(
     (child) => !selectedItems.includes(child.props.value),
   );
-  const options = filteredOptions.map((child) => {
-    const element = allItems[child.props.value];
+  const options = filteredOptions.map((child, index) => {
+    const element = optionsWithKey[child.props.value];
     const isActive = selectedItems.includes(child.props.value);
     const isDisabled = Boolean(element?.isDisabled);
     return React.cloneElement(
@@ -32,7 +32,10 @@ export const TypeaheadOptions = ({
         ...child.props,
         isActive,
         isMultiple,
-        'area-selected': isActive,
+        key: `${child.props.key}-${id}-${index}`,
+        id,
+        'aria-selected': isActive,
+        'aria-labelledby': ariaLabelledby,
         onClick: (event: BaseSyntheticEvent) => {
           event.preventDefault();
           toggleItem(child.props.value, isDisabled);

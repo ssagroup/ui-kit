@@ -51,10 +51,13 @@ export default {
 
 export const Basic: StoryObj = (args: TypeaheadProps) => {
   return (
-    <Typeahead selectedItems={[items[2].id]} isDisabled={args.isDisabled}>
-      {items.map((item) => (
-        <S.TypeaheadOption key={item.id} value={item.id}>
-          {item.value}
+    <Typeahead
+      initialSelectedItems={[items[2].id]}
+      isDisabled={args.isDisabled}
+      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+      {items.map(({ value, id }) => (
+        <S.TypeaheadOption key={id} value={id} label={value}>
+          {value}
         </S.TypeaheadOption>
       ))}
     </Typeahead>
@@ -66,7 +69,7 @@ Basic.args = { isDisabled: false };
 export const Multiple: StoryObj = (args: TypeaheadProps) => {
   return (
     <Typeahead
-      selectedItems={[items[2].id, items[1].id]}
+      initialSelectedItems={[items[2].id, items[1].id]}
       isMultiple
       isDisabled={args.isDisabled}
       renderOption={({ label, input }) => highlightInputMatch(label, input)}>

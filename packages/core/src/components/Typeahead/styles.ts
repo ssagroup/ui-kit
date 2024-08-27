@@ -39,7 +39,7 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   padding: 5px 8px;
   width: 200px;
   flex-wrap: wrap;
-  border: ${({ isOpen }) => isOpen && '1.4px solid rgba(43, 45, 49, 0.6)'};
+  border: ${({ isOpen }) => isOpen && '1px solid rgba(43, 45, 49, 0.6)'};
   &:active,
   &:focus,
   &:hover {
