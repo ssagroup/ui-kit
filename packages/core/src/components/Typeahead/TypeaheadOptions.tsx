@@ -19,9 +19,12 @@ export const TypeaheadOptions = ({
   };
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
-  const filteredOptions = (childrenArray as React.ReactElement[]).filter(
+  let filteredOptions = (childrenArray as React.ReactElement[]).filter(
     (child) => !selectedItems.includes(child.props.value),
   );
+  if (!isMultiple) {
+    filteredOptions = childrenArray as React.ReactElement[];
+  }
   const options = filteredOptions.map((child, index) => {
     const element = optionsWithKey[child.props.value];
     const isActive = selectedItems.includes(child.props.value);
@@ -46,7 +49,9 @@ export const TypeaheadOptions = ({
   });
 
   if (options.length === 0) {
-    options.push(<S.TypeaheadOption>{noItemsMessage}</S.TypeaheadOption>);
+    options.push(
+      <S.TypeaheadOption key={'no-items'}>{noItemsMessage}</S.TypeaheadOption>,
+    );
   }
 
   return <S.TypeaheadOptionsBase>{options}</S.TypeaheadOptionsBase>;

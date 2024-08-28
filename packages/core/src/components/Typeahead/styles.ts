@@ -17,6 +17,8 @@ export const TypeaheadOptionsBase = styled.ul`
 `;
 
 export const TypeaheadOption = styled.li<TypeaheadItemProps>`
+  display: flex;
+  align-items: center;
   padding: 8px 16px;
   border: none;
   cursor: pointer;
@@ -95,6 +97,8 @@ export const TypeaheadItem = styled.div`
 `;
 
 export const TypeaheadItemLabel = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: 4px;
   cursor: default;
 `;

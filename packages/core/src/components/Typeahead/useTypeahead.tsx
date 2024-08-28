@@ -2,7 +2,6 @@ import React, {
   MouseEventHandler,
   useEffect,
   useId,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -49,10 +48,6 @@ export const useTypeahead = ({
   const inputWatch = watch('typeahead-input');
   const [firstSuggestion, setFirstSuggestion] = useState('');
 
-  useLayoutEffect(() => {
-    setValue('typeahead-input', 'First');
-  }, []);
-
   useEffect(() => {
     if (isDisabled && isOpen) {
       setIsOpen(false);
@@ -60,35 +55,34 @@ export const useTypeahead = ({
   }, [isDisabled]);
 
   useEffect(() => {
-    const childrenArray = React.Children.toArray(children).filter(Boolean);
     const keyedOptions: Record<
       number | string,
       Record<string, string | number>
     > = {};
-    const childItems = (childrenArray as React.ReactElement[]).map(
-      (child, index) => {
-        keyedOptions[child.props.value] = {
-          ...child.props,
-        };
+    const childItems = (
+      React.Children.toArray(children).filter(Boolean) as React.ReactElement[]
+    ).map((child, index) => {
+      keyedOptions[child.props.value] = {
+        ...child.props,
+      };
 
-        return React.cloneElement(child, {
-          index,
-          ...child.props,
-        });
-      },
-    );
+      return React.cloneElement(child, {
+        index,
+        ...child.props,
+      });
+    });
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
   }, [initialSelectedItems, children]);
 
   useEffect(() => {
-    console.log('>>>inputWatch', inputWatch);
     const childrenArray = React.Children.toArray(children).filter((child) => {
       const label = pathOr<Record<string, any>, string>('', ['props', 'label'])(
         child as unknown as Record<string, any>,
       );
       return (
-        child && label.toLowerCase().includes(`${inputWatch}`.toLowerCase())
+        child &&
+        label.toLowerCase().includes(`${inputWatch || ''}`.toLowerCase())
       );
     });
     const childItems = (childrenArray as React.ReactElement[]).map(
@@ -98,52 +92,73 @@ export const useTypeahead = ({
           index,
           ...child.props,
           children: renderOption
-            ? renderOption({ value: id, input: inputWatch, label })
+            ? renderOption({ value: id, input: inputWatch || '', label })
             : child.props.children,
         });
       },
     );
     setItems(childItems);
-  }, [inputWatch]);
+  }, [inputWatch, optionsWithKey]);
 
   useEffect(() => {
-    if (isMultiple) {
-      if (inputWatch) {
-        const newFirstSuggestion = items.find((item) => {
-          const label = pathOr<Record<string, any>, string>('', [
-            'props',
-            'label',
-          ])(item as Record<string, any>);
-          const value = pathOr<Record<string, any>, string>('', [
-            'props',
-            'value',
-          ])(item as Record<string, any>);
-          return (
-            label.toLowerCase().startsWith(inputWatch.toLowerCase()) &&
-            !selected.includes(value)
-          );
-        });
-        const firstSuggestionLabel = pathOr<Record<string, any>, string>('', [
+    if (inputWatch) {
+      const newFirstSuggestion = items.find((item) => {
+        const label = pathOr<Record<string, any>, string>('', [
           'props',
           'label',
-        ])(newFirstSuggestion as unknown as Record<string, any>);
-        const humanSuggestionLabel = inputWatch.concat(
-          firstSuggestionLabel.slice(inputWatch.length),
+        ])(item as Record<string, any>);
+        const value = pathOr<Record<string, any>, string>('', [
+          'props',
+          'value',
+        ])(item as Record<string, any>);
+        return (
+          label.toLowerCase().startsWith(inputWatch.toLowerCase()) &&
+          (isMultiple ? !selected.includes(value) : true)
         );
-        setFirstSuggestion(humanSuggestionLabel);
-      } else {
-        setFirstSuggestion('');
+      });
+      const firstSuggestionLabel = pathOr<Record<string, any>, string>('', [
+        'props',
+        'label',
+      ])(newFirstSuggestion as unknown as Record<string, any>);
+      const humanSuggestionLabel = inputWatch.concat(
+        firstSuggestionLabel.slice(inputWatch.length),
+      );
+      setFirstSuggestion(humanSuggestionLabel);
+    } else {
+      setFirstSuggestion('');
+      if (isMultiple) {
         setValue('typeahead-input', '');
       }
-    } else {
-      if (!inputWatch && selected[0]) {
-        // TODO: set human label, not id!
-        // Probably, we need to use other input name for single mode,
-        // using label instead of id? or, combine them!?
-      }
-      console.log('>>>single', selected);
     }
   }, [inputWatch, items, selected]);
+
+  useEffect(() => {
+    if (
+      !isMultiple &&
+      Object.keys(optionsWithKey).length &&
+      selected.length &&
+      inputWatch !== '' &&
+      inputWatch !== undefined &&
+      !selected.includes(inputWatch)
+    ) {
+      const foundItem = Object.values(optionsWithKey).find(
+        (item) => item.label === inputWatch,
+      );
+      if (!foundItem || foundItem?.value !== selected[0]) {
+        setSelected([]);
+      }
+    }
+  }, [inputWatch, optionsWithKey, selected]);
+
+  useEffect(() => {
+    if (!isMultiple && selected.length && Object.keys(optionsWithKey).length) {
+      const currentOption = optionsWithKey[selected[0]];
+      const optionText =
+        currentOption &&
+        (currentOption.children || currentOption.label || currentOption.value);
+      setValue('typeahead-input', optionText);
+    }
+  }, [selected, optionsWithKey]);
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
@@ -161,12 +176,12 @@ export const useTypeahead = ({
           ? currentSelected.filter((current) => current !== changingValue)
           : [...currentSelected, changingValue],
       );
+      setValue('typeahead-input', '');
     } else {
-      setSelected(isChangingItemSelected ? [] : [changingValue]);
+      setSelected([changingValue]);
     }
     setIsOpen(false);
     setFirstSuggestion('');
-    setValue('typeahead-input', '');
     inputRef.current?.focus();
     onChange && onChange(changingValue, isNewSelected);
   };
@@ -191,7 +206,12 @@ export const useTypeahead = ({
       event.preventDefault();
       return false;
     }
-    if (event.code === 'Backspace' && selected.length > 0 && !firstSuggestion) {
+    if (
+      isMultiple &&
+      event.code === 'Backspace' &&
+      selected.length > 0 &&
+      !firstSuggestion
+    ) {
       handleChange(selected[selected.length - 1]);
       event.preventDefault();
       return false;

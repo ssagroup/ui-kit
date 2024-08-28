@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools';
 import { TypeaheadProps } from './types';
 import {
   Popover,
@@ -23,9 +22,25 @@ import { TypeaheadTrigger } from './components';
  * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  **/
 
-// TODO: Let's use Popover!
-// TODO: Let's divide by subcomponents!
-// TODO: Single? Output just the input with text, instead of tokens!
+// TODO: name
+// TODO: register?
+/*
+
+- add tests
+- add storybook
+- add possibility to customize output
+- add the possibility to customize tokens output
+--- renderMultipleToken?
+- add result highlighting
+- add "name"
+- add "register"
+- add "label (title)"
+- add disabled state + story
+- add success state + story
+- add error state + story
+- add cross icon + action
+- do we need highlighting here?
+*/
 export const Typeahead = ({
   initialSelectedItems = [],
   isOpen,
@@ -60,24 +75,12 @@ export const Typeahead = ({
           css={{ width: hookResult.triggerRef.current?.clientWidth }}
           isFocusManagerDisabled>
           <PopoverDescription css={{ width: '100%' }}>
-            {/*
-          ...dropdown options, filtered? server?
-          ...click? add to "input", hide options + filter them
-          ...check for the multiple feature
-          ...fix single feature
-          ...add possibility to styling the options +input...
-          ...add tests
-          ...add storybook
-          ...add possibility to customize output
-          ...add result highlighting
-          */}
             <TypeaheadOptions className={optionsClassname}>
               {hookResult.items}
             </TypeaheadOptions>
           </PopoverDescription>
         </PopoverContent>
       </Popover>
-      <DevTool control={hookResult.useFormResult.control} />
     </TypeaheadContext.Provider>
   );
 };
