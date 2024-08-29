@@ -4,8 +4,6 @@ import Input from '@components/Input';
 import { useTypeaheadContext } from '../Typeahead.context';
 import * as S from '../styles';
 
-// TODO: use optionText here?..
-// TODO: use input name from context!
 export const SingleTrigger = () => {
   const context = useTypeaheadContext();
 
@@ -25,7 +23,7 @@ export const SingleTrigger = () => {
           S.TypeaheadInputsGroupWrapper,
         ].join(' ')}>
         <Input
-          name="typeahead-input"
+          name={context.inputName}
           status={'custom'}
           inputProps={{
             onClick: context.handleInputClick,
@@ -33,7 +31,7 @@ export const SingleTrigger = () => {
             autoComplete: 'off',
             className: ['typeahead-input', S.TypeaheadInput].join(' '),
           }}
-          register={context.useFormResult.register}
+          register={context.register}
           wrapperClassName={S.TypeaheadInputWrapper}
           ref={context.inputRef}
         />
@@ -47,6 +45,13 @@ export const SingleTrigger = () => {
             S.TypeaheadInput,
             S.TypeaheadInputPlaceholder,
           ].join(' ')}
+        />
+        <input
+          type="hidden"
+          aria-hidden
+          readOnly
+          value={(context.selectedItems[0] || '') as string | undefined}
+          {...context.register?.(context.name)}
         />
       </Wrapper>
     </S.TypeaheadTrigger>

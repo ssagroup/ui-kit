@@ -9,14 +9,18 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { pathOr } from '@ssa-ui-kit/utils';
 import { TypeaheadProps } from './types';
 
-// TODO: use additional two hooks - useSingleTypeahead + useMultipleTypeahead
 export const useTypeahead = ({
+  name = 'typeahead-input',
   isOpen: isInitOpen,
   initialSelectedItems,
   isDisabled,
   isMultiple,
   children,
   className,
+  startIcon,
+  endIcon,
+  register,
+  setValue,
   onChange,
   renderOption,
 }: Pick<
@@ -29,7 +33,15 @@ export const useTypeahead = ({
   | 'renderOption'
   | 'isOpen'
   | 'className'
+  | 'startIcon'
+  | 'endIcon'
+  | 'name'
+  | 'register'
+  | 'setValue'
 >) => {
+  const { watch } = useForm<FieldValues>();
+
+  const inputName = `${name}-text`;
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [selected, setSelected] = useState<Array<string | number>>(
     initialSelectedItems || [],
@@ -38,15 +50,23 @@ export const useTypeahead = ({
     Record<number | string, Record<string, string | number>>
   >({});
   const [items, setItems] = useState<Array<React.ReactElement>>([]);
-  const useFormResult = useForm<FieldValues>();
-  const { watch, setValue } = useFormResult;
+  const inputWatch = watch(inputName);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const typeaheadId = useId();
   const triggerRef: React.MutableRefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
-  const inputWatch = watch('typeahead-input');
   const [firstSuggestion, setFirstSuggestion] = useState('');
+
+  useEffect(() => {
+    if (!register) {
+      console.warn('Typeahead component must be used within a Form component');
+    }
+  }, []);
+
+  useEffect(() => {
+    setValue?.(name, selected);
+  }, [selected]);
 
   useEffect(() => {
     if (isDisabled && isOpen) {
@@ -127,7 +147,7 @@ export const useTypeahead = ({
     } else {
       setFirstSuggestion('');
       if (isMultiple) {
-        setValue('typeahead-input', '');
+        setValue?.(inputName, '');
       }
     }
   }, [inputWatch, items, selected]);
@@ -156,7 +176,7 @@ export const useTypeahead = ({
       const optionText =
         currentOption &&
         (currentOption.children || currentOption.label || currentOption.value);
-      setValue('typeahead-input', optionText);
+      setValue?.(inputName, `${optionText}`);
     }
   }, [selected, optionsWithKey]);
 
@@ -176,7 +196,7 @@ export const useTypeahead = ({
           ? currentSelected.filter((current) => current !== changingValue)
           : [...currentSelected, changingValue],
       );
-      setValue('typeahead-input', '');
+      setValue?.(inputName, '');
     } else {
       setSelected([changingValue]);
     }
@@ -235,7 +255,6 @@ export const useTypeahead = ({
     };
 
   return {
-    useFormResult,
     isOpen,
     optionsWithKey,
     selectedItems: selected,
@@ -246,6 +265,12 @@ export const useTypeahead = ({
     typeaheadId,
     triggerRef,
     className,
+    startIcon,
+    endIcon,
+    name,
+    inputName,
+    register,
+    setValue,
     handleChange,
     handleOpenChange,
     handleInputClick,

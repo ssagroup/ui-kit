@@ -1,6 +1,8 @@
 import React from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import type { Meta, StoryObj } from '@storybook/react';
-
+import Icon from '@components/Icon';
+import Button from '@components/Button';
 import { Typeahead } from '.';
 import { TypeaheadProps } from './types';
 import * as S from './styles';
@@ -55,49 +57,76 @@ export default {
 } as Meta<typeof Typeahead>;
 
 export const Basic: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { handleSubmit, register, setValue } = useFormResult;
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
   return (
-    <Typeahead
-      initialSelectedItems={[items[2].id]}
-      isDisabled={args.isDisabled}
-      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
-      {items.map(({ value, id }) => (
-        <S.TypeaheadOption key={id} value={id} label={value}>
-          {value}
-        </S.TypeaheadOption>
-      ))}
-    </Typeahead>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Typeahead
+        initialSelectedItems={[items[2].id]}
+        isDisabled={args.isDisabled}
+        name={'typeahead-dropdown'}
+        // useFormResult={useFormResult}
+        register={register}
+        setValue={setValue}
+        renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+        {items.map(({ value, id }) => (
+          <S.TypeaheadOption key={id} value={id} label={value}>
+            {value}
+          </S.TypeaheadOption>
+        ))}
+      </Typeahead>
+      <Button type="submit">Submit</Button>
+    </form>
   );
 };
 
 Basic.args = { isDisabled: false };
 
 export const Multiple: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { handleSubmit, register, setValue } = useFormResult;
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
   return (
-    <Typeahead
-      initialSelectedItems={[items[2].id, items[1].id]}
-      isMultiple
-      isDisabled={args.isDisabled}
-      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
-      {items.map(({ value, id }) => (
-        <S.TypeaheadOption key={id} value={id} label={value}>
-          {value}
-        </S.TypeaheadOption>
-      ))}
-    </Typeahead>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Typeahead
+        initialSelectedItems={[items[2].id, items[1].id]}
+        isMultiple
+        isDisabled={args.isDisabled}
+        // useFormResult={useFormResult}
+        register={register}
+        setValue={setValue}
+        name={'typeahead-dropdown'}
+        renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+        {items.map(({ value, id }) => (
+          <S.TypeaheadOption key={id} value={id} label={value}>
+            {value}
+          </S.TypeaheadOption>
+        ))}
+      </Typeahead>
+      <Button type="submit">Submit</Button>
+    </form>
   );
 };
 
 Multiple.args = { isDisabled: false };
 
-export const WithImage: StoryObj = (args: TypeaheadProps) => {
+export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { register, setValue } = useFormResult;
   return (
     <Typeahead
       initialSelectedItems={[items[2].id, items[1].id]}
       isMultiple
       isDisabled={args.isDisabled}
+      name={'typeahead-dropdown'}
+      startIcon={<Icon name="user" size={16} />}
       css={{
         width: 500,
       }}
+      // useFormResult={useFormResult}
+      register={register}
+      setValue={setValue}
       renderOption={({ label, input }) => (
         <React.Fragment>
           <TypeaheadItemImage src={`data:image/png;base64,${image}`} />
@@ -114,4 +143,4 @@ export const WithImage: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-WithImage.args = { isDisabled: false };
+WithImageAndStartIcon.args = { isDisabled: false };

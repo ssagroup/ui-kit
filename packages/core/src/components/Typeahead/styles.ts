@@ -22,9 +22,12 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   padding: 8px 16px;
   border: none;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
+  gap: 8px;
+  padding: 12px;
+  height: 40px;
   &:hover {
-    background: ${({ theme }) => theme.colors.greyLighter};
+    background: rgba(72, 125, 225, 0.06);
   }
 `;
 
@@ -37,7 +40,7 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   min-height: 44px;
   height: auto;
   background: #fff;
-  gap: 3px;
+  gap: 8px;
   padding: 5px 8px;
   width: 200px;
   flex-wrap: wrap;
@@ -55,7 +58,7 @@ export const TypeaheadInput = css`
   &.typeahead-input {
     border: none;
     border-radius: 0;
-    height: 34px;
+    height: 32px;
     cursor: pointer;
     padding: 0;
     background: transparent;
@@ -78,34 +81,39 @@ export const TypeaheadInputsGroupWrapper = css`
 `;
 
 export const TypeaheadInputWrapper = css`
-  height: 34px;
+  height: 32px;
   z-index: 1;
   background: transparent;
 `;
 
 export const TypeaheadItem = styled.div`
   display: flex;
-  background: ${({ theme }) => theme.colors.greyLighter};
-  border-radius: 12px;
+  gap: 6px;
+  background: ${({ theme }) => theme.colors.greyLighter40};
+  border-radius: 24px;
+  border: 1px solid #c3c5cc;
   color: ${({ theme }) => theme.colors.greyDarker};
   font-weight: 500;
-  font-size: 13px;
-  height: 34px;
+  font-size: 14px;
+  height: 32px;
   align-items: center;
-  padding: 4px 8px;
+  padding: 6px;
   user-select: none;
 `;
 
 export const TypeaheadItemLabel = styled.div`
+  font-size: 14px;
+  font-weight: 500;
   display: flex;
+  gap: 6px;
   align-items: center;
-  margin-right: 4px;
   cursor: default;
 `;
 
 export const TypeaheadItemCross = styled(Button)`
   background: none;
   padding: 0;
+  padding-right: 5;
   &:active,
   &:focus,
   &:hover {

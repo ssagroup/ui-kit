@@ -15,7 +15,9 @@ export const MultipleTrigger = () => {
       className={context.className}
       isOpen={context.isOpen}
       aria-labelledby={`typeahead-label-${context.typeaheadId}`}
-      aria-controls={`typeahead-popup-${context.typeaheadId}`}>
+      aria-controls={`typeahead-popup-${context.typeaheadId}`}
+      startIcon={context.startIcon}
+      endIcon={context.endIcon}>
       {Object.values(context.optionsWithKey).length > 0 &&
         context.selectedItems.map((selectedItem, index) => {
           const currentOption = context.optionsWithKey[selectedItem];
@@ -34,8 +36,13 @@ export const MultipleTrigger = () => {
                 endIcon={
                   <Icon
                     name="cross"
-                    size={10}
+                    size={14}
                     color={theme.colors.greyDarker}
+                    css={{
+                      '& path': {
+                        strokeWidth: 1,
+                      },
+                    }}
                   />
                 }
                 onClick={context.handleRemoveSelectedClick(selectedItem)}
@@ -45,7 +52,7 @@ export const MultipleTrigger = () => {
         })}
       <Wrapper className={S.TypeaheadInputsGroupWrapper}>
         <Input
-          name="typeahead-input"
+          name={context.inputName}
           status={'custom'}
           inputProps={{
             onClick: context.handleInputClick,
@@ -53,7 +60,6 @@ export const MultipleTrigger = () => {
             autoComplete: 'off',
             className: ['typeahead-input', S.TypeaheadInput].join(' '),
           }}
-          register={context.useFormResult.register}
           wrapperClassName={S.TypeaheadInputWrapper}
           ref={context.inputRef}
         />
@@ -67,6 +73,13 @@ export const MultipleTrigger = () => {
             S.TypeaheadInput,
             S.TypeaheadInputPlaceholder,
           ].join(' ')}
+        />
+        <input
+          type="hidden"
+          aria-hidden
+          readOnly
+          value={context.selectedItems as string[]}
+          {...context.register?.(context.name)}
         />
       </Wrapper>
     </S.TypeaheadTrigger>

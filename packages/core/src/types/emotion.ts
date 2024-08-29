@@ -14,6 +14,7 @@ type Colors = MakeColors<
     'white30',
     'dark',
     'greyLighter',
+    'greyLighter40',
     'greySelectedMenuItem',
     'greyFocused',
     'greyFocused40',

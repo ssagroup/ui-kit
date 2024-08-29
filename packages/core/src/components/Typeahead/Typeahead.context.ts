@@ -12,7 +12,16 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   isOpen: false,
   items: [],
   className: undefined,
-  useFormResult: {} as any,
+  startIcon: null,
+  endIcon: null,
+  name: '',
+  inputName: '',
+  setValue: () => {
+    /* no-op */
+  },
+  register: () => {
+    return {} as any;
+  },
   handleChange: () => {
     /* no-op */
   },

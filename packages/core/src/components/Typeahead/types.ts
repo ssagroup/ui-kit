@@ -1,10 +1,16 @@
 import { CommonProps } from '@global-types/emotion';
+import {
+  FieldError,
+  FieldValues,
+  UseFormReturn,
+  UseFormSetValue,
+} from 'react-hook-form';
 
 export type TypeaheadValue = string | number;
 
 export type TypeaheadOptionProps = Record<string, TypeaheadValue>;
 
-export type TypeaheadProps = {
+export interface TypeaheadProps {
   initialSelectedItems?: Array<TypeaheadValue>;
   isMultiple?: boolean;
   isDisabled?: boolean;
@@ -12,13 +18,23 @@ export type TypeaheadProps = {
   className?: string;
   optionsClassname?: string;
   isOpen?: boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  name?: string;
+  label?: string;
+  helperText?: string;
+  errors?: FieldError;
+  success?: boolean;
+  validationSchema?: Record<string, unknown>;
+  setValue?: UseFormSetValue<FieldValues>;
+  register?: UseFormReturn['register'];
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
   renderOption?: (data: {
     value: string | number;
     input: string;
     label: string;
   }) => React.ReactNode;
-};
+}
 
 export interface TypeaheadItemsListProps extends CommonProps {
   ariaLabelledby?: string;
