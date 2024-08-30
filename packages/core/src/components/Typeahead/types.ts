@@ -36,6 +36,26 @@ export interface TypeaheadProps {
   }) => React.ReactNode;
 }
 
+export type UseTypeaheadProps = Pick<
+  TypeaheadProps,
+  | 'initialSelectedItems'
+  | 'isDisabled'
+  | 'children'
+  | 'isMultiple'
+  | 'onChange'
+  | 'renderOption'
+  | 'isOpen'
+  | 'className'
+  | 'startIcon'
+  | 'endIcon'
+  | 'name'
+  | 'register'
+  | 'setValue'
+  | 'validationSchema'
+  | 'errors'
+  | 'success'
+>;
+
 export interface TypeaheadItemsListProps extends CommonProps {
   ariaLabelledby?: string;
   id?: string;

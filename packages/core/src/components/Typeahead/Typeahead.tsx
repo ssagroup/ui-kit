@@ -3,13 +3,12 @@ import {
   PopoverContent,
   PopoverDescription,
 } from '@components/Popover';
-import Label from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 import Wrapper from '@components/Wrapper';
+import Label from '@components/Label';
 import { TypeaheadContext } from './Typeahead.context';
-import { TypeaheadOptions } from './TypeaheadOptions';
 import { useTypeahead } from './useTypeahead';
-import { TypeaheadTrigger } from './components';
+import { TypeaheadOptions, TypeaheadTrigger } from './components';
 import { TypeaheadProps } from './types';
 
 // TODO: Let's check:
@@ -25,31 +24,38 @@ import { TypeaheadProps } from './types';
  * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  **/
 
-// TODO: name
-// TODO: register?
 /*
 
 - add tests
 - add storybook
-- add possibility to customize output
-- add the possibility to customize tokens output
---- renderMultipleToken?
-- add result highlighting
-- add "name"
-- add "register"
-- add "label (title)"
++ add possibility to customize output
++ add the possibility to customize tokens output
++++ renderMultipleToken?
++ add result highlighting
++ add "name"
++ add "register"
++ add "label (title)"
 - add disabled state + story
-- add success state + story
-- add error state + story
++ add success state + story
++ add error state + story
 - add cross icon + action
-- do we need highlighting here?
++ do we need highlighting here?
 
-- inputName ---- check - when submit - get rid!
++ helper text?
+
++ inputName ---- check - when submit - get rid!
+
+- do we need all options for the context?
+
+// TODO: WithError => remove an error on choosing?
+// TODO: add disabled story
+// TODO: use colors from Figma for the borders?..
+// +++ Dynamically changed items
 */
 export const Typeahead = ({
   name = 'typeahead-search',
   label,
-  initialSelectedItems = [],
+  initialSelectedItems,
   isOpen,
   isDisabled,
   isMultiple,
@@ -77,12 +83,15 @@ export const Typeahead = ({
     className,
     startIcon,
     endIcon,
+    errors,
+    success,
+    validationSchema,
     setValue,
     register,
     onChange,
     renderOption,
   });
-  const status = success ? 'success' : errors ? 'error' : 'basic';
+
   return (
     <TypeaheadContext.Provider value={hookResult}>
       <Wrapper
@@ -90,7 +99,7 @@ export const Typeahead = ({
           flexDirection: 'column',
           alignItems: 'flex-start',
         }}>
-        <Label htmlFor={`typeahead-${name}`}>{label}</Label>
+        <Label htmlFor={hookResult.inputName}>{label}</Label>
         <Popover
           floatingOptions={{
             onOpenChange: hookResult.handleOpenChange,
@@ -101,13 +110,18 @@ export const Typeahead = ({
             css={{ width: hookResult.triggerRef.current?.clientWidth }}
             isFocusManagerDisabled>
             <PopoverDescription css={{ width: '100%' }}>
-              <TypeaheadOptions className={optionsClassname}>
-                {hookResult.items}
-              </TypeaheadOptions>
+              {hookResult.isOpen ? (
+                <TypeaheadOptions className={optionsClassname}>
+                  {children}
+                </TypeaheadOptions>
+              ) : null}
             </PopoverDescription>
           </PopoverContent>
         </Popover>
-        <FormHelperText role="status" status={status} disabled={isDisabled}>
+        <FormHelperText
+          role="status"
+          status={hookResult.status}
+          disabled={isDisabled}>
           {errors ? errors?.message : helperText}
         </FormHelperText>
       </Wrapper>

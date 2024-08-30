@@ -24,6 +24,7 @@ const main: Theme = {
     greyDarker: 'rgba(43, 45, 49, 1)', // #2b2d31
     greyDarker60: 'rgba(43, 45, 49, 0.6)', // #2b2d31
     greyDarker80: 'rgba(43, 45, 49, 0.8)', // #2b2d31
+    greyDarker40: 'rgba(43, 45, 49, 0.4)', // #2b2d31
     greyDarker14: 'rgba(43, 45, 49, 0.14)', // #2b2d31
     greyDark: 'rgb(64, 72, 83)', // #404853
     greyDisabled: 'rgba(85, 87, 90, 1)', // #55575a

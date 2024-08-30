@@ -1,2 +1,2 @@
 export * from './Typeahead';
-export * from './TypeaheadOptions';
+export * from './components/TypeaheadOptions';

@@ -1,7 +1,8 @@
 import React, { BaseSyntheticEvent } from 'react';
-import { TypeaheadItemsListProps } from './types';
-import { useTypeaheadContext } from './Typeahead.context';
-import * as S from './styles';
+import { NoOptions } from './NoOptions';
+import { TypeaheadItemsListProps } from '../types';
+import { useTypeaheadContext } from '../Typeahead.context';
+import * as S from '../styles';
 
 export const TypeaheadOptions = ({
   ariaLabelledby,
@@ -35,7 +36,7 @@ export const TypeaheadOptions = ({
         ...child.props,
         isActive,
         isMultiple,
-        key: `${child.props.key}-${id}-${index}`,
+        key: `${child.key}-${id}-${index}`,
         id,
         'aria-selected': isActive,
         'aria-labelledby': ariaLabelledby,
@@ -49,9 +50,7 @@ export const TypeaheadOptions = ({
   });
 
   if (options.length === 0) {
-    options.push(
-      <S.TypeaheadOption key={'no-items'}>{noItemsMessage}</S.TypeaheadOption>,
-    );
+    options.push(<NoOptions key={'no-items'}>{noItemsMessage}</NoOptions>);
   }
 
   return <S.TypeaheadOptionsBase>{options}</S.TypeaheadOptionsBase>;

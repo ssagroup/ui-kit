@@ -1,5 +1,3 @@
-import { css } from '@emotion/css';
-import Wrapper from '@components/Wrapper';
 import Input from '@components/Input';
 import { useTypeaheadContext } from '../Typeahead.context';
 import * as S from '../styles';
@@ -13,25 +11,21 @@ export const SingleTrigger = () => {
       ref={context.triggerRef}
       className={context.className}
       isOpen={context.isOpen}
+      status={context.status}
       aria-labelledby={`typeahead-label-${context.typeaheadId}`}
       aria-controls={`typeahead-popup-${context.typeaheadId}`}>
-      <Wrapper
-        className={[
-          css`
-            flex-direction: column !important;
-          `,
-          S.TypeaheadInputsGroupWrapper,
-        ].join(' ')}>
+      <S.TypeaheadInputsGroupWrapper isOpen={context.isOpen}>
         <Input
           name={context.inputName}
           status={'custom'}
           inputProps={{
             onClick: context.handleInputClick,
             onKeyDown: context.handleInputKeyDown,
+            onChange: context.handleInputChange,
+            value: context.inputValue,
             autoComplete: 'off',
             className: ['typeahead-input', S.TypeaheadInput].join(' '),
           }}
-          register={context.register}
           wrapperClassName={S.TypeaheadInputWrapper}
           ref={context.inputRef}
         />
@@ -51,9 +45,9 @@ export const SingleTrigger = () => {
           aria-hidden
           readOnly
           value={(context.selectedItems[0] || '') as string | undefined}
-          {...context.register?.(context.name)}
+          {...context.register?.(context.name, context.validationSchema)}
         />
-      </Wrapper>
+      </S.TypeaheadInputsGroupWrapper>
     </S.TypeaheadTrigger>
   );
 };

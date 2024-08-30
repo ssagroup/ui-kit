@@ -1,6 +1,5 @@
 import Icon from '@components/Icon';
 import { useTheme } from '@emotion/react';
-import Wrapper from '@components/Wrapper';
 import Input from '@components/Input';
 import * as S from '../styles';
 import { useTypeaheadContext } from '../Typeahead.context';
@@ -14,6 +13,7 @@ export const MultipleTrigger = () => {
       ref={context.triggerRef}
       className={context.className}
       isOpen={context.isOpen}
+      status={context.status}
       aria-labelledby={`typeahead-label-${context.typeaheadId}`}
       aria-controls={`typeahead-popup-${context.typeaheadId}`}
       startIcon={context.startIcon}
@@ -50,13 +50,15 @@ export const MultipleTrigger = () => {
             </S.TypeaheadItem>
           );
         })}
-      <Wrapper className={S.TypeaheadInputsGroupWrapper}>
+      <S.TypeaheadInputsGroupWrapper isOpen={context.isOpen}>
         <Input
           name={context.inputName}
           status={'custom'}
           inputProps={{
             onClick: context.handleInputClick,
             onKeyDown: context.handleInputKeyDown,
+            onChange: context.handleInputChange,
+            value: context.inputValue,
             autoComplete: 'off',
             className: ['typeahead-input', S.TypeaheadInput].join(' '),
           }}
@@ -79,9 +81,9 @@ export const MultipleTrigger = () => {
           aria-hidden
           readOnly
           value={context.selectedItems as string[]}
-          {...context.register?.(context.name)}
+          {...context.register?.(context.name, context.validationSchema)}
         />
-      </Wrapper>
+      </S.TypeaheadInputsGroupWrapper>
     </S.TypeaheadTrigger>
   );
 };

@@ -2,6 +2,8 @@ import Button from '@components/Button';
 import { PopoverTrigger } from '@components/Popover';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
+import Wrapper from '@components/Wrapper';
+import { useTypeahead } from './useTypeahead';
 import { TypeaheadItemProps } from './types';
 
 export const TypeaheadOptionsBase = styled.ul`
@@ -31,29 +33,6 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   }
 `;
 
-export const TypeaheadTrigger = styled(PopoverTrigger)<{
-  isOpen: boolean;
-}>`
-  position: relative;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.greyDropdownMain};
-  min-height: 44px;
-  height: auto;
-  background: #fff;
-  gap: 8px;
-  padding: 5px 8px;
-  width: 200px;
-  flex-wrap: wrap;
-  border: ${({ isOpen }) => isOpen && '1px solid rgba(43, 45, 49, 0.6)'};
-  &:active,
-  &:focus,
-  &:hover {
-    background: #fff;
-    box-shadow: none;
-    border: 0.67 solid rgb(73, 80, 87);
-  }
-`;
-
 export const TypeaheadInput = css`
   &.typeahead-input {
     border: none;
@@ -73,11 +52,6 @@ export const TypeaheadInputPlaceholder = css`
   font-size: 0.875rem;
   line-height: 1rem;
   color: rgba(0, 0, 0, 0.54);
-`;
-
-export const TypeaheadInputsGroupWrapper = css`
-  position: relative;
-  flex: 1 1 0%;
 `;
 
 export const TypeaheadInputWrapper = css`
@@ -119,5 +93,50 @@ export const TypeaheadItemCross = styled(Button)`
   &:hover {
     background: none;
     box-shadow: none;
+  }
+`;
+
+export const TypeaheadInputsGroupWrapper = styled(Wrapper)<{
+  isOpen: boolean;
+}>`
+  position: relative;
+  flex: 1 1 0%;
+  min-width: ${({ isOpen }) => (isOpen ? '50px' : 'auto')};
+  flex-direction: column !important;
+`;
+
+export const TypeaheadTrigger = styled(PopoverTrigger)<{
+  isOpen: boolean;
+  status: ReturnType<typeof useTypeahead>['status'];
+}>`
+  position: relative;
+  border-radius: 8px;
+  border: 1px solid
+    ${({ status, theme }) =>
+      status === 'basic'
+        ? theme.colors.grey
+        : status === 'error'
+        ? theme.colors.red
+        : theme.colors.greenLighter};
+  min-height: 44px;
+  height: auto;
+  background: #fff;
+  gap: 8px;
+  padding: 5px 8px;
+  width: 200px;
+  flex-wrap: wrap;
+  border-color: ${({ isOpen, theme }) => isOpen && theme.colors.blueRoyal};
+  &:active,
+  &:focus,
+  &:hover {
+    background: #fff;
+    box-shadow: none;
+  }
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.greyDarker80};
+  }
+  &:focus {
+    border-color: ${({ isOpen, theme }) =>
+      isOpen ? theme.colors.blueRoyal : theme.colors.greyDarker80};
   }
 `;

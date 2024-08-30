@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { UseTypeaheadResult } from './useTypeahead';
 
+// TODO: leave there only needed data!?
 export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   optionsWithKey: {},
   isMultiple: false,
@@ -10,12 +11,14 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   inputRef: { current: null },
   triggerRef: { current: null },
   isOpen: false,
-  items: [],
   className: undefined,
   startIcon: null,
   endIcon: null,
   name: '',
   inputName: '',
+  inputValue: '',
+  validationSchema: {},
+  status: 'basic',
   setValue: () => {
     /* no-op */
   },
@@ -29,6 +32,9 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
     /* no-op */
   },
   handleInputKeyDown: () => {
+    /* no-op */
+  },
+  handleInputChange: () => {
     /* no-op */
   },
   handleOpenChange: () => {

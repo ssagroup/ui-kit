@@ -1,8 +1,14 @@
-import React from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import {
+  FieldError,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import type { Meta, StoryObj } from '@storybook/react';
 import Icon from '@components/Icon';
 import Button from '@components/Button';
+import Wrapper from '@components/Wrapper';
 import { Typeahead } from '.';
 import { TypeaheadProps } from './types';
 import * as S from './styles';
@@ -44,14 +50,7 @@ export default {
   },
   decorators: [
     (Story, { args }) => {
-      const noop = () => {
-        /* no-op */
-      };
-      return (
-        <div style={{ paddingBottom: 200 }}>
-          {Story({ ...args, onChange: noop })}
-        </div>
-      );
+      return <div style={{ paddingBottom: 200 }}>{Story({ ...args })}</div>;
     },
   ],
 } as Meta<typeof Typeahead>;
@@ -66,7 +65,7 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
         initialSelectedItems={[items[2].id]}
         isDisabled={args.isDisabled}
         name={'typeahead-dropdown'}
-        // useFormResult={useFormResult}
+        label="Label"
         register={register}
         setValue={setValue}
         renderOption={({ label, input }) => highlightInputMatch(label, input)}>
@@ -93,6 +92,7 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
         initialSelectedItems={[items[2].id, items[1].id]}
         isMultiple
         isDisabled={args.isDisabled}
+        label="Label"
         // useFormResult={useFormResult}
         register={register}
         setValue={setValue}
@@ -120,6 +120,7 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
       isMultiple
       isDisabled={args.isDisabled}
       name={'typeahead-dropdown'}
+      label="Label"
       startIcon={<Icon name="user" size={16} />}
       css={{
         width: 500,
@@ -144,3 +145,141 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
 };
 
 WithImageAndStartIcon.args = { isDisabled: false };
+
+const mockError: FieldError = {
+  type: 'required',
+  message: 'Required field',
+};
+
+// TODO: remove an error on choosing?
+// TODO: add disabled story
+export const WithError: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { register, setValue } = useFormResult;
+  return (
+    <Typeahead
+      initialSelectedItems={[]}
+      isDisabled={args.isDisabled}
+      name={'typeahead-dropdown'}
+      label="Label"
+      register={register}
+      setValue={setValue}
+      validationSchema={{
+        required: 'Required',
+      }}
+      errors={mockError}
+      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+      {items.map(({ value, id }) => (
+        <S.TypeaheadOption key={id} value={id} label={value}>
+          {value}
+        </S.TypeaheadOption>
+      ))}
+    </Typeahead>
+  );
+};
+
+WithError.args = { isDisabled: false };
+
+export const WithSuccess: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { register, setValue } = useFormResult;
+  return (
+    <Typeahead
+      initialSelectedItems={[items[2].id]}
+      isDisabled={args.isDisabled}
+      name={'typeahead-dropdown'}
+      label="Label"
+      register={register}
+      setValue={setValue}
+      validationSchema={{
+        required: 'Required',
+      }}
+      success
+      helperText="Helper text"
+      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+      {items.map(({ value, id }) => (
+        <S.TypeaheadOption key={id} value={id} label={value}>
+          {value}
+        </S.TypeaheadOption>
+      ))}
+    </Typeahead>
+  );
+};
+
+WithSuccess.args = { isDisabled: false };
+
+export const Opened: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { register, setValue } = useFormResult;
+  return (
+    <Typeahead
+      isDisabled={args.isDisabled}
+      name={'typeahead-dropdown'}
+      label="Label"
+      isOpen
+      register={register}
+      setValue={setValue}
+      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+      {items.map(({ value, id }) => (
+        <S.TypeaheadOption key={id} value={id} label={value}>
+          {value}
+        </S.TypeaheadOption>
+      ))}
+    </Typeahead>
+  );
+};
+
+Opened.args = { isDisabled: false };
+
+export const DynamicallyChangedItems: StoryObj = (args: TypeaheadProps) => {
+  const [localItems, setLocalItems] = useState(items);
+
+  const handleUpdate = () => {
+    setLocalItems((state) => [
+      ...state,
+      {
+        id: state[state.length - 1].id + 1,
+        value: `New item #${state[state.length - 1].id + 1}`,
+      },
+    ]);
+  };
+
+  const useFormResult = useForm<FieldValues>();
+  const { handleSubmit, register, setValue } = useFormResult;
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Wrapper
+        css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
+        <Typeahead
+          initialSelectedItems={[localItems[2].id]}
+          isDisabled={args.isDisabled}
+          isMultiple
+          name={'typeahead-dropdown'}
+          label="Label"
+          register={register}
+          setValue={setValue}
+          validationSchema={{
+            required: 'Required',
+          }}
+          renderOption={({ label, input }) =>
+            highlightInputMatch(label, input)
+          }>
+          {localItems.map(({ value, id }) => (
+            <S.TypeaheadOption key={id} value={id} label={value}>
+              {value}
+            </S.TypeaheadOption>
+          ))}
+        </Typeahead>
+        <Button variant="primary" onClick={handleUpdate}>
+          Update items
+        </Button>
+        <Button type="submit" variant="info">
+          Submit
+        </Button>
+      </Wrapper>
+    </form>
+  );
+};
+
+DynamicallyChangedItems.args = { isDisabled: false };
