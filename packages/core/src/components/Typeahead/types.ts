@@ -20,12 +20,15 @@ export interface TypeaheadProps {
   isOpen?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
+  startIconClassName?: string;
+  endIconClassName?: string;
   name?: string;
   label?: string;
   helperText?: string;
   errors?: FieldError;
   success?: boolean;
   validationSchema?: Record<string, unknown>;
+  placeholder?: string;
   setValue?: UseFormSetValue<FieldValues>;
   register?: UseFormReturn['register'];
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
@@ -48,12 +51,15 @@ export type UseTypeaheadProps = Pick<
   | 'className'
   | 'startIcon'
   | 'endIcon'
+  | 'startIconClassName'
+  | 'endIconClassName'
   | 'name'
   | 'register'
   | 'setValue'
   | 'validationSchema'
   | 'errors'
   | 'success'
+  | 'placeholder'
 >;
 
 export interface TypeaheadItemsListProps extends CommonProps {
@@ -64,11 +70,9 @@ export interface TypeaheadItemsListProps extends CommonProps {
 }
 
 export interface TypeaheadItemProps extends CommonProps {
-  isActive?: boolean; // TODO: check
-  isMultiple?: boolean; // TODO: check
-  isDisabled?: boolean; // TODO: check
-  noHover?: boolean; // TODO: check
-  value?: string | number | boolean;
+  isActive?: boolean;
+  isDisabled?: boolean;
+  value?: string | number;
   label?: string | number;
   children?: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;

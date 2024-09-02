@@ -6,18 +6,12 @@ export const SingleTrigger = () => {
   const context = useTypeaheadContext();
 
   return (
-    <S.TypeaheadTrigger
-      as="div"
-      ref={context.triggerRef}
-      className={context.className}
-      isOpen={context.isOpen}
-      status={context.status}
-      aria-labelledby={`typeahead-label-${context.typeaheadId}`}
-      aria-controls={`typeahead-popup-${context.typeaheadId}`}>
-      <S.TypeaheadInputsGroupWrapper isOpen={context.isOpen}>
+    <S.TypeaheadInputsGroupWrapper isOpen={context.isOpen}>
+      {!context.isDisabled && (
         <Input
           name={context.inputName}
           status={'custom'}
+          disabled={context.isDisabled}
           inputProps={{
             onClick: context.handleInputClick,
             onKeyDown: context.handleInputKeyDown,
@@ -29,25 +23,26 @@ export const SingleTrigger = () => {
           wrapperClassName={S.TypeaheadInputWrapper}
           ref={context.inputRef}
         />
-        <input
-          type="text"
-          aria-hidden
-          readOnly
-          value={context.firstSuggestion}
-          className={[
-            'typeahead-input',
-            S.TypeaheadInput,
-            S.TypeaheadInputPlaceholder,
-          ].join(' ')}
-        />
-        <input
-          type="hidden"
-          aria-hidden
-          readOnly
-          value={(context.selectedItems[0] || '') as string | undefined}
-          {...context.register?.(context.name, context.validationSchema)}
-        />
-      </S.TypeaheadInputsGroupWrapper>
-    </S.TypeaheadTrigger>
+      )}
+      <input
+        type="text"
+        aria-hidden
+        readOnly
+        value={context.firstSuggestion}
+        placeholder={context.placeholder}
+        className={[
+          'typeahead-input',
+          S.TypeaheadInput,
+          S.TypeaheadInputPlaceholder,
+        ].join(' ')}
+      />
+      <input
+        type="hidden"
+        aria-hidden
+        readOnly
+        value={(context.selectedItems[0] || '') as string | undefined}
+        {...context.register?.(context.name, context.validationSchema)}
+      />
+    </S.TypeaheadInputsGroupWrapper>
   );
 };

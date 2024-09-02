@@ -1,11 +1,12 @@
 import React, {
+  BaseSyntheticEvent,
   MouseEventHandler,
   useEffect,
   useId,
   useRef,
   useState,
 } from 'react';
-import { pathOr } from '@ssa-ui-kit/utils';
+import { propOr } from '@ssa-ui-kit/utils';
 import { UseTypeaheadProps } from './types';
 
 export const useTypeahead = ({
@@ -18,9 +19,12 @@ export const useTypeahead = ({
   className,
   startIcon,
   endIcon,
+  startIconClassName,
+  endIconClassName,
   validationSchema,
   errors,
   success,
+  placeholder,
   register,
   setValue,
   onChange,
@@ -93,61 +97,32 @@ export const useTypeahead = ({
   }, [initialSelectedItems, children]);
 
   useEffect(() => {
-    const childrenArray = React.Children.toArray(children).filter((child) => {
-      const label = pathOr<Record<string, any>, string>('', ['props', 'label'])(
-        child as unknown as Record<string, any>,
-      );
-      return (
-        child &&
-        label.toLowerCase().includes(`${inputValue || ''}`.toLowerCase())
-      );
-    });
-    const childItems = (childrenArray as React.ReactElement[]).map(
-      (child, index) => {
-        const { id, label } = child.props;
-        return React.cloneElement(child, {
-          index,
-          ...child.props,
-          children: renderOption
-            ? renderOption({ value: id, input: inputValue || '', label })
-            : child.props.children,
-        });
-      },
-    );
-    setItems(childItems);
-  }, [inputValue, optionsWithKey]);
-
-  useEffect(() => {
-    if (inputValue) {
-      const newFirstSuggestion = items?.find((item) => {
-        const label = pathOr<Record<string, any>, string>('', [
-          'props',
-          'label',
-        ])(item as Record<string, any>);
-        const value = pathOr<Record<string, any>, string>('', [
-          'props',
-          'value',
-        ])(item as Record<string, any>);
-        return (
-          label.toLowerCase().startsWith(inputValue.toLowerCase()) &&
-          (isMultiple ? !selected.includes(value) : true)
-        );
+    const childrenArray = React.Children.toArray(children).filter(Boolean);
+    const filteredOptions = [...childrenArray] as React.ReactElement[];
+    const childItems = filteredOptions.map((child, index) => {
+      const { id, label, isDisabled } = child.props;
+      const isActive = selected.includes(child.props.value);
+      return React.cloneElement(child, {
+        index,
+        ...child.props,
+        isActive,
+        isDisabled,
+        id,
+        'aria-selected': isActive,
+        'aria-labelledby': `typeahead-label-${name}`,
+        onClick: (event: BaseSyntheticEvent) => {
+          event.preventDefault();
+          if (!isDisabled) {
+            handleChange(child.props.value);
+          }
+        },
+        children: renderOption
+          ? renderOption({ value: id, input: inputValue || '', label })
+          : child.props.children || child.props.label || child.props.value,
       });
-      const firstSuggestionLabel = pathOr<Record<string, any>, string>('', [
-        'props',
-        'label',
-      ])(newFirstSuggestion as unknown as Record<string, any>);
-      const humanSuggestionLabel = inputValue.concat(
-        firstSuggestionLabel.slice(inputValue.length),
-      );
-      setFirstSuggestion(humanSuggestionLabel);
-    } else {
-      setFirstSuggestion('');
-      if (isMultiple) {
-        setInputValue('');
-      }
-    }
-  }, [inputValue, items, selected]);
+    });
+    setItems(childItems);
+  }, [inputValue, optionsWithKey, selected]);
 
   useEffect(() => {
     if (!isMultiple && Object.keys(optionsWithKey).length) {
@@ -161,7 +136,7 @@ export const useTypeahead = ({
         setSelected([foundItem?.value]);
       }
     }
-  }, [inputValue, optionsWithKey, selected]);
+  }, [optionsWithKey, inputValue]);
 
   useEffect(() => {
     if (!isMultiple && selected.length && Object.keys(optionsWithKey).length) {
@@ -173,11 +148,38 @@ export const useTypeahead = ({
     }
   }, [selected, optionsWithKey]);
 
+  useEffect(() => {
+    if (inputValue) {
+      const newFirstSuggestion = Object.values(optionsWithKey)?.find((item) => {
+        const label = propOr<Record<string, any>, string>(
+          '',
+          'label',
+        )(item as Record<string, any>);
+        return label.toLowerCase().startsWith(inputValue.toLowerCase());
+      });
+      const firstSuggestionLabel = propOr<Record<string, any>, string>(
+        '',
+        'label',
+      )(newFirstSuggestion as unknown as Record<string, any>);
+      const humanSuggestionLabel = inputValue.concat(
+        firstSuggestionLabel.slice(inputValue.length),
+      );
+      setFirstSuggestion(humanSuggestionLabel);
+    } else {
+      setFirstSuggestion('');
+      if (isMultiple) {
+        setInputValue('');
+      }
+    }
+  }, [inputValue, items, selected]);
+
   const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
+    if (!isDisabled) {
+      setIsOpen(open);
+    }
   };
 
-  const handleChange = (changingValue: string | number) => {
+  const handleChange = (changingValue?: string | number) => {
     if (isDisabled || changingValue === undefined) {
       return;
     }
@@ -199,25 +201,41 @@ export const useTypeahead = ({
     onChange && onChange(changingValue, isNewSelected);
   };
 
+  const handleClearAll = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (isDisabled) {
+      return;
+    }
+    event.stopPropagation();
+    event.preventDefault();
+    setSelected([]);
+    setInputValue('');
+    setIsOpen(false);
+    setFirstSuggestion('');
+    inputRef.current?.focus();
+  };
+
   const handleInputClick: React.MouseEventHandler<HTMLInputElement> = (
     event,
   ) => {
+    if (!isDisabled) {
+      inputRef.current?.focus();
+      setIsOpen(true);
+    }
     event.stopPropagation();
     event.preventDefault();
-    setIsOpen(true);
   };
 
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     event,
   ) => {
     if (event.code === 'Tab' && firstSuggestion) {
-      const foundItem = items?.find(
+      const foundItem = Object.values(optionsWithKey).find(
         (item) =>
-          item.props?.label.toLowerCase() === firstSuggestion.toLowerCase(),
+          `${item.label}`.toLowerCase() === firstSuggestion.toLowerCase(),
       );
-      handleChange(foundItem?.props.value);
+      handleChange(foundItem?.value);
       if (foundItem) {
-        setInputValue(foundItem.props.label);
+        setInputValue(`${foundItem?.label}`);
       }
       event.preventDefault();
       return false;
@@ -258,6 +276,7 @@ export const useTypeahead = ({
 
   return {
     isOpen,
+    isDisabled,
     optionsWithKey,
     selectedItems: selected,
     inputRef,
@@ -268,14 +287,19 @@ export const useTypeahead = ({
     className,
     startIcon,
     endIcon,
+    startIconClassName,
+    endIconClassName,
     name,
     inputName,
     inputValue,
     validationSchema,
     status,
+    placeholder,
+    options: items,
     register,
     setValue,
     handleChange,
+    handleClearAll,
     handleOpenChange,
     handleInputChange,
     handleInputClick,

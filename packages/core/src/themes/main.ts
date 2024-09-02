@@ -105,6 +105,7 @@ const main: Theme = {
     blueButtonHoverGradientTo: 'rgb(14, 75, 193)', //#0e4bc1
     blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
     blueRoyal: 'rgba(72, 125, 225, 1)', //#487de1
+    blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
   },
   mediaQueries: {
     xs: '@media screen and (max-width: 389px)',

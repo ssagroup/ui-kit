@@ -28,6 +28,8 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   gap: 8px;
   padding: 12px;
   height: 40px;
+  background: ${({ isActive, theme }) =>
+    isActive ? theme.colors.blueRoyal12 : 'none'};
   &:hover {
     background: rgba(72, 125, 225, 0.06);
   }
@@ -41,32 +43,49 @@ export const TypeaheadInput = css`
     cursor: pointer;
     padding: 0;
     background: transparent;
+    text-indent: 8px;
+    &:active,
+    &:focus {
+      min-width: 100%;
+    }
   }
 `;
 
 export const TypeaheadInputPlaceholder = css`
   position: absolute;
   top: 0;
-  left: 0;
+  left: -4px;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1rem;
   color: rgba(0, 0, 0, 0.54);
+  &:disabled:hover {
+    cursor: default;
+  }
 `;
 
 export const TypeaheadInputWrapper = css`
   height: 32px;
-  z-index: 1;
+  z-index: 5;
   background: transparent;
+  margin-left: -8px;
+  &:active,
+  &:focus {
+    min-width: 100%;
+  }
 `;
 
-export const TypeaheadItem = styled.div`
+export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
   display: flex;
   gap: 6px;
-  background: ${({ theme }) => theme.colors.greyLighter40};
+  background: ${({ theme, isDisabled }) =>
+    isDisabled
+      ? theme.colors.greySelectedMenuItem
+      : theme.colors.greyLighter40};
   border-radius: 24px;
-  border: 1px solid #c3c5cc;
-  color: ${({ theme }) => theme.colors.greyDarker};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-weight: 500;
   font-size: 14px;
   height: 32px;
@@ -75,7 +94,9 @@ export const TypeaheadItem = styled.div`
   user-select: none;
 `;
 
-export const TypeaheadItemLabel = styled.div`
+export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
+  color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-size: 14px;
   font-weight: 500;
   display: flex;
@@ -91,8 +112,12 @@ export const TypeaheadItemCross = styled(Button)`
   &:active,
   &:focus,
   &:hover {
+    cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
     background: none;
     box-shadow: none;
+  }
+  &:disabled {
+    background: none;
   }
 `;
 
@@ -122,21 +147,47 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   height: auto;
   background: #fff;
   gap: 8px;
-  padding: 5px 8px;
-  width: 200px;
+  padding: 5px 28px 5px 8px;
+  width: 300px;
   flex-wrap: wrap;
-  border-color: ${({ isOpen, theme }) => isOpen && theme.colors.blueRoyal};
+  border-color: ${({ isOpen, theme, status }) =>
+    isOpen &&
+    (status === 'error'
+      ? theme.colors.red
+      : status === 'success'
+      ? theme.colors.greenLighter
+      : theme.colors.blueRoyal)};
+  background: ${({ isDisabled, theme }) =>
+    isDisabled ? theme.colors.greyLighter : theme.colors.white};
   &:active,
   &:focus,
   &:hover {
-    background: #fff;
+    background: ${({ isDisabled, theme }) =>
+      isDisabled ? theme.colors.greyLighter : theme.colors.white};
     box-shadow: none;
   }
   &:hover {
-    border-color: ${({ theme }) => theme.colors.greyDarker80};
+    border-color: ${({ isDisabled, theme, status }) =>
+      isDisabled
+        ? theme.colors.grey
+        : status === 'error'
+        ? theme.colors.red
+        : status === 'success'
+        ? theme.colors.greenLighter
+        : theme.colors.greyDarker80};
+    cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   }
-  &:focus {
-    border-color: ${({ isOpen, theme }) =>
-      isOpen ? theme.colors.blueRoyal : theme.colors.greyDarker80};
+  &:focus,
+  &:active {
+    border-color: ${({ theme, status }) =>
+      status === 'error'
+        ? theme.colors.red
+        : status === 'success'
+        ? theme.colors.greenLighter
+        : theme.colors.blueRoyal};
+    ${({ isDisabled, theme }) =>
+      isDisabled && {
+        borderColor: theme.colors.grey,
+      }}
   }
 `;

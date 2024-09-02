@@ -47,6 +47,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       text,
       startIcon,
       endIcon,
+      startIconClassName,
+      endIconClassName,
       variant = 'primary',
       type = 'button',
       className,
@@ -89,7 +91,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={onClick}
         {...ariaProps}>
         {startIcon ? (
-          <span style={noMargin} css={[iconWrapperRight]}>
+          <span
+            style={noMargin}
+            css={[iconWrapperRight]}
+            className={startIconClassName}>
             {startIcon}
           </span>
         ) : null}
@@ -107,7 +112,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           )
         ) : null}
         {endIcon ? (
-          <span style={noMargin} css={iconWrapperLeft}>
+          <span
+            style={noMargin}
+            css={[iconWrapperLeft]}
+            className={endIconClassName}>
             {endIcon}
           </span>
         ) : null}

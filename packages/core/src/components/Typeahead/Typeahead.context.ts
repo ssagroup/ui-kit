@@ -14,11 +14,16 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   className: undefined,
   startIcon: null,
   endIcon: null,
+  startIconClassName: undefined,
+  endIconClassName: undefined,
   name: '',
   inputName: '',
   inputValue: '',
   validationSchema: {},
   status: 'basic',
+  isDisabled: false,
+  options: [],
+  placeholder: '',
   setValue: () => {
     /* no-op */
   },
@@ -26,6 +31,9 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
     return {} as any;
   },
   handleChange: () => {
+    /* no-op */
+  },
+  handleClearAll: () => {
     /* no-op */
   },
   handleInputClick: () => {

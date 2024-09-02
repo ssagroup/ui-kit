@@ -27,7 +27,7 @@ import { TypeaheadProps } from './types';
 /*
 
 - add tests
-- add storybook
++ add storybook
 + add possibility to customize output
 + add the possibility to customize tokens output
 +++ renderMultipleToken?
@@ -38,7 +38,7 @@ import { TypeaheadProps } from './types';
 - add disabled state + story
 + add success state + story
 + add error state + story
-- add cross icon + action
++ add cross icon + action
 + do we need highlighting here?
 
 + helper text?
@@ -64,10 +64,13 @@ export const Typeahead = ({
   optionsClassname,
   startIcon,
   endIcon,
+  startIconClassName,
+  endIconClassName,
   errors,
   success,
   helperText,
   validationSchema,
+  placeholder = 'Select something',
   setValue,
   register,
   onChange,
@@ -83,9 +86,12 @@ export const Typeahead = ({
     className,
     startIcon,
     endIcon,
+    startIconClassName,
+    endIconClassName,
     errors,
     success,
     validationSchema,
+    placeholder,
     setValue,
     register,
     onChange,
@@ -99,7 +105,9 @@ export const Typeahead = ({
           flexDirection: 'column',
           alignItems: 'flex-start',
         }}>
-        <Label htmlFor={hookResult.inputName}>{label}</Label>
+        <Label htmlFor={hookResult.inputName} isDisabled={isDisabled}>
+          {label}
+        </Label>
         <Popover
           floatingOptions={{
             onOpenChange: hookResult.handleOpenChange,
