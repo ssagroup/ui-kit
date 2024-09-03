@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import {
   Popover,
   PopoverContent,
@@ -10,6 +11,16 @@ import { TypeaheadContext } from './Typeahead.context';
 import { useTypeahead } from './useTypeahead';
 import { TypeaheadOptions, TypeaheadTrigger } from './components';
 import { TypeaheadProps } from './types';
+
+/**
+ * Let's check all with Figma
+ * add tests
+ * add storybooks?
+ * + check all options for the context
+ * + check colors for the error/success
+ * fix description for this component
+ * ?- add stories for the Button component? start/endIconClassname?
+ */
 
 // TODO: Let's check:
 /**
@@ -61,21 +72,22 @@ export const Typeahead = ({
   isMultiple,
   children,
   className,
-  optionsClassname,
   startIcon,
   endIcon,
-  startIconClassName,
-  endIconClassName,
   errors,
   success,
   helperText,
   validationSchema,
   placeholder = 'Select something',
+  startIconClassName,
+  endIconClassName,
+  optionsClassName,
   setValue,
   register,
   onChange,
   renderOption,
 }: TypeaheadProps) => {
+  const theme = useTheme();
   const hookResult = useTypeahead({
     name,
     initialSelectedItems,
@@ -104,10 +116,16 @@ export const Typeahead = ({
         css={{
           flexDirection: 'column',
           alignItems: 'flex-start',
-        }}>
-        <Label htmlFor={hookResult.inputName} isDisabled={isDisabled}>
-          {label}
-        </Label>
+        }}
+        data-testid="typeahead">
+        {label && (
+          <Label
+            htmlFor={hookResult.inputName}
+            isDisabled={isDisabled}
+            data-testid="typeahead-label">
+            {label}
+          </Label>
+        )}
         <Popover
           floatingOptions={{
             onOpenChange: hookResult.handleOpenChange,
@@ -115,23 +133,28 @@ export const Typeahead = ({
           }}>
           <TypeaheadTrigger />
           <PopoverContent
-            css={{ width: hookResult.triggerRef.current?.clientWidth }}
+            css={{
+              width: hookResult.triggerRef.current?.clientWidth,
+              boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
+            }}
             isFocusManagerDisabled>
             <PopoverDescription css={{ width: '100%' }}>
               {hookResult.isOpen ? (
-                <TypeaheadOptions className={optionsClassname}>
+                <TypeaheadOptions className={optionsClassName}>
                   {children}
                 </TypeaheadOptions>
               ) : null}
             </PopoverDescription>
           </PopoverContent>
         </Popover>
-        <FormHelperText
-          role="status"
-          status={hookResult.status}
-          disabled={isDisabled}>
-          {errors ? errors?.message : helperText}
-        </FormHelperText>
+        {(errors?.message || helperText) && (
+          <FormHelperText
+            role="status"
+            status={hookResult.status}
+            disabled={isDisabled}>
+            {errors ? errors?.message : helperText}
+          </FormHelperText>
+        )}
       </Wrapper>
     </TypeaheadContext.Provider>
   );

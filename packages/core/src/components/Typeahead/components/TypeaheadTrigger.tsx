@@ -8,6 +8,7 @@ export const TypeaheadTrigger = () => {
   return (
     <S.TypeaheadTrigger
       as="div"
+      role="combobox"
       ref={context.triggerRef}
       className={context.className}
       isOpen={context.isOpen}

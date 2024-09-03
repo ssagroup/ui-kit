@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
 import Input from '@components/Input';
@@ -9,6 +9,11 @@ import Button from '@components/Button';
 export const MultipleTrigger = () => {
   const theme = useTheme();
   const context = useTypeaheadContext();
+  const typeaheadInputAdditionalProps: InputHTMLAttributes<HTMLInputElement> =
+    {};
+  if (!context.selectedItems.length && !!context.placeholder) {
+    typeaheadInputAdditionalProps.placeholder = context.placeholder;
+  }
   return (
     <React.Fragment>
       {Object.values(context.optionsWithKey).length > 0 &&
@@ -71,16 +76,17 @@ export const MultipleTrigger = () => {
         )}
         <input
           type="text"
+          data-testid="typeahead-input"
           aria-hidden
           readOnly
           value={context.firstSuggestion}
-          placeholder={context.selectedItems.length ? '' : context.placeholder}
           disabled={context.isDisabled}
           className={[
             'typeahead-input',
             S.TypeaheadInput,
             S.TypeaheadInputPlaceholder,
           ].join(' ')}
+          {...typeaheadInputAdditionalProps}
         />
         <input
           type="hidden"
@@ -90,19 +96,19 @@ export const MultipleTrigger = () => {
           {...context.register?.(context.name, context.validationSchema)}
         />
       </S.TypeaheadInputsGroupWrapper>
-      {context.selectedItems.length && (
+      {!context.isDisabled && context.selectedItems.length ? (
         <Button
           variant="tertiary"
           endIcon={<Icon name="cross" size={8} />}
           css={{
-            padding: '0 10px',
+            padding: '0 14px 0 10px',
             position: 'absolute',
-            right: 0,
+            right: -28,
             zIndex: 10,
           }}
           onClick={context.handleClearAll}
         />
-      )}
+      ) : null}
     </React.Fragment>
   );
 };

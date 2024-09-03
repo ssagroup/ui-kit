@@ -16,7 +16,7 @@ export interface TypeaheadProps {
   isDisabled?: boolean;
   children?: React.ReactNode;
   className?: string;
-  optionsClassname?: string;
+  optionsClassName?: string;
   isOpen?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -28,7 +28,7 @@ export interface TypeaheadProps {
   errors?: FieldError;
   success?: boolean;
   validationSchema?: Record<string, unknown>;
-  placeholder?: string;
+  placeholder?: string | null;
   setValue?: UseFormSetValue<FieldValues>;
   register?: UseFormReturn['register'];
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
@@ -63,8 +63,6 @@ export type UseTypeaheadProps = Pick<
 >;
 
 export interface TypeaheadItemsListProps extends CommonProps {
-  ariaLabelledby?: string;
-  id?: string;
   children?: React.ReactNode;
   noItemsMessage?: string;
 }

@@ -67,6 +67,7 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
         isDisabled={args.isDisabled}
         name={'typeahead-dropdown'}
         label="Label"
+        helperText="Helper Text"
         register={register}
         setValue={setValue}
         renderOption={({ label, input }) => highlightInputMatch(label, input)}>
@@ -76,7 +77,9 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
           </TypeaheadOption>
         ))}
       </Typeahead>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" css={{ marginTop: 5 }}>
+        Submit
+      </Button>
     </form>
   );
 };
@@ -94,6 +97,7 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
         isMultiple
         isDisabled={args.isDisabled}
         label="Label"
+        helperText="Helper Text"
         register={register}
         setValue={setValue}
         name={'typeahead-dropdown'}
@@ -104,7 +108,9 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
           </TypeaheadOption>
         ))}
       </Typeahead>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" css={{ marginTop: 5 }}>
+        Submit
+      </Button>
     </form>
   );
 };
@@ -323,3 +329,25 @@ export const Disabled: StoryObj = (args: TypeaheadProps) => {
 };
 
 Disabled.args = { isDisabled: true };
+
+export const NoItems: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { register, setValue } = useFormResult;
+  return (
+    <Typeahead
+      isMultiple
+      isDisabled={args.isDisabled}
+      name={'typeahead-dropdown'}
+      label="Label"
+      css={{
+        width: 500,
+      }}
+      register={register}
+      setValue={setValue}
+      helperText="Helper text">
+      {null}
+    </Typeahead>
+  );
+};
+
+NoItems.args = { isDisabled: false };

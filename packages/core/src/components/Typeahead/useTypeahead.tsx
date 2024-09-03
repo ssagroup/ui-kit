@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { propOr } from '@ssa-ui-kit/utils';
-import { UseTypeaheadProps } from './types';
+import { TypeaheadOptionProps, UseTypeaheadProps } from './types';
 
 export const useTypeahead = ({
   name = 'typeahead-input',
@@ -151,16 +151,13 @@ export const useTypeahead = ({
   useEffect(() => {
     if (inputValue) {
       const newFirstSuggestion = Object.values(optionsWithKey)?.find((item) => {
-        const label = propOr<Record<string, any>, string>(
-          '',
-          'label',
-        )(item as Record<string, any>);
+        const label = propOr<TypeaheadOptionProps, string>('', 'label')(item);
         return label.toLowerCase().startsWith(inputValue.toLowerCase());
       });
-      const firstSuggestionLabel = propOr<Record<string, any>, string>(
+      const firstSuggestionLabel = propOr<TypeaheadOptionProps, string>(
         '',
         'label',
-      )(newFirstSuggestion as unknown as Record<string, any>);
+      )(newFirstSuggestion as unknown as TypeaheadOptionProps);
       const humanSuggestionLabel = inputValue.concat(
         firstSuggestionLabel.slice(inputValue.length),
       );
@@ -193,7 +190,12 @@ export const useTypeahead = ({
       );
       setInputValue('');
     } else {
-      setSelected([changingValue]);
+      if (selected[0] === changingValue) {
+        setSelected([]);
+        setInputValue('');
+      } else {
+        setSelected([changingValue]);
+      }
     }
     setIsOpen(false);
     setFirstSuggestion('');
