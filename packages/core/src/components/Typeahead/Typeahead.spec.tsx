@@ -3,12 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { Typeahead } from './Typeahead';
 import { highlightInputMatch } from './utils';
 import { TypeaheadOption } from './components';
+import { DynamicallyChangedItems } from './Typeahead.stories';
 
 const items = [
   { id: 1, value: 'First' },
   { id: 2, value: 'Second' },
   { id: 3, value: 'Third' },
-  { id: 4, value: 'Fourth' },
+  { id: 4, label: 'Fourth', value: 4 },
   { id: 5, value: 'Fifth' },
   { id: 6, value: 'Sixth' },
 ];
@@ -16,6 +17,7 @@ const items = [
 const selectedItems = [items[0], items[4]];
 
 const getListItemValue = (item: (typeof items)[0]) => item.value;
+const getListItemLabel = (item: (typeof items)[0]) => item.label || item.value;
 
 describe('Typeahead', () => {
   const originalConsoleWarn = console.warn;
@@ -76,7 +78,7 @@ describe('Typeahead', () => {
     await user.click(inputEl as HTMLElement);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(items.length);
 
     toggleElement = within(mainElement).getByRole('combobox');
@@ -89,7 +91,7 @@ describe('Typeahead', () => {
       const listItemEl = listItemEls[i];
       expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       const itemListValue = getListItemValue(listItem);
-      expect(listItemEl).toHaveTextContent(itemListValue);
+      expect(listItemEl).toHaveTextContent(`${itemListValue}`);
       await within(listItemEl).findByText(itemListValue);
     }
   });
@@ -129,7 +131,7 @@ describe('Typeahead', () => {
     await user.click(inputEl as HTMLElement);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(items.length);
 
     toggleElement = within(mainElement).getByRole('combobox');
@@ -145,7 +147,7 @@ describe('Typeahead', () => {
         `${selectedIDs.includes(listItem.id)}`,
       );
       const itemListValue = getListItemValue(listItem);
-      expect(listItemEl).toHaveTextContent(itemListValue);
+      expect(listItemEl).toHaveTextContent(`${itemListValue}`);
       await within(listItemEl).findByText(itemListValue);
     }
   });
@@ -185,7 +187,7 @@ describe('Typeahead', () => {
     await userEvent.click(inputEl as HTMLElement);
 
     listboxEl = queryByRole('listbox');
-    const listItemEl = within(listboxEl as HTMLElement).getByRole('listitem');
+    const listItemEl = within(listboxEl as HTMLElement).getByRole('option');
 
     expect(listItemEl).toHaveAttribute('aria-selected', 'false');
     within(listItemEl).getByText('No matches found');
@@ -207,18 +209,18 @@ describe('Typeahead', () => {
 
     let toggleElement = within(mainElement).getByRole('combobox');
 
-    expect(toggleElement).toHaveTextContent('FirstCrossFifthCrossCross');
+    expect(toggleElement).toHaveTextContent('FirstRemoveFifthRemoveRemove');
 
     const inputEl = screen.queryByTestId('typeahead-input');
     await user.click(inputEl as HTMLElement);
 
     const listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     await user.click(listItemEls[0]);
 
     toggleElement = within(mainElement).getByRole('combobox');
 
-    expect(toggleElement).toHaveTextContent('FifthCrossCross');
+    expect(toggleElement).toHaveTextContent('FifthRemoveRemove');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -228,7 +230,7 @@ describe('Typeahead', () => {
         `${selectedIDs.includes(listItem.id)}`,
       );
       const itemListValue = getListItemValue(listItem);
-      expect(listItemEl).toHaveTextContent(itemListValue);
+      expect(listItemEl).toHaveTextContent(`${itemListValue}`);
       await within(listItemEl).findByText(itemListValue);
     }
   });
@@ -248,7 +250,7 @@ describe('Typeahead', () => {
     await user.click(inputEl as HTMLElement);
 
     let listboxEl = getByRole('listbox');
-    let listItemEls = within(listboxEl).getAllByRole('listitem');
+    let listItemEls = within(listboxEl).getAllByRole('option');
     await user.click(listItemEls[1]);
 
     inputEl = screen.queryByTestId('typeahead-input');
@@ -257,7 +259,7 @@ describe('Typeahead', () => {
     await user.click(inputEl as HTMLElement);
 
     listboxEl = getByRole('listbox');
-    listItemEls = within(listboxEl).getAllByRole('listitem');
+    listItemEls = within(listboxEl).getAllByRole('option');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -267,7 +269,7 @@ describe('Typeahead', () => {
         `${[2].includes(listItem.id)}`,
       );
       const itemListValue = getListItemValue(listItem);
-      expect(listItemEl).toHaveTextContent(itemListValue);
+      expect(listItemEl).toHaveTextContent(`${itemListValue}`);
       await within(listItemEl).findByText(itemListValue);
     }
   });
@@ -306,7 +308,7 @@ describe('Typeahead', () => {
       await user.click(toggleElement);
 
       const listboxEl = getByRole('listbox');
-      const listItemEls = within(listboxEl).getAllByRole('listitem');
+      const listItemEls = within(listboxEl).getAllByRole('option');
 
       await user.click(listItemEls[0]);
 
@@ -396,5 +398,109 @@ describe('Typeahead', () => {
     );
 
     expect(queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('Renders opened', () => {
+    const { queryByRole } = setup({ isOpen: true });
+
+    expect(queryByRole('listbox')).toBeInTheDocument();
+  });
+
+  it('New item should be rendered correctly', async () => {
+    const { getByTestId, getByText, getByRole } = render(
+      <DynamicallyChangedItems initialSelectedItems={[]} />,
+    );
+
+    const mainElement = getByTestId('typeahead');
+    const toggleElement = within(mainElement).getByRole('combobox');
+
+    await userEvent.click(toggleElement);
+
+    let listboxEl = getByRole('listbox');
+    let listItemEls = within(listboxEl).getAllByRole('option');
+
+    for (let i = 0; i < items.length; ++i) {
+      const listItem = items[i];
+      const listItemEl = listItemEls[i];
+      expect(listItemEl).toHaveAttribute('aria-selected', `false`);
+      const itemListLabel = getListItemLabel(listItem);
+      expect(listItemEl).toHaveTextContent(`${itemListLabel}`);
+      // await within(listItemEl).findByText(itemListLabel);
+    }
+
+    const updateItemsButton = getByText('Update items');
+    await userEvent.click(updateItemsButton);
+
+    await userEvent.click(toggleElement);
+
+    listboxEl = getByRole('listbox');
+    listItemEls = within(listboxEl).getAllByRole('option');
+    expect(listItemEls[listItemEls.length - 1]).toHaveTextContent(
+      'New item #7',
+    );
+  });
+
+  it('"Remove all" functionality should be worked', async () => {
+    const selectedIDs = selectedItems.map((item) => item.id);
+    const { mockOnChange, getByRole, getByTestId } = setup({
+      initialSelectedItems: selectedIDs,
+      isMultiple: true,
+      label: 'Label',
+    });
+
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs);
+
+    let mainElement = getByTestId('typeahead');
+    let toggleElement = within(mainElement).getByRole('combobox');
+
+    expect(toggleElement).toHaveTextContent('FirstRemoveFifthRemoveRemove');
+
+    const crossAllButton =
+      within(toggleElement).getByTestId('remove-all-button');
+    await userEvent.click(crossAllButton);
+
+    mainElement = getByTestId('typeahead');
+    toggleElement = within(mainElement).getByRole('combobox');
+
+    expect(toggleElement).toHaveTextContent('');
+
+    await userEvent.click(toggleElement);
+    const listboxEl = getByRole('listbox');
+    const listItemEls = within(listboxEl).getAllByRole('option');
+
+    for (let i = 0; i < items.length; ++i) {
+      const listItem = items[i];
+      const listItemEl = listItemEls[i];
+      expect(listItemEl).toHaveAttribute('aria-selected', `false`);
+      const itemListValue = getListItemValue(listItem);
+      expect(listItemEl).toHaveTextContent(`${itemListValue}`);
+      await within(listItemEl).findByText(itemListValue);
+    }
+  });
+
+  it('Helper text should be displayed', () => {
+    const selectedIDs = selectedItems.map((item) => item.id);
+    const { getByTestId } = setup({
+      initialSelectedItems: selectedIDs,
+      isMultiple: true,
+      label: 'Label',
+      helperText: 'Helper text',
+    });
+
+    expect(getByTestId('helper-text')).toBeInTheDocument();
+  });
+
+  it('Error should be displayed', () => {
+    const selectedIDs = selectedItems.map((item) => item.id);
+    const { getByTestId } = setup({
+      initialSelectedItems: selectedIDs,
+      isMultiple: true,
+      label: 'Label',
+      errors: {
+        message: 'Error message',
+      },
+    });
+
+    expect(getByTestId('helper-text')).toBeInTheDocument();
   });
 });

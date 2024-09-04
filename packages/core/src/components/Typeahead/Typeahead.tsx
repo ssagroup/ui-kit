@@ -13,56 +13,14 @@ import { TypeaheadOptions, TypeaheadTrigger } from './components';
 import { TypeaheadProps } from './types';
 
 /**
- * Let's check all with Figma
- * add tests
- * add storybooks?
- * + check all options for the context
- * + check colors for the error/success
- * fix description for this component
- * ?- add stories for the Button component? start/endIconClassname?
- */
-
-// TODO: Let's check:
-/**
  * The structure of the component:
- *
- * MultipleDropdown
- *   DropdownToggle
- *   MultipleDropdownOptions
- *     DropdownOption
+ * - TypeaheadTrigger
+ * - TypeaheadOptions
+ * - FormHelperText
  *
  * Aria attributes are set according to
- * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
+ * https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/
  **/
-
-/*
-
-- add tests
-+ add storybook
-+ add possibility to customize output
-+ add the possibility to customize tokens output
-+++ renderMultipleToken?
-+ add result highlighting
-+ add "name"
-+ add "register"
-+ add "label (title)"
-- add disabled state + story
-+ add success state + story
-+ add error state + story
-+ add cross icon + action
-+ do we need highlighting here?
-
-+ helper text?
-
-+ inputName ---- check - when submit - get rid!
-
-- do we need all options for the context?
-
-// TODO: WithError => remove an error on choosing?
-// TODO: add disabled story
-// TODO: use colors from Figma for the borders?..
-// +++ Dynamically changed items
-*/
 export const Typeahead = ({
   name = 'typeahead-search',
   label,
@@ -151,7 +109,8 @@ export const Typeahead = ({
           <FormHelperText
             role="status"
             status={hookResult.status}
-            disabled={isDisabled}>
+            disabled={isDisabled}
+            data-testid="helper-text">
             {errors ? errors?.message : helperText}
           </FormHelperText>
         )}

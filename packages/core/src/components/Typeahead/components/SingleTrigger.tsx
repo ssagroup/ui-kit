@@ -55,7 +55,8 @@ export const SingleTrigger = () => {
       {!context.isDisabled && context.selectedItems.length ? (
         <Button
           variant="tertiary"
-          endIcon={<Icon name="cross" size={8} />}
+          data-testid="remove-all-button"
+          endIcon={<Icon name="cross" size={8} tooltip="Remove" />}
           css={{
             padding: '0 14px 0 10px',
             position: 'absolute',

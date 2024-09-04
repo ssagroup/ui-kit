@@ -100,7 +100,7 @@ export const useTypeahead = ({
     const childrenArray = React.Children.toArray(children).filter(Boolean);
     const filteredOptions = [...childrenArray] as React.ReactElement[];
     const childItems = filteredOptions.map((child, index) => {
-      const { id, label, isDisabled } = child.props;
+      const { id, value, label, isDisabled } = child.props;
       const isActive = selected.includes(child.props.value);
       return React.cloneElement(child, {
         index,
@@ -110,6 +110,7 @@ export const useTypeahead = ({
         id,
         'aria-selected': isActive,
         'aria-labelledby': `typeahead-label-${name}`,
+        role: 'option',
         onClick: (event: BaseSyntheticEvent) => {
           event.preventDefault();
           if (!isDisabled) {
@@ -117,7 +118,7 @@ export const useTypeahead = ({
           }
         },
         children: renderOption
-          ? renderOption({ value: id, input: inputValue || '', label })
+          ? renderOption({ value: id || value, input: inputValue || '', label })
           : child.props.children || child.props.label || child.props.value,
       });
     });
@@ -230,7 +231,13 @@ export const useTypeahead = ({
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    if (event.code === 'Tab' && firstSuggestion) {
+    if (['Tab', 'Space'].includes(event.code) && !firstSuggestion) {
+      setIsOpen(true);
+      inputRef.current?.focus();
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    if (['Tab', 'Enter'].includes(event.code) && firstSuggestion) {
       const foundItem = Object.values(optionsWithKey).find(
         (item) =>
           `${item.label}`.toLowerCase() === firstSuggestion.toLowerCase(),

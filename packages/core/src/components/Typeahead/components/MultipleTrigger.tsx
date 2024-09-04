@@ -2,9 +2,9 @@ import React, { InputHTMLAttributes } from 'react';
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
 import Input from '@components/Input';
+import Button from '@components/Button';
 import * as S from '../styles';
 import { useTypeaheadContext } from '../Typeahead.context';
-import Button from '@components/Button';
 
 export const MultipleTrigger = () => {
   const theme = useTheme();
@@ -38,6 +38,7 @@ export const MultipleTrigger = () => {
                 endIcon={
                   <Icon
                     name="cross"
+                    tooltip="Remove"
                     size={14}
                     color={
                       context.isDisabled
@@ -99,11 +100,12 @@ export const MultipleTrigger = () => {
       {!context.isDisabled && context.selectedItems.length ? (
         <Button
           variant="tertiary"
-          endIcon={<Icon name="cross" size={8} />}
+          data-testid="remove-all-button"
+          endIcon={<Icon name="cross" size={8} tooltip="Remove all" />}
           css={{
             padding: '0 14px 0 10px',
             position: 'absolute',
-            right: -28,
+            right: 0,
             zIndex: 10,
           }}
           onClick={context.handleClearAll}

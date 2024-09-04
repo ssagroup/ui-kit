@@ -1,5 +1,7 @@
 import * as S from '../styles';
 
 export const NoOptions = ({ children, ...rest }: React.PropsWithChildren) => (
-  <S.TypeaheadOption {...rest}>{children}</S.TypeaheadOption>
+  <S.TypeaheadOption {...rest} role="option">
+    {children}
+  </S.TypeaheadOption>
 );

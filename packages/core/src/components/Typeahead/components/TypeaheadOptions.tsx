@@ -9,14 +9,14 @@ export const TypeaheadOptions = ({
   children,
 }: TypeaheadItemsListProps) => {
   const context = useTypeaheadContext();
-  const options = context.options || [];
+  let options = context.options || [];
 
   if (React.Children.toArray(children).filter(Boolean).length === 0) {
-    options.push(
+    options = [
       <NoOptions key={'no-items'} aria-selected={false}>
         {noItemsMessage}
       </NoOptions>,
-    );
+    ];
   }
 
   return (

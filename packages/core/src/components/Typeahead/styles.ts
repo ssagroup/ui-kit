@@ -1,8 +1,8 @@
-import Button from '@components/Button';
-import { PopoverTrigger } from '@components/Popover';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import Wrapper from '@components/Wrapper';
+import Button from '@components/Button';
+import { PopoverTrigger } from '@components/Popover';
 import { useTypeahead } from './useTypeahead';
 import { TypeaheadItemProps } from './types';
 

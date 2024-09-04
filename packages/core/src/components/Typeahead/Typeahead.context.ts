@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { UseTypeaheadResult } from './useTypeahead';
 
-// TODO: leave there only needed data!?
 export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   optionsWithKey: {},
   isMultiple: false,

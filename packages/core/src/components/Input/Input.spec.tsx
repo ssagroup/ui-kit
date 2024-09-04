@@ -15,14 +15,12 @@ describe('Inputs', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('Trow error when without register', () => {
-    jest.spyOn(console, 'error').mockImplementation();
-
-    expect(() =>
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      render(<Input placeholder="Field" name="field" disabled={true} />),
-    ).toThrow('Input component must be used within a Form component');
+  it('Throw warning when without register', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+    render(<Input placeholder="Field" name="field" disabled={true} />);
+    expect(warnSpy).toBeCalledWith(
+      'Input component must be used within a Form component',
+    );
   });
 
   it('Render input disabled', () => {
