@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
@@ -25,21 +25,27 @@ const InputInner = (
     startElement,
     endElement,
     className,
+    wrapperClassName,
     inputProps = {},
     register,
     onKeyUp,
   }: InputProps,
   inputRef?: React.ForwardedRef<HTMLInputElement | null>,
 ) => {
-  if (!register) {
-    throw new Error('Input component must be used within a Form component');
-  }
+  useEffect(() => {
+    if (!register) {
+      console.warn('Input component must be used within a Form component');
+    }
+  }, []);
 
   const showStatusIcon = () => !disabled && !endElement;
 
-  const registerResult = register(name, validationSchema);
+  const registerResult = register?.(name, validationSchema);
   return (
-    <InputGroup css={[mapColors[status]]} disabled={disabled}>
+    <InputGroup
+      css={[mapColors[status]]}
+      className={wrapperClassName}
+      disabled={disabled}>
       {startElement ? <div css={S.startElement}>{startElement}</div> : null}
       <InputBase
         type={type}
@@ -53,8 +59,8 @@ const InputInner = (
         className={className}
         onKeyUp={onKeyUp}
         {...inputProps}
-        {...register(name, validationSchema)}
-        ref={useMergeRefs([registerResult.ref, inputRef])}
+        {...register?.(name, validationSchema)}
+        ref={useMergeRefs([registerResult?.ref, inputRef])}
       />
 
       {status === 'error' && showStatusIcon() ? <InputStatusError /> : null}

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const LabelBase = styled.label`
+export const LabelBase = styled.label<{ isDisabled?: boolean }>`
   display: inline-block;
 
   flex: 1;
@@ -8,7 +8,8 @@ export const LabelBase = styled.label`
   font-size: 1rem;
   line-height: 22px;
 
-  color: ${({ theme }) => theme.colors.greyDarker};
+  color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.grey : theme.colors.greyDarker};
 
   margin: 0 0 6px 4px;
 `;

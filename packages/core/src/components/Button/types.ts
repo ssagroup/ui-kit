@@ -21,6 +21,8 @@ export interface ButtonProps extends ButtonAriaProps {
   text?: string;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
+  startIconClassName?: string;
+  endIconClassName?: string;
   variant?: keyof ButtonVariants | 'custom';
   type?: 'button' | 'reset' | 'submit';
   isDisabled?: boolean;

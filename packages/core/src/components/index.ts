@@ -100,3 +100,4 @@ export * from './PieChart';
 export * from './CollapsibleNavBar';
 export * from './Filters';
 export * from './TableFilters';
+export * from './Typeahead';

@@ -9,6 +9,7 @@ const main: Theme = {
     white60: 'rgba(255, 255, 255, 0.6)', //  #ffffff
     white30: 'rgba(255, 255, 255, 0.3)', //  #ffffff
     greyLighter: 'rgba(238, 241, 247, 1)', //  #eef1f7
+    greyLighter40: 'rgba(238, 241, 247, 0.4)', //#eef1f766
     greySelectedMenuItem: 'rgba(222, 225, 236, 1)', //  #dee1ec
     greyFocused: 'rgba(210, 212, 219, 1)', //  #d2d4db
     greyFocused40: 'rgba(210, 212, 219, 0.4)', //  #d2d4db
@@ -23,6 +24,7 @@ const main: Theme = {
     greyDarker: 'rgba(43, 45, 49, 1)', // #2b2d31
     greyDarker60: 'rgba(43, 45, 49, 0.6)', // #2b2d31
     greyDarker80: 'rgba(43, 45, 49, 0.8)', // #2b2d31
+    greyDarker40: 'rgba(43, 45, 49, 0.4)', // #2b2d31
     greyDarker14: 'rgba(43, 45, 49, 0.14)', // #2b2d31
     greyDark: 'rgb(64, 72, 83)', // #404853
     greyDisabled: 'rgba(85, 87, 90, 1)', // #55575a
@@ -103,6 +105,7 @@ const main: Theme = {
     blueButtonHoverGradientTo: 'rgb(14, 75, 193)', //#0e4bc1
     blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
     blueRoyal: 'rgba(72, 125, 225, 1)', //#487de1
+    blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
   },
   mediaQueries: {
     xs: '@media screen and (max-width: 389px)',

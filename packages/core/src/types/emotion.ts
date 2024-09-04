@@ -14,6 +14,7 @@ type Colors = MakeColors<
     'white30',
     'dark',
     'greyLighter',
+    'greyLighter40',
     'greySelectedMenuItem',
     'greyFocused',
     'greyFocused40',
@@ -22,6 +23,7 @@ type Colors = MakeColors<
     'grey40',
     'greyShadow24',
     'greyDarker',
+    'greyDarker40',
     'greyDarker60',
     'greyDarker80',
     'greyDarker14',
@@ -108,6 +110,7 @@ type Colors = MakeColors<
     'blueButtonHoverGradientTo',
     'blueButtonActive',
     'blueRoyal',
+    'blueRoyal12',
   ]
 >;
 
