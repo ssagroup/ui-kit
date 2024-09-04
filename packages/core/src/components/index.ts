@@ -101,3 +101,4 @@ export * from './CollapsibleNavBar';
 export * from './Filters';
 export * from './TableFilters';
 export * from './Typeahead';
+export * from './ImageItem';
