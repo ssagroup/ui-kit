@@ -37,11 +37,24 @@ export default {
     },
   },
   decorators: [
-    (Story) => (
-      <Form>
-        <FormGroup>{Story()}</FormGroup>
-      </Form>
-    ),
+    (Story, context) => {
+      const useFormResult = useForm<FieldValues>();
+      return (
+        <Form
+          onSubmit={useFormResult.handleSubmit((data) => {
+            console.log('>>>onSubmit', data);
+          })}>
+          <FormGroup>
+            {Story({
+              args: {
+                ...context.args,
+                register: useFormResult.register,
+              },
+            })}
+          </FormGroup>
+        </Form>
+      );
+    },
   ],
 } as Meta<typeof TextField>;
 
@@ -51,9 +64,7 @@ const mockError: FieldError = {
 };
 
 export const Basic: StoryObj<typeof TextField> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <TextField {...args} register={register} />;
+  return <TextField {...args} register={args.register} />;
 };
 Basic.args = {
   placeholder: 'Field',
@@ -65,15 +76,13 @@ Basic.args = {
   helperText: 'some nice text',
 };
 
-export const WithError: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const WithError: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       placeholder="Field error"
       label="Field"
       name="field2"
-      register={register}
+      register={args.register}
       validationSchema={{
         required: 'Required',
       }}
@@ -83,15 +92,13 @@ export const WithError: StoryObj<typeof TextField> = () => {
 };
 WithError.args = {};
 
-export const WithSuccess: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const WithSuccess: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       placeholder="Field success"
       label="Field"
       name="field3"
-      register={register}
+      register={args.register}
       validationSchema={{
         required: 'Required',
       }}
@@ -102,15 +109,13 @@ export const WithSuccess: StoryObj<typeof TextField> = () => {
 };
 WithSuccess.args = {};
 
-export const Disabled: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const Disabled: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       placeholder="Field disabled"
       label="Field"
       name="field4"
-      register={register}
+      register={args.register}
       helperText="some nice text"
       disabled={true}
       endElement={<Icon name="visible" size={16} />}
@@ -119,15 +124,13 @@ export const Disabled: StoryObj<typeof TextField> = () => {
 };
 Disabled.args = {};
 
-export const WithStatusDisabled: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const WithStatusDisabled: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       placeholder="Field success disabled"
       label="Field"
       name="field5"
-      register={register}
+      register={args.register}
       helperText="some nice text"
       disabled={true}
       success={true}
@@ -136,23 +139,21 @@ export const WithStatusDisabled: StoryObj<typeof TextField> = () => {
 };
 WithStatusDisabled.args = {};
 
-export const WithAction: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const WithAction: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       type="password"
       placeholder="Field"
       label="Field"
       name="field6"
-      register={register}
+      register={args.register}
       helperText="some nice text"
       endElement={
         <button
+          type="submit"
           onClick={(event) => {
-            event.stopPropagation();
+            console.log('>>>action...');
             event.preventDefault();
-            console.log('calling action...');
           }}>
           Action
         </button>
@@ -162,24 +163,20 @@ export const WithAction: StoryObj<typeof TextField> = () => {
 };
 WithAction.args = {};
 
-export const MultilineSimple: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const MultilineSimple: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       multirow
       rows={10}
       placeholder="Textarea"
       name="textarea"
-      register={register}
+      register={args.register}
     />
   );
 };
 MultilineSimple.args = {};
 
-export const Multiline: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const Multiline: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       multirow
@@ -188,15 +185,13 @@ export const Multiline: StoryObj<typeof TextField> = () => {
       placeholder="Textarea"
       name="textarea"
       helperText="some nice text"
-      register={register}
+      register={args.register}
     />
   );
 };
 Multiline.args = {};
 
-export const MultilineDisabled: StoryObj<typeof TextField> = () => {
-  const { register } = useForm<FieldValues>();
-
+export const MultilineDisabled: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
       multirow
@@ -205,16 +200,14 @@ export const MultilineDisabled: StoryObj<typeof TextField> = () => {
       placeholder="Textarea"
       name="textarea"
       helperText="some nice text"
-      register={register}
+      register={args.register}
     />
   );
 };
 MultilineDisabled.args = {};
 
 export const Focused: StoryObj<typeof TextField> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <TextField {...args} register={register} />;
+  return <TextField {...args} />;
 };
 Focused.args = {
   ...Basic.args,

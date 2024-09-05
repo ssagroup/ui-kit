@@ -33,7 +33,7 @@ export const ImageItem = ({
           fontWeight: 500,
           cursor: link ? 'pointer' : 'default',
           '&:hover': {
-            color: theme.colors.blue,
+            color: link ? theme.colors.blue : theme.colors.greyDarker,
           },
         }}>
         {children}
