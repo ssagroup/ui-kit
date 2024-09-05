@@ -1,10 +1,10 @@
 import React from 'react';
 import type { Meta } from '@storybook/react';
 import { useTheme } from '@emotion/react';
+import Icon from '@components/Icon';
 import { HeaderTitle, GridWrapper, colors, sizes, icons } from './helpers';
 
 import Badge from './index';
-import Icon from '@components/Icon';
 
 export default {
   title: 'Components/Badge',

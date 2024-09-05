@@ -1,27 +1,29 @@
 import { useTheme } from '@emotion/react';
 import Avatar from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
+import { ImageItemProps } from './types';
 
 export const ImageItem = ({
   children,
   image,
   avatarSize = 24,
   link = '',
-}: React.PropsWithChildren<{
-  image: string;
-  avatarSize?: number;
-  link?: string;
-}>) => {
+  openLinkInNewTab = false,
+  className,
+}: ImageItemProps) => {
   const theme = useTheme();
   const additionalProps = link
     ? {
         href: link,
+        target: openLinkInNewTab ? '_blank' : undefined,
       }
     : {};
   return (
     <Wrapper
       css={{ gap: 8, textDecoration: 'none' }}
       as={link ? 'a' : 'div'}
+      className={className}
+      data-testid="image-item"
       {...additionalProps}>
       <Avatar size={avatarSize} image={image} />
       <span
@@ -31,7 +33,7 @@ export const ImageItem = ({
           fontWeight: 500,
           cursor: link ? 'pointer' : 'default',
           '&:hover': {
-            color: '#346FE3',
+            color: theme.colors.blue,
           },
         }}>
         {children}
