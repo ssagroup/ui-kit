@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import { Meta } from '@storybook/react';
-import { Title, Description, Source } from '@storybook/addon-docs';
+import { Title, Description, Subtitle, Primary } from '@storybook/addon-docs';
 
 import { NavBar } from './NavBar';
 import { DecoratorFunction } from '@storybook/types';
@@ -42,12 +42,17 @@ export default {
     viewport: {
       defaultViewport: 'mobile2',
     },
+    source: {
+      type: 'code',
+    },
     docs: {
+      inlineStories: false,
       page: () => (
         <Fragment>
           <Title />
+          <Subtitle />
           <Description />
-          <Source code={`<NavBar />`} />
+          <Primary />
         </Fragment>
       ),
     },
