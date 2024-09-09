@@ -6,6 +6,7 @@ export const RadioBase = styled(Label)`
   flex-grow: 0;
   align-items: center;
   cursor: pointer;
+  gap: 5px;
 
   &:has(input:disabled) {
     cursor: default;
@@ -29,7 +30,6 @@ export const RadioBase = styled(Label)`
   }
 
   span {
-    margin-left: 10px;
     font-size: 14px;
     font-weight: 100;
   }
