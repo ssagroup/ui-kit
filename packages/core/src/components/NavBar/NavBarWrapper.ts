@@ -15,7 +15,7 @@ const NavBarWrapper = styled.div`
     ${({ theme }) => theme.colors.greyDarker} 100%
   );
 
-  transform: translateY(-200vh);
+  transform: translateY(-300vh);
   transition: height 475ms ease, transform 450ms ease, border-radius 450ms ease;
 
   ${({ theme }) => theme.mediaQueries.md} {

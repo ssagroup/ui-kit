@@ -71,7 +71,7 @@ export const StoryComponent = () => {
               }
               rightButton={
                 <Link to={'/'} css={{ gridColumn: 2 }}>
-                  <Button variant="info" text="View all notification" />
+                  <Button variant="info" text="View all notifications" />
                 </Link>
               }
               isLoading={isLoading}>

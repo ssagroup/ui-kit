@@ -75,7 +75,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
 
       & ~ div:nth-of-type(2) {
         display: block;
-        border-radius: 12px 12px 0 0;
+        border-radius: 0;
         height: calc(100vh - 60px);
 
         ${({ theme }) => theme.mediaQueries.xlg} {
@@ -101,8 +101,8 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
 
   ${({ theme }) => theme.mediaQueries.lg} {
     &.opened {
-      min-width: unset;
-      width: 240px;
+      min-width: 240px;
+      width: 291px;
 
       & > div:nth-of-type(2) {
         width: 240px;
