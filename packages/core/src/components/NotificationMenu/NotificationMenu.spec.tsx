@@ -58,7 +58,7 @@ describe('NotificationMenu', () => {
     await user.click(getByTestId('trigger-button'));
 
     getByRole('link', {
-      name: new RegExp('View all notification', 'i'),
+      name: new RegExp('View all notifications', 'i'),
     });
   });
 });
