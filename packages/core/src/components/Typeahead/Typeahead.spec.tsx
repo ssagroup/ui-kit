@@ -492,15 +492,18 @@ describe('Typeahead', () => {
 
   it('Error should be displayed', () => {
     const selectedIDs = selectedItems.map((item) => item.id);
-    const { getByTestId } = setup({
+
+    const additionalProps = {
       initialSelectedItems: selectedIDs,
       isMultiple: true,
       label: 'Label',
-      errors: {
+      error: {
+        type: 'required',
         message: 'Error message',
       },
-    });
+    };
 
+    const { getByTestId } = setup(additionalProps);
     expect(getByTestId('helper-text')).toBeInTheDocument();
   });
 });

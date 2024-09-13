@@ -69,7 +69,7 @@ export const MultipleTrigger = () => {
               onChange: context.handleInputChange,
               value: context.inputValue,
               autoComplete: 'off',
-              className: ['typeahead-input', S.TypeaheadInput].join(' '),
+              className: ['typeahead-input', S.TypeaheadInput(theme)].join(' '),
             }}
             wrapperClassName={S.TypeaheadInputWrapper}
             ref={context.inputRef}
@@ -84,7 +84,7 @@ export const MultipleTrigger = () => {
           disabled={context.isDisabled}
           className={[
             'typeahead-input',
-            S.TypeaheadInput,
+            S.TypeaheadInput(theme),
             S.TypeaheadInputPlaceholder,
           ].join(' ')}
           {...typeaheadInputAdditionalProps}

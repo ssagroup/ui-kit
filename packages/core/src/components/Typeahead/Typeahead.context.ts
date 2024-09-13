@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { UseTypeaheadResult } from './useTypeahead';
 
 export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
@@ -23,6 +24,7 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   isDisabled: false,
   options: [],
   placeholder: '',
+  useFormResult: {} as UseFormReturn<FieldValues>,
   setValue: () => {
     /* no-op */
   },

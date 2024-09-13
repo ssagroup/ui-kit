@@ -1,5 +1,5 @@
-import Icon from '@components/Icon';
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
 
 export const TypeaheadItemImage = styled.img`
   width: 24px;

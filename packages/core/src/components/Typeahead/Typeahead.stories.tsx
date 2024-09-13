@@ -189,7 +189,7 @@ export const WithError: StoryObj = (args: TypeaheadProps) => {
       validationSchema={{
         required: 'Required',
       }}
-      errors={mockError}
+      error={mockError}
       renderOption={({ label, input }) => highlightInputMatch(label, input)}>
       {items.map(({ label, value, id }) => (
         <TypeaheadOption key={id} value={id} label={label || value}>

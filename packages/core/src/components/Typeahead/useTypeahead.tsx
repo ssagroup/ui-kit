@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useForm } from 'react-hook-form';
 import { propOr } from '@ssa-ui-kit/utils';
 import { TypeaheadOptionProps, UseTypeaheadProps } from './types';
 
@@ -22,7 +23,7 @@ export const useTypeahead = ({
   startIconClassName,
   endIconClassName,
   validationSchema,
-  errors,
+  error,
   success,
   placeholder,
   register,
@@ -41,12 +42,13 @@ export const useTypeahead = ({
   const [items, setItems] = useState<Array<React.ReactElement> | undefined>();
   const [inputValue, setInputValue] = useState<string>('');
   const [status, setStatus] = useState<'basic' | 'success' | 'error'>('basic');
+  const [firstSuggestion, setFirstSuggestion] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
   const typeaheadId = useId();
   const triggerRef: React.MutableRefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
-  const [firstSuggestion, setFirstSuggestion] = useState('');
+  const useFormResult = useForm();
 
   useEffect(() => {
     if (!register) {
@@ -71,9 +73,21 @@ export const useTypeahead = ({
   }, [isDisabled]);
 
   useEffect(() => {
-    const status = success ? 'success' : errors ? 'error' : 'basic';
+    const status = success
+      ? 'success'
+      : useFormResult.formState.errors[name]
+      ? 'error'
+      : 'basic';
     setStatus(status);
-  }, [errors, success]);
+  }, [useFormResult.formState.errors[name], success]);
+
+  useEffect(() => {
+    if (error) {
+      useFormResult.setError(name, error);
+    } else {
+      useFormResult.resetField(name);
+    }
+  }, [error]);
 
   useEffect(() => {
     const keyedOptions: Record<
@@ -201,6 +215,8 @@ export const useTypeahead = ({
     setIsOpen(false);
     setFirstSuggestion('');
     inputRef.current?.focus();
+    setStatus('basic');
+    useFormResult.clearErrors();
     onChange && onChange(changingValue, isNewSelected);
   };
 
@@ -305,6 +321,7 @@ export const useTypeahead = ({
     status,
     placeholder,
     options: items,
+    useFormResult,
     register,
     setValue,
     handleChange,
