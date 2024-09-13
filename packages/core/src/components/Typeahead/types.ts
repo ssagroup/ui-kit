@@ -17,6 +17,8 @@ export interface TypeaheadProps {
   children?: React.ReactNode;
   className?: string;
   optionsClassName?: string;
+  wrapperClassName?: string;
+  width?: string | number;
   isOpen?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -25,7 +27,7 @@ export interface TypeaheadProps {
   name?: string;
   label?: string;
   helperText?: string;
-  errors?: FieldError;
+  error?: FieldError;
   success?: boolean;
   validationSchema?: Record<string, unknown>;
   placeholder?: string | null;
@@ -57,7 +59,7 @@ export type UseTypeaheadProps = Pick<
   | 'register'
   | 'setValue'
   | 'validationSchema'
-  | 'errors'
+  | 'error'
   | 'success'
   | 'placeholder'
 >;

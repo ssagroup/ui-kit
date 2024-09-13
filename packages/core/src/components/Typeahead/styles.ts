@@ -1,3 +1,4 @@
+import { Theme } from '@emotion/react';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import Wrapper from '@components/Wrapper';
@@ -35,8 +36,9 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   }
 `;
 
-export const TypeaheadInput = css`
+export const TypeaheadInput = (theme: Theme) => css`
   &.typeahead-input {
+    color: ${theme.colors.greyDarker};
     border: none;
     border-radius: 0;
     height: 32px;
@@ -148,7 +150,7 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   background: #fff;
   gap: 8px;
   padding: 5px 28px 5px 8px;
-  width: 300px;
+  width: 100%;
   flex-wrap: wrap;
   border-color: ${({ isOpen, theme, status }) =>
     isOpen &&

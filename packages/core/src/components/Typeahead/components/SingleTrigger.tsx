@@ -1,4 +1,5 @@
 import { InputHTMLAttributes } from 'react';
+import { useTheme } from '@emotion/react';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
@@ -7,6 +8,7 @@ import * as S from '../styles';
 
 export const SingleTrigger = () => {
   const context = useTypeaheadContext();
+  const theme = useTheme();
   const typeaheadInputAdditionalProps: InputHTMLAttributes<HTMLInputElement> =
     {};
   if (!context.selectedItems.length && !!context.placeholder) {
@@ -26,7 +28,7 @@ export const SingleTrigger = () => {
             onChange: context.handleInputChange,
             value: context.inputValue,
             autoComplete: 'off',
-            className: ['typeahead-input', S.TypeaheadInput].join(' '),
+            className: ['typeahead-input', S.TypeaheadInput(theme)].join(' '),
           }}
           wrapperClassName={S.TypeaheadInputWrapper}
           ref={context.inputRef}
@@ -40,7 +42,7 @@ export const SingleTrigger = () => {
         value={context.firstSuggestion}
         className={[
           'typeahead-input',
-          S.TypeaheadInput,
+          S.TypeaheadInput(theme),
           S.TypeaheadInputPlaceholder,
         ].join(' ')}
         {...typeaheadInputAdditionalProps}

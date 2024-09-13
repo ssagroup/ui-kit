@@ -32,7 +32,7 @@ export const Typeahead = ({
   className,
   startIcon,
   endIcon,
-  errors,
+  error,
   success,
   helperText,
   validationSchema,
@@ -40,6 +40,8 @@ export const Typeahead = ({
   startIconClassName,
   endIconClassName,
   optionsClassName,
+  wrapperClassName,
+  width = 300,
   setValue,
   register,
   onChange,
@@ -58,7 +60,7 @@ export const Typeahead = ({
     endIcon,
     startIconClassName,
     endIconClassName,
-    errors,
+    error,
     success,
     validationSchema,
     placeholder,
@@ -74,7 +76,9 @@ export const Typeahead = ({
         css={{
           flexDirection: 'column',
           alignItems: 'flex-start',
+          width,
         }}
+        className={wrapperClassName}
         data-testid="typeahead">
         {label && (
           <Label
@@ -94,6 +98,7 @@ export const Typeahead = ({
             css={{
               width: hookResult.triggerRef.current?.clientWidth,
               boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
+              zIndex: 100,
             }}
             isFocusManagerDisabled>
             <PopoverDescription css={{ width: '100%' }}>
@@ -105,13 +110,13 @@ export const Typeahead = ({
             </PopoverDescription>
           </PopoverContent>
         </Popover>
-        {(errors?.message || helperText) && (
+        {(hookResult.status === 'error' || helperText) && (
           <FormHelperText
             role="status"
             status={hookResult.status}
             disabled={isDisabled}
             data-testid="helper-text">
-            {errors ? errors?.message : helperText}
+            {error ? error?.message : helperText}
           </FormHelperText>
         )}
       </Wrapper>
