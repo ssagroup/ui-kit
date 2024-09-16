@@ -60,7 +60,9 @@ describe('Typeahead', () => {
   it('Renders without a selected item', async () => {
     const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup();
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', undefined);
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', undefined, {
+      shouldDirty: false,
+    });
 
     const mainElement = getByTestId('typeahead');
 
@@ -104,7 +106,9 @@ describe('Typeahead', () => {
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs);
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
+      shouldDirty: false,
+    });
 
     let mainElement = getByTestId('typeahead');
 
@@ -164,7 +168,9 @@ describe('Typeahead', () => {
       />,
     );
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', []);
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', [], {
+      shouldDirty: false,
+    });
 
     let mainElement = getByTestId('typeahead');
 
@@ -203,7 +209,9 @@ describe('Typeahead', () => {
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs);
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
+      shouldDirty: false,
+    });
 
     const mainElement = getByTestId('typeahead');
 
@@ -243,7 +251,9 @@ describe('Typeahead', () => {
       label: 'Label',
     });
 
-    expect(mockOnChange).lastCalledWith('typeahead-dropdown', selectedIDs[0]);
+    expect(mockOnChange).lastCalledWith('typeahead-dropdown', selectedIDs[0], {
+      shouldDirty: true,
+    });
 
     let inputEl = screen.queryByTestId('typeahead-input');
     expect(inputEl).toHaveValue('First');
@@ -345,7 +355,9 @@ describe('Typeahead', () => {
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs);
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
+      shouldDirty: false,
+    });
 
     let mainElement = getByTestId('typeahead');
 
@@ -448,7 +460,9 @@ describe('Typeahead', () => {
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs);
+    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
+      shouldDirty: false,
+    });
 
     let mainElement = getByTestId('typeahead');
     let toggleElement = within(mainElement).getByRole('combobox');
