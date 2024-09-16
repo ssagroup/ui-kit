@@ -37,9 +37,10 @@ export const SingleTrigger = () => {
       <input
         type="text"
         data-testid="typeahead-input"
-        aria-hidden
+        aria-hidden={context.isOpen}
         readOnly
         value={context.firstSuggestion}
+        tabIndex={-1}
         className={[
           'typeahead-input',
           S.TypeaheadInput(theme),
@@ -49,7 +50,6 @@ export const SingleTrigger = () => {
       />
       <input
         type="hidden"
-        aria-hidden
         readOnly
         value={(context.selectedItems[0] || '') as string | undefined}
         {...context.register?.(context.name, context.validationSchema)}
@@ -60,7 +60,8 @@ export const SingleTrigger = () => {
           data-testid="remove-all-button"
           endIcon={<Icon name="cross" size={8} tooltip="Remove" />}
           css={{
-            padding: '0 14px 0 10px',
+            padding: '0 10px',
+            marginRight: 4,
             position: 'absolute',
             right: -28,
             zIndex: 10,
