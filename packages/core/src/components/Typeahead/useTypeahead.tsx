@@ -39,6 +39,7 @@ export const useTypeahead = ({
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, Record<string, string | number>>
   >({});
+  const [isFirstRender, setFirstRender] = useState<boolean>(true);
   const [items, setItems] = useState<Array<React.ReactElement> | undefined>();
   const [inputValue, setInputValue] = useState<string>('');
   const [status, setStatus] = useState<'basic' | 'success' | 'error'>('basic');
@@ -58,11 +59,15 @@ export const useTypeahead = ({
 
   useEffect(() => {
     if (isMultiple) {
-      setValue?.(name, selected);
+      setValue?.(name, selected, {
+        shouldDirty: !isFirstRender,
+      });
       setInputValue('');
       setFirstSuggestion('');
     } else {
-      setValue?.(name, selected.length ? selected[0] : undefined);
+      setValue?.(name, selected.length ? selected[0] : undefined, {
+        shouldDirty: !isFirstRender,
+      });
     }
   }, [selected]);
 
@@ -85,6 +90,7 @@ export const useTypeahead = ({
     if (error) {
       useFormResult.setError(name, error);
     } else {
+      setStatus('basic');
       useFormResult.resetField(name);
     }
   }, [error]);
@@ -108,6 +114,7 @@ export const useTypeahead = ({
     });
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
+    setFirstRender(false);
   }, [initialSelectedItems, children]);
 
   useEffect(() => {
@@ -216,7 +223,8 @@ export const useTypeahead = ({
     setFirstSuggestion('');
     inputRef.current?.focus();
     setStatus('basic');
-    useFormResult.clearErrors();
+    useFormResult.clearErrors(name);
+    useFormResult.trigger(name);
     onChange && onChange(changingValue, isNewSelected);
   };
 
@@ -230,6 +238,7 @@ export const useTypeahead = ({
     setInputValue('');
     setIsOpen(false);
     setFirstSuggestion('');
+    useFormResult.trigger(name);
     inputRef.current?.focus();
   };
 
@@ -247,13 +256,12 @@ export const useTypeahead = ({
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    if (['Tab', 'Space'].includes(event.code) && !firstSuggestion) {
+    if (['Space'].includes(event.code) && !firstSuggestion) {
       setIsOpen(true);
       inputRef.current?.focus();
       event.stopPropagation();
       event.preventDefault();
-    }
-    if (['Tab', 'Enter'].includes(event.code) && firstSuggestion) {
+    } else if (['Tab', 'Enter'].includes(event.code) && firstSuggestion) {
       const foundItem = Object.values(optionsWithKey).find(
         (item) =>
           `${item.label}`.toLowerCase() === firstSuggestion.toLowerCase(),
@@ -264,8 +272,7 @@ export const useTypeahead = ({
       }
       event.preventDefault();
       return false;
-    }
-    if (
+    } else if (
       isMultiple &&
       event.code === 'Backspace' &&
       selected.length > 0 &&
@@ -274,8 +281,7 @@ export const useTypeahead = ({
       handleChange(selected[selected.length - 1]);
       event.preventDefault();
       return false;
-    }
-    if (!isOpen) {
+    } else if (!isOpen) {
       setIsOpen(true);
     }
   };

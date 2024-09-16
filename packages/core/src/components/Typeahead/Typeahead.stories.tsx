@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FieldError,
   FieldValues,
@@ -86,8 +86,38 @@ Basic.args = { isDisabled: false };
 
 export const Multiple: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
-  const { handleSubmit, register, setValue } = useFormResult;
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    setError,
+    clearErrors,
+    watch,
+    formState: { errors, isDirty },
+  } = useFormResult;
+  const fieldName = 'typeahead-dropdown';
+  const error = errors[fieldName]
+    ? {
+        type: errors[fieldName].type,
+        message: errors[fieldName].message,
+      }
+    : undefined;
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+  const fieldWatch = watch(fieldName);
+  useEffect(() => {
+    if (isDirty) {
+      if (Array.isArray(fieldWatch) && !fieldWatch.length) {
+        setError(fieldName, {
+          message: 'Required field',
+          type: 'required',
+        });
+      } else {
+        clearErrors(fieldName);
+      }
+    }
+  }, [fieldWatch, isDirty]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typeahead
@@ -98,7 +128,11 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
         helperText="Helper Text"
         register={register}
         setValue={setValue}
-        name={'typeahead-dropdown'}
+        validationSchema={{
+          required: 'Required',
+        }}
+        name={fieldName}
+        error={error as FieldError}
         renderOption={({ label, input }) => highlightInputMatch(label, input)}>
         {items.map(({ label, value, id }) => (
           <TypeaheadOption key={id} value={id} label={label || value}>

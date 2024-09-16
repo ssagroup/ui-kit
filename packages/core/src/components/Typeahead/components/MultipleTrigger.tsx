@@ -78,9 +78,10 @@ export const MultipleTrigger = () => {
         <input
           type="text"
           data-testid="typeahead-input"
-          aria-hidden
+          aria-hidden={context.isOpen}
           readOnly
           value={context.firstSuggestion}
+          tabIndex={-1}
           disabled={context.isDisabled}
           className={[
             'typeahead-input',
@@ -91,7 +92,6 @@ export const MultipleTrigger = () => {
         />
         <input
           type="hidden"
-          aria-hidden
           readOnly
           value={context.selectedItems as string[]}
           {...context.register?.(context.name, context.validationSchema)}
@@ -103,7 +103,8 @@ export const MultipleTrigger = () => {
           data-testid="remove-all-button"
           endIcon={<Icon name="cross" size={8} tooltip="Remove all" />}
           css={{
-            padding: '0 14px 0 10px',
+            padding: '0 10px',
+            marginRight: 4,
             position: 'absolute',
             right: 0,
             zIndex: 10,
