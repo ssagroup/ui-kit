@@ -52,6 +52,9 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   handleRemoveSelectedClick: () => () => {
     /* no-op */
   },
+  handleInputBlur: () => {
+    /* no-op */
+  },
   handleSelectedClick: () => {
     /* no-op */
   },

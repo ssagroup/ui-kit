@@ -29,6 +29,7 @@ export const useTypeahead = ({
   register,
   setValue,
   onChange,
+  onBlur,
   renderOption,
 }: UseTypeaheadProps) => {
   const inputName = `${name}-text`;
@@ -261,7 +262,11 @@ export const useTypeahead = ({
       inputRef.current?.focus();
       event.stopPropagation();
       event.preventDefault();
-    } else if (['Tab', 'Enter'].includes(event.code) && firstSuggestion) {
+    } else if (
+      ['Tab', 'Enter'].includes(event.code) &&
+      firstSuggestion &&
+      firstSuggestion !== inputValue
+    ) {
       const foundItem = Object.values(optionsWithKey).find(
         (item) =>
           `${item.label}`.toLowerCase() === firstSuggestion.toLowerCase(),
@@ -281,7 +286,7 @@ export const useTypeahead = ({
       handleChange(selected[selected.length - 1]);
       event.preventDefault();
       return false;
-    } else if (!isOpen) {
+    } else if (!isOpen && firstSuggestion !== inputValue) {
       setIsOpen(true);
     }
   };
@@ -336,6 +341,7 @@ export const useTypeahead = ({
     handleInputChange,
     handleInputClick,
     handleInputKeyDown,
+    handleInputBlur: onBlur,
     handleSelectedClick,
     handleRemoveSelectedClick,
   };
