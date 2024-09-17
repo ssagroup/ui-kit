@@ -29,7 +29,7 @@ export const useTypeahead = ({
   register,
   setValue,
   onChange,
-  onBlur,
+  onEmptyChange,
   renderOption,
 }: UseTypeaheadProps) => {
   const inputName = `${name}-text`;
@@ -40,6 +40,7 @@ export const useTypeahead = ({
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, Record<string, string | number>>
   >({});
+  const [isEmpty, setIsEmpty] = useState<boolean>();
   const [isFirstRender, setFirstRender] = useState<boolean>(true);
   const [items, setItems] = useState<Array<React.ReactElement> | undefined>();
   const [inputValue, setInputValue] = useState<string>('');
@@ -70,7 +71,15 @@ export const useTypeahead = ({
         shouldDirty: !isFirstRender,
       });
     }
+
+    if (!isFirstRender) {
+      setIsEmpty(!selected.length);
+    }
   }, [selected]);
+
+  useEffect(() => {
+    onEmptyChange?.(isEmpty);
+  }, [isEmpty]);
 
   useEffect(() => {
     if (isDisabled && isOpen) {
@@ -341,7 +350,6 @@ export const useTypeahead = ({
     handleInputChange,
     handleInputClick,
     handleInputKeyDown,
-    handleInputBlur: onBlur,
     handleSelectedClick,
     handleRemoveSelectedClick,
   };
