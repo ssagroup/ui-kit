@@ -34,7 +34,7 @@ export interface TypeaheadProps {
   setValue?: UseFormSetValue<FieldValues>;
   register?: UseFormReturn['register'];
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onEmptyChange?: (isEmpty?: boolean) => void;
   renderOption?: (data: {
     value: string | number;
     input: string;
@@ -49,7 +49,7 @@ export type UseTypeaheadProps = Pick<
   | 'children'
   | 'isMultiple'
   | 'onChange'
-  | 'onBlur'
+  | 'onEmptyChange'
   | 'renderOption'
   | 'isOpen'
   | 'className'

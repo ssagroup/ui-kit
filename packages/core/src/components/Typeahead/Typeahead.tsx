@@ -45,7 +45,7 @@ export const Typeahead = ({
   setValue,
   register,
   onChange,
-  onBlur,
+  onEmptyChange,
   renderOption,
 }: TypeaheadProps) => {
   const theme = useTheme();
@@ -68,7 +68,7 @@ export const Typeahead = ({
     setValue,
     register,
     onChange,
-    onBlur,
+    onEmptyChange,
     renderOption,
   });
 

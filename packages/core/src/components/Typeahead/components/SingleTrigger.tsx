@@ -26,7 +26,6 @@ export const SingleTrigger = () => {
             onClick: context.handleInputClick,
             onKeyDown: context.handleInputKeyDown,
             onChange: context.handleInputChange,
-            onBlur: context.handleInputBlur,
             value: context.inputValue,
             autoComplete: 'off',
             className: ['typeahead-input', S.TypeaheadInput(theme)].join(' '),
