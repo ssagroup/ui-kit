@@ -63,6 +63,9 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
       <Typeahead
         initialSelectedItems={[items[2].id]}
         isDisabled={args.isDisabled}
+        onBlur={() => {
+          console.log('>>>onBlur event');
+        }}
         name={'typeahead-dropdown'}
         label="Label"
         helperText="Helper Text"
@@ -124,6 +127,9 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
         initialSelectedItems={[items[2].id, items[1].id]}
         isMultiple
         isDisabled={args.isDisabled}
+        onBlur={() => {
+          console.log('>>>onBlur event');
+        }}
         label="Label"
         helperText="Helper Text"
         register={register}
