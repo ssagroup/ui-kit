@@ -4,7 +4,6 @@ import { PieChartProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 
 export const PieChart = ({
-  data,
   as,
   className,
   title,
@@ -15,7 +14,6 @@ export const PieChart = ({
     <PieChartBase as={as} className={className}>
       <div className="pie-chart-wrapper">
         <ResponsivePie
-          data={data}
           isInteractive={false}
           innerRadius={0.8}
           enableArcLinkLabels={false}
@@ -29,7 +27,7 @@ export const PieChart = ({
           arcLinkLabelsThickness={2}
           arcLinkLabelsColor={{ from: 'color' }}
           arcLabelsSkipAngle={10}
-          layers={['arcs']}
+          layers={['arcs', 'arcLinkLabels', 'arcLabels']}
           {...chartProps}
         />
         {title && <PieChartTextBase>{title}</PieChartTextBase>}
