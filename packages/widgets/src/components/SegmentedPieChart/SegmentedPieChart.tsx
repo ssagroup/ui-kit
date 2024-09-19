@@ -1,35 +1,32 @@
-import { MayHaveLabel } from '@nivo/pie';
-import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { pathOr } from '@ssa-ui-kit/utils';
-import Typography from '@components/Typography';
-import Wrapper from '@components/Wrapper';
-import { balanceData, balanceDataTotal } from './stories/fixtures';
-import { PieChart, PieChartLegend, pieChartPalettes } from '.';
+import {
+  Typography,
+  Wrapper,
+  PieChart,
+  PieChartLegend,
+} from '@ssa-ui-kit/core';
+import { getAccountPalette } from './colorPalettes';
+import { BalanceDataForGraph, SegmentedPieChartProps } from './types';
 
-export default {
-  title: 'Charts/SegmentedPieChart',
-  component: PieChart,
-} as Meta<typeof PieChart>;
-
-interface BalanceData extends MayHaveLabel {
-  mainLabel: string;
-  mainPercentage: number;
-  partLabel: string;
-  partPercentage: number;
-  id: number | string;
-  value: number | string;
-  color: string;
-}
-
-// TODO: widget from story?
-export const AccountExample: StoryObj<typeof PieChart> = () => {
+/**
+ * TODO:
+ * - pass PieChart props
+ * - pass color [[], [], ...]
+ * - pass data
+ * - pass styles?
+ * - pass labels (like USD)
+ * - add tests?
+ * - don't we need changed to the "core" library?
+ */
+export const SegmentedPieChart = ({
+  balanceData,
+  balanceDataTotal,
+}: SegmentedPieChartProps) => {
   const theme = useTheme();
-  const { legendBackgrounds, pieChartColors } =
-    pieChartPalettes.getAccountPalette(theme);
+  const { legendBackgrounds, pieChartColors } = getAccountPalette(theme);
 
-  // making flat data structure
-  const balanceDataForTheGraph: Array<BalanceData> = [];
+  const balanceDataForTheGraph: BalanceDataForGraph[] = [];
   balanceData.forEach((item, itemIndex) => {
     item.parts.forEach((part, partIndex) => {
       balanceDataForTheGraph.push({
@@ -37,28 +34,25 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
         mainPercentage: item.percentage,
         partLabel: part.label,
         partPercentage: part.percentage,
-        color: '#ffa',
+        color: pieChartColors[itemIndex][partIndex],
         id: `${itemIndex}${partIndex}`,
+        mainId: item.id,
         value: part.percentage,
       });
     });
   });
-
-  // generating colors for data;
-  // const pieChartColorsNew = [];
 
   return (
     <div style={{ padding: 50 }}>
       <div style={{ width: '400px' }}>
         <PieChart
           data={balanceDataForTheGraph}
-          // colors={pieChartColors}
           animate={true}
           isInteractive
           activeInnerRadiusOffset={0}
           activeOuterRadiusOffset={0}
           tooltip={(point) => {
-            const pointData = pathOr<typeof point, BalanceData>({}, [
+            const pointData = pathOr<typeof point, BalanceDataForGraph>({}, [
               'datum',
               'data',
             ])(point);
@@ -148,4 +142,3 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
     </div>
   );
 };
-AccountExample.args = {};

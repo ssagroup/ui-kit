@@ -34,3 +34,4 @@ export * from './components/BotsTable';
 export * from './components/AccountBalance';
 export * from './components/ExchangeAccount';
 export * from './components/ExchangeAccountKeys';
+export * from './components/SegmentedPieChart';
