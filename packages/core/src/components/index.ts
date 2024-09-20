@@ -97,6 +97,7 @@ export * from './SearchBox';
 export * from './UserProfile';
 export * from './AddNewAccountCard';
 export * from './PieChart';
+export * from './SegmentedPieChart';
 export * from './CollapsibleNavBar';
 export * from './Filters';
 export * from './TableFilters';

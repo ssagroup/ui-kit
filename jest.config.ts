@@ -49,6 +49,9 @@ const config: JestConfigWithTsJest = {
         '<rootDir>/packages/core/src/**/*.spec.tsx',
       ],
       moduleNameMapper: {
+        '^@(components|themes|styles|types)$': [
+          '<rootDir>/packages/core/src/index.ts',
+        ],
         '^@(components|themes|styles|types)/(.*)$': [
           '<rootDir>/packages/core/src/$1/$2',
           '<rootDir>/packages/core/src/$1/$2.ts',
