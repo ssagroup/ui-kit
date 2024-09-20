@@ -18,7 +18,8 @@ export type PieChartLegendItem = {
 
 export interface PieChartLegendProps {
   data: Array<PieChartLegendItem>;
-  colors: Array<keyof MainColors>;
+  colors?: Array<keyof MainColors>;
+  backgroundColors?: Array<string>;
   renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
   renderLabel?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
   className?: string;

@@ -38,7 +38,7 @@
       "./jest-setup.ts"
     ],
     "transform": {
-      "^.+\\.(j|t)sx?$": "babel-jest"
+      "^.+\\.(j|t)sx?$": "ts-jest"
     },
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/apis/sources/mock/"

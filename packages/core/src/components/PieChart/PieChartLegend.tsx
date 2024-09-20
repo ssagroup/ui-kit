@@ -9,6 +9,7 @@ import { PieChartLegendProps } from './types';
 export const PieChartLegend = ({
   data,
   colors,
+  backgroundColors,
   renderLabel,
   renderValue,
   markerStyles,
@@ -27,7 +28,12 @@ export const PieChartLegend = ({
           return (
             <li key={`tag-${id}`}>
               <PieChartLegendMarker
-                color={colors[index] || 'purple'}
+                color={
+                  backgroundColors ? undefined : colors?.[index] || 'purple'
+                }
+                background={
+                  backgroundColors ? backgroundColors[index] : undefined
+                }
                 as={'span'}
                 css={markerStyles}
               />

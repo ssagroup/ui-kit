@@ -4,6 +4,15 @@ import type { JestConfigWithTsJest } from 'ts-jest';
 // an example Dashboard. Thus, the have Jest configured locally (in the
 // corresponding package.json).
 
+const transformIgnorePatterns = [
+  'node_modules/',
+  'node_modules/.pnpm/(?!(d3-color)/)',
+  'node_modules/.pnpm/(?!(d3-interpolate)/)',
+  'node_modules/.pnpm/(?!(d3-scale)/)',
+  'node_modules/.pnpm/(?!(d3-scale-chromatic)/)',
+  'node_modules/.pnpm/(?!(d3-shape)/)',
+];
+
 const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
@@ -49,13 +58,16 @@ const config: JestConfigWithTsJest = {
         '<rootDir>/packages/core/src/**/*.spec.tsx',
       ],
       moduleNameMapper: {
+        '^@(components|themes|styles|types)$': [
+          '<rootDir>/packages/core/src/index.ts',
+        ],
         '^@(components|themes|styles|types)/(.*)$': [
           '<rootDir>/packages/core/src/$1/$2',
           '<rootDir>/packages/core/src/$1/$2.ts',
           '<rootDir>/packages/core/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns: ['/node_modules/'],
+      transformIgnorePatterns,
     },
     {
       displayName: 'UI Kit Utils',
@@ -119,7 +131,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/widgets/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns: ['/node_modules/'],
+      transformIgnorePatterns,
     },
     {
       preset: 'ts-jest',
@@ -148,7 +160,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/examples/fitness-dashboard/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns: ['/node_modules/'],
+      transformIgnorePatterns,
     },
   ],
 };
