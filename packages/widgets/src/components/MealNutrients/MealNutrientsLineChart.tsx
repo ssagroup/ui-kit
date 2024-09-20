@@ -39,7 +39,6 @@ export const MealNutrientsLineChart = ({ data, ...props }: LineSvgProps) => {
             return <MealNutrientsTooltip point={point} colorName={color} />;
           },
           theme: {
-            fontFamily: "'Manrope', sans-serif",
             axis: {
               ticks: {
                 text: {
@@ -55,6 +54,9 @@ export const MealNutrientsLineChart = ({ data, ...props }: LineSvgProps) => {
                 strokeWidth: 1,
                 strokeDasharray: '8 8',
               },
+            },
+            text: {
+              fontFamily: "'Manrope', sans-serif",
             },
           },
         },
