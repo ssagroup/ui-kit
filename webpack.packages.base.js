@@ -47,8 +47,19 @@ const baseConfig = {
         },
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
+      },
+      {
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: { not: [/react/] }, // exclude react component if *.svg?react
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: [/react/], // include react component if *.svg?react
+        use: ['@svgr/webpack'],
       },
     ],
   },

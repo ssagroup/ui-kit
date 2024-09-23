@@ -1,0 +1,86 @@
+{
+  "name": "@ssa-ui-kit/templates",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "sideEffects": false,
+  "author": "SSA Group",
+  "license": "MIT",
+  "description": "SSA UI Kit",
+  "keywords": [
+    "react",
+    "SSA UI Kit",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssagroup/ui-kit.git",
+    "directory": "packages/templates"
+  },
+  "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/css": "^11.11.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@ssa-ui-kit/core": "workspace:^",
+    "@ssa-ui-kit/hooks": "workspace:^",
+    "@ssa-ui-kit/utils": "workspace:^",
+    "@ssa-ui-kit/widgets": "workspace:^",
+    "dotenv": "^16.0.3",
+    "js-tokens": "^4.0.0",
+    "loose-envify": "^1.4.0",
+    "luxon": "^3.5.0",
+    "react-plotly.js": "^2.6.0",
+    "scheduler": "^0.23.0",
+    "usehooks-ts": "^3.1.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@emotion/jest": "^11.11.0",
+    "@playwright/test": "^1.37.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/luxon": "^3.4.2",
+    "@types/react-plotly.js": "^2.6.3",
+    "@types/testing-library__jest-dom": "^5.14.6",
+    "@types/uuid": "^9.0.3",
+    "resolve-tspaths": "^0.8.16",
+    "storybook-addon-pseudo-states": "^2.1.0",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.85.0"
+  },
+  "scripts": {
+    "test": "jest -i --no-cache",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "sb:dev": "storybook dev -p 6006",
+    "sb:build": "storybook build",
+    "test:e2e": "pnpm exec playwright test --project=chromium",
+    "test:e2e:ui": "pnpm exec playwright test --project=chromium --ui",
+    "test:e2e:debug": "pnpm exec playwright test --project=chromium --debug",
+    "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
+    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "tsc --noEmit -p ./tsconfig.json",
+    "ts-check-build": "tsc -p ./tsconfig.build.json"
+  },
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "peerDependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/css": "^11.11.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "react-hook-form": "^7.46.1",
+    "react-i18next": "^13.x",
+    "react-router-dom": "6.x"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  }
+}

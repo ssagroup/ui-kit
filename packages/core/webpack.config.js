@@ -22,6 +22,7 @@ module.exports = () => {
       '@emotion/styled': '@emotion/styled',
       '@nivo/core': '@nivo/core',
       '@nivo/pie': '@nivo/pie',
+      '@nivo/line': '@nivo/line',
     },
   });
 
