@@ -6,11 +6,11 @@ import {
   HeaderProvider,
   PeriodProvider,
 } from '@/trading/contexts';
-import { Dashboard } from '@trading/pages/Dashboard';
+import { TradingDashboard } from '@trading/pages/Dashboard';
 
 export default {
   title: 'Templates/TradingDashboard',
-  component: Dashboard,
+  component: TradingDashboard,
   decorators: [
     (Story, { args }) => {
       return (
@@ -27,6 +27,6 @@ export default {
     },
   ],
   argTypes: {},
-} as Meta<typeof Dashboard>;
+} as Meta<typeof TradingDashboard>;
 
 export const Default = {};

@@ -103,6 +103,7 @@ svgr
 swp
 tanstack
 testid
+Threashold
 tickfont
 tickformat
 tomdata

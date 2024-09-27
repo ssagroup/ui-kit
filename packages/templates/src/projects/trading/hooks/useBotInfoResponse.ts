@@ -10,6 +10,17 @@ export const useBotInfoResponse = <T = API.SingleBotResponse>(
   const { id: botId } = useParams();
   const { isOn: currentRun } = useSwitchContext();
   const { period } = usePeriod();
+  /**
+   * botId
+   * currentRun
+   * period:
+   *** period: StatisticPeriod
+   ***** "Day" | "Current" | "Week" | "Month" | "Year" | "AllTime" | "Custom"
+   *** periodRange
+   ***** start: Date
+   ***** end: Date
+   ******* periodRange - we don't need it! We don't need Custom!
+   */
   return useQuery({
     queryKey: ['bot-info', { botId, currentRun, period }],
     gcTime: 0,

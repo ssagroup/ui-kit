@@ -37,7 +37,7 @@ import {
 import { useStatistics, useGraphStatistic } from './hooks';
 import * as S from './styles';
 
-export const Dashboard = () => {
+export const TradingDashboard = () => {
   const [period, setPeriod] = useState<RequestPeriod>({ period: PERIOD_DAY });
 
   const { data: graphsData, isFetching: isGraphStatLoading } =
