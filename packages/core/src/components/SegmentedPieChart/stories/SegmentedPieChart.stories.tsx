@@ -10,7 +10,14 @@ export default {
 type Args = StoryObj<Partial<Parameters<typeof SegmentedPieChart>[0]>>;
 
 const StoryTemplate: Args = {
-  render: ({ ...args }) => <SegmentedPieChart data={balanceData} {...args} />,
+  render: ({ ...args }) => (
+    <SegmentedPieChart
+      data={balanceData}
+      totalAmount={17737}
+      totalDimension="USD"
+      {...args}
+    />
+  ),
 };
 
 export const AccountExample = {
@@ -43,8 +50,12 @@ export const CustomCurrency = {
   ...StoryTemplate,
   args: {
     currency: 'EUR',
+    totalDimension: 'PLN',
+    totalAmount: 17737.12,
   },
 };
+
+CustomCurrency.storyName = 'Custom currency, total dimension and amount';
 
 export const WithoutTooltip = {
   ...StoryTemplate,

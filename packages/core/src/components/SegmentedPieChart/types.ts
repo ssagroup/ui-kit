@@ -4,7 +4,6 @@ import { PieChartLegend, PieChartProps } from '@components';
 
 type BalanceDataPartsItem = {
   label: string;
-  percentage: number;
   value: number;
 };
 
@@ -12,7 +11,6 @@ type BalanceDataItem = {
   id: number;
   value: number;
   label: string;
-  percentage: number;
   parts?: BalanceDataPartsItem[];
 };
 
@@ -26,11 +24,14 @@ export interface SegmentedPieChartProps extends CommonProps {
   pieChartColors?: string[][];
   currency?: string;
   otherLabel?: string;
+  totalAmount: number;
+  totalDimension: string;
 }
 
 export interface BalanceDataForGraph extends MayHaveLabel {
   mainLabel: string;
   mainPercentage: number;
+  partIndex?: number;
   partLabel?: string;
   partPercentage?: number;
   id: number | string;

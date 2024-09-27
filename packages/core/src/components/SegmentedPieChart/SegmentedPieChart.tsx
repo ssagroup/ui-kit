@@ -7,6 +7,10 @@ import {
 } from './colorPalettes';
 import { BalanceDataForGraph, SegmentedPieChartProps } from './types';
 
+/**
+ * - first, do stories
+ * - second, make corrections to this component, if it needed
+ */
 export const SegmentedPieChart = ({
   data,
   pieChartProps,
@@ -15,36 +19,41 @@ export const SegmentedPieChart = ({
   pieChartColors = defaultPieChartColors,
   currency = 'USD',
   otherLabel = 'Other',
+  totalAmount,
+  totalDimension,
 }: SegmentedPieChartProps) => {
   const theme = useTheme();
 
+  let calculatedTotalAmount = 0;
+  data.forEach((item) => {
+    calculatedTotalAmount += item.value;
+  });
   const balanceDataForTheGraph: BalanceDataForGraph[] = [];
-  let balanceDataTotal = 0;
   data?.forEach((item, itemIndex) => {
     if (item.parts?.length) {
       item.parts?.forEach((part, partIndex) => {
         balanceDataForTheGraph.push({
           mainLabel: item.label,
-          mainPercentage: item.percentage,
+          mainPercentage: (item.value * 100) / calculatedTotalAmount,
+          partIndex,
           partLabel: part.label,
-          partPercentage: part.percentage,
+          partPercentage: (part.value * 100) / calculatedTotalAmount,
           color: pieChartColors[itemIndex][partIndex],
           id: `${itemIndex}${partIndex}`,
           mainId: item.id,
-          value: part.percentage,
+          value: (part.value * 100) / calculatedTotalAmount,
         });
       });
     } else {
       balanceDataForTheGraph.push({
         mainLabel: item.label,
-        mainPercentage: item.percentage,
+        mainPercentage: (item.value * 100) / calculatedTotalAmount,
         color: pieChartColors[itemIndex][0],
         id: `${itemIndex}${0}`,
         mainId: item.id,
-        value: item.percentage,
+        value: (item.value * 100) / calculatedTotalAmount,
       });
     }
-    balanceDataTotal += item.value;
   });
 
   return (
@@ -111,7 +120,7 @@ export const SegmentedPieChart = ({
             font-size: 20px;
             line-height: 25px;
           `}>
-          {balanceDataTotal} &nbsp;
+          {totalAmount} &nbsp;
           <Typography
             variant="body2"
             weight="regular"
@@ -120,7 +129,7 @@ export const SegmentedPieChart = ({
             css={css`
               font-size: 14px;
             `}>
-            {currency}
+            {totalDimension}
           </Typography>
         </Typography>
       }
