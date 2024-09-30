@@ -7,10 +7,6 @@ import {
 } from './colorPalettes';
 import { BalanceDataForGraph, SegmentedPieChartProps } from './types';
 
-/**
- * - first, do stories
- * - second, make corrections to this component, if it needed
- */
 export const SegmentedPieChart = ({
   data,
   pieChartProps,
@@ -21,38 +17,47 @@ export const SegmentedPieChart = ({
   otherLabel = 'Other',
   totalAmount,
   totalDimension,
+  tooltipRoundingDigits = 2,
+  legendValueRoundingDigits = 2,
+  legendPercentageRoundingDigits = 0,
 }: SegmentedPieChartProps) => {
   const theme = useTheme();
 
   let calculatedTotalAmount = 0;
   data.forEach((item) => {
-    calculatedTotalAmount += item.value;
+    calculatedTotalAmount += Number(item.value);
   });
   const balanceDataForTheGraph: BalanceDataForGraph[] = [];
+  const balanceDataForTheLegend: BalanceDataForGraph[] = [];
   data?.forEach((item, itemIndex) => {
+    const newMainItem = {
+      label: item.label,
+      percentage: (Number(item.value) * 100) / calculatedTotalAmount,
+      color: pieChartColors[itemIndex][0],
+      id: `${itemIndex}${0}`,
+      mainId: Number(item.id),
+      value: item.value,
+    };
+    balanceDataForTheLegend.push(newMainItem);
     if (item.parts?.length) {
       item.parts?.forEach((part, partIndex) => {
+        const mainPercentage =
+          (Number(item.value) * 100) / calculatedTotalAmount;
+        const partPercentage = (part.value * 100) / calculatedTotalAmount;
         balanceDataForTheGraph.push({
-          mainLabel: item.label,
-          mainPercentage: (item.value * 100) / calculatedTotalAmount,
+          label: item.label,
+          percentage: Number(mainPercentage),
           partIndex,
           partLabel: part.label,
-          partPercentage: (part.value * 100) / calculatedTotalAmount,
+          partPercentage: Number(partPercentage),
           color: pieChartColors[itemIndex][partIndex],
           id: `${itemIndex}${partIndex}`,
-          mainId: item.id,
-          value: (part.value * 100) / calculatedTotalAmount,
+          mainId: Number(item.id),
+          value: part.value,
         });
       });
     } else {
-      balanceDataForTheGraph.push({
-        mainLabel: item.label,
-        mainPercentage: (item.value * 100) / calculatedTotalAmount,
-        color: pieChartColors[itemIndex][0],
-        id: `${itemIndex}${0}`,
-        mainId: item.id,
-        value: (item.value * 100) / calculatedTotalAmount,
-      });
+      balanceDataForTheGraph.push(newMainItem);
     }
   });
 
@@ -89,12 +94,16 @@ export const SegmentedPieChart = ({
               const currentItem =
                 item === 'main'
                   ? {
-                      label: pointData['mainLabel'],
-                      percentage: pointData['mainPercentage'],
+                      label: pointData['label'],
+                      percentage: pointData['percentage'].toFixed(
+                        tooltipRoundingDigits,
+                      ),
                     }
                   : {
                       label: pointData['partLabel'],
-                      percentage: pointData['partPercentage'],
+                      percentage: pointData['partPercentage']?.toFixed(
+                        tooltipRoundingDigits,
+                      ),
                     };
               return (
                 <Wrapper
@@ -135,13 +144,17 @@ export const SegmentedPieChart = ({
       }
       {...pieChartProps}>
       <PieChartLegend
-        data={data}
+        data={balanceDataForTheLegend}
         backgroundColors={legendBackgrounds}
-        renderValue={({ value, label, percentage }) =>
-          label === otherLabel
-            ? value + ` ${currency}` + ` (${percentage}%)`
-            : value + ' ' + label + ` (${percentage}%)`
-        }
+        renderValue={({ value, label, percentage }) => {
+          const valueLocal = Number(value).toFixed(legendValueRoundingDigits);
+          const percentageLocal = Number(percentage).toFixed(
+            legendPercentageRoundingDigits,
+          );
+          return label === otherLabel
+            ? valueLocal + ` ${currency}` + ` (${percentageLocal}%)`
+            : valueLocal + ' ' + label + ` (${percentageLocal}%)`;
+        }}
         markerStyles={css`
           width: 10px;
           height: 10px;

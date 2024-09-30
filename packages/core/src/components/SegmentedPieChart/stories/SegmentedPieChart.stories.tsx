@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { balanceData, balanceMissedPartsData } from './fixtures';
+import { PieChartLegendItem } from '@components/PieChart';
+import {
+  balanceData,
+  balanceMissedPartsData,
+  balanceMissedPartsDataTotalAmount,
+  balanceTotalAmount,
+} from './fixtures';
 import { SegmentedPieChart } from '../SegmentedPieChart';
 
 export default {
@@ -9,11 +15,14 @@ export default {
 
 type Args = StoryObj<Partial<Parameters<typeof SegmentedPieChart>[0]>>;
 
+const currency = 'USD';
+const otherLabel = 'Other';
+
 const StoryTemplate: Args = {
   render: ({ ...args }) => (
     <SegmentedPieChart
       data={balanceData}
-      totalAmount={17737}
+      totalAmount={Number(balanceTotalAmount)}
       totalDimension="USD"
       {...args}
     />
@@ -57,6 +66,23 @@ export const CustomCurrency = {
 
 CustomCurrency.storyName = 'Custom currency, total dimension and amount';
 
+export const MissedPartsData = {
+  ...StoryTemplate,
+  args: {
+    data: balanceMissedPartsData,
+    totalAmount: balanceMissedPartsDataTotalAmount,
+  },
+};
+
+export const PercentageRoundingDigits = {
+  ...StoryTemplate,
+  args: {
+    tooltipRoundingDigits: 0,
+    legendValueRoundingDigits: 0,
+    legendPercentageRoundingDigits: 2,
+  },
+};
+
 export const WithoutTooltip = {
   ...StoryTemplate,
   args: {
@@ -66,9 +92,26 @@ export const WithoutTooltip = {
   },
 };
 
-export const MissedPartsData = {
+export const WithoutPercentage = {
   ...StoryTemplate,
   args: {
-    data: balanceMissedPartsData,
+    pieChartLegendProps: {
+      renderValue: ({ value, label }: PieChartLegendItem) =>
+        label === otherLabel
+          ? Number(value).toFixed(2) + ` ${currency}`
+          : Number(value).toFixed(2) + ' ' + label,
+    },
+  },
+};
+
+export const WithoutDimensions = {
+  ...StoryTemplate,
+  args: {
+    pieChartLegendProps: {
+      renderValue: ({ value, label, percentage }: PieChartLegendItem) =>
+        label === otherLabel
+          ? Number(value).toFixed(2) + ` (${Number(percentage).toFixed(0)}%)`
+          : Number(value).toFixed(2) + ` (${Number(percentage).toFixed(0)}%)`,
+    },
   },
 };

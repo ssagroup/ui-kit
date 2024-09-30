@@ -1,36 +1,37 @@
 import { CommonProps } from '@global-types/emotion';
-import { MayHaveLabel } from '@nivo/pie';
-import { PieChartLegend, PieChartProps } from '@components';
+import { PieChartLegend, PieChartLegendItem, PieChartProps } from '@components';
 
-type BalanceDataPartsItem = {
+type SegmentedDataMainInfo = {
   label: string;
   value: number;
+  legendValue: number;
 };
 
-type BalanceDataItem = {
-  id: number;
-  value: number;
-  label: string;
-  parts?: BalanceDataPartsItem[];
-};
+interface SegmentedDataItem extends PieChartLegendItem {
+  legendValue: number;
+  parts?: SegmentedDataMainInfo[];
+}
 
-export type BalanceData = Array<BalanceDataItem>;
+export type SegmentedDataSet = Array<SegmentedDataItem>;
 
 export interface SegmentedPieChartProps extends CommonProps {
-  data: BalanceData;
+  data: SegmentedDataSet;
+  totalAmount: number;
+  totalDimension: string;
   pieChartProps?: Partial<PieChartProps>;
   pieChartLegendProps?: Partial<React.ComponentProps<typeof PieChartLegend>>;
   legendBackgrounds?: string[];
   pieChartColors?: string[][];
   currency?: string;
   otherLabel?: string;
-  totalAmount: number;
-  totalDimension: string;
+  tooltipRoundingDigits?: number;
+  legendValueRoundingDigits?: number;
+  legendPercentageRoundingDigits?: number;
 }
 
-export interface BalanceDataForGraph extends MayHaveLabel {
-  mainLabel: string;
-  mainPercentage: number;
+export interface BalanceDataForGraph extends PieChartLegendItem {
+  label: string;
+  percentage: number;
   partIndex?: number;
   partLabel?: string;
   partPercentage?: number;
