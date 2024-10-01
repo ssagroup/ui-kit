@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PieChartLegendItem } from '@components/PieChart';
 import {
   balanceData,
   balanceMissedPartsData,
@@ -15,15 +14,13 @@ export default {
 
 type Args = StoryObj<Partial<Parameters<typeof SegmentedPieChart>[0]>>;
 
-const currency = 'USD';
-const otherLabel = 'Other';
-
+const currency = 'USDT';
 const StoryTemplate: Args = {
   render: ({ ...args }) => (
     <SegmentedPieChart
       data={balanceData}
       totalAmount={Number(balanceTotalAmount)}
-      totalDimension="USD"
+      totalDimension={currency}
       {...args}
     />
   ),
@@ -49,9 +46,6 @@ export const CustomColors = {
       ['#5FD1E4', '#7AE4F5', '#A1F3FF', '#C0FFFF', '#D9FFFF'],
       ['#D77A61', '#E89C91', '#F1B5A4', '#FFC3B5', '#FFDACC'],
     ],
-    pieChartProps: {
-      tooltip: undefined,
-    },
   },
 };
 
@@ -77,8 +71,7 @@ export const MissedPartsData = {
 export const PercentageRoundingDigits = {
   ...StoryTemplate,
   args: {
-    tooltipRoundingDigits: 0,
-    legendValueRoundingDigits: 0,
+    legendValueRoundingDigits: 1,
     legendPercentageRoundingDigits: 2,
   },
 };
@@ -95,23 +88,13 @@ export const WithoutTooltip = {
 export const WithoutPercentage = {
   ...StoryTemplate,
   args: {
-    pieChartLegendProps: {
-      renderValue: ({ value, label }: PieChartLegendItem) =>
-        label === otherLabel
-          ? Number(value).toFixed(2) + ` ${currency}`
-          : Number(value).toFixed(2) + ' ' + label,
-    },
+    showPercentage: false,
   },
 };
 
 export const WithoutDimensions = {
   ...StoryTemplate,
   args: {
-    pieChartLegendProps: {
-      renderValue: ({ value, label, percentage }: PieChartLegendItem) =>
-        label === otherLabel
-          ? Number(value).toFixed(2) + ` (${Number(percentage).toFixed(0)}%)`
-          : Number(value).toFixed(2) + ` (${Number(percentage).toFixed(0)}%)`,
-    },
+    showDimensions: false,
   },
 };

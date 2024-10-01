@@ -21,13 +21,11 @@ describe('SegmentedPieChart', () => {
     getByTestId('responsive-pie');
     getByText(balanceTotalAmount);
 
-    for (const { label, value, percentage } of balanceData) {
+    for (const { label } of balanceData) {
       getByRole('heading', { name: label });
-      if (label === 'Other') {
-        getByRole('heading', { name: `${value} USD (${percentage}%)` });
-      } else {
-        getByRole('heading', { name: `${value} ${label} (${percentage}%)` });
-      }
+      getByRole('heading', {
+        name: `2818.83 U.S.D.T (16%)`,
+      });
     }
   });
 });

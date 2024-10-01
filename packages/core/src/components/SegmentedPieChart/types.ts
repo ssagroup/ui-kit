@@ -7,8 +7,9 @@ type SegmentedDataMainInfo = {
   legendValue: number;
 };
 
-interface SegmentedDataItem extends PieChartLegendItem {
+export interface SegmentedDataItem extends PieChartLegendItem {
   legendValue: number;
+  legendLabel?: string;
   parts?: SegmentedDataMainInfo[];
 }
 
@@ -24,13 +25,16 @@ export interface SegmentedPieChartProps extends CommonProps {
   pieChartColors?: string[][];
   currency?: string;
   otherLabel?: string;
-  tooltipRoundingDigits?: number;
   legendValueRoundingDigits?: number;
   legendPercentageRoundingDigits?: number;
+  showDimensions?: boolean;
+  showPercentage?: boolean;
 }
 
 export interface BalanceDataForGraph extends PieChartLegendItem {
   label: string;
+  legendLabel?: string;
+  legendValueRoundingDigits: number;
   percentage: number;
   partIndex?: number;
   partLabel?: string;
@@ -40,3 +44,18 @@ export interface BalanceDataForGraph extends PieChartLegendItem {
   value: number | string;
   color: string;
 }
+
+export type LegendItemProps = {
+  label: string;
+  legendLabel?: string;
+  percentage?: number;
+  legendValue?: number;
+  legendValueRoundingDigits: number;
+} & Pick<
+  SegmentedPieChartProps,
+  | 'showDimensions'
+  | 'legendPercentageRoundingDigits'
+  | 'otherLabel'
+  | 'currency'
+  | 'showPercentage'
+>;
