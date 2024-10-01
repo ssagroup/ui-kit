@@ -24,7 +24,7 @@ describe('SegmentedPieChart', () => {
     for (const { label } of balanceData) {
       getByRole('heading', { name: label });
       getByRole('heading', {
-        name: `2818.83 U.S.D.T (16%)`,
+        name: `2819 USDT (16%)`,
       });
     }
   });
