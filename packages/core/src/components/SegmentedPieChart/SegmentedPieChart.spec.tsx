@@ -1,5 +1,5 @@
 import { SegmentedPieChart } from './index';
-import { balanceData } from './stories/fixtures';
+import { balanceData, balanceTotalAmount } from './stories/fixtures';
 
 const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
 
@@ -11,19 +11,21 @@ jest.mock('@nivo/pie', () => ({
 describe('SegmentedPieChart', () => {
   it('Renders with a Legend', () => {
     const { getByTestId, getByRole, getByText } = render(
-      <SegmentedPieChart data={balanceData} />,
+      <SegmentedPieChart
+        data={balanceData}
+        totalAmount={balanceTotalAmount}
+        totalDimension="USD"
+      />,
     );
 
     getByTestId('responsive-pie');
-    getByText('17737');
+    getByText(balanceTotalAmount);
 
-    for (const { label, value, percentage } of balanceData) {
+    for (const { label } of balanceData) {
       getByRole('heading', { name: label });
-      if (label === 'Other') {
-        getByRole('heading', { name: `${value} USD (${percentage}%)` });
-      } else {
-        getByRole('heading', { name: `${value} ${label} (${percentage}%)` });
-      }
+      getByRole('heading', {
+        name: `2818.83 U.S.D.T (16%)`,
+      });
     }
   });
 });

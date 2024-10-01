@@ -58,6 +58,7 @@ mxschmitt
 neque
 nisl
 nivo
+PLN
 PNL
 porttitor
 ramda

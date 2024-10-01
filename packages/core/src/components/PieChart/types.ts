@@ -1,5 +1,5 @@
 import { SerializedStyles } from '@emotion/react';
-import { ResponsivePie } from '@nivo/pie';
+import { ResponsivePie, MayHaveLabel } from '@nivo/pie';
 import { CommonProps } from '../..';
 
 export interface PieChartProps
@@ -9,12 +9,12 @@ export interface PieChartProps
   children?: React.ReactNode;
 }
 
-export type PieChartLegendItem = {
+export interface PieChartLegendItem extends MayHaveLabel {
   id: string | number;
   value: string | number;
   label: string;
   [key: string | number | symbol]: unknown;
-};
+}
 
 export interface PieChartLegendProps {
   data: Array<PieChartLegendItem>;
