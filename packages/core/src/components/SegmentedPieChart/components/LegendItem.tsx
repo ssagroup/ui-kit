@@ -7,7 +7,7 @@ export const LegendItem = ({
   legendLabel,
   percentage,
   legendValue,
-  legendValueRoundingDigits: legendValueRoundingDigitsItem,
+  legendValueRoundingDigits,
   legendPercentageRoundingDigits,
   showDimensions,
   showPercentage,
@@ -16,7 +16,7 @@ export const LegendItem = ({
 }: LegendItemProps) => {
   const legendValueLocal = getRoundedNumber(
     legendValue,
-    legendValueRoundingDigitsItem as number,
+    legendValueRoundingDigits as number,
   );
   const percentageLocal = getRoundedNumber(
     percentage,
