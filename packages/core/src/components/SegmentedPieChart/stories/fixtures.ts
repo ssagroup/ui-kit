@@ -12,7 +12,7 @@ export const balanceData: SegmentedDataSet = [
     id: 1,
     value: 5843.37,
     legendValue: 5843.37 / RATE.BTC,
-    legendLabel: 'B.T.C',
+    legendLabel: 'BTC',
     label: 'BTC',
     legendValueRoundingDigits: 6,
     parts: [
@@ -37,7 +37,7 @@ export const balanceData: SegmentedDataSet = [
     id: 2,
     value: 5249.25,
     legendValue: 5249.25 / RATE.ETH,
-    legendLabel: 'E.T.H',
+    legendLabel: 'ETH',
     label: 'ETH',
     legendValueRoundingDigits: 2,
     parts: [
@@ -57,7 +57,7 @@ export const balanceData: SegmentedDataSet = [
     id: 3,
     value: 3825.55,
     legendValue: 3825.55 / RATE.FDUSD,
-    legendLabel: 'F.D.U.S.D',
+    legendLabel: 'FDUSD',
     label: 'FDUSD',
     legendValueRoundingDigits: 2,
     parts: [
@@ -83,7 +83,7 @@ export const balanceData: SegmentedDataSet = [
     value: 2818.83,
     legendValue: 2818.83 / RATE.USDT,
     label: 'Other',
-    legendLabel: 'U.S.D.T',
+    legendLabel: 'USDT',
     legendValueRoundingDigits: 0,
     parts: [
       {

@@ -58,7 +58,10 @@ export const SegmentedPieChart = ({
         renderValue={(props) => (
           <LegendItem
             {...props}
-            legendValueRoundingDigits={legendValueRoundingDigits}
+            legendValueRoundingDigits={
+              props.legendValueRoundingDigits as number
+            }
+            legendPercentageRoundingDigits={legendPercentageRoundingDigits}
             showDimensions={showDimensions}
             showPercentage={showPercentage}
             otherLabel={otherLabel}
