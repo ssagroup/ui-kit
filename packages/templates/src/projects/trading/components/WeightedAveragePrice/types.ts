@@ -1,8 +1,8 @@
-import { RequestPeriod, GraphStatistics } from '@trading/types';
+import { RequestPeriod, GraphStatisticsWeighted } from '@trading/types';
 
 export type WeightedAveragePriceProps = {
   id?: string;
-  data: GraphStatistics['weightedPriceData'];
+  data: GraphStatisticsWeighted['weightedPriceData'];
   currency: string;
   period: RequestPeriod;
   onClick?: () => void;

@@ -3,14 +3,12 @@ import { useBotInfoResponse } from '@trading/hooks';
 import { Bot } from '@trading/types';
 
 export const useBotInfo = () => {
-  const result = useBotInfoResponse((data) => data.result);
-  const { data } = result;
+  const data = useBotInfoResponse();
   const instrument = propOr<Bot, string>('', 'instrument')(data || ({} as Bot));
   const [baseCurrency = '', quoteCurrency = ''] = instrument.split('/');
   return {
-    ...result,
     data: {
-      ...result.data,
+      ...data,
       baseCurrency,
       quoteCurrency,
     } as Bot,

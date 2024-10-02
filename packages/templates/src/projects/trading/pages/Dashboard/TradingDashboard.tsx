@@ -329,12 +329,14 @@ export const TradingDashboard = () => {
           gridArea="weighted-mean-prices-btc"
           weightedMeanPrices={weightedMeanPricesBtc}
           isFetching={isStatLoading}
+          isBotPage={false}
         />
         <WeightedMeanPricesWithLoader
           key="weighted-mean-prices-eth"
           gridArea="weighted-mean-prices-eth"
           weightedMeanPrices={weightedMeanPricesEth}
           isFetching={isStatLoading}
+          isBotPage={false}
         />
         <OrdersWithLoader
           data={graphsData}

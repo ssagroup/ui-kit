@@ -1,18 +1,13 @@
-import { RequestPeriod } from '@/trading/types';
+import { propOr } from '@ssa-ui-kit/utils';
+import { Bot, RequestPeriod } from '@/trading/types';
+import * as mockResponse from './botInfoMock';
 
-export const getBotInfoResponse = ({
-  botId,
-  currentRun,
+export const getBotInfoResponseMock = ({
   period,
 }: {
-  botId: string;
-  currentRun: boolean;
   period: Pick<RequestPeriod, 'period'>;
-}) => {
-  // return mock, dependable on input params
-  return {
-    botId,
-    currentRun,
-    period,
-  };
-};
+}) =>
+  propOr<typeof mockResponse, Bot>(
+    mockResponse.Day,
+    period.period,
+  )(mockResponse);

@@ -4,10 +4,16 @@ import { useTheme } from '@emotion/react';
 import { useAppLayout } from '@trading/pages/AppLayout/useAppLayoutContext';
 import { useDeviceType } from './useDeviceType';
 
-export const usePlotlyDefaultConfig = ({
+interface UsePlotlyDefaultConfig {
+  (params: { titleTranslationKey: string }): {
+    layout: PlotParams['layout'];
+    config: PlotParams['config'];
+    emptyBar: PlotParams['data'][0];
+  };
+}
+
+export const usePlotlyDefaultConfig: UsePlotlyDefaultConfig = ({
   titleTranslationKey,
-}: {
-  titleTranslationKey: string;
 }) => {
   const theme = useTheme();
   const deviceType = useDeviceType();

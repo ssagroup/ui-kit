@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ClassNames, useTheme } from '@emotion/react';
 import { Wrapper } from '@ssa-ui-kit/core';
@@ -16,11 +15,11 @@ import { WidgetCard, WithWidgetLoader } from '..';
 export const WeightedMeanPrices = ({
   gridArea,
   weightedMeanPrices,
+  isBotPage,
 }: WeightedMeanPricesProps) => {
   const { t } = useTranslation();
-  const { id: botId } = useParams();
   const theme = useTheme();
-  const instrumentInfo = useInstrumentInfoWithPrices(weightedMeanPrices);
+  const instrumentInfo = useInstrumentInfoWithPrices();
   const prices = [
     weightedMeanPrices.weightedAssetBuyPrice,
     weightedMeanPrices.weightedAssetSellPrice,
@@ -28,7 +27,6 @@ export const WeightedMeanPrices = ({
   const instrument = weightedMeanPrices.instrument;
   const baseQuote = instrument.split('/').map((name) => name.toLowerCase());
   const PlatformIcon = propOr(null, instrumentInfo.platform)(PLATFORM_ICONS);
-  const isBotPage = !!botId;
   return (
     <ClassNames>
       {({ css }) => (
@@ -70,11 +68,11 @@ export const WeightedMeanPrices = ({
                 </S.IconWrapper>
                 <S.Price
                   isIncreasing={instrumentInfo.isIncreasing}
-                  isBotPage={isBotPage}>
+                  isBotPage={!!isBotPage}>
                   {instrumentInfo.price}
                 </S.Price>
               </Wrapper>
-              <S.Instrument direction="row" isBotPage={isBotPage}>
+              <S.Instrument direction="row" isBotPage={!!isBotPage}>
                 {instrumentInfo.instrument}
               </S.Instrument>
             </S.ItemsWrapper>
@@ -123,11 +121,11 @@ export const WeightedMeanPrices = ({
                             <CurrencyIcon className={S.Platform} />
                           )}
                         </S.IconWrapper>
-                        <S.Price isIncreasing={null} isBotPage={isBotPage}>
+                        <S.Price isIncreasing={null} isBotPage={!!isBotPage}>
                           {weightedPrice as unknown as React.ReactElement}
                         </S.Price>
                       </Wrapper>
-                      <S.Instrument direction="row" isBotPage={isBotPage}>
+                      <S.Instrument direction="row" isBotPage={!!isBotPage}>
                         {instrumentInfo.instrument}
                       </S.Instrument>
                     </Wrapper>

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { Typography, Wrapper } from '@ssa-ui-kit/core';
-import NoDataIcon from '@trading/assets/no_data_yet.svg?react';
+import { NoDataYet as NoDataIcon } from '@icons';
 
 const Text = styled(Typography)`
   font-size: 14px;

@@ -37,6 +37,15 @@ export interface Bot {
   weightedAssetSellVolume: number;
   baseCurrency: string;
   quoteCurrency: string;
+  uptimeDurationTimestamp: number;
+  mobileStatistics: null;
+  formattedOrderSize: string;
+  lastNotificationTime: null;
+  lastNotificationTitle: null;
+  lastNotificationText: null;
+  maxInWorkPercents: number;
+  maxInWork: number;
+  currentInWork: number;
 }
 
 export interface BotStatistics {
@@ -49,6 +58,7 @@ export interface BotStatistics {
   errors: number;
   runs: number;
   coinForBalance: string;
+  matchedOrders: number;
   noControlOrdersCount: number;
   noControlOrdersSize: number;
   noControlOrdersPnl: number;

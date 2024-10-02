@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTheme } from '@emotion/react';
 import { Typography } from '@ssa-ui-kit/core';
 import { MaxInWorkProps } from './types';
@@ -8,7 +9,7 @@ type BalanceInfoProps = { text: string } & Pick<MaxInWorkProps, 'percent'>;
 export const BalanceInfo = ({ percent, text }: BalanceInfoProps) => {
   const theme = useTheme();
   return (
-    <>
+    <React.Fragment>
       <WidgetCardTitle variant="h3" weight="bold">
         {percent}%
       </WidgetCardTitle>
@@ -26,6 +27,6 @@ export const BalanceInfo = ({ percent, text }: BalanceInfoProps) => {
         }}>
         {text}
       </Typography>
-    </>
+    </React.Fragment>
   );
 };

@@ -1,11 +1,11 @@
 import { pathOr } from '@ssa-ui-kit/utils';
 import { getExtendedInfo } from '@trading/utils/charts';
-import { GraphStatistics, WeightedPriceItem } from '@trading/types';
+import { GraphStatisticsWeighted, WeightedPriceItem } from '@trading/types';
 
 export const useChartInfo = ({
   dataOriginal,
 }: {
-  dataOriginal: GraphStatistics['weightedPriceData'];
+  dataOriginal: GraphStatisticsWeighted['weightedPriceData'];
 }) => {
   const baseAssetMarketPriceList: Array<number | null> = [];
   const baseAssetWeightedMeanPriceList: Array<number | null> = [];

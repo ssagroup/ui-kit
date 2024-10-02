@@ -7,6 +7,7 @@ module.exports = () => {
     libraryName: 'SSATemplates',
     outputPath: path.resolve(__dirname, 'dist'),
     alias: {
+      '@icons': path.resolve(__dirname, './src/icons'),
       '@': path.resolve(__dirname, './src/projects'),
       '@trading': path.resolve('./src/projects/trading'),
     },

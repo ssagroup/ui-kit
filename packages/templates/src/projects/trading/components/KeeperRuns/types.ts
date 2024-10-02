@@ -1,4 +1,4 @@
-import { RequestPeriod, GraphsListItem } from '@/types';
+import { RequestPeriod, GraphsListItem } from '@trading/types';
 
 export type KeeperRunsProps = {
   id?: string;

@@ -27,6 +27,7 @@
       "../../node_modules/@types"
     ],
     "paths": {
+      "@icons": ["./src/icons"],
       "@": ["./src/projects"],
       "@/*": ["./src/projects/*"],
       "@trading": ["./src/projects/trading"],

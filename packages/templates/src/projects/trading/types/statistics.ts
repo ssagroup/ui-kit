@@ -140,20 +140,21 @@ export type GraphsListItem = {
   allOrders: number;
   matchedOrders: number;
   pnl: number;
+  pnlFromInitial: null;
   cumulativePNL: number;
   turnover: number;
   rebalancing: RebalancingItem;
   keeperRuns: KeeperRunsItem;
-  balanceHistory: BalanceHistoryItem;
-  isEmpty: 0 | 1;
+  balanceHistory?: BalanceHistoryItem;
+  isEmpty?: 0 | 1;
   baseCommission: number;
   quoteCommission: number;
-  alternateCommission?: number;
+  alternateCommission?: number | null;
   baseCommissionEquivalent: number;
   quoteCommissionEquivalent: number;
-  alternateCommissionEquivalent?: number;
+  alternateCommissionEquivalent?: number | null;
   totalCommissionEquivalent: number;
-  alternateCommissionAsset?: string;
+  alternateCommissionAsset?: string | null;
   pnlInvestment: number;
   cumulativePnlInvestment: number;
   pnlTotal: number;
@@ -197,11 +198,14 @@ export type WeightedPriceItemNonNullable = {
   >;
 };
 
-export type GraphStatistics = {
+export interface GraphStatistics {
   aggregationPeriod: string;
   data: Array<GraphsListItem>;
+}
+
+export interface GraphStatisticsWeighted extends GraphStatistics {
   weightedPriceData: {
     aggregationPeriod: string;
     data: Array<WeightedPriceItem>;
   };
-};
+}
