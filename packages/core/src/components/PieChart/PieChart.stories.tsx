@@ -88,7 +88,7 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
               font-size: 20px;
               line-height: 25px;
             `}>
-            147358 &nbsp;
+            18183 &nbsp;
             <Typography
               variant="body2"
               weight="regular"
@@ -97,7 +97,7 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
               css={css`
                 font-size: 14px;
               `}>
-              USD
+              USDT
             </Typography>
           </Typography>
         }>

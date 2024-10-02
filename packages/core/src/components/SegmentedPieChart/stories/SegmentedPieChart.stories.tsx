@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { balanceData, balanceMissedPartsData } from './fixtures';
+import {
+  balanceData,
+  balanceMissedPartsData,
+  balanceMissedPartsDataTotalAmount,
+  balanceTotalAmount,
+} from './fixtures';
 import { SegmentedPieChart } from '../SegmentedPieChart';
 
 export default {
@@ -9,8 +14,16 @@ export default {
 
 type Args = StoryObj<Partial<Parameters<typeof SegmentedPieChart>[0]>>;
 
+const currency = 'USDT';
 const StoryTemplate: Args = {
-  render: ({ ...args }) => <SegmentedPieChart data={balanceData} {...args} />,
+  render: ({ ...args }) => (
+    <SegmentedPieChart
+      data={balanceData}
+      totalAmount={Number(balanceTotalAmount)}
+      totalDimension={currency}
+      {...args}
+    />
+  ),
 };
 
 export const AccountExample = {
@@ -33,9 +46,6 @@ export const CustomColors = {
       ['#5FD1E4', '#7AE4F5', '#A1F3FF', '#C0FFFF', '#D9FFFF'],
       ['#D77A61', '#E89C91', '#F1B5A4', '#FFC3B5', '#FFDACC'],
     ],
-    pieChartProps: {
-      tooltip: undefined,
-    },
   },
 };
 
@@ -43,6 +53,26 @@ export const CustomCurrency = {
   ...StoryTemplate,
   args: {
     currency: 'EUR',
+    totalDimension: 'PLN',
+    totalAmount: 17737.12,
+  },
+};
+
+CustomCurrency.storyName = 'Custom currency, total dimension and amount';
+
+export const MissedPartsData = {
+  ...StoryTemplate,
+  args: {
+    data: balanceMissedPartsData,
+    totalAmount: balanceMissedPartsDataTotalAmount,
+  },
+};
+
+export const PercentageRoundingDigits = {
+  ...StoryTemplate,
+  args: {
+    legendValueRoundingDigits: 1,
+    legendPercentageRoundingDigits: 2,
   },
 };
 
@@ -55,9 +85,16 @@ export const WithoutTooltip = {
   },
 };
 
-export const MissedPartsData = {
+export const WithoutPercentage = {
   ...StoryTemplate,
   args: {
-    data: balanceMissedPartsData,
+    showPercentage: false,
+  },
+};
+
+export const WithoutDimensions = {
+  ...StoryTemplate,
+  args: {
+    showDimensions: false,
   },
 };

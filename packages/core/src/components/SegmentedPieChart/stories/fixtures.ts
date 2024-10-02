@@ -1,147 +1,174 @@
-import { BalanceData } from '../types';
+import { SegmentedDataSet } from '../types';
 
-export const balanceData: BalanceData = [
+const RATE = {
+  BTC: 63972.97,
+  ETH: 2649.84,
+  FDUSD: 0.9991,
+  USDT: 1,
+};
+
+export const balanceData: SegmentedDataSet = [
   {
     id: 1,
     value: 5843.37,
+    legendValue: 5843.37 / RATE.BTC,
+    legendLabel: 'BTC',
     label: 'BTC',
-    percentage: 33,
+    legendValueRoundingDigits: 6,
     parts: [
       {
-        label: 'BTC. Option 1',
-        percentage: 13,
+        label: 'Option 1',
         value: 2300,
+        legendValue: 2300 / RATE.BTC,
       },
       {
-        label: 'BTC. Option 2',
-        percentage: 10,
+        label: 'Option 2',
         value: 1800,
+        legendValue: 1800 / RATE.BTC,
       },
       {
-        label: 'BTC. Option 3',
-        percentage: 10,
+        label: 'Option 3',
         value: 1743.37,
+        legendValue: 1743.37 / RATE.BTC,
       },
     ],
   },
   {
     id: 2,
     value: 5249.25,
+    legendValue: 5249.25 / RATE.ETH,
+    legendLabel: 'ETH',
     label: 'ETH',
-    percentage: 30,
+    legendValueRoundingDigits: 2,
     parts: [
       {
-        label: 'ETH. Option 1',
-        percentage: 17,
+        label: 'Option 1',
         value: 2800,
+        legendValue: 2800 / RATE.ETH,
       },
       {
-        label: 'ETH. Option 2',
-        percentage: 13,
+        label: 'Option 2',
         value: 2449.25,
+        legendValue: 2449.25 / RATE.ETH,
       },
     ],
   },
   {
     id: 3,
     value: 3825.55,
-    label: 'USDT',
-    percentage: 22,
+    legendValue: 3825.55 / RATE.FDUSD,
+    legendLabel: 'FDUSD',
+    label: 'FDUSD',
+    legendValueRoundingDigits: 2,
     parts: [
       {
-        label: 'USDT. Option 1',
-        percentage: 5,
+        label: 'Option 1',
         value: 1000,
+        legendValue: 1000 / RATE.FDUSD,
       },
       {
-        label: 'USDT. Option 2',
-        percentage: 12,
+        label: 'Option 2',
         value: 1840,
+        legendValue: 1840 / RATE.FDUSD,
       },
       {
-        label: 'USDT. Option 3',
-        percentage: 5,
+        label: 'Option 3',
         value: 985.55,
+        legendValue: 985.55 / RATE.FDUSD,
       },
     ],
   },
   {
     id: 4,
     value: 2818.83,
+    legendValue: 2818.83 / RATE.USDT,
     label: 'Other',
-    percentage: 15,
+    legendLabel: 'USDT',
+    legendValueRoundingDigits: 0,
     parts: [
       {
-        label: 'Other. Option 1',
-        percentage: 7,
+        label: 'Option 1',
         value: 1400,
+        legendValue: 1400 / RATE.USDT,
       },
       {
-        label: 'Other. Option 2',
-        percentage: 8,
+        label: 'Option 2',
         value: 1418.83,
+        legendValue: 1418.83 / RATE.USDT,
       },
     ],
   },
 ];
 
-export const balanceMissedPartsData: BalanceData = [
+export const balanceTotalAmount = balanceData
+  .map((item) => Number(item.value))
+  .reduce((acc, currentValue) => acc + currentValue, 0);
+
+export const balanceMissedPartsData: SegmentedDataSet = [
   {
     id: 1,
     value: 5843.37,
+    legendValue: 5843.37 / RATE.BTC,
     label: 'BTC',
-    percentage: 33,
+    legendValueRoundingDigits: 6,
     parts: [
       {
-        label: 'BTC. Option 1',
-        percentage: 13,
+        label: 'Option 1',
         value: 2300,
+        legendValue: 2300 / RATE.BTC,
       },
       {
-        label: 'BTC. Option 2',
-        percentage: 10,
+        label: 'Option 2',
         value: 1800,
+        legendValue: 1800 / RATE.BTC,
       },
       {
-        label: 'BTC. Option 3',
-        percentage: 10,
+        label: 'Option 3',
         value: 1743.37,
+        legendValue: 1743.37 / RATE.BTC,
       },
     ],
   },
   {
     id: 2,
     value: 5249.25,
+    legendValue: 5249.25 / RATE.ETH,
     label: 'ETH',
-    percentage: 30,
+    legendValueRoundingDigits: 2,
   },
   {
     id: 3,
     value: 3825.55,
-    label: 'USDT',
-    percentage: 22,
+    legendValue: 3825.55 / RATE.FDUSD,
+    label: 'FDUSD',
+    legendValueRoundingDigits: 2,
     parts: [
       {
-        label: 'USDT. Option 1',
-        percentage: 5,
+        label: 'Option 1',
         value: 1000,
+        legendValue: 1000 / RATE.FDUSD,
       },
       {
-        label: 'USDT. Option 2',
-        percentage: 12,
+        label: 'Option 2',
         value: 1840,
+        legendValue: 1840 / RATE.FDUSD,
       },
       {
-        label: 'USDT. Option 3',
-        percentage: 5,
+        label: 'Option 3',
         value: 985.55,
+        legendValue: 985.55 / RATE.FDUSD,
       },
     ],
   },
   {
     id: 4,
     value: 2818.83,
+    legendValue: 2818.83 / RATE.USDT,
     label: 'Other',
-    percentage: 15,
+    legendValueRoundingDigits: 0,
   },
 ];
+
+export const balanceMissedPartsDataTotalAmount = balanceMissedPartsData
+  .map((item) => Number(item.value))
+  .reduce((acc, currentValue) => acc + currentValue, 0);

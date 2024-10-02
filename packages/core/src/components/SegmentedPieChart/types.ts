@@ -1,36 +1,42 @@
 import { CommonProps } from '@global-types/emotion';
-import { MayHaveLabel } from '@nivo/pie';
-import { PieChartLegend, PieChartProps } from '@components';
+import { PieChartLegend, PieChartLegendItem, PieChartProps } from '@components';
 
-type BalanceDataPartsItem = {
+type SegmentedDataMainInfo = {
   label: string;
-  percentage: number;
   value: number;
+  legendValue: number;
 };
 
-type BalanceDataItem = {
-  id: number;
-  value: number;
-  label: string;
-  percentage: number;
-  parts?: BalanceDataPartsItem[];
-};
+export interface SegmentedDataItem extends PieChartLegendItem {
+  legendValue: number;
+  legendLabel?: string;
+  parts?: SegmentedDataMainInfo[];
+}
 
-export type BalanceData = Array<BalanceDataItem>;
+export type SegmentedDataSet = Array<SegmentedDataItem>;
 
 export interface SegmentedPieChartProps extends CommonProps {
-  data: BalanceData;
+  data: SegmentedDataSet;
+  totalAmount: number;
+  totalDimension: string;
   pieChartProps?: Partial<PieChartProps>;
   pieChartLegendProps?: Partial<React.ComponentProps<typeof PieChartLegend>>;
   legendBackgrounds?: string[];
   pieChartColors?: string[][];
   currency?: string;
   otherLabel?: string;
+  legendValueRoundingDigits?: number;
+  legendPercentageRoundingDigits?: number;
+  showDimensions?: boolean;
+  showPercentage?: boolean;
 }
 
-export interface BalanceDataForGraph extends MayHaveLabel {
-  mainLabel: string;
-  mainPercentage: number;
+export interface BalanceDataForGraph extends PieChartLegendItem {
+  label: string;
+  legendLabel?: string;
+  legendValueRoundingDigits: number;
+  percentage: number;
+  partIndex?: number;
   partLabel?: string;
   partPercentage?: number;
   id: number | string;
@@ -38,3 +44,18 @@ export interface BalanceDataForGraph extends MayHaveLabel {
   value: number | string;
   color: string;
 }
+
+export type LegendItemProps = {
+  label: string;
+  legendLabel?: string;
+  percentage?: number;
+  legendValue?: number;
+  legendValueRoundingDigits: number;
+} & Pick<
+  SegmentedPieChartProps,
+  | 'showDimensions'
+  | 'legendPercentageRoundingDigits'
+  | 'otherLabel'
+  | 'currency'
+  | 'showPercentage'
+>;

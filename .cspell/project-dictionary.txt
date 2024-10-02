@@ -76,6 +76,7 @@ neque
 nisl
 nivo
 Plotly
+PLN
 PNL
 porttitor
 ramda
