@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { withTheme } from '@emotion/react';
+import { useTranslation } from '@contexts';
 import { AllBotsBlockProps } from './types';
 import { SmallText, LargeText } from './BotsText';
 

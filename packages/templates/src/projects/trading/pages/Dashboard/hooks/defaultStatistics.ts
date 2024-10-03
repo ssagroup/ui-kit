@@ -56,15 +56,6 @@ export const defaultStatistics = {
       roleTakerCost: null,
       roleTakerCostPercents: null,
     },
-
-    fundsInNoControls: {
-      longFunds: null,
-      longFundsPercents: null,
-      shortFunds: null,
-      shortFundsPercents: null,
-      total: null,
-      totalPercents: null,
-    },
     fundsInPlacedOrders: {
       longFunds: null,
       longFundsPercents: null,

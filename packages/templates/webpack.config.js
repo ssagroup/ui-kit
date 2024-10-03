@@ -8,6 +8,7 @@ module.exports = () => {
     outputPath: path.resolve(__dirname, 'dist'),
     alias: {
       '@icons': path.resolve(__dirname, './src/icons'),
+      '@contexts': path.resolve(__dirname, './src/contexts'),
       '@': path.resolve(__dirname, './src/projects'),
       '@trading': path.resolve('./src/projects/trading'),
     },

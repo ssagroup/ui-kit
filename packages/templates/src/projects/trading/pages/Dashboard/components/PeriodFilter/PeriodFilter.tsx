@@ -1,12 +1,11 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { useHeader } from '@trading/contexts';
 import {
   PERIOD_DAY,
   PERIOD_WEEK,
   PERIOD_MONTH,
   PERIOD_YEAR,
-  PERIOD_CUSTOM,
 } from '@trading/constants';
 import { ButtonGroupSM, ButtonGroupMD } from './PeriodButtonGroup';
 import { PeriodFilterProps, PeriodFilterItem } from './types';
@@ -39,10 +38,6 @@ export const PeriodFilter = ({
     {
       id: PERIOD_YEAR,
       text: t('pages.dashboard.periodFilter.1y'),
-    },
-    {
-      id: PERIOD_CUSTOM,
-      text: t('pages.dashboard.periodFilter.custom'),
     },
   ];
 

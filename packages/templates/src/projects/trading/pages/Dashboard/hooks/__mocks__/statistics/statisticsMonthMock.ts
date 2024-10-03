@@ -94,14 +94,6 @@ export const data = {
     total: 0,
     totalPercents: 0,
   },
-  fundsInNoControls: {
-    longFunds: 555.5,
-    longFundsPercents: 0.18,
-    shortFunds: 401.19,
-    shortFundsPercents: 0.13,
-    total: 956.69,
-    totalPercents: 0.31,
-  },
   weightedMeanPrices: [
     {
       instrument: 'BTC/FDUSD',

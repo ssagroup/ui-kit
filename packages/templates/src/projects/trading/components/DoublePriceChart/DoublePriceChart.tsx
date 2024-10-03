@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useTheme } from '@emotion/react';
 import Plot from 'react-plotly.js';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import {
   useBarGroupGap,
   usePlotlyDefaultConfig,

@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { propOr } from '@ssa-ui-kit/utils';
+import { useTranslation } from '@contexts';
 import { useCurrency } from '@trading/contexts';
 import { RebalanceTooltipContentProps } from './types';
 import { getDateTime } from '../../helpers';

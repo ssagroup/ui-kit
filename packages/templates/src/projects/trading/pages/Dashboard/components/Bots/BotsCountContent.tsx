@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { SmallText, LargeText } from './BotsText';
 import { BotsCountContentProps } from './types';
 

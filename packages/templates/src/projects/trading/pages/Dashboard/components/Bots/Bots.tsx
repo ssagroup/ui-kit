@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ClassNames, useTheme } from '@emotion/react';
+import { useTranslation } from '@contexts';
 import { WidgetCard, WithWidgetLoader } from '@trading/components';
 import { BotsCount } from './BotsCount';
 import { AllBotsBlock } from './AllBotsBlock';
@@ -16,7 +16,6 @@ export const Bots = ({ all, running }: BotsProps) => {
       <ClassNames>
         {({ css }) => (
           <WidgetCard
-            link="/bots"
             title={t('bots.title')}
             wrapperClassName={css({
               gridArea: 'bots',

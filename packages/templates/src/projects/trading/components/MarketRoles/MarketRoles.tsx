@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '@emotion/react';
 import { Wrapper } from '@ssa-ui-kit/core';
+import { useTranslation } from '@contexts';
 import { useCurrency } from '@trading/contexts';
 import { MarketRolesProps } from './types';
 import { DistributionMultiline } from '../Distribution';

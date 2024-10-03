@@ -10,6 +10,7 @@
     ],
     "paths": {
       "@icons": ["./src/icons"],
+      "@contexts": ["./src/contexts"],
       "@": ["./src/projects"],
       "@/*": ["./src/projects/*"],
       "@trading": ["./src/projects/trading"],

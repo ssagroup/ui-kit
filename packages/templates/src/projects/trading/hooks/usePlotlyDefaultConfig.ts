@@ -1,6 +1,6 @@
 import { PlotParams } from 'react-plotly.js';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '@emotion/react';
+import { useTranslation } from '@contexts';
 import { useAppLayout } from '@trading/pages/AppLayout/useAppLayoutContext';
 import { useDeviceType } from './useDeviceType';
 

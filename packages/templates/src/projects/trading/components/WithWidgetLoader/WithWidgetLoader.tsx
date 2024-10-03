@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { Card } from '../MaxInWork/Card';
 import { NoDataYet } from '..';
 

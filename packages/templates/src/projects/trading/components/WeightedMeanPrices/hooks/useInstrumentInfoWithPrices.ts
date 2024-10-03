@@ -1,36 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { InstrumentSingle } from '@trading/types';
+import { InstrumentSingle, WeightedMeanPrices } from '@trading/types';
+import { MOCK_INSTRUMENTS } from './mock';
 
-const MOCK_RESULT = [
-  {
-    platform: 'Binance',
-    instrument: 'ETH/FDUSD',
-    price: '2454.58',
-    isIncreasing: false,
-  },
-  {
-    platform: 'Binance',
-    instrument: 'BTC/FDUSD',
-    price: '61263.83',
-    isIncreasing: false,
-  },
-  {
-    platform: 'Binance',
-    instrument: 'ETH/FDUSD',
-    price: '2394.19',
-    isIncreasing: true,
-  },
-  {
-    platform: 'Binance',
-    instrument: 'BTC/FDUSD',
-    price: '60194.28',
-    isIncreasing: true,
-  },
-];
-export const useInstrumentInfoWithPrices = () => {
-  const [instrumentInfo, setInstrumentInfo] = useState<InstrumentSingle>(
-    MOCK_RESULT[0],
-  );
+export const useInstrumentInfoWithPrices = (props: WeightedMeanPrices) => {
+  const [instrumentInfo, setInstrumentInfo] = useState<InstrumentSingle>({
+    platform: props.platform,
+    instrument: props.instrument,
+    price: '',
+    isIncreasing: null,
+  });
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
   const mockIndex = useRef<number>();
 
@@ -39,8 +17,12 @@ export const useInstrumentInfoWithPrices = () => {
       if (mockIndex.current === undefined) {
         mockIndex.current = 1;
       } else {
-        setInstrumentInfo(MOCK_RESULT[mockIndex.current]);
-        if (mockIndex.current < MOCK_RESULT.length - 1) {
+        setInstrumentInfo({
+          ...MOCK_INSTRUMENTS[props.instrument][mockIndex.current],
+          platform: props.platform,
+          instrument: props.instrument,
+        });
+        if (mockIndex.current < MOCK_INSTRUMENTS[props.instrument].length - 1) {
           mockIndex.current += 1;
         } else {
           mockIndex.current = 0;

@@ -74,9 +74,4 @@ export const LOADING_CARDS_CUSTOM_LAYOUT: Array<LoadingCard> = [
     title: 'fundsInPlacedOrders.title',
     gridArea: 'funds-place-order',
   },
-  {
-    key: 'fundsNoControl',
-    title: 'fundsInNoControls.title',
-    gridArea: 'funds-no-control',
-  },
 ];

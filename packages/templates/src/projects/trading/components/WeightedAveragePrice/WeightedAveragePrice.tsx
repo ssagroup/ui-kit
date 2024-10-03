@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import Plot from 'react-plotly.js';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '@emotion/react';
+import { useTranslation } from '@contexts';
 import { useAppLayout } from '@trading/pages/AppLayout/useAppLayoutContext';
 import { useBotInfo } from '@trading/pages/BotPage/hooks';
 import {

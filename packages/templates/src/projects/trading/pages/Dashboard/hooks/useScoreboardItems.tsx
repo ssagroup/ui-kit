@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { Icon } from '@ssa-ui-kit/core';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { GrowthIndexIcon } from '@trading/components';
 import { Statistics } from '@trading/types';
 import { USDT } from '@trading/constants';

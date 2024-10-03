@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import { ClassNames, useTheme } from '@emotion/react';
 import { Typography } from '@ssa-ui-kit/core';
+import { useTranslation } from '@contexts';
 import { HourlyPNLProps, ProgressPointProps } from './types';
 import { ProgressPoint } from './ProgressPoint';
 import * as S from './styles';

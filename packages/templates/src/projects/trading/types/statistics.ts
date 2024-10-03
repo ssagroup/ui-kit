@@ -81,7 +81,6 @@ export type Statistics = {
   };
   noControlStatistic: NoControlOrdersStatProps;
   marketRolesStatistic: MarketRolesProps;
-  fundsInNoControls: CurrentFundsProps;
   fundsInPlacedOrders: CurrentFundsProps;
   weightedMeanPrices: WeightedMeanPrices[];
   commission: number;

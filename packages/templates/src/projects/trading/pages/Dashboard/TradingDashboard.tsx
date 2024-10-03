@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { TradingInfoCard, TradingScoreboard } from '@ssa-ui-kit/widgets';
 import { propOr } from '@ssa-ui-kit/utils';
 
@@ -19,7 +19,6 @@ import {
   CumulativePNLWithLoader,
   RebalanceWithLoader,
   WeightedMeanPricesWithLoader,
-  TurnoverRatioWithLoader,
   CurrentFundsWithLoader,
   KeeperRunsWithLoader,
 } from '@trading/components';
@@ -86,11 +85,6 @@ export const TradingDashboard = () => {
     'balance',
   )(common);
 
-  const fundsInNoControls = propOr<Statistics, Statistics['fundsInNoControls']>(
-    {},
-    'fundsInNoControls',
-  )(common);
-
   const fundsInPlacedOrders = propOr<
     Statistics,
     Statistics['fundsInPlacedOrders']
@@ -118,11 +112,6 @@ export const TradingDashboard = () => {
     instrument: 'ETH/FDUSD',
     platform: 'Binance',
   };
-
-  const turnoverRatio = propOr<Statistics, Statistics['turnoverRatio']>(
-    {},
-    'turnoverRatio',
-  )(common);
 
   return (
     <DashboardLayout>
@@ -290,22 +279,6 @@ export const TradingDashboard = () => {
           shortFundsPercents={fundsInPlacedOrders.shortFundsPercents}
           isAdditionalRightBar
           key="fundsPlaceOrder"
-          isFetching={isStatLoading}
-        />
-        <TurnoverRatioWithLoader
-          key="turnoverRatio"
-          data={turnoverRatio}
-          isFetching={isStatLoading}
-        />
-        <CurrentFundsWithLoader
-          styles={css({ gridArea: 'funds-no-control' })}
-          title="fundsInNoControls.title"
-          longFunds={fundsInNoControls.longFunds}
-          longFundsPercents={fundsInNoControls.longFundsPercents}
-          shortFunds={fundsInNoControls.shortFunds}
-          shortFundsPercents={fundsInNoControls.shortFundsPercents}
-          isAdditionalRightBar
-          key="fundsNoControl"
           isFetching={isStatLoading}
         />
         <HourlyPNLWithLoader

@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { ClassNames, useTheme } from '@emotion/react';
 import { Wrapper } from '@ssa-ui-kit/core';
 import { pathOr, propOr } from '@ssa-ui-kit/utils';
+import { useTranslation } from '@contexts';
 import { InstrumentsList } from '@trading/types';
 import { PLATFORM_ICONS } from '@trading/icons';
 import { useBotInfo } from '@trading/pages/BotPage/hooks';

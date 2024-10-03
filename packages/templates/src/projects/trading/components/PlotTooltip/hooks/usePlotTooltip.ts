@@ -79,7 +79,7 @@ export const usePlotTooltip = () => {
   }, [handleScroll]);
 
   const handleHover = (event: Readonly<Plotly.PlotMouseEvent>) => {
-    showTooltip(event.event.clientX, event.event.clientY);
+    showTooltip(event.event.pageX, event.event.pageY);
   };
 
   const handleUnhover = () => {

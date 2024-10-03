@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { Typography, Wrapper } from '@ssa-ui-kit/core';
+import { useTranslation } from '@contexts';
 import { NoDataYet as NoDataIcon } from '@icons';
 
 const Text = styled(Typography)`

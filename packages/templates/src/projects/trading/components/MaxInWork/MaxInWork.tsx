@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { Card } from './Card';
 import { BalanceInfo } from './BalanceInfo';
 import { Progress } from './Progress';

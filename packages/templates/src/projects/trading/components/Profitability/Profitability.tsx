@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@contexts';
 import { ProfitabilityProps } from './types';
 import { Distribution } from '../Distribution';
 import { WithWidgetLoader } from '..';

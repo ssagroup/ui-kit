@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import { AccountBalance } from '@ssa-ui-kit/widgets';
 import { transformBalanceData as transform } from '@trading/utils';
+import { useTranslation } from '@contexts';
 import { BalanceProps } from './types';
 import { WithWidgetLoader } from '..';
 

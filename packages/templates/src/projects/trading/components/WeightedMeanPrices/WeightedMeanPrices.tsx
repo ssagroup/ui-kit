@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ClassNames, useTheme } from '@emotion/react';
 import { Wrapper } from '@ssa-ui-kit/core';
 import { propOr } from '@ssa-ui-kit/utils';
+import { useTranslation } from '@contexts';
 import { PLATFORM_ICONS } from '@trading/icons';
 import { CURRENCY_ICONS } from '@trading/components/CryptocurrencyPrices/constants';
 import * as S from '@trading/components/CryptocurrencyPrices/styles';
@@ -19,7 +19,7 @@ export const WeightedMeanPrices = ({
 }: WeightedMeanPricesProps) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const instrumentInfo = useInstrumentInfoWithPrices();
+  const instrumentInfo = useInstrumentInfoWithPrices(weightedMeanPrices);
   const prices = [
     weightedMeanPrices.weightedAssetBuyPrice,
     weightedMeanPrices.weightedAssetSellPrice,

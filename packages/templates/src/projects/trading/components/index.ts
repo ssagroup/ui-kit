@@ -18,7 +18,6 @@ export * from './Positions';
 export * from './Profitability';
 export * from './Rebalance';
 export * from './Turnover';
-export * from './TurnoverRatio';
 export * from './WeightedAveragePrice';
 export * from './WeightedMeanPrices';
 export * from './WidgetCard';

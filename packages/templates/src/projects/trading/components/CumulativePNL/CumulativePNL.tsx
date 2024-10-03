@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import Plot from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
+import { useTranslation } from '@contexts';
 import { usePlotlyDefaultConfig, useTimestamp } from '@trading/hooks';
 import { isShortPeriod } from '@trading/utils';
 import { useAppLayout } from '@trading/pages/AppLayout/useAppLayoutContext';

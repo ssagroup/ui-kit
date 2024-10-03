@@ -1,6 +1,6 @@
 import Plot from 'react-plotly.js';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '@emotion/react';
+import { useTranslation } from '@contexts';
 import {
   useBarGroupGap,
   usePlotlyDefaultConfig,
