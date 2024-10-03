@@ -102,6 +102,28 @@ jobs:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/widgets
 
+      - name: "Building storybook: Templates"
+        run: pnpm sb:build:templates
+
+      - name: "Running storybook: Templates"
+        run: pnpm sb:templates &
+
+      # - name: Installing Playwright Browsers...
+      #   run: |
+      #     cd ./packages/templates
+      #     pnpm -w install
+      #     npx playwright install chromium --with-deps
+      #     cd ../..
+
+      # - name: Running e2e tests...
+      #   run: pnpm test:templates:e2e
+
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.6.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/templates
+
       - name: Installing firebase tools...
         run: curl -sL https://firebase.tools | bash
 
