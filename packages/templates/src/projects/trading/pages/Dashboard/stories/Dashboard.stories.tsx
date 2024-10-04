@@ -20,7 +20,9 @@ export default {
   component: TradingDashboard,
   parameters: {
     layout: 'fullscreen',
-    controls: { disable: true },
+    options: {
+      showPanel: false,
+    },
   },
   decorators: [
     (Story, { args }) => {

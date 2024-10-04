@@ -6,7 +6,7 @@ import initBabelConfig from '../../../.babelrc';
 const appWebpackConfig: Configuration = initWebpackConfig();
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)', '../src/**/*.mdx'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -56,7 +56,8 @@ const config: StorybookConfig = {
     return newConfig;
   },
   docs: {
-    autodocs: true, //cspell:disable-line
+    //👇 See the table below for the list of supported options
+    defaultName: 'Documentation',
   },
   managerHead: (head) => `
     ${head}

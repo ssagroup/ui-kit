@@ -101,6 +101,12 @@ export const data = {
       weightedAssetBuyPrice: 61759.05,
       weightedAssetSellPrice: 61659.17,
     },
+    {
+      instrument: 'ETH/FDUSD',
+      platform: 'Binance',
+      weightedAssetBuyPrice: 2420.98,
+      weightedAssetSellPrice: 2318.32,
+    },
   ],
   commission: 0,
   pnlInvestment: -110,
