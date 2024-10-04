@@ -1,7 +1,7 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 const IS_PROD = process.env.STORYBOOK_ENV === 'production';
 
-const refs = {
+const refs: StorybookConfig['refs'] = {
   '@ssa-ui-kit/core': {
     title: 'Core',
     url: IS_PROD ? 'https://ui-kit-core.web.app' : 'http://localhost:6006',
