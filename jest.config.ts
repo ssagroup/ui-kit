@@ -135,6 +135,36 @@ const config: JestConfigWithTsJest = {
     },
     {
       preset: 'ts-jest',
+      displayName: 'UI Kit Templates',
+      testEnvironment: 'jsdom',
+      setupFilesAfterEnv: ['<rootDir>/packages/core/jest-setup.ts'],
+      transform: {
+        '^.+\\.(ts|tsx)$': [
+          'ts-jest',
+          {
+            tsconfig: './packages/templates/tsconfig.json',
+            babelConfig: './.babelrc.js',
+          },
+        ],
+      },
+      testMatch: [
+        '<rootDir>/packages/templates/src/**/*.spec.ts',
+        '<rootDir>/packages/templates/src/**/*.spec.tsx',
+      ],
+      moduleNameMapper: {
+        '^@(components|themes|styles|types)$': [
+          '<rootDir>/packages/templates/src/index.ts',
+        ],
+        '^@(components|themes|styles|types)/(.*)$': [
+          '<rootDir>/packages/templates/src/$1/$2',
+          '<rootDir>/packages/templates/src/$1/$2.ts',
+          '<rootDir>/packages/templates/src/$1/$2.tsx',
+        ],
+      },
+      transformIgnorePatterns,
+    },
+    {
+      preset: 'ts-jest',
       displayName: 'Examples: Fitness Dashboard',
       testEnvironment: 'jsdom',
       setupFilesAfterEnv: [

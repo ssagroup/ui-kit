@@ -3,4 +3,5 @@ packages:
   - 'packages/utils'
   - 'packages/hooks'
   - 'packages/widgets'
+  - 'packages/templates'
   - 'examples/fitness-dashboard'

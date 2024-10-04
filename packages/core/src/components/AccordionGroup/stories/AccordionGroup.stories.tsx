@@ -1,7 +1,7 @@
+import { css, useTheme } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { AccordionGroup } from '../index';
 import { AccordionGroupDecorator } from './helpers';
-import { css, useTheme } from '@emotion/react';
 import { AccordionTemplate } from './helpers';
 
 type Args = StoryObj<typeof AccordionGroup>;

@@ -1,0 +1,27 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsxImportSource": "@emotion/react",
+    "emitDeclarationOnly": false,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@icons": ["./src/icons"],
+      "@contexts": ["./src/contexts"],
+      "@": ["./src/projects"],
+      "@/*": ["./src/projects/*"],
+      "@trading": ["./src/projects/trading"],
+      "@trading/*": ["./src/projects/trading/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "./jest-setup.ts",
+    "./customTest.tsx",
+    "./src/types/svg.d.ts"
+  ],
+  "exclude": ["dist/**/*"]
+}
