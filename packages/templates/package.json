@@ -53,7 +53,7 @@
   "scripts": {
     "test": "jest -i --no-cache",
     "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
-    "sb:dev": "storybook dev -p 6006",
+    "sb:dev": "storybook dev -p 6008",
     "sb:build": "storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",
     "test:e2e:ui": "pnpm exec playwright test --project=chromium --ui",

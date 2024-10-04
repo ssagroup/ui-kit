@@ -143,7 +143,6 @@ const config: JestConfigWithTsJest = {
           'ts-jest',
           {
             tsconfig: './packages/templates/tsconfig.json',
-            // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
             babelConfig: './.babelrc.js',
           },
         ],

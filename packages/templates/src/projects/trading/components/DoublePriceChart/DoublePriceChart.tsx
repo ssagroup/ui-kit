@@ -10,12 +10,12 @@ import {
 import { useCurrency } from '@trading/contexts';
 import { useAppLayout } from '@trading/pages/AppLayout/useAppLayoutContext';
 import { useBotInfo } from '@trading/pages/BotPage/hooks';
+import { isShortPeriod } from '@trading/utils';
 import { SHORT_DATE_FORMAT, SHORT_TIME_FORMAT } from './constants';
 import { useChartInfo } from './hooks';
 import { DoublePriceChartProps } from './types';
 import { COMMON_ANNOTATION } from '../WeightedAveragePrice/constants';
 import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
-import { isShortPeriod } from '@trading/utils';
 
 export const DoublePriceChart = ({
   data: dataOriginal,
