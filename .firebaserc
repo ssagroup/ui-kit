@@ -11,6 +11,9 @@
         "core": [
           "ui-kit-core"
         ],
+        "templates": [
+          "ui-kit-template"
+        ],
         "fitness": [
           "ui-kit-fitness"
         ]

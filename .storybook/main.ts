@@ -11,8 +11,8 @@ const refs = {
     url: IS_PROD ? 'https://ui-kit-fitness.web.app/' : 'http://localhost:6007',
   },
   '@ssa-ui-kit/templates': {
-    title: 'Industry-specific widgets',
-    url: IS_PROD ? 'https://ui-kit-fitness.web.app/' : 'http://localhost:6008',
+    title: 'Templates',
+    url: IS_PROD ? 'https://ui-kit-template.web.app/' : 'http://localhost:6008',
   },
 };
 const config: StorybookConfig = {

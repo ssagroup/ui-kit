@@ -146,6 +146,9 @@ jobs:
       - name: "Deploying: storybook core"
         run: pnpm sb:deploy:core
 
+      - name: "Deploying: storybook templates"
+        run: pnpm sb:deploy:templates
+
       - name: "Deploying: fitness dashboard"
         run: pnpm deploy:dashboard
 

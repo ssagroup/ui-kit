@@ -40,6 +40,7 @@ eget
 eleifend
 elit
 enim
+etags
 fdusd
 firebase
 firestore
@@ -77,6 +78,7 @@ nisl
 nivo
 Plotly
 PLN
+Plotly
 PNL
 porttitor
 ramda

@@ -49,6 +49,7 @@
     "sb:deploy:root": "vercel --prod",
     "sb:deploy:fitness": "pnpm sb:build:widgets && firebase deploy --only hosting:fitness",
     "sb:deploy:core": "pnpm sb:build:core && firebase deploy --only hosting:core",
+    "sb:deploy:templates": "pnpm sb:build:templates && firebase deploy --only hosting:templates",
     "deploy:dashboard": "pnpm --filter ./examples/fitness-dashboard build && firebase deploy --only hosting:fitness-dashboard",
     "prepare": "husky install"
   },
