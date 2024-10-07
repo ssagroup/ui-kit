@@ -15,12 +15,16 @@ export const useData = ({
   'data' | 'pieChartColors' | 'legendValueRoundingDigits'
 >) => {
   let calculatedTotalAmount = 0;
-  data.forEach((item) => {
+  const dataLocal = Array.isArray(data) ? data : [];
+  const pieChartColorsLocal = Array.isArray(pieChartColors)
+    ? pieChartColors
+    : [[]];
+  dataLocal?.forEach((item) => {
     calculatedTotalAmount += Number(item.value);
   });
   const balanceDataForTheGraph: BalanceDataForGraph[] = [];
   const balanceDataForTheLegend: BalanceDataForGraph[] = [];
-  data?.forEach((item, itemIndex) => {
+  dataLocal?.forEach((item, itemIndex) => {
     const mainPercentage = (Number(item.value) * 100) / calculatedTotalAmount;
     const newMainItem = {
       value: item.value,
@@ -33,7 +37,7 @@ export const useData = ({
         legendValueRoundingDigits,
         'legendValueRoundingDigits',
       )(item),
-      color: pieChartColors[itemIndex][0],
+      color: pieChartColorsLocal?.[itemIndex]?.[0],
       id: `${itemIndex}0`,
     };
     balanceDataForTheLegend.push(newMainItem);
@@ -51,7 +55,7 @@ export const useData = ({
             legendValueRoundingDigits,
             'legendValueRoundingDigits',
           )(item),
-          color: pieChartColors[itemIndex][partIndex],
+          color: pieChartColorsLocal?.[itemIndex]?.[partIndex],
           id: `${itemIndex}${partIndex}`,
           partIndex,
           partLabel: part.label,
