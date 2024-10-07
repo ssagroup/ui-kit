@@ -98,3 +98,26 @@ export const WithoutDimensions = {
     showDimensions: false,
   },
 };
+
+export const WithTotalTooltip = {
+  ...StoryTemplate,
+  args: {
+    titleTooltipOptions: [
+      {
+        value: 10500,
+        label: 'Option 1',
+        dimension: 'USDT',
+      },
+      {
+        value: 5000,
+        label: 'Option 2',
+        dimension: 'USDT',
+      },
+      {
+        value: 2237,
+        label: 'Option 3',
+        dimension: 'USDT',
+      },
+    ],
+  },
+};

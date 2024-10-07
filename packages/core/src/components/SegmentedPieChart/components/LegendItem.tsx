@@ -1,6 +1,7 @@
 import React from 'react';
 import { LegendItemProps } from '../types';
 import { getRoundedNumber } from '../utils';
+import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
 
 export const LegendItem = ({
   label,
@@ -8,12 +9,14 @@ export const LegendItem = ({
   percentage,
   legendValue,
   legendValueRoundingDigits,
-  legendPercentageRoundingDigits,
-  showDimensions,
-  showPercentage,
-  otherLabel,
-  currency,
 }: LegendItemProps) => {
+  const {
+    legendPercentageRoundingDigits,
+    showDimensions,
+    showPercentage,
+    otherLabel,
+    currency,
+  } = useSegmentedPieChartContext();
   const legendValueLocal = getRoundedNumber(
     legendValue,
     legendValueRoundingDigits as number,

@@ -1,5 +1,6 @@
 import { CommonProps } from '@global-types/emotion';
 import { PieChartLegend, PieChartLegendItem, PieChartProps } from '@components';
+import { TooltipProps } from '@components/Tooltip/types';
 
 type SegmentedDataMainInfo = {
   label: string;
@@ -29,6 +30,12 @@ export interface SegmentedPieChartProps extends CommonProps {
   legendPercentageRoundingDigits?: number;
   showDimensions?: boolean;
   showPercentage?: boolean;
+  titleTooltipOptions?: Array<ChartTitleOption>;
+  tooltipConfig?: Partial<TooltipProps>;
+  renderTitleTooltipContent?: (props: {
+    totalAmount: number;
+    totalDimension: string;
+  }) => React.ReactNode;
 }
 
 export interface BalanceDataForGraph extends PieChartLegendItem {
@@ -51,11 +58,10 @@ export type LegendItemProps = {
   percentage?: number;
   legendValue?: number;
   legendValueRoundingDigits: number;
-} & Pick<
-  SegmentedPieChartProps,
-  | 'showDimensions'
-  | 'legendPercentageRoundingDigits'
-  | 'otherLabel'
-  | 'currency'
-  | 'showPercentage'
->;
+};
+
+export type ChartTitleOption = Pick<BalanceDataForGraph, 'value' | 'label'> & {
+  dimension?: string;
+  legendValueRoundingDigits?: number;
+  legendPercentageRoundingDigits?: number;
+};

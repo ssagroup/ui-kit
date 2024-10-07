@@ -3,14 +3,15 @@ import { MayHaveLabel, PieTooltipProps } from '@nivo/pie';
 import { pathOr } from '@ssa-ui-kit/utils';
 import { BalanceDataForGraph } from '../types';
 import { getRoundedNumber } from '../utils';
+import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
 
 export const ChartTooltip = ({
   point,
-  legendPercentageRoundingDigits,
 }: {
   point: PieTooltipProps<MayHaveLabel>;
-  legendPercentageRoundingDigits: number;
 }) => {
+  const { legendPercentageRoundingDigits, showDimensions, showPercentage } =
+    useSegmentedPieChartContext();
   const theme = useTheme();
   const pointData = pathOr<typeof point, BalanceDataForGraph>({}, [
     'datum',
@@ -65,9 +66,9 @@ export const ChartTooltip = ({
       <tr>
         <td css={{ fontWeight: 600, padding: '0 5px' }}>{pointData.label}</td>
         <td>
-          {mainData.value} {mainData.label}
+          {mainData.value} {showDimensions && mainData.label}
         </td>
-        <td>({mainData.percentage}%)</td>
+        {showPercentage && <td>({mainData.percentage}%)</td>}
       </tr>
       {pointData.partLabel && (
         <tr>
@@ -75,9 +76,10 @@ export const ChartTooltip = ({
             {pointData.partLabel}
           </td>
           <td>
-            {partData.value} {pointData.legendLabel || pointData.label}
+            {partData.value}{' '}
+            {showDimensions && (pointData.legendLabel || pointData.label)}
           </td>
-          <td>({partData.percentage}%)</td>
+          {showPercentage && <td>({partData.percentage}%)</td>}
         </tr>
       )}
     </table>
