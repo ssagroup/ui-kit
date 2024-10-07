@@ -1,3 +1,4 @@
+abp
 adipiscing
 amet
 arcu
@@ -76,7 +77,6 @@ mxschmitt
 neque
 nisl
 nivo
-Plotly
 PLN
 Plotly
 PNL

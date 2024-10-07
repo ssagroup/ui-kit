@@ -17,6 +17,7 @@ export * from './PNL';
 export * from './Positions';
 export * from './Profitability';
 export * from './Rebalance';
+export * from './RowsPerPageDropdown';
 export * from './Turnover';
 export * from './WeightedAveragePrice';
 export * from './WeightedMeanPrices';

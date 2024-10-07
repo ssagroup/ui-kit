@@ -168,6 +168,15 @@ export const translationConfig: JSONObject = {
           roiTotal: 'ROI total',
         },
       },
+      notifications: {
+        pageTitle: 'Notifications - SSA CTP: Crypto Trading Platform',
+        crumbs: 'Notifications',
+        readAllBtnText: 'Mark all as read',
+        allFilterText: 'All',
+        unreadFilterText: 'Last %Unread',
+        noItemsMsg: 'You don’t have notifications now!',
+        noUnreadItemsMsg: 'You don’t have unread notifications now!',
+      },
     },
   },
 };
