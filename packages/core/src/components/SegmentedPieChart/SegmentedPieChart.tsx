@@ -7,6 +7,7 @@ import {
 import { SegmentedPieChartProps } from './types';
 import { ChartTitle, ChartTooltip, LegendItem } from './components';
 import { useData } from './hooks';
+import { SegmentedPieChartProvider } from './SegmentedPieChartContext';
 
 export const SegmentedPieChart = ({
   data,
@@ -22,6 +23,9 @@ export const SegmentedPieChart = ({
   legendPercentageRoundingDigits = 0,
   showDimensions = true,
   showPercentage = true,
+  titleTooltipOptions,
+  tooltipConfig,
+  renderTitleTooltipContent,
 }: SegmentedPieChartProps) => {
   const theme = useTheme();
 
@@ -32,58 +36,59 @@ export const SegmentedPieChart = ({
   });
 
   return (
-    <PieChart
-      data={balanceDataForTheGraph}
-      animate={true}
-      css={{
-        width: 400,
-        margin: '40px 120px',
-      }}
-      isInteractive
-      activeInnerRadiusOffset={0}
-      activeOuterRadiusOffset={0}
-      tooltip={(point) => (
-        <ChartTooltip
-          point={point}
-          legendPercentageRoundingDigits={legendPercentageRoundingDigits}
-        />
-      )}
-      title={
-        <ChartTitle totalAmount={totalAmount} totalDimension={totalDimension} />
-      }
-      {...pieChartProps}>
-      <PieChartLegend
-        data={balanceDataForTheLegend}
-        backgroundColors={legendBackgrounds}
-        renderValue={(props) => (
-          <LegendItem
-            {...props}
-            legendValueRoundingDigits={
-              props.legendValueRoundingDigits as number
+    <SegmentedPieChartProvider
+      legendPercentageRoundingDigits={legendPercentageRoundingDigits}
+      legendValueRoundingDigits={legendValueRoundingDigits}
+      totalAmount={totalAmount}
+      totalDimension={totalDimension}
+      titleTooltipOptions={titleTooltipOptions}
+      showDimensions={showDimensions}
+      showPercentage={showPercentage}
+      otherLabel={otherLabel}
+      currency={currency}
+      renderTitleTooltipContent={renderTitleTooltipContent}
+      tooltipConfig={tooltipConfig}>
+      <PieChart
+        data={balanceDataForTheGraph}
+        animate={true}
+        css={{
+          width: 400,
+          margin: '40px 120px',
+        }}
+        isInteractive
+        activeInnerRadiusOffset={0}
+        activeOuterRadiusOffset={0}
+        tooltip={(point) => <ChartTooltip point={point} />}
+        title={<ChartTitle />}
+        {...pieChartProps}>
+        <PieChartLegend
+          data={balanceDataForTheLegend}
+          backgroundColors={legendBackgrounds}
+          renderValue={(props) => (
+            <LegendItem
+              {...props}
+              legendValueRoundingDigits={
+                props.legendValueRoundingDigits as number
+              }
+            />
+          )}
+          markerStyles={css`
+            width: 10px;
+            height: 10px;
+          `}
+          labelListStyles={css`
+            h6 {
+              font-weight: 700;
             }
-            legendPercentageRoundingDigits={legendPercentageRoundingDigits}
-            showDimensions={showDimensions}
-            showPercentage={showPercentage}
-            otherLabel={otherLabel}
-            currency={currency}
-          />
-        )}
-        markerStyles={css`
-          width: 10px;
-          height: 10px;
-        `}
-        labelListStyles={css`
-          h6 {
-            font-weight: 700;
-          }
-        `}
-        valueListStyles={css`
-          h6 {
-            color: ${theme.colors.greyDarker80};
-          }
-        `}
-        {...pieChartLegendProps}
-      />
-    </PieChart>
+          `}
+          valueListStyles={css`
+            h6 {
+              color: ${theme.colors.greyDarker80};
+            }
+          `}
+          {...pieChartLegendProps}
+        />
+      </PieChart>
+    </SegmentedPieChartProvider>
   );
 };
