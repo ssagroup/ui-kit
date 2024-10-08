@@ -6,6 +6,7 @@ import {
   WithPagination,
 } from '@ssa-ui-kit/core';
 import { useTranslation } from '@contexts';
+import { ROWS_PER_PAGE_LIST } from '@/trading/components';
 import {
   NotificationFilters,
   NotificationsList,
@@ -14,17 +15,13 @@ import {
   ALL_FILTER_ID,
   UNREAD_FILTER_ID,
 } from './components';
-import {
-  useNotifications,
-  useReadMutation,
-  useReadManyMutation,
-} from './hooks';
+import { useNotifications, useReadManyMutation } from './hooks';
 
 const MAX_UNREAD_TO_SHOW = 100;
 const MIN_UNREAD_TO_SHOW = 10;
 
 const Notifications: React.FC<object> = () => {
-  const { setPage } = usePaginationContext();
+  const { setPage, page } = usePaginationContext();
   const [searchParams] = useSearchParams();
   const isUnreadParam = Boolean(searchParams.get('unread'));
   const [rowsPerPage, setRowsPerPage] = useState(
@@ -33,16 +30,12 @@ const Notifications: React.FC<object> = () => {
   const [showUnread, setShowUnread] = useState(!isUnreadParam);
   const { t } = useTranslation();
 
-  /**
-  {
-    page: page || 1,
-    rowsPerPage,
-    showUnread,
-  }
-   */
-  const { isFetching, error, data, isPlaceholderData } = useNotifications();
-
-  const readAllMutation = useReadMutation();
+  const { isFetching, error, data, isPlaceholderData, handleMarkReadAll } =
+    useNotifications({
+      page: page || 1,
+      rowsPerPage,
+      showUnread,
+    });
 
   const readManyMutation = useReadManyMutation({
     onSuccess() {
@@ -54,11 +47,13 @@ const Notifications: React.FC<object> = () => {
 
   useEffect(() => {
     setPage(1);
+    if (!showUnread) {
+      setRowsPerPage(ROWS_PER_PAGE_LIST[1].value);
+    }
   }, [showUnread, setPage]);
 
-  const notifications = data.items;
-  const totalCount = data.totalCount;
-  const unreadCount = data.unreadCount;
+  const { items: notifications, totalCount, unreadCount } = data;
+  const isReadAllDisabled = unreadCount === 0;
 
   if (error) return 'An error has occurred: ' + error.message;
 
@@ -126,8 +121,8 @@ const Notifications: React.FC<object> = () => {
       {!showUnread || (isFetching && notifications.length > 0) ? (
         <Footer
           isHidden={isFetching && !notifications?.length}
-          isReadAllDisabled={unreadCount === 0 || readAllMutation.isPending}
-          onReadAllClick={() => readAllMutation.mutate()}
+          isReadAllDisabled={isReadAllDisabled}
+          onReadAllClick={() => handleMarkReadAll()}
           onRowsPerPageChange={(value) => {
             setRowsPerPage(value);
             setPage(1);

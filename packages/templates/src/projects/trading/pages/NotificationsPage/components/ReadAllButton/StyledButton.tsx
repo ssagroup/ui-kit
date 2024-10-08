@@ -16,6 +16,9 @@ export const StyledButton = styled(Button)`
       border: none;
     }
   }
+  &:disabled {
+    cursor: default;
+  }
 
   span {
     color: ${({ theme }) => theme.colors.blueDark};

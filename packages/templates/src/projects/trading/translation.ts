@@ -2,6 +2,9 @@ import { JSONObject } from '../../types';
 
 export const translationConfig: JSONObject = {
   en: {
+    rowsPerPage: {
+      text: 'Rows per page',
+    },
     common: {
       noDataYet: 'No data yet',
     },

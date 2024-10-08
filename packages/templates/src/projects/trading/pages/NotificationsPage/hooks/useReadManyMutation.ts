@@ -4,17 +4,14 @@ type UseReadMutationProps = {
 
 export const useReadManyMutation = ({ onSuccess }: UseReadMutationProps) => {
   const handleMutate = (ids: number[]) => {
-    /**
-     * no-op
-     */
-    console.log('>>>read many mutations, ids', ids);
+    // Additional logic
     return {
+      ids,
       error: null,
       result: null,
       success: true,
       targetUrl: null,
       unAuthorizedRequest: false,
-      __abp: true,
     };
   };
   return {

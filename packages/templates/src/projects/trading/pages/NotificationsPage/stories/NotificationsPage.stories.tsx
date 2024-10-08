@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, Fragment } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import type { Meta } from '@storybook/react';
 import { TranslationProvider } from '@contexts';
@@ -14,6 +14,7 @@ import { AppLayoutProvider } from '../../AppLayout/context';
 import { LayoutBase } from '../../AppLayout/LayoutBase';
 import { RightPaneBase } from '../../AppLayout/RightPaneBase';
 import { NotificationsPage } from '../NotificationsPage';
+// import { Header } from '../../AppLayout/components/Header';
 
 export default {
   title: 'Templates/NotificationsPage',
@@ -40,7 +41,12 @@ export default {
                           router={createBrowserRouter([
                             {
                               path: '/*',
-                              element: <Story {...args} />,
+                              element: (
+                                <Fragment>
+                                  {/* <Header /> */}
+                                  <Story {...args} />
+                                </Fragment>
+                              ),
                             },
                           ])}
                         />
