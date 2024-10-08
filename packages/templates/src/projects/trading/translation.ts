@@ -2,6 +2,9 @@ import { JSONObject } from '../../types';
 
 export const translationConfig: JSONObject = {
   en: {
+    rowsPerPage: {
+      text: 'Rows per page',
+    },
     common: {
       noDataYet: 'No data yet',
     },
@@ -167,6 +170,15 @@ export const translationConfig: JSONObject = {
           roiInvestment: 'ROI investment',
           roiTotal: 'ROI total',
         },
+      },
+      notifications: {
+        pageTitle: 'Notifications - SSA CTP: Crypto Trading Platform',
+        crumbs: 'Notifications',
+        readAllBtnText: 'Mark all as read',
+        allFilterText: 'All',
+        unreadFilterText: 'Last %Unread',
+        noItemsMsg: 'You don’t have notifications now!',
+        noUnreadItemsMsg: 'You don’t have unread notifications now!',
       },
     },
   },
