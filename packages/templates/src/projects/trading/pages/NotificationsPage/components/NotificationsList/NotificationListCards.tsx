@@ -1,5 +1,4 @@
-import { useRef, useEffect } from 'react';
-import { useIntersectionObserver } from 'usehooks-ts';
+import { useRef } from 'react';
 import { NotificationCard } from '@ssa-ui-kit/core';
 import {
   UnreadNotificationCardProps,
@@ -8,22 +7,8 @@ import {
 
 const TYPE_INFO = 'Informational';
 
-export const UnreadCard = ({
-  notification,
-  onRead,
-}: UnreadNotificationCardProps) => {
+export const UnreadCard = ({ notification }: UnreadNotificationCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const entry = useIntersectionObserver({
-    threshold: 0.8,
-    freezeOnceVisible: true,
-  });
-
-  useEffect(() => {
-    const isVisible = !!entry?.isIntersecting;
-    if (!notification.readAt && isVisible) {
-      onRead(notification);
-    }
-  }, [entry]);
 
   return (
     <NotificationCard

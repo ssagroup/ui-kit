@@ -15,9 +15,7 @@ const Indicator = ({
   const indicatorRef = useRef<HTMLDivElement>(null);
   const childrenRef = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState<number>(0);
-  const [childrenData, setChildrenData] = useState<ChildrenDataProps | null>(
-    {} || null,
-  );
+  const [childrenData, setChildrenData] = useState<ChildrenDataProps>({});
   const { width: windowWidth } = useWindowSize();
   const theme = useTheme();
 
@@ -32,8 +30,17 @@ const Indicator = ({
         width: childrenRef.current.offsetWidth,
         right: childrenRef.current.offsetWidth + childrenRef.current.offsetLeft,
       };
-      setWidth(refValue);
-      setChildrenData(refData);
+      if (refValue !== width) {
+        setWidth(refValue);
+      }
+      if (
+        childrenData.top !== refData.top ||
+        childrenData.left !== refData.left ||
+        childrenData.width !== refData.width ||
+        childrenData.right !== refData.right
+      ) {
+        setChildrenData(refData);
+      }
     }
   }, [width, childrenRef.current, windowWidth]);
 
@@ -44,7 +51,7 @@ const Indicator = ({
           data-testid={`indicator-${position}`}
           ref={indicatorRef}
           css={
-            childrenData && [
+            Object.keys(childrenData).length > 0 && [
               css`
                 top: ${childrenData.top + 2}px;
                 left: ${isRight ? '-6px' : '1px'};

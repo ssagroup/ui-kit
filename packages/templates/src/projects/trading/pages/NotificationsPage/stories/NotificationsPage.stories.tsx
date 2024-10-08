@@ -14,7 +14,7 @@ import { AppLayoutProvider } from '../../AppLayout/context';
 import { LayoutBase } from '../../AppLayout/LayoutBase';
 import { RightPaneBase } from '../../AppLayout/RightPaneBase';
 import { NotificationsPage } from '../NotificationsPage';
-// import { Header } from '../../AppLayout/components/Header';
+import { Header } from '../../AppLayout/components/Header';
 
 export default {
   title: 'Templates/NotificationsPage',
@@ -43,7 +43,7 @@ export default {
                               path: '/*',
                               element: (
                                 <Fragment>
-                                  {/* <Header /> */}
+                                  <Header />
                                   <Story {...args} />
                                 </Fragment>
                               ),

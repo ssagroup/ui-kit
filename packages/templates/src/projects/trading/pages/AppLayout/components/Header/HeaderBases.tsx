@@ -7,13 +7,7 @@ export const HeaderBase = styled.header`
   margin-bottom: 12px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 14px;
-    height: 69px;
-    border-bottom: 1px solid #fff;
+    display: none;
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
@@ -22,7 +16,7 @@ export const HeaderBase = styled.header`
 `;
 
 export const MenusSectionBase = styled.div`
-  display: flex;
+  display: none;
   align-items: center;
   align-self: flex-end;
   gap: 15px;
@@ -30,6 +24,7 @@ export const MenusSectionBase = styled.div`
   padding-left: 58px;
 
   ${({ theme }) => theme.mediaQueries.md} {
+    display: flex;
     justify-content: flex-end;
     gap: 0;
     padding-left: 0;
@@ -39,6 +34,7 @@ export const MenusSectionBase = styled.div`
 export const PageSectionBase = styled.div`
   display: flex;
   margin-top: 8px;
+  justify-content: flex-end;
 
   ${({ theme }) => theme.mediaQueries.md} {
     justify-content: flex-start;
