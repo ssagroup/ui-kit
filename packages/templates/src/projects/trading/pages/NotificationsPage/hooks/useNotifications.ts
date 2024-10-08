@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { notificationsQueryMock } from './__mocks__/useNotifications';
 import { Notification } from '@/trading/types';
+import { notificationsQueryMock } from './__mocks__/useNotifications';
 
 type UseNotificationsProps = {
   page: number;
