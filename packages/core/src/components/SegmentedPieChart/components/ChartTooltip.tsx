@@ -25,7 +25,7 @@ export const ChartTooltip = ({
             pointData.legendValueRoundingDigits,
           )
         : getRoundedNumber(
-            pointData.value,
+            pointData.mainValue,
             pointData.legendValueRoundingDigits,
           ),
     label: pointData.legendLabel || pointData.label,

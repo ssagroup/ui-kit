@@ -31,6 +31,7 @@ export const useData = ({
       label: item.label,
       percentage: mainPercentage,
       mainId: Number(item.id),
+      mainValue: item.value,
       legendLabel: item.legendLabel,
       legendValue: item.legendValue,
       legendValueRoundingDigits: propOr<SegmentedDataItem, number>(
@@ -42,28 +43,31 @@ export const useData = ({
     };
     balanceDataForTheLegend.push(newMainItem);
     if (item.parts?.length) {
-      item.parts?.forEach((part, partIndex) => {
-        const partPercentage = (part.value * 100) / calculatedTotalAmount;
-        balanceDataForTheGraph.push({
-          value: item.value,
-          label: item.label,
-          percentage: mainPercentage,
-          mainId: Number(item.id),
-          legendLabel: item.legendLabel,
-          legendValue: item.legendValue,
-          legendValueRoundingDigits: propOr<SegmentedDataItem, number>(
-            legendValueRoundingDigits,
-            'legendValueRoundingDigits',
-          )(item),
-          color: pieChartColorsLocal?.[itemIndex]?.[partIndex],
-          id: `${itemIndex}${partIndex}`,
-          partIndex,
-          partLabel: part.label,
-          partPercentage: Number(partPercentage),
-          partValue: part.value,
-          partLegendValue: part.legendValue,
+      item.parts
+        ?.filter((part) => !!part.value)
+        .forEach((part, partIndex) => {
+          const partPercentage = (part.value * 100) / calculatedTotalAmount;
+          balanceDataForTheGraph.push({
+            value: part.value,
+            label: item.label,
+            percentage: mainPercentage,
+            mainId: Number(item.id),
+            mainValue: item.value,
+            legendLabel: item.legendLabel,
+            legendValue: item.legendValue,
+            legendValueRoundingDigits: propOr<SegmentedDataItem, number>(
+              legendValueRoundingDigits,
+              'legendValueRoundingDigits',
+            )(item),
+            color: pieChartColorsLocal?.[itemIndex]?.[partIndex],
+            id: `${itemIndex}${partIndex}`,
+            partIndex,
+            partLabel: part.label,
+            partPercentage: Number(partPercentage),
+            partValue: part.value,
+            partLegendValue: part.legendValue,
+          });
         });
-      });
     } else {
       balanceDataForTheGraph.push(newMainItem);
     }

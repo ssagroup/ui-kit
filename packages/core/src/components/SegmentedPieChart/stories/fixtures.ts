@@ -100,6 +100,89 @@ export const balanceData: SegmentedDataSet = [
   },
 ];
 
+export const balanceDataNullable: SegmentedDataSet = [
+  {
+    id: 1,
+    value: 5843.37,
+    legendValue: 5843.37 / RATE.BTC,
+    legendLabel: 'BTC',
+    label: 'BTC',
+    legendValueRoundingDigits: 6,
+    parts: [
+      {
+        label: 'Option 1',
+        value: 5843.37,
+        legendValue: 5843.37 / RATE.BTC,
+      },
+      {
+        label: 'Option 2',
+        value: 0,
+        legendValue: 0,
+      },
+    ],
+  },
+  {
+    id: 2,
+    value: 5249.25,
+    legendValue: 5249.25 / RATE.ETH,
+    legendLabel: 'ETH',
+    label: 'ETH',
+    legendValueRoundingDigits: 2,
+    parts: [
+      {
+        label: 'Option 1',
+        value: 2800,
+        legendValue: 2800 / RATE.ETH,
+      },
+      {
+        label: 'Option 2',
+        value: 2449.25,
+        legendValue: 2449.25 / RATE.ETH,
+      },
+    ],
+  },
+  {
+    id: 3,
+    value: 3825.55,
+    legendValue: 3825.55 / RATE.FDUSD,
+    legendLabel: 'FDUSD',
+    label: 'FDUSD',
+    legendValueRoundingDigits: 2,
+    parts: [
+      {
+        label: 'Option 1',
+        value: 3825.55,
+        legendValue: 3825.55 / RATE.FDUSD,
+      },
+      {
+        label: 'Option 2',
+        value: 0,
+        legendValue: 0,
+      },
+    ],
+  },
+  {
+    id: 4,
+    value: 2818.83,
+    legendValue: 2818.83 / RATE.USDT,
+    label: 'Other',
+    legendLabel: 'USDT',
+    legendValueRoundingDigits: 0,
+    parts: [
+      {
+        label: 'Option 1',
+        value: 2818.83,
+        legendValue: 2818.83 / RATE.USDT,
+      },
+      {
+        label: 'Option 2',
+        value: 0,
+        legendValue: 0,
+      },
+    ],
+  },
+];
+
 export const balanceTotalAmount = balanceData
   .map((item) => Number(item.value))
   .reduce((acc, currentValue) => acc + currentValue, 0);
