@@ -1,0 +1,10 @@
+export const BOT_STARTING = 'starting';
+export const BOT_STARTED = 'started';
+export const BOT_STOPPING = 'stopping';
+export const BOT_STOPPED = 'stopped';
+export const BOT_ARCHIVING = 'archiving';
+export const BOT_ARCHIVED = 'archived';
+export const BOT_REBALANCING = 'rebalancing';
+export const BOT_REBALANCED = 'rebalanced';
+export const BOT_VERSION_UPDATING = 'version_updating';
+export const BOT_VERSION_UPDATED = 'version_updated';

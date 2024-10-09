@@ -2,6 +2,10 @@ import { JSONObject } from '../../types';
 
 export const translationConfig: JSONObject = {
   en: {
+    buttons: {
+      copy: 'Copy',
+      delete: 'Delete',
+    },
     rowsPerPage: {
       text: 'Rows per page',
     },
@@ -179,6 +183,31 @@ export const translationConfig: JSONObject = {
         unreadFilterText: 'Last %Unread',
         noItemsMsg: 'You don’t have notifications now!',
         noUnreadItemsMsg: 'You don’t have unread notifications now!',
+      },
+      bots: {
+        buttonGroup: {
+          all: 'All',
+          running: 'Running',
+          stopped: 'Stopped',
+        },
+        table: {
+          noResults: 'No results!',
+          allTitle: 'Bots',
+          archiveTitle: 'Bots Archive',
+          lastStatusChange: 'Last Status change:',
+          lastOrderTime: 'Last order time: ',
+          notAvailable: 'N/A',
+          columns: {
+            name: 'Name',
+            strategy: 'Strategy',
+            funds: 'Funds in Work',
+            creationDate: 'Created At',
+            exchange: 'Exchange',
+            status: 'Status',
+            pnl: 'PNL trading',
+            roi: 'ROI trading',
+          },
+        },
       },
     },
   },

@@ -1,4 +1,5 @@
 export * from './account';
+export * from './api';
 export * from './bot';
 export * from './currency';
 export * from './enum';
