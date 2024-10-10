@@ -1,3 +1,4 @@
 export type * from './types';
-export { useBotsPageEnums } from './useBotsPageEnums';
-export { useQueryParams } from './useQueryParams';
+export * from './useBotsPageEnums';
+export * from './useQueryParams';
+export * from './useBotsPage';

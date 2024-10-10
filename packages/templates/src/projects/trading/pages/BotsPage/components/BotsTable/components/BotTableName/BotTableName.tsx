@@ -1,8 +1,8 @@
 import { Platform } from '@trading/components';
-import { Bot } from '@trading/types';
+import { SingleBot } from '@/trading/pages/BotsPage/__mock__/allBots';
 import * as S from './styles';
 
-export const BotTableName = ({ bot }: { bot: Bot }) => {
+export const BotTableName = ({ bot }: { bot: SingleBot }) => {
   return (
     <div css={S.BotName}>
       {bot.platform && (

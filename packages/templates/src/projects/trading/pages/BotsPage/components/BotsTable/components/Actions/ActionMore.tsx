@@ -1,5 +1,4 @@
-import { MouseEventHandler, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { MouseEventHandler, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import {
   Icon,
@@ -9,16 +8,13 @@ import {
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
 import { useTranslation } from '@contexts';
-import { Bot } from '@trading/types';
 import { ActionItem } from './ActionItem';
 import { ActionsWrapper } from './ActionsWrapper';
 
-export const ActionMore = ({ row }: { row: Bot }) => {
-  const { isActionsDisabled, id: botId } = row;
+export const ActionMore = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const isDisabled = false;
 
@@ -31,7 +27,6 @@ export const ActionMore = ({ row }: { row: Bot }) => {
 
   const actionHandler: MouseEventHandler<HTMLElement> = (event) => {
     event.stopPropagation();
-    navigate(`create-bot/basic?mode=copy&id=${botId}`);
   };
 
   return (
@@ -48,7 +43,7 @@ export const ActionMore = ({ row }: { row: Bot }) => {
         css={{
           marginLeft: 10,
           padding: '0 10px',
-          cursor: isActionsDisabled || isDisabled ? 'default' : 'pointer',
+          cursor: 'pointer',
           backgroundColor: 'unset',
         }}
         startIcon={

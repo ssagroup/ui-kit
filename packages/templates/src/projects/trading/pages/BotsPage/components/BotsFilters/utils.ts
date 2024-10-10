@@ -21,10 +21,6 @@ export const API_KEY_TO_TITLE: ApiKeyToTitle = [
     title: 'Status',
     botsApiKey: 'status',
   },
-  {
-    title: 'Pair',
-    botsApiKey: 'instrument',
-  },
 ];
 
 export const makeFilters = (

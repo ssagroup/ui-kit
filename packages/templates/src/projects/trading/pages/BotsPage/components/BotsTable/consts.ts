@@ -3,10 +3,8 @@ import { SortInfo } from './types';
 export const COLUMNS = [
   'pages.bots.table.columns.name',
   'pages.bots.table.columns.strategy',
-  'pages.bots.table.columns.orderSize',
   'pages.bots.table.columns.funds',
   'pages.bots.table.columns.status',
-  'pages.bots.table.columns.pair',
   'pages.bots.table.columns.pnl',
   'pages.bots.table.columns.roi',
   '',

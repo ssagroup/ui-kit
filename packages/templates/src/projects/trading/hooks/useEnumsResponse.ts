@@ -48,48 +48,8 @@ export const useEnumsResponse = () => ({
           backgroundColor: '#ECFDF3',
           fontColor: '#0B9F43',
         },
-        key: 'Initializing',
-        localizedName: 'Initializing',
-      },
-      {
-        styles: {
-          backgroundColor: '#ECFDF3',
-          fontColor: '#0B9F43',
-        },
-        key: 'WarmingUp',
-        localizedName: 'WarmingUp',
-      },
-      {
-        styles: {
-          backgroundColor: '#ECFDF3',
-          fontColor: '#0B9F43',
-        },
-        key: 'Trading',
+        key: 'Running',
         localizedName: 'Trading',
-      },
-      {
-        styles: {
-          backgroundColor: '#ECFDF3',
-          fontColor: '#0B9F43',
-        },
-        key: 'WaitingForSignal',
-        localizedName: 'WaitingForSignal',
-      },
-      {
-        styles: {
-          backgroundColor: '#FFEFEC',
-          fontColor: '#E5350E',
-        },
-        key: 'StopLossing',
-        localizedName: 'StopLossing',
-      },
-      {
-        styles: {
-          backgroundColor: '#FFEFEC',
-          fontColor: '#E5350E',
-        },
-        key: 'StopLossPending',
-        localizedName: 'StopLossPending',
       },
       {
         styles: {
@@ -99,54 +59,6 @@ export const useEnumsResponse = () => ({
         key: 'Stopped',
         localizedName: 'Stopped',
       },
-      {
-        styles: {
-          backgroundColor: '#FFEFEC',
-          fontColor: '#E5350E',
-        },
-        key: 'Failed',
-        localizedName: 'Failed',
-      },
-      {
-        styles: {
-          backgroundColor: '#FFEFEC',
-          fontColor: '#E5350E',
-        },
-        key: 'StartFailed',
-        localizedName: 'StartFailed',
-      },
-      {
-        styles: {
-          backgroundColor: '#ECFDF3',
-          fontColor: '#0B9F43',
-        },
-        key: 'Rebalancing->WarmingUp',
-        localizedName: 'Rebalancing->WarmingUp',
-      },
-      {
-        styles: {
-          backgroundColor: '#ECFDF3',
-          fontColor: '#0B9F43',
-        },
-        key: 'Rebalancing->Active',
-        localizedName: 'Rebalancing->Active',
-      },
-      {
-        styles: {
-          backgroundColor: '#FFEFEC',
-          fontColor: '#E5350E',
-        },
-        key: 'Rebalancing->Stopping',
-        localizedName: 'Rebalancing->Stopping',
-      },
-      {
-        styles: {
-          backgroundColor: '#FFEFEC',
-          fontColor: '#E5350E',
-        },
-        key: 'Rebalancing->Stopped',
-        localizedName: 'Rebalancing->Stopped',
-      },
     ],
     exchangePlatforms: [
       {
@@ -154,22 +66,8 @@ export const useEnumsResponse = () => ({
         localizedName: 'Binance',
       },
       {
-        key: 'Bybit',
-        localizedName: 'Bybit',
-      },
-    ],
-    pairs: [
-      {
-        key: 'BTC/FDUSD',
-        localizedName: 'BTC/FDUSD',
-      },
-      {
-        key: 'ETH/FDUSD',
-        localizedName: 'ETH/FDUSD',
-      },
-      {
-        key: 'BTC/USDT',
-        localizedName: 'BTC/USDT',
+        key: 'ByBit',
+        localizedName: 'ByBit',
       },
     ],
     colorsForLastOrder: [

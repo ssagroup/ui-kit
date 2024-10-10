@@ -12,6 +12,7 @@ export const RightPaneBase = styled.main`
   width: 100%;
   padding: 10px 9px 0 15px;
   overflow: hidden auto;
+  min-height: 100vh;
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 10px 21px 0 35px;

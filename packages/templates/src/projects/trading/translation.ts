@@ -2,12 +2,42 @@ import { JSONObject } from '../../types';
 
 export const translationConfig: JSONObject = {
   en: {
+    toasts: {
+      archive: {
+        progress: 'Archive in progress',
+        success: 'Bot archived',
+      },
+      stopBot: {
+        progress: 'Stop in progress',
+        success: 'Bot stopped',
+      },
+      startBot: {
+        progress: 'Start in progress',
+        success: 'Bot started',
+      },
+    },
     buttons: {
       copy: 'Copy',
       delete: 'Delete',
     },
     rowsPerPage: {
       text: 'Rows per page',
+    },
+    periods: {
+      plural: {
+        years: 'years',
+        days: 'days',
+        hours: 'hours',
+        minutes: 'minutes',
+        seconds: 'seconds',
+      },
+      singular: {
+        years: 'year',
+        days: 'day',
+        hours: 'hour',
+        minutes: 'minute',
+        seconds: 'second',
+      },
     },
     common: {
       noDataYet: 'No data yet',
@@ -185,6 +215,8 @@ export const translationConfig: JSONObject = {
         noUnreadItemsMsg: 'You don’t have unread notifications now!',
       },
       bots: {
+        runReason: 'Run Reason',
+        run: 'Run',
         buttonGroup: {
           all: 'All',
           running: 'Running',

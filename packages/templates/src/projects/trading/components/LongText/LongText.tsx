@@ -1,3 +1,4 @@
+import React from 'react';
 import DomPurify from 'dompurify';
 import { useTheme } from '@emotion/react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@ssa-ui-kit/core';

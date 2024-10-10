@@ -17,7 +17,7 @@ export const Actions = ({ row }: ActionsProps) => {
     <BotStatusProvider>
       <Wrapper>
         <BotsActionRun row={row} />
-        <ActionMore row={row} />
+        <ActionMore />
       </Wrapper>
     </BotStatusProvider>
   );

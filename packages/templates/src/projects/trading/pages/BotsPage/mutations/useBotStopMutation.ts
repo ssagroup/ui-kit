@@ -18,11 +18,11 @@ export const useBotStopMutation = (id: number) => {
 
   const mutate = () => {
     setMutationStatus(BOT_STOPPING);
-    showSimpleToast(t('toasts.stopBot.progress'));
+    showSimpleToast(t('toasts.stopBot.progress'), { hideProgressBar: true });
     setTimeout(() => {
       setMutationStatus(BOT_STOPPED);
       setReloadReason('stopAllBotsMutation');
-      showSimpleToast(t('toasts.stopBot.success'));
+      showSimpleToast(t('toasts.stopBot.success'), { type: 'success' });
     }, 1000);
   };
 

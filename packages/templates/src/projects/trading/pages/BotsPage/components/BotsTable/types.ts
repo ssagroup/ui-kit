@@ -1,17 +1,9 @@
-import { MouseEvent } from 'react';
-import { APIListResponse, Bot } from '@trading/types';
 import { COLUMN_API_NAMES } from './consts';
+import { AllBots } from '../../__mock__/allBots';
 
 export type BotsTableProps = {
-  botsResponse: {
-    data: {
-      result: APIListResponse<Bot>;
-    };
-    isFetching: boolean;
-    isError: boolean;
-  };
+  response: AllBots;
   allRowsDisabled?: boolean;
-  onRowClick: (bot: Bot) => (event: MouseEvent<HTMLTableRowElement>) => void;
   handleSortingChange: (sortInfo: SortInfo<string>) => void;
 };
 

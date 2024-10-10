@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { css, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import { Wrapper, ButtonGroup } from '@ssa-ui-kit/core';
 import { useTranslation } from '@contexts';
 import { BotsNavigationProps } from './types';
@@ -53,31 +52,6 @@ export const BotsNavigation = ({
         </div>
         <ActionButton iconName="archive" onClick={handleArchiveButtonClick} />
       </Wrapper>
-      <Link
-        to="/bots/create-bot/basic"
-        css={css`
-          font-size: 14px;
-          font-weight: 700;
-          border-radius: 6px;
-          padding: 10px 14px;
-          background: linear-gradient(
-            247.37deg,
-            ${theme.colors.blueLighter} 14.71%,
-            ${theme.colors.blue} 85.29%
-          );
-          color: ${theme.colors.white};
-          text-decoration: none;
-
-          &:hover {
-            background: linear-gradient(
-              247deg,
-              ${theme.colors.blueButtonHoverGradientFrom},
-              ${theme.colors.blueButtonHoverGradientTo} 85.29%
-            );
-          }
-        `}>
-        {t('buttons.createNew')}
-      </Link>
     </Wrapper>
   );
 };

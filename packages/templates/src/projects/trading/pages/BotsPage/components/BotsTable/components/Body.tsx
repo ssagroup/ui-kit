@@ -1,6 +1,5 @@
 import { TableBody } from '@ssa-ui-kit/core';
 import { BotsTableRow } from '@ssa-ui-kit/widgets';
-import { pathOr } from '@ssa-ui-kit/utils';
 import { useTranslation } from '@contexts';
 import {
   ROICell,
@@ -9,25 +8,17 @@ import {
   InformationLinkCell,
 } from '@trading/components';
 import { TableRowProvider, useCurrency } from '@trading/contexts';
-import { APIListResponse, Bot, Enum } from '@trading/types';
 import { getColorsByStatus, getStatusInfo } from '@trading/utils';
 import { useBotsPageEnums } from '@trading/pages/BotsPage/hooks/useBotsPageEnums';
-import { Actions, BotTableName, BotTooltip, BotOrderSize } from '.';
+import { Actions, BotTableName, BotTooltip } from '.';
 import { BotsTableProps } from '../types';
-import { getColorsForLastOrder } from './BotOrderSize/helpers';
 
 export const Body = ({
-  botsResponse,
+  response,
   allRowsDisabled,
-}: Pick<BotsTableProps, 'botsResponse' | 'onRowClick' | 'allRowsDisabled'>) => {
+}: Pick<BotsTableProps, 'response' | 'allRowsDisabled'>) => {
   const enumsResponse = useBotsPageEnums();
-  const { items, totalCount } = pathOr<
-    typeof botsResponse,
-    APIListResponse<Bot>['result']
-  >({ items: [], totalCount: 0 }, ['data', 'result'])(botsResponse);
-  const enumsData = pathOr<typeof enumsResponse, Record<string, Enum[]>>({}, [
-    'data',
-  ])(enumsResponse);
+  const { items, totalCount } = response;
   const { t } = useTranslation();
   const { currency } = useCurrency();
 
@@ -37,7 +28,7 @@ export const Body = ({
         <BotsTableRow>
           <InformationLinkCell
             includeLink={false}
-            colSpan={9}
+            colSpan={7}
             css={{
               background: '#EEF1F7',
             }}>
@@ -58,12 +49,6 @@ export const Body = ({
           colorsByStatus,
         );
 
-        const orderSizeColors =
-          getColorsForLastOrder(
-            bot.strategy,
-            bot.lastOrderDate,
-            enumsData.colorsForLastOrder,
-          ) || [];
         return (
           <TableRowProvider key={`bots-table-row-${bot.id}-provider`} row={bot}>
             <BotsTableRow
@@ -79,13 +64,6 @@ export const Body = ({
                 <BotTableName bot={bot} />
               </InformationLinkCell>
               <InformationLinkCell>{bot.strategy}</InformationLinkCell>
-              <InformationLinkCell>
-                <BotOrderSize
-                  timestamp={bot.lastOrderDate}
-                  orders={bot.averageOrderSize}
-                  colors={orderSizeColors}
-                />
-              </InformationLinkCell>
               <InformationLinkCell>
                 {bot.currentlyInUsePercents}%
               </InformationLinkCell>
@@ -103,7 +81,6 @@ export const Body = ({
                   />
                 )}
               </InformationLinkCell>
-              <InformationLinkCell>{bot.instrument}</InformationLinkCell>
               <InformationLinkCell>
                 <PNLCell
                   amount={bot.statistics.pnl}

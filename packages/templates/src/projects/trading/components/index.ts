@@ -29,6 +29,7 @@ export * from './RowsPerPageDropdown';
 export * from './TableCellWithLink';
 export * from './TableFooter';
 export * from './TableLoader';
+export * from './Toastify';
 export * from './TradeCell';
 export * from './Turnover';
 export * from './WeightedAveragePrice';

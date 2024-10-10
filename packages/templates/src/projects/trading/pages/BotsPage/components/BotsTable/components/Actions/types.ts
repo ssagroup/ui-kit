@@ -1,5 +1,5 @@
-import { Bot } from '@trading/types';
+import { SingleBot } from '@/trading/pages/BotsPage/__mock__/allBots';
 
 export interface ActionsProps {
-  row: Bot;
+  row: SingleBot;
 }
