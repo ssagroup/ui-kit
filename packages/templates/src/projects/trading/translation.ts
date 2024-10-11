@@ -4,16 +4,24 @@ export const translationConfig: JSONObject = {
   en: {
     toasts: {
       archive: {
-        progress: 'Archive in progress',
-        success: 'Bot archived',
+        progress: 'Archiving in progress',
+        success: 'Service has been archived',
       },
-      stopBot: {
-        progress: 'Stop in progress',
-        success: 'Bot stopped',
+      stopService: {
+        progress: 'Stopping in progress',
+        success: 'Service has been stopped',
       },
-      startBot: {
-        progress: 'Start in progress',
-        success: 'Bot started',
+      startService: {
+        progress: 'Starting in progress',
+        success: 'Service has been started',
+      },
+      copyService: {
+        progress: 'Copying in progress',
+        success: 'Service has been copied',
+      },
+      removeService: {
+        progress: 'Removing in progress',
+        success: 'Service has been removed',
       },
     },
     buttons: {
@@ -236,8 +244,8 @@ export const translationConfig: JSONObject = {
             creationDate: 'Created At',
             exchange: 'Exchange',
             status: 'Status',
-            pnl: 'PNL trading',
-            roi: 'ROI trading',
+            pnl: 'PNL',
+            roi: 'ROI',
           },
         },
       },

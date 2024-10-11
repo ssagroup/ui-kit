@@ -83,6 +83,7 @@ export const allBotsMock: AllBots = {
       name: 'Test Bot 1',
       platform: 'Binance',
       strategy: 'GridRebalancingV6',
+      isRunning: true,
     },
     {
       ...singleBotMock,
@@ -90,6 +91,7 @@ export const allBotsMock: AllBots = {
       name: 'Test Bot 2',
       platform: 'ByBit',
       strategy: 'Fibonacci',
+      isRunning: true,
     },
     {
       ...singleBotMock,
@@ -99,6 +101,7 @@ export const allBotsMock: AllBots = {
       strategy: 'Fibonacci',
       status: 'Running',
       statusAlias: 'Running',
+      isRunning: true,
     },
     {
       ...singleBotMock,
@@ -108,6 +111,7 @@ export const allBotsMock: AllBots = {
       strategy: 'GridRebalancingV6',
       status: 'Running',
       statusAlias: 'Running',
+      isRunning: true,
     },
     {
       ...singleBotMock,
@@ -132,6 +136,7 @@ export const allBotsMock: AllBots = {
       strategy: 'GridRebalancingV6',
       status: 'Running',
       statusAlias: 'Running',
+      isRunning: true,
     },
     {
       ...singleBotMock,
@@ -166,12 +171,14 @@ export const allBotsMock: AllBots = {
       name: 'Test Bot 11',
       platform: 'Binance',
       strategy: 'Grid',
+      isRunning: true,
     },
     {
       ...singleBotMock,
       id: 12,
       name: 'Test Bot 12',
       platform: 'ByBit',
+      isRunning: true,
     },
   ],
 };

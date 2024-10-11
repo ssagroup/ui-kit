@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ButtonGroupItem } from '@ssa-ui-kit/core';
-import { propOr } from '@ssa-ui-kit/utils';
+import { propOr, pathOr } from '@ssa-ui-kit/utils';
 import { useCookie } from '@/trading/hooks';
 import { SORT_ORDER_DESC, usePeriod } from '@/trading/contexts';
 import { Enum, EnumsList } from '@/trading/types';
-import { PERIOD_CURRENT } from '@/trading/constants';
 import { ROWS_PER_PAGE_LIST, TableFooterProps } from '@/trading/components';
 import { showSimpleToast } from '@/trading/utils';
 import { useTranslation } from '@contexts';
@@ -22,18 +21,10 @@ const DEFAULT_PER_PAGE = ROWS_PER_PAGE_LIST[DEFAULT_SELECTED_INDEX].value;
 
 /**
  * TODO:
- * - Current/24h/7d/30d/1y/All filter
- * -  -     Current
- * -  24h   Day
- * -  7d    Week
- * -  30d   Month
- * -  1y    Year
- * -  All   AllTime
- * - sorting by column header
+ * - fix applying Exchange/Strategy/Status dropdowns
  * - check mock, get rid of extra data, compress it (pair, instrument...)
  * - get rid of console.log
  * - clean up codebase
- * - fix applying Exchange/Strategy/Status dropdowns
  * - mdx links change
  */
 export const useBotsPage = () => {
@@ -44,7 +35,6 @@ export const useBotsPage = () => {
   });
 
   const [totalCount, setTotalCount] = useState<number>(0);
-  const [lastItemsCount, setLastItemsCount] = useState<number>(0);
   const [filtersItems, setFiltersItems] = useState<FiltersData>({});
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
   const [botsSortColumn, updateBotsSortColumnCookie] = useCookie(
@@ -65,7 +55,6 @@ export const useBotsPage = () => {
   const [perPage, setPerPage] = useState<number>(Number(botsPerPage));
 
   const { period } = usePeriod();
-  const currentPeriod = period.period === PERIOD_CURRENT ? null : period;
 
   const enumsData = useBotsPageEnums();
 
@@ -104,11 +93,6 @@ export const useBotsPage = () => {
   }, [response.totalCount]);
 
   useEffect(() => {
-    setLastItemsCount(response.items.length);
-  }, [response.items.length]);
-
-  useEffect(() => {
-    // TODO: use also filtered values!!!
     console.log('>>>filter out with query params', queryParams);
     const MaxResultCount = propOr<SearchType, number>(
       DEFAULT_PER_PAGE,
@@ -123,7 +107,44 @@ export const useBotsPage = () => {
       null,
       'Keyword',
     )(queryParams);
-    let filteredPageItems = allBotsMock.items.filter((item) => {
+    const Sorting = propOr<SearchType, string>('Name', 'Sorting')(queryParams);
+    const isDescending = propOr<SearchType, boolean>(
+      false,
+      'Descending',
+    )(queryParams);
+
+    const sortedItems = allBotsMock.items.sort((item1, item2) => {
+      if (
+        ['currentlyInUsePercents', 'statistics.pnl', 'statistics.roi'].includes(
+          Sorting,
+        )
+      ) {
+        // number
+        const item1Value = pathOr<SingleBot, number>(
+          0,
+          Sorting.split('.'),
+        )(item1);
+        const item2Value = pathOr<SingleBot, number>(
+          0,
+          Sorting.split('.'),
+        )(item2);
+        return isDescending ? item2Value - item1Value : item1Value - item2Value;
+      } else {
+        // string
+        const item1Value = pathOr<SingleBot, string>(
+          '',
+          Sorting.split('.'),
+        )(item1);
+        const item2Value = pathOr<SingleBot, string>(
+          '',
+          Sorting.split('.'),
+        )(item2);
+        return isDescending
+          ? item2Value.localeCompare(item1Value, undefined, { numeric: true })
+          : item1Value.localeCompare(item2Value, undefined, { numeric: true });
+      }
+    });
+    let filteredPageItems = sortedItems.filter((item) => {
       if (RunState === 'All') {
         return true;
       } else {
@@ -151,15 +172,88 @@ export const useBotsPage = () => {
         return name.indexOf(keywordLower) > -1;
       });
     }
-    const newPageItems = filteredPageItems.slice(
+    let newPageItems = filteredPageItems.slice(
       SkipCount,
       SkipCount + MaxResultCount,
     );
+
+    newPageItems = newPageItems.map((item) => {
+      switch (period.period) {
+        case 'Current':
+          return {
+            ...item,
+            currentlyInUsePercents: 78,
+            statistics: {
+              ...item.statistics,
+              roi: -5.01,
+              pnl: -0.050266,
+            },
+          };
+        case 'Day':
+          return {
+            ...item,
+            currentlyInUsePercents: 78,
+            statistics: {
+              ...item.statistics,
+              roi: -5.01,
+              pnl: -0.050191,
+              pnlUp: true,
+            },
+          };
+        case 'Week':
+          return {
+            ...item,
+            currentlyInUsePercents: 78,
+            statistics: {
+              ...item.statistics,
+              roi: -13.1,
+              pnl: -0.13136,
+              pnlUp: true,
+            },
+          };
+        case 'Month':
+          return {
+            ...item,
+            currentlyInUsePercents: 78,
+            statistics: {
+              ...item.statistics,
+              roi: 0.14,
+              pnl: 0.001395,
+              pnlUp: true,
+            },
+          };
+        case 'Year':
+          return {
+            ...item,
+            currentlyInUsePercents: 80,
+            statistics: {
+              ...item.statistics,
+              roi: 83,
+              pnl: 0.82829,
+              pnlUp: true,
+            },
+          };
+        case 'AllTime':
+          return {
+            ...item,
+            currentlyInUsePercents: 85,
+            statistics: {
+              ...item.statistics,
+              roi: 85,
+              pnl: 0.84193,
+              pnlUp: true,
+            },
+          };
+        default:
+          return item;
+      }
+    });
+
     setResponse({
       items: newPageItems,
       totalCount: filteredPageItems.length,
     });
-  }, [queryParams]);
+  }, [queryParams, period]);
 
   const makeFiltersMemo = useCallback(makeFilters, [
     enumsData,

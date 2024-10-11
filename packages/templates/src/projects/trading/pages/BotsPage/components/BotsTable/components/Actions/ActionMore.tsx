@@ -10,6 +10,7 @@ import {
 import { useTranslation } from '@contexts';
 import { ActionItem } from './ActionItem';
 import { ActionsWrapper } from './ActionsWrapper';
+import { showSimpleToast } from '@/trading/utils';
 
 export const ActionMore = () => {
   const theme = useTheme();
@@ -25,8 +26,26 @@ export const ActionMore = () => {
     event.stopPropagation();
   };
 
-  const actionHandler: MouseEventHandler<HTMLElement> = (event) => {
+  const actionCopyHandler: MouseEventHandler<HTMLElement> = (event) => {
     event.stopPropagation();
+    setOpen(false);
+    showSimpleToast(t('toasts.copyService.progress'), {
+      hideProgressBar: true,
+    });
+    setTimeout(() => {
+      showSimpleToast(t('toasts.copyService.success'), { type: 'success' });
+    }, 1000);
+  };
+
+  const actionRemoveHandler: MouseEventHandler<HTMLElement> = (event) => {
+    event.stopPropagation();
+    setOpen(false);
+    showSimpleToast(t('toasts.removeService.progress'), {
+      hideProgressBar: true,
+    });
+    setTimeout(() => {
+      showSimpleToast(t('toasts.removeService.success'), { type: 'success' });
+    }, 1000);
   };
 
   return (
@@ -66,7 +85,7 @@ export const ActionMore = () => {
                   color={theme.colors.greyFilterIcon}
                 />
               }
-              onClick={actionHandler}>
+              onClick={actionCopyHandler}>
               {t('buttons.copy')}
             </ActionItem>
             <ActionItem
@@ -77,7 +96,7 @@ export const ActionMore = () => {
                   color={theme.colors.greyFilterIcon}
                 />
               }
-              onClick={actionHandler}>
+              onClick={actionRemoveHandler}>
               {t('buttons.delete')}
             </ActionItem>
           </ActionsWrapper>

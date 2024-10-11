@@ -18,11 +18,13 @@ export const useBotStartMutation = (id: number) => {
 
   const mutate = () => {
     setMutationStatus(BOT_STARTING);
-    showSimpleToast(t('toasts.startBot.progress'), { hideProgressBar: true });
+    showSimpleToast(t('toasts.startService.progress'), {
+      hideProgressBar: true,
+    });
     setTimeout(() => {
       setMutationStatus(BOT_STARTED);
       setReloadReason('botStartMutation');
-      showSimpleToast(t('toasts.startBot.success'), { type: 'success' });
+      showSimpleToast(t('toasts.startService.success'), { type: 'success' });
     }, 1000);
   };
 

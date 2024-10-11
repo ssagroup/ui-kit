@@ -16,13 +16,11 @@ export const DEFAULT_SORT: SortInfo<string> = {
 };
 
 export const COLUMN_API_NAMES = [
-  'Name',
-  'Strategy',
-  'AverageOrderSize',
-  'CurrentlyInUsePercents',
-  'Status',
-  'Instrument',
-  'PNL',
-  'ROI',
+  'name',
+  'strategy',
+  'currentlyInUsePercents',
+  'status',
+  'statistics.pnl',
+  'statistics.roi',
   '',
 ] as const;

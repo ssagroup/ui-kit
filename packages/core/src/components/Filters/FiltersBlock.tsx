@@ -1,45 +1,33 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTheme } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from '@components/MultipleDropdown';
 import { useFiltersContext } from './FiltersContext';
+import { useFiltersBlock } from './hooks/useFiltersBlock';
 
 export const FiltersBlock = () => {
-  const { setElementRef, onDropdownChange, checkboxData } = useFiltersContext();
-  const handleOnChange = (groupName: string) => (item: string | number) => {
-    onDropdownChange(groupName, item);
-  };
-
-  const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
-    Record<string, Array<{ value: string }>>
-  >({});
-
   const theme = useTheme();
+  const { setElementRef, checkboxData } = useFiltersContext();
+  const { selectedItemsWithValue, handleOnChange } = useFiltersBlock();
+  const selectedItemsRef = useRef(selectedItemsWithValue);
+
+  console.log('%c Rendering...', 'background: #222; color: #bada55');
+  useEffect(() => {
+    console.log('RENDER > handleOnChange');
+  }, [handleOnChange]);
 
   useEffect(() => {
-    const newData: Record<
-      string,
-      Array<{
-        value: string;
-      }>
-    > = {};
-    Object.keys(checkboxData).map((groupName) => {
-      const selectedItems = checkboxData[groupName]['selectedItemsDraft'];
-      if (selectedItems) {
-        newData[groupName] = selectedItems.map((item) => ({
-          value: item,
-        }));
-      }
-    });
-    setSelectedItemsWithValue(newData);
-  }, [checkboxData]);
+    console.log('RENDER > selectedItemsWithValue');
+    selectedItemsRef.current = selectedItemsWithValue;
+  }, [selectedItemsWithValue]);
 
+  console.log('>>>REF', selectedItemsRef.current);
   return (
-    <>
+    <React.Fragment>
       {Object.keys(checkboxData).map((groupName) => {
         const accordionInfo = checkboxData[groupName];
-        const selectedItems = selectedItemsWithValue[groupName];
+        const selectedItems = selectedItemsRef.current[groupName];
+        console.log('>>>FiltersBlock > map > selectedItems', selectedItems);
         return (
           <MultipleDropdown
             key={accordionInfo.id}
@@ -49,6 +37,9 @@ export const FiltersBlock = () => {
               setElementRef(accordionInfo.id, element);
             }}
             onChange={handleOnChange(groupName)}
+            // onChange={(selectedItem, isSelected) => {
+            //   console.log('>>>onChange props', selectedItem, isSelected);
+            // }}
             selectedItems={selectedItems}
             css={{
               padding: '11px 15px 9px 10px',
@@ -74,6 +65,6 @@ export const FiltersBlock = () => {
           </MultipleDropdown>
         );
       })}
-    </>
+    </React.Fragment>
   );
 };
