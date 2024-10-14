@@ -27,6 +27,7 @@ export const translationConfig: JSONObject = {
     buttons: {
       copy: 'Copy',
       delete: 'Delete',
+      archive: 'Archive',
     },
     rowsPerPage: {
       text: 'Rows per page',

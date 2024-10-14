@@ -3,11 +3,9 @@ import { Wrapper, ButtonGroup } from '@ssa-ui-kit/core';
 import { useTranslation } from '@contexts';
 import { BotsNavigationProps } from './types';
 import { buttonGroupItems } from './consts';
-import { ActionButton } from './components';
 
 export const BotsNavigation = ({
   handleRunStateClick,
-  handleArchiveButtonClick,
   externalState,
 }: BotsNavigationProps) => {
   const { t } = useTranslation();
@@ -50,7 +48,6 @@ export const BotsNavigation = ({
             externalState={externalState}
           />
         </div>
-        <ActionButton iconName="archive" onClick={handleArchiveButtonClick} />
       </Wrapper>
     </Wrapper>
   );
