@@ -27,7 +27,6 @@ const BotsPageComponent = () => {
     resetFilters,
     handleSortingChange,
     handleRunStateClick,
-    handleArchiveButtonClick,
     handleFiltersSubmit,
     handleSearchTerm,
     handleRowsPerPageChange,
@@ -38,14 +37,12 @@ const BotsPageComponent = () => {
       {
         <BotsNavigationMD
           handleRunStateClick={handleRunStateClick}
-          handleArchiveButtonClick={handleArchiveButtonClick}
           externalState={selectedGroupItem}
         />
       }
       {renderHeaderContent(
         <BotsNavigationSM
           handleRunStateClick={handleRunStateClick}
-          handleArchiveButtonClick={handleArchiveButtonClick}
           externalState={selectedGroupItem}
         />,
       )}

@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ButtonGroupItem } from '@ssa-ui-kit/core';
+import { ButtonGroupItem, usePaginationContext } from '@ssa-ui-kit/core';
 import { propOr, pathOr } from '@ssa-ui-kit/utils';
 import { useCookie } from '@/trading/hooks';
 import { SORT_ORDER_DESC, usePeriod } from '@/trading/contexts';
 import { Enum, EnumsList } from '@/trading/types';
 import { ROWS_PER_PAGE_LIST, TableFooterProps } from '@/trading/components';
-import { showSimpleToast } from '@/trading/utils';
-import { useTranslation } from '@contexts';
 import { useBotsPageEnums, useQueryParams } from '.';
 import { DEFAULT_SORT } from '../components/BotsTable/consts';
 import { API_KEY_TO_TITLE, makeFilters } from '../components/BotsFilters/utils';
@@ -20,7 +18,6 @@ const DEFAULT_SELECTED_INDEX = 0;
 const DEFAULT_PER_PAGE = ROWS_PER_PAGE_LIST[DEFAULT_SELECTED_INDEX].value;
 
 export const useBotsPage = () => {
-  const { t } = useTranslation();
   const [response, setResponse] = useState<AllBots>({
     totalCount: 0,
     items: [],
@@ -45,6 +42,7 @@ export const useBotsPage = () => {
     ButtonGroupItem | undefined
   >(buttonGroupItems[0]);
   const [perPage, setPerPage] = useState<number>(Number(botsPerPage));
+  const { page } = usePaginationContext();
 
   const { period } = usePeriod();
 
@@ -106,7 +104,80 @@ export const useBotsPage = () => {
       'Descending',
     )(queryParams);
 
-    const sortedItems = allBotsMock.items.sort((item1, item2) => {
+    const step = Number((100 / (allBotsMock.items.length - 1)).toFixed(0));
+    const allBotsMockChanged = allBotsMock.items.map((item, index) => {
+      switch (period.period) {
+        case 'Current':
+          return {
+            ...item,
+            currentlyInUsePercents: step * index + 1,
+            statistics: {
+              ...item.statistics,
+              roi: -5.01,
+              pnl: -0.050266,
+            },
+          };
+        case 'Day':
+          return {
+            ...item,
+            currentlyInUsePercents: step * index,
+            statistics: {
+              ...item.statistics,
+              roi: -5.01,
+              pnl: -0.050191,
+              pnlUp: true,
+            },
+          };
+        case 'Week':
+          return {
+            ...item,
+            currentlyInUsePercents: step * index + 1,
+            statistics: {
+              ...item.statistics,
+              roi: -13.1,
+              pnl: -0.13136,
+              pnlUp: true,
+            },
+          };
+        case 'Month':
+          return {
+            ...item,
+            currentlyInUsePercents: step * index,
+            statistics: {
+              ...item.statistics,
+              roi: 0.14,
+              pnl: 0.001395,
+              pnlUp: true,
+            },
+          };
+        case 'Year':
+          return {
+            ...item,
+            currentlyInUsePercents: step * index + 1,
+            statistics: {
+              ...item.statistics,
+              roi: 83,
+              pnl: 0.82829,
+              pnlUp: true,
+            },
+          };
+        case 'AllTime':
+          return {
+            ...item,
+            currentlyInUsePercents: step * index,
+            statistics: {
+              ...item.statistics,
+              roi: 85,
+              pnl: 0.84193,
+              pnlUp: true,
+            },
+          };
+        default:
+          return item;
+      }
+    });
+
+    const sortedItems = allBotsMockChanged.sort((item1, item2) => {
       if (
         ['currentlyInUsePercents', 'statistics.pnl', 'statistics.roi'].includes(
           Sorting,
@@ -165,82 +236,10 @@ export const useBotsPage = () => {
         return name.indexOf(keywordLower) > -1;
       });
     }
-    let newPageItems = filteredPageItems.slice(
+    const newPageItems = filteredPageItems.slice(
       SkipCount,
       SkipCount + MaxResultCount,
     );
-
-    newPageItems = newPageItems.map((item) => {
-      switch (period.period) {
-        case 'Current':
-          return {
-            ...item,
-            currentlyInUsePercents: 78,
-            statistics: {
-              ...item.statistics,
-              roi: -5.01,
-              pnl: -0.050266,
-            },
-          };
-        case 'Day':
-          return {
-            ...item,
-            currentlyInUsePercents: 78,
-            statistics: {
-              ...item.statistics,
-              roi: -5.01,
-              pnl: -0.050191,
-              pnlUp: true,
-            },
-          };
-        case 'Week':
-          return {
-            ...item,
-            currentlyInUsePercents: 78,
-            statistics: {
-              ...item.statistics,
-              roi: -13.1,
-              pnl: -0.13136,
-              pnlUp: true,
-            },
-          };
-        case 'Month':
-          return {
-            ...item,
-            currentlyInUsePercents: 78,
-            statistics: {
-              ...item.statistics,
-              roi: 0.14,
-              pnl: 0.001395,
-              pnlUp: true,
-            },
-          };
-        case 'Year':
-          return {
-            ...item,
-            currentlyInUsePercents: 80,
-            statistics: {
-              ...item.statistics,
-              roi: 83,
-              pnl: 0.82829,
-              pnlUp: true,
-            },
-          };
-        case 'AllTime':
-          return {
-            ...item,
-            currentlyInUsePercents: 85,
-            statistics: {
-              ...item.statistics,
-              roi: 85,
-              pnl: 0.84193,
-              pnlUp: true,
-            },
-          };
-        default:
-          return item;
-      }
-    });
 
     setTimeout(() => {
       setResponse({
@@ -248,7 +247,7 @@ export const useBotsPage = () => {
         totalCount: filteredPageItems.length,
       });
     }, 10);
-  }, [queryParams, period]);
+  }, [queryParams, period, page]);
 
   const makeFiltersMemo = useCallback(makeFilters, [
     enumsData,
@@ -302,17 +301,6 @@ export const useBotsPage = () => {
     }
   };
 
-  const handleArchiveButtonClick = () => {
-    showSimpleToast(t('toasts.archive.progress'), {
-      hideProgressBar: true,
-    });
-    setTimeout(() => {
-      showSimpleToast(t('toasts.archive.success'), {
-        type: 'success',
-      });
-    }, 1000);
-  };
-
   return {
     selectedGroupItem,
     filtersItems,
@@ -322,7 +310,6 @@ export const useBotsPage = () => {
     resetFilters,
     handleSortingChange,
     handleRunStateClick,
-    handleArchiveButtonClick,
     handleFiltersSubmit,
     handleSearchTerm,
     handleRowsPerPageChange,

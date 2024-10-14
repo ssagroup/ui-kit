@@ -6,6 +6,7 @@ import {
   TradeCell,
   PNLCell,
   InformationLinkCell,
+  FundsInWorkCell,
 } from '@trading/components';
 import { TableRowProvider, useCurrency } from '@trading/contexts';
 import { getColorsByStatus, getStatusInfo } from '@trading/utils';
@@ -65,7 +66,7 @@ export const Body = ({
               </InformationLinkCell>
               <InformationLinkCell>{bot.strategy}</InformationLinkCell>
               <InformationLinkCell>
-                {bot.currentlyInUsePercents}%
+                <FundsInWorkCell value={bot.currentlyInUsePercents} />
               </InformationLinkCell>
               <InformationLinkCell>
                 {bot.status && (

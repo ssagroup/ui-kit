@@ -8,6 +8,7 @@ export * from './CumulativePNL';
 export * from './CurrentFunds';
 export * from './Distribution';
 export * from './DoublePriceChart';
+export * from './FundsInWorkCell';
 export * from './GrowthIndexIcon';
 export * from './HourlyPNL';
 export * from './KeeperRuns';

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { MouseEvent, MouseEventHandler, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import {
   Icon,
@@ -8,9 +8,9 @@ import {
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
 import { useTranslation } from '@contexts';
+import { showSimpleToast } from '@/trading/utils';
 import { ActionItem } from './ActionItem';
 import { ActionsWrapper } from './ActionsWrapper';
-import { showSimpleToast } from '@/trading/utils';
 
 export const ActionMore = () => {
   const theme = useTheme();
@@ -26,27 +26,19 @@ export const ActionMore = () => {
     event.stopPropagation();
   };
 
-  const actionCopyHandler: MouseEventHandler<HTMLElement> = (event) => {
-    event.stopPropagation();
-    setOpen(false);
-    showSimpleToast(t('toasts.copyService.progress'), {
-      hideProgressBar: true,
-    });
-    setTimeout(() => {
-      showSimpleToast(t('toasts.copyService.success'), { type: 'success' });
-    }, 1000);
-  };
-
-  const actionRemoveHandler: MouseEventHandler<HTMLElement> = (event) => {
-    event.stopPropagation();
-    setOpen(false);
-    showSimpleToast(t('toasts.removeService.progress'), {
-      hideProgressBar: true,
-    });
-    setTimeout(() => {
-      showSimpleToast(t('toasts.removeService.success'), { type: 'success' });
-    }, 1000);
-  };
+  const actionHandler =
+    (translationKeyPrefix: string) => (event: MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      setOpen(false);
+      showSimpleToast(t(`${translationKeyPrefix}.progress`), {
+        hideProgressBar: true,
+      });
+      setTimeout(() => {
+        showSimpleToast(t(`${translationKeyPrefix}.success`), {
+          type: 'success',
+        });
+      }, 1000);
+    };
 
   return (
     <Popover
@@ -85,7 +77,7 @@ export const ActionMore = () => {
                   color={theme.colors.greyFilterIcon}
                 />
               }
-              onClick={actionCopyHandler}>
+              onClick={actionHandler('toasts.copyService')}>
               {t('buttons.copy')}
             </ActionItem>
             <ActionItem
@@ -96,8 +88,19 @@ export const ActionMore = () => {
                   color={theme.colors.greyFilterIcon}
                 />
               }
-              onClick={actionRemoveHandler}>
+              onClick={actionHandler('toasts.removeService')}>
               {t('buttons.delete')}
+            </ActionItem>
+            <ActionItem
+              startIcon={
+                <Icon
+                  name="archive"
+                  size={15}
+                  color={theme.colors.greyFilterIcon}
+                />
+              }
+              onClick={actionHandler('toasts.archive')}>
+              {t('buttons.archive')}
             </ActionItem>
           </ActionsWrapper>
         </PopoverDescription>
