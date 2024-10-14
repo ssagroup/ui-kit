@@ -12,6 +12,5 @@ export const useBotsPageEnums = () => {
     strategy: result.botStrategies,
     status: result.colorsForBotStatuses,
     platform: result.exchangePlatforms,
-    colorsForLastOrder: result.colorsForLastOrder,
   };
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useTheme } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from '@components/MultipleDropdown';
@@ -9,25 +9,12 @@ export const FiltersBlock = () => {
   const theme = useTheme();
   const { setElementRef, checkboxData } = useFiltersContext();
   const { selectedItemsWithValue, handleOnChange } = useFiltersBlock();
-  const selectedItemsRef = useRef(selectedItemsWithValue);
 
-  console.log('%c Rendering...', 'background: #222; color: #bada55');
-  useEffect(() => {
-    console.log('RENDER > handleOnChange');
-  }, [handleOnChange]);
-
-  useEffect(() => {
-    console.log('RENDER > selectedItemsWithValue');
-    selectedItemsRef.current = selectedItemsWithValue;
-  }, [selectedItemsWithValue]);
-
-  console.log('>>>REF', selectedItemsRef.current);
   return (
     <React.Fragment>
       {Object.keys(checkboxData).map((groupName) => {
         const accordionInfo = checkboxData[groupName];
-        const selectedItems = selectedItemsRef.current[groupName];
-        console.log('>>>FiltersBlock > map > selectedItems', selectedItems);
+        const selectedItems = selectedItemsWithValue[groupName];
         return (
           <MultipleDropdown
             key={accordionInfo.id}
@@ -37,9 +24,6 @@ export const FiltersBlock = () => {
               setElementRef(accordionInfo.id, element);
             }}
             onChange={handleOnChange(groupName)}
-            // onChange={(selectedItem, isSelected) => {
-            //   console.log('>>>onChange props', selectedItem, isSelected);
-            // }}
             selectedItems={selectedItems}
             css={{
               padding: '11px 15px 9px 10px',

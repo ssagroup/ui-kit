@@ -19,14 +19,6 @@ import { SearchType } from '../types';
 const DEFAULT_SELECTED_INDEX = 0;
 const DEFAULT_PER_PAGE = ROWS_PER_PAGE_LIST[DEFAULT_SELECTED_INDEX].value;
 
-/**
- * TODO:
- * - fix applying Exchange/Strategy/Status dropdowns
- * - check mock, get rid of extra data, compress it (pair, instrument...)
- * - get rid of console.log
- * - clean up codebase
- * - mdx links change
- */
 export const useBotsPage = () => {
   const { t } = useTranslation();
   const [response, setResponse] = useState<AllBots>({
@@ -79,13 +71,15 @@ export const useBotsPage = () => {
   }, [searchTerm]);
 
   useEffect(() => {
-    setFiltersItems(
-      makeFiltersMemo(
-        API_KEY_TO_TITLE,
-        enumsData as unknown as Record<EnumsList, Enum[]>,
-        queryParams.RunState,
-      ),
-    );
+    setTimeout(() => {
+      setFiltersItems(
+        makeFiltersMemo(
+          API_KEY_TO_TITLE,
+          enumsData as unknown as Record<EnumsList, Enum[]>,
+          queryParams.RunState,
+        ),
+      );
+    }, 50);
   }, [queryParams.RunState]);
 
   useEffect(() => {
@@ -93,7 +87,6 @@ export const useBotsPage = () => {
   }, [response.totalCount]);
 
   useEffect(() => {
-    console.log('>>>filter out with query params', queryParams);
     const MaxResultCount = propOr<SearchType, number>(
       DEFAULT_PER_PAGE,
       'MaxResultCount',
@@ -249,10 +242,12 @@ export const useBotsPage = () => {
       }
     });
 
-    setResponse({
-      items: newPageItems,
-      totalCount: filteredPageItems.length,
-    });
+    setTimeout(() => {
+      setResponse({
+        items: newPageItems,
+        totalCount: filteredPageItems.length,
+      });
+    }, 10);
   }, [queryParams, period]);
 
   const makeFiltersMemo = useCallback(makeFilters, [
@@ -303,13 +298,6 @@ export const useBotsPage = () => {
           ShowArchive: null,
         },
         true,
-      );
-      setFiltersItems(
-        makeFilters(
-          API_KEY_TO_TITLE,
-          enumsData as unknown as Record<EnumsList, Enum[]>,
-          text,
-        ),
       );
     }
   };
