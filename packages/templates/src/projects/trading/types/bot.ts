@@ -78,14 +78,7 @@ export interface PlatformProps {
   showTitle?: boolean;
 }
 
-export type StatusType =
-  | 'Initializing'
-  | 'LiquidationInProgress'
-  | 'LiquidationPending'
-  | 'NoTrade'
-  | 'Stopped'
-  | 'Trade'
-  | 'WarmUp';
+export type StatusType = 'Running' | 'Stopped';
 
 export interface BotConfiguration {
   configuration?: string;

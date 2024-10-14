@@ -15,9 +15,7 @@ export type EnumsList =
   | 'accountTypes'
   | 'botStrategies'
   | 'colorsForBotStatuses'
-  | 'colorsForLastOrder'
   | 'noControlStatuses'
   | 'exchangePlatforms'
-  | 'pairs'
   | 'tradingAccounts'
   | 'periods';

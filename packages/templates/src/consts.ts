@@ -1,3 +1,5 @@
+import { ToastPosition } from 'react-toastify';
+
 export const SCREEN_SIZES = {
   390: {
     width: 390,
@@ -15,4 +17,14 @@ export const SCREEN_SIZES = {
     width: 1920,
     height: 1080,
   },
+};
+
+export const TOASTIFY_OPTIONS = {
+  position: 'bottom-right' as ToastPosition,
+  autoClose: 3000,
+  hideProgressBar: false,
+  newestOnTop: true,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnHover: false,
 };

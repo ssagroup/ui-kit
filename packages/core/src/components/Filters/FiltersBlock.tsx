@@ -1,42 +1,17 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTheme } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from '@components/MultipleDropdown';
 import { useFiltersContext } from './FiltersContext';
+import { useFiltersBlock } from './hooks/useFiltersBlock';
 
 export const FiltersBlock = () => {
-  const { setElementRef, onDropdownChange, checkboxData } = useFiltersContext();
-  const handleOnChange = (groupName: string) => (item: string | number) => {
-    onDropdownChange(groupName, item);
-  };
-
-  const [selectedItemsWithValue, setSelectedItemsWithValue] = useState<
-    Record<string, Array<{ value: string }>>
-  >({});
-
   const theme = useTheme();
-
-  useEffect(() => {
-    const newData: Record<
-      string,
-      Array<{
-        value: string;
-      }>
-    > = {};
-    Object.keys(checkboxData).map((groupName) => {
-      const selectedItems = checkboxData[groupName]['selectedItemsDraft'];
-      if (selectedItems) {
-        newData[groupName] = selectedItems.map((item) => ({
-          value: item,
-        }));
-      }
-    });
-    setSelectedItemsWithValue(newData);
-  }, [checkboxData]);
+  const { setElementRef, checkboxData } = useFiltersContext();
+  const { selectedItemsWithValue, handleOnChange } = useFiltersBlock();
 
   return (
-    <>
+    <React.Fragment>
       {Object.keys(checkboxData).map((groupName) => {
         const accordionInfo = checkboxData[groupName];
         const selectedItems = selectedItemsWithValue[groupName];
@@ -74,6 +49,6 @@ export const FiltersBlock = () => {
           </MultipleDropdown>
         );
       })}
-    </>
+    </React.Fragment>
   );
 };

@@ -2,8 +2,50 @@ import { JSONObject } from '../../types';
 
 export const translationConfig: JSONObject = {
   en: {
+    toasts: {
+      archive: {
+        progress: 'Archiving in progress',
+        success: 'Service has been archived',
+      },
+      stopService: {
+        progress: 'Stopping in progress',
+        success: 'Service has been stopped',
+      },
+      startService: {
+        progress: 'Starting in progress',
+        success: 'Service has been started',
+      },
+      copyService: {
+        progress: 'Copying in progress',
+        success: 'Service has been copied',
+      },
+      removeService: {
+        progress: 'Removing in progress',
+        success: 'Service has been removed',
+      },
+    },
+    buttons: {
+      copy: 'Copy',
+      delete: 'Delete',
+    },
     rowsPerPage: {
       text: 'Rows per page',
+    },
+    periods: {
+      plural: {
+        years: 'years',
+        days: 'days',
+        hours: 'hours',
+        minutes: 'minutes',
+        seconds: 'seconds',
+      },
+      singular: {
+        years: 'year',
+        days: 'day',
+        hours: 'hour',
+        minutes: 'minute',
+        seconds: 'second',
+      },
     },
     common: {
       noDataYet: 'No data yet',
@@ -179,6 +221,33 @@ export const translationConfig: JSONObject = {
         unreadFilterText: 'Last %Unread',
         noItemsMsg: 'You don’t have notifications now!',
         noUnreadItemsMsg: 'You don’t have unread notifications now!',
+      },
+      bots: {
+        runReason: 'Run Reason',
+        run: 'Run',
+        buttonGroup: {
+          all: 'All',
+          running: 'Running',
+          stopped: 'Stopped',
+        },
+        table: {
+          noResults: 'No results!',
+          allTitle: 'Bots',
+          archiveTitle: 'Bots Archive',
+          lastStatusChange: 'Last Status change:',
+          lastOrderTime: 'Last order time: ',
+          notAvailable: 'N/A',
+          columns: {
+            name: 'Name',
+            strategy: 'Strategy',
+            funds: 'Funds in Work',
+            creationDate: 'Created At',
+            exchange: 'Exchange',
+            status: 'Status',
+            pnl: 'PNL',
+            roi: 'ROI',
+          },
+        },
       },
     },
   },
