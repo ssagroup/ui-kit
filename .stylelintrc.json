@@ -8,6 +8,7 @@
     "alpha-value-notation": "number",
     "color-function-notation": "legacy",
     "media-feature-range-notation": "prefix",
-    "function-name-case": "lower"
+    "function-name-case": "lower",
+    "property-no-vendor-prefix": null
   }
 }
