@@ -1,4 +1,5 @@
 import type { Meta } from '@storybook/react';
+import { StoryAnnotations } from '@storybook/types';
 import { Pagination, PaginationContextProvider } from './index';
 
 export default {
@@ -6,9 +7,8 @@ export default {
   component: Pagination,
   decorators: [
     (Story, { parameters, args }) => {
-      const { selectedPage } = parameters;
       return (
-        <PaginationContextProvider selectedPage={selectedPage}>
+        <PaginationContextProvider {...parameters}>
           {Story(args)}
         </PaginationContextProvider>
       );
@@ -58,3 +58,17 @@ export const Disabled = {
     selectedPage: 5,
   },
 };
+
+export const WithManualPageSettingAndPerPage: StoryAnnotations = {
+  args: {
+    pagesCount: 10,
+    isPageSettingVisible: true,
+    isRowPerPageVisible: true,
+  },
+  parameters: {
+    selectedPage: 1,
+  },
+};
+
+WithManualPageSettingAndPerPage.storyName =
+  'With records per page and page number setting';
