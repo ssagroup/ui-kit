@@ -43,6 +43,7 @@ const testCases = {
 
 const checkPages = (range: number[], selected?: number) => {
   const navigation = screen.getByRole('navigation');
+  const buttonsWrapper = navigation.querySelector('div') as HTMLDivElement;
   const withinNavigation = within(navigation);
 
   const prevPageBtn = within(
@@ -54,7 +55,7 @@ const checkPages = (range: number[], selected?: number) => {
   );
   nextPageBtn.getByTitle('Carrot right');
 
-  const buttonsAndBreaks = Array.from(navigation.children).slice(1, -1);
+  const buttonsAndBreaks = Array.from(buttonsWrapper.children).slice(1, -1);
 
   for (let i = 0; i < range.length; ++i) {
     const page = range[i];
