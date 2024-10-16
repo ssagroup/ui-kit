@@ -107,6 +107,7 @@ export const PageNumberInput = styled(Input)`
   width: 80px;
   margin-right: 16px;
   -moz-appearance: textfield;
+  appearance: textfield;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
