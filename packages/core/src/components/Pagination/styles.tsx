@@ -1,4 +1,6 @@
+import Input from '@components/Input';
 import { css, Theme } from '@emotion/react';
+import styled from '@emotion/styled';
 
 const baseBtnStyles = (theme: Theme) => css`
   height: 30px;
@@ -94,5 +96,27 @@ export const arrowBtnStyles = (theme: Theme) => css`
   &:not(:disabled):hover {
     box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+  }
+`;
+
+export const PaginationNav = styled.nav`
+  display: flex;
+`;
+
+export const PageNumberInput = styled(Input)`
+  width: 80px;
+  margin-right: 16px;
+  -moz-appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &:focus,
+  &:hover {
+    border-width: 1px !important;
+  }
+  & + div {
+    right: 24px;
   }
 `;

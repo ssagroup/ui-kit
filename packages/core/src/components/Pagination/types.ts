@@ -1,9 +1,16 @@
 import { CommonProps } from '@global-types/emotion';
+import { InputProps } from '@components/Input/types';
+import { RowsPerPageDropdownProps } from './components/RowsPerPageDropdown/types';
 
 export interface PaginationProps extends CommonProps {
   pagesCount: number;
   ariaLabel?: string;
   isDisabled?: boolean;
+  pageNumberPlaceholder?: string;
+  isPageSettingVisible?: boolean;
+  isRowPerPageVisible?: boolean;
+  rowPerPageProps?: RowsPerPageDropdownProps;
+  manualPageNumberProps?: InputProps;
 }
 
 export interface PaginationButtonsProps {
@@ -29,10 +36,13 @@ export interface PageButtonProps {
 
 export interface PaginationContextProps {
   page?: number;
+  perPage: number;
   setPage: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setPerPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface PaginationContextProviderProps {
   selectedPage?: number;
+  defaultPerPage?: number;
   children: React.ReactNode;
 }
