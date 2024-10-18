@@ -1,9 +1,9 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-
 import DropdownOption from '@components/DropdownOption';
-
+import Button from '@components/Button';
 import Dropdown from './Dropdown';
 import { DropdownProps } from './types';
 import { DropdownOptionProps } from '../..';
@@ -153,3 +153,28 @@ export const Custom: StoryObj = (args: Args) => {
 Custom.args = {
   isDisabled: false,
 };
+
+export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
+  const [selectedIndex, setSelectedIndex] = useState(1);
+
+  const handleUpdate = () => {
+    const newIndex = selectedIndex < items.length - 1 ? selectedIndex + 1 : 0;
+    setSelectedIndex(newIndex);
+  };
+  return (
+    <div>
+      <Dropdown
+        isDisabled={args.isDisabled}
+        selectedItem={items[selectedIndex]}>
+        {items.map((item) => (
+          <DropdownOption key={item.id} value={item.value} />
+        ))}
+      </Dropdown>
+      <Button variant="info" css={{ marginLeft: 10 }} onClick={handleUpdate}>
+        Update selected item
+      </Button>
+    </div>
+  );
+};
+
+DynamicallyChangedSelectedItem.args = { isDisabled: false };

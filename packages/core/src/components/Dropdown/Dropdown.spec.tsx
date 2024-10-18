@@ -141,6 +141,68 @@ describe('Dropdown', () => {
     }
   });
 
+  it('Selected item changed successfully', async () => {
+    const selectedItem = items[2];
+    const {
+      user,
+      mockOnChange,
+      getByRole,
+      queryByRole,
+      getByTestId,
+      rerender,
+    } = setup({
+      selectedItem,
+    });
+
+    expect(mockOnChange).not.toBeCalled();
+
+    let dropdownEl = getByTestId('dropdown');
+
+    let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    let listboxEl = queryByRole('listbox');
+
+    await user.click(dropdownToggleEl);
+
+    listboxEl = getByRole('listbox');
+    const listItemEls = within(listboxEl).getAllByRole('listitem');
+
+    dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    await within(dropdownToggleEl).findByTitle('Carrot up');
+
+    for (let i = 0; i < items.length; ++i) {
+      const listItem = items[i];
+      const listItemEl = listItemEls[i];
+
+      const itemListValue = getListItemValue(listItem);
+
+      await within(listItemEl).findByText(itemListValue);
+      expect(within(listItemEl).getByRole('button')).toHaveTextContent(
+        itemListValue,
+      );
+
+      if (listItem.id === selectedItem.id) {
+        expect(listItemEl).toHaveAttribute('aria-selected', 'true');
+        expect(listItemEl).toHaveStyle('background: #DEE1EC');
+      } else {
+        expect(listItemEl).toHaveAttribute('aria-selected', 'false');
+      }
+    }
+
+    rerender(
+      <Dropdown onChange={mockOnChange} selectedItem={items[0]}>
+        {items.map((item, index) => (
+          <DropdownOption key={index} value={item.value} />
+        ))}
+      </Dropdown>,
+    );
+
+    dropdownEl = getByTestId('dropdown');
+    dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+    expect(dropdownToggleEl).toHaveTextContent(getListItemValue(items[0]));
+  });
+
   it('Renders with an empty items array', async () => {
     const mockOnChange = jest.fn();
     const { getByTestId, queryByRole, getByRole } = render(
