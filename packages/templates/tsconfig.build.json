@@ -33,6 +33,8 @@
       "@/*": ["./src/projects/*"],
       "@trading": ["./src/projects/trading"],
       "@trading/*": ["./src/projects/trading/*"],
+      "@fitness": ["./src/projects/fitness"],
+      "@fitness/*": ["./src/projects/fitness/*"],
     }
   },
 
