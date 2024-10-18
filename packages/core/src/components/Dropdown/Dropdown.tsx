@@ -78,6 +78,10 @@ const Dropdown = <T extends DropdownOptionProps>({
   }, [isOpen, isDisabled, isFocused]);
 
   useEffect(() => {
+    setActiveItem(selectedItem);
+  }, [selectedItem]);
+
+  useEffect(() => {
     if (isDisabled && isOpen) {
       setIsOpen(false);
     }
