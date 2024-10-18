@@ -9,6 +9,11 @@ import './style.css';
 const preview = {
   parameters: {
     controls: { expanded: true, hideNoControlsWarning: true },
+    options: {
+      storySort: {
+        method: 'alphabetical',
+      },
+    },
   },
   decorators: [
     (Story) => (

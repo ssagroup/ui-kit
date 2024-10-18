@@ -8,3 +8,4 @@ declare module '@emotion/react' {
 }
 
 export * from './projects/trading';
+export * from './projects/fitness';
