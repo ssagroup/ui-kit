@@ -75,3 +75,43 @@ Custom.args = {
     },
   ],
 };
+
+export const WithoutPaletteColors: StoryObj<typeof AccountBalance> = (
+  args: AccountBalanceProps,
+) => {
+  return (
+    <AccountBalance
+      {...args}
+      css={css`
+        ul li {
+          height: auto;
+        }
+      `}
+    />
+  );
+};
+
+WithoutPaletteColors.args = {
+  total: 48700.53569,
+  currency: 'USDT',
+  variant: 'withoutValueList',
+  chartColorPalette: ['#F7931A', '#50AF95'],
+  legendColorPalette: [
+    'linear-gradient(243.84deg, rgb(235, 117, 86), rgb(242, 136, 142))',
+    '#50AF95',
+  ],
+  data: [
+    {
+      id: 'BTC',
+      label: 'BTC',
+      value: 571.23,
+      legendValue: 12323,
+    },
+    {
+      id: 'LTC',
+      label: 'LTC',
+      value: 530.25,
+      legendValue: 12323,
+    },
+  ],
+};
