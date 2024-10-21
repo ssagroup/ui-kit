@@ -154,3 +154,11 @@ WithIcon.argTypes = {
     control: false,
   },
 };
+
+export const WithCustomColor = () => {
+  return (
+    <Badge color={'#F7931A'} size="medium">
+      Custom color
+    </Badge>
+  );
+};

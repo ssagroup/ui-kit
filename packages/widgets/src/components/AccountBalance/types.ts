@@ -8,7 +8,7 @@ interface WithTheme {
 type BalanceBase = {
   total: number | string;
   currency: string;
-  legendColorPalette?: Array<keyof MainColors>;
+  legendColorPalette?: Array<keyof MainColors | string>;
   chartColorPalette?: string[];
   variant?: 'valueList' | 'withoutValueList';
   data: Array<{

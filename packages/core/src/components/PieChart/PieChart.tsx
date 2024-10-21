@@ -8,10 +8,16 @@ export const PieChart = ({
   className,
   title,
   children,
+  width = 400,
   ...chartProps
 }: PieChartProps) => {
   return (
-    <PieChartBase as={as} className={className}>
+    <PieChartBase
+      as={as}
+      className={className}
+      css={{
+        width,
+      }}>
       <div className="pie-chart-wrapper">
         <ResponsivePie
           isInteractive={false}

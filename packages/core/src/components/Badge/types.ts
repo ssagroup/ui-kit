@@ -1,5 +1,5 @@
 export interface BadgeProps {
-  color?: keyof MainColors;
+  color?: keyof MainColors | string;
   size?: keyof MainSizes;
   children?: React.ReactNode;
   as?: React.ElementType;

@@ -7,6 +7,7 @@ export interface PieChartProps
     React.ComponentProps<typeof ResponsivePie> {
   title?: React.ReactNode;
   children?: React.ReactNode;
+  width?: number;
 }
 
 export interface PieChartLegendItem extends MayHaveLabel {
@@ -18,7 +19,7 @@ export interface PieChartLegendItem extends MayHaveLabel {
 
 export interface PieChartLegendProps {
   data: Array<PieChartLegendItem>;
-  colors?: Array<keyof MainColors>;
+  colors?: Array<keyof MainColors | string>;
   backgroundColors?: Array<string>;
   renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
   renderLabel?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
