@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { css } from '@emotion/react';
-import { mainTheme } from '@ssa-ui-kit/core';
+import { mainTheme, FullscreenModeProvider } from '@ssa-ui-kit/core';
 
 import { data } from './stories/fixtures';
 
@@ -26,7 +26,14 @@ export const WithLink: StoryObj<typeof AccountBalance> = (
   return (
     <MemoryRouter>
       <Routes>
-        <Route path="/*" element={<AccountBalance {...args} />} />
+        <Route
+          path="/*"
+          element={
+            <FullscreenModeProvider>
+              <AccountBalance {...args} />
+            </FullscreenModeProvider>
+          }
+        />
       </Routes>
     </MemoryRouter>
   );
@@ -40,14 +47,16 @@ export const Custom: StoryObj<typeof AccountBalance> = (
   args: AccountBalanceProps,
 ) => {
   return (
-    <AccountBalance
-      {...args}
-      css={css`
-        ul li {
-          height: auto;
-        }
-      `}
-    />
+    <FullscreenModeProvider>
+      <AccountBalance
+        {...args}
+        css={css`
+          ul li {
+            height: auto;
+          }
+        `}
+      />
+    </FullscreenModeProvider>
   );
 };
 
@@ -80,14 +89,16 @@ export const WithoutPaletteColors: StoryObj<typeof AccountBalance> = (
   args: AccountBalanceProps,
 ) => {
   return (
-    <AccountBalance
-      {...args}
-      css={css`
-        ul li {
-          height: auto;
-        }
-      `}
-    />
+    <FullscreenModeProvider>
+      <AccountBalance
+        {...args}
+        css={css`
+          ul li {
+            height: auto;
+          }
+        `}
+      />
+    </FullscreenModeProvider>
   );
 };
 

@@ -10,13 +10,13 @@ export const PieChartLegend = ({
   data,
   colors,
   backgroundColors,
-  renderLabel,
-  renderValue,
   markerStyles,
   currency,
   labelListStyles,
   valueListStyles,
   variant = 'valueList',
+  renderLabel,
+  renderValue,
 }: PieChartLegendProps) => {
   const theme = useTheme();
   const isValueList = variant === 'valueList';

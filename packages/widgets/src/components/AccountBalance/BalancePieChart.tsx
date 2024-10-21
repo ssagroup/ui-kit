@@ -1,6 +1,11 @@
 import { withTheme, css } from '@emotion/react';
 
-import { PieChart, PieChartLegend, pieChartPalettes } from '@ssa-ui-kit/core';
+import {
+  PieChart,
+  PieChartLegend,
+  pieChartPalettes,
+  useFullscreenMode,
+} from '@ssa-ui-kit/core';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';
@@ -15,6 +20,7 @@ export const BalancePieChart = withTheme(
     legendColorPalette,
     variant = 'valueList',
   }: BalancePieChartProps) => {
+    const { isFullscreenMode } = useFullscreenMode();
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
     return (
@@ -64,6 +70,12 @@ export const BalancePieChart = withTheme(
                 font-size: 14px;
               }
             }
+            ${isFullscreenMode &&
+            css`
+              flex-direction: row;
+              gap: 20px;
+              margin-top: 10px;
+            `}
 
             ${theme.mediaQueries.lg} {
               margin-left: -20%;

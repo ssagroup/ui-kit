@@ -1,5 +1,11 @@
 import { css, useTheme } from '@emotion/react';
-import { Card, CardContent, CardHeader, Typography } from '@ssa-ui-kit/core';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  useFullscreenMode,
+} from '@ssa-ui-kit/core';
 import { BalancePieChart } from './BalancePieChart';
 import { WithLink } from './WithLink';
 import { AccountBalanceProps } from './types';
@@ -13,9 +19,17 @@ export const AccountBalance = ({
   ...props
 }: AccountBalanceProps) => {
   const theme = useTheme();
+  const { toggleFullscreenMode, isFullscreenMode } = useFullscreenMode();
 
+  const handleClick = () => {
+    toggleFullscreenMode();
+    onClick?.();
+  };
+
+  // TODO: check onClick! We can use it with other purpose!
+  // TODO: option? fullscreen mode by click?
   return (
-    <WithLink link={link} onClick={onClick}>
+    <WithLink link={link} onClick={handleClick}>
       <Card
         className={className}
         onClick={link ? undefined : onClick}
@@ -23,6 +37,16 @@ export const AccountBalance = ({
           border-radius: 20px;
           padding: 5px 10px;
           width: 100%;
+          box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
+
+          ${isFullscreenMode &&
+          css`
+            height: 100vh;
+            max-height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+          `}
 
           ${theme.mediaQueries.md} {
             padding: 10px;
@@ -31,8 +55,6 @@ export const AccountBalance = ({
           ${theme.mediaQueries.lg} {
             padding: 12px 20px 11px;
           }
-
-          box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};
         `}>
         <CardHeader
           css={css`
@@ -55,6 +77,13 @@ export const AccountBalance = ({
             max-width: 406px;
             width: 100%;
             display: block;
+            ${isFullscreenMode &&
+            css`
+              width: 100%;
+              height: 100%;
+              position: relative;
+              max-width: 100%;
+            `}
           `}>
           <BalancePieChart theme={theme} variant={variant} {...props} />
         </CardContent>

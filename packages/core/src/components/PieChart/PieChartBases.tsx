@@ -1,10 +1,18 @@
 import styled from '@emotion/styled';
 
-export const PieChartBase = styled.div`
+export const PieChartBase = styled.div<{
+  isFullscreenMode: boolean;
+  width?: number;
+}>`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  width: ${({ isFullscreenMode, width }) =>
+    isFullscreenMode ? '100%' : width};
+
+  flex-direction: ${({ isFullscreenMode }) =>
+    isFullscreenMode ? 'column' : 'row'};
 
   & > .pie-chart-wrapper {
     position: relative;
@@ -13,7 +21,7 @@ export const PieChartBase = styled.div`
   }
 `;
 
-export const PieChartTextBase = styled.div`
+export const PieChartTextBase = styled.div<{ isFullscreenMode: boolean }>`
   position: absolute;
   display: flex;
   align-items: center;
