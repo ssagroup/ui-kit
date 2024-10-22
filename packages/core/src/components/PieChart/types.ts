@@ -7,7 +7,7 @@ export interface PieChartProps
     React.ComponentProps<typeof ResponsivePie> {
   title?: React.ReactNode;
   children?: React.ReactNode;
-  width?: number;
+  width?: string;
 }
 
 export interface PieChartLegendItem extends MayHaveLabel {

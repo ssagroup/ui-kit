@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import { useFullscreenMode } from '@components/FullscreenModeContext';
 import { PieChartProps } from './types';
@@ -9,17 +8,16 @@ export const PieChart = ({
   className,
   title,
   children,
-  width = 400,
+  width = '400px',
   ...chartProps
 }: PieChartProps) => {
-  const { toggleFullscreenMode, isFullscreenMode } = useFullscreenMode();
+  const { isFullscreenMode } = useFullscreenMode();
   return (
     <PieChartBase
       as={as}
       className={className}
       width={width}
-      isFullscreenMode={isFullscreenMode}
-      onClick={toggleFullscreenMode}>
+      isFullscreenMode={isFullscreenMode}>
       <div className="pie-chart-wrapper">
         <ResponsivePie
           isInteractive={false}

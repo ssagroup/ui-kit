@@ -2,9 +2,11 @@ import { useTheme } from '@emotion/react';
 import { Fragment } from 'react';
 import Typography from '@components/Typography';
 
+import { useFullscreenMode } from '@components/FullscreenModeContext';
 import { PieChartLegendMarker } from './PieChartLegendMarker';
 import { PieChartLegendList } from './PieChartLegendList';
 import { PieChartLegendProps } from './types';
+import { PieChartLegendListItem } from './PieChartLegendListItem';
 
 export const PieChartLegend = ({
   data,
@@ -20,13 +22,16 @@ export const PieChartLegend = ({
 }: PieChartLegendProps) => {
   const theme = useTheme();
   const isValueList = variant === 'valueList';
+  const { isFullscreenMode } = useFullscreenMode();
   return (
     <Fragment>
       <PieChartLegendList css={labelListStyles}>
         {data.map((item, index) => {
           const { id, label, value, legendValue } = item;
           return (
-            <li key={`tag-${id}`}>
+            <PieChartLegendListItem
+              key={`tag-${id}`}
+              isFullscreenMode={isFullscreenMode}>
               <PieChartLegendMarker
                 color={
                   backgroundColors ? undefined : colors?.[index] || 'purple'
@@ -58,11 +63,20 @@ export const PieChartLegend = ({
                   </span>
                 </Typography>
               )}
-            </li>
+              {isValueList && isFullscreenMode && (
+                <Typography
+                  variant="subtitle"
+                  color={theme.colors.greyDarker60}>
+                  {typeof renderValue === 'function'
+                    ? renderValue(item)
+                    : item.value}
+                </Typography>
+              )}
+            </PieChartLegendListItem>
           );
         })}
       </PieChartLegendList>
-      {isValueList && (
+      {isValueList && !isFullscreenMode && (
         <PieChartLegendList css={valueListStyles}>
           {data.map((item) => (
             <li key={`subtitle-${item.id}`}>

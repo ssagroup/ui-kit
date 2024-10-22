@@ -35,19 +35,22 @@ export const BalancePieChart = withTheme(
             currency={currency}
           />
         }
-        css={css`
-          div:nth-of-type(1) {
-            width: 100px;
-            height: 100px;
-          }
-
-          ${theme.mediaQueries.lg} {
+        css={
+          !isFullscreenMode &&
+          css`
             div:nth-of-type(1) {
-              width: 120px;
-              height: 120px;
+              width: 100px;
+              height: 100px;
             }
-          }
-        `}>
+
+            ${theme.mediaQueries.lg} {
+              div:nth-of-type(1) {
+                width: 120px;
+                height: 120px;
+              }
+            }
+          `
+        }>
         <PieChartLegend
           data={data}
           colors={legendColorPalette || legendColorNames}
@@ -74,11 +77,12 @@ export const BalancePieChart = withTheme(
             css`
               flex-direction: row;
               gap: 20px;
-              margin-top: 10px;
+              margin: 40px 0 50px;
+              height: auto;
             `}
 
             ${theme.mediaQueries.lg} {
-              margin-left: -20%;
+              margin-left: ${isFullscreenMode ? 'unset' : '-20%'};
             }
           `}
           valueListStyles={css`

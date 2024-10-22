@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const PieChartLegendList = styled.ul`
+export const PieChartLegendList = styled.ul<{ isFullscreenMode?: boolean }>`
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -12,8 +12,6 @@ export const PieChartLegendList = styled.ul`
   gap: 14px;
 
   li {
-    display: flex;
-    align-items: center;
-    height: 20px;
+    height: ${({ isFullscreenMode }) => (isFullscreenMode ? 'auto' : '20px')};
   }
 `;

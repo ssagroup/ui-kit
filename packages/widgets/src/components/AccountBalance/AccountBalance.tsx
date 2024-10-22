@@ -1,11 +1,14 @@
 import { css, useTheme } from '@emotion/react';
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
+  Icon,
   Typography,
   useFullscreenMode,
 } from '@ssa-ui-kit/core';
+import { RemoveButton } from '@components/ExchangeAccount/styles';
 import { BalancePieChart } from './BalancePieChart';
 import { WithLink } from './WithLink';
 import { AccountBalanceProps } from './types';
@@ -21,15 +24,16 @@ export const AccountBalance = ({
   const theme = useTheme();
   const { toggleFullscreenMode, isFullscreenMode } = useFullscreenMode();
 
-  const handleClick = () => {
+  const handleToggleFullscreenMode = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.stopPropagation();
+    event.preventDefault();
     toggleFullscreenMode();
-    onClick?.();
   };
 
-  // TODO: check onClick! We can use it with other purpose!
-  // TODO: option? fullscreen mode by click?
   return (
-    <WithLink link={link} onClick={handleClick}>
+    <WithLink link={link} onClick={onClick}>
       <Card
         className={className}
         onClick={link ? undefined : onClick}
@@ -59,6 +63,7 @@ export const AccountBalance = ({
         <CardHeader
           css={css`
             margin-bottom: 10px;
+            align-items: center;
           `}>
           <Typography
             variant="h3"
@@ -71,6 +76,17 @@ export const AccountBalance = ({
             `}>
             {title}
           </Typography>
+          <Button css={RemoveButton} onClick={handleToggleFullscreenMode}>
+            <Icon
+              name={isFullscreenMode ? 'cross' : 'maximize'}
+              css={{
+                cursor: 'pointer',
+              }}
+              tooltip={isFullscreenMode ? 'Close' : 'Maximize'}
+              size={18}
+              color={theme.colors.greyFilterIcon}
+            />
+          </Button>
         </CardHeader>
         <CardContent
           css={css`

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const PieChartBase = styled.div<{
   isFullscreenMode: boolean;
-  width?: number;
+  width?: string;
 }>`
   display: flex;
   justify-content: space-between;
@@ -14,10 +14,24 @@ export const PieChartBase = styled.div<{
   flex-direction: ${({ isFullscreenMode }) =>
     isFullscreenMode ? 'column' : 'row'};
 
+  height: 100%;
+
+  height: ${({ isFullscreenMode }) =>
+    isFullscreenMode ? 'calc(100% - 140px)' : 'auto'};
+  max-height: ${({ isFullscreenMode }) =>
+    isFullscreenMode ? 'calc(100% - 140px)' : 'none'};
+
   & > .pie-chart-wrapper {
     position: relative;
-    width: 160px;
-    height: 160px;
+    width: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '160px')};
+    height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '160px')};
+
+    & > div > div {
+      display: ${({ isFullscreenMode }) =>
+        isFullscreenMode ? 'flex' : 'block'};
+      justify-content: ${({ isFullscreenMode }) =>
+        isFullscreenMode ? 'center' : 'unset'};
+    }
   }
 `;
 
