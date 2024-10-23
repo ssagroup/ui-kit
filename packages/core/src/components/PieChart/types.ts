@@ -1,6 +1,6 @@
 import { SerializedStyles } from '@emotion/react';
 import { ResponsivePie, MayHaveLabel } from '@nivo/pie';
-import { CommonProps } from '../..';
+import { CommonProps, WidgetCardProps } from '../..';
 
 export interface PieChartProps
   extends CommonProps,
@@ -8,6 +8,8 @@ export interface PieChartProps
   title?: React.ReactNode;
   children?: React.ReactNode;
   width?: string;
+  features?: Array<'header' | 'fullscreenMode' | 'activeItemAnimation'>;
+  cardProps?: Omit<WidgetCardProps, 'children'>;
 }
 
 export interface PieChartLegendItem extends MayHaveLabel {

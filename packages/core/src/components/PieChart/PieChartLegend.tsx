@@ -43,7 +43,11 @@ export const PieChartLegend = ({
                 css={markerStyles}
               />
               {isValueList ? (
-                <Typography variant="h6">
+                <Typography
+                  variant="h6"
+                  css={{
+                    alignSelf: 'start',
+                  }}>
                   {typeof renderLabel === 'function'
                     ? renderLabel(item)
                     : label}

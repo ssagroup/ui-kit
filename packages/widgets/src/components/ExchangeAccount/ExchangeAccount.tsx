@@ -6,8 +6,9 @@ import {
   CardHeader,
   Icon,
   Typography,
+  WithLink,
 } from '@ssa-ui-kit/core';
-import { BalancePieChart, WithLink } from '@components/AccountBalance';
+import { BalancePieChart } from '@components/AccountBalance';
 import { ExchangeAccountProps } from './types';
 import * as S from './styles';
 

@@ -7,18 +7,22 @@ import {
   Icon,
   Typography,
   useFullscreenMode,
+  WithLink,
 } from '@ssa-ui-kit/core';
 import { RemoveButton } from '@components/ExchangeAccount/styles';
 import { BalancePieChart } from './BalancePieChart';
-import { WithLink } from './WithLink';
 import { AccountBalanceProps } from './types';
 
+// TODO: combine fullscreenMode & active widget name
+// before fullscreenMode need to check for the widget name
+// check core & widgets
 export const AccountBalance = ({
   title = 'Balance',
   className,
   onClick,
   link,
   variant = 'valueList',
+  features = [],
   ...props
 }: AccountBalanceProps) => {
   const theme = useTheme();
@@ -76,17 +80,19 @@ export const AccountBalance = ({
             `}>
             {title}
           </Typography>
-          <Button css={RemoveButton} onClick={handleToggleFullscreenMode}>
-            <Icon
-              name={isFullscreenMode ? 'cross' : 'maximize'}
-              css={{
-                cursor: 'pointer',
-              }}
-              tooltip={isFullscreenMode ? 'Close' : 'Maximize'}
-              size={18}
-              color={theme.colors.greyFilterIcon}
-            />
-          </Button>
+          {features.includes('fullscreenMode') && (
+            <Button css={RemoveButton} onClick={handleToggleFullscreenMode}>
+              <Icon
+                name={isFullscreenMode ? 'cross' : 'maximize'}
+                css={{
+                  cursor: 'pointer',
+                }}
+                tooltip={isFullscreenMode ? 'Close' : 'Maximize'}
+                size={18}
+                color={theme.colors.greyFilterIcon}
+              />
+            </Button>
+          )}
         </CardHeader>
         <CardContent
           css={css`

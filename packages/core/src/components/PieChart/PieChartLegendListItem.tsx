@@ -5,8 +5,9 @@ export const PieChartLegendListItem = styled.li<{ isFullscreenMode?: boolean }>`
   align-items: center;
   height: ${({ isFullscreenMode }) => (isFullscreenMode ? 'auto' : '22px')};
   & > h6 {
-    place-items: center;
     height: 100%;
+    align-content: ${({ isFullscreenMode }) =>
+      isFullscreenMode ? 'end' : 'unset'};
     &:nth-of-type(1) {
       margin-right: 5px;
       font-size: 14px;

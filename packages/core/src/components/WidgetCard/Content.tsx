@@ -1,0 +1,18 @@
+import styled from '@emotion/styled';
+import CardContent from '@components/CardContent';
+
+export const Content = styled(CardContent)`
+  max-width: 406px;
+  width: 100%;
+  display: 'flex';
+  justify-content: space-between;
+  gap: 5px;
+  height: 100%;
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: initial;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: initial;
+  }
+`;

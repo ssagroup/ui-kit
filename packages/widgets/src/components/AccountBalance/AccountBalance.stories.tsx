@@ -20,6 +20,12 @@ Default.args = {
   data,
 };
 
+export const WithFullscreenMode: StoryObj<typeof AccountBalance> = {};
+WithFullscreenMode.args = {
+  ...Default.args,
+  features: ['fullscreenMode'],
+};
+
 export const WithLink: StoryObj<typeof AccountBalance> = (
   args: AccountBalanceProps,
 ) => {

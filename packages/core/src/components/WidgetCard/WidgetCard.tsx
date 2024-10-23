@@ -1,4 +1,4 @@
-import { WithLink } from '@ssa-ui-kit/core';
+import { WithLink } from '@components';
 import { WidgetCardBase } from './WidgetCardBase';
 import { Header } from './Header';
 import { Content } from './Content';

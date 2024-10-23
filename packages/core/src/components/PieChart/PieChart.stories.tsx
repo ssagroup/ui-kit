@@ -21,49 +21,47 @@ export const FitnessExample: StoryObj<typeof PieChart> = () => {
   ] as unknown as string[];
 
   return (
-    <FullscreenModeProvider>
-      <PieChart
-        data={fitnessData}
-        colors={pieChartColors}
-        animate={false}
-        title={
+    <PieChart
+      data={fitnessData}
+      colors={pieChartColors}
+      animate={false}
+      title={
+        <Typography
+          variant="body2"
+          weight="regular"
+          color={theme.colors.greyDarker60}
+          css={css`
+            font-size: 16px;
+            line-height: 16px;
+            margin-top: -5px;
+          `}>
+          Total
           <Typography
             variant="body2"
-            weight="regular"
-            color={theme.colors.greyDarker60}
+            weight="bold"
+            color={theme.colors.greyDarker}
             css={css`
-              font-size: 16px;
-              line-height: 16px;
-              margin-top: -5px;
+              font-size: 27.65px;
+              line-height: 35px;
             `}>
-            Total
+            143
             <Typography
               variant="body2"
-              weight="bold"
-              color={theme.colors.greyDarker}
+              weight="regular"
+              as="span"
+              color={theme.colors.greyDarker60}
               css={css`
-                font-size: 27.65px;
-                line-height: 35px;
+                font-size: 16px;
+                font-weight: 600;
+                margin-left: 3px;
               `}>
-              143
-              <Typography
-                variant="body2"
-                weight="regular"
-                as="span"
-                color={theme.colors.greyDarker60}
-                css={css`
-                  font-size: 16px;
-                  font-weight: 600;
-                  margin-left: 3px;
-                `}>
-                hrs
-              </Typography>
+              hrs
             </Typography>
           </Typography>
-        }>
-        <PieChartLegend data={fitnessData} colors={colorNames} />
-      </PieChart>
-    </FullscreenModeProvider>
+        </Typography>
+      }>
+      <PieChartLegend data={fitnessData} colors={colorNames} />
+    </PieChart>
   );
 };
 FitnessExample.args = {};
@@ -74,11 +72,130 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
     pieChartPalettes.getBalancePalette(theme);
 
   return (
+    <PieChart
+      data={accountData}
+      colors={pieChartColors}
+      animate={false}
+      title={
+        <Typography
+          variant="body2"
+          weight="bold"
+          color={theme.colors.greyDarker}
+          css={css`
+            font-size: 20px;
+            line-height: 25px;
+          `}>
+          18183 &nbsp;
+          <Typography
+            variant="body2"
+            weight="regular"
+            as="span"
+            color={theme.colors.greyDarker80}
+            css={css`
+              font-size: 14px;
+            `}>
+            USDT
+          </Typography>
+        </Typography>
+      }>
+      <PieChartLegend
+        data={accountData}
+        colors={legendColorNames}
+        renderValue={({ value, label }) =>
+          label === 'Other' ? value + ' USD' : value + ' ' + label
+        }
+        markerStyles={css`
+          width: 10px;
+          height: 10px;
+        `}
+        labelListStyles={css`
+          h6 {
+            font-weight: 700;
+          }
+        `}
+        valueListStyles={css`
+          h6 {
+            color: ${theme.colors.greyDarker80};
+          }
+        `}
+      />
+    </PieChart>
+  );
+};
+AccountExample.args = {};
+
+export const CustomColors: StoryObj<typeof PieChart> = () => {
+  const theme = useTheme();
+  const colors = ['#F7931A', '#50AF95', '#6f93d1', '#d37070'];
+
+  return (
+    <PieChart
+      data={accountData}
+      colors={colors}
+      animate={false}
+      title={
+        <Typography
+          variant="body2"
+          weight="bold"
+          color={theme.colors.greyDarker}
+          css={css`
+            font-size: 20px;
+            line-height: 25px;
+          `}>
+          18183 &nbsp;
+          <Typography
+            variant="body2"
+            weight="regular"
+            as="span"
+            color={theme.colors.greyDarker80}
+            css={css`
+              font-size: 14px;
+            `}>
+            USDT
+          </Typography>
+        </Typography>
+      }>
+      <PieChartLegend
+        data={accountData}
+        backgroundColors={colors}
+        renderValue={({ value, label }) =>
+          label === 'Other' ? value + ' USD' : value + ' ' + label
+        }
+        markerStyles={css`
+          width: 10px;
+          height: 10px;
+        `}
+        labelListStyles={css`
+          h6 {
+            font-weight: 700;
+          }
+        `}
+        valueListStyles={css`
+          h6 {
+            color: ${theme.colors.greyDarker80};
+          }
+        `}
+      />
+    </PieChart>
+  );
+};
+CustomColors.args = {};
+
+export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
+  const theme = useTheme();
+  const { legendColorNames, pieChartColors } =
+    pieChartPalettes.getBalancePalette(theme);
+
+  return (
     <FullscreenModeProvider>
       <PieChart
         data={accountData}
         colors={pieChartColors}
         animate={false}
+        features={['header', 'fullscreenMode']}
+        cardProps={{
+          title: 'Account example',
+        }}
         title={
           <Typography
             variant="body2"
@@ -126,63 +243,4 @@ export const AccountExample: StoryObj<typeof PieChart> = () => {
     </FullscreenModeProvider>
   );
 };
-AccountExample.args = {};
-
-export const CustomColors: StoryObj<typeof PieChart> = () => {
-  const theme = useTheme();
-  const colors = ['#F7931A', '#50AF95', '#6f93d1', '#d37070'];
-
-  return (
-    <FullscreenModeProvider>
-      <PieChart
-        data={accountData}
-        colors={colors}
-        animate={false}
-        title={
-          <Typography
-            variant="body2"
-            weight="bold"
-            color={theme.colors.greyDarker}
-            css={css`
-              font-size: 20px;
-              line-height: 25px;
-            `}>
-            18183 &nbsp;
-            <Typography
-              variant="body2"
-              weight="regular"
-              as="span"
-              color={theme.colors.greyDarker80}
-              css={css`
-                font-size: 14px;
-              `}>
-              USDT
-            </Typography>
-          </Typography>
-        }>
-        <PieChartLegend
-          data={accountData}
-          backgroundColors={colors}
-          renderValue={({ value, label }) =>
-            label === 'Other' ? value + ' USD' : value + ' ' + label
-          }
-          markerStyles={css`
-            width: 10px;
-            height: 10px;
-          `}
-          labelListStyles={css`
-            h6 {
-              font-weight: 700;
-            }
-          `}
-          valueListStyles={css`
-            h6 {
-              color: ${theme.colors.greyDarker80};
-            }
-          `}
-        />
-      </PieChart>
-    </FullscreenModeProvider>
-  );
-};
-CustomColors.args = {};
+FullscreenAndTitle.args = {};

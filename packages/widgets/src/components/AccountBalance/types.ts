@@ -1,5 +1,5 @@
-import { MainColors, Theme } from '@ssa-ui-kit/core';
 import type { To } from 'react-router-dom';
+import { MainColors, Theme } from '@ssa-ui-kit/core';
 
 interface WithTheme {
   theme: Theme;
@@ -26,6 +26,7 @@ export interface AccountBalanceProps extends BalanceBase {
   className?: string;
   onClick?: () => void;
   link?: To;
+  features?: Array<'fullscreenMode' | 'activeItemAnimation'>;
 }
 
 export type BalancePieChartTitleProps = Pick<
