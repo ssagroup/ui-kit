@@ -25,7 +25,9 @@ export const PieChartLegend = ({
   const { isFullscreenMode } = useFullscreenMode();
   return (
     <Fragment>
-      <PieChartLegendList css={labelListStyles}>
+      <PieChartLegendList
+        css={labelListStyles}
+        isFullscreenMode={isFullscreenMode}>
         {data.map((item, index) => {
           const { id, label, value, legendValue } = item;
           return (
@@ -41,12 +43,18 @@ export const PieChartLegend = ({
                 }
                 as={'span'}
                 css={markerStyles}
+                isFullscreenMode={isFullscreenMode}
               />
               {isValueList ? (
                 <Typography
                   variant="h6"
                   css={{
                     alignSelf: 'start',
+                    marginRight: 5,
+                    fontSize: 14,
+                    height: isFullscreenMode ? 20 : 'auto',
+                    lineHeight: isFullscreenMode ? '20px' : '1.375rem',
+                    alignContent: isFullscreenMode ? 'center' : 'end',
                   }}>
                   {typeof renderLabel === 'function'
                     ? renderLabel(item)
@@ -70,7 +78,11 @@ export const PieChartLegend = ({
               {isValueList && isFullscreenMode && (
                 <Typography
                   variant="subtitle"
-                  color={theme.colors.greyDarker60}>
+                  color={theme.colors.greyDarker60}
+                  css={{
+                    fontSize: isFullscreenMode ? '12px' : '0.833rem',
+                    alignContent: isFullscreenMode && 'center',
+                  }}>
                   {typeof renderValue === 'function'
                     ? renderValue(item)
                     : item.value}
@@ -81,7 +93,9 @@ export const PieChartLegend = ({
         })}
       </PieChartLegendList>
       {isValueList && !isFullscreenMode && (
-        <PieChartLegendList css={valueListStyles}>
+        <PieChartLegendList
+          css={valueListStyles}
+          isFullscreenMode={isFullscreenMode}>
           {data.map((item) => (
             <li key={`subtitle-${item.id}`}>
               <Typography variant="subtitle" color={theme.colors.greyDarker60}>

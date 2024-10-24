@@ -1,14 +1,18 @@
 import { ResponsivePie } from '@nivo/pie';
-import { useFullscreenMode } from '@components/FullscreenModeContext';
+import {
+  useFullscreenMode,
+  WithFullscreenMode,
+} from '@components/FullscreenModeContext';
 import { WithWidgetCard } from '@components/WidgetCard';
 import { PieChartProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 import { PieChartHeader } from './PieChartHeader';
+import { useEffect } from 'react';
 
-// TODO: create "features" prop, like features = ['fullscreenMode', 'sectorsHighlight'], or features = { ...: true, ... true }
 // TODO: storybook Docs => disable fullscreen mode for this page
 // or, exclude additional story with fullscreen mode from the documentation chapter
-export const PieChart = ({
+// TODO: chart animation
+const PieChartComponent = ({
   as,
   className,
   title,
@@ -16,15 +20,21 @@ export const PieChart = ({
   width = '400px',
   features = [],
   cardProps,
+  onFullscreenModeChange,
   ...chartProps
 }: PieChartProps) => {
   const { isFullscreenMode } = useFullscreenMode();
+
+  useEffect(() => {
+    onFullscreenModeChange?.(isFullscreenMode);
+  }, [isFullscreenMode]);
+
   return (
     <WithWidgetCard
       features={features}
       cardProps={{
-        ...cardProps,
         headerContent: <PieChartHeader features={features} />,
+        ...cardProps,
       }}>
       <PieChartBase
         as={as}
@@ -60,3 +70,5 @@ export const PieChart = ({
     </WithWidgetCard>
   );
 };
+
+export const PieChart = WithFullscreenMode(PieChartComponent);

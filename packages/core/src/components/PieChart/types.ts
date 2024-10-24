@@ -10,6 +10,7 @@ export interface PieChartProps
   width?: string;
   features?: Array<'header' | 'fullscreenMode' | 'activeItemAnimation'>;
   cardProps?: Omit<WidgetCardProps, 'children'>;
+  onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
 
 export interface PieChartLegendItem extends MayHaveLabel {

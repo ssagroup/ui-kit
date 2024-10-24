@@ -22,12 +22,6 @@ export const BalancePieChartTitle = withTheme(
             : css`
                 font-size: 13px;
                 padding: 0 14px;
-                ${theme.mediaQueries.md} {
-                  font-size: 14px;
-                }
-                ${theme.mediaQueries.lg} {
-                  font-size: 16px;
-                }
                 line-height: 1;
               `
         }>

@@ -16,10 +16,8 @@ export const PieChartBase = styled.div<{
 
   height: 100%;
 
-  height: ${({ isFullscreenMode }) =>
-    isFullscreenMode ? 'calc(100% - 140px)' : 'auto'};
-  max-height: ${({ isFullscreenMode }) =>
-    isFullscreenMode ? 'calc(100% - 140px)' : 'none'};
+  height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'auto')};
+  max-height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'none')};
 
   & > .pie-chart-wrapper {
     position: relative;

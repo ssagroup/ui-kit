@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 import CardContent from '@components/CardContent';
 
-export const Content = styled(CardContent)`
-  max-width: 406px;
+export const Content = styled(CardContent)<{ isFullscreenMode?: boolean }>`
+  max-width: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '406px')};
   width: 100%;
-  display: 'flex';
+  display: flex;
   justify-content: space-between;
   gap: 5px;
-  height: 100%;
+  height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'auto')};
+
   ${({ theme }) => theme.mediaQueries.md} {
     max-width: initial;
     flex-direction: column;

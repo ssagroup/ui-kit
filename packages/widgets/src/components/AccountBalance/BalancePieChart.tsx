@@ -4,11 +4,12 @@ import {
   PieChart,
   PieChartLegend,
   pieChartPalettes,
-  useFullscreenMode,
+  PieChartProps,
 } from '@ssa-ui-kit/core';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';
+import { useState } from 'react';
 
 export const BalancePieChart = withTheme(
   ({
@@ -19,14 +20,27 @@ export const BalancePieChart = withTheme(
     chartColorPalette,
     legendColorPalette,
     variant = 'valueList',
+    cardProps,
+    fullscreenModeFeature = false,
   }: BalancePieChartProps) => {
-    const { isFullscreenMode } = useFullscreenMode();
+    const [isFullscreenMode, setFullscreenMode] = useState(false);
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
+    const featuresList: PieChartProps['features'] = ['header'];
+    if (fullscreenModeFeature) {
+      featuresList.push('fullscreenMode');
+    }
+
+    const handleFullscreenModeChange = (pieChartFullscreenMode: boolean) => {
+      setFullscreenMode(pieChartFullscreenMode);
+    };
     return (
       <PieChart
         data={data}
+        features={featuresList}
+        cardProps={cardProps}
         colors={chartColorPalette || pieChartColors}
+        onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
         title={
           <BalancePieChartTitle
@@ -62,34 +76,28 @@ export const BalancePieChart = withTheme(
             margin-right: 5px;
           `}
           labelListStyles={css`
-            gap: 5px;
+            gap: ${!isFullscreenMode && '5px'};
             h6 {
               font-weight: 700;
-              font-size: 12px;
+              line-height: ${isFullscreenMode && '20px'};
+              font-size: ${!isFullscreenMode && '12px'};
               ${theme.mediaQueries.md} {
-                font-size: 13px;
+                font-size: ${!isFullscreenMode && '13px'};
               }
               ${theme.mediaQueries.lg} {
-                font-size: 14px;
+                font-size: ${!isFullscreenMode && '14px'};
               }
             }
-            ${isFullscreenMode &&
-            css`
-              flex-direction: row;
-              gap: 20px;
-              margin: 40px 0 50px;
-              height: auto;
-            `}
 
             ${theme.mediaQueries.lg} {
               margin-left: ${isFullscreenMode ? 'unset' : '-20%'};
             }
           `}
           valueListStyles={css`
-            gap: 5px;
+            gap: ${!isFullscreenMode && '5px'};
             h6 {
               color: ${theme.colors.greyDarker80};
-              font-size: 11px;
+              font-size: ${isFullscreenMode ? '12px' : '11px'};
               ${theme.mediaQueries.lg} {
                 font-size: 12px;
               }

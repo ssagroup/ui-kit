@@ -1,9 +1,9 @@
+import { Fragment } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import Typography from '@components/Typography';
-import { FullscreenModeProvider } from '@components/FullscreenModeContext';
 import { PieChart, PieChartLegend, pieChartPalettes } from './index';
-import { fitnessData, accountData } from './stories/fixtures';
+import { fitnessData, accountData, accountDataBig } from './stories/fixtures';
 
 export default {
   title: 'Charts/PieChart',
@@ -187,60 +187,46 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
     pieChartPalettes.getBalancePalette(theme);
 
   return (
-    <FullscreenModeProvider>
-      <PieChart
-        data={accountData}
-        colors={pieChartColors}
-        animate={false}
-        features={['header', 'fullscreenMode']}
-        cardProps={{
-          title: 'Account example',
-        }}
-        title={
-          <Typography
-            variant="body2"
-            weight="bold"
-            color={theme.colors.greyDarker}
-            css={css`
-              font-size: 20px;
-              line-height: 25px;
-            `}>
-            18183 &nbsp;
-            <Typography
-              variant="body2"
-              weight="regular"
-              as="span"
-              color={theme.colors.greyDarker80}
-              css={css`
-                font-size: 14px;
-              `}>
-              USDT
-            </Typography>
-          </Typography>
-        }>
-        <PieChartLegend
-          data={accountData}
-          colors={legendColorNames}
-          renderValue={({ value, label }) =>
-            label === 'Other' ? value + ' USD' : value + ' ' + label
+    <PieChart
+      data={accountDataBig}
+      colors={pieChartColors}
+      animate
+      isInteractive
+      innerRadius={0}
+      padAngle={0}
+      cornerRadius={0}
+      css={{
+        padding: 20,
+      }}
+      activeInnerRadiusOffset={0}
+      activeOuterRadiusOffset={10}
+      features={['header', 'fullscreenMode']}
+      cardProps={{
+        title: 'Account example',
+      }}
+      tooltip={() => <Fragment></Fragment>}>
+      <PieChartLegend
+        data={accountDataBig}
+        colors={legendColorNames}
+        renderValue={({ value, label }) =>
+          label === 'Other' ? value + ' USD' : value + ' ' + label
+        }
+        markerStyles={css`
+          width: 10px;
+          height: 10px;
+        `}
+        labelListStyles={css`
+          h6 {
+            font-weight: 700;
           }
-          markerStyles={css`
-            width: 10px;
-            height: 10px;
-          `}
-          labelListStyles={css`
-            h6 {
-              font-weight: 700;
-            }
-          `}
-          valueListStyles={css`
-            h6 {
-              color: ${theme.colors.greyDarker80};
-            }
-          `}
-        />
-      </PieChart>
-    </FullscreenModeProvider>
+        `}
+        valueListStyles={css`
+          h6 {
+            color: ${theme.colors.greyDarker80};
+          }
+        `}
+      />
+    </PieChart>
   );
 };
 FullscreenAndTitle.args = {};

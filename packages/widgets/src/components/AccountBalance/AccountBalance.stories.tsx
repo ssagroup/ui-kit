@@ -23,7 +23,7 @@ Default.args = {
 export const WithFullscreenMode: StoryObj<typeof AccountBalance> = {};
 WithFullscreenMode.args = {
   ...Default.args,
-  features: ['fullscreenMode'],
+  fullscreenModeFeature: true,
 };
 
 export const WithLink: StoryObj<typeof AccountBalance> = (

@@ -11,6 +11,9 @@ export const PieChartButton = styled(Button)`
   &:focus {
     background: none;
     box-shadow: none;
+    &:before {
+      display: none;
+    }
   }
 
   &:hover {
