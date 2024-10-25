@@ -20,10 +20,9 @@ type BalanceBase = {
   }>;
 };
 
-export interface BalancePieChartProps
-  extends WithTheme,
-    BalanceBase,
-    Pick<PieChartProps, 'cardProps'> {}
+export interface BalancePieChartProps extends WithTheme, BalanceBase {
+  pieChartProps?: Partial<PieChartProps>;
+}
 
 export interface AccountBalanceProps extends BalanceBase {
   title?: string;

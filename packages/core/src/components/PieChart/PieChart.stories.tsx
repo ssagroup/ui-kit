@@ -1,9 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import Typography from '@components/Typography';
 import { PieChart, PieChartLegend, pieChartPalettes } from './index';
-import { fitnessData, accountData, accountDataBig } from './stories/fixtures';
+import { fitnessData, accountData, eventsDataBig } from './stories/fixtures';
 
 export default {
   title: 'Charts/PieChart',
@@ -183,14 +183,15 @@ CustomColors.args = {};
 
 export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
   const theme = useTheme();
+  const [isFullscreenMode, setFullscreenMode] = useState(false);
   const { legendColorNames, pieChartColors } =
     pieChartPalettes.getBalancePalette(theme);
 
   return (
     <PieChart
-      data={accountDataBig}
+      data={eventsDataBig}
+      onFullscreenModeChange={setFullscreenMode}
       colors={pieChartColors}
-      animate
       isInteractive
       innerRadius={0}
       padAngle={0}
@@ -199,30 +200,43 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
         padding: 20,
       }}
       activeInnerRadiusOffset={0}
-      activeOuterRadiusOffset={10}
+      activeOuterRadiusOffset={isFullscreenMode ? 40 : 7}
       features={['header', 'fullscreenMode']}
       cardProps={{
-        title: 'Account example',
+        title: 'Events',
       }}
       tooltip={() => <Fragment></Fragment>}>
       <PieChartLegend
-        data={accountDataBig}
+        data={eventsDataBig}
         colors={legendColorNames}
-        renderValue={({ value, label }) =>
-          label === 'Other' ? value + ' USD' : value + ' ' + label
-        }
         markerStyles={css`
           width: 10px;
           height: 10px;
         `}
         labelListStyles={css`
+          li {
+            height: ${isFullscreenMode ? 'auto' : '34px'};
+          }
           h6 {
-            font-weight: 700;
+            color: ${theme.colors.greyDarker};
+            line-height: 34px;
+            font-size: 14px;
+            &:nth-of-type(1) {
+              font-weight: 500;
+            }
+            &:nth-of-type(2) {
+              font-weight: 700;
+            }
           }
         `}
         valueListStyles={css`
+          li {
+            justify-content: flex-end;
+            height: ${isFullscreenMode ? 'auto' : '34px'};
+          }
           h6 {
-            color: ${theme.colors.greyDarker80};
+            color: ${theme.colors.greyDarker};
+            font-weight: 700;
           }
         `}
       />

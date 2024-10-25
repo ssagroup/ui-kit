@@ -1,12 +1,15 @@
 import { useTheme } from '@emotion/react';
-import { Fragment } from 'react';
 import Typography from '@components/Typography';
 
 import { useFullscreenMode } from '@components/FullscreenModeContext';
 import { PieChartLegendMarker } from './PieChartLegendMarker';
 import { PieChartLegendList } from './PieChartLegendList';
 import { PieChartLegendProps } from './types';
-import { PieChartLegendListItem } from './PieChartLegendListItem';
+import {
+  PieChartLegendListItem,
+  PieChartLegendListValueListItem,
+} from './PieChartLegendListItem';
+import Wrapper from '@components/Wrapper';
 
 export const PieChartLegend = ({
   data,
@@ -22,18 +25,26 @@ export const PieChartLegend = ({
 }: PieChartLegendProps) => {
   const theme = useTheme();
   const isValueList = variant === 'valueList';
-  const { isFullscreenMode } = useFullscreenMode();
+  const { isFullscreenMode, activeId, setActiveId } = useFullscreenMode();
   return (
-    <Fragment>
+    <Wrapper css={{ width: 'auto' }}>
       <PieChartLegendList
         css={labelListStyles}
         isFullscreenMode={isFullscreenMode}>
         {data.map((item, index) => {
           const { id, label, value, legendValue } = item;
+          const isActive = id === activeId;
           return (
             <PieChartLegendListItem
               key={`tag-${id}`}
-              isFullscreenMode={isFullscreenMode}>
+              isActive={isActive}
+              isFullscreenMode={isFullscreenMode}
+              onMouseEnter={() => {
+                setActiveId(id);
+              }}
+              onMouseLeave={() => {
+                setActiveId(null);
+              }}>
               <PieChartLegendMarker
                 color={
                   backgroundColors ? undefined : colors?.[index] || 'purple'
@@ -51,10 +62,9 @@ export const PieChartLegend = ({
                   css={{
                     alignSelf: 'start',
                     marginRight: 5,
-                    fontSize: 14,
-                    height: isFullscreenMode ? 20 : 'auto',
-                    lineHeight: isFullscreenMode ? '20px' : '1.375rem',
-                    alignContent: isFullscreenMode ? 'center' : 'end',
+                    height: 'auto',
+                    lineHeight: '34px',
+                    alignContent: 'center',
                   }}>
                   {typeof renderLabel === 'function'
                     ? renderLabel(item)
@@ -96,17 +106,32 @@ export const PieChartLegend = ({
         <PieChartLegendList
           css={valueListStyles}
           isFullscreenMode={isFullscreenMode}>
-          {data.map((item) => (
-            <li key={`subtitle-${item.id}`}>
-              <Typography variant="subtitle" color={theme.colors.greyDarker60}>
-                {typeof renderValue === 'function'
-                  ? renderValue(item)
-                  : item.value}
-              </Typography>
-            </li>
-          ))}
+          {data.map((item) => {
+            const { id } = item;
+            const isActive = id === activeId;
+            return (
+              <PieChartLegendListValueListItem
+                key={`subtitle-${id}`}
+                isActive={isActive}
+                css={{ paddingLeft: 20 }}
+                onMouseEnter={() => {
+                  setActiveId(id);
+                }}
+                onMouseLeave={() => {
+                  setActiveId(null);
+                }}>
+                <Typography
+                  variant="subtitle"
+                  color={theme.colors.greyDarker60}>
+                  {typeof renderValue === 'function'
+                    ? renderValue(item)
+                    : item.value}
+                </Typography>
+              </PieChartLegendListValueListItem>
+            );
+          })}
         </PieChartLegendList>
       )}
-    </Fragment>
+    </Wrapper>
   );
 };

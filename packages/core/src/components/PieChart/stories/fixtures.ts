@@ -38,55 +38,55 @@ export const accountData = [
   },
 ];
 
-export const accountDataBig = [
+export const eventsDataBig = [
   {
     id: 1,
-    value: 5800,
-    label: 'BTC1',
+    value: 500,
+    label: 'Event first',
   },
   {
     id: 2,
-    value: 6243,
-    label: 'ETH1',
+    value: 305,
+    label: 'Event second',
   },
   {
     id: 3,
-    value: 3840,
-    label: 'USDT1',
+    value: 789,
+    label: 'Event third',
   },
   {
     id: 4,
-    value: 5800,
-    label: 'BTC2',
+    value: 120,
+    label: 'Event fourth',
   },
   {
     id: 5,
-    value: 6243,
-    label: 'ETH3',
+    value: 39,
+    label: 'Event fifth',
   },
   {
     id: 6,
-    value: 3840,
-    label: 'USDT2',
+    value: 995,
+    label: 'Event sixth',
   },
   {
     id: 7,
-    value: 5800,
-    label: 'BTC3',
+    value: 753,
+    label: 'Event seventh',
   },
   {
     id: 8,
-    value: 6243,
-    label: 'ETH3',
+    value: 183,
+    label: 'Event eighth',
   },
   {
     id: 9,
-    value: 3840,
-    label: 'USDT3',
+    value: 683,
+    label: 'Event ninth',
   },
   {
     id: 10,
-    value: 2300,
-    label: 'Other',
+    value: 359,
+    label: 'Event tenth',
   },
 ];

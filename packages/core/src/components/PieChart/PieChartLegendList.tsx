@@ -12,13 +12,14 @@ export const PieChartLegendList = styled.ul<{ isFullscreenMode?: boolean }>`
   padding: 0;
   height: ${({ isFullscreenMode }) => (isFullscreenMode ? 'auto' : '100%')};
   margin: ${({ isFullscreenMode }) => (isFullscreenMode ? '40px 0 50px' : 0)};
-  gap: ${({ isFullscreenMode }) => (isFullscreenMode ? '5px 20px' : '14px')};
+  gap: ${({ isFullscreenMode }) => (isFullscreenMode ? '0 20px' : 0)};
 
   li {
-    height: ${({ isFullscreenMode }) => (isFullscreenMode ? 'auto' : '20px')};
+    height: 34px;
     display: flex;
     align-items: center;
     text-align: left;
     white-space: nowrap;
+    padding-right: ${({ isFullscreenMode }) => isFullscreenMode && '12px'};
   }
 `;

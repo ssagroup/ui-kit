@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 
 // TODO: storybook Docs => disable fullscreen mode for this page
 // or, exclude additional story with fullscreen mode from the documentation chapter
-// TODO: chart animation
 const PieChartComponent = ({
   as,
   className,
@@ -23,7 +22,19 @@ const PieChartComponent = ({
   onFullscreenModeChange,
   ...chartProps
 }: PieChartProps) => {
-  const { isFullscreenMode } = useFullscreenMode();
+  const { isFullscreenMode, activeId, setActiveId } = useFullscreenMode();
+  const {
+    activeInnerRadiusOffset = 0,
+    activeOuterRadiusOffset = 0,
+    isInteractive = false,
+  } = chartProps;
+
+  let internalOffset = 0;
+  if (isInteractive) {
+    internalOffset = Math.max(
+      ...[activeInnerRadiusOffset, activeOuterRadiusOffset],
+    );
+  }
 
   useEffect(() => {
     onFullscreenModeChange?.(isFullscreenMode);
@@ -39,17 +50,24 @@ const PieChartComponent = ({
       <PieChartBase
         as={as}
         className={className}
-        width={width}
+        width={`calc(${width} + ${internalOffset}px)`}
         isFullscreenMode={isFullscreenMode}>
         <div className="pie-chart-wrapper">
           <ResponsivePie
             isInteractive={false}
+            margin={{
+              top: internalOffset,
+              right: internalOffset,
+              bottom: internalOffset,
+              left: internalOffset,
+            }}
             innerRadius={0.8}
             enableArcLinkLabels={false}
             enableArcLabels={false}
             padAngle={2}
             cornerRadius={16}
-            activeOuterRadiusOffset={8}
+            activeInnerRadiusOffset={0}
+            activeOuterRadiusOffset={0}
             colors={{ datum: 'data.color' }}
             arcLinkLabelsSkipAngle={10}
             arcLinkLabelsTextColor="#333333"
@@ -57,6 +75,10 @@ const PieChartComponent = ({
             arcLinkLabelsColor={{ from: 'color' }}
             arcLabelsSkipAngle={10}
             layers={['arcs', 'arcLinkLabels', 'arcLabels']}
+            activeId={activeId}
+            onActiveIdChange={(activeId: string | number | null) => {
+              setActiveId(activeId);
+            }}
             {...chartProps}
           />
           {title && (

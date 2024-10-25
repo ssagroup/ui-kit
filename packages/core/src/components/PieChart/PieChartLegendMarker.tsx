@@ -7,11 +7,11 @@ export const PieChartLegendMarker = styled(Badge)<{
 }>`
   display: flex;
   align-self: center;
+  margin-right: 12px;
+  margin-left: 12px;
   margin-top: ${({ isFullscreenMode }) => !isFullscreenMode && '2px'};
 
   padding: 0;
-  margin-right: ${({ isFullscreenMode }) =>
-    isFullscreenMode ? '5px' : '12px'};
 
   width: 8px;
   height: 8px;

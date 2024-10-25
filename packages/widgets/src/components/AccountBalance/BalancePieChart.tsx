@@ -20,7 +20,7 @@ export const BalancePieChart = withTheme(
     chartColorPalette,
     legendColorPalette,
     variant = 'valueList',
-    cardProps,
+    pieChartProps = {},
     fullscreenModeFeature = false,
   }: BalancePieChartProps) => {
     const [isFullscreenMode, setFullscreenMode] = useState(false);
@@ -38,7 +38,6 @@ export const BalancePieChart = withTheme(
       <PieChart
         data={data}
         features={featuresList}
-        cardProps={cardProps}
         colors={chartColorPalette || pieChartColors}
         onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
@@ -64,7 +63,9 @@ export const BalancePieChart = withTheme(
               }
             }
           `
-        }>
+        }
+        width={'100%'}
+        {...pieChartProps}>
         <PieChartLegend
           data={data}
           colors={legendColorPalette || legendColorNames}
@@ -76,10 +77,13 @@ export const BalancePieChart = withTheme(
             margin-right: 5px;
           `}
           labelListStyles={css`
-            gap: ${!isFullscreenMode && '5px'};
+            gap: 0;
+            li {
+              height: 22.5px;
+            }
             h6 {
               font-weight: 700;
-              line-height: ${isFullscreenMode && '20px'};
+              line-height: 22.5px;
               font-size: ${!isFullscreenMode && '12px'};
               ${theme.mediaQueries.md} {
                 font-size: ${!isFullscreenMode && '13px'};
@@ -94,8 +98,12 @@ export const BalancePieChart = withTheme(
             }
           `}
           valueListStyles={css`
-            gap: ${!isFullscreenMode && '5px'};
+            gap: 0;
+            li {
+              height: 22.5px;
+            }
             h6 {
+              line-height: 22.5px;
               color: ${theme.colors.greyDarker80};
               font-size: ${isFullscreenMode ? '12px' : '11px'};
               ${theme.mediaQueries.lg} {
