@@ -1,11 +1,9 @@
 import { useTheme } from '@emotion/react';
-import {
-  DropdownOption,
-  Typography,
-  Wrapper,
-  Dropdown,
-  usePaginationContext,
-} from '@components';
+import DropdownOption from '@components/DropdownOption/DropdownOption';
+import Typography from '@components/Typography/Typography';
+import Wrapper from '@components/Wrapper/Wrapper';
+import Dropdown from '@components/Dropdown/Dropdown';
+import { usePaginationContext } from '@components/Pagination/PaginationContext';
 import { RowsPerPageDropdownProps } from './types';
 import { DEFAULT_PER_PAGE_VALUE, ROWS_PER_PAGE_LIST } from '../../constants';
 
