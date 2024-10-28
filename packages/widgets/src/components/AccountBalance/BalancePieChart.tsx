@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import { withTheme, css } from '@emotion/react';
-
-import { PieChart, PieChartLegend, pieChartPalettes } from '@ssa-ui-kit/core';
+import {
+  PieChart,
+  PieChartFeatures,
+  PieChartLegend,
+  pieChartPalettes,
+} from '@ssa-ui-kit/core';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';
@@ -14,13 +19,32 @@ export const BalancePieChart = withTheme(
     chartColorPalette,
     legendColorPalette,
     variant = 'valueList',
+    pieChartProps = {},
+    fullscreenModeFeature = false,
+    activeHighlight = false,
   }: BalancePieChartProps) => {
+    const [isFullscreenMode, setFullscreenMode] = useState(false);
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
+    const featuresList = new Set<PieChartFeatures>();
+
+    if (Object.keys(pieChartProps.cardProps || {}).length) {
+      featuresList.add('header');
+    }
+    if (fullscreenModeFeature) {
+      featuresList.add('header');
+      featuresList.add('fullscreenMode');
+    }
+
+    const handleFullscreenModeChange = (pieChartFullscreenMode: boolean) => {
+      setFullscreenMode(pieChartFullscreenMode);
+    };
     return (
       <PieChart
         data={data}
+        features={Array.from(featuresList)}
         colors={chartColorPalette || pieChartColors}
+        onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
         title={
           <BalancePieChartTitle
@@ -29,51 +53,61 @@ export const BalancePieChart = withTheme(
             currency={currency}
           />
         }
-        css={css`
-          div:nth-of-type(1) {
-            width: 100px;
-            height: 100px;
-          }
-
-          ${theme.mediaQueries.lg} {
+        css={
+          !isFullscreenMode &&
+          css`
             div:nth-of-type(1) {
-              width: 120px;
-              height: 120px;
+              width: 100px;
+              height: 100px;
             }
-          }
-        `}>
+
+            ${theme.mediaQueries.lg} {
+              div:nth-of-type(1) {
+                width: 120px;
+                height: 120px;
+              }
+            }
+          `
+        }
+        width={'100%'}
+        {...pieChartProps}>
         <PieChartLegend
           data={data}
           colors={legendColorPalette || legendColorNames}
           variant={variant}
           currency={currency}
+          activeHighlight={activeHighlight}
           markerStyles={css`
             width: 10px;
             height: 10px;
             margin-right: 5px;
           `}
           labelListStyles={css`
-            gap: 5px;
+            gap: 0;
+            li {
+              height: 22.5px;
+            }
             h6 {
               font-weight: 700;
-              font-size: 12px;
+              line-height: 22.5px;
+              font-size: ${!isFullscreenMode && '12px'};
               ${theme.mediaQueries.md} {
-                font-size: 13px;
+                font-size: ${!isFullscreenMode && '13px'};
               }
               ${theme.mediaQueries.lg} {
-                font-size: 14px;
+                font-size: ${!isFullscreenMode && '14px'};
               }
-            }
-
-            ${theme.mediaQueries.lg} {
-              margin-left: -20%;
             }
           `}
           valueListStyles={css`
-            gap: 5px;
+            gap: 0;
+            li {
+              height: 22.5px;
+            }
             h6 {
+              line-height: 22.5px;
               color: ${theme.colors.greyDarker80};
-              font-size: 11px;
+              font-size: ${isFullscreenMode ? '12px' : '11px'};
               ${theme.mediaQueries.lg} {
                 font-size: 12px;
               }

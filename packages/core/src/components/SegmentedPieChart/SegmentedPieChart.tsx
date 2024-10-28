@@ -52,7 +52,7 @@ export const SegmentedPieChart = ({
         data={balanceDataForTheGraph}
         animate={true}
         css={{
-          width: 400,
+          width: '400px',
           margin: '40px 120px',
         }}
         isInteractive

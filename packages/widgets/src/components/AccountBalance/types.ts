@@ -1,5 +1,5 @@
-import { MainColors, Theme } from '@ssa-ui-kit/core';
 import type { To } from 'react-router-dom';
+import { MainColors, PieChartProps, Theme } from '@ssa-ui-kit/core';
 
 interface WithTheme {
   theme: Theme;
@@ -11,6 +11,7 @@ type BalanceBase = {
   legendColorPalette?: Array<keyof MainColors | string>;
   chartColorPalette?: string[];
   variant?: 'valueList' | 'withoutValueList';
+  fullscreenModeFeature?: boolean;
   data: Array<{
     id: string | number;
     value: number;
@@ -19,13 +20,17 @@ type BalanceBase = {
   }>;
 };
 
-export interface BalancePieChartProps extends WithTheme, BalanceBase {}
+export interface BalancePieChartProps extends WithTheme, BalanceBase {
+  pieChartProps?: Partial<PieChartProps>;
+  activeHighlight?: boolean;
+}
 
 export interface AccountBalanceProps extends BalanceBase {
   title?: string;
   className?: string;
   onClick?: () => void;
   link?: To;
+  activeHighlight?: boolean;
 }
 
 export type BalancePieChartTitleProps = Pick<

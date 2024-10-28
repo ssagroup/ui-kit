@@ -57,3 +57,4 @@ export * as Edit from './Edit';
 export * as Import from './Import';
 export * as Pages from './Pages';
 export * as Roles from './Roles';
+export * as Maximize from './Maximize';

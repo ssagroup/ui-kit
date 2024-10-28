@@ -1,4 +1,4 @@
-import { WithLink } from '@ssa-ui-kit/core';
+import { useFullscreenMode, WithLink } from '@components';
 import { WidgetCardBase } from './WidgetCardBase';
 import { Header } from './Header';
 import { Content } from './Content';
@@ -11,19 +11,27 @@ export const WidgetCard = ({
   contentClassName,
   headerClassName,
   headerContent,
-  onClick,
   link,
+  width,
   children,
+  onClick,
 }: WidgetCardProps) => {
+  const { isFullscreenMode } = useFullscreenMode();
   return (
     <WithLink link={link} onClick={onClick} className={wrapperClassName}>
       <WidgetCardBase
         className={className}
-        onClick={link ? undefined : onClick}>
+        onClick={link ? undefined : onClick}
+        isFullscreenMode={isFullscreenMode}
+        width={width}>
         <Header title={title} className={headerClassName}>
           {headerContent}
         </Header>
-        <Content className={contentClassName}>{children}</Content>
+        <Content
+          className={contentClassName}
+          isFullscreenMode={isFullscreenMode}>
+          {children}
+        </Content>
       </WidgetCardBase>
     </WithLink>
   );

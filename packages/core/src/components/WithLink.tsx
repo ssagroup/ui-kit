@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 import { css } from '@emotion/react';
-import { AccountBalanceProps } from './types';
 
 export const WithLink = ({
   link,
   onClick,
   children,
   className,
-}: Pick<AccountBalanceProps, 'link' | 'onClick'> & {
+}: {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
+  link?: To;
 }) =>
   link ? (
     <Link

@@ -1,3 +1,4 @@
+import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
 import {
   Button,
@@ -6,8 +7,9 @@ import {
   CardHeader,
   Icon,
   Typography,
+  WithLink,
 } from '@ssa-ui-kit/core';
-import { BalancePieChart, WithLink } from '@components/AccountBalance';
+import { BalancePieChart } from '@components/AccountBalance';
 import { ExchangeAccountProps } from './types';
 import * as S from './styles';
 
@@ -65,7 +67,20 @@ export const ExchangeAccount = ({
           {isActive ? status : 'Not available'}
         </Typography>
         <CardContent css={S.CardContent} direction="column">
-          <BalancePieChart theme={theme} {...data} />
+          <BalancePieChart
+            theme={theme}
+            {...data}
+            pieChartProps={{
+              className: css`
+                ${theme.mediaQueries.md} {
+                  flex-direction: row;
+                }
+                ${theme.mediaQueries.lg} {
+                  flex-direction: column;
+                }
+              `,
+            }}
+          />
         </CardContent>
       </CardBase>
     </WithLink>

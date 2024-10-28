@@ -83,6 +83,9 @@ export const Status = (theme: Theme) => css`
 export const CardContent = (theme: Theme) => css`
   width: 100%;
   padding: 10px 20px;
+  & > div {
+    flex-direction: row;
+  }
 
   ul:last-child {
     li {
@@ -91,43 +94,22 @@ export const CardContent = (theme: Theme) => css`
     }
   }
 
+  ${theme.mediaQueries.sm} {
+    & > div {
+      justify-content: space-around;
+    }
+  }
+
   ${theme.mediaQueries.md} {
-    > div {
-      display: block;
-      text-align: center;
-
-      .pie-chart-wrapper {
-        margin: 0 auto 6px;
-      }
-    }
-
-    ul {
-      display: inline-flex;
-      height: auto;
-    }
-
-    ul:last-child {
-      margin-left: 30px;
+    justify-content: space-around;
+    & > div {
+      flex-direction: column;
     }
   }
 
   ${theme.mediaQueries.lg} {
-    > div {
-      display: flex;
-      justify-content: space-around;
-
-      .pie-chart-wrapper {
-        margin: 0 10px 0 0;
-      }
-    }
-
-    ul {
-      display: flex;
-      margin-left: 0;
-    }
-
-    ul:last-child {
-      margin-left: 10px;
+    & > div {
+      flex-direction: row;
     }
   }
 `;

@@ -1,19 +1,23 @@
 import styled from '@emotion/styled';
 
-export const PieChartLegendList = styled.ul`
+export const PieChartLegendList = styled.ul<{ isFullscreenMode?: boolean }>`
   display: flex;
-  flex-flow: column;
   justify-content: center;
   list-style: none;
+  flex-flow: ${({ isFullscreenMode }) =>
+    isFullscreenMode ? 'row wrap' : 'column nowrap'};
 
-  height: 100%;
   padding: 0;
-  margin: 0;
-  gap: 14px;
+  height: ${({ isFullscreenMode }) => (isFullscreenMode ? 'auto' : '100%')};
+  margin: ${({ isFullscreenMode }) => (isFullscreenMode ? '40px 0 50px' : 0)};
+  gap: ${({ isFullscreenMode }) => (isFullscreenMode ? '0 20px' : 0)};
 
   li {
+    height: 34px;
     display: flex;
     align-items: center;
-    height: 20px;
+    text-align: left;
+    white-space: nowrap;
+    padding-right: ${({ isFullscreenMode }) => isFullscreenMode && '12px'};
   }
 `;

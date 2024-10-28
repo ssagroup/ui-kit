@@ -36,6 +36,8 @@
     "dist/**/*",
     "src/**/*.spec.*",
     "src/**/*.spec.old.*",
+    "src/**/*.specBackup.ts",
+    "src/**/*.specBackup.tsx",
     "src/**/*.e2e.*",
     "src/**/*.stories.*"
   ]
