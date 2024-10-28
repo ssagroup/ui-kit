@@ -7,7 +7,7 @@ export const Content = styled(CardContent)<{ isFullscreenMode?: boolean }>`
   display: flex;
   justify-content: space-between;
   gap: 5px;
-  height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'auto')};
+  height: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
     max-width: initial;
