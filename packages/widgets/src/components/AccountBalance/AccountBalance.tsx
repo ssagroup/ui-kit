@@ -11,6 +11,7 @@ export const AccountBalance = ({
   link,
   variant = 'valueList',
   fullscreenModeFeature = false,
+  activeHighlight = true,
   ...props
 }: AccountBalanceProps) => {
   const theme = useTheme();
@@ -21,6 +22,7 @@ export const AccountBalance = ({
         theme={theme}
         variant={variant}
         fullscreenModeFeature={fullscreenModeFeature}
+        activeHighlight={activeHighlight}
         pieChartProps={{
           cardProps: {
             title,

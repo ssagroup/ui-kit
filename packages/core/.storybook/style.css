@@ -38,3 +38,7 @@ p {
 #storybook-docs .docs-story > div:first-of-type {
   overflow: visible;
 }
+
+.sb-anchor#anchor--charts-piechart--fullscreen-and-title {
+  display: none;
+}

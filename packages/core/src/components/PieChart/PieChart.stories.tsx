@@ -192,6 +192,7 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
       data={eventsDataBig}
       onFullscreenModeChange={setFullscreenMode}
       colors={pieChartColors}
+      activeHighlight
       isInteractive
       innerRadius={0}
       padAngle={0}
@@ -209,6 +210,7 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
       <PieChartLegend
         data={eventsDataBig}
         colors={legendColorNames}
+        activeHighlight
         markerStyles={css`
           width: 10px;
           height: 10px;
@@ -226,6 +228,7 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
             }
             &:nth-of-type(2) {
               font-weight: 700;
+              font-size: 12px;
             }
           }
         `}
@@ -237,6 +240,7 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
           h6 {
             color: ${theme.colors.greyDarker};
             font-weight: 700;
+            font-size: 12px;
           }
         `}
       />

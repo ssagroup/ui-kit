@@ -56,12 +56,12 @@ export const List: StoryObj<typeof ExchangeAccount> = () => {
     <div
       css={css`
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
         gap: 10px;
 
         ${theme.mediaQueries.md} {
           max-width: 1542px;
-          grid-template-columns: repeat(3, minmax(200px, 1fr));
+          grid-template-columns: repeat(3, minmax(270px, 1fr));
           gap: 20px;
         }
       `}>

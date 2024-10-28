@@ -8,12 +8,11 @@ export const PieChartBase = styled.div<{
   justify-content: space-between;
   align-items: center;
 
-  width: ${({ isFullscreenMode, width }) =>
-    isFullscreenMode ? '100%' : width};
-
   flex-direction: ${({ isFullscreenMode }) =>
     isFullscreenMode ? 'column' : 'row'};
 
+  width: ${({ isFullscreenMode, width }) =>
+    isFullscreenMode ? '100%' : width};
   height: 100%;
 
   height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'auto')};
@@ -22,6 +21,14 @@ export const PieChartBase = styled.div<{
   & > .pie-chart-wrapper {
     position: relative;
     width: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '160px')};
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      margin-bottom: 6px;
+    }
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      margin-bottom: 0;
+    }
     height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '160px')};
 
     & > div > div {

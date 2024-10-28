@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import {
   useFullscreenMode,
@@ -7,10 +8,7 @@ import { WithWidgetCard } from '@components/WidgetCard';
 import { PieChartProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 import { PieChartHeader } from './PieChartHeader';
-import { useEffect } from 'react';
 
-// TODO: storybook Docs => disable fullscreen mode for this page
-// or, exclude additional story with fullscreen mode from the documentation chapter
 const PieChartComponent = ({
   as,
   className,
@@ -19,6 +17,7 @@ const PieChartComponent = ({
   width = '400px',
   features = [],
   cardProps,
+  activeHighlight = false,
   onFullscreenModeChange,
   ...chartProps
 }: PieChartProps) => {
@@ -43,6 +42,7 @@ const PieChartComponent = ({
   return (
     <WithWidgetCard
       features={features}
+      width={`calc(${width} + ${internalOffset}px)`}
       cardProps={{
         headerContent: <PieChartHeader features={features} />,
         ...cardProps,
@@ -77,7 +77,7 @@ const PieChartComponent = ({
             layers={['arcs', 'arcLinkLabels', 'arcLabels']}
             activeId={activeId}
             onActiveIdChange={(activeId: string | number | null) => {
-              setActiveId(activeId);
+              activeHighlight && setActiveId(activeId);
             }}
             {...chartProps}
           />

@@ -22,6 +22,7 @@ type BalanceBase = {
 
 export interface BalancePieChartProps extends WithTheme, BalanceBase {
   pieChartProps?: Partial<PieChartProps>;
+  activeHighlight?: boolean;
 }
 
 export interface AccountBalanceProps extends BalanceBase {
@@ -29,6 +30,7 @@ export interface AccountBalanceProps extends BalanceBase {
   className?: string;
   onClick?: () => void;
   link?: To;
+  activeHighlight?: boolean;
 }
 
 export type BalancePieChartTitleProps = Pick<

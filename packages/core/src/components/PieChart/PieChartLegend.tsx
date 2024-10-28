@@ -20,12 +20,18 @@ export const PieChartLegend = ({
   labelListStyles,
   valueListStyles,
   variant = 'valueList',
+  activeHighlight = false,
   renderLabel,
   renderValue,
 }: PieChartLegendProps) => {
   const theme = useTheme();
   const isValueList = variant === 'valueList';
   const { isFullscreenMode, activeId, setActiveId } = useFullscreenMode();
+  const handleActiveIdChange = (newActiveId: null | number | string) => {
+    if (activeHighlight) {
+      setActiveId(newActiveId);
+    }
+  };
   return (
     <Wrapper css={{ width: 'auto' }}>
       <PieChartLegendList
@@ -40,10 +46,10 @@ export const PieChartLegend = ({
               isActive={isActive}
               isFullscreenMode={isFullscreenMode}
               onMouseEnter={() => {
-                setActiveId(id);
+                handleActiveIdChange(id);
               }}
               onMouseLeave={() => {
-                setActiveId(null);
+                handleActiveIdChange(null);
               }}>
               <PieChartLegendMarker
                 color={
@@ -115,10 +121,10 @@ export const PieChartLegend = ({
                 isActive={isActive}
                 css={{ paddingLeft: 20 }}
                 onMouseEnter={() => {
-                  setActiveId(id);
+                  handleActiveIdChange(id);
                 }}
                 onMouseLeave={() => {
-                  setActiveId(null);
+                  handleActiveIdChange(null);
                 }}>
                 <Typography
                   variant="subtitle"

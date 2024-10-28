@@ -2,9 +2,9 @@ import { withTheme, css } from '@emotion/react';
 
 import {
   PieChart,
+  PieChartFeatures,
   PieChartLegend,
   pieChartPalettes,
-  PieChartProps,
 } from '@ssa-ui-kit/core';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
@@ -22,13 +22,19 @@ export const BalancePieChart = withTheme(
     variant = 'valueList',
     pieChartProps = {},
     fullscreenModeFeature = false,
+    activeHighlight = false,
   }: BalancePieChartProps) => {
     const [isFullscreenMode, setFullscreenMode] = useState(false);
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
-    const featuresList: PieChartProps['features'] = ['header'];
+    const featuresList = new Set<PieChartFeatures>();
+
+    if (Object.keys(pieChartProps.cardProps || {}).length) {
+      featuresList.add('header');
+    }
     if (fullscreenModeFeature) {
-      featuresList.push('fullscreenMode');
+      featuresList.add('header');
+      featuresList.add('fullscreenMode');
     }
 
     const handleFullscreenModeChange = (pieChartFullscreenMode: boolean) => {
@@ -37,7 +43,7 @@ export const BalancePieChart = withTheme(
     return (
       <PieChart
         data={data}
-        features={featuresList}
+        features={Array.from(featuresList)}
         colors={chartColorPalette || pieChartColors}
         onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
@@ -71,6 +77,7 @@ export const BalancePieChart = withTheme(
           colors={legendColorPalette || legendColorNames}
           variant={variant}
           currency={currency}
+          activeHighlight={activeHighlight}
           markerStyles={css`
             width: 10px;
             height: 10px;
@@ -91,10 +98,6 @@ export const BalancePieChart = withTheme(
               ${theme.mediaQueries.lg} {
                 font-size: ${!isFullscreenMode && '14px'};
               }
-            }
-
-            ${theme.mediaQueries.lg} {
-              margin-left: ${isFullscreenMode ? 'unset' : '-20%'};
             }
           `}
           valueListStyles={css`

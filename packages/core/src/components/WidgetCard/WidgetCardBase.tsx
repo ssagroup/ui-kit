@@ -1,10 +1,14 @@
 import styled from '@emotion/styled';
 import Card from '@components/Card';
 
-export const WidgetCardBase = styled(Card)<{ isFullscreenMode?: boolean }>`
+export const WidgetCardBase = styled(Card)<{
+  isFullscreenMode?: boolean;
+  width?: string;
+}>`
   border-radius: 20px;
   padding: 5px 10px;
-  width: 100%;
+  width: ${({ isFullscreenMode, width }) =>
+    isFullscreenMode ? '100%' : width};
   height: 100%;
   position: ${({ isFullscreenMode }) =>
     isFullscreenMode ? 'absolute' : 'static'};
