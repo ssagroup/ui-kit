@@ -2,6 +2,7 @@ import { useTheme } from '@emotion/react';
 import Typography from '@components/Typography';
 
 import { useFullscreenMode } from '@components/FullscreenModeContext';
+import Wrapper from '@components/Wrapper';
 import { PieChartLegendMarker } from './PieChartLegendMarker';
 import { PieChartLegendList } from './PieChartLegendList';
 import { PieChartLegendProps } from './types';
@@ -9,7 +10,6 @@ import {
   PieChartLegendListItem,
   PieChartLegendListValueListItem,
 } from './PieChartLegendListItem';
-import Wrapper from '@components/Wrapper';
 
 export const PieChartLegend = ({
   data,

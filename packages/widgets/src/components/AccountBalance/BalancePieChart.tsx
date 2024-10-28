@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { withTheme, css } from '@emotion/react';
-
 import {
   PieChart,
   PieChartFeatures,
@@ -9,7 +9,6 @@ import {
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';
-import { useState } from 'react';
 
 export const BalancePieChart = withTheme(
   ({
