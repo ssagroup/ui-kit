@@ -26,7 +26,7 @@ export const PieChartBase = styled.div<{
       margin-bottom: 6px;
     }
 
-    ${({ theme }) => theme.mediaQueries.md} {
+    ${({ theme }) => theme.mediaQueries.lg} {
       margin-bottom: 0;
     }
     height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '160px')};

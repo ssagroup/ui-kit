@@ -2,12 +2,10 @@ import styled from '@emotion/styled';
 
 export const PieChartLegendList = styled.ul<{ isFullscreenMode?: boolean }>`
   display: flex;
-  flex-flow: column;
   justify-content: center;
   list-style: none;
-  flex-direction: ${({ isFullscreenMode }) =>
-    isFullscreenMode ? 'row' : 'column'};
-  flex-wrap: ${({ isFullscreenMode }) => isFullscreenMode && 'wrap'};
+  flex-flow: ${({ isFullscreenMode }) =>
+    isFullscreenMode ? 'row wrap' : 'column nowrap'};
 
   padding: 0;
   height: ${({ isFullscreenMode }) => (isFullscreenMode ? 'auto' : '100%')};

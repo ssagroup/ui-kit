@@ -10,12 +10,12 @@ export const PieChartLegendListItem = styled.li<{
   padding-right: ${({ isFullscreenMode }) => !isFullscreenMode && '5px'};
   background: ${({ isActive, theme }) =>
     isActive && `${theme.colors.greyLighter}`};
+  border-radius: ${({ isFullscreenMode, isActive }) =>
+    isFullscreenMode && isActive && '5px'};
   border-top-left-radius: ${({ isFullscreenMode, isActive }) =>
     !isFullscreenMode && isActive && '5px'};
   border-bottom-left-radius: ${({ isFullscreenMode, isActive }) =>
     !isFullscreenMode && isActive && '5px'};
-  border-radius: ${({ isFullscreenMode, isActive }) =>
-    isFullscreenMode && isActive && '5px'};
 `;
 
 export const PieChartLegendListValueListItem = styled.li<{
