@@ -55,7 +55,9 @@ export const MealNutrientsLineChart = ({ data, ...props }: LineSvgProps) => {
                 strokeDasharray: '8 8',
               },
             },
-            fontFamily: "'Manrope', sans-serif",
+            text: {
+              fontFamily: "'Manrope', sans-serif",
+            },
           },
         },
       ),
