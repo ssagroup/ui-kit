@@ -17,7 +17,8 @@ export const PieChartLegendList = styled.ul<{ isFullscreenMode?: boolean }>`
     display: flex;
     align-items: center;
     text-align: left;
-    white-space: nowrap;
+    white-space: ${({ isFullscreenMode }) =>
+      isFullscreenMode ? 'nowrap' : 'normal'};
     padding-right: ${({ isFullscreenMode }) => isFullscreenMode && '12px'};
   }
 `;

@@ -16,7 +16,7 @@ export const Balance = ({ balance }: BalanceProps) => {
         gridArea: 'balance',
         '& > div:last-of-type': {
           height: '100%',
-          alignContent: 'center',
+          justifyContent: 'center',
         },
       }}
       {...transformedData}
