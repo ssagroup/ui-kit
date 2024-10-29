@@ -68,8 +68,9 @@ export const PieChartLegend = ({
                   css={{
                     alignSelf: 'start',
                     marginRight: 5,
-                    height: 'auto',
-                    lineHeight: '34px',
+                    height: '100%',
+                    lineHeight: '14px',
+                    fontSize: 14,
                     alignContent: 'center',
                   }}>
                   {typeof renderLabel === 'function'

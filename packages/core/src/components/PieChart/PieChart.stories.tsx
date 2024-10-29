@@ -217,11 +217,10 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
         `}
         labelListStyles={css`
           li {
-            height: ${isFullscreenMode ? 'auto' : '34px'};
+            height: 34px;
           }
           h6 {
             color: ${theme.colors.greyDarker};
-            line-height: 34px;
             font-size: 14px;
             &:nth-of-type(1) {
               font-weight: 500;
