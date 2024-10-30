@@ -12,7 +12,6 @@ export const WidgetCard = ({
   headerClassName,
   headerContent,
   link,
-  width,
   children,
   onClick,
 }: WidgetCardProps) => {
@@ -22,8 +21,7 @@ export const WidgetCard = ({
       <WidgetCardBase
         className={className}
         onClick={link ? undefined : onClick}
-        isFullscreenMode={isFullscreenMode}
-        width={width}>
+        isFullscreenMode={isFullscreenMode}>
         <Header title={title} className={headerClassName}>
           {headerContent}
         </Header>

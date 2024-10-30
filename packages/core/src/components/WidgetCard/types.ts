@@ -9,6 +9,5 @@ export type WidgetCardProps = {
   headerContent?: React.ReactNode;
   link?: To;
   children?: React.ReactNode;
-  width?: string;
   onClick?: () => void;
 };
