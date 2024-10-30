@@ -5,14 +5,11 @@ export const WithWidgetCard = ({
   children,
   features = [],
   cardProps = {},
-  width,
 }: {
   children: React.ReactNode;
-} & Pick<PieChartProps, 'features' | 'cardProps' | 'width'>) =>
+} & Pick<PieChartProps, 'features' | 'cardProps'>) =>
   features && features.includes('header') ? (
-    <WidgetCard {...cardProps} width={width}>
-      {children}
-    </WidgetCard>
+    <WidgetCard {...cardProps}>{children}</WidgetCard>
   ) : (
     children
   );

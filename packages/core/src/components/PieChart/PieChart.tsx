@@ -42,7 +42,6 @@ const PieChartComponent = ({
   return (
     <WithWidgetCard
       features={features}
-      width={`calc(${width} + ${internalOffset}px)`}
       cardProps={{
         headerContent: <PieChartHeader features={features} />,
         ...cardProps,
@@ -50,7 +49,7 @@ const PieChartComponent = ({
       <PieChartBase
         as={as}
         className={className}
-        width={`calc(${width} + ${internalOffset}px)`}
+        width={width}
         isFullscreenMode={isFullscreenMode}>
         <div className="pie-chart-wrapper">
           <ResponsivePie
