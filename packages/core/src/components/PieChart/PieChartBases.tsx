@@ -7,6 +7,7 @@ export const PieChartBase = styled.div<{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 
   flex-direction: ${({ isFullscreenMode }) =>
     isFullscreenMode ? 'column' : 'row'};

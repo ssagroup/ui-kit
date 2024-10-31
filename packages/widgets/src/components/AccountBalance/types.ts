@@ -23,6 +23,7 @@ type BalanceBase = {
 export interface BalancePieChartProps extends WithTheme, BalanceBase {
   pieChartProps?: Partial<PieChartProps>;
   activeHighlight?: boolean;
+  onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
 
 export interface AccountBalanceProps extends BalanceBase {
@@ -31,6 +32,7 @@ export interface AccountBalanceProps extends BalanceBase {
   onClick?: () => void;
   link?: To;
   activeHighlight?: boolean;
+  widgetMaxWidth?: string;
 }
 
 export type BalancePieChartTitleProps = Pick<

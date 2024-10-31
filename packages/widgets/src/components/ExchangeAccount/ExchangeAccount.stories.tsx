@@ -1,6 +1,7 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
+import { css as cssClassname } from '@emotion/css';
 import { Icon, AddNewAccountCard } from '@ssa-ui-kit/core';
 import { ExchangeAccount } from './ExchangeAccount';
 import { dataValues } from './helpers';
@@ -19,6 +20,12 @@ export const Default: StoryObj<typeof ExchangeAccount> = () => {
       data={dataValues[0].data}
       onClick={() => alert('Card is clicked!')}
       onDelete={() => alert('Card is deleted!')}
+      pieChartProps={{
+        className: cssClassname`
+          align-self: center;
+          max-width: 300px;
+        `,
+      }}
     />
   );
 };
@@ -40,6 +47,12 @@ export const WithLink: StoryObj<typeof ExchangeAccount> = () => {
               link="/link"
               onClick={() => alert('Card is clicked!')}
               onDelete={() => alert('Card is deleted!')}
+              pieChartProps={{
+                className: cssClassname`
+                  align-self: center;
+                  max-width: 300px;
+                `,
+              }}
             />
           }
         />
@@ -79,6 +92,12 @@ export const List: StoryObj<typeof ExchangeAccount> = () => {
             data={item.data}
             onClick={() => alert('Card is clicked!')}
             onDelete={() => alert('Card is deleted!')}
+            pieChartProps={{
+              className: cssClassname`
+                align-self: center;
+                max-width: 300px;
+              `,
+            }}
           />
         );
       })}

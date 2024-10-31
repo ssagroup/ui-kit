@@ -19,6 +19,7 @@ export const ExchangeAccount = ({
   status,
   link,
   data,
+  pieChartProps,
   onClick,
   onDelete,
 }: ExchangeAccountProps) => {
@@ -69,7 +70,6 @@ export const ExchangeAccount = ({
         <CardContent css={S.CardContent} direction="column">
           <BalancePieChart
             theme={theme}
-            {...data}
             pieChartProps={{
               className: css`
                 ${theme.mediaQueries.md} {
@@ -79,7 +79,9 @@ export const ExchangeAccount = ({
                   flex-direction: column;
                 }
               `,
+              ...pieChartProps,
             }}
+            {...data}
           />
         </CardContent>
       </CardBase>
