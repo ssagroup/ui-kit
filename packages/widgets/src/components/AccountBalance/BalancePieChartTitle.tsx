@@ -1,15 +1,12 @@
 import { withTheme, css } from '@emotion/react';
 import { Typography, useFullscreenMode } from '@ssa-ui-kit/core';
-import { useTextSizeDecrease } from '@ssa-ui-kit/hooks';
 import { BalancePieChartTitleProps } from './types';
 
 export const BalancePieChartTitle = withTheme(
   ({ total, currency, theme }: BalancePieChartTitleProps) => {
-    const ref = useTextSizeDecrease();
     const { isFullscreenMode } = useFullscreenMode();
     return (
       <Typography
-        ref={ref}
         variant="body2"
         weight="bold"
         color={theme.colors.greyDarker}
@@ -20,7 +17,7 @@ export const BalancePieChartTitle = withTheme(
                 font-weight: 500;
               `
             : css`
-                font-size: 13px;
+                font-size: 10px;
                 padding: 0 14px;
                 line-height: 1;
               `

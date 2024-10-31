@@ -1,4 +1,5 @@
 import { To } from 'react-router-dom';
+import { PieChartProps } from '@ssa-ui-kit/core';
 import { AccountBalanceProps } from '@components/AccountBalance';
 
 export interface ExchangeAccountProps {
@@ -9,4 +10,5 @@ export interface ExchangeAccountProps {
   onDelete: () => void;
   link?: To;
   data: Omit<AccountBalanceProps, 'title' | 'className' | 'onClick' | 'link'>;
+  pieChartProps?: Partial<PieChartProps>;
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/css';
 import { WithLink } from '@ssa-ui-kit/core';
@@ -12,9 +13,11 @@ export const AccountBalance = ({
   variant = 'valueList',
   fullscreenModeFeature = false,
   activeHighlight = true,
+  widgetMaxWidth = '280px',
   ...props
 }: AccountBalanceProps) => {
   const theme = useTheme();
+  const [isFullscreenMode, setIsFullscreenMode] = useState(false);
 
   return (
     <WithLink link={link} onClick={onClick}>
@@ -23,10 +26,19 @@ export const AccountBalance = ({
         variant={variant}
         fullscreenModeFeature={fullscreenModeFeature}
         activeHighlight={activeHighlight}
+        onFullscreenModeChange={setIsFullscreenMode}
         pieChartProps={{
+          width: '100%',
           cardProps: {
             title,
-            className,
+            className: [
+              css`
+                & > div:last-of-type {
+                  max-width: ${isFullscreenMode ? '100%' : widgetMaxWidth};
+                }
+              `,
+              className,
+            ].join(' '),
             headerClassName: css([
               {
                 fontSize: 11,

@@ -66,6 +66,7 @@ Custom.args = {
     mainTheme.colors.green as string,
   ],
   legendColorPalette: ['blue', 'green'],
+  widgetMaxWidth: '230px',
   data: [
     {
       id: 'BTC',
@@ -106,6 +107,7 @@ WithoutPaletteColors.args = {
     'linear-gradient(243.84deg, rgb(235, 117, 86), rgb(242, 136, 142))',
     '#50AF95',
   ],
+  widgetMaxWidth: '230px',
   data: [
     {
       id: 'BTC',

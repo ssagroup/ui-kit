@@ -22,6 +22,7 @@ export const BalancePieChart = withTheme(
     pieChartProps = {},
     fullscreenModeFeature = false,
     activeHighlight = false,
+    onFullscreenModeChange,
   }: BalancePieChartProps) => {
     const [isFullscreenMode, setFullscreenMode] = useState(false);
     const { legendColorNames, pieChartColors } =
@@ -38,6 +39,7 @@ export const BalancePieChart = withTheme(
 
     const handleFullscreenModeChange = (pieChartFullscreenMode: boolean) => {
       setFullscreenMode(pieChartFullscreenMode);
+      onFullscreenModeChange?.(pieChartFullscreenMode);
     };
     return (
       <PieChart
