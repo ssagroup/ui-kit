@@ -15,7 +15,7 @@ export const dataValues: Array<
     title: 'Account Name',
     status: 'Active',
     data: {
-      total: 48000.53032,
+      total: 48000.53,
       currency: 'USDT',
       data: [
         {
@@ -120,7 +120,7 @@ export const dataValues: Array<
     title: 'Name#4',
     status: 'Active',
     data: {
-      total: 9000.53032,
+      total: 9000.53,
       currency: 'USDT',
       data: [
         {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { css } from '@emotion/react';
+import { css as cssReact } from '@emotion/react';
+import { css } from '@emotion/css';
 import { mainTheme } from '@ssa-ui-kit/core';
 
 import { data } from './stories/fixtures';
@@ -14,9 +15,15 @@ export default {
 
 export const Default: StoryObj<typeof AccountBalance> = {};
 Default.args = {
-  total: 48700.53569,
+  total: 48700.53,
   currency: 'USDT',
   onClick: () => alert('Clicked!'),
+  widgetMaxWidth: '290px',
+  className: css`
+    & .pie-chart-wrapper p {
+      font-size: 12px;
+    }
+  `,
   data,
 };
 
@@ -48,9 +55,12 @@ export const Custom: StoryObj<typeof AccountBalance> = (
   return (
     <AccountBalance
       {...args}
-      css={css`
+      css={cssReact`
         ul li {
           height: auto;
+        }
+        & .pie-chart-wrapper p {
+          font-size: 12px;
         }
       `}
     />
@@ -58,7 +68,7 @@ export const Custom: StoryObj<typeof AccountBalance> = (
 };
 
 Custom.args = {
-  total: 48700.53569,
+  total: 48700.53,
   currency: 'USDT',
   variant: 'withoutValueList',
   chartColorPalette: [
@@ -66,7 +76,7 @@ Custom.args = {
     mainTheme.colors.green as string,
   ],
   legendColorPalette: ['blue', 'green'],
-  widgetMaxWidth: '230px',
+  widgetMaxWidth: '240px',
   data: [
     {
       id: 'BTC',
@@ -89,9 +99,12 @@ export const WithoutPaletteColors: StoryObj<typeof AccountBalance> = (
   return (
     <AccountBalance
       {...args}
-      css={css`
+      css={cssReact`
         ul li {
           height: auto;
+        }
+        & .pie-chart-wrapper p {
+          font-size: 12px;
         }
       `}
     />
@@ -99,7 +112,7 @@ export const WithoutPaletteColors: StoryObj<typeof AccountBalance> = (
 };
 
 WithoutPaletteColors.args = {
-  total: 48700.53569,
+  total: 48700.53,
   currency: 'USDT',
   variant: 'withoutValueList',
   chartColorPalette: ['#F7931A', '#50AF95'],
@@ -107,7 +120,7 @@ WithoutPaletteColors.args = {
     'linear-gradient(243.84deg, rgb(235, 117, 86), rgb(242, 136, 142))',
     '#50AF95',
   ],
-  widgetMaxWidth: '230px',
+  widgetMaxWidth: '240px',
   data: [
     {
       id: 'BTC',

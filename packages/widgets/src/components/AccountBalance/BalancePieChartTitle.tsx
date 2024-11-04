@@ -17,7 +17,7 @@ export const BalancePieChartTitle = withTheme(
                 font-weight: 500;
               `
             : css`
-                font-size: 10px;
+                font-size: 12px;
                 padding: 0 14px;
                 line-height: 1;
               `
