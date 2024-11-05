@@ -5,7 +5,7 @@ export const data: Bot = {
   platform: 'Binance',
   tradingAccountId: 10,
   tradingAccountName: 'Test Yevgen',
-  strategy: 'GridRebalancingV6',
+  strategy: 'Scalping',
   instrument: 'BTC/FDUSD',
   isRunning: true,
   status: 'WaitingForSignal' as StatusType,

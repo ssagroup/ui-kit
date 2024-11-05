@@ -2,16 +2,20 @@ export const useEnumsResponse = () => ({
   result: {
     botStrategies: [
       {
-        key: 'Grid',
-        localizedName: 'Grid',
+        key: 'Grid1',
+        localizedName: 'Grid 1.0',
       },
       {
-        key: 'Fibonacci',
-        localizedName: 'Fibonacci',
+        key: 'Grid2',
+        localizedName: 'Grid 2.0',
       },
       {
         key: 'Cross',
         localizedName: 'Cross',
+      },
+      {
+        key: 'Scalping',
+        localizedName: 'Scalping',
       },
     ],
     colorsForBotStatuses: [

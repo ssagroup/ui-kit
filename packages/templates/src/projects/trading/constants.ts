@@ -4,7 +4,6 @@ export const PERIOD_DAY = 'Day';
 export const PERIOD_WEEK = 'Week';
 export const PERIOD_MONTH = 'Month';
 export const PERIOD_YEAR = 'Year';
-export const PERIOD_ALL_TIME = 'AllTime';
 export const PERIOD_CUSTOM = 'Custom';
 
 export const USDT = 'USDT';

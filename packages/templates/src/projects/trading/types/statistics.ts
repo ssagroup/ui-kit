@@ -3,7 +3,6 @@ import {
   PERIOD_WEEK,
   PERIOD_MONTH,
   PERIOD_YEAR,
-  PERIOD_ALL_TIME,
   PERIOD_CURRENT,
   PERIOD_CUSTOM,
 } from '../constants';
@@ -17,7 +16,6 @@ export type StatisticsPeriod =
   | typeof PERIOD_WEEK
   | typeof PERIOD_MONTH
   | typeof PERIOD_YEAR
-  | typeof PERIOD_ALL_TIME
   | typeof PERIOD_CUSTOM;
 
 export type PeriodRange = {

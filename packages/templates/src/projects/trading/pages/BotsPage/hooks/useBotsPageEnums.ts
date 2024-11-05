@@ -14,3 +14,12 @@ export const useBotsPageEnums = () => {
     platform: result.exchangePlatforms,
   };
 };
+
+export const useBotStrategiesLocalizedName = () => {
+  const enums = useBotsPageEnums();
+  const result: Record<string, string> = {};
+  enums.strategy.map((strategy) => {
+    result[strategy.key] = strategy.localizedName;
+  });
+  return result;
+};
