@@ -1,5 +1,6 @@
 import { TableBody } from '@ssa-ui-kit/core';
 import { BotsTableRow } from '@ssa-ui-kit/widgets';
+import { propOr } from '@ssa-ui-kit/utils';
 import { useTranslation } from '@contexts';
 import {
   ROICell,
@@ -10,7 +11,10 @@ import {
 } from '@trading/components';
 import { TableRowProvider, useCurrency } from '@trading/contexts';
 import { getColorsByStatus, getStatusInfo } from '@trading/utils';
-import { useBotsPageEnums } from '@trading/pages/BotsPage/hooks/useBotsPageEnums';
+import {
+  useBotsPageEnums,
+  useBotStrategiesLocalizedName,
+} from '@trading/pages/BotsPage/hooks/useBotsPageEnums';
 import { Actions, BotTableName, BotTooltip } from '.';
 import { BotsTableProps } from '../types';
 
@@ -41,6 +45,7 @@ export const Body = ({
   }
 
   const colorsByStatus = getColorsByStatus(enumsResponse?.status);
+  const strategyNameByKey = useBotStrategiesLocalizedName();
 
   return (
     <TableBody>
@@ -64,7 +69,9 @@ export const Body = ({
               <InformationLinkCell>
                 <BotTableName bot={bot} />
               </InformationLinkCell>
-              <InformationLinkCell>{bot.strategy}</InformationLinkCell>
+              <InformationLinkCell>
+                {propOr(bot.strategy, bot.strategy || '')(strategyNameByKey)}
+              </InformationLinkCell>
               <InformationLinkCell>
                 <FundsInWorkCell value={bot.currentlyInUsePercents} />
               </InformationLinkCell>

@@ -189,7 +189,6 @@ export const translationConfig: JSONObject = {
           '7d': '7d',
           '30d': '30d',
           '1y': '1y',
-          all: 'All',
           custom: 'Custom',
           customButtons: {
             apply: 'Apply',

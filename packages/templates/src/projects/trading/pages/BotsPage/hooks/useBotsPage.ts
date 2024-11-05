@@ -10,7 +10,12 @@ import { DEFAULT_SORT } from '../components/BotsTable/consts';
 import { API_KEY_TO_TITLE, makeFilters } from '../components/BotsFilters/utils';
 import { FiltersData } from '../components/BotsFilters/types';
 import { BotsTableProps } from '../components/BotsTable/types';
-import { AllBots, allBotsMock, SingleBot } from '../__mock__/allBots';
+import {
+  AllBots,
+  allBotsMock,
+  botInformationByIdMock,
+  SingleBot,
+} from '../__mock__/allBots';
 import { buttonGroupItems } from '../components/BotsNavigation/consts';
 import { SearchType } from '../types';
 
@@ -113,8 +118,8 @@ export const useBotsPage = () => {
             currentlyInUsePercents: step * index + 1,
             statistics: {
               ...item.statistics,
-              roi: -5.01,
-              pnl: -0.050266,
+              roi: botInformationByIdMock[item.id].roi,
+              pnl: botInformationByIdMock[item.id].pnl,
             },
           };
         case 'Day':
@@ -123,8 +128,12 @@ export const useBotsPage = () => {
             currentlyInUsePercents: step * index,
             statistics: {
               ...item.statistics,
-              roi: -5.01,
-              pnl: -0.050191,
+              roi: Number(
+                (botInformationByIdMock[item.id].roi * 1.05).toFixed(2),
+              ),
+              pnl: Number(
+                (botInformationByIdMock[item.id].pnl * 1.05).toFixed(2),
+              ),
               pnlUp: true,
             },
           };
@@ -134,8 +143,12 @@ export const useBotsPage = () => {
             currentlyInUsePercents: step * index + 1,
             statistics: {
               ...item.statistics,
-              roi: -13.1,
-              pnl: -0.13136,
+              roi: Number(
+                (botInformationByIdMock[item.id].roi * 1.1).toFixed(2),
+              ),
+              pnl: Number(
+                (botInformationByIdMock[item.id].pnl * 1.1).toFixed(2),
+              ),
               pnlUp: true,
             },
           };
@@ -145,8 +158,12 @@ export const useBotsPage = () => {
             currentlyInUsePercents: step * index,
             statistics: {
               ...item.statistics,
-              roi: 0.14,
-              pnl: 0.001395,
+              roi: Number(
+                (botInformationByIdMock[item.id].roi * 1.15).toFixed(2),
+              ),
+              pnl: Number(
+                (botInformationByIdMock[item.id].pnl * 1.15).toFixed(2),
+              ),
               pnlUp: true,
             },
           };
@@ -156,19 +173,12 @@ export const useBotsPage = () => {
             currentlyInUsePercents: step * index + 1,
             statistics: {
               ...item.statistics,
-              roi: 83,
-              pnl: 0.82829,
-              pnlUp: true,
-            },
-          };
-        case 'AllTime':
-          return {
-            ...item,
-            currentlyInUsePercents: step * index,
-            statistics: {
-              ...item.statistics,
-              roi: 85,
-              pnl: 0.84193,
+              roi: Number(
+                (botInformationByIdMock[item.id].roi * 1.2).toFixed(2),
+              ),
+              pnl: Number(
+                (botInformationByIdMock[item.id].pnl * 1.2).toFixed(2),
+              ),
               pnlUp: true,
             },
           };

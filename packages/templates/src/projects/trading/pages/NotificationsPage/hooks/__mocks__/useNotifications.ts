@@ -23,7 +23,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -34,7 +34,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -45,7 +45,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -56,7 +56,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -67,7 +67,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -78,7 +78,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -89,7 +89,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -100,7 +100,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -111,7 +111,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -122,7 +122,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -133,7 +133,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -144,7 +144,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -155,7 +155,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -166,7 +166,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -177,7 +177,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -188,7 +188,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -199,7 +199,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -210,7 +210,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -221,7 +221,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -232,7 +232,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -243,7 +243,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -254,7 +254,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -265,7 +265,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -276,7 +276,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -287,7 +287,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -298,7 +298,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -309,7 +309,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -320,7 +320,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -331,7 +331,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -342,7 +342,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -353,7 +353,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -364,7 +364,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -375,7 +375,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -386,7 +386,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -397,7 +397,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -408,7 +408,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -419,7 +419,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -430,7 +430,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -441,7 +441,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -452,7 +452,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -463,7 +463,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -474,7 +474,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -485,7 +485,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -496,7 +496,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -507,7 +507,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -518,7 +518,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -529,7 +529,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -540,7 +540,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -551,7 +551,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -562,7 +562,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -573,7 +573,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -584,7 +584,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -595,7 +595,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -606,7 +606,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -617,7 +617,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -628,7 +628,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -639,7 +639,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -650,7 +650,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -661,7 +661,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -672,7 +672,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -683,7 +683,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -694,7 +694,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -705,7 +705,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -716,7 +716,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -727,7 +727,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -738,7 +738,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -749,7 +749,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -760,7 +760,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -771,7 +771,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -782,7 +782,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -793,7 +793,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -804,7 +804,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -815,7 +815,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -826,7 +826,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -837,7 +837,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -848,7 +848,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -859,7 +859,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -870,7 +870,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -881,7 +881,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -892,7 +892,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -903,7 +903,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -914,7 +914,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -925,7 +925,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -936,7 +936,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -947,7 +947,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -958,7 +958,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -969,7 +969,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -980,7 +980,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -991,7 +991,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1002,7 +1002,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1013,7 +1013,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1024,7 +1024,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1035,7 +1035,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1046,7 +1046,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1057,7 +1057,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1068,7 +1068,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1079,7 +1079,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1090,7 +1090,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,
@@ -1101,7 +1101,7 @@ export const notificationsMock: {
     },
     {
       title: 'Test bot - Warning',
-      text: 'Failed to place order, cause: Grid - Insufficient balance',
+      text: 'Failed to place order, cause: Grid 1.0 - Insufficient balance',
       type: 'Warning',
       userId: 4,
       botId: 20,

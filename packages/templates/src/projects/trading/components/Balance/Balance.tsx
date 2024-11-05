@@ -14,6 +14,12 @@ export const Balance = ({ balance }: BalanceProps) => {
       css={{
         background: 'white',
         gridArea: 'balance',
+        '& .pie-chart-wrapper p': {
+          fontSize: 12,
+        },
+        '& ul li h6': {
+          whiteSpace: 'nowrap',
+        },
         '& > div:last-of-type': {
           height: '100%',
           justifyContent: 'center',

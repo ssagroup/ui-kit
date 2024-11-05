@@ -1,5 +1,4 @@
 import {
-  PERIOD_ALL_TIME,
   PERIOD_CURRENT,
   PERIOD_DAY,
   PERIOD_MONTH,
@@ -41,10 +40,6 @@ export const BotPeriodFilter = ({
     {
       id: PERIOD_YEAR,
       text: t('pages.dashboard.periodFilter.1y'),
-    },
-    {
-      id: PERIOD_ALL_TIME,
-      text: t('pages.dashboard.periodFilter.all'),
     },
   ];
 
