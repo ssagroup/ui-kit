@@ -1,4 +1,4 @@
-import { PieChartProps } from '@components/PieChart';
+import { PieChartProps } from '@components/Charts/PieChart';
 import { WidgetCard } from './WidgetCard';
 
 export const WithWidgetCard = ({

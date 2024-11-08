@@ -8,7 +8,7 @@ import {
 import { SegmentedPieChart } from '../SegmentedPieChart';
 
 export default {
-  title: 'Widgets/SegmentedPieChart',
+  title: 'Charts/SegmentedPieChart',
   component: SegmentedPieChart,
 } as Meta<typeof SegmentedPieChart>;
 
