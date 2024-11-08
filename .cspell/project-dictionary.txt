@@ -64,6 +64,7 @@ HTMLSVGElement
 IBMP
 ipsum
 jsdom
+jsnext
 ligula
 linkstabbar
 lobortis

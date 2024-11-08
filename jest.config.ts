@@ -5,12 +5,21 @@ import type { JestConfigWithTsJest } from 'ts-jest';
 // corresponding package.json).
 
 const transformIgnorePatterns = [
-  'node_modules/',
-  'node_modules/.pnpm/(?!(d3-color)/)',
-  'node_modules/.pnpm/(?!(d3-interpolate)/)',
-  'node_modules/.pnpm/(?!(d3-scale)/)',
-  'node_modules/.pnpm/(?!(d3-scale-chromatic)/)',
-  'node_modules/.pnpm/(?!(d3-shape)/)',
+  // 'node_modules/',
+  // Ignore d3- and @nivo packages specifically from .pnpm directory
+  // '<rootDir>/node_modules/.pnpm/(?!(d3-|@nivo).*)',
+  '<rootDir>/node_modules/.pnpm/*',
+  'node_modules/.pnpm/@nivo+core@',
+  'node_modules/.pnpm/@nivo+pie@',
+  // 'node_modules/.pnpm/(?!(d3-color)@)',
+  // 'node_modules/.pnpm/(?!(d3-interpolate)@)',
+  // 'node_modules/.pnpm/(?!(d3-scale)@)',
+  // 'node_modules/.pnpm/(?!(d3-scale-chromatic)@)',
+  // 'node_modules/.pnpm/(?!(d3-shape)@)',
+  // 'node_modules/.pnpm/(?!(@nivo)+)',
+  // 'node_modules/.pnpm/(?!(@nivo))',
+  // '<rootDir>/node_modules/.pnpm/(?!(package-a|@scope\\+pkg-b)@)',
+  // 'node_modules/(?!(@nivo/))',
 ];
 
 const config: JestConfigWithTsJest = {
@@ -36,6 +45,7 @@ const config: JestConfigWithTsJest = {
     '!./packages/**/lostpixel.config.ts',
   ],
   verbose: true,
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   globalSetup: '<rootDir>/global-setup.ts',
   projects: [
     {
@@ -131,7 +141,11 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/widgets/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns,
+      transformIgnorePatterns: [
+        ...transformIgnorePatterns,
+        'node_modules/@ssa-ui-kit/*',
+        'node_modules/(?!(@ssa-ui-kit/))',
+      ],
     },
     {
       preset: 'ts-jest',

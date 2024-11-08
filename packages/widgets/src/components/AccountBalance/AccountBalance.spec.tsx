@@ -3,6 +3,13 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { data } from './stories/fixtures';
 import { AccountBalance } from './index';
 
+const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
+
+jest.mock('@nivo/pie', () => ({
+  PieCustomLayerProps: {},
+  ResponsivePie: ResponsivePieMock,
+}));
+
 describe('AccountBalance', () => {
   it('Renders', () => {
     const { getByRole, getByText, container } = render(

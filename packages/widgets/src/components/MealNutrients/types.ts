@@ -1,6 +1,14 @@
 import { Point, LineSvgProps, CustomLayerProps } from '@nivo/line';
-import { ScaleTimeSpec } from '@nivo/scales';
 import { MainColors, DropdownOptionProps } from '@ssa-ui-kit/core';
+
+type TIME_PRECISION =
+  | 'millisecond'
+  | 'second'
+  | 'minute'
+  | 'hour'
+  | 'day'
+  | 'month'
+  | 'year';
 
 export interface OptionType extends DropdownOptionProps {
   value: 'd' | 'w' | 'm';
@@ -25,7 +33,7 @@ export interface MealNutrientsTooltipProps {
 export type UseChartConfig = (
   ref: React.RefObject<HTMLElement>,
   data: LineSvgProps['data'],
-  precision: ScaleTimeSpec['precision'] | 'week',
+  precision: TIME_PRECISION | 'week',
 ) => Pick<LineSvgProps, 'xScale' | 'axisBottom'>;
 
 // ScaleSpec is not exported from @nivo/line

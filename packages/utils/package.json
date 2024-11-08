@@ -36,5 +36,10 @@
     ">0.1%",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "dependencies": {
+    "@nivo/core": "^0.87.0",
+    "@nivo/line": "^0.87.0",
+    "@nivo/pie": "^0.87.0"
+  }
 }

@@ -19,11 +19,14 @@
     "directory": "packages/hooks"
   },
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc --build --force && resolve-tspaths",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },
   "dependencies": {
+    "@nivo/core": "^0.87.0",
+    "@nivo/line": "^0.87.0",
+    "@nivo/pie": "^0.87.0",
     "@ssa-ui-kit/utils": "workspace:^"
   },
   "devDependencies": {
