@@ -9,8 +9,12 @@ export const InputSuccess = styled.div`
     `linear-gradient(68.38deg, ${theme.colors.greenLighter}, ${theme.colors.green});`};
 `;
 
-export const InputStatusSuccess = () => (
+export const InputStatusSuccess = ({
+  successTooltip,
+}: {
+  successTooltip?: string;
+}) => (
   <InputSuccess css={inputStatus}>
-    <Icon name="check" size={10} color="#fff" />
+    <Icon name="check" size={10} color="#fff" tooltip={successTooltip} />
   </InputSuccess>
 );

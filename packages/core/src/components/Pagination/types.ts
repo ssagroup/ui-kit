@@ -11,6 +11,7 @@ export interface PaginationProps extends CommonProps {
   isRowPerPageVisible?: boolean;
   rowPerPageProps?: RowsPerPageDropdownProps;
   manualPageNumberProps?: InputProps;
+  errorTooltip?: string;
 }
 
 export interface PaginationButtonsProps {

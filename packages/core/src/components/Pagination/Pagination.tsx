@@ -16,6 +16,7 @@ const Pagination = ({
   ariaLabel,
   isDisabled,
   pageNumberPlaceholder = 'Page №',
+  errorTooltip = 'The value is out of range',
   isPageSettingVisible = false,
   isRowPerPageVisible = false,
   rowPerPageProps,
@@ -51,6 +52,7 @@ const Pagination = ({
             onKeyUp={handlePageNumberChange}
             status={inputStatus}
             type="number"
+            errorTooltip={errorTooltip}
             inputProps={{
               autoComplete: 'off',
             }}

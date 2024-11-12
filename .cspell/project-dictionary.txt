@@ -6,6 +6,7 @@ auctor
 autodocs
 automargin
 autosizable
+autosize
 barcornerradius
 bargroupgap
 barmode
@@ -37,6 +38,7 @@ dolor
 domcontentloaded
 dompurify
 Donec
+dtick
 Dto
 dui
 ecdeldbxe
@@ -63,7 +65,9 @@ hovertemplate
 HTMLSVGElement
 IBMP
 ipsum
+itemclick
 jsdom
+legendgroup
 ligula
 linkstabbar
 lobortis

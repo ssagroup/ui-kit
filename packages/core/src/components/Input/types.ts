@@ -22,6 +22,8 @@ export interface InputProps
   endElement?: React.ReactElement;
   css?: Interpolation<Theme>;
   inputProps?: ExtendedInputProps;
+  errorTooltip?: string;
+  successTooltip?: string;
   onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
   onStartElementClick?: (event: BaseSyntheticEvent) => void;
   onEndElementClick?: (event: BaseSyntheticEvent) => void;
