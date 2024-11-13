@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { BarLineComplexChart } from './BarLineComplexChart';
-import { mockConfig, mockData } from './__mock__/data';
-import { BarLineComplexChartProps } from './types';
 import { TranslationProvider } from '@contexts';
+import { BarLineComplexChart } from './BarLineComplexChart';
+import { mockData, mockDataWithDifferentLineType } from './__mock__/data';
+import { BarLineComplexChartProps } from './types';
 
 export default {
   title: 'Charts/BarLineComplexChart',
@@ -22,7 +22,6 @@ export const Default: Args = {
   render: ({ ...args }) => (
     <BarLineComplexChart
       data={mockData}
-      chartConfig={mockConfig}
       width="670px"
       height="220px"
       cardProps={{
@@ -31,4 +30,18 @@ export const Default: Args = {
       {...args}
     />
   ),
+};
+
+export const WithSpline: Args = {
+  ...Default,
+  args: {
+    lineShape: 'spline',
+  },
+};
+
+export const Custom: Args = {
+  ...Default,
+  args: {
+    data: mockDataWithDifferentLineType,
+  },
 };

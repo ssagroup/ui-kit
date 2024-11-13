@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { StoryComponent } from './stories/StoryComponent';
 
-describe('ExchangeAccountKeys', () => {
+describe('AccountKeys', () => {
   it('Renders with title', () => {
     const { getByText } = render(<StoryComponent onDelete={jest.fn()} />);
 

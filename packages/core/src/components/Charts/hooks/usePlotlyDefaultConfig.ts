@@ -14,13 +14,6 @@ export const usePlotlyDefaultConfig: UsePlotlyDefaultConfig = () => {
 
   return {
     layout: {
-      margin: {
-        b: 0,
-        l: 0,
-        r: 30,
-        t: 20,
-        pad: 10,
-      },
       font: {
         family: "'Manrope',sans-serif",
         size: 10,
@@ -31,6 +24,7 @@ export const usePlotlyDefaultConfig: UsePlotlyDefaultConfig = () => {
     config: {
       responsive: true,
       autosizable: true,
+      displaylogo: false,
     } as PlotParams['config'],
     emptyBar: {
       type: 'bar',

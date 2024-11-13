@@ -1,11 +1,32 @@
 import { pathOr } from '@ssa-ui-kit/utils';
+import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { colorPalette } from './colorPalette';
+import { useEffect } from 'react';
 
 interface UseChartInfo {
-  ({ data }: { data: Plotly.Data[] }): { transformedChartData: Plotly.Data[] };
+  ({
+    data,
+    lineShape,
+  }: {
+    data: Plotly.Data[];
+    lineShape?: Plotly.ScatterLine['shape'];
+  }): {
+    transformedChartData: Plotly.Data[];
+    handleFilterClick: (gd: Plotly.PlotlyHTMLElement, ev: MouseEvent) => void;
+  };
 }
 
-export const useChartInfo: UseChartInfo = ({ data }) => {
+export const useChartInfo: UseChartInfo = ({ data, lineShape = 'linear' }) => {
+  const { setIsOpen, isOpen, context } = useTooltipContext();
+
+  // TODO: position sometimes is changed... Resolve it!
+  useEffect(() => {
+    if (!isOpen) {
+      context.refs.setReference(null);
+      context.refs.setFloating(null);
+    }
+  }, [isOpen]);
+
   const transformedChartData = data.map((item, index) => {
     const markerColor = pathOr<typeof item, string[]>(colorPalette[index], [
       'marker',
@@ -26,14 +47,25 @@ export const useChartInfo: UseChartInfo = ({ data }) => {
     if (item.type === 'scatter') {
       extraParams.mode = 'lines';
       extraParams.line = {
-        shape: 'spline',
+        shape: lineShape,
       };
     }
     return {
-      ...item,
       ...extraParams,
+      ...item,
     };
   }) as unknown as Plotly.Data[];
 
-  return { transformedChartData };
+  const handleFilterClick: Plotly.ButtonClickEvent = (
+    gd: Plotly.PlotlyHTMLElement,
+  ) => {
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      const filteringIcon = gd.querySelector('[data-attr=filtering-icon]');
+      context.refs.setReference(filteringIcon as HTMLElement);
+      context.refs.setFloating(filteringIcon as HTMLElement);
+    }
+  };
+
+  return { transformedChartData, handleFilterClick };
 };

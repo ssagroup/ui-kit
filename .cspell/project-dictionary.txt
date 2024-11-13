@@ -33,6 +33,7 @@ csstype
 cubehelix
 customdata
 disbalance
+displaylogo
 Dissoc
 dolor
 domcontentloaded
@@ -68,6 +69,7 @@ ipsum
 itemclick
 jsdom
 legendgroup
+legendgrouptitle
 ligula
 linkstabbar
 lobortis

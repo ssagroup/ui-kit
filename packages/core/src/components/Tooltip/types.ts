@@ -3,6 +3,7 @@ import {
   FloatingArrow,
   Placement,
   UseFloatingReturn,
+  OffsetOptions,
 } from '@floating-ui/react';
 import { PointTooltipProps, Point } from '@nivo/line';
 import { MapIconsType } from '@components/Icon/types';
@@ -17,7 +18,7 @@ export interface TooltipProps extends CommonProps {
   placement?: Placement;
   enableHover?: boolean;
   enableClick?: boolean;
-  offsetPx?: number;
+  offsetOptions?: OffsetOptions;
   // TooltipContent-related props
   size?: TooltipSize;
   hasArrow?: boolean;
@@ -39,14 +40,16 @@ export type UseTooltip = (props: UseTooltipArgs) => Pick<
 > & {
   arrowRef: MutableRefObject<null>;
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 } & UseFloatingReturn &
   UseInteractions;
 
 export type TooltipContextType =
   | (UseFloatingReturn &
       ReturnType<typeof useInteractions> & {
-        isOpen: boolean;
         arrowRef: React.Ref<SVGSVGElement>;
+        isOpen: boolean;
+        setIsOpen: (isOpen: boolean) => void;
       } & Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
   | null;
 
