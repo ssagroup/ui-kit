@@ -15,7 +15,7 @@ const TradingInfoCardTooltip = ({
   const theme = useTheme();
   return (
     <Tooltip
-      offsetPx={0}
+      offsetOptions={0}
       enableHover={true}
       enableClick={false}
       arrowProps={{
