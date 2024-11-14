@@ -18,6 +18,7 @@ const Pagination = ({
   pageNumberPlaceholder = 'Page №',
   errorTooltip = 'The value is out of range',
   isPageSettingVisible = false,
+  isPageFromCountVisible = true,
   isRowPerPageVisible = false,
   rowPerPageProps,
   manualPageNumberProps,
@@ -45,7 +46,7 @@ const Pagination = ({
       aria-label={ariaLabel || 'Pagination'}>
       {isRowPerPageVisible && <RowsPerPageDropdown {...rowPerPageProps} />}
       {isPageSettingVisible && (
-        <Wrapper css={{ width: 'auto', marginRight: 32 }}>
+        <Wrapper css={{ width: 'auto', marginRight: 5 }}>
           <S.PageNumberInput
             name="page-number"
             placeholder={pageNumberPlaceholder}
@@ -58,9 +59,11 @@ const Pagination = ({
             }}
             {...manualPageNumberProps}
           />
-          <span css={{ textWrap: 'nowrap', fontSize: 14 }}>
-            {page || 0} / {pagesCount}
-          </span>
+          {isPageFromCountVisible && (
+            <span css={{ textWrap: 'nowrap', fontSize: 14, marginLeft: 16 }}>
+              {page || 0} / {pagesCount}
+            </span>
+          )}
         </Wrapper>
       )}
       <Wrapper>

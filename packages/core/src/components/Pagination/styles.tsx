@@ -104,8 +104,7 @@ export const PaginationNav = styled.nav`
 `;
 
 export const PageNumberInput = styled(Input)`
-  width: 80px;
-  margin-right: 16px;
+  width: 65px;
   -moz-appearance: textfield;
   appearance: textfield;
   &::-webkit-outer-spin-button,

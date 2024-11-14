@@ -40,7 +40,7 @@ export const RowsPerPageDropdown = ({
         onChange={onChange}
         css={{
           marginLeft: 10,
-          marginRight: 37,
+          marginRight: 15,
           background: 'none',
           color: '#070821',
           gap: 5,

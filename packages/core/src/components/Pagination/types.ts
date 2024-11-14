@@ -9,6 +9,7 @@ export interface PaginationProps extends CommonProps {
   pageNumberPlaceholder?: string;
   isPageSettingVisible?: boolean;
   isRowPerPageVisible?: boolean;
+  isPageFromCountVisible?: boolean;
   rowPerPageProps?: RowsPerPageDropdownProps;
   manualPageNumberProps?: InputProps;
   errorTooltip?: string;
