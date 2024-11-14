@@ -1,64 +1,74 @@
+import { ChartItem } from '../types';
+
 const axisXTimestamps = [
   1388572800000, 1391260800000, 1393670400000, 1396348800000, 1398940800000,
   1401619200000, 1404211200000, 1406899200000, 1409577600000, 1412179200000,
   1414857600000, 1417545600000,
 ];
 
-export const mockData: Plotly.Data[] = [
+export const mockData: ChartItem[] = [
   {
     x: axisXTimestamps,
     y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24],
     name: 'Department 1',
     type: 'bar',
+    selected: false,
   },
   {
     x: axisXTimestamps,
     y: [7, 5, 12, 11, 5, 6, 19, 11, 9, 10, 17, 18],
     name: 'Department 2',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
     y: [15, 18, 7, 20, 16, 12, 7, 18, 6, 14, 12, 15],
     name: 'Department 3',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
     y: [14, 14, 19, 13, 9, 14, 23, 20, 24, 21, 8, 19],
     name: 'Department 4',
     type: 'bar',
+    selected: false,
   },
   {
     x: axisXTimestamps,
     y: [3, 8, 9, 6, 4, 11, 10, 8, 16, 7, 11, 9],
     name: 'Department 5',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
-    y: [20, 25, 21, 15, 31, 10, 30, 15, 10, 28, 30, 20],
-    name: 'Department 6',
+    y: [3, 5, 7, 6, 4, 6, 7, 8, 6, 7, 8, 9],
+    name: 'Min',
     type: 'scatter',
+    selected: true,
   },
   {
     x: axisXTimestamps,
-    y: [15, 25, 28, 27, 15, 25, 19, 30, 10, 13, 19, 22],
-    name: 'Department 7',
+    y: [9.8, 11.4, 11.0, 13.0, 10.8, 12.2, 16.8, 15.8, 13.6, 13.6, 15.6, 16.2],
+    name: 'Average',
     type: 'scatter',
+    selected: true,
   },
   {
     x: axisXTimestamps,
-    y: [17, 21, 25, 19, 21, 28, 21, 19, 12, 19, 25, 32],
-    name: 'Department 8',
+    y: [15, 18, 19, 20, 20, 18, 25, 22, 24, 21, 30, 24],
+    name: 'Max',
     type: 'scatter',
     line: {
       shape: 'linear',
     },
+    selected: false,
   },
 ];
 
-export const mockDataWithDifferentLineType: Plotly.Data[] = [
+export const mockDataWithDifferentLineType: ChartItem[] = [
   {
     x: axisXTimestamps,
     y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24],
@@ -70,56 +80,62 @@ export const mockDataWithDifferentLineType: Plotly.Data[] = [
         color: '#ED995D',
       },
     },
+    selected: true,
   },
   {
     x: axisXTimestamps,
     y: [7, 5, 12, 11, 5, 6, 19, 11, 9, 10, 17, 18],
     name: 'Department 2',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
     y: [15, 18, 7, 20, 16, 12, 7, 18, 6, 14, 12, 15],
     name: 'Department 3',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
     y: [14, 14, 19, 13, 9, 14, 23, 20, 24, 21, 8, 19],
     name: 'Department 4',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
     y: [3, 8, 9, 6, 4, 11, 10, 8, 16, 7, 11, 9],
     name: 'Department 5',
     type: 'bar',
+    selected: true,
   },
   {
     x: axisXTimestamps,
-    y: [20, 25, 21, 15, 31, 10, 30, 15, 10, 28, 30, 20],
-    name: 'Department 6',
+    y: [3, 5, 7, 6, 4, 6, 7, 8, 6, 7, 8, 9],
+    name: 'Min',
     type: 'scatter',
     line: {
       shape: 'linear',
     },
+    selected: true,
   },
   {
     x: axisXTimestamps,
-    y: [15, 25, 28, 27, 15, 25, 19, 30, 10, 13, 19, 22],
-    name: 'Department 7',
+    y: [9.8, 11.4, 11.0, 13.0, 10.8, 12.2, 16.8, 15.8, 13.6, 13.6, 15.6, 16.2],
+    name: 'Average',
     type: 'scatter',
     line: {
       shape: 'spline',
+      dash: 'dot',
     },
+    selected: true,
   },
   {
     x: axisXTimestamps,
-    y: [17, 21, 25, 19, 21, 28, 21, 19, 12, 19, 25, 32],
-    name: 'Department 8',
+    y: [15, 18, 19, 20, 20, 18, 25, 22, 24, 21, 30, 24],
+    name: 'Max',
     type: 'scatter',
-    line: {
-      dash: 'dot',
-    },
+    selected: true,
   },
 ];

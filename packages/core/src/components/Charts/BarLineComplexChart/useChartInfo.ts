@@ -1,31 +1,28 @@
+import { MutableRefObject, useEffect, useRef } from 'react';
 import { pathOr } from '@ssa-ui-kit/utils';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { colorPalette } from './colorPalette';
-import { useEffect } from 'react';
+import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 
 interface UseChartInfo {
-  ({
-    data,
-    lineShape,
-  }: {
-    data: Plotly.Data[];
-    lineShape?: Plotly.ScatterLine['shape'];
-  }): {
+  (): {
     transformedChartData: Plotly.Data[];
+    tooltipContentRef: MutableRefObject<HTMLDivElement | null>;
     handleFilterClick: (gd: Plotly.PlotlyHTMLElement, ev: MouseEvent) => void;
   };
 }
 
-export const useChartInfo: UseChartInfo = ({ data, lineShape = 'linear' }) => {
+export const useChartInfo: UseChartInfo = () => {
   const { setIsOpen, isOpen, context } = useTooltipContext();
+  const { data, lineShape } = useBarLineComplexChartContext();
+  const tooltipContentRef = useRef<HTMLDivElement | null>(null);
 
-  // TODO: position sometimes is changed... Resolve it!
   useEffect(() => {
-    if (!isOpen) {
+    return () => {
       context.refs.setReference(null);
       context.refs.setFloating(null);
-    }
-  }, [isOpen]);
+    };
+  }, []);
 
   const transformedChartData = data.map((item, index) => {
     const markerColor = pathOr<typeof item, string[]>(colorPalette[index], [
@@ -63,9 +60,9 @@ export const useChartInfo: UseChartInfo = ({ data, lineShape = 'linear' }) => {
     if (!isOpen) {
       const filteringIcon = gd.querySelector('[data-attr=filtering-icon]');
       context.refs.setReference(filteringIcon as HTMLElement);
-      context.refs.setFloating(filteringIcon as HTMLElement);
+      context.refs.setFloating(tooltipContentRef.current as HTMLElement);
     }
   };
 
-  return { transformedChartData, handleFilterClick };
+  return { transformedChartData, tooltipContentRef, handleFilterClick };
 };
