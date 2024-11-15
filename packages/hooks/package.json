@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/hooks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
@@ -24,7 +24,8 @@
     "ts-check": "tsc -p ./tsconfig.json"
   },
   "dependencies": {
-    "@ssa-ui-kit/utils": "workspace:^"
+    "@ssa-ui-kit/utils": "workspace:^",
+    "usehooks-ts": "3.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
