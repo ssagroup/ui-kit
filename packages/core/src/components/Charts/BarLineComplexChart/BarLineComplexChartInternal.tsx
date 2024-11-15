@@ -1,45 +1,62 @@
 import Plot from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
-import { WithWidgetCard } from '@components/WidgetCard';
 import { BarLineComplexChartProps } from './types';
-import { PieChartHeader } from '../PieChart/PieChartHeader';
+import { useDeviceType } from '@ssa-ui-kit/hooks';
+import Wrapper from '@components/Wrapper';
 import { usePlotlyDefaultConfig } from '../hooks';
 import { useChartInfo } from './useChartInfo';
 import { BarLineComplexChartTooltip } from './BarLineComplexChartTooltip';
 
 export const BarLineComplexChartInternal = ({
-  features = ['header'],
-  cardProps,
   width = '670px',
   height = '220px',
   ...props
 }: Omit<
   BarLineComplexChartProps,
-  'data' | 'lineShape' | 'maxVisibleBars' | 'maxVisibleLines'
+  | 'data'
+  | 'lineShape'
+  | 'maxVisibleBars'
+  | 'maxVisibleLines'
+  | 'features'
+  | 'cardProps'
 >) => {
   const theme = useTheme();
   const plotlyDefaultLayoutConfig = usePlotlyDefaultConfig();
   const { transformedChartData, tooltipContentRef } = useChartInfo();
+  const deviceType = useDeviceType();
   return (
-    <WithWidgetCard
-      features={features}
-      cardProps={{
-        headerContent: <PieChartHeader features={features} />,
+    <Wrapper
+      css={{
         width,
         height,
-        ...cardProps,
+        borderRadius: 20,
+        overflow: 'hidden',
+        boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
       }}>
       <Plot
         divId={'bar-line-complex-chart-graph'}
-        css={{ width, maxWidth: '100%', height: `calc(${height} - 50px)` }}
+        css={{
+          width,
+          maxWidth: '100%',
+          height,
+        }}
         data={transformedChartData}
         layout={{
           margin: {
             b: 0,
-            l: 0,
-            r: 30,
-            t: 20,
+            l: 10,
+            r: 40,
+            t: 30,
             pad: 10,
+          },
+          title: {
+            text: 'Bar & Line Complex Chart',
+            x: 0.02,
+            y: 0.98,
+          },
+          titlefont: {
+            size: deviceType === 'mobile' ? 16 : 20,
+            weight: 800,
           },
           barmode: 'group',
           autosize: false,
@@ -113,6 +130,6 @@ export const BarLineComplexChartInternal = ({
         {...props}
       />
       <BarLineComplexChartTooltip ref={tooltipContentRef} />
-    </WithWidgetCard>
+    </Wrapper>
   );
 };

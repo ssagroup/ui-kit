@@ -120,6 +120,7 @@ testid
 Threashold
 tickfont
 tickformat
+titlefont
 toastify
 tomdata
 traceorder
