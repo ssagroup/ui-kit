@@ -15,3 +15,6 @@ global.render = customRender;
 
 expect.addSnapshotSerializer(createSerializer());
 expect.extend(matchers);
+
+window.URL.createObjectURL = jest.fn();
+window.HTMLCanvasElement.prototype.getContext = jest.fn();
