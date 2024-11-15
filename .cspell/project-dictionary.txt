@@ -6,6 +6,7 @@ auctor
 autodocs
 automargin
 autosizable
+autosize
 barcornerradius
 bargroupgap
 barmode
@@ -32,11 +33,13 @@ csstype
 cubehelix
 customdata
 disbalance
+displaylogo
 Dissoc
 dolor
 domcontentloaded
 dompurify
 Donec
+dtick
 Dto
 dui
 ecdeldbxe
@@ -63,7 +66,10 @@ hovertemplate
 HTMLSVGElement
 IBMP
 ipsum
+itemclick
 jsdom
+legendgroup
+legendgrouptitle
 ligula
 linkstabbar
 lobortis

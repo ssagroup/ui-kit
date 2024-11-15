@@ -8,17 +8,17 @@ import {
   Icon,
   Typography,
 } from '@ssa-ui-kit/core';
-import { ExchangeAccountKeysProps } from './types';
+import { AccountKeysProps } from './types';
 import * as S from './styles';
 
-export const ExchangeAccountKeys = ({
+export const AccountKeys = ({
   title,
   apiKey,
   secretKey,
   onDelete,
   onVisibilityChange,
   isDisabled,
-}: ExchangeAccountKeysProps) => {
+}: AccountKeysProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const theme = useTheme();
   const placeholder = <span>******</span>;

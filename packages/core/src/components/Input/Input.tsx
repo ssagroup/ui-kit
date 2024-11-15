@@ -27,6 +27,8 @@ const InputInner = (
     className,
     wrapperClassName,
     inputProps = {},
+    errorTooltip,
+    successTooltip,
     register,
     onKeyUp,
   }: InputProps,
@@ -63,8 +65,12 @@ const InputInner = (
         ref={useMergeRefs([registerResult?.ref, inputRef])}
       />
 
-      {status === 'error' && showStatusIcon() ? <InputStatusError /> : null}
-      {status === 'success' && showStatusIcon() ? <InputStatusSuccess /> : null}
+      {status === 'error' && showStatusIcon() ? (
+        <InputStatusError errorTooltip={errorTooltip} />
+      ) : null}
+      {status === 'success' && showStatusIcon() ? (
+        <InputStatusSuccess successTooltip={successTooltip} />
+      ) : null}
 
       {endElement ? <div css={S.endElement}>{endElement}</div> : null}
     </InputGroup>

@@ -34,7 +34,7 @@ export const LongText = ({
       enableClick={false}
       enableHover
       size="medium"
-      offsetPx={0}
+      offsetOptions={0}
       placement={'bottom-start'}
       hasArrow={false}>
       <TooltipTrigger>

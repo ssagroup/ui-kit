@@ -1,6 +1,6 @@
 import { SerializedStyles } from '@emotion/react';
 import { ResponsivePie, MayHaveLabel } from '@nivo/pie';
-import { CommonProps, WidgetCardProps } from '../..';
+import { CommonProps, WidgetCardProps } from '../../..';
 
 export type PieChartFeatures =
   | 'header'

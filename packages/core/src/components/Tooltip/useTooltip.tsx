@@ -18,7 +18,7 @@ export const useTooltip: UseTooltip = ({
   placement,
   enableClick = true,
   enableHover = false,
-  offsetPx = 12,
+  offsetOptions = 12,
   size = 'small',
   hasArrow = true,
   arrowProps = {},
@@ -32,7 +32,7 @@ export const useTooltip: UseTooltip = ({
     onOpenChange: setIsOpen,
     placement,
     middleware: [
-      offset(offsetPx),
+      offset(offsetOptions),
       flip(),
       shift(),
       arrow({
@@ -54,6 +54,7 @@ export const useTooltip: UseTooltip = ({
   return useMemo(
     () => ({
       isOpen,
+      setIsOpen,
       arrowRef,
       size,
       hasArrow,
@@ -63,6 +64,7 @@ export const useTooltip: UseTooltip = ({
     }),
     [
       isOpen,
+      setIsOpen,
       arrowRef,
       size,
       hasArrow,

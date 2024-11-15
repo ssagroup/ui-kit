@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExchangeAccountKeys } from '../ExchangeAccountKeys';
+import { AccountKeys } from '../AccountKeys';
 import { getMockData } from '../helpers';
 
 interface onDelete {
@@ -21,7 +21,7 @@ export const StoryComponent = ({ onDelete }: onDelete) => {
   };
 
   return (
-    <ExchangeAccountKeys
+    <AccountKeys
       title="Account Name"
       apiKey="123456789012345678901234567890"
       secretKey={secretKey}

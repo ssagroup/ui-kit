@@ -7,7 +7,7 @@ import Card from '@components/Card';
 import CardHeader from '@components/CardHeader';
 import Typography from '@components/Typography';
 
-import { PieChart, PieChartLegend } from '@components/PieChart';
+import { PieChart, PieChartLegend } from '@components/Charts/PieChart';
 import { ProgressInfoTotals } from './ProgressInfoTotals';
 
 import {

@@ -13,8 +13,12 @@ export const InputError = styled.div`
   }
 `;
 
-export const InputStatusError = () => (
+export const InputStatusError = ({
+  errorTooltip,
+}: {
+  errorTooltip?: string;
+}) => (
   <InputError css={inputStatus}>
-    <Icon name="union" size={10} color="#fff" />
+    <Icon name="union" size={10} color="#fff" tooltip={errorTooltip} />
   </InputError>
 );

@@ -70,5 +70,17 @@ export const WithManualPageSettingAndPerPage: StoryAnnotations = {
   },
 };
 
+export const WithoutPageFromCount: StoryAnnotations = {
+  args: {
+    pagesCount: 10,
+    isPageSettingVisible: true,
+    isRowPerPageVisible: true,
+    isPageFromCountVisible: false,
+  },
+  parameters: {
+    selectedPage: 1,
+  },
+};
+
 WithManualPageSettingAndPerPage.storyName =
   'With records per page and page number setting';

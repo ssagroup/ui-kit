@@ -1,4 +1,4 @@
-export interface ExchangeAccountKeysProps {
+export interface AccountKeysProps {
   title: string | JSX.Element;
   apiKey: string;
   secretKey: string;

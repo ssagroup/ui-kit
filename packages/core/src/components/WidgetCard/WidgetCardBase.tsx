@@ -3,11 +3,13 @@ import Card from '@components/Card';
 
 export const WidgetCardBase = styled(Card)<{
   isFullscreenMode?: boolean;
+  width?: string;
+  height?: string;
 }>`
   border-radius: 20px;
   padding: 5px 10px;
-  width: 100%;
-  height: 100%;
+  width: ${({ width }) => width ?? '100%'};
+  height: ${({ height }) => height ?? '100%'};
   position: ${({ isFullscreenMode }) =>
     isFullscreenMode ? 'absolute' : 'static'};
   top: ${({ isFullscreenMode }) => isFullscreenMode && 0};
