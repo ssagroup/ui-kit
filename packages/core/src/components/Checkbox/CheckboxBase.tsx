@@ -14,7 +14,7 @@ export const CheckboxBase = styled(Label)<Pick<CheckboxProps, 'color'>>`
     cursor: default;
   }
 
-  div {
+  & > div {
     position: relative;
     height: 20px;
     width: 20px;
