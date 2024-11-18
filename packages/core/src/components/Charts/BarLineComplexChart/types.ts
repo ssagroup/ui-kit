@@ -13,9 +13,20 @@ export interface BarLineComplexChartProps extends Omit<PlotParams, 'layout'> {
   lineShape?: Plotly.ScatterLine['shape'];
   width?: string;
   height?: string;
+  title?: string;
   maxVisibleBars?: number;
   maxVisibleLines?: number;
 }
+
+export type BarLineComplexInternalProps = Omit<
+  BarLineComplexChartProps,
+  | 'data'
+  | 'lineShape'
+  | 'maxVisibleBars'
+  | 'maxVisibleLines'
+  | 'features'
+  | 'title'
+>;
 
 export interface BarLineComplexChartPContextProps {
   data: ChartItem[];

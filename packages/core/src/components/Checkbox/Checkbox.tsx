@@ -71,7 +71,7 @@ const Checkbox = ({
           <Icon name="check" size={12} color={theme.colors.white} />
         ) : null}
       </div>
-      {text ? <span>{text}</span> : null}
+      {['string', 'number'].includes(typeof text) ? <span>{text}</span> : text}
     </CheckboxBase>
   );
 };

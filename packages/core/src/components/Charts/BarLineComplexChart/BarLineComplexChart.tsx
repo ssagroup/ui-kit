@@ -9,6 +9,8 @@ export const BarLineComplexChart = ({
   lineShape = 'linear',
   maxVisibleBars = 5, // need to be implemented
   maxVisibleLines = 3, // need to be implemented
+  title = 'Bar & Line Complex Chart',
+  cardProps,
   ...rest
 }: BarLineComplexChartProps) => {
   const tooltip = useTooltip({});
@@ -19,7 +21,13 @@ export const BarLineComplexChart = ({
       maxVisibleBars={maxVisibleBars}
       maxVisibleLines={maxVisibleLines}>
       <TooltipContext.Provider value={tooltip}>
-        <BarLineComplexChartInternal {...rest} />
+        <BarLineComplexChartInternal
+          {...rest}
+          cardProps={{
+            ...cardProps,
+            title: cardProps?.title || title,
+          }}
+        />
       </TooltipContext.Provider>
     </BarLineComplexChartContextProvider>
   );
