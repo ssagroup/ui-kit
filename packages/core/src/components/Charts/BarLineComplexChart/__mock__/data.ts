@@ -1,4 +1,4 @@
-import { ChartItem } from '../types';
+import { BarLineChartItem } from '../types';
 
 const axisXTimestamps = [
   1388572800000, 1391260800000, 1393670400000, 1396348800000, 1398940800000,
@@ -6,13 +6,18 @@ const axisXTimestamps = [
   1414857600000, 1417545600000, 1420233600000,
 ];
 
-export const mockData: ChartItem[] = [
+// marker => color use for colors customizing
+// TODO: remove marker => color after
+export const mockData: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
     y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24, 27],
     name: 'Department 1',
     type: 'bar',
     selected: false,
+    marker: {
+      color: '#00f',
+    },
   },
   {
     x: axisXTimestamps,
@@ -20,6 +25,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 2',
     type: 'bar',
     selected: true,
+    marker: {
+      color: '#f00',
+    },
   },
   {
     x: axisXTimestamps,
@@ -27,6 +35,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 3',
     type: 'bar',
     selected: true,
+    marker: {
+      color: '#0f0',
+    },
   },
   {
     x: axisXTimestamps,
@@ -34,6 +45,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 4',
     type: 'bar',
     selected: false,
+    marker: {
+      color: '#ff0',
+    },
   },
   {
     x: axisXTimestamps,
@@ -41,6 +55,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 5',
     type: 'bar',
     selected: true,
+    marker: {
+      color: '#f0f',
+    },
   },
   {
     x: axisXTimestamps,
@@ -48,6 +65,9 @@ export const mockData: ChartItem[] = [
     name: 'Min',
     type: 'scatter',
     selected: true,
+    marker: {
+      color: '#0ff',
+    },
   },
   {
     x: axisXTimestamps,
@@ -55,6 +75,9 @@ export const mockData: ChartItem[] = [
     name: 'Average',
     type: 'scatter',
     selected: true,
+    marker: {
+      color: '#ffe',
+    },
   },
   {
     x: axisXTimestamps,
@@ -65,10 +88,13 @@ export const mockData: ChartItem[] = [
       shape: 'linear',
     },
     selected: false,
+    marker: {
+      color: '#aa0',
+    },
   },
 ];
 
-export const mockDataWithDifferentLineType: ChartItem[] = [
+export const mockDataWithDifferentLineType: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
     y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24, 27],
