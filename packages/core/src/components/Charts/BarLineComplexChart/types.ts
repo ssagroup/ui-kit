@@ -1,7 +1,7 @@
 import { PlotParams } from 'react-plotly.js';
 import { PieChartProps } from '../PieChart';
 
-export type ChartItem = Plotly.Data & {
+export type BarLineChartItem = Plotly.Data & {
   selected?: boolean;
 };
 
@@ -9,7 +9,7 @@ export interface BarLineComplexChartProps extends Omit<PlotParams, 'layout'> {
   layout?: PlotParams['layout'];
   cardProps?: PieChartProps['cardProps'];
   features?: Array<'header'>;
-  data: ChartItem[];
+  data: BarLineChartItem[];
   lineShape?: Plotly.ScatterLine['shape'];
   width?: string;
   height?: string;
@@ -29,13 +29,13 @@ export type BarLineComplexInternalProps = Omit<
 >;
 
 export interface BarLineComplexChartPContextProps {
-  data: ChartItem[];
-  filteredData: ChartItem[];
+  data: BarLineChartItem[];
+  filteredData: BarLineChartItem[];
   lineShape?: Plotly.ScatterLine['shape'];
   maxVisibleBars?: number;
   maxVisibleLines?: number;
-  setFilteredData: React.Dispatch<React.SetStateAction<ChartItem[]>>;
-  setData: React.Dispatch<React.SetStateAction<ChartItem[]>>;
+  setFilteredData: React.Dispatch<React.SetStateAction<BarLineChartItem[]>>;
+  setData: React.Dispatch<React.SetStateAction<BarLineChartItem[]>>;
 }
 
 export interface BarLineComplexChartPContextProviderProps

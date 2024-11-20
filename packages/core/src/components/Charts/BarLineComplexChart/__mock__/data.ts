@@ -1,4 +1,4 @@
-import { ChartItem } from '../types';
+import { BarLineChartItem } from '../types';
 
 const axisXTimestamps = [
   1388572800000, 1391260800000, 1393670400000, 1396348800000, 1398940800000,
@@ -6,13 +6,16 @@ const axisXTimestamps = [
   1414857600000, 1417545600000, 1420233600000,
 ];
 
-export const mockData: ChartItem[] = [
+export const mockData: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
     y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24, 27],
     name: 'Department 1',
     type: 'bar',
     selected: false,
+    marker: {
+      color: '#ff7f00',
+    },
   },
   {
     x: axisXTimestamps,
@@ -20,6 +23,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 2',
     type: 'bar',
     selected: true,
+    marker: {
+      color: '#377eb8',
+    },
   },
   {
     x: axisXTimestamps,
@@ -27,6 +33,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 3',
     type: 'bar',
     selected: true,
+    marker: {
+      color: '#4daf4a',
+    },
   },
   {
     x: axisXTimestamps,
@@ -34,6 +43,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 4',
     type: 'bar',
     selected: false,
+    marker: {
+      color: '#984ea3',
+    },
   },
   {
     x: axisXTimestamps,
@@ -41,6 +53,9 @@ export const mockData: ChartItem[] = [
     name: 'Department 5',
     type: 'bar',
     selected: true,
+    marker: {
+      color: '#e41a1c',
+    },
   },
   {
     x: axisXTimestamps,
@@ -48,6 +63,9 @@ export const mockData: ChartItem[] = [
     name: 'Min',
     type: 'scatter',
     selected: true,
+    marker: {
+      color: '#ffff33',
+    },
   },
   {
     x: axisXTimestamps,
@@ -55,6 +73,9 @@ export const mockData: ChartItem[] = [
     name: 'Average',
     type: 'scatter',
     selected: true,
+    marker: {
+      color: '#a65628',
+    },
   },
   {
     x: axisXTimestamps,
@@ -65,10 +86,13 @@ export const mockData: ChartItem[] = [
       shape: 'linear',
     },
     selected: false,
+    marker: {
+      color: '#f781bf',
+    },
   },
 ];
 
-export const mockDataWithDifferentLineType: ChartItem[] = [
+export const mockDataWithDifferentLineType: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
     y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24, 27],

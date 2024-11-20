@@ -8,6 +8,7 @@ import { useChartInfo } from './useChartInfo';
 import { BarLineComplexChartTooltip } from './BarLineComplexChartTooltip';
 import { FONT_FAMILY } from './constants';
 
+// Use ? https://plotly.com/javascript/reference/layout/#layout-colorscale-diverging
 export const BarLineComplexChartInternal = ({
   width = '670px',
   height = '220px',
@@ -67,8 +68,7 @@ export const BarLineComplexChartInternal = ({
               ? title
               : {
                   x: 0,
-                  y:
-                    deviceType === 'mobile' ? 5 : deviceType === 'md' ? 10 : 12,
+                  y: 1,
                   pad: {
                     l:
                       deviceType === 'mobile'
@@ -76,11 +76,17 @@ export const BarLineComplexChartInternal = ({
                         : deviceType === 'md'
                         ? 10
                         : 20,
+                    t:
+                      deviceType === 'mobile'
+                        ? 5
+                        : deviceType === 'md'
+                        ? 10
+                        : 12,
                   },
                   ...title,
                 },
           titlefont: {
-            size: deviceType === 'mobile' ? 16 : 20,
+            size: ['mobile', 'md'].includes(deviceType) ? 16 : 20,
             weight: 700,
             family: FONT_FAMILY,
             ...titlefont,
