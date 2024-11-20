@@ -1,14 +1,20 @@
+import { useEffect, useRef, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
-import { BarLineComplexInternalProps } from './types';
+import { debounce, propOr } from '@ssa-ui-kit/utils';
 import { useDeviceType } from '@ssa-ui-kit/hooks';
 import Wrapper from '@components/Wrapper';
-import { usePlotlyDefaultConfig } from '../hooks';
+import { BarLineComplexInternalProps } from './types';
 import { useChartInfo } from './useChartInfo';
 import { BarLineComplexChartTooltip } from './BarLineComplexChartTooltip';
-import { FONT_FAMILY } from './constants';
+import {
+  FONT_FAMILY,
+  TITLE_FONT_SIZE,
+  TITLE_PADDING_LEFT,
+  TITLE_PADDING_TOP,
+} from './constants';
+import { usePlotlyDefaultConfig } from '../hooks';
 
-// Use ? https://plotly.com/javascript/reference/layout/#layout-colorscale-diverging
 export const BarLineComplexChartInternal = ({
   width = '670px',
   height = '220px',
@@ -18,6 +24,26 @@ export const BarLineComplexChartInternal = ({
   const plotlyDefaultLayoutConfig = usePlotlyDefaultConfig();
   const { transformedChartData, tooltipContentRef } = useChartInfo();
   const deviceType = useDeviceType();
+
+  const [revision, setRevision] = useState(1);
+  const setNewRevision = () => {
+    setRevision((currentValue) => currentValue + 1);
+  };
+  const debounceThrottled = useRef(debounce(setNewRevision, 300));
+  const [debouncedFn, cancel] = debounceThrottled.current;
+
+  const handleDebouncedFn = () => {
+    cancel();
+    debouncedFn();
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleDebouncedFn, false);
+    return () => {
+      window.removeEventListener('resize', handleDebouncedFn, false);
+    };
+  }, []);
+
   const { layout = {} } = props;
   const {
     margin = {},
@@ -52,12 +78,13 @@ export const BarLineComplexChartInternal = ({
           maxWidth: '100%',
           height,
         }}
+        revision={revision}
         data={transformedChartData}
         layout={{
           hovermode: 'x unified',
           margin: {
             b: 0,
-            l: 10,
+            l: propOr(TITLE_PADDING_LEFT.other, deviceType)(TITLE_PADDING_LEFT),
             r: 40,
             t: 30,
             pad: 10,
@@ -70,23 +97,19 @@ export const BarLineComplexChartInternal = ({
                   x: 0,
                   y: 1,
                   pad: {
-                    l:
-                      deviceType === 'mobile'
-                        ? 10
-                        : deviceType === 'md'
-                        ? 10
-                        : 20,
-                    t:
-                      deviceType === 'mobile'
-                        ? 5
-                        : deviceType === 'md'
-                        ? 10
-                        : 12,
+                    l: propOr(
+                      TITLE_PADDING_LEFT.other,
+                      deviceType,
+                    )(TITLE_PADDING_LEFT),
+                    t: propOr(
+                      TITLE_PADDING_TOP.other,
+                      deviceType,
+                    )(TITLE_PADDING_TOP),
                   },
                   ...title,
                 },
           titlefont: {
-            size: ['mobile', 'md'].includes(deviceType) ? 16 : 20,
+            size: propOr(TITLE_FONT_SIZE.other, deviceType)(TITLE_FONT_SIZE),
             weight: 700,
             family: FONT_FAMILY,
             ...titlefont,
