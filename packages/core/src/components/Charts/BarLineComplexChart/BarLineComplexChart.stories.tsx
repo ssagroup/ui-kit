@@ -39,16 +39,9 @@ export const WithSpline: Args = {
   },
 };
 
-export const CustomLineType: Args = {
+export const Custom: Args = {
   ...Default,
   args: {
     data: mockDataWithDifferentLineType,
-  },
-};
-
-export const CustomColors: Args = {
-  ...Default,
-  args: {
-    // use data with marker.color property
   },
 };

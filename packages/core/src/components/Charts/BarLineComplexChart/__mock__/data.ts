@@ -16,7 +16,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'bar',
     selected: false,
     marker: {
-      color: '#00f',
+      color: '#ff7f00',
     },
   },
   {
@@ -26,7 +26,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'bar',
     selected: true,
     marker: {
-      color: '#f00',
+      color: '#377eb8',
     },
   },
   {
@@ -36,7 +36,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'bar',
     selected: true,
     marker: {
-      color: '#0f0',
+      color: '#4daf4a',
     },
   },
   {
@@ -46,7 +46,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'bar',
     selected: false,
     marker: {
-      color: '#ff0',
+      color: '#984ea3',
     },
   },
   {
@@ -56,7 +56,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'bar',
     selected: true,
     marker: {
-      color: '#f0f',
+      color: '#e41a1c',
     },
   },
   {
@@ -66,7 +66,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'scatter',
     selected: true,
     marker: {
-      color: '#0ff',
+      color: '#ffff33',
     },
   },
   {
@@ -76,7 +76,7 @@ export const mockData: BarLineChartItem[] = [
     type: 'scatter',
     selected: true,
     marker: {
-      color: '#ffe',
+      color: '#a65628',
     },
   },
   {
@@ -89,7 +89,7 @@ export const mockData: BarLineChartItem[] = [
     },
     selected: false,
     marker: {
-      color: '#aa0',
+      color: '#f781bf',
     },
   },
 ];
