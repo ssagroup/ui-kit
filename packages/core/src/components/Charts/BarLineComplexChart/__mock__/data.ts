@@ -6,8 +6,6 @@ const axisXTimestamps = [
   1414857600000, 1417545600000, 1420233600000,
 ];
 
-// marker => color use for colors customizing
-// TODO: remove marker => color after
 export const mockData: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
