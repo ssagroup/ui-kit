@@ -154,6 +154,7 @@ export const mockDataWithDifferentLineType: BarLineChartItem[] = [
       dash: 'dot',
     },
     selected: true,
+    showOnHover: false,
   },
   {
     x: axisXTimestamps,
