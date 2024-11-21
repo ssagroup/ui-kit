@@ -3,6 +3,7 @@ import { PieChartProps } from '../PieChart';
 
 export type BarLineChartItem = Plotly.Data & {
   selected?: boolean;
+  showOnHover?: boolean;
 };
 
 export interface BarLineComplexChartProps extends Omit<PlotParams, 'layout'> {

@@ -41,6 +41,10 @@ export const useChartInfo: UseChartInfo = () => {
     if (!('hovertemplate' in item)) {
       extraParams.hovertemplate = `${item.name}: %{y:}` + '<extra></extra>';
     }
+    if (item.showOnHover === false) {
+      extraParams.hoverinfo = 'none';
+      extraParams.hovertemplate = '';
+    }
     if (item.type === 'scatter') {
       extraParams.mode = 'lines';
       extraParams.line = {

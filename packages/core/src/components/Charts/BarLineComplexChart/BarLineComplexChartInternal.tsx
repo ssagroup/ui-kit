@@ -86,7 +86,9 @@ export const BarLineComplexChartInternal = ({
             b: 0,
             l: propOr(TITLE_PADDING_LEFT.other, deviceType)(TITLE_PADDING_LEFT),
             r: 40,
-            t: 30,
+            t:
+              propOr(TITLE_PADDING_TOP.other, deviceType)(TITLE_PADDING_TOP) +
+              25,
             pad: 10,
             ...margin,
           },
