@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TranslationProvider } from '@contexts';
 import { BarLineComplexChart } from './BarLineComplexChart';
-import { mockData, mockDataWithDifferentLineType } from './__mock__/data';
+import {
+  mockData,
+  mockDataWithDifferentLineType,
+  mockWithDimensions,
+} from './__mock__/data';
 import { BarLineComplexChartProps } from './types';
 
 export default {
@@ -43,5 +47,12 @@ export const Custom: Args = {
   ...Default,
   args: {
     data: mockDataWithDifferentLineType,
+  },
+};
+
+export const WithCustomDimension: Args = {
+  ...Default,
+  args: {
+    data: mockWithDimensions,
   },
 };
