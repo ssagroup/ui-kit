@@ -164,3 +164,30 @@ export const mockDataWithDifferentLineType: BarLineChartItem[] = [
     selected: true,
   },
 ];
+
+export const mockWithDimensions: BarLineChartItem[] = [
+  {
+    x: axisXTimestamps,
+    y: [10, 12, 8, 15, 20, 18, 25, 22, 13, 16, 30, 24, 27],
+    name: 'Data 1',
+    type: 'bar',
+    selected: true,
+    valueDimension: '%',
+  },
+  {
+    x: axisXTimestamps,
+    y: [7, 5, 12, 11, 5, 6, 19, 11, 9, 10, 17, 18, 13],
+    name: 'Data 2',
+    type: 'bar',
+    selected: true,
+    valueDimension: '!',
+  },
+  {
+    x: axisXTimestamps,
+    y: [15, 18, 7, 20, 16, 12, 7, 18, 6, 14, 12, 15, 16],
+    name: 'Data 3',
+    type: 'bar',
+    selected: true,
+    valueDimension: '+',
+  },
+];

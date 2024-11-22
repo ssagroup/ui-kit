@@ -29,6 +29,7 @@ export const useChartInfo: UseChartInfo = () => {
       'marker',
       'color',
     ])(item);
+    const { valueDimension = '' } = item;
     const extraParams: Plotly.Data = {
       mode: 'markers',
       marker: {
@@ -39,7 +40,8 @@ export const useChartInfo: UseChartInfo = () => {
       connectgaps: true,
     };
     if (!('hovertemplate' in item)) {
-      extraParams.hovertemplate = `${item.name}: %{y:}` + '<extra></extra>';
+      extraParams.hovertemplate =
+        `${item.name}: %{y:}${valueDimension}` + '<extra></extra>';
     }
     if (item.showOnHover === false) {
       extraParams.hoverinfo = 'none';
