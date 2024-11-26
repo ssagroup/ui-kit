@@ -1,20 +1,13 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { pathOr } from '@ssa-ui-kit/utils';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { colorPalette } from './colorPalette';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
-
-interface UseChartInfo {
-  (): {
-    transformedChartData: Plotly.Data[];
-    tooltipContentRef: MutableRefObject<HTMLDivElement | null>;
-    handleFilterClick: (gd: Plotly.PlotlyHTMLElement, ev: MouseEvent) => void;
-  };
-}
+import { UseChartInfo } from './types';
 
 export const useChartInfo: UseChartInfo = () => {
   const { setIsOpen, isOpen, context } = useTooltipContext();
-  const { data, lineShape } = useBarLineComplexChartContext();
+  const { filteredData, selected, lineShape } = useBarLineComplexChartContext();
   const tooltipContentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -24,7 +17,7 @@ export const useChartInfo: UseChartInfo = () => {
     };
   }, []);
 
-  const transformedChartData = data.map((item, index) => {
+  const transformedChartData = filteredData.map((item, index) => {
     const markerColor = pathOr<typeof item, string[]>(colorPalette[index], [
       'marker',
       'color',
@@ -55,6 +48,7 @@ export const useChartInfo: UseChartInfo = () => {
     }
     return {
       ...extraParams,
+      selected: selected.includes(item.name || ''),
       ...item,
     };
   }) as unknown as Plotly.Data[];
@@ -62,12 +56,12 @@ export const useChartInfo: UseChartInfo = () => {
   const handleFilterClick: Plotly.ButtonClickEvent = (
     gd: Plotly.PlotlyHTMLElement,
   ) => {
-    setIsOpen(!isOpen);
-    if (!isOpen) {
-      const filteringIcon = gd.querySelector('[data-attr=filtering-icon]');
-      context.refs.setReference(filteringIcon as HTMLElement);
-      context.refs.setFloating(tooltipContentRef.current as HTMLElement);
-    }
+    setIsOpen((state) => !state);
+    const filteringIcon = gd.querySelector('[data-attr=filtering-icon]');
+    context.refs.setReference(isOpen ? null : (filteringIcon as HTMLElement));
+    context.refs.setFloating(
+      isOpen ? null : (tooltipContentRef.current as HTMLElement),
+    );
   };
 
   return { transformedChartData, tooltipContentRef, handleFilterClick };

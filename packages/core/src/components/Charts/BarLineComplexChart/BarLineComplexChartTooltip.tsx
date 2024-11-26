@@ -5,13 +5,21 @@ import { TooltipContentProps } from '@components/Tooltip/types';
 import Wrapper from '@components/Wrapper';
 import Checkbox from '@components/Checkbox';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
+import { path } from '@ssa-ui-kit/utils';
 
+// Check the default undefined selected value
 export const BarLineComplexChartTooltip = forwardRef<
   HTMLDivElement,
   Omit<TooltipContentProps, 'children'>
 >(function BarLineComplexChartTooltipContent(props, refProp) {
-  const { data } = useBarLineComplexChartContext();
+  const { data, selected, setSelected } = useBarLineComplexChartContext();
   const { register } = useForm<FieldValues>();
+  const handleChange = (itemName: string) => (isChecked: boolean) => {
+    const newSelected = isChecked
+      ? [...selected, itemName]
+      : selected.filter((item) => item !== itemName);
+    setSelected(newSelected);
+  };
   return (
     <TooltipContent
       ref={refProp}
@@ -22,27 +30,30 @@ export const BarLineComplexChartTooltip = forwardRef<
         alignItems: 'flex-start',
       }}>
       {data.map((item) => {
+        const color = path(['marker', 'color'])(item) as string | undefined;
         const itemOutput = (
           <Fragment key={`${item.name}-output`}>
-            <div css={{ margin: '0 7px' }}>
-              {item.type === 'bar' ? (
-                <div
-                  css={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: 3,
-                    background: '#02499a',
-                  }}></div>
-              ) : (
-                <div
-                  css={{
-                    width: 25,
-                    height: 3,
-                    background: '#F99',
-                    borderRadius: 3,
-                  }}></div>
-              )}
-            </div>
+            {color && (
+              <div css={{ marginRight: 7 }}>
+                {item.type === 'bar' ? (
+                  <div
+                    css={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 3,
+                      background: color,
+                    }}></div>
+                ) : (
+                  <div
+                    css={{
+                      width: 25,
+                      height: 2,
+                      borderRadius: 3,
+                      background: color,
+                    }}></div>
+                )}
+              </div>
+            )}
             {item.name}
           </Fragment>
         );
@@ -54,14 +65,26 @@ export const BarLineComplexChartTooltip = forwardRef<
               register={register}
               name={'filters'}
               text={itemOutput}
-              // onChange={...}
+              onChange={handleChange(item.name || '')}
               ref={undefined}
-              // externalState={...}
+              externalState={item.selected}
               css={{
                 display: 'flex',
                 whiteSpace: 'nowrap',
                 marginBottom: 0,
-                '& input + div': { height: 44, '&:before': { top: 12 } },
+                lineHeight: '20px',
+                fontSize: 9.3,
+                '& input + div': {
+                  width: 13.33,
+                  height: 13.33,
+                  marginRight: 7,
+                  '&:before': { width: 13.33, height: 13.33, borderRadius: 3 },
+                  '& svg': {
+                    width: 9,
+                    height: 9,
+                    marginLeft: 1,
+                  },
+                },
                 '& input:focus + div': { boxShadow: 'none' },
               }}
             />
