@@ -1,18 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
-  BarLineComplexChartPContextProps,
-  BarLineComplexChartPContextProviderProps,
+  BarLineComplexChartContextProps,
+  BarLineComplexChartContextProviderProps,
   BarLineChartItem,
 } from './types';
 
 const BarLineComplexChartContext =
-  createContext<BarLineComplexChartPContextProps>({
+  createContext<BarLineComplexChartContextProps>({
     filteredData: [],
     data: [],
     lineShape: undefined,
     maxVisibleBars: 5,
     maxVisibleLines: 3,
     selected: [],
+    features: [],
     setFilteredData: () => {
       // no-op
     },
@@ -32,8 +33,9 @@ export const BarLineComplexChartContextProvider = ({
   lineShape,
   maxVisibleBars,
   maxVisibleLines,
+  features = [],
   data: initialData = [],
-}: BarLineComplexChartPContextProviderProps) => {
+}: BarLineComplexChartContextProviderProps) => {
   const [data, setData] = useState<BarLineChartItem[]>(initialData);
   const [selected, setSelected] = useState<Array<string | number>>([]);
   const [filteredData, setFilteredData] = useState<BarLineChartItem[]>([]);
@@ -61,6 +63,7 @@ export const BarLineComplexChartContextProvider = ({
         maxVisibleLines,
         filteredData,
         selected,
+        features,
         setData,
         setFilteredData,
         setSelected,

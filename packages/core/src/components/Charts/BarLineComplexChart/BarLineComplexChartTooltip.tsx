@@ -1,17 +1,19 @@
 import { forwardRef, Fragment } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { path } from '@ssa-ui-kit/utils';
 import TooltipContent from '@components/TooltipContent';
 import { TooltipContentProps } from '@components/Tooltip/types';
 import Wrapper from '@components/Wrapper';
 import Checkbox from '@components/Checkbox';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
-import { path } from '@ssa-ui-kit/utils';
 
 // Check the default undefined selected value
 export const BarLineComplexChartTooltip = forwardRef<
   HTMLDivElement,
-  Omit<TooltipContentProps, 'children'>
->(function BarLineComplexChartTooltipContent(props, refProp) {
+  Omit<TooltipContentProps, 'children'> & {
+    onChange?: (itemName: string | number, selected: boolean) => void;
+  }
+>(function BarLineComplexChartTooltipContent({ onChange, ...rest }, refProp) {
   const { data, selected, setSelected } = useBarLineComplexChartContext();
   const { register } = useForm<FieldValues>();
   const handleChange = (itemName: string) => (isChecked: boolean) => {
@@ -19,11 +21,12 @@ export const BarLineComplexChartTooltip = forwardRef<
       ? [...selected, itemName]
       : selected.filter((item) => item !== itemName);
     setSelected(newSelected);
+    onChange?.(itemName, isChecked);
   };
   return (
     <TooltipContent
       ref={refProp}
-      {...props}
+      {...rest}
       css={{
         display: 'flex',
         flexDirection: 'column',

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { TranslationProvider } from '@contexts';
 import { BarLineComplexChart } from './BarLineComplexChart';
 import {
+  mockBigData,
   mockData,
   mockDataWithDifferentLineType,
   mockWithDimensions,
@@ -36,10 +37,11 @@ export const Default: Args = {
   ),
 };
 
-export const WithSpline: Args = {
+export const WithSplineAndFiltering: Args = {
   ...Default,
   args: {
     lineShape: 'spline',
+    features: ['filtering'],
   },
 };
 
@@ -47,6 +49,10 @@ export const Custom: Args = {
   ...Default,
   args: {
     data: mockDataWithDifferentLineType,
+    features: ['filtering'],
+    onChange: (name, isSelected) => {
+      console.log('onChange event', name, isSelected);
+    },
   },
 };
 
@@ -54,5 +60,21 @@ export const WithCustomDimension: Args = {
   ...Default,
   args: {
     data: mockWithDimensions,
+    features: ['filtering'],
+  },
+};
+
+export const WithFullscreen: Args = {
+  ...Default,
+  args: {
+    features: ['filtering', 'fullscreenMode'],
+  },
+};
+
+export const WithLimitation: Args = {
+  ...Default,
+  args: {
+    data: mockBigData,
+    features: ['filtering', 'fullscreenMode'],
   },
 };

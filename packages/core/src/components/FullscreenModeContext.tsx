@@ -4,7 +4,7 @@ export type FullscreenModeContextType = {
   isFullscreenMode: boolean;
   activeId: null | number | string;
   toggleFullscreenMode: () => void;
-  setFullscreenMode: (isFullscreenMode: boolean) => void;
+  setFullscreenMode: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveId: (activeId: null | number | string) => void;
 };
 

@@ -34,7 +34,7 @@ interface MutableRefObject<T> {
   current: T;
 }
 
-export type UseTooltip = (props: UseTooltipArgs) => Pick<
+export type UseTooltip = (props?: UseTooltipArgs) => Pick<
   TooltipProps,
   'size' | 'hasArrow' | 'arrowProps'
 > & {
