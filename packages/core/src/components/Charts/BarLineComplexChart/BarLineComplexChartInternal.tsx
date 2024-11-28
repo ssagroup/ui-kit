@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
-import { debounce, propOr } from '@ssa-ui-kit/utils';
+import { debounce, pathOr, propOr } from '@ssa-ui-kit/utils';
 import { useDeviceType } from '@ssa-ui-kit/hooks';
 import Wrapper from '@components/Wrapper';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { useFullscreenMode } from '@components/FullscreenModeContext';
-import { BarLineComplexInternalProps } from './types';
+import { BarLineChartItem, BarLineComplexInternalProps } from './types';
 import { useChartInfo } from './useChartInfo';
 import { BarLineComplexChartTooltip } from './BarLineComplexChartTooltip';
 import {
@@ -18,9 +18,6 @@ import {
 import { usePlotlyDefaultConfig } from '../hooks';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 
-// TODO: maxVisibleBars
-// TODO: maxVisibleLines
-// Output & select first ... values, others - disable
 export const BarLineComplexChartInternal = ({
   width = '670px',
   height = '220px',
@@ -29,7 +26,7 @@ export const BarLineComplexChartInternal = ({
 }: BarLineComplexInternalProps) => {
   const theme = useTheme();
   const plotlyDefaultLayoutConfig = usePlotlyDefaultConfig();
-  const { features } = useBarLineComplexChartContext();
+  const { features, data } = useBarLineComplexChartContext();
   const { isFullscreenMode } = useFullscreenMode();
   const { transformedChartData, tooltipContentRef, modeBarButtonsByKey } =
     useChartInfo();
@@ -42,6 +39,25 @@ export const BarLineComplexChartInternal = ({
   };
   const debounceThrottled = useRef(debounce(setNewRevision, 300));
   const [debouncedFn, cancel] = debounceThrottled.current;
+  const timestamps = pathOr<BarLineChartItem[], number[]>([], [0, 'x'])(data);
+  const formattedTicks = timestamps.map((timestamp, index) => {
+    const dateTime = new Date(timestamp);
+    const monthYear = dateTime
+      .toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+      })
+      .split(' ');
+    const firstLastDate = monthYear.join(', ');
+    return index === 0 || index === timestamps.length - 1
+      ? firstLastDate
+      : monthYear[0];
+  });
+
+  new Date().toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  });
 
   const extraModeBarButtons: Array<Plotly.ModeBarButtonAny> = [];
   if (features?.includes('filtering')) {
@@ -96,6 +112,12 @@ export const BarLineComplexChartInternal = ({
         borderRadius: 20,
         overflow: 'hidden',
         boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
+        '& .plotly .modebar': {
+          top: 12,
+        },
+        '& .plotly .modebar-btn': {
+          fontSize: isFullscreenMode ? 20 : 16,
+        },
       }}>
       <Plot
         divId={'bar-line-complex-chart-graph'}
@@ -110,7 +132,7 @@ export const BarLineComplexChartInternal = ({
         layout={{
           hovermode: 'x unified',
           margin: {
-            b: 0,
+            b: isFullscreenMode ? 15 : 0,
             l: propOr(TITLE_PADDING_LEFT.other, deviceType)(TITLE_PADDING_LEFT),
             r: 40,
             t:
@@ -138,7 +160,9 @@ export const BarLineComplexChartInternal = ({
                   ...title,
                 },
           titlefont: {
-            size: propOr(TITLE_FONT_SIZE.other, deviceType)(TITLE_FONT_SIZE),
+            size: isFullscreenMode
+              ? 24
+              : propOr(TITLE_FONT_SIZE.other, deviceType)(TITLE_FONT_SIZE),
             weight: 700,
             family: FONT_FAMILY,
             ...titlefont,
@@ -155,6 +179,7 @@ export const BarLineComplexChartInternal = ({
             zeroline: false,
             tickfont: {
               family: FONT_FAMILY,
+              size: isFullscreenMode ? 16 : 12,
             },
             ...yaxis,
           },
@@ -165,6 +190,7 @@ export const BarLineComplexChartInternal = ({
             tickfont: {
               color: theme.colors.greyDarker60,
               family: FONT_FAMILY,
+              size: isFullscreenMode ? 16 : 12,
             },
             zeroline: false,
             ...yaxis2,
@@ -173,11 +199,14 @@ export const BarLineComplexChartInternal = ({
             showgrid: true,
             type: 'date',
             hoverformat: '%B',
-            tickformat: '%b',
+            tickmode: 'array',
+            tickvals: timestamps,
+            ticktext: formattedTicks,
             zeroline: false,
             dtick: 31 * 24 * 60 * 60 * 1000,
             tickfont: {
               family: FONT_FAMILY,
+              size: isFullscreenMode ? 16 : 12,
             },
             ...xaxis,
           },
@@ -188,10 +217,11 @@ export const BarLineComplexChartInternal = ({
             valign: 'bottom',
             itemclick: 'toggle',
             bgcolor: 'rgba(255, 255, 255, 0)',
-            y: -0.22,
+            y: isFullscreenMode ? -0.06 : -0.22,
             x: 0.5,
             font: {
               family: FONT_FAMILY,
+              size: isFullscreenMode ? 16 : 12,
             },
             ...legend,
           },

@@ -42,13 +42,20 @@ export interface BarLineComplexChartContextProps {
   data: BarLineChartItem[];
   filteredData: BarLineChartItem[];
   lineShape?: Plotly.ScatterLine['shape'];
+  isMaxBarsSelected: boolean;
+  isMaxLinesSelected: boolean;
   maxVisibleBars?: number;
   maxVisibleLines?: number;
   selected: Array<number | string>;
+  barsSelected: Array<number | string>;
+  linesSelected: Array<number | string>;
   features: BarLineComplexChartProps['features'];
   setFilteredData: React.Dispatch<React.SetStateAction<BarLineChartItem[]>>;
   setData: React.Dispatch<React.SetStateAction<BarLineChartItem[]>>;
-  setSelected: React.Dispatch<React.SetStateAction<Array<number | string>>>;
+  setBarsSelected: React.Dispatch<React.SetStateAction<Array<number | string>>>;
+  setLinesSelected: React.Dispatch<
+    React.SetStateAction<Array<number | string>>
+  >;
 }
 
 export interface BarLineComplexChartContextProviderProps

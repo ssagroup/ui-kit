@@ -151,7 +151,6 @@ export const mockDataWithDifferentLineType: BarLineChartItem[] = [
     type: 'scatter',
     line: {
       shape: 'spline',
-      dash: 'dot',
     },
     selected: false,
     showOnHover: false,
@@ -230,7 +229,7 @@ export const mockBigData: BarLineChartItem[] = [
     type: 'bar',
     selected: false,
     marker: {
-      color: '#984ea3',
+      color: '#69738a',
     },
   },
   {

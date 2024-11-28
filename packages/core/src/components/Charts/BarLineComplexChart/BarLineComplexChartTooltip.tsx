@@ -1,28 +1,48 @@
-import { forwardRef, Fragment } from 'react';
+import React, { forwardRef } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useTheme } from '@emotion/react';
 import { path } from '@ssa-ui-kit/utils';
+import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import TooltipContent from '@components/TooltipContent';
 import { TooltipContentProps } from '@components/Tooltip/types';
 import Wrapper from '@components/Wrapper';
 import Checkbox from '@components/Checkbox';
-import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
+import { useFullscreenMode } from '@components/FullscreenModeContext';
 
-// Check the default undefined selected value
 export const BarLineComplexChartTooltip = forwardRef<
   HTMLDivElement,
   Omit<TooltipContentProps, 'children'> & {
     onChange?: (itemName: string | number, selected: boolean) => void;
   }
 >(function BarLineComplexChartTooltipContent({ onChange, ...rest }, refProp) {
-  const { data, selected, setSelected } = useBarLineComplexChartContext();
+  const {
+    data,
+    selected,
+    barsSelected,
+    linesSelected,
+    isMaxBarsSelected,
+    isMaxLinesSelected,
+    setBarsSelected,
+    setLinesSelected,
+  } = useBarLineComplexChartContext();
   const { register } = useForm<FieldValues>();
-  const handleChange = (itemName: string) => (isChecked: boolean) => {
-    const newSelected = isChecked
-      ? [...selected, itemName]
-      : selected.filter((item) => item !== itemName);
-    setSelected(newSelected);
-    onChange?.(itemName, isChecked);
-  };
+  const theme = useTheme();
+  const { isFullscreenMode } = useFullscreenMode();
+  const handleChange =
+    (itemType: string, itemName: string) => (isChecked: boolean) => {
+      if (itemType === 'bar') {
+        const newSelected = isChecked
+          ? [...barsSelected, itemName]
+          : barsSelected.filter((item) => item !== itemName);
+        setBarsSelected(() => newSelected);
+      } else {
+        const newSelected = isChecked
+          ? [...linesSelected, itemName]
+          : linesSelected.filter((item) => item !== itemName);
+        setLinesSelected(() => newSelected);
+      }
+      onChange?.(itemName, isChecked);
+    };
   return (
     <TooltipContent
       ref={refProp}
@@ -34,17 +54,20 @@ export const BarLineComplexChartTooltip = forwardRef<
       }}>
       {data.map((item) => {
         const color = path(['marker', 'color'])(item) as string | undefined;
+        const isDisabled =
+          !selected.includes(item.name || '') &&
+          (item.type === 'bar' ? isMaxBarsSelected : isMaxLinesSelected);
         const itemOutput = (
-          <Fragment key={`${item.name}-output`}>
+          <React.Fragment key={`${item.name}-output`}>
             {color && (
               <div css={{ marginRight: 7 }}>
                 {item.type === 'bar' ? (
                   <div
                     css={{
-                      width: 8,
-                      height: 8,
+                      width: isFullscreenMode ? 10 : 8,
+                      height: isFullscreenMode ? 10 : 8,
                       borderRadius: 3,
-                      background: color,
+                      background: isDisabled ? theme.colors.greyFocused : color,
                     }}></div>
                 ) : (
                   <div
@@ -52,13 +75,13 @@ export const BarLineComplexChartTooltip = forwardRef<
                       width: 25,
                       height: 2,
                       borderRadius: 3,
-                      background: color,
+                      background: isDisabled ? theme.colors.greyFocused : color,
                     }}></div>
                 )}
               </div>
             )}
             {item.name}
-          </Fragment>
+          </React.Fragment>
         );
 
         return (
@@ -68,23 +91,32 @@ export const BarLineComplexChartTooltip = forwardRef<
               register={register}
               name={'filters'}
               text={itemOutput}
-              onChange={handleChange(item.name || '')}
+              onChange={handleChange(item.type || '', item.name || '')}
               ref={undefined}
               externalState={item.selected}
+              isDisabled={isDisabled}
               css={{
                 display: 'flex',
                 whiteSpace: 'nowrap',
                 marginBottom: 0,
-                lineHeight: '20px',
-                fontSize: 9.3,
+                lineHeight: isFullscreenMode ? '27px' : '20px',
+                fontSize: isFullscreenMode ? 14 : 9.3,
+                color: isDisabled
+                  ? theme.colors.greyFocused
+                  : theme.colors.greyDarker,
                 '& input + div': {
-                  width: 13.33,
-                  height: 13.33,
+                  width: isFullscreenMode ? 20 : 13.33,
+                  height: isFullscreenMode ? 20 : 13.33,
+                  borderRadius: isFullscreenMode ? 7 : 3,
                   marginRight: 7,
-                  '&:before': { width: 13.33, height: 13.33, borderRadius: 3 },
+                  '&:before': {
+                    width: isFullscreenMode ? 20 : 13.33,
+                    height: isFullscreenMode ? 20 : 13.33,
+                    borderRadius: isFullscreenMode ? 7 : 3,
+                  },
                   '& svg': {
-                    width: 9,
-                    height: 9,
+                    width: isFullscreenMode ? 12 : 9,
+                    height: isFullscreenMode ? 12 : 9,
                     marginLeft: 1,
                   },
                 },

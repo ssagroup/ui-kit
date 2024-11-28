@@ -1,22 +1,19 @@
-import { BarLineComplexChartProps } from './types';
+import { useEffect } from 'react';
 import { useTooltip } from '@components/Tooltip/useTooltip';
 import { TooltipContext } from '@components/Tooltip/useTooltipContext';
 import {
   useFullscreenMode,
   WithFullscreenMode,
 } from '@components/FullscreenModeContext';
+import { BarLineComplexChartProps } from './types';
 import { BarLineComplexChartInternal } from './BarLineComplexChartInternal';
 import { BarLineComplexChartContextProvider } from './BarLIneComplexChart.context';
-import { useEffect } from 'react';
 
-// +feature - fullscreen mode
-// +disabled item styling
-// we don't need dotted lines on this stage
 const BarLineComplexChartComponent = ({
   data,
   lineShape = 'linear',
-  maxVisibleBars = 5, // need to be implemented
-  maxVisibleLines = 3, // need to be implemented
+  maxVisibleBars = 5,
+  maxVisibleLines = 3,
   title = 'Bar & Line Complex Chart',
   cardProps,
   features = [],
