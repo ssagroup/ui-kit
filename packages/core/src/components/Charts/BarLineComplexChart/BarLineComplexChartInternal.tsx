@@ -112,9 +112,6 @@ export const BarLineComplexChartInternal = ({
         borderRadius: 20,
         overflow: 'hidden',
         boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
-        '& .plotly .modebar': {
-          top: 12,
-        },
         '& .plotly .modebar-btn': {
           fontSize: isFullscreenMode ? 20 : 16,
         },

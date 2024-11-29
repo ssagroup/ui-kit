@@ -54,8 +54,9 @@ export const BarLineComplexChartTooltip = forwardRef<
       }}>
       {data.map((item) => {
         const color = path(['marker', 'color'])(item) as string | undefined;
+        const isSelected = selected.includes(item.name || '');
         const isDisabled =
-          !selected.includes(item.name || '') &&
+          !isSelected &&
           (item.type === 'bar' ? isMaxBarsSelected : isMaxLinesSelected);
         const itemOutput = (
           <React.Fragment key={`${item.name}-output`}>
@@ -93,7 +94,7 @@ export const BarLineComplexChartTooltip = forwardRef<
               text={itemOutput}
               onChange={handleChange(item.type || '', item.name || '')}
               ref={undefined}
-              externalState={item.selected}
+              externalState={isSelected}
               isDisabled={isDisabled}
               css={{
                 display: 'flex',
