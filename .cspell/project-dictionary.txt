@@ -81,6 +81,7 @@ luxon
 Mauris
 metus
 MMM
+modebar
 msedge
 multirow
 mxschmitt
@@ -120,6 +121,9 @@ testid
 Threashold
 tickfont
 tickformat
+tickmode
+ticktext
+tickvals
 titlefont
 toastify
 tomdata

@@ -1,50 +1,88 @@
-import { forwardRef, Fragment } from 'react';
+import React, { forwardRef } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useTheme } from '@emotion/react';
+import { path } from '@ssa-ui-kit/utils';
+import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import TooltipContent from '@components/TooltipContent';
 import { TooltipContentProps } from '@components/Tooltip/types';
 import Wrapper from '@components/Wrapper';
 import Checkbox from '@components/Checkbox';
-import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
+import { useFullscreenMode } from '@components/FullscreenModeContext';
 
 export const BarLineComplexChartTooltip = forwardRef<
   HTMLDivElement,
-  Omit<TooltipContentProps, 'children'>
->(function BarLineComplexChartTooltipContent(props, refProp) {
-  const { data } = useBarLineComplexChartContext();
+  Omit<TooltipContentProps, 'children'> & {
+    onChange?: (itemName: string | number, selected: boolean) => void;
+  }
+>(function BarLineComplexChartTooltipContent({ onChange, ...rest }, refProp) {
+  const {
+    data,
+    selected,
+    barsSelected,
+    linesSelected,
+    isMaxBarsSelected,
+    isMaxLinesSelected,
+    setBarsSelected,
+    setLinesSelected,
+  } = useBarLineComplexChartContext();
   const { register } = useForm<FieldValues>();
+  const theme = useTheme();
+  const { isFullscreenMode } = useFullscreenMode();
+  const handleChange =
+    (itemType: string, itemName: string) => (isChecked: boolean) => {
+      if (itemType === 'bar') {
+        const newSelected = isChecked
+          ? [...barsSelected, itemName]
+          : barsSelected.filter((item) => item !== itemName);
+        setBarsSelected(() => newSelected);
+      } else {
+        const newSelected = isChecked
+          ? [...linesSelected, itemName]
+          : linesSelected.filter((item) => item !== itemName);
+        setLinesSelected(() => newSelected);
+      }
+      onChange?.(itemName, isChecked);
+    };
   return (
     <TooltipContent
       ref={refProp}
-      {...props}
+      {...rest}
       css={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
       }}>
       {data.map((item) => {
+        const color = path(['marker', 'color'])(item) as string | undefined;
+        const isSelected = selected.includes(item.name || '');
+        const isDisabled =
+          !isSelected &&
+          (item.type === 'bar' ? isMaxBarsSelected : isMaxLinesSelected);
         const itemOutput = (
-          <Fragment key={`${item.name}-output`}>
-            <div css={{ margin: '0 7px' }}>
-              {item.type === 'bar' ? (
-                <div
-                  css={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: 3,
-                    background: '#02499a',
-                  }}></div>
-              ) : (
-                <div
-                  css={{
-                    width: 25,
-                    height: 3,
-                    background: '#F99',
-                    borderRadius: 3,
-                  }}></div>
-              )}
-            </div>
+          <React.Fragment key={`${item.name}-output`}>
+            {color && (
+              <div css={{ marginRight: 7 }}>
+                {item.type === 'bar' ? (
+                  <div
+                    css={{
+                      width: isFullscreenMode ? 10 : 8,
+                      height: isFullscreenMode ? 10 : 8,
+                      borderRadius: 3,
+                      background: isDisabled ? theme.colors.greyFocused : color,
+                    }}></div>
+                ) : (
+                  <div
+                    css={{
+                      width: 25,
+                      height: 2,
+                      borderRadius: 3,
+                      background: isDisabled ? theme.colors.greyFocused : color,
+                    }}></div>
+                )}
+              </div>
+            )}
             {item.name}
-          </Fragment>
+          </React.Fragment>
         );
 
         return (
@@ -54,14 +92,35 @@ export const BarLineComplexChartTooltip = forwardRef<
               register={register}
               name={'filters'}
               text={itemOutput}
-              // onChange={...}
+              onChange={handleChange(item.type || '', item.name || '')}
               ref={undefined}
-              // externalState={...}
+              externalState={isSelected}
+              isDisabled={isDisabled}
               css={{
                 display: 'flex',
                 whiteSpace: 'nowrap',
                 marginBottom: 0,
-                '& input + div': { height: 44, '&:before': { top: 12 } },
+                lineHeight: isFullscreenMode ? '27px' : '20px',
+                fontSize: isFullscreenMode ? 14 : 9.3,
+                color: isDisabled
+                  ? theme.colors.greyFocused
+                  : theme.colors.greyDarker,
+                '& input + div': {
+                  width: isFullscreenMode ? 20 : 13.33,
+                  height: isFullscreenMode ? 20 : 13.33,
+                  borderRadius: isFullscreenMode ? 7 : 3,
+                  marginRight: 7,
+                  '&:before': {
+                    width: isFullscreenMode ? 20 : 13.33,
+                    height: isFullscreenMode ? 20 : 13.33,
+                    borderRadius: isFullscreenMode ? 7 : 3,
+                  },
+                  '& svg': {
+                    width: isFullscreenMode ? 12 : 9,
+                    height: isFullscreenMode ? 12 : 9,
+                    marginLeft: 1,
+                  },
+                },
                 '& input:focus + div': { boxShadow: 'none' },
               }}
             />

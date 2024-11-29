@@ -34,13 +34,13 @@ interface MutableRefObject<T> {
   current: T;
 }
 
-export type UseTooltip = (props: UseTooltipArgs) => Pick<
+export type UseTooltip = (props?: UseTooltipArgs) => Pick<
   TooltipProps,
   'size' | 'hasArrow' | 'arrowProps'
 > & {
   arrowRef: MutableRefObject<null>;
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 } & UseFloatingReturn &
   UseInteractions;
 
@@ -49,7 +49,7 @@ export type TooltipContextType =
       ReturnType<typeof useInteractions> & {
         arrowRef: React.Ref<SVGSVGElement>;
         isOpen: boolean;
-        setIsOpen: (isOpen: boolean) => void;
+        setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
       } & Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
   | null;
 

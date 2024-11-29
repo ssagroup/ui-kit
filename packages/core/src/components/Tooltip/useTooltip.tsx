@@ -14,16 +14,17 @@ import {
 } from '@floating-ui/react';
 import { UseTooltip } from './types';
 
-export const useTooltip: UseTooltip = ({
-  placement,
-  enableClick = true,
-  enableHover = false,
-  offsetOptions = 12,
-  size = 'small',
-  hasArrow = true,
-  arrowProps = {},
-  isOpen: isInitOpen = false,
-}) => {
+export const useTooltip: UseTooltip = (props) => {
+  const {
+    placement,
+    enableClick = true,
+    enableHover = false,
+    offsetOptions = 12,
+    size = 'small',
+    hasArrow = true,
+    arrowProps = {},
+    isOpen: isInitOpen = false,
+  } = props || {};
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const arrowRef = useRef(null);
 
