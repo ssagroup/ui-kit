@@ -51,7 +51,7 @@ export const BarLineComplexChartTooltip = forwardRef<
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        zIndex: 1,
+        zIndex: 100,
       }}>
       {data.map((item) => {
         const color = path(['marker', 'color'])(item) as string | undefined;
