@@ -34,6 +34,7 @@ const config: JestConfigWithTsJest = {
     '!./playwright.base.config.ts',
     '!./packages/**/playwright.config.ts',
     '!./packages/**/lostpixel.config.ts',
+    '!**/*.stories-extra.{ts,tsx}',
   ],
   verbose: true,
   globalSetup: '<rootDir>/global-setup.ts',

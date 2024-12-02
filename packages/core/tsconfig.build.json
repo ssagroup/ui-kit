@@ -47,6 +47,8 @@
     "src/**/*.e2e.ts",
     "src/**/*.e2e.tsx",
     "src/**/*.stories.tsx",
-    "src/**/*.stories.ts"
+    "src/**/*.stories.ts",
+    "src/**/*.stories-extra.tsx",
+    "src/**/*.stories-extra.ts"
   ]
 }
