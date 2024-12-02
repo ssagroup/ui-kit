@@ -10,6 +10,7 @@ export const BarLineComplexChartInternal = ({
   height = '220px',
   container = document.body,
   onChange,
+  ...rest
 }: BarLineComplexInternalProps) => {
   const { features } = useBarLineComplexChartContext();
   const { isFullscreenMode } = useFullscreenMode();
@@ -39,6 +40,7 @@ export const BarLineComplexChartInternal = ({
         transformedChartData={transformedChartData}
         tooltipContentRef={tooltipContentRef}
         extraModeBarButtons={extraModeBarButtons}
+        {...rest}
       />,
       container,
     );
@@ -53,6 +55,7 @@ export const BarLineComplexChartInternal = ({
       transformedChartData={transformedChartData}
       tooltipContentRef={tooltipContentRef}
       extraModeBarButtons={extraModeBarButtons}
+      {...rest}
     />
   );
 };

@@ -102,11 +102,14 @@ export const BarLineComplexChartView = ({
         width: isFullscreenMode ? '100%' : width,
         height: isFullscreenMode ? '100%' : height,
         borderRadius: 20,
-        zIndex: 1,
+        zIndex: isFullscreenMode ? 2 : 1,
         overflow: 'hidden',
         boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
-        '& .plotly .modebar-btn': {
-          fontSize: isFullscreenMode ? 20 : 16,
+        '& .plotly': {
+          width: '100% !important',
+          '& .modebar-btn': {
+            fontSize: isFullscreenMode ? 20 : 16,
+          },
         },
       }}>
       <Plot
