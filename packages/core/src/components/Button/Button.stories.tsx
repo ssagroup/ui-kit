@@ -3,7 +3,12 @@ import type { Meta } from '@storybook/react';
 import Icon from '@components/Icon';
 
 import Button from './index';
-import { GridWrapper, HeaderTitle, sizes, variants } from './helpers';
+import {
+  GridWrapper,
+  HeaderTitle,
+  sizes,
+  variants,
+} from './helpers.stories-extra';
 import React from 'react';
 
 export default {

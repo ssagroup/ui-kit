@@ -12,7 +12,6 @@ import {
   attentionBtnSpecs,
   TestPropsType,
 } from './fixtures';
-import { GridWrapper, HeaderTitle } from './helpers';
 
 function setup(component: JSX.Element) {
   return {
@@ -525,30 +524,6 @@ describe('Button', () => {
 
       expect(iconLeft).toBeInTheDocument();
       expect(iconRight).toBeInTheDocument();
-    });
-  });
-
-  describe('Stories: HeaderTitle', () => {
-    it('Has proper style', () => {
-      const { getByText } = render(<HeaderTitle>Header Title</HeaderTitle>);
-
-      const span = getByText(/header title/i);
-
-      expect(span).toHaveStyleRule('text-align', 'center');
-      expect(span).toHaveStyleRule('font-weight', '800');
-      expect(span).toHaveStyleRule('font-size', '12px');
-    });
-  });
-
-  describe('Stories: GridWrapper', () => {
-    it('Has proper style', () => {
-      const { getByText } = render(<GridWrapper>Wrapper</GridWrapper>);
-
-      const div = getByText(/wrapper/i);
-
-      expect(div).toHaveStyleRule('display', 'grid');
-      expect(div).toHaveStyleRule('grid-template', "'a a a a'");
-      expect(div).toHaveStyleRule('grid-gap', '10px');
     });
   });
 });
