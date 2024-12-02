@@ -107,6 +107,9 @@ export const BarLineComplexChartView = ({
         boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
         '& .plotly': {
           width: '100% !important',
+          '& > svg': {
+            width: '100%',
+          },
           '& .modebar-btn': {
             fontSize: isFullscreenMode ? 20 : 16,
           },
