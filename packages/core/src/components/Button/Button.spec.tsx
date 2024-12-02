@@ -534,7 +534,6 @@ describe('Button', () => {
 
       const span = getByText(/header title/i);
 
-      expect(span).toBeInTheDocument();
       expect(span).toHaveStyleRule('text-align', 'center');
       expect(span).toHaveStyleRule('font-weight', '800');
       expect(span).toHaveStyleRule('font-size', '12px');
@@ -547,7 +546,6 @@ describe('Button', () => {
 
       const div = getByText(/wrapper/i);
 
-      expect(div).toBeInTheDocument();
       expect(div).toHaveStyleRule('display', 'grid');
       expect(div).toHaveStyleRule('grid-template', "'a a a a'");
       expect(div).toHaveStyleRule('grid-gap', '10px');
