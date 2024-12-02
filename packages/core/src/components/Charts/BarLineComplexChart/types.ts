@@ -24,6 +24,7 @@ export interface BarLineComplexChartProps extends Omit<PlotParams, 'layout'> {
   title?: string;
   maxVisibleBars?: number;
   maxVisibleLines?: number;
+  container?: Element | DocumentFragment;
   onChange?: (name: string | number, isSelected: boolean) => void;
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
