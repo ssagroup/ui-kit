@@ -100,6 +100,20 @@ describe('Badge', () => {
     expect(badge).toHaveStyleRule('background-color', theme.colors.blue);
   });
 
+  it('Render with custom color', () => {
+    render(<Badge color="magenta">Badge</Badge>);
+
+    const badge = screen.getByText(/badge/i);
+
+    expect(badge).toHaveStyleRule('background', 'magenta');
+  });
+
+  it('Render without children', () => {
+    const { container } = render(<Badge />);
+
+    expect(container.firstChild).toBeEmptyDOMElement();
+  });
+
   it('Renders with ref', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(

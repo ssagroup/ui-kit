@@ -2,7 +2,13 @@ import React from 'react';
 import type { Meta } from '@storybook/react';
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
-import { HeaderTitle, GridWrapper, colors, sizes, icons } from './helpers';
+import {
+  HeaderTitle,
+  GridWrapper,
+  colors,
+  sizes,
+  icons,
+} from './helpers.stories-extra';
 
 import Badge from './index';
 
