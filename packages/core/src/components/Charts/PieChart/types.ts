@@ -15,6 +15,7 @@ export interface PieChartProps
   features?: Array<PieChartFeatures>;
   cardProps?: Omit<WidgetCardProps, 'children'>;
   activeHighlight?: boolean;
+  container?: Element | DocumentFragment;
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
 
