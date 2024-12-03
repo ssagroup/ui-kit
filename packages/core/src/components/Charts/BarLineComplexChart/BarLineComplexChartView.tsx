@@ -96,7 +96,7 @@ export const BarLineComplexChartView = ({
     <Wrapper
       className="bar-line-complex-chart-wrapper"
       css={{
-        position: isFullscreenMode ? 'absolute' : 'static',
+        position: isFullscreenMode ? 'fixed' : 'static',
         top: isFullscreenMode ? 0 : 'unset',
         left: isFullscreenMode ? 0 : 'unset',
         width: isFullscreenMode ? '100%' : width,
@@ -127,6 +127,7 @@ export const BarLineComplexChartView = ({
         revision={revision}
         data={transformedChartData}
         onHover={handleHover}
+        useResizeHandler
         layout={{
           hovermode: 'x unified',
           margin: {
