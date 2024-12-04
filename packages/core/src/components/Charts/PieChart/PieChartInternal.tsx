@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { ResponsivePie } from '@nivo/pie';
+import { propOr } from '@ssa-ui-kit/utils';
 import { FullscreenModeContextType } from '@components/FullscreenModeContext';
 import { WithWidgetCard } from '@components/WidgetCard';
 import { PieChartProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 import { PieChartHeader } from './PieChartHeader';
+import { PieChartTooltip } from './PieChartTooltip';
+import { getRoundedNumber } from '../SegmentedPieChart/utils';
 
 export const PieChartInternal = ({
   as,
@@ -17,6 +20,8 @@ export const PieChartInternal = ({
   activeHighlight = false,
   isFullscreenMode,
   activeId,
+  data,
+  tooltipProps,
   setActiveId,
   onFullscreenModeChange,
   ...chartProps
@@ -30,6 +35,34 @@ export const PieChartInternal = ({
     activeOuterRadiusOffset = 0,
     isInteractive = false,
   } = chartProps;
+
+  const {
+    valueRoundingDigits = false,
+    percentageRoundingDigits = 0,
+    dimension,
+    showPercentage = false,
+    showValue = true,
+    isEnabled = false,
+    isFullscreenEnabled = false,
+  } = tooltipProps || {};
+
+  const totalAmount = data.reduce((acc, item) => {
+    const currentValue = propOr<typeof item, number>(0, 'value')(item);
+    return +currentValue + +acc;
+  }, 0);
+
+  const dataForChart = data.map((item) => {
+    const currentValue = propOr<typeof item, number>(0, 'value')(item);
+    const currentPercentage = (+currentValue * 100) / totalAmount;
+    return {
+      ...item,
+      percentage: getRoundedNumber(currentPercentage, percentageRoundingDigits),
+      value:
+        typeof valueRoundingDigits === 'number'
+          ? getRoundedNumber(currentValue, valueRoundingDigits)
+          : currentValue,
+    };
+  });
 
   let internalOffset = 0;
   if (isInteractive) {
@@ -56,7 +89,6 @@ export const PieChartInternal = ({
         isFullscreenMode={isFullscreenMode}>
         <div className="pie-chart-wrapper">
           <ResponsivePie
-            isInteractive={false}
             margin={{
               top: internalOffset,
               right: internalOffset,
@@ -68,8 +100,6 @@ export const PieChartInternal = ({
             enableArcLabels={false}
             padAngle={2}
             cornerRadius={16}
-            activeInnerRadiusOffset={0}
-            activeOuterRadiusOffset={0}
             colors={{ datum: 'data.color' }}
             arcLinkLabelsSkipAngle={10}
             arcLinkLabelsTextColor="#333333"
@@ -81,6 +111,21 @@ export const PieChartInternal = ({
             onActiveIdChange={(activeId: string | number | null) => {
               activeHighlight && setActiveId(activeId);
             }}
+            data={dataForChart}
+            tooltip={
+              (isEnabled && !isFullscreenMode) ||
+              (isFullscreenEnabled && isFullscreenMode)
+                ? (point) => (
+                    <PieChartTooltip
+                      point={point}
+                      dimension={dimension}
+                      showValue={showValue}
+                      showPercentage={showPercentage}
+                      isFullscreenMode={isFullscreenMode}
+                    />
+                  )
+                : () => <Fragment></Fragment>
+            }
             {...chartProps}
           />
           {title && (

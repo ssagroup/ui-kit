@@ -6,6 +6,16 @@ export type PieChartFeatures =
   | 'header'
   | 'fullscreenMode'
   | 'activeItemAnimation';
+
+export interface PieChartTooltipProps {
+  isEnabled?: boolean;
+  isFullscreenEnabled?: boolean;
+  dimension?: string;
+  showValue?: boolean;
+  showPercentage?: boolean;
+  valueRoundingDigits?: number | false;
+  percentageRoundingDigits?: number;
+}
 export interface PieChartProps
   extends CommonProps,
     React.ComponentProps<typeof ResponsivePie> {
@@ -16,6 +26,7 @@ export interface PieChartProps
   cardProps?: Omit<WidgetCardProps, 'children'>;
   activeHighlight?: boolean;
   container?: Element | DocumentFragment;
+  tooltipProps?: PieChartTooltipProps;
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
 
