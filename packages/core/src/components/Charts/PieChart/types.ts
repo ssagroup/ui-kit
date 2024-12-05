@@ -6,6 +6,16 @@ export type PieChartFeatures =
   | 'header'
   | 'fullscreenMode'
   | 'activeItemAnimation';
+
+export interface PieChartTooltipProps {
+  isEnabled?: boolean;
+  isFullscreenEnabled?: boolean;
+  dimension?: string;
+  showValue?: boolean;
+  showPercentage?: boolean;
+  valueRoundingDigits?: number | false;
+  percentageRoundingDigits?: number;
+}
 export interface PieChartProps
   extends CommonProps,
     React.ComponentProps<typeof ResponsivePie> {
@@ -16,6 +26,8 @@ export interface PieChartProps
   cardProps?: Omit<WidgetCardProps, 'children'>;
   activeHighlight?: boolean;
   container?: Element | DocumentFragment;
+  tooltipProps?: PieChartTooltipProps;
+  data: PieChartLegendItem[];
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
 
@@ -26,8 +38,9 @@ export interface PieChartLegendItem extends MayHaveLabel {
   [key: string | number | symbol]: unknown;
 }
 
-export interface PieChartLegendProps {
-  data: Array<PieChartLegendItem>;
+export type PieChartLegendProps = {
+  data?: Array<PieChartLegendItem>;
+  useChartData?: boolean;
   activeHighlight?: boolean;
   colors?: Array<keyof MainColors | string>;
   backgroundColors?: Array<string>;
@@ -39,4 +52,4 @@ export interface PieChartLegendProps {
   variant?: 'valueList' | 'withoutValueList';
   renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
   renderLabel?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
-}
+};

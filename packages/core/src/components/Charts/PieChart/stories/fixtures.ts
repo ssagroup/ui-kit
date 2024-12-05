@@ -38,55 +38,108 @@ export const accountData = [
   },
 ];
 
-export const eventsDataBig = [
+export const optionsDataBig = [
   {
     id: 1,
     value: 500,
-    label: 'Event first',
+    label: 'Option first',
   },
   {
     id: 2,
     value: 305,
-    label: 'Event second',
+    label: 'Option second',
   },
   {
     id: 3,
     value: 789,
-    label: 'Event third',
+    label: 'Option third',
   },
   {
     id: 4,
     value: 120,
-    label: 'Event fourth',
+    label: 'Option fourth',
   },
   {
     id: 5,
     value: 39,
-    label: 'Event fifth',
+    label: 'Option fifth',
   },
   {
     id: 6,
     value: 995,
-    label: 'Event sixth',
+    label: 'Option sixth',
   },
   {
     id: 7,
     value: 753,
-    label: 'Event seventh',
+    label: 'Option seventh',
   },
   {
     id: 8,
     value: 183,
-    label: 'Event eighth',
+    label: 'Option eighth',
   },
   {
     id: 9,
     value: 683,
-    label: 'Event ninth',
+    label: 'Option ninth',
   },
   {
     id: 10,
     value: 359,
-    label: 'Event tenth',
+    label: 'Option tenth',
+  },
+];
+
+export const optionsDataBigDecimal = [
+  {
+    id: 1,
+    value: 501.12345,
+    label: 'Option first',
+  },
+  {
+    id: 2,
+    value: 305.44333,
+    label: 'Option second',
+  },
+  {
+    id: 3,
+    value: 789.99588,
+    label: 'Option third',
+  },
+  {
+    id: 4,
+    value: 120.33432,
+    label: 'Option fourth',
+  },
+  {
+    id: 5,
+    value: 39.39954,
+    label: 'Option fifth',
+  },
+  {
+    id: 6,
+    value: 995.44332,
+    label: 'Option sixth',
+  },
+  {
+    id: 7,
+    value: 753.99955,
+    label: 'Option seventh',
+  },
+  {
+    id: 8,
+    value: 183.33112,
+    label: 'Option eighth',
+  },
+  {
+    id: 9,
+    value: 683.55412,
+    label: 'Option ninth',
+  },
+  {
+    id: 10,
+    value: 359.99403,
+    label: 'Option tenth',
   },
 ];

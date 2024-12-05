@@ -1,9 +1,22 @@
 import { Fragment, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
+import { css as cssString } from '@emotion/css';
 import Typography from '@components/Typography';
-import { PieChart, PieChartLegend, pieChartPalettes } from './index';
-import { fitnessData, accountData, eventsDataBig } from './stories/fixtures';
+import {
+  PieChart,
+  PieChartLegend,
+  PieChartLegendItem,
+  pieChartPalettes,
+  PieChartProps,
+  PieChartTooltipProps,
+} from './index';
+import {
+  fitnessData,
+  accountData,
+  optionsDataBig,
+  optionsDataBigDecimal,
+} from './stories/fixtures';
 
 export default {
   title: 'Charts/PieChart',
@@ -189,7 +202,7 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
 
   return (
     <PieChart
-      data={eventsDataBig}
+      data={optionsDataBig}
       onFullscreenModeChange={setFullscreenMode}
       colors={pieChartColors}
       activeHighlight
@@ -204,11 +217,11 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
       activeOuterRadiusOffset={isFullscreenMode ? 40 : 7}
       features={['header', 'fullscreenMode']}
       cardProps={{
-        title: 'Events',
+        title: 'Options',
       }}
       tooltip={() => <Fragment></Fragment>}>
       <PieChartLegend
-        data={eventsDataBig}
+        data={optionsDataBig}
         colors={legendColorNames}
         activeHighlight
         markerStyles={css`
@@ -247,3 +260,143 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
   );
 };
 FullscreenAndTitle.args = {};
+
+// TODO: check data...
+const WithTooltipTemplate: StoryObj<
+  PieChartTooltipProps & Pick<PieChartProps, 'data'>
+> = {
+  render: ({ data: pieChartData = optionsDataBig, ...tooltipArgs }) => {
+    const theme = useTheme();
+    const [isFullscreenMode, setFullscreenMode] = useState(false);
+    const { legendColorNames, pieChartColors } =
+      pieChartPalettes.getBalancePalette(theme);
+
+    return (
+      <PieChart
+        data={pieChartData}
+        onFullscreenModeChange={setFullscreenMode}
+        colors={pieChartColors}
+        activeHighlight
+        isInteractive
+        innerRadius={0}
+        padAngle={0}
+        cornerRadius={0}
+        css={{
+          padding: 20,
+        }}
+        activeInnerRadiusOffset={0}
+        activeOuterRadiusOffset={isFullscreenMode ? 40 : 7}
+        features={['header', 'fullscreenMode']}
+        cardProps={{
+          title: 'Options',
+          contentClassName: cssString`
+            max-width: ${isFullscreenMode ? '100%' : '440px !important'};
+          `,
+        }}
+        tooltipProps={{
+          isEnabled: true,
+          ...tooltipArgs,
+        }}
+        width={'500px'}>
+        <PieChartLegend
+          data={pieChartData as PieChartLegendItem[]}
+          useChartData
+          colors={legendColorNames}
+          activeHighlight
+          markerStyles={css`
+            width: 10px;
+            height: 10px;
+          `}
+          labelListStyles={css`
+            li {
+              height: 34px;
+            }
+            h6 {
+              color: ${theme.colors.greyDarker};
+              font-size: 14px;
+              &:nth-of-type(1) {
+                font-weight: 500;
+              }
+              &:nth-of-type(2) {
+                font-weight: 700;
+                font-size: 12px;
+              }
+            }
+          `}
+          valueListStyles={css`
+            li {
+              justify-content: flex-end;
+              height: ${isFullscreenMode ? 'auto' : '34px'};
+            }
+            h6 {
+              color: ${theme.colors.greyDarker};
+              font-weight: 700;
+              font-size: 12px;
+            }
+          `}
+        />
+      </PieChart>
+    );
+  },
+};
+
+export const WithTooltipSimple = {
+  ...WithTooltipTemplate,
+  args: {},
+};
+
+export const WithTooltipInFullscreenMode = {
+  ...WithTooltipTemplate,
+  args: {
+    isFullscreenEnabled: true,
+  },
+};
+
+export const WithTooltipAndPercentage = {
+  ...WithTooltipTemplate,
+  args: {
+    isFullscreenEnabled: true,
+    showPercentage: true,
+    showValue: false,
+  },
+};
+
+export const WithTooltipAndDimension = {
+  ...WithTooltipTemplate,
+  args: {
+    isFullscreenEnabled: true,
+    dimension: 'm',
+  },
+};
+
+export const WithTooltipAndValueRounding = {
+  ...WithTooltipTemplate,
+  args: {
+    data: optionsDataBigDecimal,
+    isFullscreenEnabled: true,
+    valueRoundingDigits: 2,
+  },
+};
+
+export const WithTooltipAndPercentageRounding = {
+  ...WithTooltipTemplate,
+  args: {
+    data: optionsDataBigDecimal,
+    showPercentage: true,
+    showValue: false,
+    isFullscreenEnabled: true,
+    percentageRoundingDigits: 2,
+  },
+};
+
+export const WithTooltipAndAllOptions = {
+  ...WithTooltipTemplate,
+  args: {
+    data: optionsDataBigDecimal,
+    isFullscreenEnabled: true,
+    showPercentage: true,
+    valueRoundingDigits: 2,
+    percentageRoundingDigits: 2,
+    dimension: 'm',
+  },
+};
