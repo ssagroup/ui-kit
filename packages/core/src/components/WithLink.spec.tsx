@@ -34,8 +34,8 @@ describe('WithLink', () => {
       </MemoryRouter>,
     );
 
-    const div = getByTitle('Child');
+    const child = getByTitle('Child');
 
-    expect(div).toBeInTheDocument();
+    expect(child).toBeInTheDocument();
   });
 });

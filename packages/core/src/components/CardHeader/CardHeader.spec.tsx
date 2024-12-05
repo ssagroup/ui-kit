@@ -2,27 +2,27 @@ import CardHeader from './CardHeader';
 import { screen } from '../../../customTest';
 
 describe('CardHeader', () => {
-  it('Render initial background', () => {
+  it('Renders with initial background', () => {
     render(<CardHeader>Card</CardHeader>);
 
-    const cardHeader = screen.getByText(/card/i).closest('div');
+    const div = screen.getByText(/card/i).closest('div');
 
-    expect(cardHeader).toHaveStyle('background: initial');
+    expect(div).toHaveStyle('background: initial');
   });
 });
 
 describe('CardHeader', () => {
-  it('Render initial background', () => {
+  it('Renders with transparent background', () => {
     const { getByText } = render(<CardHeader transparent>Card</CardHeader>);
 
-    const cardHeader = getByText(/card/i).closest('div');
+    const div = getByText(/card/i).closest('div');
 
-    expect(cardHeader).toHaveStyle('background: transparent');
+    expect(div).toHaveStyle('background: transparent');
   });
 });
 
 describe('CardHeader', () => {
-  it('Render with icon', () => {
+  it('Renders with icon', () => {
     const { getByText } = render(
       <CardHeader icon={<div>Icon</div>}>Card</CardHeader>,
     );
@@ -30,7 +30,7 @@ describe('CardHeader', () => {
     const div = getByText(/card/i).closest('div');
     expect(div).not.toBeNull();
 
-    if (div !== null) {
+    if (div) {
       const style = window.getComputedStyle(div);
       expect(style.paddingLeft).toBe('30px');
     }
