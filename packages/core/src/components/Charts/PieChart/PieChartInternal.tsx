@@ -22,6 +22,7 @@ export const PieChartInternal = ({
   isFullscreenMode,
   activeId,
   data,
+  legendOutputType = 'value',
   tooltipProps,
   setActiveId,
   onFullscreenModeChange,
@@ -41,8 +42,7 @@ export const PieChartInternal = ({
     valueRoundingDigits = false,
     percentageRoundingDigits = 0,
     dimension,
-    showPercentage = false,
-    showValue = true,
+    outputType = 'value',
     isEnabled = false,
     isFullscreenEnabled = false,
   } = tooltipProps || {};
@@ -80,7 +80,7 @@ export const PieChartInternal = ({
   }, [isFullscreenMode]);
 
   return (
-    <PieChartProvider data={dataForChart}>
+    <PieChartProvider data={dataForChart} legendOutputType={legendOutputType}>
       <WithWidgetCard
         features={features}
         cardProps={{
@@ -124,8 +124,7 @@ export const PieChartInternal = ({
                       <PieChartTooltip
                         point={point}
                         dimension={dimension}
-                        showValue={showValue}
-                        showPercentage={showPercentage}
+                        outputType={outputType}
                         isFullscreenMode={isFullscreenMode}
                       />
                     )
