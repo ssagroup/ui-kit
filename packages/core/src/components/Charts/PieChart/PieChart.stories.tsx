@@ -1,10 +1,12 @@
 import { Fragment, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
+import { css as cssString } from '@emotion/css';
 import Typography from '@components/Typography';
 import {
   PieChart,
   PieChartLegend,
+  PieChartLegendItem,
   pieChartPalettes,
   PieChartProps,
   PieChartTooltipProps,
@@ -287,13 +289,18 @@ const WithTooltipTemplate: StoryObj<
         features={['header', 'fullscreenMode']}
         cardProps={{
           title: 'Options',
+          contentClassName: cssString`
+            max-width: ${isFullscreenMode ? '100%' : '440px !important'};
+          `,
         }}
         tooltipProps={{
           isEnabled: true,
           ...tooltipArgs,
-        }}>
+        }}
+        width={'500px'}>
         <PieChartLegend
-          data={optionsDataBig}
+          data={pieChartData as PieChartLegendItem[]}
+          useChartData
           colors={legendColorNames}
           activeHighlight
           markerStyles={css`
@@ -371,12 +378,25 @@ export const WithTooltipAndValueRounding = {
   },
 };
 
+export const WithTooltipAndPercentageRounding = {
+  ...WithTooltipTemplate,
+  args: {
+    data: optionsDataBigDecimal,
+    showPercentage: true,
+    showValue: false,
+    isFullscreenEnabled: true,
+    percentageRoundingDigits: 2,
+  },
+};
+
 export const WithTooltipAndAllOptions = {
   ...WithTooltipTemplate,
   args: {
+    data: optionsDataBigDecimal,
     isFullscreenEnabled: true,
     showPercentage: true,
     valueRoundingDigits: 2,
+    percentageRoundingDigits: 2,
     dimension: 'm',
   },
 };

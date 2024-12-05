@@ -7,7 +7,8 @@ import { PieChartProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 import { PieChartHeader } from './PieChartHeader';
 import { PieChartTooltip } from './PieChartTooltip';
-import { getRoundedNumber } from '../SegmentedPieChart/utils';
+import { getFixedNumber, getRoundedNumber } from '../SegmentedPieChart/utils';
+import { PieChartProvider } from './PieChartContext';
 
 export const PieChartInternal = ({
   as,
@@ -56,10 +57,13 @@ export const PieChartInternal = ({
     const currentPercentage = (+currentValue * 100) / totalAmount;
     return {
       ...item,
-      percentage: getRoundedNumber(currentPercentage, percentageRoundingDigits),
+      percentage:
+        typeof percentageRoundingDigits === 'number'
+          ? getFixedNumber(currentPercentage, percentageRoundingDigits)
+          : getRoundedNumber(currentPercentage, 0),
       value:
         typeof valueRoundingDigits === 'number'
-          ? getRoundedNumber(currentValue, valueRoundingDigits)
+          ? getFixedNumber(currentValue, valueRoundingDigits)
           : currentValue,
     };
   });
@@ -76,66 +80,68 @@ export const PieChartInternal = ({
   }, [isFullscreenMode]);
 
   return (
-    <WithWidgetCard
-      features={features}
-      cardProps={{
-        headerContent: <PieChartHeader features={features} />,
-        ...cardProps,
-      }}>
-      <PieChartBase
-        as={as}
-        className={className}
-        width={width}
-        isFullscreenMode={isFullscreenMode}>
-        <div className="pie-chart-wrapper">
-          <ResponsivePie
-            margin={{
-              top: internalOffset,
-              right: internalOffset,
-              bottom: internalOffset,
-              left: internalOffset,
-            }}
-            innerRadius={0.8}
-            enableArcLinkLabels={false}
-            enableArcLabels={false}
-            padAngle={2}
-            cornerRadius={16}
-            colors={{ datum: 'data.color' }}
-            arcLinkLabelsSkipAngle={10}
-            arcLinkLabelsTextColor="#333333"
-            arcLinkLabelsThickness={2}
-            arcLinkLabelsColor={{ from: 'color' }}
-            arcLabelsSkipAngle={10}
-            layers={['arcs', 'arcLinkLabels', 'arcLabels']}
-            activeId={activeId}
-            onActiveIdChange={(activeId: string | number | null) => {
-              activeHighlight && setActiveId(activeId);
-            }}
-            data={dataForChart}
-            tooltip={
-              (isEnabled && !isFullscreenMode) ||
-              (isFullscreenEnabled && isFullscreenMode)
-                ? (point) => (
-                    <PieChartTooltip
-                      point={point}
-                      dimension={dimension}
-                      showValue={showValue}
-                      showPercentage={showPercentage}
-                      isFullscreenMode={isFullscreenMode}
-                    />
-                  )
-                : () => <Fragment></Fragment>
-            }
-            {...chartProps}
-          />
-          {title && (
-            <PieChartTextBase isFullscreenMode={isFullscreenMode}>
-              {title}
-            </PieChartTextBase>
-          )}
-        </div>
-        {children}
-      </PieChartBase>
-    </WithWidgetCard>
+    <PieChartProvider data={dataForChart}>
+      <WithWidgetCard
+        features={features}
+        cardProps={{
+          headerContent: <PieChartHeader features={features} />,
+          ...cardProps,
+        }}>
+        <PieChartBase
+          as={as}
+          className={className}
+          width={width}
+          isFullscreenMode={isFullscreenMode}>
+          <div className="pie-chart-wrapper">
+            <ResponsivePie
+              margin={{
+                top: internalOffset,
+                right: internalOffset,
+                bottom: internalOffset,
+                left: internalOffset,
+              }}
+              innerRadius={0.8}
+              enableArcLinkLabels={false}
+              enableArcLabels={false}
+              padAngle={2}
+              cornerRadius={16}
+              colors={{ datum: 'data.color' }}
+              arcLinkLabelsSkipAngle={10}
+              arcLinkLabelsTextColor="#333333"
+              arcLinkLabelsThickness={2}
+              arcLinkLabelsColor={{ from: 'color' }}
+              arcLabelsSkipAngle={10}
+              layers={['arcs', 'arcLinkLabels', 'arcLabels']}
+              activeId={activeId}
+              onActiveIdChange={(activeId: string | number | null) => {
+                activeHighlight && setActiveId(activeId);
+              }}
+              data={dataForChart}
+              tooltip={
+                (isEnabled && !isFullscreenMode) ||
+                (isFullscreenEnabled && isFullscreenMode)
+                  ? (point) => (
+                      <PieChartTooltip
+                        point={point}
+                        dimension={dimension}
+                        showValue={showValue}
+                        showPercentage={showPercentage}
+                        isFullscreenMode={isFullscreenMode}
+                      />
+                    )
+                  : () => <Fragment></Fragment>
+              }
+              {...chartProps}
+            />
+            {title && (
+              <PieChartTextBase isFullscreenMode={isFullscreenMode}>
+                {title}
+              </PieChartTextBase>
+            )}
+          </div>
+          {children}
+        </PieChartBase>
+      </WithWidgetCard>
+    </PieChartProvider>
   );
 };

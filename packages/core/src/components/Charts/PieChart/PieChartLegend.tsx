@@ -10,6 +10,7 @@ import {
   PieChartLegendListItem,
   PieChartLegendListValueListItem,
 } from './PieChartLegendListItem';
+import { usePieChartContext } from './PieChartContext';
 
 export const PieChartLegend = ({
   data,
@@ -21,23 +22,26 @@ export const PieChartLegend = ({
   valueListStyles,
   variant = 'valueList',
   activeHighlight = false,
+  useChartData = false,
   renderLabel,
   renderValue,
 }: PieChartLegendProps) => {
   const theme = useTheme();
   const isValueList = variant === 'valueList';
   const { isFullscreenMode, activeId, setActiveId } = useFullscreenMode();
+  const { data: contextData } = usePieChartContext();
   const handleActiveIdChange = (newActiveId: null | number | string) => {
     if (activeHighlight) {
       setActiveId(newActiveId);
     }
   };
+  const dataForChart = useChartData ? contextData : data;
   return (
     <Wrapper css={{ width: 'auto' }}>
       <PieChartLegendList
         css={labelListStyles}
         isFullscreenMode={isFullscreenMode}>
-        {data.map((item, index) => {
+        {dataForChart?.map((item, index) => {
           const { id, label, value, legendValue } = item;
           const isActive = id === activeId;
           return (
@@ -113,7 +117,7 @@ export const PieChartLegend = ({
         <PieChartLegendList
           css={valueListStyles}
           isFullscreenMode={isFullscreenMode}>
-          {data.map((item) => {
+          {dataForChart?.map((item) => {
             const { id } = item;
             const isActive = id === activeId;
             return (

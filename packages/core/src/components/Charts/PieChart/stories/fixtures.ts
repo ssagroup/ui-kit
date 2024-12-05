@@ -99,47 +99,47 @@ export const optionsDataBigDecimal = [
   },
   {
     id: 2,
-    value: 305.12345,
+    value: 305.44333,
     label: 'Option second',
   },
   {
     id: 3,
-    value: 789.12345,
+    value: 789.99588,
     label: 'Option third',
   },
   {
     id: 4,
-    value: 120.12345,
+    value: 120.33432,
     label: 'Option fourth',
   },
   {
     id: 5,
-    value: 39.12345,
+    value: 39.39954,
     label: 'Option fifth',
   },
   {
     id: 6,
-    value: 995.12345,
+    value: 995.44332,
     label: 'Option sixth',
   },
   {
     id: 7,
-    value: 753.12345,
+    value: 753.99955,
     label: 'Option seventh',
   },
   {
     id: 8,
-    value: 183.12345,
+    value: 183.33112,
     label: 'Option eighth',
   },
   {
     id: 9,
-    value: 683.12345,
+    value: 683.55412,
     label: 'Option ninth',
   },
   {
     id: 10,
-    value: 359.12345,
+    value: 359.99403,
     label: 'Option tenth',
   },
 ];
