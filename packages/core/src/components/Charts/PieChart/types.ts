@@ -11,8 +11,13 @@ export interface PieChartTooltipProps {
   isEnabled?: boolean;
   isFullscreenEnabled?: boolean;
   dimension?: string;
-  showValue?: boolean;
-  showPercentage?: boolean;
+  outputType?:
+    | 'value'
+    | 'value+dimension'
+    | 'dimension'
+    | 'percentage'
+    | 'value+percentage'
+    | 'value+dimension+percentage';
   valueRoundingDigits?: number | false;
   percentageRoundingDigits?: number;
 }
@@ -27,6 +32,7 @@ export interface PieChartProps
   activeHighlight?: boolean;
   container?: Element | DocumentFragment;
   tooltipProps?: PieChartTooltipProps;
+  legendOutputType?: 'value' | 'percentage' | 'value+percentage';
   data: PieChartLegendItem[];
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
@@ -50,6 +56,12 @@ export type PieChartLegendProps = {
   labelListStyles?: SerializedStyles;
   valueListStyles?: SerializedStyles;
   variant?: 'valueList' | 'withoutValueList';
-  renderValue?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
-  renderLabel?: (item: PieChartLegendItem) => NonNullable<React.ReactNode>;
+  renderValue?: (
+    item: PieChartLegendItem,
+    legendOutputType: PieChartProps['legendOutputType'],
+  ) => NonNullable<React.ReactNode>;
+  renderLabel?: (
+    item: PieChartLegendItem,
+    legendOutputType: PieChartProps['legendOutputType'],
+  ) => NonNullable<React.ReactNode>;
 };

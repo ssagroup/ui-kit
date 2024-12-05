@@ -29,7 +29,7 @@ export const PieChartLegend = ({
   const theme = useTheme();
   const isValueList = variant === 'valueList';
   const { isFullscreenMode, activeId, setActiveId } = useFullscreenMode();
-  const { data: contextData } = usePieChartContext();
+  const { data: contextData, legendOutputType } = usePieChartContext();
   const handleActiveIdChange = (newActiveId: null | number | string) => {
     if (activeHighlight) {
       setActiveId(newActiveId);
@@ -78,7 +78,7 @@ export const PieChartLegend = ({
                     alignContent: 'center',
                   }}>
                   {typeof renderLabel === 'function'
-                    ? renderLabel(item)
+                    ? renderLabel(item, legendOutputType)
                     : label}
                 </Typography>
               ) : (
@@ -105,7 +105,7 @@ export const PieChartLegend = ({
                     alignContent: isFullscreenMode && 'center',
                   }}>
                   {typeof renderValue === 'function'
-                    ? renderValue(item)
+                    ? renderValue(item, legendOutputType)
                     : item.value}
                 </Typography>
               )}
@@ -135,7 +135,7 @@ export const PieChartLegend = ({
                   variant="subtitle"
                   color={theme.colors.greyDarker60}>
                   {typeof renderValue === 'function'
-                    ? renderValue(item)
+                    ? renderValue(item, legendOutputType)
                     : item.value}
                 </Typography>
               </PieChartLegendListValueListItem>
