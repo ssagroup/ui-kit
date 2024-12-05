@@ -1,4 +1,4 @@
-import CardHeader from './CardHeader';
+import CardHeader from './index';
 import { screen } from '../../../customTest';
 
 describe('CardHeader', () => {
