@@ -9,9 +9,7 @@ describe('CardHeader', () => {
 
     expect(div).toHaveStyle('background: initial');
   });
-});
 
-describe('CardHeader', () => {
   it('Renders with transparent background', () => {
     const { getByText } = render(<CardHeader transparent>Card</CardHeader>);
 
@@ -19,9 +17,7 @@ describe('CardHeader', () => {
 
     expect(div).toHaveStyle('background: transparent');
   });
-});
 
-describe('CardHeader', () => {
   it('Renders with icon', () => {
     const { getByText } = render(
       <CardHeader icon={<div>Icon</div>}>Card</CardHeader>,
