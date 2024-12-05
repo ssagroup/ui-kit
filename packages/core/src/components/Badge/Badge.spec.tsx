@@ -60,6 +60,17 @@ describe('Badge', () => {
     expect(badge).toHaveStyleRule('background-color', theme.colors.yellow);
   });
 
+  it('Render with color yellowWarm', () => {
+    render(<Badge color="yellowWarm">Badge</Badge>);
+
+    const badge = screen.getByText(/badge/i);
+
+    expect(badge).toHaveStyleRule(
+      'background-color',
+      theme.colors.yellowLighter,
+    );
+  });
+
   it('Render with color green', () => {
     render(<Badge color="green">Badge</Badge>);
 
