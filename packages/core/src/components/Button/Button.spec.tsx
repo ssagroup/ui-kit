@@ -213,7 +213,7 @@ describe('Button', () => {
       );
     });
 
-    it('Renders text with white font', () => {
+    it('Renders with default style', () => {
       const { getByTestId } = render(<Button text="Button" />);
 
       const span = getByTestId('white-button-text');
@@ -285,7 +285,7 @@ describe('Button', () => {
       );
     });
 
-    it('Renders text with white font', () => {
+    it('Renders with default style', () => {
       const { getByTestId } = render(<Button variant="info" text="Button" />);
 
       const span = getByTestId('white-button-text');
@@ -358,7 +358,7 @@ describe('Button', () => {
       );
     });
 
-    it('Renders text with darker grey font', () => {
+    it('Renders with default style', () => {
       const { getByTestId } = render(
         <Button variant="secondary" text="Button" />,
       );
@@ -436,7 +436,7 @@ describe('Button', () => {
       );
     });
 
-    it('Renders text with light-grey font', async () => {
+    it('Renders with default style when hovered', async () => {
       const { user, getByTestId, getByRole } = setup(
         <Button variant="tertiary" text="Button" />,
       );
@@ -512,7 +512,7 @@ describe('Button', () => {
       );
     });
 
-    it('Renders text with white font', () => {
+    it('Renders with default style', () => {
       const { getByTestId } = render(
         <Button variant="attention" text="Button" />,
       );
@@ -598,7 +598,7 @@ describe('Button', () => {
   });
 
   describe('Disabled', () => {
-    it('Renders text with grey font', () => {
+    it('Renders with default style', () => {
       const { getByTestId } = render(<Button isDisabled text="Button" />);
 
       const span = getByTestId('disabled-button-text');
