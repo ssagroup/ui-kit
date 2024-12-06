@@ -51,13 +51,13 @@ export const PieChartTooltip = ({
           <b>{point.datum.value}</b>
           {outputType === 'value+dimension' && dimension}
           {outputType === 'value+percentage' &&
-            ` (${point.datum.data.percentage}`}
+            ` (${point.datum.data.percentage}%)`}
           {outputType === 'value+dimension+percentage' &&
-            ` ${dimension} (${point.datum.data.percentage})`}
+            `${dimension} (${point.datum.data.percentage}%)`}
         </div>
       )}
       {outputType === 'percentage' && ` ${point.datum.data.percentage}%`}
-      {outputType === 'dimension' && ` ${dimension}%`}
+      {outputType === 'dimension' && ` (${dimension})`}
     </Wrapper>
   );
 };
