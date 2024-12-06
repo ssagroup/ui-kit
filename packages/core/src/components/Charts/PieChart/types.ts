@@ -1,5 +1,5 @@
 import { SerializedStyles } from '@emotion/react';
-import { ResponsivePie, MayHaveLabel } from '@nivo/pie';
+import { ResponsivePie, MayHaveLabel, PieTooltipProps } from '@nivo/pie';
 import { CommonProps, WidgetCardProps } from '../../..';
 
 export type PieChartFeatures =
@@ -64,4 +64,17 @@ export type PieChartLegendProps = {
     item: PieChartLegendItem,
     legendOutputType: PieChartProps['legendOutputType'],
   ) => NonNullable<React.ReactNode>;
+};
+
+export type PieChartTooltipViewProps = {
+  point: PieTooltipProps<
+    MayHaveLabel & {
+      percentage?: number;
+      dimension?: string;
+    }
+  >;
+  outputType: PieChartTooltipProps['outputType'];
+  dimension?: string;
+  isFullscreenMode?: boolean;
+  position: { x: number; y: number };
 };

@@ -1,29 +1,29 @@
+import { useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useTheme } from '@emotion/react';
-import { MayHaveLabel, PieTooltipProps } from '@nivo/pie';
 import Wrapper from '@components/Wrapper';
-import { PieChartTooltipProps } from './types';
+import { PieChartTooltipViewProps } from './types';
 
-export const PieChartTooltip = ({
+type PieChartTooltipProps = (
+  data: PieChartTooltipViewProps,
+) => React.ReactPortal;
+
+export const PieChartTooltip: PieChartTooltipProps = ({
   point,
   outputType = 'value',
   dimension,
   isFullscreenMode,
-}: {
-  point: PieTooltipProps<
-    MayHaveLabel & {
-      percentage?: number;
-      dimension?: string;
-    }
-  >;
-  outputType: PieChartTooltipProps['outputType'];
-  dimension?: string;
-  isFullscreenMode?: boolean;
+  position,
 }) => {
   const theme = useTheme();
-  return (
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  return createPortal(
     <Wrapper
+      ref={wrapperRef}
       css={{
         height: 30,
+        width: 'auto',
+        pointerEvents: 'none',
         padding: '4px 8px',
         borderRadius: 4,
         border: `1px solid ${theme.colors.grey20}`,
@@ -31,6 +31,10 @@ export const PieChartTooltip = ({
         gap: 6,
         whiteSpace: 'nowrap',
         fontSize: isFullscreenMode ? 16 : 14,
+        position: 'absolute',
+        top: position.y,
+        left: position.x,
+        transition: 'all .3s ease-out',
       }}>
       <div
         css={{
@@ -59,6 +63,7 @@ export const PieChartTooltip = ({
       )}
       {outputType === 'percentage' && ` ${point.datum.data.percentage}%`}
       {outputType === 'dimension' && ` (${dimension})`}
-    </Wrapper>
+    </Wrapper>,
+    document.body,
   );
 };

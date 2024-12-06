@@ -1,9 +1,9 @@
-import { Fragment, useEffect } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ResponsivePie } from '@nivo/pie';
-import { propOr } from '@ssa-ui-kit/utils';
+import { debounce, propOr } from '@ssa-ui-kit/utils';
 import { FullscreenModeContextType } from '@components/FullscreenModeContext';
 import { WithWidgetCard } from '@components/WidgetCard';
-import { PieChartProps } from './types';
+import { PieChartProps, PieChartTooltipViewProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 import { PieChartHeader } from './PieChartHeader';
 import { PieChartTooltip } from './PieChartTooltip';
@@ -47,6 +47,13 @@ export const PieChartInternal = ({
     isFullscreenEnabled = false,
   } = tooltipProps || {};
 
+  const tooltipData: MutableRefObject<
+    PieChartTooltipViewProps['point'] | null
+  > = useRef(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const debounceThrottledPosition = useRef(debounce(setTooltipPosition, 10));
+  const [setTooltipPositionDebounced] = debounceThrottledPosition.current;
+
   const totalAmount = data.reduce((acc, item) => {
     const currentValue = propOr<typeof item, number>(0, 'value')(item);
     return +currentValue + +acc;
@@ -78,6 +85,15 @@ export const PieChartInternal = ({
   useEffect(() => {
     onFullscreenModeChange?.(isFullscreenMode);
   }, [isFullscreenMode]);
+
+  // TODO: check why sometimes tooltip doesn't hide
+  // TODO: do flip left-right
+  useEffect(() => {
+    console.log('>>>activeId', activeId);
+    if (activeId === null) {
+      tooltipData.current = null;
+    }
+  }, [activeId]);
 
   return (
     <PieChartProvider data={dataForChart} legendOutputType={legendOutputType}>
@@ -117,19 +133,35 @@ export const PieChartInternal = ({
                 activeHighlight && setActiveId(activeId);
               }}
               data={dataForChart}
-              tooltip={
-                (isEnabled && !isFullscreenMode) ||
-                (isFullscreenEnabled && isFullscreenMode)
-                  ? (point) => (
-                      <PieChartTooltip
-                        point={point}
-                        dimension={dimension}
-                        outputType={outputType}
-                        isFullscreenMode={isFullscreenMode}
-                      />
-                    )
-                  : () => <Fragment></Fragment>
-              }
+              tooltip={(point) => {
+                tooltipData.current = point;
+                // setTooltipData(datum);
+                return null; // Prevent the default tooltip rendering
+              }}
+              onMouseMove={(sliceData, event) => {
+                // setTooltipPosition({ x: event.clientX, y: event.clientY });
+                setTooltipPositionDebounced({
+                  x: event.clientX,
+                  y: event.clientY,
+                });
+              }}
+              onMouseLeave={() => {
+                // tooltipData.current = null;
+                // cancel();
+              }}
+              // tooltip={
+              // (isEnabled && !isFullscreenMode) ||
+              // (isFullscreenEnabled && isFullscreenMode)
+              //     ? (point) => (
+              // <PieChartTooltip
+              //   point={point}
+              //   dimension={dimension}
+              //   outputType={outputType}
+              //   isFullscreenMode={isFullscreenMode}
+              // />
+              //       )
+              //     : () => <Fragment></Fragment>
+              // }
               {...chartProps}
             />
             {title && (
@@ -137,6 +169,18 @@ export const PieChartInternal = ({
                 {title}
               </PieChartTextBase>
             )}
+            {tooltipData &&
+              tooltipData.current &&
+              ((isEnabled && !isFullscreenMode) ||
+                (isFullscreenEnabled && isFullscreenMode)) && (
+                <PieChartTooltip
+                  point={tooltipData.current}
+                  position={tooltipPosition}
+                  dimension={dimension}
+                  outputType={outputType}
+                  isFullscreenMode={isFullscreenMode}
+                />
+              )}
           </div>
           {children}
         </PieChartBase>
