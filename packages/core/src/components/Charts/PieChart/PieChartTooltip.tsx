@@ -41,6 +41,7 @@ export const PieChartTooltip = ({
         }}
       />
       {point.datum.label}
+      {outputType !== 'dimension' ? ':' : ''}
       {[
         'value',
         'value+dimension',
