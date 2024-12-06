@@ -261,11 +261,6 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
 };
 FullscreenAndTitle.args = {};
 
-/**
- * TODO:
- * - remove extra stories?
- * - fix different story controls
- */
 const WithTooltipTemplate: StoryObj<
   Pick<PieChartProps, 'data' | 'legendOutputType'> & {
     tooltipOutputType: PieChartTooltipProps['outputType'];
@@ -277,7 +272,7 @@ const WithTooltipTemplate: StoryObj<
   }
 > = {
   render: ({
-    data: pieChartData = optionsDataBig,
+    data: pieChartData = optionsDataBigDecimal,
     legendOutputType = 'percentage',
     tooltipDimension,
     tooltipIsEnabled,
@@ -364,7 +359,6 @@ const WithTooltipTemplate: StoryObj<
             }
           `}
           renderValue={(item, legendOutputType) => {
-            console.log('>>>>!', item, legendOutputType);
             switch (legendOutputType) {
               case 'percentage':
                 return `${item.percentage}%`;
@@ -380,15 +374,23 @@ const WithTooltipTemplate: StoryObj<
   },
 };
 
-export const WithTooltipSimple = {
+export const WithTooltip = {
   ...WithTooltipTemplate,
   args: {
     legendOutputType: 'value',
+    tooltipOutputType: 'value',
+    tooltipDimension: 'm',
   },
   argTypes: {
     legendOutputType: {
       options: ['value', 'percentage', 'value+percentage'],
       control: { type: 'radio' },
+    },
+    tooltipIsEnabled: {
+      control: { type: 'boolean' },
+    },
+    tooltipIsFullscreenEnabled: {
+      control: { type: 'boolean' },
     },
     tooltipOutputType: {
       options: [
@@ -401,86 +403,14 @@ export const WithTooltipSimple = {
       ],
       control: { type: 'radio' },
     },
-    tooltipIsEnabled: {
-      control: { type: 'boolean' },
-    },
-    tooltipIsFullscreenEnabled: {
-      control: { type: 'boolean' },
-    },
     tooltipDimension: {
-      control: { type: 'string' },
+      control: { type: 'text' },
     },
     tooltipValueRoundingDigits: {
       control: { type: 'number' },
     },
     tooltipPercentageRoundingDigits: {
       control: { type: 'number' },
-    },
-  },
-};
-
-export const WithTooltipInFullscreenMode = {
-  ...WithTooltipTemplate,
-  args: {
-    isFullscreenEnabled: true,
-  },
-};
-
-export const WithTooltipAndPercentage = {
-  ...WithTooltipTemplate,
-  args: {
-    tooltipProps: {
-      isFullscreenEnabled: true,
-      showPercentage: true,
-      showValue: false,
-    },
-  },
-};
-
-export const WithTooltipAndDimension = {
-  ...WithTooltipTemplate,
-  args: {
-    tooltipProps: {
-      isFullscreenEnabled: true,
-      dimension: 'm',
-    },
-  },
-};
-
-export const WithTooltipAndValueRounding = {
-  ...WithTooltipTemplate,
-  args: {
-    data: optionsDataBigDecimal,
-    tooltipProps: {
-      isFullscreenEnabled: true,
-      valueRoundingDigits: 2,
-    },
-  },
-};
-
-export const WithTooltipAndPercentageRounding = {
-  ...WithTooltipTemplate,
-  args: {
-    data: optionsDataBigDecimal,
-    tooltipProps: {
-      showPercentage: true,
-      showValue: false,
-      isFullscreenEnabled: true,
-      percentageRoundingDigits: 2,
-    },
-  },
-};
-
-export const WithTooltipAndAllOptions = {
-  ...WithTooltipTemplate,
-  args: {
-    data: optionsDataBigDecimal,
-    tooltipProps: {
-      isFullscreenEnabled: true,
-      showPercentage: true,
-      valueRoundingDigits: 2,
-      percentageRoundingDigits: 2,
-      dimension: 'm',
     },
   },
 };
