@@ -1,11 +1,11 @@
 import { useTheme } from '@emotion/react';
 import { MayHaveLabel, PieTooltipProps } from '@nivo/pie';
 import Wrapper from '@components/Wrapper';
+import { PieChartTooltipProps } from './types';
 
 export const PieChartTooltip = ({
   point,
-  showValue = true,
-  showPercentage = false,
+  outputType = 'value',
   dimension,
   isFullscreenMode,
 }: {
@@ -15,8 +15,7 @@ export const PieChartTooltip = ({
       dimension?: string;
     }
   >;
-  showPercentage?: boolean;
-  showValue?: boolean;
+  outputType: PieChartTooltipProps['outputType'];
   dimension?: string;
   isFullscreenMode?: boolean;
 }) => {
@@ -42,13 +41,24 @@ export const PieChartTooltip = ({
         }}
       />
       {point.datum.label}
-      {showValue && (
+      {outputType !== 'dimension' ? ':' : ''}
+      {[
+        'value',
+        'value+dimension',
+        'value+percentage',
+        'value+dimension+percentage',
+      ].includes(outputType) && (
         <div>
-          {showValue && <b>{point.datum.value}</b>}
-          {dimension !== undefined && dimension}
+          <b>{point.datum.value}</b>
+          {outputType === 'value+dimension' && dimension}
+          {outputType === 'value+percentage' &&
+            ` (${point.datum.data.percentage}%)`}
+          {outputType === 'value+dimension+percentage' &&
+            `${dimension} (${point.datum.data.percentage}%)`}
         </div>
       )}
-      {showPercentage && ` (${point.datum.data.percentage}%)`}
+      {outputType === 'percentage' && ` ${point.datum.data.percentage}%`}
+      {outputType === 'dimension' && ` (${dimension})`}
     </Wrapper>
   );
 };

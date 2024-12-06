@@ -5,7 +5,7 @@ import {
   colors,
   HeaderTitle,
   GridWrapper,
-} from '@components/Badge/helpers';
+} from '@components/Badge/helpers.stories-extra';
 import Tag from './index';
 
 export default {

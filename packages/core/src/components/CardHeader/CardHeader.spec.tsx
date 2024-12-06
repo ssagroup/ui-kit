@@ -1,12 +1,34 @@
-import CardHeader from './CardHeader';
+import CardHeader from './index';
 import { screen } from '../../../customTest';
 
 describe('CardHeader', () => {
-  it('Render transparent card header', () => {
-    render(<CardHeader transparent>Card</CardHeader>);
+  it('Renders with initial background', () => {
+    render(<CardHeader>Card</CardHeader>);
 
-    const cardHeader = screen.getByText(/card/i).closest('div');
+    const div = screen.getByText(/card/i).closest('div');
 
-    expect(cardHeader).toHaveStyle('background: transparent');
+    expect(div).toHaveStyle('background: initial');
+  });
+
+  it('Renders with transparent background', () => {
+    const { getByText } = render(<CardHeader transparent>Card</CardHeader>);
+
+    const div = getByText(/card/i).closest('div');
+
+    expect(div).toHaveStyle('background: transparent');
+  });
+
+  it('Renders with icon', () => {
+    const { getByText } = render(
+      <CardHeader icon={<div>Icon</div>}>Card</CardHeader>,
+    );
+
+    const div = getByText(/card/i).closest('div');
+    expect(div).not.toBeNull();
+
+    if (div) {
+      const style = window.getComputedStyle(div);
+      expect(style.paddingLeft).toBe('30px');
+    }
   });
 });

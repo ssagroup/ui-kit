@@ -212,6 +212,16 @@ describe('Button', () => {
         'Button must have either text or icon or children',
       );
     });
+
+    it('Renders with default style', () => {
+      const { getByTestId } = render(<Button text="Button" />);
+
+      const span = getByTestId('white-button-text');
+
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveStyleRule('color', 'rgba(255, 255, 255, 1)');
+      expect(span).toHaveTextContent('Button');
+    });
   });
 
   describe('Info', () => {
@@ -273,6 +283,16 @@ describe('Button', () => {
       expect(() => render(<Button variant="info" />)).toThrow(
         'Button must have either text or icon or children',
       );
+    });
+
+    it('Renders with default style', () => {
+      const { getByTestId } = render(<Button variant="info" text="Button" />);
+
+      const span = getByTestId('white-button-text');
+
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveStyleRule('color', 'rgba(255, 255, 255, 1)');
+      expect(span).toHaveTextContent('Button');
     });
   });
 
@@ -336,6 +356,18 @@ describe('Button', () => {
       expect(() => render(<Button variant="secondary" />)).toThrow(
         'Button must have either text or icon or children',
       );
+    });
+
+    it('Renders with default style', () => {
+      const { getByTestId } = render(
+        <Button variant="secondary" text="Button" />,
+      );
+
+      const span = getByTestId('grey-button-text');
+
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveStyleRule('color', 'rgba(43, 45, 49, 1)');
+      expect(span).toHaveTextContent('Button');
     });
   });
 
@@ -403,6 +435,20 @@ describe('Button', () => {
         'Button must have either text or icon or children',
       );
     });
+
+    it('Renders with default style when hovered', async () => {
+      const { user, getByTestId, getByRole } = setup(
+        <Button variant="tertiary" text="Button" />,
+      );
+
+      const buttonEl = getByRole('button');
+      await user.hover(buttonEl);
+
+      const span = getByTestId('greylight-button-text');
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveStyleRule('color', 'rgba(77, 82, 87, 1)');
+      expect(span).toHaveTextContent('Button');
+    });
   });
 
   describe('Attention', () => {
@@ -465,6 +511,18 @@ describe('Button', () => {
         'Button must have either text or icon or children',
       );
     });
+
+    it('Renders with default style', () => {
+      const { getByTestId } = render(
+        <Button variant="attention" text="Button" />,
+      );
+
+      const span = getByTestId('white-button-text');
+
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveStyleRule('color', 'rgba(255, 255, 255, 1)');
+      expect(span).toHaveTextContent('Button');
+    });
   });
 
   describe('Custom', () => {
@@ -524,6 +582,30 @@ describe('Button', () => {
 
       expect(iconLeft).toBeInTheDocument();
       expect(iconRight).toBeInTheDocument();
+    });
+
+    it('Renders only an icon', () => {
+      const { container, getByTitle } = render(
+        <Button startIcon={<Icon name="archive" />} />,
+      );
+
+      const icon = getByTitle(/archive/i);
+      expect(icon).toBeInTheDocument();
+
+      const spans = container.getElementsByTagName('span');
+      expect(spans).toHaveLength(1);
+    });
+  });
+
+  describe('Disabled', () => {
+    it('Renders with default style', () => {
+      const { getByTestId } = render(<Button isDisabled text="Button" />);
+
+      const span = getByTestId('disabled-button-text');
+
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveStyleRule('color', 'rgba(43, 45, 49, 0.4)');
+      expect(span).toHaveTextContent('Button');
     });
   });
 });
