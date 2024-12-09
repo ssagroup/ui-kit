@@ -67,14 +67,15 @@ export type PieChartLegendProps = {
 };
 
 export type PieChartTooltipViewProps = {
-  point: PieTooltipProps<
+  isOpen: boolean;
+  point?: PieTooltipProps<
     MayHaveLabel & {
       percentage?: number;
       dimension?: string;
     }
-  >;
+  > | null;
   outputType: PieChartTooltipProps['outputType'];
   dimension?: string;
   isFullscreenMode?: boolean;
-  position: { x: number; y: number };
+  position: { x: number; y: number } | null;
 };
