@@ -37,7 +37,7 @@ export const Default: Args = {
   ),
 };
 
-export const WithSplineAndFiltering: Args = {
+export const WithFiltering: Args = {
   ...Default,
   args: {
     lineShape: 'spline',
@@ -76,5 +76,14 @@ export const WithLimitation: Args = {
   args: {
     data: mockBigData,
     features: ['filtering', 'fullscreenMode'],
+  },
+};
+
+export const WithDisabledControls: Args = {
+  ...Default,
+  args: {
+    data: mockBigData,
+    features: ['filtering', 'fullscreenMode'],
+    systemModeBarButtons: ['toImage'],
   },
 };

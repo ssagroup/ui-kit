@@ -1,14 +1,26 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  autoUpdate,
+  flip,
+  FloatingFocusManager,
+  shift,
+  useDismiss,
+  useFloating,
+  useHover,
+  useInteractions,
+  useRole,
+} from '@floating-ui/react';
 import { ResponsivePie } from '@nivo/pie';
 import { propOr } from '@ssa-ui-kit/utils';
 import { FullscreenModeContextType } from '@components/FullscreenModeContext';
 import { WithWidgetCard } from '@components/WidgetCard';
-import { PieChartProps } from './types';
+import { PieChartProps, PieChartTooltipViewProps } from './types';
 import { PieChartBase, PieChartTextBase } from './PieChartBases';
 import { PieChartHeader } from './PieChartHeader';
 import { PieChartTooltip } from './PieChartTooltip';
-import { getFixedNumber, getRoundedNumber } from '../SegmentedPieChart/utils';
 import { PieChartProvider } from './PieChartContext';
+import { getFixedNumber, getRoundedNumber } from '../SegmentedPieChart/utils';
+import { TOOLTIP_HEIGHT } from './constants';
 
 export const PieChartInternal = ({
   as,
@@ -47,6 +59,35 @@ export const PieChartInternal = ({
     isFullscreenEnabled = false,
   } = tooltipProps || {};
 
+  const [tooltipPosition, setTooltipPosition] = useState<null | {
+    x: number;
+    y: number;
+  }>(null);
+  const [tooltipData, setTooltipData] = useState<
+    PieChartTooltipViewProps['point'] | null
+  >(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const { refs, context } = useFloating({
+    open: isOpen,
+    middleware: [flip({ fallbackAxisSideDirection: 'end' }), shift()],
+    onOpenChange: setIsOpen,
+    whileElementsMounted: autoUpdate,
+  });
+
+  const tooltipIsOpened = !!(
+    tooltipData &&
+    tooltipPosition &&
+    ((isEnabled && !isFullscreenMode) ||
+      (isFullscreenEnabled && isFullscreenMode))
+  );
+
+  const hover = useHover(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context);
+
+  const { getReferenceProps } = useInteractions([hover, dismiss, role]);
+
   const totalAmount = data.reduce((acc, item) => {
     const currentValue = propOr<typeof item, number>(0, 'value')(item);
     return +currentValue + +acc;
@@ -75,6 +116,31 @@ export const PieChartInternal = ({
     );
   }
 
+  const calcTooltipPosition = () => {
+    const referenceRect = refs.domReference.current?.getBoundingClientRect();
+    const floatingRect = refs.floating.current?.getBoundingClientRect();
+    let newX = 0;
+    let newY = 0;
+    if (referenceRect && floatingRect) {
+      newX =
+        referenceRect.left + referenceRect.width / 2 - floatingRect.width / 2;
+      newY =
+        referenceRect.top + referenceRect.height / 2 - floatingRect.height / 2;
+      return {
+        x: newX,
+        y: newY,
+      };
+    } else if (referenceRect) {
+      newX = referenceRect.left + referenceRect.width / 2;
+      newY = referenceRect.top + referenceRect.height / 2 - TOOLTIP_HEIGHT / 2;
+      return {
+        x: newX,
+        y: newY,
+      };
+    }
+    return null;
+  };
+
   useEffect(() => {
     onFullscreenModeChange?.(isFullscreenMode);
   }, [isFullscreenMode]);
@@ -92,7 +158,10 @@ export const PieChartInternal = ({
           className={className}
           width={width}
           isFullscreenMode={isFullscreenMode}>
-          <div className="pie-chart-wrapper">
+          <div
+            className="pie-chart-wrapper"
+            ref={refs.setReference}
+            {...getReferenceProps()}>
             <ResponsivePie
               margin={{
                 top: internalOffset,
@@ -117,19 +186,19 @@ export const PieChartInternal = ({
                 activeHighlight && setActiveId(activeId);
               }}
               data={dataForChart}
-              tooltip={
-                (isEnabled && !isFullscreenMode) ||
-                (isFullscreenEnabled && isFullscreenMode)
-                  ? (point) => (
-                      <PieChartTooltip
-                        point={point}
-                        dimension={dimension}
-                        outputType={outputType}
-                        isFullscreenMode={isFullscreenMode}
-                      />
-                    )
-                  : () => <Fragment></Fragment>
-              }
+              onMouseEnter={(data) => {
+                setTooltipData(() => ({ datum: data }));
+              }}
+              onMouseLeave={() => {
+                setTooltipData(() => null);
+              }}
+              onMouseMove={() => {
+                const newPosition = calcTooltipPosition();
+                if (newPosition) {
+                  setTooltipPosition(() => newPosition);
+                }
+              }}
+              tooltip={() => null}
               {...chartProps}
             />
             {title && (
@@ -137,6 +206,17 @@ export const PieChartInternal = ({
                 {title}
               </PieChartTextBase>
             )}
+            <FloatingFocusManager context={context}>
+              <PieChartTooltip
+                isOpen={tooltipIsOpened}
+                point={tooltipData}
+                position={tooltipPosition}
+                dimension={dimension}
+                outputType={outputType}
+                isFullscreenMode={isFullscreenMode}
+                ref={refs.setFloating}
+              />
+            </FloatingFocusManager>
           </div>
           {children}
         </PieChartBase>

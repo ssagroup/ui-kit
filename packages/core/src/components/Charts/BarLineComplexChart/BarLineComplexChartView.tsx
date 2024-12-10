@@ -23,6 +23,15 @@ export const BarLineComplexChartView = ({
   transformedChartData,
   tooltipContentRef,
   extraModeBarButtons,
+  systemModeBarButtons = [
+    'zoom2d',
+    'pan2d',
+    'select2d',
+    'zoomIn2d',
+    'zoomOut2d',
+    'autoScale2d',
+    'resetScale2d',
+  ],
   onChange,
   ...props
 }: BarLineComplexInternalProps & {
@@ -228,18 +237,7 @@ export const BarLineComplexChartView = ({
         }}
         config={{
           ...plotlyDefaultLayoutConfig.config,
-          modeBarButtons: [
-            extraModeBarButtons,
-            [
-              'zoom2d',
-              'pan2d',
-              'select2d',
-              'zoomIn2d',
-              'zoomOut2d',
-              'autoScale2d',
-              'resetScale2d',
-            ],
-          ],
+          modeBarButtons: [extraModeBarButtons, systemModeBarButtons],
         }}
         {...props}
       />
