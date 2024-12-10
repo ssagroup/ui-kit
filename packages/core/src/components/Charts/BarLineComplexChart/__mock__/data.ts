@@ -171,7 +171,7 @@ export const mockWithDimensions: BarLineChartItem[] = [
     name: 'Data 1',
     type: 'bar',
     selected: true,
-    valueDimension: '%',
+    valueDimension: 'm',
   },
   {
     x: axisXTimestamps,
@@ -179,7 +179,7 @@ export const mockWithDimensions: BarLineChartItem[] = [
     name: 'Data 2',
     type: 'bar',
     selected: true,
-    valueDimension: '!',
+    valueDimension: 'm',
   },
   {
     x: axisXTimestamps,
@@ -187,7 +187,7 @@ export const mockWithDimensions: BarLineChartItem[] = [
     name: 'Data 3',
     type: 'bar',
     selected: false,
-    valueDimension: '+',
+    valueDimension: 'm',
   },
 ];
 

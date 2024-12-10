@@ -8,10 +8,20 @@ export const PieChartTooltip = forwardRef<
   HTMLDivElement,
   PieChartTooltipViewProps
 >(function PieChartTooltip(
-  { point, outputType = 'value', dimension, isFullscreenMode, position },
+  {
+    point,
+    outputType = 'value',
+    dimension,
+    isFullscreenMode,
+    position,
+    isOpen,
+  },
   ref,
 ) {
   const theme = useTheme();
+  if (!isOpen) {
+    return null;
+  }
   return createPortal(
     <Wrapper
       ref={ref}
@@ -31,6 +41,7 @@ export const PieChartTooltip = forwardRef<
         left: position?.x,
         transition: point ? 'all .3s ease-out' : 'none',
         visibility: point ? 'visible' : 'hidden',
+        zIndex: 10,
       }}>
       {point && (
         <React.Fragment>

@@ -275,8 +275,8 @@ const WithTooltipTemplate: StoryObj<
     data: pieChartData = optionsDataBigDecimal,
     legendOutputType = 'percentage',
     tooltipDimension,
-    tooltipIsEnabled,
-    tooltipIsFullscreenEnabled,
+    tooltipIsEnabled = true,
+    tooltipIsFullscreenEnabled = true,
     tooltipOutputType,
     tooltipPercentageRoundingDigits,
     tooltipValueRoundingDigits,
@@ -380,6 +380,8 @@ export const WithTooltip = {
     legendOutputType: 'value',
     tooltipOutputType: 'value',
     tooltipDimension: 'm',
+    tooltipIsFullscreenEnabled: true,
+    tooltipIsEnabled: true,
   },
   argTypes: {
     legendOutputType: {

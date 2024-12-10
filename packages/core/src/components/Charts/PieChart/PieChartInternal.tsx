@@ -75,6 +75,13 @@ export const PieChartInternal = ({
     whileElementsMounted: autoUpdate,
   });
 
+  const tooltipIsOpened = !!(
+    tooltipData &&
+    tooltipPosition &&
+    ((isEnabled && !isFullscreenMode) ||
+      (isFullscreenEnabled && isFullscreenMode))
+  );
+
   const hover = useHover(context);
   const dismiss = useDismiss(context);
   const role = useRole(context);
@@ -109,10 +116,6 @@ export const PieChartInternal = ({
     );
   }
 
-  useEffect(() => {
-    onFullscreenModeChange?.(isFullscreenMode);
-  }, [isFullscreenMode]);
-
   const calcTooltipPosition = () => {
     const referenceRect = refs.domReference.current?.getBoundingClientRect();
     const floatingRect = refs.floating.current?.getBoundingClientRect();
@@ -120,7 +123,7 @@ export const PieChartInternal = ({
     let newY = 0;
     if (referenceRect && floatingRect) {
       newX =
-        referenceRect.left - referenceRect.width / 2 + floatingRect.width / 2;
+        referenceRect.left + referenceRect.width / 2 - floatingRect.width / 2;
       newY =
         referenceRect.top + referenceRect.height / 2 - floatingRect.height / 2;
       return {
@@ -128,7 +131,7 @@ export const PieChartInternal = ({
         y: newY,
       };
     } else if (referenceRect) {
-      newX = referenceRect.left - referenceRect.width / 2;
+      newX = referenceRect.left + referenceRect.width / 2;
       newY = referenceRect.top + referenceRect.height / 2 - TOOLTIP_HEIGHT / 2;
       return {
         x: newX,
@@ -137,6 +140,10 @@ export const PieChartInternal = ({
     }
     return null;
   };
+
+  useEffect(() => {
+    onFullscreenModeChange?.(isFullscreenMode);
+  }, [isFullscreenMode]);
 
   return (
     <PieChartProvider data={dataForChart} legendOutputType={legendOutputType}>
@@ -201,14 +208,7 @@ export const PieChartInternal = ({
             )}
             <FloatingFocusManager context={context}>
               <PieChartTooltip
-                isOpen={
-                  !!(
-                    tooltipData &&
-                    tooltipPosition &&
-                    ((isEnabled && !isFullscreenMode) ||
-                      (isFullscreenEnabled && isFullscreenMode))
-                  )
-                }
+                isOpen={tooltipIsOpened}
                 point={tooltipData}
                 position={tooltipPosition}
                 dimension={dimension}
