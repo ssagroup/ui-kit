@@ -4,4 +4,5 @@ import theme from '../../../.storybook/theme';
 addons.setConfig({
   theme,
   showPanel: true,
+  panelPosition: 'bottom',
 });

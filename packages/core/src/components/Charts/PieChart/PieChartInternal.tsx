@@ -10,6 +10,7 @@ import {
   useInteractions,
   useRole,
 } from '@floating-ui/react';
+import { css } from '@emotion/css';
 import { ResponsivePie } from '@nivo/pie';
 import { propOr } from '@ssa-ui-kit/utils';
 import { FullscreenModeContextType } from '@components/FullscreenModeContext';
@@ -67,6 +68,7 @@ export const PieChartInternal = ({
     PieChartTooltipViewProps['point'] | null
   >(null);
 
+  const isHeaderIncluded = features.includes('header');
   const [isOpen, setIsOpen] = useState(false);
   const { refs, context } = useFloating({
     open: isOpen,
@@ -151,13 +153,23 @@ export const PieChartInternal = ({
         features={features}
         cardProps={{
           headerContent: <PieChartHeader features={features} />,
+          className:
+            isHeaderIncluded && isFullscreenMode
+              ? css`
+                  width: 95% !important;
+                  height: 95% !important;
+                  top: 2.5% !important;
+                  left: 2.5% !important;
+                `
+              : undefined,
           ...cardProps,
         }}>
         <PieChartBase
           as={as}
           className={className}
           width={width}
-          isFullscreenMode={isFullscreenMode}>
+          isFullscreenMode={isFullscreenMode}
+          isHeaderIncluded={isHeaderIncluded}>
           <div
             className="pie-chart-wrapper"
             ref={refs.setReference}
