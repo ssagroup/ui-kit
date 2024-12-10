@@ -1,17 +1,22 @@
-import { PieChartProps } from './types';
+import { Fragment } from 'react';
+import { createPortal } from 'react-dom';
 import {
   useFullscreenMode,
   WithFullscreenMode,
 } from '@components/FullscreenModeContext';
-import { createPortal } from 'react-dom';
+import { PieChartProps } from './types';
 import { PieChartInternal } from './PieChartInternal';
+import { ChartBackground } from '../common';
 
 const PieChartComponent = (props: PieChartProps) => {
   const fullscreenModeProps = useFullscreenMode();
 
   if (fullscreenModeProps.isFullscreenMode) {
     return createPortal(
-      <PieChartInternal {...props} {...fullscreenModeProps} />,
+      <Fragment>
+        <ChartBackground />
+        <PieChartInternal {...props} {...fullscreenModeProps} />
+      </Fragment>,
       props.container || document.body,
     );
   }

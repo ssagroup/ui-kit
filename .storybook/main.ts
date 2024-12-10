@@ -24,6 +24,7 @@ const config: StorybookConfig = {
       options: {},
     },
     '@storybook/addon-mdx-gfm',
+    '@storybook/addon-controls',
   ],
   refs,
   docs: {

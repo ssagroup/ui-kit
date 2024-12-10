@@ -1,9 +1,11 @@
+import { Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import { useFullscreenMode } from '@components/FullscreenModeContext';
 import { BarLineComplexInternalProps } from './types';
 import { useChartInfo } from './useChartInfo';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import { BarLineComplexChartView } from './BarLineComplexChartView';
+import { ChartBackground } from '../common';
 
 export const BarLineComplexChartInternal = ({
   width = '670px',
@@ -32,16 +34,19 @@ export const BarLineComplexChartInternal = ({
 
   if (isFullscreenMode) {
     return createPortal(
-      <BarLineComplexChartView
-        isFullscreenMode={isFullscreenMode}
-        width={width}
-        height={height}
-        onChange={onChange}
-        transformedChartData={transformedChartData}
-        tooltipContentRef={tooltipContentRef}
-        extraModeBarButtons={extraModeBarButtons}
-        {...rest}
-      />,
+      <Fragment>
+        <ChartBackground />
+        <BarLineComplexChartView
+          isFullscreenMode={isFullscreenMode}
+          width={width}
+          height={height}
+          onChange={onChange}
+          transformedChartData={transformedChartData}
+          tooltipContentRef={tooltipContentRef}
+          extraModeBarButtons={extraModeBarButtons}
+          {...rest}
+        />
+      </Fragment>,
       container,
     );
   }

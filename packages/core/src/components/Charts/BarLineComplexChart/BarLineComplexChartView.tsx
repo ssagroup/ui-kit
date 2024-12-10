@@ -106,10 +106,10 @@ export const BarLineComplexChartView = ({
       className="bar-line-complex-chart-wrapper"
       css={{
         position: isFullscreenMode ? 'fixed' : 'static',
-        top: isFullscreenMode ? 0 : 'unset',
-        left: isFullscreenMode ? 0 : 'unset',
-        width: isFullscreenMode ? '100%' : width,
-        height: isFullscreenMode ? '100%' : height,
+        top: isFullscreenMode ? '2.5%' : 'unset',
+        left: isFullscreenMode ? '2.5%' : 'unset',
+        width: isFullscreenMode ? '95%' : width,
+        height: isFullscreenMode ? '95%' : height,
         borderRadius: 20,
         zIndex: isFullscreenMode ? 2 : 1,
         overflow: 'hidden',

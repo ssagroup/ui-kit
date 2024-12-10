@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 export const PieChartBase = styled.div<{
   isFullscreenMode: boolean;
+  isHeaderIncluded: boolean;
   width?: string;
 }>`
   display: flex;
@@ -12,12 +13,13 @@ export const PieChartBase = styled.div<{
   flex-direction: ${({ isFullscreenMode }) =>
     isFullscreenMode ? 'column' : 'row'};
 
-  width: ${({ isFullscreenMode, width }) =>
-    isFullscreenMode ? '100%' : width};
-  height: 100%;
+  width: ${({ isFullscreenMode, isHeaderIncluded, width }) =>
+    isFullscreenMode ? (isHeaderIncluded ? '100%' : '95%') : width};
 
-  height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'auto')};
-  max-height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : 'none')};
+  height: ${({ isFullscreenMode, isHeaderIncluded }) =>
+    isFullscreenMode ? (isHeaderIncluded ? '100%' : '95%') : 'auto'};
+  max-height: ${({ isFullscreenMode, isHeaderIncluded }) =>
+    isFullscreenMode ? (isHeaderIncluded ? '100%' : '95%') : 'none'};
 
   & > .pie-chart-wrapper {
     position: relative;
