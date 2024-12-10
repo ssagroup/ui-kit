@@ -74,11 +74,11 @@ jobs:
       - name: Running e2e tests...
         run: pnpm test:core:e2e
 
-      # - name: Running visual tests...
-      #   uses: lost-pixel/lost-pixel@v3.6.0
-      #   env:
-      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-      #     LOST_PIXEL_CONFIG_DIR: ./packages/core
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.6.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/core
 
       - name: "Building storybook: Widgets"
         run: pnpm sb:build:widgets
@@ -96,11 +96,11 @@ jobs:
       - name: Running e2e tests...
         run: pnpm test:widgets:e2e
 
-      # - name: Running visual tests...
-      #   uses: lost-pixel/lost-pixel@v3.6.0
-      #   env:
-      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-      #     LOST_PIXEL_CONFIG_DIR: ./packages/widgets
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.6.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
 
       - name: "Building storybook: Templates"
         run: pnpm sb:build:templates
@@ -108,33 +108,33 @@ jobs:
       - name: "Running storybook: Templates"
         run: pnpm sb:templates &
 
-      # - name: Installing Playwright Browsers...
-      #   run: |
-      #     cd ./packages/templates
-      #     pnpm -w install
-      #     npx playwright install chromium --with-deps
-      #     cd ../..
+      - name: Installing Playwright Browsers...
+        run: |
+          cd ./packages/templates
+          pnpm -w install
+          npx playwright install chromium --with-deps
+          cd ../..
 
-      # - name: Running e2e tests...
-      #   run: pnpm test:widgets:e2e
+      - name: Running e2e tests...
+        run: pnpm test:widgets:e2e
 
-      # - name: Running visual tests...
-      #   uses: lost-pixel/lost-pixel@v3.6.0
-      #   env:
-      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-      #     LOST_PIXEL_CONFIG_DIR: ./packages/templates
+      - name: Running visual tests...
+        uses: lost-pixel/lost-pixel@v3.6.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/templates
 
-  # finalize:
-  #   needs: [main]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
+  finalize:
+    needs: [main]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-  #     - name: Lost Pixel Finalize
-  #       uses: lost-pixel/lost-pixel@v3.6.0
-  #       env:
-  #         LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-  #         LOST_PIXEL_CONFIG_DIR: ./packages/widgets
-  #       with:
-  #         FINALIZE: true
+      - name: Lost Pixel Finalize
+        uses: lost-pixel/lost-pixel@v3.6.0
+        env:
+          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+          LOST_PIXEL_CONFIG_DIR: ./packages/widgets
+        with:
+          FINALIZE: true
