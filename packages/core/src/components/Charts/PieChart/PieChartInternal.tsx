@@ -123,18 +123,27 @@ export const PieChartInternal = ({
     const floatingRect = refs.floating.current?.getBoundingClientRect();
     let newX = 0;
     let newY = 0;
+    const documentScroll =
+      document.documentElement.scrollTop || document.body.scrollTop;
     if (referenceRect && floatingRect) {
       newX =
         referenceRect.left + referenceRect.width / 2 - floatingRect.width / 2;
       newY =
-        referenceRect.top + referenceRect.height / 2 - floatingRect.height / 2;
+        documentScroll +
+        referenceRect.top +
+        referenceRect.height / 2 -
+        floatingRect.height / 2;
       return {
         x: newX,
         y: newY,
       };
     } else if (referenceRect) {
       newX = referenceRect.left + referenceRect.width / 2;
-      newY = referenceRect.top + referenceRect.height / 2 - TOOLTIP_HEIGHT / 2;
+      newY =
+        documentScroll +
+        referenceRect.top +
+        referenceRect.height / 2 -
+        TOOLTIP_HEIGHT / 2;
       return {
         x: newX,
         y: newY,
