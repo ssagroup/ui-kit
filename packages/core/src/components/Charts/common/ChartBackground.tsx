@@ -5,14 +5,14 @@ export const ChartBackground = () => {
   return (
     <div
       css={{
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        opacity: 0.24,
-        background: theme.colors.greyShadow24,
-        filter: 'blur(5px)',
+        background: theme.colors.greyFocused,
+        opacity: 0.8,
+        zIndex: 1,
       }}
     />
   );
