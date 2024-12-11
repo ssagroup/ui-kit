@@ -11,7 +11,7 @@ export const WidgetCardBase = styled(Card)<{
   width: ${({ width }) => width ?? '100%'};
   height: ${({ height }) => height ?? '100%'};
   position: ${({ isFullscreenMode }) =>
-    isFullscreenMode ? 'absolute' : 'static'};
+    isFullscreenMode ? 'fixed' : 'static'};
   top: ${({ isFullscreenMode }) => isFullscreenMode && 0};
   left: ${({ isFullscreenMode }) => isFullscreenMode && 0};
 
