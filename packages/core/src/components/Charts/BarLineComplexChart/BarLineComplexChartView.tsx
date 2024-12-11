@@ -64,6 +64,14 @@ export const BarLineComplexChartView = ({
     legend = {},
     ...layoutRest
   } = layout;
+
+  const tickFont = {
+    color: theme.colors.greyDarker,
+    family: FONT_FAMILY,
+    size: isFullscreenMode ? 16 : 12,
+    weight: 500,
+  };
+
   if (
     typeof props.cardProps?.title === 'string' &&
     typeof title !== 'string' &&
@@ -185,21 +193,14 @@ export const BarLineComplexChartView = ({
             showgrid: true,
             rangemode: 'nonnegative',
             zeroline: false,
-            tickfont: {
-              family: FONT_FAMILY,
-              size: isFullscreenMode ? 16 : 12,
-            },
+            tickfont: tickFont,
             ...yaxis,
           },
           yaxis2: {
             showgrid: true,
             overlaying: 'y',
             side: 'right',
-            tickfont: {
-              color: theme.colors.greyDarker60,
-              family: FONT_FAMILY,
-              size: isFullscreenMode ? 16 : 12,
-            },
+            tickfont: tickFont,
             zeroline: false,
             ...yaxis2,
           },
@@ -212,10 +213,7 @@ export const BarLineComplexChartView = ({
             ticktext: formattedTicks,
             zeroline: false,
             dtick: 31 * 24 * 60 * 60 * 1000,
-            tickfont: {
-              family: FONT_FAMILY,
-              size: isFullscreenMode ? 16 : 12,
-            },
+            tickfont: tickFont,
             ...xaxis,
           },
           legend: {
