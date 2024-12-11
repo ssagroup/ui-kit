@@ -10,7 +10,7 @@ import {
   useInteractions,
   useRole,
 } from '@floating-ui/react';
-import { css } from '@emotion/css';
+import { css } from '@emotion/react';
 import { ResponsivePie } from '@nivo/pie';
 import { propOr } from '@ssa-ui-kit/utils';
 import { FullscreenModeContextType } from '@components/FullscreenModeContext';
@@ -153,7 +153,7 @@ export const PieChartInternal = ({
         features={features}
         cardProps={{
           headerContent: <PieChartHeader features={features} />,
-          className:
+          css:
             isHeaderIncluded && isFullscreenMode
               ? css`
                   width: 95% !important;
