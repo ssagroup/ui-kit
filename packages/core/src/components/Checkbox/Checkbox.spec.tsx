@@ -1,13 +1,11 @@
 import userEvent from '@testing-library/user-event';
+import { getByRole } from '@testing-library/dom';
 import { ThemeProvider } from '@emotion/react';
 import colors from '@themes/main';
 import { useForm } from 'react-hook-form';
 
-import Checkbox from '@components/Checkbox';
-import FormCheckbox from '@components/FormCheckbox';
-
-import { CheckboxProps } from './types';
-import { getByRole } from '@testing-library/dom';
+import Checkbox, { CheckboxProps } from './index';
+import FormCheckbox from '@components/FormCheckbox/index';
 
 const checkLabel = () => {
   const labelEl = document.getElementsByTagName('label')[0];
@@ -145,6 +143,45 @@ describe('Checkbox', () => {
     const { getByRole } = setup({ isRequired: true });
     const checkboxEl = getByRole('checkbox');
     expect(checkboxEl).toHaveAttribute('required', name);
+  });
+
+  it('Renders with default green style', () => {
+    const { getByTestId, getByRole } = setup({ color: 'green' });
+    const input = getByRole('checkbox');
+    input.focus();
+    const div = getByTestId('icon-wrapper');
+    const computedStyle = window.getComputedStyle(div);
+    expect(computedStyle.boxShadow).toBe(
+      '-4px 4px 10px rgba(82, 197, 135, 0.4)',
+    );
+  });
+
+  it('Renders with default blue style', () => {
+    const { getByTestId, getByRole } = setup({ color: 'blue' });
+    const input = getByRole('checkbox');
+    input.focus();
+    const div = getByTestId('icon-wrapper');
+    const computedStyle = window.getComputedStyle(div);
+    expect(computedStyle.boxShadow).toBe(
+      '-4px 4px 10px rgba(0, 133, 226, 0.4)',
+    );
+  });
+
+  it('Renders with custom style', () => {
+    const { getByRole } = setup({ color: 'custom' });
+    const input = getByRole('checkbox');
+    expect(input).toHaveStyle('border: 0; height: 1px; width: 1px;');
+  });
+
+  it('Renders without onchange handler', async () => {
+    const { container } = render(<Checkbox />);
+    const checkboxEl: HTMLInputElement = getByRole(container, 'checkbox', {
+      checked: false,
+    });
+    const labelEl = checkLabel();
+    await userEvent.click(labelEl);
+
+    expect(checkboxEl.checked).toBe(true);
   });
 
   describe('FormCheckbox', () => {

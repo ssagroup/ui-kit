@@ -64,7 +64,7 @@ const Checkbox = ({
         required={isRequired}
         {...register}
       />
-      <div>
+      <div data-testid="icon-wrapper">
         {isIndeterminate ? (
           <Icon name="minus" size={12} color={theme.colors.white} />
         ) : isChecked ? (
