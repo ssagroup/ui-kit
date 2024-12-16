@@ -58,3 +58,7 @@ export * as Import from './Import';
 export * as Pages from './Pages';
 export * as Roles from './Roles';
 export * as Maximize from './Maximize';
+export * as Employee from './Employee';
+export * as Language from './Language';
+export * as Message from './Message';
+export * as Report from './Report';
