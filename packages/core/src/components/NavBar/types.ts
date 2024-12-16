@@ -12,14 +12,23 @@ export type NavBarExtendedItem = {
   title: string;
 };
 
-export type NavBarExtendedGroup = {
+export type NavBarExtendedSubItem<T extends object = object> = {
+  path: string;
+  title: string;
+} & T;
+
+export interface NavBarExtendedGroup<
+  T extends NavBarExtendedSubItem = NavBarExtendedSubItem,
+> {
   CustomIcon?: () => EmotionJSX.Element;
   prefix?: string;
   iconName: keyof MapIconsType;
   title: string;
-  items: Array<{ path: string; title: string }>;
-};
+  items: Array<T>;
+}
 
-export interface NavBarExtendedProps {
-  items: Array<NavBarExtendedItem | NavBarExtendedGroup>;
+export interface NavBarExtendedProps<
+  T extends NavBarExtendedSubItem = NavBarExtendedSubItem,
+> {
+  items: Array<NavBarExtendedItem | T>;
 }
