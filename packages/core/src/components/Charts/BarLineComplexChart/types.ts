@@ -5,7 +5,7 @@ import { PieChartProps } from '../PieChart';
 export type BarLineChartItem = Plotly.Data & {
   selected?: boolean;
   showOnHover?: boolean;
-  valueDimension?: string;
+  valueDimension?: string | null;
 };
 
 export type BarLineComplexChartFeatures =

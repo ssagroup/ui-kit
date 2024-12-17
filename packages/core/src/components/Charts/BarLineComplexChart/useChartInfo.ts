@@ -24,7 +24,10 @@ export const useChartInfo: UseChartInfo = () => {
       'marker',
       'color',
     ])(item);
-    const { valueDimension = '' } = item;
+    const valueDimension =
+      item.valueDimension === null || item.valueDimension === undefined
+        ? ''
+        : item.valueDimension;
     const extraParams: Plotly.Data = {
       mode: 'markers',
       marker: {
