@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import NavBarLink from '@components/NavBar/NavBarLink';
+import { CollapsibleNavBarExtendedProps } from './types';
 
-const CollapsibleNavBarLink = styled(NavBarLink)`
+const CollapsibleNavBarLink = styled(NavBarLink)<{
+  navBarTheme: CollapsibleNavBarExtendedProps['theme'];
+}>`
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -18,7 +21,7 @@ const CollapsibleNavBarLink = styled(NavBarLink)`
       `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
     color: ${({ theme }) => theme.colors.white};
 
-    svg {
+    div > svg {
       & path {
         fill: ${({ theme }) => theme.colors.white};
       }
@@ -29,10 +32,41 @@ const CollapsibleNavBarLink = styled(NavBarLink)`
   }
 
   & > span {
-    color: ${({ theme }) => theme.colors.white80};
+    color: ${({ theme, navBarTheme }) =>
+      navBarTheme === 'default'
+        ? theme.colors.white80
+        : theme.colors.greyDarker};
 
     ${({ theme }) => theme.mediaQueries.md} {
       display: none;
+    }
+  }
+
+  div > svg {
+    & path {
+      fill: ${({ theme, navBarTheme }) =>
+        navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+    }
+    & circle {
+      stroke: ${({ theme, navBarTheme }) =>
+        navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+    }
+  }
+
+  &.active {
+    & > span {
+      color: ${({ theme, navBarTheme }) =>
+        navBarTheme === 'default'
+          ? theme.colors.white80
+          : theme.colors.greyDarker};
+    }
+    div > svg {
+      & path {
+        fill: ${({ theme, navBarTheme }) =>
+          navBarTheme === 'default'
+            ? theme.colors.white
+            : theme.colors.greyDarker};
+      }
     }
   }
 `;

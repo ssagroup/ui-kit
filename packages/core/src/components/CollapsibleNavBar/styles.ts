@@ -1,42 +1,55 @@
 import { Theme, css } from '@emotion/react';
+import { CollapsibleNavBarExtendedProps } from './types';
 
-export const AccordionTitleWrapper = (theme: Theme) => css`
-  cursor: pointer;
-  align-items: center;
+export const AccordionTitleWrapper =
+  (navBarTheme: CollapsibleNavBarExtendedProps['theme']) => (theme: Theme) =>
+    css`
+      cursor: pointer;
+      align-items: center;
 
-  ${theme.mediaQueries.md} {
-    display: flex;
-    justify-content: center;
-  }
+      ${theme.mediaQueries.md} {
+        display: flex;
+        justify-content: center;
+      }
 
-  & div.icon-wrapper {
-    width: 100%;
-    gap: 0;
-  }
+      & div.icon-wrapper {
+        width: 100%;
+        gap: 0;
+      }
 
-  & div.icon-wrapper:not(.active):hover > button svg path,
-  & div.icon-wrapper.active > button svg path {
-    stroke: #fff;
-    fill: none;
-  }
+      & div.icon-wrapper:not(.active):hover > button svg path,
+      & div.icon-wrapper.active > button svg path {
+        stroke: ${navBarTheme === 'default'
+          ? '#fff'
+          : theme.colors.greyDarker80};
+        fill: none;
+      }
 
-  & .trigger-icon {
-    height: 22px;
-  }
-`;
+      & .trigger-icon {
+        height: 22px;
+      }
+    `;
 
-export const AccordionTitle = (theme: Theme) => css`
-  padding: 0 14px 0 22px;
-  ${theme.mediaQueries.md} {
-    display: none;
-  }
-`;
+export const AccordionTitle =
+  (navBarTheme: CollapsibleNavBarExtendedProps['theme']) => (theme: Theme) =>
+    css`
+      padding: 0 14px 0 20px;
+      color: ${navBarTheme === 'default'
+        ? theme.colors.white80
+        : theme.colors.greyDarker80};
+      svg path {
+        stroke: ${navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+      }
+      ${theme.mediaQueries.md} {
+        display: none;
+      }
+    `;
 
 export const AccordionContent = (theme: Theme) => css`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  padding-left: 44px;
+  padding-left: 45px;
   overflow: hidden;
   perspective: 1px;
 

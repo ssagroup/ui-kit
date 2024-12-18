@@ -17,6 +17,7 @@ import { SCREEN_SIZES } from '../../consts';
 export const CollapsibleNavBar = ({
   items,
   renderLogo,
+  theme = 'default',
   onChange,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
@@ -39,7 +40,9 @@ export const CollapsibleNavBar = ({
   };
 
   return (
-    <CollapsibleNavBarBase className={isChecked ? 'opened' : undefined}>
+    <CollapsibleNavBarBase
+      className={isChecked ? 'opened' : undefined}
+      navBarTheme={theme}>
       <input
         type="checkbox"
         id={toggleId}
@@ -56,7 +59,7 @@ export const CollapsibleNavBar = ({
           {renderLogo}
           <NavContentToggle id={toggleId} isChecked={isChecked} />
         </Wrapper>
-        <CollapsibleNavBarList>
+        <CollapsibleNavBarList navBarTheme={theme}>
           {items.map((item) => {
             const { iconName, title } = item;
             const keyName = iconName + title.replace(' ', '').toLowerCase();
@@ -64,12 +67,14 @@ export const CollapsibleNavBar = ({
               <NavBarItemWithSubMenu
                 item={item}
                 key={keyName}
+                navBarTheme={theme}
                 onClick={handleCloseMobileMenu}
               />
             ) : (
               <NavBarItemWithoutSubMenu
                 item={item}
                 key={keyName}
+                navBarTheme={theme}
                 onClick={handleCloseMobileMenu}
               />
             );
