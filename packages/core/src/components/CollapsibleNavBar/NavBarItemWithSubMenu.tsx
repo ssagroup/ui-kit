@@ -11,23 +11,20 @@ import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import { NavBarAccordionContent } from './NavBarAccordionContent';
 import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
-import {
-  CollapsibleNavBarExtendedProps,
-  CollapsibleNavBarGroup,
-} from './types';
+import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
+import { CollapsibleNavBarGroup } from './types';
 import * as S from './styles';
 
 const Link = CollapsibleNavBarLink.withComponent('div');
 
 export const NavBarItemWithSubMenu = ({
   item,
-  navBarTheme,
   onClick,
 }: {
   item: CollapsibleNavBarGroup;
-  navBarTheme: CollapsibleNavBarExtendedProps['theme'];
   onClick?: () => void;
 }) => {
+  const { subMenuMaxWidth, theme } = useCollapsibleNavBarContext();
   const { iconName, iconSize, title, items, prefix, css, CustomIcon } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
@@ -52,6 +49,7 @@ export const NavBarItemWithSubMenu = ({
             ariaControls={`${accordionUniqName}-panel`}
             css={{
               padding: 0,
+              maxWidth: subMenuMaxWidth,
               '& ul li:last-child': {
                 paddingBottom: 10,
               },
@@ -69,11 +67,11 @@ export const NavBarItemWithSubMenu = ({
             renderTitle={(data) => (
               <Wrapper
                 onClick={data.onClick}
-                css={S.AccordionTitleWrapper(navBarTheme)}>
+                css={S.AccordionTitleWrapper(theme)}>
                 <Link
                   to=""
                   className={match ? ' active' : ''}
-                  navBarTheme={navBarTheme}>
+                  navBarTheme={theme}>
                   <CollapsibleNavBarPopover
                     triggerIcon={<Icon />}
                     title={data.title}
@@ -93,12 +91,9 @@ export const NavBarItemWithSubMenu = ({
                 <Link
                   to=""
                   className={`icon-wrapper${match ? ' active' : ''}`}
-                  navBarTheme={navBarTheme}>
+                  navBarTheme={theme}>
                   {CustomIcon ? <CustomIcon /> : <Icon />}
-                  <AccordionTitle
-                    {...data}
-                    css={S.AccordionTitle(navBarTheme)}
-                  />
+                  <AccordionTitle {...data} css={S.AccordionTitle(theme)} />
                 </Link>
               </Wrapper>
             )}

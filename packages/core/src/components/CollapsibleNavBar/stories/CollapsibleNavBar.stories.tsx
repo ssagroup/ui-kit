@@ -6,7 +6,7 @@ import { Title, Description, Subtitle, Stories } from '@storybook/addon-docs';
 import { DecoratorFunction } from '@storybook/types';
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
-import { Logo } from './Logo';
+import { DarkLogo, Logo } from './Logo';
 import { Layout } from './Layout';
 import { CustomIcon } from './CustomIcon';
 
@@ -78,8 +78,9 @@ export const LightTheme: StoryObj<typeof CollapsibleNavBar> = () => {
   return (
     <CollapsibleNavBar
       items={ITEMS}
-      renderLogo={<Logo />}
+      renderLogo={<DarkLogo />}
       theme={'light'}
+      subMenuMaxWidth={220}
       onChange={(isChecked) => {
         console.log('>>>onChange', isChecked);
       }}

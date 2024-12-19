@@ -2,17 +2,17 @@ import CollapsibleNavBarItem from './CollapsibleNavBarItem';
 import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
 import CollapsibleNavBarLink from './CollapsibleNavBarLink';
+import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
 import * as T from './types';
 
 export const NavBarItemWithoutSubMenu = ({
   item,
-  navBarTheme,
   onClick,
 }: {
   item: T.CollapsibleNavBarItem;
-  navBarTheme: T.CollapsibleNavBarExtendedProps['theme'];
   onClick?: () => void;
 }) => {
+  const { theme } = useCollapsibleNavBarContext();
   const { path, iconName, title, iconSize, css, CustomIcon } = item;
   const Icon = () => (
     <TriggerIcon
@@ -28,7 +28,7 @@ export const NavBarItemWithoutSubMenu = ({
       <CollapsibleNavBarLink
         to={'/' + path}
         onClick={onClick}
-        navBarTheme={navBarTheme}>
+        navBarTheme={theme}>
         <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
         <Icon />
         <span>{title}</span>
