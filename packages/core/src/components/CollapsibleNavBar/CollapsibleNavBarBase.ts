@@ -49,7 +49,7 @@ const backgroundByTheme = (
 `;
 
 const CollapsibleNavBarBase = styled(NavBarBase)<{
-  navBarTheme: CollapsibleNavBarExtendedProps['theme'];
+  'data-theme': CollapsibleNavBarExtendedProps['theme'];
 }>`
   padding: 15px 0 0 15px;
   position: absolute;
@@ -59,14 +59,16 @@ const CollapsibleNavBarBase = styled(NavBarBase)<{
   }
 
   &.opened {
-    ${({ theme, navBarTheme }) => backgroundByTheme(theme, navBarTheme)}
+    ${({ theme, ...rest }) => backgroundByTheme(theme, rest['data-theme'])}
     align-items: flex-start;
     min-width: 100%;
     width: 100%;
     height: 100%;
 
     & > div:nth-of-type(2) {
-      background: none;
+      ${({ theme }) => theme.mediaQueries.upToMd} {
+        background: none;
+      }
     }
 
     ${({ theme }) => theme.mediaQueries.md} {
@@ -77,14 +79,16 @@ const CollapsibleNavBarBase = styled(NavBarBase)<{
   & > input[type='checkbox'] {
     &:checked {
       & ~ div:first-of-type {
-        background-color: ${({ theme, navBarTheme }) =>
-          navBarTheme === 'default' ? '#4a4d51' : theme.colors.greyFocused};
+        background-color: ${({ theme, ...rest }) =>
+          rest['data-theme'] === 'default'
+            ? '#4a4d51'
+            : theme.colors.greyFocused};
 
         & label span {
           opacity: 1;
           transform: rotate(45deg) translate(-5px, -9px);
-          background: ${({ theme, navBarTheme }) =>
-            navBarTheme === 'default'
+          background: ${({ theme, ...rest }) =>
+            rest['data-theme'] === 'default'
               ? theme.colors.white
               : theme.colors.greyDarker};
 

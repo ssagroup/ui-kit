@@ -40,21 +40,29 @@ export const NavBarAccordionContent = ({
   onClick?: () => void;
 }) => {
   const { theme } = useCollapsibleNavBarContext();
+
   return (
     <AccordionContent
       {...rest}
       css={[S.AccordionContent, isPopover && S.AccordionContentPopover]}>
-      {items.map((subMenuItem) => (
-        <Link
-          key={`${accordionUniqueName}-link-${subMenuItem.title
-            .replace(' ', '')
-            .toLowerCase()}`}
-          onClick={onClick}
-          to={'/' + prefix + subMenuItem.path}
-          navBarTheme={theme}>
-          {subMenuItem.title}
-        </Link>
-      ))}
+      {items.map((subMenuItem) => {
+        const isExternalLink = subMenuItem.path.includes('://');
+        return (
+          <Link
+            key={`${accordionUniqueName}-link-${subMenuItem.title
+              .replace(' ', '')
+              .toLowerCase()}`}
+            onClick={onClick}
+            to={
+              isExternalLink
+                ? subMenuItem.path
+                : '/' + prefix + subMenuItem.path
+            }
+            navBarTheme={theme}>
+            {subMenuItem.title}
+          </Link>
+        );
+      })}
     </AccordionContent>
   );
 };

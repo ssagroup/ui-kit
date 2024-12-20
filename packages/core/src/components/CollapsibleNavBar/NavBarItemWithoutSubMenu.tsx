@@ -14,6 +14,7 @@ export const NavBarItemWithoutSubMenu = ({
 }) => {
   const { theme } = useCollapsibleNavBarContext();
   const { path, iconName, title, iconSize, css, CustomIcon } = item;
+  const isExternalLink = path.includes('://');
   const Icon = () => (
     <TriggerIcon
       iconName={iconName}
@@ -26,7 +27,7 @@ export const NavBarItemWithoutSubMenu = ({
   return (
     <CollapsibleNavBarItem key={path}>
       <CollapsibleNavBarLink
-        to={'/' + path}
+        to={isExternalLink ? path : '/' + path}
         onClick={onClick}
         navBarTheme={theme}>
         <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />

@@ -20,6 +20,7 @@ export const CollapsibleNavBar = ({
   renderLogo,
   theme = 'default',
   subMenuMaxWidth,
+  className,
   onChange,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
@@ -44,8 +45,8 @@ export const CollapsibleNavBar = ({
   return (
     <CollapsibleNavBarProvider theme={theme} subMenuMaxWidth={subMenuMaxWidth}>
       <CollapsibleNavBarBase
-        className={isChecked ? 'opened' : undefined}
-        navBarTheme={theme}>
+        className={className + (isChecked ? ' opened' : '')}
+        data-theme={theme}>
         <input
           type="checkbox"
           id={toggleId}
