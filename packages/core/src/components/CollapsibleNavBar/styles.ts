@@ -88,7 +88,7 @@ export const ContentToggle =
       display: none;
       position: absolute;
       cursor: pointer;
-      right: ${isChecked ? '-32px' : '-17px'};
+      right: -17px;
       width: 34px;
       height: 34px;
       background: ${navBarTheme === 'default'
@@ -105,5 +105,9 @@ export const ContentToggle =
       }
       ${theme.mediaQueries.lg} {
         display: flex;
+      }
+      ${theme.mediaQueries.xlg} {
+        display: flex;
+        right: ${isChecked ? '-32px' : '-17px'};
       }
     `;

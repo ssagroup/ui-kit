@@ -90,7 +90,9 @@ export const CollapsibleNavBarPopover = ({
               content: '""',
               display: 'block',
               background:
-                navBarTheme === 'default' ? 'rgba(71, 74, 80, 1)' : '#F4F5F9',
+                navBarTheme === 'default'
+                  ? theme.colors.greyGraphite
+                  : '#F4F5F9',
               borderRadius: 2,
               position: 'absolute',
               width: 9,
