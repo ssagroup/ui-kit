@@ -1,4 +1,6 @@
+import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
+import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
 import * as S from './styles';
 
 export const NavContentToggle = ({
@@ -8,8 +10,10 @@ export const NavContentToggle = ({
   id: string;
   isChecked: boolean;
 }) => {
+  const globalTheme = useTheme();
+  const { theme } = useCollapsibleNavBarContext();
   return (
-    <div css={S.ContentToggle}>
+    <div css={S.ContentToggle(theme, isChecked)}>
       <label
         htmlFor={id}
         css={{
@@ -20,7 +24,11 @@ export const NavContentToggle = ({
           justifyContent: 'center',
           cursor: 'pointer',
         }}>
-        <Icon name={isChecked ? 'carrot-left' : 'carrot-right'} size={14} />
+        <Icon
+          name={isChecked ? 'carrot-left' : 'carrot-right'}
+          color={theme === 'default' ? '#000' : globalTheme.colors.greyDarker}
+          size={14}
+        />
       </label>
     </div>
   );

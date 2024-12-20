@@ -1,10 +1,19 @@
 import styled from '@emotion/styled';
 import NavBarList from '@components/NavBar/NavBarList';
+import { CollapsibleNavBarExtendedProps } from './types';
 
-const CollapsibleNavBarList = styled(NavBarList)`
+const CollapsibleNavBarList = styled(NavBarList)<{
+  navBarTheme?: CollapsibleNavBarExtendedProps['theme'];
+}>`
   height: auto;
   padding: 0 0 0 15px;
   margin: 14px 0 0 0;
+  & li:nth-of-type(5) {
+    & svg path {
+      stroke: ${({ theme, navBarTheme }) =>
+        navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+    }
+  }
   ${({ theme }) => theme.mediaQueries.md} {
     margin-top: 90px;
     width: 100%;

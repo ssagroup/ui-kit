@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import {
   NavBarExtendedGroup,
   NavBarExtendedItem,
@@ -22,5 +23,7 @@ export interface CollapsibleNavBarExtendedProps<
 > {
   items: Array<CollapsibleNavBarItem | CollapsibleNavBarGroup<T>>;
   renderLogo: React.ReactElement;
+  theme?: 'default' | 'light';
+  subMenuMaxWidth?: CSSProperties['maxWidth'];
   onChange?: (isChecked: boolean) => void;
 }

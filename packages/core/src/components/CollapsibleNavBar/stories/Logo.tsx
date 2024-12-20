@@ -10,3 +10,13 @@ export const Logo = () => (
     alt="SSA UI Kit"
   />
 );
+
+export const DarkLogo = () => (
+  <ResponsiveImage
+    css={S.ResponsiveLogo}
+    srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_Left_BlackBG.png?alt=media&token=7ff7b02f-3cbd-4dac-9a9e-13a8d6713816 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Medium_Left_BlackBG.png?alt=media&token=090c0a45-9ee8-46f7-a92f-7c311daa4d50 55w"
+    sizes="(min-width: 900px) 55px, (min-width: 1440px) 69px"
+    src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Large_Left_BlackBG.png?alt=media&token=fbcdc479-99a5-4bcf-a7eb-9372d0c87f8c"
+    alt="SSA UI Kit"
+  />
+);

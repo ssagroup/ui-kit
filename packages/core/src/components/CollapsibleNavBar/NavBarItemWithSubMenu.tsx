@@ -11,6 +11,7 @@ import CollapsibleNavBarLink from './CollapsibleNavBarLink';
 import { NavBarAccordionContent } from './NavBarAccordionContent';
 import { CollapsibleNavBarPopover } from './NavBarPopover';
 import { TriggerIcon } from './TriggerIcon';
+import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
 import { CollapsibleNavBarGroup } from './types';
 import * as S from './styles';
 
@@ -23,6 +24,7 @@ export const NavBarItemWithSubMenu = ({
   item: CollapsibleNavBarGroup;
   onClick?: () => void;
 }) => {
+  const { subMenuMaxWidth, theme } = useCollapsibleNavBarContext();
   const { iconName, iconSize, title, items, prefix, css, CustomIcon } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
@@ -47,6 +49,7 @@ export const NavBarItemWithSubMenu = ({
             ariaControls={`${accordionUniqName}-panel`}
             css={{
               padding: 0,
+              maxWidth: subMenuMaxWidth,
               '& ul li:last-child': {
                 paddingBottom: 10,
               },
@@ -62,8 +65,13 @@ export const NavBarItemWithSubMenu = ({
               />
             )}
             renderTitle={(data) => (
-              <Wrapper onClick={data.onClick} css={S.AccordionTitleWrapper}>
-                <Link to="" className={match ? ' active' : ''}>
+              <Wrapper
+                onClick={data.onClick}
+                css={S.AccordionTitleWrapper(theme)}>
+                <Link
+                  to=""
+                  className={match ? ' active' : ''}
+                  navBarTheme={theme}>
                   <CollapsibleNavBarPopover
                     triggerIcon={<Icon />}
                     title={data.title}
@@ -80,9 +88,12 @@ export const NavBarItemWithSubMenu = ({
                   />
                 </Link>
 
-                <Link to="" className={`icon-wrapper${match ? ' active' : ''}`}>
+                <Link
+                  to=""
+                  className={`icon-wrapper${match ? ' active' : ''}`}
+                  navBarTheme={theme}>
                   {CustomIcon ? <CustomIcon /> : <Icon />}
-                  <AccordionTitle {...data} css={S.AccordionTitle} />
+                  <AccordionTitle {...data} css={S.AccordionTitle(theme)} />
                 </Link>
               </Wrapper>
             )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { offset } from '@floating-ui/react';
 import { useTheme } from '@emotion/react';
+import { useWindowSize } from '@ssa-ui-kit/hooks';
 import {
   Popover,
   PopoverContent,
@@ -8,7 +9,7 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@components/Popover';
-import { useWindowSize } from '@ssa-ui-kit/hooks';
+import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
 
 export const CollapsibleNavBarPopover = ({
   triggerIcon,
@@ -20,6 +21,7 @@ export const CollapsibleNavBarPopover = ({
   content?: React.ReactElement;
 }) => {
   const theme = useTheme();
+  const { theme: navBarTheme } = useCollapsibleNavBarContext();
   const [open, setOpen] = useState(false);
 
   const onOpenChange = (open: boolean) => {
@@ -71,10 +73,14 @@ export const CollapsibleNavBarPopover = ({
         isFocusManagerDisabled={true}>
         <PopoverHeading
           css={{
-            color: theme.colors.white,
+            color:
+              navBarTheme === 'default'
+                ? theme.colors.white
+                : theme.colors.greyGraphite,
             fontSize: 12,
             padding: '3px 5px 5px 5px',
-            background: theme.colors.greyGraphite,
+            background:
+              navBarTheme === 'default' ? theme.colors.greyGraphite : '#F4F5F9',
             borderRadius: 5,
             cursor: 'default',
             marginBottom: 1,
@@ -83,7 +89,10 @@ export const CollapsibleNavBarPopover = ({
             '&::before': {
               content: '""',
               display: 'block',
-              background: 'rgba(71, 74, 80, 1)',
+              background:
+                navBarTheme === 'default'
+                  ? theme.colors.greyGraphite
+                  : '#F4F5F9',
               borderRadius: 2,
               position: 'absolute',
               width: 9,
@@ -100,19 +109,28 @@ export const CollapsibleNavBarPopover = ({
           css={{
             '& > div': {
               padding: 0,
-              background: theme.colors.greyGraphite,
+              background:
+                navBarTheme === 'default'
+                  ? theme.colors.greyGraphite
+                  : '#F4F5F9',
               borderRadius: 5,
               width: 85,
               '& > a': {
-                color: theme.colors.white,
+                color:
+                  navBarTheme === 'default'
+                    ? theme.colors.white
+                    : theme.colors.greyDarker80,
                 padding: 5,
                 fontSize: 12,
-                fontWeight: 400,
+                fontWeight: navBarTheme === 'default' ? 400 : 500,
                 '&:first-of-type': {
                   paddingTop: 5,
                 },
                 '&:hover': {
-                  background: '#62656B',
+                  background:
+                    navBarTheme === 'default'
+                      ? theme.colors.greyGraphite
+                      : theme.colors.greyOutline,
                 },
               },
             },

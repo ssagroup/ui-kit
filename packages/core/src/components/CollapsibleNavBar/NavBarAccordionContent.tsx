@@ -4,6 +4,7 @@ import {
   RenderContentProps,
 } from '@components/AccordionGroup';
 import CollapsibleNavBarLink from './CollapsibleNavBarLink';
+import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
 import * as S from './styles';
 
 const Link = styled(CollapsibleNavBarLink)`
@@ -37,19 +38,23 @@ export const NavBarAccordionContent = ({
   prefix?: string;
   isPopover?: boolean;
   onClick?: () => void;
-}) => (
-  <AccordionContent
-    {...rest}
-    css={[S.AccordionContent, isPopover && S.AccordionContentPopover]}>
-    {items.map((subMenuItem) => (
-      <Link
-        key={`${accordionUniqueName}-link-${subMenuItem.title
-          .replace(' ', '')
-          .toLowerCase()}`}
-        onClick={onClick}
-        to={'/' + prefix + subMenuItem.path}>
-        {subMenuItem.title}
-      </Link>
-    ))}
-  </AccordionContent>
-);
+}) => {
+  const { theme } = useCollapsibleNavBarContext();
+  return (
+    <AccordionContent
+      {...rest}
+      css={[S.AccordionContent, isPopover && S.AccordionContentPopover]}>
+      {items.map((subMenuItem) => (
+        <Link
+          key={`${accordionUniqueName}-link-${subMenuItem.title
+            .replace(' ', '')
+            .toLowerCase()}`}
+          onClick={onClick}
+          to={'/' + prefix + subMenuItem.path}
+          navBarTheme={theme}>
+          {subMenuItem.title}
+        </Link>
+      ))}
+    </AccordionContent>
+  );
+};

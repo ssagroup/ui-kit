@@ -19,7 +19,7 @@ export const TriggerIcon = ({
     <Wrapper
       css={css`
         width: auto;
-        min-width: 22px;
+        min-width: 25px;
         justify-content: center;
         overflow: visible;
         position: relative;

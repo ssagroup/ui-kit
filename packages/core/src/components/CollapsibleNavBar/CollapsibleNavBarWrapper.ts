@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import NavBarWrapper from '@components/NavBar/NavBarWrapper';
+import { CollapsibleNavBarExtendedProps } from './types';
 
-const CollapsibleNavBarWrapper = styled(NavBarWrapper)`
+const CollapsibleNavBarWrapper = styled(NavBarWrapper)<{
+  navBarTheme?: CollapsibleNavBarExtendedProps['theme'];
+}>`
   transform: none;
   transition: unset;
   position: static;
@@ -10,6 +13,7 @@ const CollapsibleNavBarWrapper = styled(NavBarWrapper)`
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
+    background: ${({ navBarTheme }) => navBarTheme === 'light' && '#F4F5F9'};
     display: flex;
     flex-direction: column;
     align-items: center;

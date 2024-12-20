@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import NavBarBase from '@components/NavBar/NavBarBase';
+import { CollapsibleNavBarExtendedProps } from './types';
 
 // TODO: refactor this
 const popupIconsToggle = (isVisible: boolean) => css`
@@ -28,7 +29,28 @@ const staticIconsToggle = (isVisible: boolean) => css`
   }
 `;
 
-const CollapsibleNavBarBase = styled(NavBarBase)`
+const backgroundByTheme = (
+  theme: Theme,
+  navBarTheme: CollapsibleNavBarExtendedProps['theme'],
+) => css`
+  background: ${navBarTheme === 'default'
+    ? `linear-gradient(
+      108.3deg,
+      ${theme.colors.greyDarker} -0.36%,
+      ${theme.colors.greyDarker} 100%
+    );`
+    : `linear-gradient(
+        143deg,
+        #e7ebf1 -4.16%,
+        #d7d9dd 29%,
+        #cccdd2 63.74%,
+        #e1e4ea 87.68%
+      );`};
+`;
+
+const CollapsibleNavBarBase = styled(NavBarBase)<{
+  navBarTheme: CollapsibleNavBarExtendedProps['theme'];
+}>`
   padding: 15px 0 0 15px;
   position: absolute;
 
@@ -37,15 +59,15 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
   }
 
   &.opened {
-    background: linear-gradient(
-      108.3deg,
-      ${({ theme }) => theme.colors.greyDarker} -0.36%,
-      ${({ theme }) => theme.colors.greyDarker} 100%
-    );
+    ${({ theme, navBarTheme }) => backgroundByTheme(theme, navBarTheme)}
     align-items: flex-start;
     min-width: 100%;
     width: 100%;
     height: 100%;
+
+    & > div:nth-of-type(2) {
+      background: none;
+    }
 
     ${({ theme }) => theme.mediaQueries.md} {
       height: initial;
@@ -55,12 +77,16 @@ const CollapsibleNavBarBase = styled(NavBarBase)`
   & > input[type='checkbox'] {
     &:checked {
       & ~ div:first-of-type {
-        background-color: #4a4d51;
+        background-color: ${({ theme, navBarTheme }) =>
+          navBarTheme === 'default' ? '#4a4d51' : theme.colors.greyFocused};
 
         & label span {
           opacity: 1;
           transform: rotate(45deg) translate(-5px, -9px);
-          background: ${({ theme }) => theme.colors.white};
+          background: ${({ theme, navBarTheme }) =>
+            navBarTheme === 'default'
+              ? theme.colors.white
+              : theme.colors.greyDarker};
 
           &:nth-last-of-type(3) {
             opacity: 0;
