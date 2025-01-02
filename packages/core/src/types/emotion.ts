@@ -124,6 +124,7 @@ export interface Theme {
   mediaQueries: {
     xs: MediaQueryString;
     sm: MediaQueryString;
+    upToMd: MediaQueryString;
     md: MediaQueryString;
     lg: MediaQueryString;
     xlg: MediaQueryString;

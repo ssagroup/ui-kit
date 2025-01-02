@@ -111,6 +111,7 @@ const main: Theme = {
   mediaQueries: {
     xs: '@media screen and (max-width: 389px)',
     sm: '@media screen and (min-width: 390px)',
+    upToMd: '@media screen and (max-width: 899.99px)',
     md: '@media screen and (min-width: 900px)',
     lg: '@media screen and (min-width: 1440px)',
     xlg: '@media screen and (min-width: 1920px)',
