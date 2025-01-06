@@ -87,3 +87,13 @@ export const WithDisabledControls: Args = {
     systemModeBarButtons: ['toImage'],
   },
 };
+
+export const Responsive: Args = {
+  ...Default,
+  args: {
+    data: mockBigData,
+    width: '100%',
+    features: ['filtering', 'fullscreenMode'],
+    systemModeBarButtons: [],
+  },
+};
