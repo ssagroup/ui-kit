@@ -4,9 +4,9 @@ import * as S from './styles';
 export const Logo = () => (
   <ResponsiveImage
     css={S.ResponsiveLogo}
-    srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Large_Left_WhiteBG.png?alt=media&token=b6f7850c-2f1d-421c-a26f-f1f1280d676c 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Medium_Left_WhiteBG.png?alt=media&token=27f3fcb9-c419-4e12-a18f-a16d362f54bf 55w"
+    srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Large_WhiteBG.svg?alt=media&token=7a13db1e-83b9-41cc-9381-ff569c7f77f7 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Medium_WhiteBG.svg?alt=media&token=1a538009-1970-4e19-97d5-16eb28981ad7 55w"
     sizes="(min-width: 900px) 55px, (min-width: 1440px) 69px"
-    src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_Left_WhiteBG.png?alt=media&token=c565fdb0-4ad9-42f5-8077-3249a5d727d8"
+    src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_WhiteBG.svg?alt=media&token=b3a57f8f-545f-494f-b046-76adfbc969b7"
     alt="SSA UI Kit"
   />
 );
@@ -14,9 +14,9 @@ export const Logo = () => (
 export const DarkLogo = () => (
   <ResponsiveImage
     css={S.ResponsiveLogo}
-    srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_Left_BlackBG.png?alt=media&token=7ff7b02f-3cbd-4dac-9a9e-13a8d6713816 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Medium_Left_BlackBG.png?alt=media&token=090c0a45-9ee8-46f7-a92f-7c311daa4d50 55w"
+    srcSet="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Large_BlackBG.svg?alt=media&token=621a5341-f24b-438e-84eb-ad58f2104cae 69w, https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Medium_BlackBG.svg?alt=media&token=e19a8d8b-7622-47da-89fa-158628a54554 55w"
     sizes="(min-width: 900px) 55px, (min-width: 1440px) 69px"
-    src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Large_Left_BlackBG.png?alt=media&token=fbcdc479-99a5-4bcf-a7eb-9372d0c87f8c"
+    src="https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/logo%2FUI_KIT_Small_BlackBG.svg?alt=media&token=0e5fd02b-4266-4fc6-beb1-9bac9d466fa6"
     alt="SSA UI Kit"
   />
 );
