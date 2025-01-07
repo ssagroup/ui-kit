@@ -53,7 +53,7 @@ export const BarLineComplexChartView = ({
   const [debouncedFn, cancel] = debounceThrottled.current;
   const { setIsOpen } = useTooltipContext();
 
-  const { layout = {}, ...restProps } = props;
+  const { layout = {}, config = {}, ...restProps } = props;
   const {
     margin = {},
     title = {},
@@ -238,6 +238,7 @@ export const BarLineComplexChartView = ({
         config={{
           ...plotlyDefaultLayoutConfig.config,
           modeBarButtons: [extraModeBarButtons, systemModeBarButtons],
+          ...config,
         }}
         {...restProps}
       />
