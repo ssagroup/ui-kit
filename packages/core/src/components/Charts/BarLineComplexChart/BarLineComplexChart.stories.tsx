@@ -71,6 +71,18 @@ export const WithFullscreen: Args = {
   },
 };
 
+export const WithDisabledScaling: Args = {
+  ...Default,
+  args: {
+    features: ['filtering', 'fullscreenMode'],
+    layout: {
+      xaxis: { fixedrange: true },
+      yaxis: { fixedrange: true },
+      yaxis2: { fixedrange: true },
+    },
+  },
+};
+
 export const WithLimitation: Args = {
   ...Default,
   args: {
@@ -85,5 +97,15 @@ export const WithDisabledControls: Args = {
     data: mockBigData,
     features: ['filtering', 'fullscreenMode'],
     systemModeBarButtons: ['toImage'],
+  },
+};
+
+export const Responsive: Args = {
+  ...Default,
+  args: {
+    data: mockBigData,
+    width: '100%',
+    features: ['filtering', 'fullscreenMode'],
+    systemModeBarButtons: [],
   },
 };

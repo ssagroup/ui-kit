@@ -51,6 +51,7 @@ etags
 fdusd
 firebase
 firestore
+fixedrange
 fns
 gfm
 greylight
@@ -119,8 +120,11 @@ swp
 tanstack
 testid
 Threashold
+tickangle
 tickfont
 tickformat
+ticklabelmode
+ticklabelstep
 tickmode
 ticktext
 tickvals

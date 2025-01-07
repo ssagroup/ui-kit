@@ -53,7 +53,7 @@ export const BarLineComplexChartView = ({
   const [debouncedFn, cancel] = debounceThrottled.current;
   const { setIsOpen } = useTooltipContext();
 
-  const { layout = {} } = props;
+  const { layout = {}, ...restProps } = props;
   const {
     margin = {},
     title = {},
@@ -88,7 +88,7 @@ export const BarLineComplexChartView = ({
         month: 'short',
       })
       .split(' ');
-    const firstLastDate = monthYear.join(', ');
+    const firstLastDate = monthYear.join('<br />');
     return index === 0 || index === timestamps.length - 1
       ? firstLastDate
       : monthYear[0];
@@ -211,8 +211,10 @@ export const BarLineComplexChartView = ({
             tickmode: 'array',
             tickvals: timestamps,
             ticktext: formattedTicks,
+            tickangle: 0,
+            ticklabelmode: 'period',
+            ticklabelstep: 1,
             zeroline: false,
-            dtick: 31 * 24 * 60 * 60 * 1000,
             tickfont: tickFont,
             ...xaxis,
           },
@@ -223,7 +225,7 @@ export const BarLineComplexChartView = ({
             valign: 'bottom',
             itemclick: 'toggle',
             bgcolor: 'rgba(255, 255, 255, 0)',
-            y: isFullscreenMode ? -0.06 : -0.22,
+            y: isFullscreenMode ? -0.08 : -0.4,
             x: 0.5,
             font: {
               family: FONT_FAMILY,
@@ -237,7 +239,7 @@ export const BarLineComplexChartView = ({
           ...plotlyDefaultLayoutConfig.config,
           modeBarButtons: [extraModeBarButtons, systemModeBarButtons],
         }}
-        {...props}
+        {...restProps}
       />
       <BarLineComplexChartTooltip
         ref={tooltipContentRef}
