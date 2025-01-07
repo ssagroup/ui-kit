@@ -100,6 +100,18 @@ export const WithDisabledControls: Args = {
   },
 };
 
+export const ModeBarAlwaysVisible: Args = {
+  ...Default,
+  args: {
+    data: mockBigData,
+    features: ['filtering', 'fullscreenMode'],
+    systemModeBarButtons: [],
+    config: {
+      displayModeBar: true,
+    },
+  },
+};
+
 export const Responsive: Args = {
   ...Default,
   args: {
