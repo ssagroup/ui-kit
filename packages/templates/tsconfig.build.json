@@ -35,6 +35,8 @@
       "@trading/*": ["./src/projects/trading/*"],
       "@fitness": ["./src/projects/fitness"],
       "@fitness/*": ["./src/projects/fitness/*"],
+      "@peopleops": ["./src/projects/peopleops"],
+      "@peopleops/*": ["./src/projects/peopleops/*"],
     }
   },
 

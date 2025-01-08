@@ -17,7 +17,7 @@ import { NotificationsPage } from '../NotificationsPage';
 import { Header } from '../../AppLayout/components/Header';
 
 export default {
-  title: 'Templates/NotificationsPage',
+  title: 'Templates/Notifications Page',
   component: NotificationsPage,
   parameters: {
     layout: 'fullscreen',

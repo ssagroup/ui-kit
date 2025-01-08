@@ -12,6 +12,7 @@ module.exports = () => {
       '@': path.resolve(__dirname, './src/projects'),
       '@trading': path.resolve('./src/projects/trading'),
       '@fitness': path.resolve('./src/projects/fitness'),
+      '@peopleops': path.resolve('./src/projects/peopleops'),
     },
     externals: {
       react: 'react',

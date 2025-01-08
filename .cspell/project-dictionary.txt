@@ -53,6 +53,7 @@ firebase
 firestore
 fixedrange
 fns
+fte
 gfm
 greylight
 HIIT
@@ -81,6 +82,7 @@ LTC
 luxon
 Mauris
 metus
+Millis
 MMM
 modebar
 msedge
@@ -90,8 +92,10 @@ neque
 nisl
 nivo
 nocontrol
+peopleops
 PLN
 Plotly
+PMO
 PNL
 porttitor
 ramda

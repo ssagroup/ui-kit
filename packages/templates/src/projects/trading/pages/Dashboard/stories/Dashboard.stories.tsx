@@ -16,7 +16,7 @@ import { LayoutBase } from '../../AppLayout/LayoutBase';
 import { RightPaneBase } from '../../AppLayout/RightPaneBase';
 
 export default {
-  title: 'Templates/TradingDashboard',
+  title: 'Templates/Trading Dashboard',
   component: TradingDashboard,
   parameters: {
     layout: 'fullscreen',

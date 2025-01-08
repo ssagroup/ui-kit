@@ -6,7 +6,7 @@ import { AuthProvider } from '../hooks/useAuth';
 import { FitnessDashboard } from '..';
 
 export default {
-  title: 'Templates/FitnessDashboard',
+  title: 'Templates/Fitness Dashboard',
   component: FitnessDashboard,
   parameters: {
     layout: 'fullscreen',

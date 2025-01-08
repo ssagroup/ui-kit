@@ -482,6 +482,9 @@ importers:
       '@floating-ui/react':
         specifier: 0.25.4
         version: 0.25.4(react-dom@18.2.0)(react@18.2.0)
+      '@nivo/colors':
+        specifier: 0.84.0
+        version: 0.84.0(react-dom@18.2.0)(react@18.2.0)
       '@nivo/core':
         specifier: ^0.84.0
         version: 0.84.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
