@@ -1,17 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
 import * as API from '@/peopleops/types';
+import { dashboardIndicatorsMock } from './__mocks__/dashboardIndicators';
 
-export const useDashboardIndicators = (props?: { enabled: boolean }) => {
-  const queryResult = useQuery({
-    queryKey: ['dashboard-indicators'],
-    queryFn: () => API.Dashboard.getIndicators(),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    enabled: !!props?.enabled,
-    meta: {
-      name: 'dashboard-indicators',
-    },
-  });
+export const useDashboardIndicators =
+  (): API.CommonAPIResponse<API.DashboardIndicators> => {
+    const result = {
+      result: dashboardIndicatorsMock,
+      targetUrl: null,
+      success: true,
+      unAuthorizedRequest: false,
+      __abp: true,
+    };
 
-  return queryResult;
-};
+    return result;
+  };

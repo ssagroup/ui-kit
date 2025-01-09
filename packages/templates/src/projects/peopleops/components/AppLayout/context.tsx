@@ -10,7 +10,7 @@ export const AppLayoutContext = createContext<AppLayoutContextType>({
   },
   setNavBarOpened: () => {
     // no-op
-  }
+  },
 });
 
 export const AppLayoutProvider = ({

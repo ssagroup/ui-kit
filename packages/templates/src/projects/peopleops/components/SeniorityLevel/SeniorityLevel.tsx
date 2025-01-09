@@ -29,7 +29,7 @@ export const SeniorityLevelWithLoader = ({
   const charts = useDashboardCharts();
   const data = pathOr<typeof charts, DashboardCharts['seniorityInfoChart']>(
     {},
-    ['data', 'result', 'seniorityInfoChart'],
+    ['result', 'seniorityInfoChart'],
   )(charts);
   return (
     <WithWidgetLoader

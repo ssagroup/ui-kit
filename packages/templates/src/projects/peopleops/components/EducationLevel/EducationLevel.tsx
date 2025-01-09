@@ -29,7 +29,7 @@ export const EducationLevelWithLoader = ({
   const charts = useDashboardCharts();
   const data = pathOr<typeof charts, DashboardCharts['educationLevelChart']>(
     [],
-    ['data', 'result', 'educationLevelChart'],
+    ['result', 'educationLevelChart'],
   )(charts);
   return (
     <WithWidgetLoader

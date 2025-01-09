@@ -18,7 +18,7 @@ export const FTE = ({
       timestamps={timestamps}
       gridArea="fteGraph"
     />
-  )
+  );
 };
 
 export const FTEWithLoader = ({ isFetching }: { isFetching: boolean }) => {

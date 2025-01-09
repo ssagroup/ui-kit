@@ -80,7 +80,7 @@ export const DepartmentsWithLoader = ({
   const data = pathOr<
     typeof charts,
     DashboardCharts['headCountByDepartmentChart']
-  >({}, ['data', 'result', 'headCountByDepartmentChart'])(charts);
+  >({}, ['result', 'headCountByDepartmentChart'])(charts);
   return (
     <WithWidgetLoader
       title={'widgets.departments.title'}

@@ -56,7 +56,7 @@ export const StaffTypeWithLoader = ({
   const data = pathOr<
     typeof indicators,
     DashboardIndicators['diagrams']['staffType']
-  >({}, ['data', 'result', 'diagrams', 'staffType'])(indicators);
+  >({}, ['result', 'diagrams', 'staffType'])(indicators);
   return (
     <WithWidgetLoader
       title={'widgets.staffType.title'}

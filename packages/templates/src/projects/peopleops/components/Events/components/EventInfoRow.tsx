@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTheme } from '@emotion/react';
 import { offset } from '@floating-ui/react';
 import { Wrapper, useTranslation } from '@ssa-ui-kit/core';
@@ -133,18 +134,20 @@ const EventInfoRowComponent = ({
                   ? `#/Employee?ID=${firstItem.personId}`
                   : undefined
               }>
-              {firstItem.photo ? (
-                <EventInfoAvatar src={firstItem.photo} />
-              ) : (
-                <UserPlaceholder />
-              )}
-              {isMinLGMediaQuery ? (
-                firstItem.person
-              ) : (
-                <span css={{ fontSize: 10, letterSpacing: -2.5 }}>
-                  &#x2022;&#x2022;&#x2022;
-                </span>
-              )}
+              <Wrapper>
+                {firstItem.photo ? (
+                  <EventInfoAvatar src={firstItem.photo} />
+                ) : (
+                  <UserPlaceholder />
+                )}
+                {isMinLGMediaQuery ? (
+                  firstItem.person
+                ) : (
+                  <span css={{ fontSize: 10, letterSpacing: -2.5 }}>
+                    &#x2022;&#x2022;&#x2022;
+                  </span>
+                )}
+              </Wrapper>
             </WithEventLink>
           ) : null}
         </EventInfoCell>

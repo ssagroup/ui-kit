@@ -25,7 +25,6 @@ export const AgeChart = ({
 export const AgeChartWithLoader = ({ isFetching }: { isFetching: boolean }) => {
   const charts = useDashboardCharts();
   const data = pathOr<typeof charts, DashboardCharts['ageChart']>({}, [
-    'data',
     'result',
     'ageChart',
   ])(charts);

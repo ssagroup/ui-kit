@@ -73,7 +73,7 @@ export type DashboardIndicators = {
     seniority: number;
     tenure: number;
     staffTurnover: number;
-    benchAvailabilityPercentage: number;
+    benchAvailabilityPercentage?: number;
   };
   diagrams: {
     employmentType: {

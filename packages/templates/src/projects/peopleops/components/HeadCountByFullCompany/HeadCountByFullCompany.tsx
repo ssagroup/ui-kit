@@ -27,13 +27,17 @@ export const HeadCountByFullCompanyWithLoader = ({
 }: {
   isFetching: boolean;
 }) => {
-  const { headCountByFullCompanyGraph = [], timeStamps = [] } = useDashboardGraphsData();
+  const { headCountByFullCompanyGraph = [], timeStamps = [] } =
+    useDashboardGraphsData();
   return (
     <WithWidgetLoader
       title={'widgets.headCountByFullCompany.title'}
       css={{ gridArea: 'headCountByFullCompany' }}
       isFetching={isFetching}>
-      <HeadCountByFullCompany data={headCountByFullCompanyGraph} timestamps={timeStamps} />
+      <HeadCountByFullCompany
+        data={headCountByFullCompanyGraph}
+        timestamps={timeStamps}
+      />
     </WithWidgetLoader>
   );
 };

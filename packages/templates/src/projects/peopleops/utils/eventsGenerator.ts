@@ -1,7 +1,9 @@
+import { DateTime } from 'luxon';
 import * as API from '@/peopleops/types';
 import { DashboardEventsMock as template } from '@peopleops/hooks/dashboard/__mocks__/dashboardEvents';
 
-const formatDate = (date: Date) => date.toLocaleDateString('en-GB');
+const formatDate = (date: Date) =>
+  DateTime.fromJSDate(date).toFormat('dd-MM-yyyy');
 
 const getRandomDateInRange = (start: Date, end: Date) => {
   const randomTime =
@@ -9,51 +11,98 @@ const getRandomDateInRange = (start: Date, end: Date) => {
   return new Date(randomTime);
 };
 
-const getWeekBounds = (date: Date) => {
-  const startOfWeek = new Date(date);
-  startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Monday
-  startOfWeek.setHours(0, 0, 0, 0);
+export const getTodayBounds = () => {
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
 
-  const endOfWeek = new Date(date);
-  endOfWeek.setDate(date.getDate() - date.getDay() + 7); // Sunday
+  const endOfDay = new Date();
+  endOfDay.setHours(23, 59, 59, 999);
+
+  return { start: startOfDay, end: endOfDay };
+};
+
+export const getCurrentWeekBounds = () => {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const endOfCurrentWeekLuxon = DateTime.now().endOf('week');
+  const endOfWeek = endOfCurrentWeekLuxon.toJSDate();
   endOfWeek.setHours(23, 59, 59, 999);
 
-  return { start: startOfWeek, end: endOfWeek };
+  return { start: startOfToday, end: endOfWeek };
 };
 
-const getMonthBounds = (date: Date) => {
-  const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-  startOfMonth.setHours(0, 0, 0, 0);
+export const getNextWeekBounds = () => {
+  const startOfNextWeekLuxon = DateTime.now()
+    .plus({ weeks: 1 })
+    .startOf('week');
+  const startOfNextWeek = startOfNextWeekLuxon.toJSDate();
+  startOfNextWeek.setHours(0, 0, 0, 0);
 
-  const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  const endOfNextWeekLuxon = startOfNextWeekLuxon.endOf('week');
+  const endOfNextWeek = endOfNextWeekLuxon.toJSDate();
+  endOfNextWeek.setHours(23, 59, 59, 999);
+
+  return { start: startOfNextWeek, end: endOfNextWeek };
+};
+
+export const getCurrentMonthBounds = () => {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const endOfCurrentMonthLuxon = DateTime.now().endOf('month');
+  const endOfMonth = endOfCurrentMonthLuxon.toJSDate();
   endOfMonth.setHours(23, 59, 59, 999);
 
-  return { start: startOfMonth, end: endOfMonth };
+  return { start: startOfToday, end: endOfMonth };
 };
 
+export const getNextMonthBounds = () => {
+  const startOfNextMonthLuxon = DateTime.now()
+    .plus({ month: 1 })
+    .startOf('month');
+  const startOfNextMonth = startOfNextMonthLuxon.toJSDate();
+  startOfNextMonth.setHours(0, 0, 0, 0);
+
+  const endOfNextMonthLuxon = startOfNextMonthLuxon.endOf('month');
+  const endOfNextMonth = endOfNextMonthLuxon.toJSDate();
+  endOfNextMonth.setHours(23, 59, 59, 999);
+
+  return { start: startOfNextMonth, end: endOfNextMonth };
+};
+
+// TODO: add sorting by date ASK
 const updateEventDates = (
   events: Array<API.EventItemInfo>,
   dateRange: { start: Date; end: Date },
 ) => {
   const { start, end } = dateRange;
 
-  return events.map((event) => {
+  const updatedEvents = events.map((event) => {
     const randomDate = getRandomDateInRange(start, end);
     return {
       ...event,
       eventDate: formatDate(randomDate),
     };
   });
+
+  return updatedEvents;
 };
 
+// type EventPeriods = keyof typeof template;
+// type EventTypes = keyof (typeof template)['today'];
+
 export const getFilledTemplate = () => {
-  const today = new Date();
+  // const cache: Record<
+  //   EventPeriods,
+  //   Record<EventTypes, API.EventItemInfo[]>
+  // > = {} as Record<EventPeriods, Record<EventTypes, API.EventItemInfo[]>>;
   const dateRanges: API.DateRanges = {
-    today: { start: today, end: today },
-    thisWeek: getWeekBounds(today),
-    nextWeek: getWeekBounds(new Date(today.setDate(today.getDate() + 7))),
-    thisMonth: getMonthBounds(today),
-    nextMonth: getMonthBounds(new Date(today.setMonth(today.getMonth() + 1))),
+    today: getTodayBounds(),
+    thisWeek: getCurrentWeekBounds(),
+    nextWeek: getNextWeekBounds(),
+    thisMonth: getCurrentMonthBounds(),
+    nextMonth: getNextMonthBounds(),
   };
 
   const updateSection = (
@@ -69,17 +118,13 @@ export const getFilledTemplate = () => {
     };
   };
 
-  return {
-    today: {
-      ...template.today,
-      assessments: updateEventDates(
-        template.today.assessments,
-        dateRanges.today,
-      ),
-    },
+  const result = {
+    today: updateSection(template.today, 'today'),
     thisWeek: updateSection(template.thisWeek, 'thisWeek'),
     nextWeek: updateSection(template.nextWeek, 'nextWeek'),
     thisMonth: updateSection(template.thisMonth, 'thisMonth'),
     nextMonth: updateSection(template.nextMonth, 'nextMonth'),
   };
+
+  return result;
 };

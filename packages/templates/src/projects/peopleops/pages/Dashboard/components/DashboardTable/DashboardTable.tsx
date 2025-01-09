@@ -11,7 +11,7 @@ export const DashboardTable = () => {
   const result = useDashboardIndicators();
   const indicators = pathOr<typeof result, DashboardIndicators['indicators']>(
     {},
-    ['data', 'result', 'indicators'],
+    ['result', 'indicators'],
   )(result);
   const items = [
     {

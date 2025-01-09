@@ -65,7 +65,7 @@ export const GenderWithLoader = ({ isFetching }: { isFetching: boolean }) => {
   const data = pathOr<
     typeof indicators,
     DashboardIndicators['diagrams']['genderType']
-  >({}, ['data', 'result', 'diagrams', 'genderType'])(indicators);
+  >({}, ['result', 'diagrams', 'genderType'])(indicators);
   return (
     <WithWidgetLoader
       title={'widgets.gender.title'}

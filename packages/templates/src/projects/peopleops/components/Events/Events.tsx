@@ -140,9 +140,7 @@ export const Events = ({
 
 export const EventsWithLoader = ({ isFetching }: { isFetching: boolean }) => {
   const charts = hooks.Dashboard.useDashboardEvents();
-  const data = pathOr<typeof charts, DashboardEvents>({}, ['data', 'result'])(
-    charts,
-  );
+  const data = pathOr<typeof charts, DashboardEvents>({}, ['result'])(charts);
   return (
     <WithWidgetLoader
       title={'widgets.events.title'}

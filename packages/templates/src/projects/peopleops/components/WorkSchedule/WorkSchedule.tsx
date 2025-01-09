@@ -56,7 +56,7 @@ export const WorkScheduleWithLoader = ({
   const data = pathOr<
     typeof indicators,
     DashboardIndicators['diagrams']['workSchedule']
-  >({}, ['data', 'result', 'diagrams', 'workSchedule'])(indicators);
+  >({}, ['result', 'diagrams', 'workSchedule'])(indicators);
   return (
     <WithWidgetLoader
       title={'widgets.workSchedule.title'}

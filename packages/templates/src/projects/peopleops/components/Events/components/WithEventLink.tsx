@@ -31,5 +31,5 @@ export const WithEventLink = ({
     </Link>
   ) : (
     children
-  )
+  );
 };
