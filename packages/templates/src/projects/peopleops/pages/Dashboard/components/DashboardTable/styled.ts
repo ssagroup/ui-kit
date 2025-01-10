@@ -1,5 +1,5 @@
-import { TradingScoreboard as TradingScoreboardOriginal } from '@ssa-ui-kit/widgets';
 import styled from '@emotion/styled';
+import { TradingScoreboard as TradingScoreboardOriginal } from '@ssa-ui-kit/widgets';
 
 export const TradingScoreboard = styled(TradingScoreboardOriginal)`
   gap: 4px;
