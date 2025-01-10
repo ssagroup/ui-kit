@@ -71,18 +71,20 @@ export const getNextMonthBounds = () => {
   return { start: startOfNextMonth, end: endOfNextMonth };
 };
 
-// TODO: add sorting by date ASK
 const updateEventDates = (
   events: Array<API.EventItemInfo>,
   dateRange: { start: Date; end: Date },
 ) => {
   const { start, end } = dateRange;
 
-  const updatedEvents = events.map((event) => {
-    const randomDate = getRandomDateInRange(start, end);
+  const dates = events
+    .map(() => getRandomDateInRange(start, end))
+    .sort((date1, date2) => date1.getTime() - date2.getTime());
+
+  const updatedEvents = events.map((event, index) => {
     return {
       ...event,
-      eventDate: formatDate(randomDate),
+      eventDate: formatDate(dates[index]),
     };
   });
 
