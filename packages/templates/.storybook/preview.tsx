@@ -8,7 +8,12 @@ import './style.css';
 
 const preview = {
   parameters: {
-    controls: false,
+    controls: {
+      disable: true,
+    },
+    actions: {
+      disable: true,
+    },
     options: {
       storySort: {
         method: 'alphabetical',
