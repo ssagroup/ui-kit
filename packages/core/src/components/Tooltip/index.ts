@@ -3,3 +3,4 @@ export { TooltipContentBase } from './TooltipContentBase';
 export { SimpleChartTooltip } from './SimpleChartTooltip';
 export { ProgressChartTooltip } from './ProgressChartTooltip';
 export * as styles from './styles';
+export type * from './types';

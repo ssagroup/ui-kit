@@ -21,7 +21,7 @@ import { TOASTIFY_OPTIONS } from '../../../../../consts';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default {
-  title: 'Templates/ServicesTablePage',
+  title: 'Templates/Services Table Page',
   component: BotsPage,
   parameters: {
     layout: 'fullscreen',
