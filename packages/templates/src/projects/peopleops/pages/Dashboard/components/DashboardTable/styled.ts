@@ -6,6 +6,20 @@ export const TradingScoreboard = styled(TradingScoreboardOriginal)`
   grid-template-columns: repeat(3, 1fr);
   grid-auto-flow: inherit;
   overflow: inherit;
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 0;
+  }
   & div[role='button'] {
     cursor: default;
     white-space: normal;
@@ -45,20 +59,6 @@ export const TradingScoreboard = styled(TradingScoreboardOriginal)`
         font-size: 12px;
       }
     }
-  }
-  .h1,
-  .h2,
-  .h3,
-  .h4,
-  .h5,
-  .h6,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-bottom: 0;
   }
   ${({ theme }) => theme.mediaQueries.md} {
     grid-template-columns: repeat(7, 1fr);

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 export const baseText = (count: number) => css`
   font-weight: 700 !important;
-  &:after {
+  &::after {
     display: inline-block;
     font-weight: 100;
     margin-left: 3px;
