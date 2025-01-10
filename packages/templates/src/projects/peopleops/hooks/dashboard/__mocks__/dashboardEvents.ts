@@ -57,29 +57,7 @@ export const DashboardEventsMock = {
       },
     ],
     newComers: [],
-    assessments: [
-      {
-        personId: 1,
-        personName: 'John Smith',
-        eventDate: '01-01-2025',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=John+Smith&size=24&font-size=0.5',
-      },
-      {
-        personId: 2,
-        personName: 'Jack Brown',
-        eventDate: '01-01-2025',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Jack+Brown&size=24&font-size=0.5',
-      },
-      {
-        personId: 3,
-        personName: 'Adam Turner',
-        eventDate: '01-01-2025',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Adam+Turner&size=24&font-size=0.5',
-      },
-    ],
+    assessments: [],
     terminations: [],
   },
   nextWeek: {
@@ -114,30 +92,8 @@ export const DashboardEventsMock = {
   },
   thisMonth: {
     trials: [],
-    birthdays: [
-      {
-        personId: 4,
-        personName: 'Colin York',
-        eventDate: '10-01-1978',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Colin+York&size=24&font-size=0.5',
-      },
-      {
-        personId: 5,
-        personName: 'Stephen McCarthy',
-        eventDate: '11-01-1978',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Stephen+McCarthy&size=24&font-size=0.5',
-      },
-    ],
+    birthdays: [],
     anniversaries: [
-      {
-        personId: 6,
-        personName: 'Sarah Webb',
-        eventDate: '09-01-2018',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Sarah+Webb&size=24&font-size=0.5',
-      },
       {
         personId: 7,
         personName: 'Jane Stone',
@@ -147,29 +103,7 @@ export const DashboardEventsMock = {
       },
     ],
     newComers: [],
-    assessments: [
-      {
-        personId: 1,
-        personName: 'John Smith',
-        eventDate: '01-01-2025',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=John+Smith&size=24&font-size=0.5',
-      },
-      {
-        personId: 2,
-        personName: 'Jack Brown',
-        eventDate: '01-01-2025',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Jack+Brown&size=24&font-size=0.5',
-      },
-      {
-        personId: 3,
-        personName: 'Adam Turner',
-        eventDate: '01-01-2025',
-        avatarUrl:
-          'https://eu.ui-avatars.com/api/?name=Adam+Turner&size=24&font-size=0.5',
-      },
-    ],
+    assessments: [],
     terminations: [],
   },
   nextMonth: {
@@ -226,6 +160,9 @@ export const DashboardEventsMock = {
         avatarUrl:
           'https://eu.ui-avatars.com/api/?name=Colin+York&size=24&font-size=0.5',
       },
+    ],
+    newComers: [],
+    assessments: [
       {
         personId: 13,
         personName: 'David Foster',
@@ -241,8 +178,6 @@ export const DashboardEventsMock = {
           'https://eu.ui-avatars.com/api/?name=Emily+Clark&size=24&font-size=0.5',
       },
     ],
-    newComers: [],
-    assessments: [],
     terminations: [],
   },
 };
