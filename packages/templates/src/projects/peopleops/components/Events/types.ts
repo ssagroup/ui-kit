@@ -4,6 +4,7 @@ export type Period =
   | 'nextWeek'
   | 'thisMonth'
   | 'nextMonth';
+
 export type EventInfoRowProps = {
   itemLabel: string;
   rowCircleColor: string;

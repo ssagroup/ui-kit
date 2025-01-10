@@ -9,7 +9,7 @@ export const translationConfig: JSONObject = {
       dashboard: {
         indicators: {
           employees: 'Employees',
-          fte: 'FTE',
+          fte: 'Full Time Employees',
           utilization: 'Utilization',
           onBench: 'On Bench',
           seniorityLevel: 'Seniority Level',
@@ -74,7 +74,7 @@ export const translationConfig: JSONObject = {
         nextTrialTerminationDates: 'next termination dates',
       },
       fte: {
-        title: 'FTE',
+        title: 'Full Time Employees',
       },
       headCountByFullCompany: {
         title: 'Headcount',

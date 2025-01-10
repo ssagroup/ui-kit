@@ -132,12 +132,15 @@ export type EventItemInfo = {
   avatarUrl: string;
 };
 
-export type EventInfo = {
-  anniversaries: Array<EventItemInfo>;
-  birthdays: Array<EventItemInfo>;
-  trials: Array<EventItemInfo>;
-  terminations: Array<EventItemInfo>;
-};
+export type EventInfoType =
+  | 'anniversaries'
+  | 'birthdays'
+  | 'trials'
+  | 'newComers'
+  | 'terminations'
+  | 'assessments';
+
+export type EventInfo = Record<EventInfoType, Array<EventItemInfo>>;
 
 export type DashboardCharts = {
   [K in DashboardChartsTypes]: Array<{
