@@ -44,7 +44,14 @@ export const BarLineComplexChartView = ({
   const plotlyDefaultLayoutConfig = usePlotlyDefaultConfig();
   const deviceType = useDeviceType();
   const { data } = useBarLineComplexChartContext();
-  const timestamps = pathOr<BarLineChartItem[], number[]>([], [0, 'x'])(data);
+  const orientation = pathOr<BarLineChartItem[], 'h' | 'v'>('v', [
+    0,
+    'orientation',
+  ])(data);
+  const timestamps = pathOr<BarLineChartItem[], number[]>(
+    [],
+    [0, orientation === 'v' ? 'x' : 'y'],
+  )(data);
   const [revision, setRevision] = useState(1);
   const setNewRevision = () => {
     setRevision((currentValue) => currentValue + 1);
@@ -93,6 +100,28 @@ export const BarLineComplexChartView = ({
       ? firstLastDate
       : monthYear[0];
   });
+
+  const dateAxisProps: Partial<Plotly.LayoutAxis> = {
+    visible: false,
+    showgrid: true,
+    type: 'date',
+    hoverformat: '%B',
+    tickmode: 'array',
+    tickvals: timestamps,
+    ticktext: formattedTicks,
+    tickangle: 0,
+    ticklabelmode: 'period',
+    ticklabelstep: 1,
+    zeroline: false,
+    tickfont: tickFont,
+  };
+
+  const valuesAxisProps: Partial<Plotly.LayoutAxis> = {
+    showgrid: true,
+    rangemode: 'nonnegative',
+    zeroline: false,
+    tickfont: tickFont,
+  };
 
   const handleDebouncedFn = () => {
     cancel();
@@ -147,6 +176,7 @@ export const BarLineComplexChartView = ({
         useResizeHandler
         layout={{
           hovermode: 'x unified',
+          orientation: 1,
           margin: {
             b: isFullscreenMode ? 15 : 0,
             l: propOr(TITLE_PADDING_LEFT.other, deviceType)(TITLE_PADDING_LEFT),
@@ -190,10 +220,7 @@ export const BarLineComplexChartView = ({
           barcornerradius: 15,
           bargroupgap: 0.2,
           yaxis: {
-            showgrid: true,
-            rangemode: 'nonnegative',
-            zeroline: false,
-            tickfont: tickFont,
+            ...(orientation === 'v' ? valuesAxisProps : dateAxisProps),
             ...yaxis,
           },
           yaxis2: {
@@ -202,20 +229,11 @@ export const BarLineComplexChartView = ({
             side: 'right',
             tickfont: tickFont,
             zeroline: false,
+            visible: orientation === 'v' ? true : false,
             ...yaxis2,
           },
           xaxis: {
-            showgrid: true,
-            type: 'date',
-            hoverformat: '%B',
-            tickmode: 'array',
-            tickvals: timestamps,
-            ticktext: formattedTicks,
-            tickangle: 0,
-            ticklabelmode: 'period',
-            ticklabelstep: 1,
-            zeroline: false,
-            tickfont: tickFont,
+            ...(orientation === 'v' ? dateAxisProps : valuesAxisProps),
             ...xaxis,
           },
           legend: {

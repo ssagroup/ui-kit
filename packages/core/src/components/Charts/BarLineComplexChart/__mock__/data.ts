@@ -6,6 +6,8 @@ const axisXTimestamps = [
   1414857600000, 1417545600000, 1420233600000,
 ];
 
+const axisYTimestamps = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+
 export const mockData: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
@@ -319,6 +321,53 @@ export const mockBigData: BarLineChartItem[] = [
     selected: true,
     marker: {
       color: '#741660',
+    },
+  },
+];
+
+export const mockDataHorizontal: BarLineChartItem[] = [
+  {
+    x: [53],
+    y: axisYTimestamps,
+    orientation: 'h',
+    name: 'Department 1',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: '#ff7f00',
+    },
+  },
+  {
+    x: [110],
+    y: axisYTimestamps,
+    orientation: 'h',
+    name: 'Department 2',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: '#377eb8',
+    },
+  },
+  {
+    x: [300],
+    y: axisYTimestamps,
+    orientation: 'h',
+    name: 'Department 3',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: '#4daf4a',
+    },
+  },
+  {
+    x: [220],
+    y: axisYTimestamps,
+    orientation: 'h',
+    name: 'Department 4',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: '#984ea3',
     },
   },
 ];
