@@ -3,6 +3,6 @@ import theme from './theme';
 
 addons.setConfig({
   theme,
-  showPanel: true,
+  showPanel: false,
   panelPosition: 'bottom',
 });
