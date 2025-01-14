@@ -27,7 +27,7 @@ describe('TradingScoreboard', () => {
         itemsPerRow={5}
         items={defaultBoardArr}
         renderCard={(item) => (
-          <Button data-testid="trading-board">
+          <Button data-testid="fintech-board">
             <span>
               {item.value} {item.unit}
             </span>
@@ -36,7 +36,7 @@ describe('TradingScoreboard', () => {
         )}
       />,
     );
-    const itemsEls = getAllByTestId('trading-board');
+    const itemsEls = getAllByTestId('fintech-board');
     expect(itemsEls.length).toBe(defaultBoardArr.length);
 
     for (let i = 0; i < itemsEls.length; i++) {
@@ -94,7 +94,7 @@ describe('TradingScoreboard', () => {
         items={defaultBoardArr}
         onClick={mockOnClick}
         renderCard={(item, onClick) => (
-          <Button data-testid="trading-board" onClick={() => onClick?.(item)}>
+          <Button data-testid="fintech-board" onClick={() => onClick?.(item)}>
             <span>
               {item.value} {item.unit}
             </span>
@@ -106,7 +106,7 @@ describe('TradingScoreboard', () => {
       />,
     );
 
-    const itemsEls = getAllByTestId('trading-board');
+    const itemsEls = getAllByTestId('fintech-board');
     expect(itemsEls.length).toBe(defaultBoardArr.length);
 
     for (let i = 0; i < itemsEls.length; i++) {

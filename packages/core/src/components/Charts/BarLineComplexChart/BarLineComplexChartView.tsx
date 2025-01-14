@@ -179,8 +179,14 @@ export const BarLineComplexChartView = ({
           orientation: 1,
           margin: {
             b: isFullscreenMode ? 15 : 0,
-            l: propOr(TITLE_PADDING_LEFT.other, deviceType)(TITLE_PADDING_LEFT),
-            r: 40,
+            l:
+              orientation === 'v'
+                ? propOr(
+                    TITLE_PADDING_LEFT.other,
+                    deviceType,
+                  )(TITLE_PADDING_LEFT)
+                : 15,
+            r: orientation === 'v' ? 40 : 0,
             t:
               propOr(TITLE_PADDING_TOP.other, deviceType)(TITLE_PADDING_TOP) +
               25,
@@ -221,6 +227,7 @@ export const BarLineComplexChartView = ({
           bargroupgap: 0.2,
           yaxis: {
             ...(orientation === 'v' ? valuesAxisProps : dateAxisProps),
+            hoverformat: '%B +++ y',
             ...yaxis,
           },
           yaxis2: {
@@ -230,10 +237,12 @@ export const BarLineComplexChartView = ({
             tickfont: tickFont,
             zeroline: false,
             visible: orientation === 'v' ? true : false,
+            hoverformat: '%B +++ y2',
             ...yaxis2,
           },
           xaxis: {
             ...(orientation === 'v' ? dateAxisProps : valuesAxisProps),
+            hoverformat: '%B +++ x',
             ...xaxis,
           },
           legend: {

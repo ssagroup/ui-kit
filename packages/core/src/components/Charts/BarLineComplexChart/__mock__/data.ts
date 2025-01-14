@@ -1,3 +1,4 @@
+import main from '@themes/main';
 import { BarLineChartItem } from '../types';
 
 const axisXTimestamps = [
@@ -6,7 +7,16 @@ const axisXTimestamps = [
   1414857600000, 1417545600000, 1420233600000,
 ];
 
-const axisYTimestamps = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+const axisYValues = [
+  'Department 1',
+  'Department 2',
+  'Department 3',
+  'Department 4',
+  'Department 5',
+  'Department 6',
+  'Department 7',
+  'Department 8',
+];
 
 export const mockData: BarLineChartItem[] = [
   {
@@ -328,46 +338,98 @@ export const mockBigData: BarLineChartItem[] = [
 export const mockDataHorizontal: BarLineChartItem[] = [
   {
     x: [53],
-    y: axisYTimestamps,
+    y: axisYValues,
     orientation: 'h',
     name: 'Department 1',
+    hovertemplate: 'Department 1: %{x:}' + '<extra></extra>',
+    type: 'bar',
+    selected: false,
+    marker: {
+      color: main.colors.yellow,
+    },
+  },
+  {
+    x: [75],
+    y: axisYValues,
+    orientation: 'h',
+    name: 'Department 2',
+    hovertemplate: 'Department 2: %{x:}' + '<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
-      color: '#ff7f00',
+      color: main.colors.blue,
     },
   },
   {
     x: [110],
-    y: axisYTimestamps,
+    y: axisYValues,
     orientation: 'h',
-    name: 'Department 2',
+    name: 'Department 3',
+    hovertemplate: 'Department 3: %{x:}' + '<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
-      color: '#377eb8',
+      color: main.colors.green,
+    },
+  },
+  {
+    x: [230],
+    y: axisYValues,
+    orientation: 'h',
+    name: 'Department 4',
+    hovertemplate: 'Department 4: %{x:}' + '<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.yellowLighter,
     },
   },
   {
     x: [300],
-    y: axisYTimestamps,
+    y: axisYValues,
     orientation: 'h',
-    name: 'Department 3',
+    name: 'Department 5',
+    hovertemplate: 'Department 5: %{x:}' + '<extra></extra>',
+    type: 'bar',
+    selected: false,
+    marker: {
+      color: main.colors.blueLight,
+    },
+  },
+  {
+    x: [250],
+    y: axisYValues,
+    orientation: 'h',
+    name: 'Department 6',
+    hovertemplate: 'Department 6: %{x:}' + '<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
-      color: '#4daf4a',
+      color: main.colors.turquoise,
     },
   },
   {
     x: [220],
-    y: axisYTimestamps,
+    y: axisYValues,
     orientation: 'h',
-    name: 'Department 4',
+    name: 'Department 7',
+    hovertemplate: 'Department 7: %{x:}' + '<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
-      color: '#984ea3',
+      color: main.colors.pink,
+    },
+  },
+  {
+    x: [180],
+    y: axisYValues,
+    orientation: 'h',
+    name: 'Department 8',
+    hovertemplate: 'Department 8: %{x:}' + '<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.purple,
     },
   },
 ];

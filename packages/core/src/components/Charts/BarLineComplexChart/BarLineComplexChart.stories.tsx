@@ -127,8 +127,8 @@ export const Horizontal: Args = {
   ...Default,
   args: {
     data: mockDataHorizontal,
-    lineShape: 'spline',
-    features: ['filtering'],
+    features: ['filtering', 'fullscreenMode'],
     systemModeBarButtons: [],
+    maxVisibleBars: 8,
   },
 };

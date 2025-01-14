@@ -50,6 +50,7 @@ enim
 Entra
 etags
 fdusd
+fintech
 firebase
 firestore
 fixedrange
@@ -93,7 +94,6 @@ neque
 nisl
 nivo
 nocontrol
-peopleops
 PLN
 Plotly
 PMO

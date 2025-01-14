@@ -31,12 +31,12 @@
       "@contexts": ["./src/contexts"],
       "@": ["./src/projects"],
       "@/*": ["./src/projects/*"],
-      "@trading": ["./src/projects/trading"],
-      "@trading/*": ["./src/projects/trading/*"],
+      "@fintech": ["./src/projects/fintech"],
+      "@fintech/*": ["./src/projects/fintech/*"],
       "@fitness": ["./src/projects/fitness"],
       "@fitness/*": ["./src/projects/fitness/*"],
-      "@peopleops": ["./src/projects/peopleops"],
-      "@peopleops/*": ["./src/projects/peopleops/*"],
+      "@hr": ["./src/projects/hr"],
+      "@hr/*": ["./src/projects/hr/*"],
     }
   },
 
