@@ -41,6 +41,7 @@ export const BarLineComplexChartView = ({
   extraModeBarButtons: Array<Plotly.ModeBarButtonAny>;
 }) => {
   const theme = useTheme();
+  const plotlyWrapperRef = useRef<HTMLDivElement>(null);
   const plotlyDefaultLayoutConfig = usePlotlyDefaultConfig();
   const deviceType = useDeviceType();
   const { data } = useBarLineComplexChartContext();
@@ -130,6 +131,15 @@ export const BarLineComplexChartView = ({
 
   const handleHover = () => {
     setIsOpen(false);
+    // const legendTitleText = plotlyWrapperRef.current?.querySelector(
+    //   'text.legendtitletext',
+    // );
+    // if (legendTitleText) {
+    //   legendTitleText.innerHTML = 'Text!!!';
+    //   setTimeout(() => {
+    //     legendTitleText.innerHTML = 'Text!!!';
+    //   }, 1000);
+    // }
   };
 
   useEffect(() => {
@@ -141,6 +151,7 @@ export const BarLineComplexChartView = ({
   return (
     <Wrapper
       className="bar-line-complex-chart-wrapper"
+      ref={plotlyWrapperRef}
       css={{
         position: isFullscreenMode ? 'fixed' : 'static',
         top: isFullscreenMode ? '2.5%' : 'unset',
@@ -169,6 +180,9 @@ export const BarLineComplexChartView = ({
           width: isFullscreenMode ? '100%' : width,
           maxWidth: '100%',
           height: isFullscreenMode ? '100%' : height,
+          // '& .legendtitletext': {
+          //   display: orientation === 'h' ? 'none' : 'block',
+          // },
         }}
         revision={revision}
         data={transformedChartData}
@@ -185,6 +199,8 @@ export const BarLineComplexChartView = ({
                     TITLE_PADDING_LEFT.other,
                     deviceType,
                   )(TITLE_PADDING_LEFT)
+                : isFullscreenMode
+                ? 30
                 : 15,
             r: orientation === 'v' ? 40 : 0,
             t:
@@ -227,7 +243,6 @@ export const BarLineComplexChartView = ({
           bargroupgap: 0.2,
           yaxis: {
             ...(orientation === 'v' ? valuesAxisProps : dateAxisProps),
-            hoverformat: '%B +++ y',
             ...yaxis,
           },
           yaxis2: {
@@ -237,12 +252,11 @@ export const BarLineComplexChartView = ({
             tickfont: tickFont,
             zeroline: false,
             visible: orientation === 'v' ? true : false,
-            hoverformat: '%B +++ y2',
             ...yaxis2,
           },
           xaxis: {
             ...(orientation === 'v' ? dateAxisProps : valuesAxisProps),
-            hoverformat: '%B +++ x',
+            spikesnap: orientation === 'v' ? 'hovered data' : 'cursor',
             ...xaxis,
           },
           legend: {

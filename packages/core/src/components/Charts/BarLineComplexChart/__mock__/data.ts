@@ -7,17 +7,6 @@ const axisXTimestamps = [
   1414857600000, 1417545600000, 1420233600000,
 ];
 
-const axisYValues = [
-  'Department 1',
-  'Department 2',
-  'Department 3',
-  'Department 4',
-  'Department 5',
-  'Department 6',
-  'Department 7',
-  'Department 8',
-];
-
 export const mockData: BarLineChartItem[] = [
   {
     x: axisXTimestamps,
@@ -336,12 +325,44 @@ export const mockBigData: BarLineChartItem[] = [
 ];
 
 export const mockDataHorizontal: BarLineChartItem[] = [
+  // {
+  //   x: [0],
+  //   y: [0],
+  //   hoverlabel: {
+  //     bgcolor: 'red',
+  //     align: 'auto',
+  //     bordercolor: 'pink',
+  //     font: {
+  //       color: 'blue',
+  //       size: 20,
+  //       weight: 1000,
+  //     },
+  //     namelength: 0,
+  //   },
+  //   orientation: 'h',
+  //   hoverinfo: 'text',
+  //   hovertemplate: '<extra></extra>',
+  //   text: '???',
+  //   mode: 'markers',
+  //   marker: {
+  //     size: 0,
+  //     color: 'white',
+  //   },
+  //   showlegend: false,
+  //   opacity: 0,
+  //   // hovertemplate: '',
+  //   // type: 'bar',
+  //   selected: false,
+  //   // marker: {
+  //   //   color: main.colors.yellow,
+  //   // },
+  // },
   {
     x: [53],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 1',
-    hovertemplate: 'Department 1: %{x:}' + '<extra></extra>',
+    hoverinfo: 'text',
+    hovertemplate: 'Department 1: %{x:}<extra></extra>',
     type: 'bar',
     selected: false,
     marker: {
@@ -350,10 +371,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [75],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 2',
-    hovertemplate: 'Department 2: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 2: %{x:}<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
@@ -362,10 +382,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [110],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 3',
-    hovertemplate: 'Department 3: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 3: %{x:}<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
@@ -374,10 +393,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [230],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 4',
-    hovertemplate: 'Department 4: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 4: %{x:}<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
@@ -386,10 +404,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [300],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 5',
-    hovertemplate: 'Department 5: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 5: %{x:}<extra></extra>',
     type: 'bar',
     selected: false,
     marker: {
@@ -398,10 +415,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [250],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 6',
-    hovertemplate: 'Department 6: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 6: %{x:}<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
@@ -410,10 +426,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [220],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 7',
-    hovertemplate: 'Department 7: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 7: %{x:}<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
@@ -422,10 +437,9 @@ export const mockDataHorizontal: BarLineChartItem[] = [
   },
   {
     x: [180],
-    y: axisYValues,
     orientation: 'h',
     name: 'Department 8',
-    hovertemplate: 'Department 8: %{x:}' + '<extra></extra>',
+    hovertemplate: 'Department 8: %{x:}<extra></extra>',
     type: 'bar',
     selected: true,
     marker: {
