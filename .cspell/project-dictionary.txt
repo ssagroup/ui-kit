@@ -154,12 +154,16 @@ VERCEL
 viewports
 vtpit
 xanchor
+xaxes
 xaxis
 xlg
 xshift
+xvals
 yanchor
+yaxes
 yaxis
 Yevgen
 yref
 yshift
+yvals
 zeroline

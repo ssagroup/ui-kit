@@ -325,38 +325,6 @@ export const mockBigData: BarLineChartItem[] = [
 ];
 
 export const mockDataHorizontal: BarLineChartItem[] = [
-  // {
-  //   x: [0],
-  //   y: [0],
-  //   hoverlabel: {
-  //     bgcolor: 'red',
-  //     align: 'auto',
-  //     bordercolor: 'pink',
-  //     font: {
-  //       color: 'blue',
-  //       size: 20,
-  //       weight: 1000,
-  //     },
-  //     namelength: 0,
-  //   },
-  //   orientation: 'h',
-  //   hoverinfo: 'text',
-  //   hovertemplate: '<extra></extra>',
-  //   text: '???',
-  //   mode: 'markers',
-  //   marker: {
-  //     size: 0,
-  //     color: 'white',
-  //   },
-  //   showlegend: false,
-  //   opacity: 0,
-  //   // hovertemplate: '',
-  //   // type: 'bar',
-  //   selected: false,
-  //   // marker: {
-  //   //   color: main.colors.yellow,
-  //   // },
-  // },
   {
     x: [53],
     orientation: 'h',

@@ -130,16 +130,36 @@ export const BarLineComplexChartView = ({
   };
 
   const handleHover = () => {
+    /**
+     * Show tooltip on hover
+     * event: Readonly<Plotly.PlotHoverEvent>
+     * - event = {}
+     * - points:
+     * Array<{
+     *   bbox: { x0: number; x1: number; y0: number; y1: number; };
+     *   curveNumber: number;
+     *   data: Plotly.Data;
+     *   fullData: Plotly.Data;
+     *   label: number;
+     *   pointIndex: number;
+     *   pointNumber: number;
+     *   value: number;
+     *   x: number;
+     *   y: number;
+     *   xaxis: string;
+     *   yaxis: string;
+     * }>
+     * - xaxes: Array<{}>
+     * - xvals: Array<number>
+     * - yaxes: Array<{}>
+     * - yvals: Array<number>
+     */
     setIsOpen(false);
-    // const legendTitleText = plotlyWrapperRef.current?.querySelector(
-    //   'text.legendtitletext',
-    // );
-    // if (legendTitleText) {
-    //   legendTitleText.innerHTML = 'Text!!!';
-    //   setTimeout(() => {
-    //     legendTitleText.innerHTML = 'Text!!!';
-    //   }, 1000);
-    // }
+  };
+
+  const handleUnhover = () => {
+    // Hide tooltip on unhover
+    // event: Readonly<Plotly.PlotMouseEvent>
   };
 
   useEffect(() => {
@@ -180,13 +200,14 @@ export const BarLineComplexChartView = ({
           width: isFullscreenMode ? '100%' : width,
           maxWidth: '100%',
           height: isFullscreenMode ? '100%' : height,
-          // '& .legendtitletext': {
-          //   display: orientation === 'h' ? 'none' : 'block',
-          // },
+          '& .legendtitletext': {
+            display: orientation === 'h' ? 'none' : 'block',
+          },
         }}
         revision={revision}
         data={transformedChartData}
         onHover={handleHover}
+        onUnhover={handleUnhover}
         useResizeHandler
         layout={{
           hovermode: 'x unified',

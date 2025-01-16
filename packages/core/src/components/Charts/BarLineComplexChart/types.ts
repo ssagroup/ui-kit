@@ -26,6 +26,10 @@ export interface BarLineComplexChartProps extends Omit<PlotParams, 'layout'> {
   maxVisibleLines?: number;
   container?: Element | DocumentFragment;
   systemModeBarButtons?: Array<Plotly.ModeBarDefaultButtons>;
+  customModeBarButtons?: {
+    items: Array<Plotly.ModeBarButtonAny>;
+    position: 'end' | 'start';
+  };
   onChange?: (name: string | number, isSelected: boolean) => void;
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }

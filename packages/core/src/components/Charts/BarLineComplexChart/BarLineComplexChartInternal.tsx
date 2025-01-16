@@ -11,6 +11,10 @@ export const BarLineComplexChartInternal = ({
   width = '670px',
   height = '220px',
   container = document.body,
+  customModeBarButtons = {
+    items: [],
+    position: 'end',
+  },
   onChange,
   ...rest
 }: BarLineComplexInternalProps) => {
@@ -30,6 +34,13 @@ export const BarLineComplexChartInternal = ({
   }
   if (features?.includes('fullscreenMode')) {
     extraModeBarButtons.push(modeBarButtonsByKey['fullscreen']);
+  }
+  if (customModeBarButtons.items.length) {
+    if (customModeBarButtons.position === 'start') {
+      extraModeBarButtons.unshift(...customModeBarButtons.items);
+    } else {
+      extraModeBarButtons.push(...customModeBarButtons.items);
+    }
   }
 
   if (isFullscreenMode) {
