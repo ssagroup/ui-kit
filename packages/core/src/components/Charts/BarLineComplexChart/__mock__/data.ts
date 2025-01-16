@@ -1,3 +1,4 @@
+import main from '@themes/main';
 import { BarLineChartItem } from '../types';
 
 const axisXTimestamps = [
@@ -319,6 +320,98 @@ export const mockBigData: BarLineChartItem[] = [
     selected: true,
     marker: {
       color: '#741660',
+    },
+  },
+];
+
+export const mockDataHorizontal: BarLineChartItem[] = [
+  {
+    x: [53],
+    orientation: 'h',
+    name: 'Department 1',
+    hoverinfo: 'text',
+    hovertemplate: 'Department 1: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: false,
+    marker: {
+      color: main.colors.yellow,
+    },
+  },
+  {
+    x: [75],
+    orientation: 'h',
+    name: 'Department 2',
+    hovertemplate: 'Department 2: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.blue,
+    },
+  },
+  {
+    x: [110],
+    orientation: 'h',
+    name: 'Department 3',
+    hovertemplate: 'Department 3: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.green,
+    },
+  },
+  {
+    x: [230],
+    orientation: 'h',
+    name: 'Department 4',
+    hovertemplate: 'Department 4: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.yellowLighter,
+    },
+  },
+  {
+    x: [300],
+    orientation: 'h',
+    name: 'Department 5',
+    hovertemplate: 'Department 5: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: false,
+    marker: {
+      color: main.colors.blueLight,
+    },
+  },
+  {
+    x: [250],
+    orientation: 'h',
+    name: 'Department 6',
+    hovertemplate: 'Department 6: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.turquoise,
+    },
+  },
+  {
+    x: [220],
+    orientation: 'h',
+    name: 'Department 7',
+    hovertemplate: 'Department 7: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.pink,
+    },
+  },
+  {
+    x: [180],
+    orientation: 'h',
+    name: 'Department 8',
+    hovertemplate: 'Department 8: %{x:}<extra></extra>',
+    type: 'bar',
+    selected: true,
+    marker: {
+      color: main.colors.purple,
     },
   },
 ];

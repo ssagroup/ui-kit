@@ -3,6 +3,7 @@ import { TranslationProvider } from '@contexts';
 import { BarLineComplexChart } from './BarLineComplexChart';
 import {
   mockBigData,
+  mockDataHorizontal,
   mockData,
   mockDataWithDifferentLineType,
   mockWithDimensions,
@@ -119,5 +120,15 @@ export const Responsive: Args = {
     width: '100%',
     features: ['filtering', 'fullscreenMode'],
     systemModeBarButtons: [],
+  },
+};
+
+export const Horizontal: Args = {
+  ...Default,
+  args: {
+    data: mockDataHorizontal,
+    features: ['filtering', 'fullscreenMode'],
+    systemModeBarButtons: [],
+    maxVisibleBars: 8,
   },
 };

@@ -10,9 +10,9 @@ module.exports = () => {
       '@icons': path.resolve(__dirname, './src/icons'),
       '@contexts': path.resolve(__dirname, './src/contexts'),
       '@': path.resolve(__dirname, './src/projects'),
-      '@trading': path.resolve('./src/projects/trading'),
+      '@fintech': path.resolve('./src/projects/fintech'),
       '@fitness': path.resolve('./src/projects/fitness'),
-      '@peopleops': path.resolve('./src/projects/peopleops'),
+      '@hr': path.resolve('./src/projects/hr'),
     },
     externals: {
       react: 'react',

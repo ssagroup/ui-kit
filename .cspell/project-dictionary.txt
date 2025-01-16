@@ -12,6 +12,7 @@ bargroupgap
 barmode
 BMI
 BmiHeatbar
+bordercolor
 btc
 btcfdusd
 btn
@@ -50,6 +51,7 @@ enim
 Entra
 etags
 fdusd
+fintech
 firebase
 firestore
 fixedrange
@@ -64,6 +66,7 @@ homescreen
 hookform
 hoverformat
 hoverinfo
+hoverlabel
 hovermode
 hovertemplate
 HTMLSVGElement
@@ -73,6 +76,7 @@ itemclick
 jsdom
 legendgroup
 legendgrouptitle
+legendtitletext
 ligula
 linkstabbar
 lobortis
@@ -89,11 +93,11 @@ modebar
 msedge
 multirow
 mxschmitt
+namelength
 neque
 nisl
 nivo
 nocontrol
-peopleops
 PLN
 Plotly
 PMO
@@ -114,6 +118,7 @@ Setted
 showarrow
 showgrid
 showlegend
+spikesnap
 ssa
 ssagroup
 SSAHOCs
@@ -149,12 +154,16 @@ VERCEL
 viewports
 vtpit
 xanchor
+xaxes
 xaxis
 xlg
 xshift
+xvals
 yanchor
+yaxes
 yaxis
 Yevgen
 yref
 yshift
+yvals
 zeroline

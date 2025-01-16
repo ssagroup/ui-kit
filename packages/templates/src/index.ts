@@ -7,5 +7,5 @@ declare module '@emotion/react' {
   export interface Theme extends T {}
 }
 
-export * from './projects/trading';
+export * from './projects/fintech';
 export * from './projects/fitness';
