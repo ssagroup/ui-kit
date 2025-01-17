@@ -103,7 +103,6 @@ export const BarLineComplexChartView = ({
   });
 
   const dateAxisProps: Partial<Plotly.LayoutAxis> = {
-    visible: false,
     showgrid: true,
     type: 'date',
     hoverformat: '%B',
