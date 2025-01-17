@@ -17,15 +17,22 @@ const BarLineComplexChartComponent = ({
   title = 'Bar & Line Complex Chart',
   cardProps,
   features = [],
+  isFullscreenModeInitial = false,
   onFullscreenModeChange,
   ...rest
 }: BarLineComplexChartProps) => {
   const tooltip = useTooltip();
-  const { isFullscreenMode } = useFullscreenMode();
+  const { isFullscreenMode, setFullscreenMode } = useFullscreenMode();
 
   useEffect(() => {
     onFullscreenModeChange?.(isFullscreenMode);
   }, [isFullscreenMode]);
+
+  useEffect(() => {
+    if (isFullscreenModeInitial) {
+      setFullscreenMode(isFullscreenModeInitial);
+    }
+  }, [isFullscreenModeInitial]);
   return (
     <BarLineComplexChartContextProvider
       data={data}

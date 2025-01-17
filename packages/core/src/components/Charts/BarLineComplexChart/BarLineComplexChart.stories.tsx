@@ -72,6 +72,14 @@ export const WithFullscreen: Args = {
   },
 };
 
+export const WithFullscreenByDefault: Args = {
+  ...Default,
+  args: {
+    features: ['filtering', 'fullscreenMode'],
+    isFullscreenModeInitial: true,
+  },
+};
+
 export const WithDisabledScaling: Args = {
   ...Default,
   args: {
