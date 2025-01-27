@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { PathPattern } from 'react-router-dom';
 import {
   NavBarExtendedGroup,
   NavBarExtendedItem,
@@ -26,5 +27,6 @@ export interface CollapsibleNavBarExtendedProps<
   theme?: 'default' | 'light';
   className?: string;
   subMenuMaxWidth?: CSSProperties['maxWidth'];
+  useMatchPattern?: (prefix: string) => string | PathPattern<string>;
   onChange?: (isChecked: boolean) => void;
 }

@@ -1,4 +1,4 @@
-import { useMatch } from 'react-router-dom';
+import { PathPattern, useMatch } from 'react-router-dom';
 import {
   AccordionGroupContextProvider,
   AccordionGroup,
@@ -19,16 +19,29 @@ const Link = CollapsibleNavBarLink.withComponent('div');
 
 export const NavBarItemWithSubMenu = ({
   item,
+  useMatchPattern,
   onClick,
 }: {
   item: CollapsibleNavBarGroup;
+  useMatchPattern?: (prefix: string) => string | PathPattern<string>;
   onClick?: () => void;
 }) => {
   const { subMenuMaxWidth, theme } = useCollapsibleNavBarContext();
-  const { iconName, iconSize, title, items, prefix, css, CustomIcon } = item;
+  const {
+    iconName,
+    iconSize,
+    title,
+    items,
+    prefix = '',
+    css,
+    CustomIcon,
+  } = item;
   const uniqName = iconName + title.replace(' ', '').toLowerCase();
   const accordionUniqName = uniqName + 'accordion';
-  const match = useMatch(prefix + ':id');
+  const matchPattern = useMatchPattern
+    ? useMatchPattern(prefix)
+    : prefix + ':id';
+  const match = useMatch(matchPattern);
 
   const Icon = () => (
     <TriggerIcon iconName={iconName} iconSize={iconSize} css={{ ...css }} />
