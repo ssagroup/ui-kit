@@ -94,6 +94,7 @@ msedge
 multirow
 mxschmitt
 namelength
+navbartheme
 neque
 nisl
 nivo

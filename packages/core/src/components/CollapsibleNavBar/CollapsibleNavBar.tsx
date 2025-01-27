@@ -21,6 +21,7 @@ export const CollapsibleNavBar = ({
   theme = 'default',
   subMenuMaxWidth,
   className,
+  useMatchPattern,
   onChange,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
@@ -72,6 +73,7 @@ export const CollapsibleNavBar = ({
                   item={item}
                   key={keyName}
                   onClick={handleCloseMobileMenu}
+                  useMatchPattern={useMatchPattern}
                 />
               ) : (
                 <NavBarItemWithoutSubMenu
