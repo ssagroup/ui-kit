@@ -53,12 +53,13 @@ export const NavBarAccordionContent = ({
               .replace(' ', '')
               .toLowerCase()}`}
             onClick={onClick}
+            end
             to={
               isExternalLink
                 ? subMenuItem.path
                 : '/' + prefix + subMenuItem.path
             }
-            navBarTheme={theme}>
+            navbartheme={theme}>
             {subMenuItem.title}
           </Link>
         );

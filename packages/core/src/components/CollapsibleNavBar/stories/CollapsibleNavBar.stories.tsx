@@ -2,7 +2,6 @@ import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import { Meta, StoryObj } from '@storybook/react';
 import { Title, Description, Subtitle, Stories } from '@storybook/addon-docs';
-
 import { DecoratorFunction } from '@storybook/types';
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
