@@ -33,6 +33,7 @@ cornerradius
 csstype
 cubehelix
 customdata
+customicon
 disbalance
 displaylogo
 Dissoc
