@@ -209,7 +209,7 @@ export const BarLineComplexChartView = ({
         onUnhover={handleUnhover}
         useResizeHandler
         layout={{
-          hovermode: 'x unified',
+          hovermode: orientation === 'v' ? 'x unified' : 'y unified',
           orientation: 1,
           margin: {
             b: isFullscreenMode ? 15 : 0,

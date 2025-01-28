@@ -29,7 +29,8 @@ export const NavBarItemWithoutSubMenu = ({
       <CollapsibleNavBarLink
         to={isExternalLink ? path : '/' + path}
         onClick={onClick}
-        navbartheme={theme}>
+        navbartheme={theme}
+        customicon={!!CustomIcon}>
         <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
         <Icon />
         <span>{title}</span>

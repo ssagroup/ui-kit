@@ -4,6 +4,7 @@ import { CollapsibleNavBarExtendedProps } from './types';
 
 const CollapsibleNavBarLink = styled(NavLink)<{
   navbartheme: CollapsibleNavBarExtendedProps['theme'];
+  customicon?: boolean;
 }>`
   cursor: pointer;
   text-decoration: none;
@@ -33,12 +34,16 @@ const CollapsibleNavBarLink = styled(NavLink)<{
 
   div > svg {
     & path {
-      fill: ${({ theme, navbartheme }) =>
-        navbartheme === 'light' && theme.colors.greyDropdownFocused};
+      fill: ${({ theme, navbartheme, customicon }) =>
+        navbartheme === 'light' &&
+        !customicon &&
+        theme.colors.greyDropdownFocused};
     }
     & circle {
-      stroke: ${({ theme, navbartheme }) =>
-        navbartheme === 'light' && theme.colors.greyDropdownFocused};
+      stroke: ${({ theme, navbartheme, customicon }) =>
+        navbartheme === 'light' &&
+        !customicon &&
+        theme.colors.greyDropdownFocused};
     }
   }
 
