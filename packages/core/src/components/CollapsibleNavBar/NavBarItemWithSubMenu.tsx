@@ -84,7 +84,7 @@ export const NavBarItemWithSubMenu = ({
                 <Link
                   to=""
                   className={match ? ' active' : ''}
-                  navBarTheme={theme}>
+                  navbartheme={theme}>
                   <CollapsibleNavBarPopover
                     triggerIcon={<Icon />}
                     title={data.title}
@@ -104,7 +104,7 @@ export const NavBarItemWithSubMenu = ({
                 <Link
                   to=""
                   className={`icon-wrapper${match ? ' active' : ''}`}
-                  navBarTheme={theme}>
+                  navbartheme={theme}>
                   {CustomIcon ? <CustomIcon /> : <Icon />}
                   <AccordionTitle {...data} css={S.AccordionTitle(theme)} />
                 </Link>

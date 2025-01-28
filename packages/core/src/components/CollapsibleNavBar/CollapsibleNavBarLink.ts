@@ -3,15 +3,15 @@ import styled from '@emotion/styled';
 import { CollapsibleNavBarExtendedProps } from './types';
 
 const CollapsibleNavBarLink = styled(NavLink)<{
-  navBarTheme: CollapsibleNavBarExtendedProps['theme'];
+  navbartheme: CollapsibleNavBarExtendedProps['theme'];
 }>`
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 20px;
-  color: ${({ theme, navBarTheme }) =>
-    navBarTheme === 'default'
+  color: ${({ theme, navbartheme }) =>
+    navbartheme === 'default'
       ? theme.colors.white80
       : theme.colors.greyDarker80};
 
@@ -20,9 +20,9 @@ const CollapsibleNavBarLink = styled(NavLink)<{
   }
 
   & > span {
-    font-weight: ${({ navBarTheme }) => navBarTheme === 'light' && 500};
-    color: ${({ theme, navBarTheme }) =>
-      navBarTheme === 'default'
+    font-weight: ${({ navbartheme }) => navbartheme === 'light' && 500};
+    color: ${({ theme, navbartheme }) =>
+      navbartheme === 'default'
         ? theme.colors.white80
         : theme.colors.greyDarker80};
 
@@ -33,12 +33,12 @@ const CollapsibleNavBarLink = styled(NavLink)<{
 
   div > svg {
     & path {
-      fill: ${({ theme, navBarTheme }) =>
-        navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+      fill: ${({ theme, navbartheme }) =>
+        navbartheme === 'light' && theme.colors.greyDropdownFocused};
     }
     & circle {
-      stroke: ${({ theme, navBarTheme }) =>
-        navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+      stroke: ${({ theme, navbartheme }) =>
+        navbartheme === 'light' && theme.colors.greyDropdownFocused};
     }
   }
 
@@ -46,27 +46,27 @@ const CollapsibleNavBarLink = styled(NavLink)<{
     cursor: default;
     backdrop-filter: blur(0);
     filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
-    color: ${({ theme, navBarTheme }) =>
-      navBarTheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
+    color: ${({ theme, navbartheme }) =>
+      navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
     & > span {
-      font-weight: ${({ navBarTheme }) =>
-        navBarTheme === 'default' ? 500 : 600};
-      color: ${({ theme, navBarTheme }) =>
-        navBarTheme === 'default'
+      font-weight: ${({ navbartheme }) =>
+        navbartheme === 'default' ? 500 : 600};
+      color: ${({ theme, navbartheme }) =>
+        navbartheme === 'default'
           ? theme.colors.white80
           : theme.colors.greyDarker80};
     }
     div > svg {
       filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
       & path {
-        fill: ${({ theme, navBarTheme }) =>
-          navBarTheme === 'default'
+        fill: ${({ theme, navbartheme }) =>
+          navbartheme === 'default'
             ? theme.colors.white
             : theme.colors.greyDarker};
       }
       & circle {
-        stroke: ${({ theme, navBarTheme }) =>
-          navBarTheme === 'default'
+        stroke: ${({ theme, navbartheme }) =>
+          navbartheme === 'default'
             ? theme.colors.white
             : theme.colors.greyDarker};
       }
@@ -76,21 +76,21 @@ const CollapsibleNavBarLink = styled(NavLink)<{
     backdrop-filter: blur(0);
     filter: ${({ theme }) =>
       `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
-    color: ${({ theme, navBarTheme }) =>
-      navBarTheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
+    color: ${({ theme, navbartheme }) =>
+      navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
 
     div > svg {
       filter: ${({ theme }) =>
         `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
       & path {
-        fill: ${({ theme, navBarTheme }) =>
-          navBarTheme === 'default'
+        fill: ${({ theme, navbartheme }) =>
+          navbartheme === 'default'
             ? theme.colors.white
             : theme.colors.greyDarker};
       }
       & circle {
-        stroke: ${({ theme, navBarTheme }) =>
-          navBarTheme === 'default'
+        stroke: ${({ theme, navbartheme }) =>
+          navbartheme === 'default'
             ? theme.colors.white
             : theme.colors.greyDarker};
       }
