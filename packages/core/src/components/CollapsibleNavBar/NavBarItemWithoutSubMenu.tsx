@@ -30,7 +30,7 @@ export const NavBarItemWithoutSubMenu = ({
         to={isExternalLink ? path : '/' + path}
         onClick={onClick}
         navbartheme={theme}
-        customicon={!!CustomIcon}>
+        data-customicon={!!CustomIcon}>
         <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
         <Icon />
         <span>{title}</span>

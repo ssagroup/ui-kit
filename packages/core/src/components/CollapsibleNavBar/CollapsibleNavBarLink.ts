@@ -4,7 +4,7 @@ import { CollapsibleNavBarExtendedProps } from './types';
 
 const CollapsibleNavBarLink = styled(NavLink)<{
   navbartheme: CollapsibleNavBarExtendedProps['theme'];
-  customicon?: boolean;
+  ['data-customicon']?: boolean;
 }>`
   cursor: pointer;
   text-decoration: none;
@@ -34,15 +34,15 @@ const CollapsibleNavBarLink = styled(NavLink)<{
 
   div > svg {
     & path {
-      fill: ${({ theme, navbartheme, customicon }) =>
+      fill: ${({ theme, navbartheme, ...rest }) =>
         navbartheme === 'light' &&
-        !customicon &&
+        !rest['data-customicon'] &&
         theme.colors.greyDropdownFocused};
     }
     & circle {
-      stroke: ${({ theme, navbartheme, customicon }) =>
+      stroke: ${({ theme, navbartheme, ...rest }) =>
         navbartheme === 'light' &&
-        !customicon &&
+        !rest['data-customicon'] &&
         theme.colors.greyDropdownFocused};
     }
   }
@@ -64,14 +64,14 @@ const CollapsibleNavBarLink = styled(NavLink)<{
     div > svg {
       filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
       & path {
-        fill: ${({ theme, navbartheme }) =>
-          navbartheme === 'default'
+        fill: ${({ theme, navbartheme, ...rest }) =>
+          !rest['data-customicon'] && navbartheme === 'default'
             ? theme.colors.white
             : theme.colors.greyDarker};
       }
       & circle {
-        stroke: ${({ theme, navbartheme }) =>
-          navbartheme === 'default'
+        stroke: ${({ theme, navbartheme, ...rest }) =>
+          !rest['data-customicon'] && navbartheme === 'default'
             ? theme.colors.white
             : theme.colors.greyDarker};
       }
