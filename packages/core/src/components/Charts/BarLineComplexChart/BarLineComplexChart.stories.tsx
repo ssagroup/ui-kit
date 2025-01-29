@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TranslationProvider } from '@contexts';
 import { BarLineComplexChart } from './BarLineComplexChart';
@@ -9,7 +10,6 @@ import {
   mockWithDimensions,
 } from './__mock__/data';
 import { BarLineChartItem, BarLineComplexChartProps } from './types';
-import { useState } from 'react';
 
 export default {
   title: 'Charts/BarLineComplexChart',
@@ -37,23 +37,6 @@ export const Default: Args = {
       {...args}
     />
   ),
-};
-
-export const DefaultTest = () => {
-  const [qData, setQData] = useState<BarLineChartItem[]>([]);
-  setTimeout(() => {
-    setQData(mockData);
-  }, 5000);
-  return (
-    <BarLineComplexChart
-      data={qData}
-      width="670px"
-      height="220px"
-      cardProps={{
-        title: 'Bar & Line Complex Chart',
-      }}
-    />
-  );
 };
 
 export const WithFiltering: Args = {
@@ -157,4 +140,21 @@ export const Horizontal: Args = {
     systemModeBarButtons: [],
     maxVisibleBars: 8,
   },
+};
+
+export const WithAsyncData = () => {
+  const [queryData, setQueryData] = useState<BarLineChartItem[]>([]);
+  setTimeout(() => {
+    setQueryData(mockData);
+  }, 500);
+  return (
+    <BarLineComplexChart
+      data={queryData}
+      width="670px"
+      height="220px"
+      cardProps={{
+        title: 'Bar & Line Complex Chart',
+      }}
+    />
+  );
 };
