@@ -136,7 +136,7 @@ const CollapsibleNavBarBase = styled(NavBarBase)<{
 
       & > div:nth-of-type(2) {
         width: 240px;
-        padding-left: 31px;
+        padding-left: 29.5px;
         & img {
           margin-left: 0;
         }

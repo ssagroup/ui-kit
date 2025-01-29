@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TranslationProvider } from '@contexts';
 import { BarLineComplexChart } from './BarLineComplexChart';
@@ -8,7 +9,7 @@ import {
   mockDataWithDifferentLineType,
   mockWithDimensions,
 } from './__mock__/data';
-import { BarLineComplexChartProps } from './types';
+import { BarLineChartItem, BarLineComplexChartProps } from './types';
 
 export default {
   title: 'Charts/BarLineComplexChart',
@@ -139,4 +140,21 @@ export const Horizontal: Args = {
     systemModeBarButtons: [],
     maxVisibleBars: 8,
   },
+};
+
+export const WithAsyncData = () => {
+  const [queryData, setQueryData] = useState<BarLineChartItem[]>([]);
+  setTimeout(() => {
+    setQueryData(mockData);
+  }, 500);
+  return (
+    <BarLineComplexChart
+      data={queryData}
+      width="670px"
+      height="220px"
+      cardProps={{
+        title: 'Bar & Line Complex Chart',
+      }}
+    />
+  );
 };
