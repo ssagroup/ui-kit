@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTooltip } from '@components/Tooltip/useTooltip';
 import { TooltipContext } from '@components/Tooltip/useTooltipContext';
 import {
   useFullscreenMode,
   WithFullscreenMode,
 } from '@components/FullscreenModeContext';
-import { BarLineComplexChartProps } from './types';
+import { BarLineChartItem, BarLineComplexChartProps } from './types';
 import { BarLineComplexChartInternal } from './BarLineComplexChartInternal';
 import { BarLineComplexChartContextProvider } from './BarLIneComplexChart.context';
 
@@ -23,10 +23,15 @@ const BarLineComplexChartComponent = ({
 }: BarLineComplexChartProps) => {
   const tooltip = useTooltip();
   const { isFullscreenMode, setFullscreenMode } = useFullscreenMode();
+  const [componentData, setComponentData] = useState<BarLineChartItem[]>(data);
 
   useEffect(() => {
     onFullscreenModeChange?.(isFullscreenMode);
   }, [isFullscreenMode]);
+
+  useEffect(() => {
+    setComponentData(data);
+  }, [data]);
 
   useEffect(() => {
     if (isFullscreenModeInitial) {
@@ -35,7 +40,7 @@ const BarLineComplexChartComponent = ({
   }, [isFullscreenModeInitial]);
   return (
     <BarLineComplexChartContextProvider
-      data={data}
+      data={componentData}
       lineShape={lineShape}
       maxVisibleBars={maxVisibleBars}
       maxVisibleLines={maxVisibleLines}

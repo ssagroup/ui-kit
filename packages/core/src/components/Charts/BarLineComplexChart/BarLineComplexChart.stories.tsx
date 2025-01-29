@@ -8,7 +8,8 @@ import {
   mockDataWithDifferentLineType,
   mockWithDimensions,
 } from './__mock__/data';
-import { BarLineComplexChartProps } from './types';
+import { BarLineChartItem, BarLineComplexChartProps } from './types';
+import { useState } from 'react';
 
 export default {
   title: 'Charts/BarLineComplexChart',
@@ -36,6 +37,23 @@ export const Default: Args = {
       {...args}
     />
   ),
+};
+
+export const DefaultTest = () => {
+  const [qData, setQData] = useState<BarLineChartItem[]>([]);
+  setTimeout(() => {
+    setQData(mockData);
+  }, 5000);
+  return (
+    <BarLineComplexChart
+      data={qData}
+      width="670px"
+      height="220px"
+      cardProps={{
+        title: 'Bar & Line Complex Chart',
+      }}
+    />
+  );
 };
 
 export const WithFiltering: Args = {

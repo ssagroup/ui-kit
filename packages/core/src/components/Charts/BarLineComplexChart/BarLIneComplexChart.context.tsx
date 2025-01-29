@@ -110,6 +110,10 @@ export const BarLineComplexChartContextProvider = ({
     setIsMaxLinesSelected(linesSelected.length >= maxVisibleLines);
   }, [barsSelected, linesSelected]);
 
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
+
   return (
     <BarLineComplexChartContext.Provider
       value={{
