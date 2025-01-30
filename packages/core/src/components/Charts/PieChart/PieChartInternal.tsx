@@ -35,7 +35,7 @@ export const PieChartInternal = ({
   isFullscreenMode,
   activeId,
   data,
-  legendOutputType = 'value',
+  legendOutputType: legendOutputTypeInitial = 'value',
   tooltipProps,
   setActiveId,
   onFullscreenModeChange,
@@ -70,6 +70,9 @@ export const PieChartInternal = ({
 
   const isHeaderIncluded = features.includes('header');
   const [isOpen, setIsOpen] = useState(false);
+  const [legendOutputType, setLegendOutputType] = useState(
+    legendOutputTypeInitial,
+  );
   const { refs, context } = useFloating({
     open: isOpen,
     middleware: [flip({ fallbackAxisSideDirection: 'end' }), shift()],
@@ -155,6 +158,10 @@ export const PieChartInternal = ({
   useEffect(() => {
     onFullscreenModeChange?.(isFullscreenMode);
   }, [isFullscreenMode]);
+
+  useEffect(() => {
+    setLegendOutputType(legendOutputTypeInitial);
+  }, [legendOutputTypeInitial]);
 
   return (
     <PieChartProvider data={dataForChart} legendOutputType={legendOutputType}>
