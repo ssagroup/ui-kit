@@ -17,6 +17,7 @@ export interface PieChartTooltipProps {
     | 'dimension'
     | 'percentage'
     | 'value+percentage'
+    | 'percentage+value'
     | 'value+dimension+percentage';
   valueRoundingDigits?: number | false;
   percentageRoundingDigits?: number;
@@ -32,7 +33,11 @@ export interface PieChartProps
   activeHighlight?: boolean;
   container?: Element | DocumentFragment;
   tooltipProps?: PieChartTooltipProps;
-  legendOutputType?: 'value' | 'percentage' | 'value+percentage';
+  legendOutputType?:
+    | 'value'
+    | 'percentage'
+    | 'value+percentage'
+    | 'percentage+value';
   data: PieChartLegendItem[];
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
