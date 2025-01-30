@@ -59,13 +59,19 @@ export const PieChartTooltip = forwardRef<
             'value',
             'value+dimension',
             'value+percentage',
+            'percentage+value',
             'value+dimension+percentage',
           ].includes(outputType) && (
             <div>
-              <b>{point?.datum.value}</b>
+              <b>
+                {outputType === 'percentage+value'
+                  ? `${point?.datum.data.percentage}%`
+                  : point?.datum.value}
+              </b>
               {outputType === 'value+dimension' && dimension}
               {outputType === 'value+percentage' &&
                 ` (${point?.datum.data.percentage}%)`}
+              {outputType === 'percentage+value' && ` (${point?.datum.value})`}
               {outputType === 'value+dimension+percentage' &&
                 `${dimension} (${point?.datum.data.percentage}%)`}
             </div>

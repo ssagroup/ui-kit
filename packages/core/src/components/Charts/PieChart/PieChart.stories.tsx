@@ -364,6 +364,8 @@ const WithTooltipTemplate: StoryObj<
                 return `${item.percentage}%`;
               case 'value+percentage':
                 return `${item.value} (${item.percentage}%)`;
+              case 'percentage+value':
+                return `${item.percentage}% (${item.value})`;
               default:
                 return item.value;
             }
@@ -385,7 +387,7 @@ export const WithTooltip = {
   },
   argTypes: {
     legendOutputType: {
-      options: ['value', 'percentage', 'value+percentage'],
+      options: ['value', 'percentage', 'value+percentage', 'percentage+value'],
       control: { type: 'radio' },
     },
     tooltipIsEnabled: {
@@ -401,6 +403,7 @@ export const WithTooltip = {
         'dimension',
         'percentage',
         'value+percentage',
+        'percentage+value',
         'value+dimension+percentage',
       ],
       control: { type: 'radio' },
