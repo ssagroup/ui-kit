@@ -5,6 +5,7 @@ import {
   PieChartFeatures,
   PieChartLegend,
   pieChartPalettes,
+  mainTheme,
 } from '@ssa-ui-kit/core';
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
@@ -29,6 +30,23 @@ export const BalancePieChart = withTheme(
       pieChartPalettes.getBalancePalette(theme);
     const featuresList = new Set<PieChartFeatures>();
 
+    const filteredIndexes: number[] = [];
+    const chartData = data?.filter((item, index) => {
+      const isSaved = item.value !== 0;
+      if (!isSaved) {
+        filteredIndexes.push(index);
+      }
+      return isSaved;
+    });
+    const chartColors = (chartColorPalette || pieChartColors).filter(
+      (item, index) => !filteredIndexes.includes(index),
+    );
+    if (chartColors.length < chartData.length) {
+      for (let i = 0; i < chartData.length - chartColors.length; i++) {
+        chartColors.push(mainTheme.colors.purpleLighter as string);
+      }
+    }
+
     if (Object.keys(pieChartProps.cardProps || {}).length) {
       featuresList.add('header');
     }
@@ -43,9 +61,9 @@ export const BalancePieChart = withTheme(
     };
     return (
       <PieChart
-        data={data}
+        data={chartData}
         features={Array.from(featuresList)}
-        colors={chartColorPalette || pieChartColors}
+        colors={chartColors}
         onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
         title={
