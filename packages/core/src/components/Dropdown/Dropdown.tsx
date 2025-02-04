@@ -28,6 +28,7 @@ const DropdownBase = styled.div`
   position: relative;
 `;
 
+// TODO: allow React.ReactNode for selectedItem as well as DropdownOptionProps
 const Dropdown = <T extends DropdownOptionProps>({
   selectedItem,
   isDisabled,

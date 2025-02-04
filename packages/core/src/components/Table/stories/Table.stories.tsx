@@ -1,5 +1,13 @@
-import { Fragment } from 'react';
-import { css } from '@emotion/react';
+import {
+  Fragment,
+  Children,
+  isValidElement,
+  cloneElement,
+  ReactElement,
+  useState,
+} from 'react';
+import { css, useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react';
 import {
   Title,
@@ -92,3 +100,131 @@ export const TableSorting: StoryObj<typeof Table> = () => {
 };
 
 TableSorting.args = {};
+
+const TableCellCollapsible = styled(TableCell)`
+  border-right: none;
+`;
+
+const TableRowCollapsible = styled(TableRow)`
+  &.first-row {
+    background: rgba(238, 241, 247, 0.6);
+  }
+`;
+
+/**
+ * TODO:
+ - Make an item collapsible/expandable.
+ - Dynamically add the first column (including the first row in the header).
+ - Create a component with an up/down arrow and specified logic.
+ - Create another component for this logic
+ */
+const WithCollapsibleRow = ({ children }: React.PropsWithChildren) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const firstTableRow = Children.map(children, (child) => {
+    return isValidElement(child) ? child : null;
+  })
+    ?.filter(Boolean)
+    .at(0);
+  console.log('>>>firstTableRow', firstTableRow);
+
+  return Children.map(children, (child, index) => {
+    console.log('>>>child', child);
+    if (isValidElement(child)) {
+      if (
+        (child.type === TableRow || child.type === TableRowCollapsible) &&
+        index === 0
+      ) {
+        return cloneElement(child as ReactElement, {
+          className: `first-row${isCollapsed ? ' collapsed' : ''}`,
+          onClick: () => {
+            setIsCollapsed((currentState) => !currentState);
+          },
+        });
+      }
+      return cloneElement(child);
+    }
+  });
+};
+
+export const Collapsible: StoryObj<typeof Table> = () => {
+  const theme = useTheme();
+  return (
+    <Table>
+      <TableHead css={{ backgroundColor: theme.colors.white }}>
+        <TableRowCollapsible>
+          {/**  mode="header" */}
+          <TableCellCollapsible></TableCellCollapsible>
+          <TableCellCollapsible>Version</TableCellCollapsible>
+          <TableCellCollapsible>Layer</TableCellCollapsible>
+          <TableCellCollapsible>Type</TableCellCollapsible>
+          <TableCellCollapsible>Action</TableCellCollapsible>
+        </TableRowCollapsible>
+      </TableHead>
+      <TableBody>
+        <WithCollapsibleRow>
+          <TableRowCollapsible>
+            <TableCellCollapsible></TableCellCollapsible>
+            <TableCellCollapsible>1234567890</TableCellCollapsible>
+            <TableCellCollapsible>Estate</TableCellCollapsible>
+            <TableCellCollapsible>json</TableCellCollapsible>
+            <TableCellCollapsible>
+              <Icon name="bin" size={24} />
+            </TableCellCollapsible>
+          </TableRowCollapsible>
+          <TableRowCollapsible>
+            <TableCellCollapsible></TableCellCollapsible>
+            <TableCellCollapsible>1234567890</TableCellCollapsible>
+            <TableCellCollapsible>Estate</TableCellCollapsible>
+            <TableCellCollapsible>json</TableCellCollapsible>
+            <TableCellCollapsible>
+              <Icon name="bin" size={24} />
+            </TableCellCollapsible>
+          </TableRowCollapsible>
+        </WithCollapsibleRow>
+        <WithCollapsibleRow>
+          <TableRowCollapsible>
+            <TableCellCollapsible></TableCellCollapsible>
+            <TableCellCollapsible>1234567890</TableCellCollapsible>
+            <TableCellCollapsible>Estate</TableCellCollapsible>
+            <TableCellCollapsible>json</TableCellCollapsible>
+            <TableCellCollapsible>
+              <Icon name="bin" size={24} />
+            </TableCellCollapsible>
+          </TableRowCollapsible>
+          <TableRowCollapsible>
+            <TableCellCollapsible></TableCellCollapsible>
+            <TableCellCollapsible>1234567890</TableCellCollapsible>
+            <TableCellCollapsible>Estate</TableCellCollapsible>
+            <TableCellCollapsible>json</TableCellCollapsible>
+            <TableCellCollapsible>
+              <Icon name="bin" size={24} />
+            </TableCellCollapsible>
+          </TableRowCollapsible>
+          <TableRowCollapsible>
+            <TableCellCollapsible></TableCellCollapsible>
+            <TableCellCollapsible>1234567890</TableCellCollapsible>
+            <TableCellCollapsible>Estate</TableCellCollapsible>
+            <TableCellCollapsible>json</TableCellCollapsible>
+            <TableCellCollapsible>
+              <Icon name="bin" size={24} />
+            </TableCellCollapsible>
+          </TableRowCollapsible>
+        </WithCollapsibleRow>
+
+        <WithCollapsibleRow>
+          <TableRowCollapsible>
+            <TableCellCollapsible></TableCellCollapsible>
+            <TableCellCollapsible>1234567890</TableCellCollapsible>
+            <TableCellCollapsible>Estate</TableCellCollapsible>
+            <TableCellCollapsible>json</TableCellCollapsible>
+            <TableCellCollapsible>
+              <Icon name="bin" size={24} />
+            </TableCellCollapsible>
+          </TableRowCollapsible>
+        </WithCollapsibleRow>
+      </TableBody>
+    </Table>
+  );
+};
+
+Collapsible.args = {};
