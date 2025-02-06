@@ -25,7 +25,7 @@ export const WithNestedTableRow = ({
     if (isValidElement(child)) {
       const isSubHeader = index === 0;
       if (child.type === TableRow || child.type === NestedTableRow) {
-        const classNames = [];
+        const classNames: string[] = [];
         if (isSubHeader) {
           classNames.push('first-row');
         }
