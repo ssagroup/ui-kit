@@ -1,48 +1,17 @@
-import { Fragment } from 'react';
 import { useTheme } from '@emotion/react';
-import type { Meta, StoryObj } from '@storybook/react';
-import {
-  Title,
-  Subtitle,
-  Description,
-  Primary,
-  Stories,
-} from '@storybook/addon-docs';
-import Table from '@components/Table';
-import TableHead from '@components/TableHead';
-import TableBody from '@components/TableBody';
-import { ButtonProps } from '@components/Button/types';
 import Button from '@components/Button';
+import { ButtonProps } from '@components/Button/types';
 import Icon from '@components/Icon';
-import { NestedTableCell, NestedTableRow } from './components';
-import { WithNestedTableRow } from './WithNestedTableRow';
-
-export default {
-  title: 'Components/NestedTable',
-  component: Table,
-  parameters: {
-    controls: { disable: true },
-    docs: {
-      source: {
-        type: 'code',
-      },
-      page: () => (
-        <Fragment>
-          <Title />
-          <Subtitle />
-          <Description />
-          <Primary />
-          <Stories />
-        </Fragment>
-      ),
-    },
-  },
-} as Meta<typeof Table>;
+import Table from '@components/Table';
+import TableBody from '@components/TableBody';
+import TableHead from '@components/TableHead';
+import { NestedTableRow, NestedTableCell } from '../components';
+import { WithNestedTableRow } from '../WithNestedTableRow';
 
 const TableCellActionButton = (props: ButtonProps) => (
   <Button
     variant={'tertiary'}
-    endIcon={<Icon name="bin" size={24} />}
+    endIcon={<Icon name="bin" size={24} tooltip="" />}
     css={{
       padding: 0,
       ':focus': {
@@ -53,13 +22,13 @@ const TableCellActionButton = (props: ButtonProps) => (
     }}
     onClick={(event) => {
       event.stopPropagation();
-      console.log('+++');
+      console.log('Action button clicked');
     }}
     {...props}
   />
 );
 
-export const Default: StoryObj<typeof Table> = () => {
+export const NestedTableStory = () => {
   const theme = useTheme();
   return (
     <Table>
@@ -133,5 +102,3 @@ export const Default: StoryObj<typeof Table> = () => {
     </Table>
   );
 };
-
-Default.args = {};

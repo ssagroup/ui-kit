@@ -21,6 +21,9 @@ export const NestedTableCellSubHeader = ({
       name={isCollapsed ? 'carrot-up' : 'carrot-down'}
       size={18}
       css={{ cursor: 'pointer' }}
+      tooltip=""
+      data-testid="toggle-icon"
+      data-type={isCollapsed ? 'collapsed' : 'expanded'}
     />
   ) : (
     ''
