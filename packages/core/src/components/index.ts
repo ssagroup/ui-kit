@@ -79,6 +79,7 @@ export * from './ImageItem';
 export * from './LinksTabBar';
 export * from './Modal';
 export * from './NavBar';
+export * from './NestedTable';
 export * from './NotificationCard';
 export * from './NotificationMenu';
 export * from './Pagination';

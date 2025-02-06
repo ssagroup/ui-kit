@@ -30,6 +30,10 @@ const baseConfig = {
         extractComments: false,
       }),
     ],
+    usedExports: true,
+    splitChunks: {
+      chunks: 'all', // Split all modules (including third-party libraries)
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
