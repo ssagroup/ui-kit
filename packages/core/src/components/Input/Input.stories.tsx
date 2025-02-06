@@ -121,6 +121,30 @@ export const WithError: StoryObj<typeof Input> = () => {
 };
 WithError.args = {};
 
+export const WithErrorAndHelperText: StoryObj<typeof Input> = () => {
+  const { register } = useForm<FieldValues>();
+
+  return (
+    <Input
+      placeholder="Field error"
+      name="field2"
+      register={register}
+      validationSchema={{
+        required: 'Required',
+      }}
+      showHelperText
+      helperText={'Helper Text'}
+      status="error"
+      errors={{
+        type: 'value',
+        message: 'Error...',
+      }}
+    />
+  );
+};
+WithErrorAndHelperText.storyName = 'With Error and Helper Text';
+WithErrorAndHelperText.args = {};
+
 export const WithSuccess: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();
 
@@ -137,6 +161,26 @@ export const WithSuccess: StoryObj<typeof Input> = () => {
   );
 };
 WithSuccess.args = {};
+
+export const WithSuccessAndHelperText: StoryObj<typeof Input> = () => {
+  const { register } = useForm<FieldValues>();
+
+  return (
+    <Input
+      placeholder="Field success"
+      name="field3"
+      register={register}
+      validationSchema={{
+        required: 'Required',
+      }}
+      status="success"
+      showHelperText
+      helperText="Some nice text"
+    />
+  );
+};
+WithSuccessAndHelperText.storyName = 'With Success and Helper Text';
+WithSuccessAndHelperText.args = {};
 
 export const Disabled: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();

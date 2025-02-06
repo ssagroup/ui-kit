@@ -113,6 +113,11 @@ type Colors = MakeColors<
     'blueButtonActive',
     'blueRoyal',
     'blueRoyal12',
+    'dangerShades300',
+    'dangerShades500',
+    'dangerShades700',
+    'successShades500',
+    'successShades700',
   ]
 >;
 

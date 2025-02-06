@@ -70,6 +70,7 @@ export * from './ButtonGroup';
 export * from './CardList';
 export * from './Checkbox';
 export * from './CollapsibleNavBar';
+export * from './DateTimePicker';
 export * from './Filters';
 export * from './FormCheckbox';
 export * from './FullscreenModeContext';

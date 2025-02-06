@@ -1,5 +1,6 @@
-import { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
+import { FormHelperText } from '@components';
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
 import { InputProps, InputStatusColors } from './types';
@@ -29,6 +30,10 @@ const InputInner = (
     inputProps = {},
     errorTooltip,
     successTooltip,
+    errors,
+    maxLength,
+    helperText,
+    showHelperText = false,
     register,
     onKeyUp,
   }: InputProps,
@@ -40,40 +45,63 @@ const InputInner = (
     }
   }, []);
 
+  const [countChar, setCountChar] = React.useState(0);
   const showStatusIcon = () => !disabled && !endElement;
-
   const registerResult = register?.(name, validationSchema);
+
+  const handleCount: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    setCountChar(e.currentTarget.value.length);
+    onKeyUp?.(e);
+  };
+
   return (
-    <InputGroup
-      css={[mapColors[status]]}
-      className={wrapperClassName}
-      disabled={disabled}>
-      {startElement ? <div css={S.startElement}>{startElement}</div> : null}
-      <InputBase
-        type={type}
-        id={`formElement-${name}`}
-        placeholder={placeholder}
-        disabled={disabled}
-        css={{
-          paddingLeft: startElement && 40,
-          paddingRight: endElement && 40,
-        }}
-        className={className}
-        onKeyUp={onKeyUp}
-        {...inputProps}
-        {...register?.(name, validationSchema)}
-        ref={useMergeRefs([registerResult?.ref, inputRef])}
-      />
+    <>
+      <InputGroup
+        css={[mapColors[status]]}
+        className={wrapperClassName}
+        disabled={disabled}>
+        {startElement ? <div css={S.startElement}>{startElement}</div> : null}
+        <InputBase
+          type={type}
+          id={`formElement-${name}`}
+          placeholder={placeholder}
+          disabled={disabled}
+          css={{
+            paddingLeft: startElement && 40,
+            paddingRight: endElement && 40,
+          }}
+          className={className}
+          onKeyUp={handleCount}
+          {...inputProps}
+          {...register?.(name, validationSchema)}
+          ref={useMergeRefs([registerResult?.ref, inputRef])}
+        />
 
-      {status === 'error' && showStatusIcon() ? (
-        <InputStatusError errorTooltip={errorTooltip} />
-      ) : null}
-      {status === 'success' && showStatusIcon() ? (
-        <InputStatusSuccess successTooltip={successTooltip} />
-      ) : null}
+        {status === 'error' && showStatusIcon() ? (
+          <InputStatusError errorTooltip={errorTooltip} />
+        ) : null}
+        {status === 'success' && showStatusIcon() ? (
+          <InputStatusSuccess successTooltip={successTooltip} />
+        ) : null}
 
-      {endElement ? <div css={S.endElement}>{endElement}</div> : null}
-    </InputGroup>
+        {endElement ? <div css={S.endElement}>{endElement}</div> : null}
+      </InputGroup>
+      {showHelperText && (
+        <div
+          css={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}>
+          <FormHelperText role="status" status={status} disabled={disabled}>
+            {errors ? errors?.message : helperText}
+          </FormHelperText>
+          <FormHelperText role="meter">
+            {maxLength ? `${countChar} / ${maxLength}` : null}
+          </FormHelperText>
+        </div>
+      )}
+    </>
   );
 };
 
