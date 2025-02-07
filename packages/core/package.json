@@ -24,6 +24,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@floating-ui/react": "0.25.4",
+    "@react-input/mask": "^2.0.4",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
     "dotenv": "^16.0.3",
