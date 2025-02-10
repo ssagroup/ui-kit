@@ -11,5 +11,9 @@ export type DatePickerProps = {
 export type DatePickerContextProps = DatePickerProps & {
   inputRef: MutableRefObject<HTMLInputElement | null>;
   isOpen: boolean;
+  calendarType: CalendarType;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setCalendarType: Dispatch<SetStateAction<CalendarType>>;
 };
+
+export type CalendarType = 'days' | 'months' | 'years';

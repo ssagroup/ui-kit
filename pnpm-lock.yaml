@@ -375,6 +375,9 @@ importers:
       loose-envify:
         specifier: ^1.4.0
         version: 1.4.0
+      luxon:
+        specifier: ^3.5.0
+        version: 3.5.0
       plotly.js:
         specifier: 2.35.2
         version: 2.35.2(mapbox-gl@1.13.3)(webpack@5.85.0)
@@ -412,6 +415,9 @@ importers:
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.16.5
+      '@types/luxon':
+        specifier: ^3.4.2
+        version: 3.4.2
       '@types/react-plotly.js':
         specifier: 2.6.3
         version: 2.6.3
