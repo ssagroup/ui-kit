@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { DateTime } from 'luxon';
-import { useTheme } from '@emotion/react';
 import Wrapper from '@components/Wrapper';
+import * as S from '../styles';
 import { getDaysForCalendarMonth, getWeekDays } from '../utils';
+import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DaysView = () => {
-  const theme = useTheme();
   const weekDays = getWeekDays();
-  const currentMonth = 1;
-  const dates = getDaysForCalendarMonth(new Date(2025, currentMonth, 10));
+  const { calendarViewDateTime, dateTime } = useDatePickerContext();
+  const selectedDateTime = dateTime?.toFormat('D');
+  const currentDate = calendarViewDateTime?.toJSDate();
+  const currentMonth = currentDate?.getMonth();
+  const dates = getDaysForCalendarMonth(currentDate);
   const nowDate = DateTime.fromJSDate(new Date()).toFormat('D');
+  const handleDaySelect: MouseEventHandler<HTMLDivElement> = (event) => {
+    const { target } = event;
+    const selectedDay = Number((target as HTMLDivElement).innerHTML);
+    const isEnabled =
+      (target as HTMLDivElement).getAttribute('aria-disabled') === 'false';
+    if (isEnabled) {
+      console.log('>>>selected day', selectedDay);
+    }
+  };
   return (
     <React.Fragment>
       <Wrapper>
-        {weekDays.map((weekDay) => (
+        {weekDays.map((weekDay, index) => (
           <Wrapper
-            key={`week-day-${weekDay}`}
+            key={`week-day-${weekDay}-${index}`}
             css={{
               width: 40,
               height: 40,
@@ -28,34 +40,23 @@ export const DaysView = () => {
           </Wrapper>
         ))}
       </Wrapper>
-      <Wrapper css={{ flexWrap: 'wrap' }}>
-        {dates.map((currentDate) => {
+      <Wrapper css={{ flexWrap: 'wrap' }} onClick={handleDaySelect}>
+        {dates.map((currentDate, index) => {
           const calendarDate = DateTime.fromJSDate(currentDate).toFormat('D');
+          const calendarDay = currentDate.getDate();
           const calendarMonth = currentDate.getMonth();
+          const isCalendarDateNow = nowDate === calendarDate;
+          const isCalendarDateSelected = selectedDateTime === calendarDate;
+          const isCalendarMonth = currentMonth === calendarMonth;
           return (
-            <Wrapper
-              key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`}
-              css={{
-                width: 40,
-                height: 40,
-                justifyContent: 'center',
-                fontSize: 14,
-                fontWeight: 500,
-                cursor: 'default',
-                borderRadius: 6,
-                color:
-                  nowDate === calendarDate
-                    ? theme.colors.white
-                    : currentMonth === calendarMonth
-                    ? theme.colors.greyDarker
-                    : theme.colors.grey,
-                background:
-                  nowDate === calendarDate
-                    ? 'linear-gradient(247deg, #7599DE 14.71%, #4178E1 85.29%)'
-                    : 'none',
-              }}>
-              {currentDate.getDate()}
-            </Wrapper>
+            <S.DaysViewCell
+              key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}-${index}`}
+              aria-disabled={!isCalendarMonth}
+              isCalendarDateNow={isCalendarDateNow}
+              isCalendarDateSelected={isCalendarDateSelected}
+              isCalendarMonth={isCalendarMonth}>
+              {calendarDay}
+            </S.DaysViewCell>
           );
         })}
       </Wrapper>

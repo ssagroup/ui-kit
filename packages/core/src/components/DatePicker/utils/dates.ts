@@ -1,6 +1,9 @@
 import { DateTime } from 'luxon';
 
-export const getDaysForCalendarMonth = (date: Date) => {
+export const getDaysForCalendarMonth = (date?: Date) => {
+  if (!date) {
+    return [];
+  }
   const firstDayOfMonth = DateTime.fromJSDate(date).startOf('month');
   const firstDayOfCal = firstDayOfMonth.startOf('week');
   const lastDayOfMonth = firstDayOfMonth.endOf('month');
@@ -30,4 +33,15 @@ export const getWeekDays = () => {
   }
   days.pop();
   return days;
+};
+
+export const getYearsList = (props?: {
+  yearsFrom?: number;
+  yearsCount?: number;
+}) => {
+  const { yearsFrom = 1900, yearsCount = 250 } = props || {};
+  return Array.from(
+    { length: yearsCount },
+    (value, index) => yearsFrom + index,
+  );
 };

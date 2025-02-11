@@ -1,4 +1,6 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { DateTime } from 'luxon';
 import { CalendarType, DatePickerContextProps, DatePickerProps } from './types';
 import { DEFAULT_FORMAT } from './constants';
 import { useDatePickerMask } from './useDatePickerMask';
@@ -11,10 +13,16 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
   inputRef: { current: null },
   isOpen: false,
   calendarType: 'days',
+  value: undefined,
+  dateTime: undefined,
+  calendarViewDateTime: undefined,
   setIsOpen: () => {
     // no-op
   },
   setCalendarType: () => {
+    // no-op
+  },
+  setCalendarViewDateTime: () => {
     // no-op
   },
 });
@@ -25,6 +33,12 @@ export const DatePickerProvider = ({
 }: React.PropsWithChildren<DatePickerProps>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [calendarType, setCalendarType] = useState<CalendarType>('days');
+  const [dateTime, setDateTime] = useState<DateTime | undefined>(undefined);
+  const [calendarViewDateTime, setCalendarViewDateTime] = useState<
+    DateTime | undefined
+  >(undefined);
+  const { watch } = useFormContext();
+  const value = watch(rest.name);
   // Save 1st date of the month [luxon?]
   // luxon.DateTime.fromJSDate(new Date()).set({ day: 1, hour: 12 }).toFormat('DDDD')
   const { format, maskOptions } = rest;
@@ -32,6 +46,23 @@ export const DatePickerProvider = ({
     format,
     maskOptions,
   });
+
+  useEffect(() => {
+    const newDateTime =
+      typeof value === 'string'
+        ? // TODO: make this format flexible
+          DateTime.fromFormat(value, 'MM/dd/yyyy')
+        : undefined;
+    setDateTime(newDateTime);
+
+    const newCalendarViewDateTime = newDateTime
+      ? newDateTime.set({ day: 15 })
+      : DateTime.now().set({ day: 15 });
+
+    // TODO: check it
+    setCalendarViewDateTime(newCalendarViewDateTime);
+  }, [value]);
+
   return (
     <DatePickerContext.Provider
       value={{
@@ -39,6 +70,10 @@ export const DatePickerProvider = ({
         inputRef,
         isOpen,
         calendarType,
+        value,
+        dateTime,
+        calendarViewDateTime,
+        setCalendarViewDateTime,
         setIsOpen,
         setCalendarType,
       }}>
