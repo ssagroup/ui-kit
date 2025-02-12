@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
-import * as C from '../..';
 import * as DPC from '.';
+import * as C from '../..';
 import { CalendarType } from '../types';
 import { useDatePickerContext } from '../useDatePickerContext';
 
@@ -23,7 +23,7 @@ export const DatePickerCalendar = () => {
         borderRadius: 16,
         padding: 24,
         paddingTop: 16,
-        width: 328,
+        width: 346,
         height: 370,
         alignItems: 'flex-start',
       }}>

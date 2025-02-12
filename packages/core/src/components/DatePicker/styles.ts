@@ -36,3 +36,50 @@ export const DaysViewCell = styled(Wrapper)<{
       isCalendarDateNow && `1px solid ${theme.colors.greyFocused}`};
   }
 `;
+
+export const YearsViewCell = styled.div<{
+  isCalendarYear: boolean;
+}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500px;
+  cursor: pointer;
+  color: ${({ theme, isCalendarYear }) => isCalendarYear && theme.colors.white};
+  background: ${({ theme, isCalendarYear }) =>
+    isCalendarYear
+      ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
+      : 'none'};
+  &:hover {
+    background: ${({ theme }) => theme.colors.greyLighter};
+    color: ${({ theme }) => theme.colors.greyDarker};
+  }
+`;
+
+export const MonthsViewCell = styled.div<{
+  isCalendarMonth: boolean;
+}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 99px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500px;
+  cursor: pointer;
+  color: ${({ theme, isCalendarMonth }) =>
+    isCalendarMonth && theme.colors.white};
+  background: ${({ theme, isCalendarMonth }) =>
+    isCalendarMonth
+      ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
+      : 'none'};
+  &:hover {
+    background: ${({ theme }) => theme.colors.greyLighter};
+    color: ${({ theme }) => theme.colors.greyDarker};
+  }
+`;

@@ -2,11 +2,16 @@ import { createContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { CalendarType, DatePickerContextProps, DatePickerProps } from './types';
-import { DEFAULT_FORMAT } from './constants';
+import {
+  DEFAULT_LUXON_FORMAT,
+  DEFAULT_MASK_FORMAT,
+  YEAR_MAX,
+  YEAR_MIN,
+} from './constants';
 import { useDatePickerMask } from './useDatePickerMask';
 
 export const DatePickerContext = createContext<DatePickerContextProps>({
-  format: DEFAULT_FORMAT,
+  format: DEFAULT_MASK_FORMAT,
   name: '',
   maskOptions: {},
   openCalendarMode: 'icon',
@@ -16,6 +21,8 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
   value: undefined,
   dateTime: undefined,
   calendarViewDateTime: undefined,
+  yearMin: YEAR_MIN,
+  yearMax: YEAR_MAX,
   setIsOpen: () => {
     // no-op
   },
@@ -23,6 +30,9 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
     // no-op
   },
   setCalendarViewDateTime: () => {
+    // no-op
+  },
+  setDateTime: () => {
     // no-op
   },
 });
@@ -37,10 +47,8 @@ export const DatePickerProvider = ({
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     DateTime | undefined
   >(undefined);
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const value = watch(rest.name);
-  // Save 1st date of the month [luxon?]
-  // luxon.DateTime.fromJSDate(new Date()).set({ day: 1, hour: 12 }).toFormat('DDDD')
   const { format, maskOptions } = rest;
   const inputRef = useDatePickerMask({
     format,
@@ -48,20 +56,37 @@ export const DatePickerProvider = ({
   });
 
   useEffect(() => {
+    if (typeof value === 'string' && value.length < 10) {
+      setIsOpen(false);
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 10);
+    }
     const newDateTime =
-      typeof value === 'string'
+      typeof value === 'string' && value.length === 10
         ? // TODO: make this format flexible
-          DateTime.fromFormat(value, 'MM/dd/yyyy')
+          DateTime.fromFormat(value, DEFAULT_LUXON_FORMAT)
         : undefined;
-    setDateTime(newDateTime);
+    if (newDateTime !== undefined) {
+      setDateTime(newDateTime);
+    }
 
     const newCalendarViewDateTime = newDateTime
-      ? newDateTime.set({ day: 15 })
+      ? newDateTime
       : DateTime.now().set({ day: 15 });
 
     // TODO: check it
     setCalendarViewDateTime(newCalendarViewDateTime);
   }, [value]);
+
+  useEffect(() => {
+    if (dateTime) {
+      const newValue = dateTime.toFormat(DEFAULT_LUXON_FORMAT);
+      if (value !== newValue) {
+        setValue(rest.name, newValue);
+      }
+    }
+  }, [dateTime]);
 
   return (
     <DatePickerContext.Provider
@@ -73,6 +98,9 @@ export const DatePickerProvider = ({
         value,
         dateTime,
         calendarViewDateTime,
+        yearMin: rest.yearMin || YEAR_MIN,
+        yearMax: rest.yearMax || YEAR_MAX,
+        setDateTime,
         setCalendarViewDateTime,
         setIsOpen,
         setCalendarType,

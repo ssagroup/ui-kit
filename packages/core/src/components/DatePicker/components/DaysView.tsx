@@ -7,7 +7,13 @@ import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();
-  const { calendarViewDateTime, dateTime } = useDatePickerContext();
+  const {
+    dateTime,
+    calendarViewDateTime,
+    setCalendarViewDateTime,
+    setDateTime,
+    setIsOpen,
+  } = useDatePickerContext();
   const selectedDateTime = dateTime?.toFormat('D');
   const currentDate = calendarViewDateTime?.toJSDate();
   const currentMonth = currentDate?.getMonth();
@@ -19,12 +25,15 @@ export const DaysView = () => {
     const isEnabled =
       (target as HTMLDivElement).getAttribute('aria-disabled') === 'false';
     if (isEnabled) {
-      console.log('>>>selected day', selectedDay);
+      const newDate = calendarViewDateTime?.set({ day: selectedDay });
+      setCalendarViewDateTime(newDate);
+      setDateTime(newDate);
+      setIsOpen(false);
     }
   };
   return (
     <React.Fragment>
-      <Wrapper>
+      <Wrapper css={{ paddingLeft: 9 }}>
         {weekDays.map((weekDay, index) => (
           <Wrapper
             key={`week-day-${weekDay}-${index}`}
@@ -40,7 +49,9 @@ export const DaysView = () => {
           </Wrapper>
         ))}
       </Wrapper>
-      <Wrapper css={{ flexWrap: 'wrap' }} onClick={handleDaySelect}>
+      <Wrapper
+        css={{ flexWrap: 'wrap', paddingLeft: 9 }}
+        onClick={handleDaySelect}>
         {dates.map((currentDate, index) => {
           const calendarDate = DateTime.fromJSDate(currentDate).toFormat('D');
           const calendarDay = currentDate.getDate();

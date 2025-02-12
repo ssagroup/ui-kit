@@ -122,6 +122,7 @@ showarrow
 showgrid
 showlegend
 spikesnap
+splitted
 ssa
 ssagroup
 SSAHOCs
