@@ -9,7 +9,6 @@ import {
 import { processDate } from './utils';
 
 export const useDatePickerMask = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   format = DEFAULT_MASK_FORMAT,
   maskOptions,
   yearMin = YEAR_MIN,
@@ -25,7 +24,7 @@ export const useDatePickerMask = ({
     mask,
     replacement,
     track: ({ data, selectionStart, selectionEnd, value: currentValue }) => {
-      if (format === DEFAULT_MASK_FORMAT && mask === DEFAULT_MASK) {
+      if (mask === DEFAULT_MASK) {
         const newValue =
           currentValue.slice(0, selectionStart) +
           data +
@@ -33,11 +32,17 @@ export const useDatePickerMask = ({
 
         const updatedValue = maskFormat(newValue, { mask, replacement });
         const splittedValue = updatedValue.split('/');
+        const splittedFormat = format.split('/');
+        const formatIndexes = {
+          day: splittedFormat.findIndex((item) => item === 'dd'),
+          month: splittedFormat.findIndex((item) => item === 'mm'),
+          year: splittedFormat.findIndex((item) => item === 'yyyy'),
+        };
         const isChecked = processDate(
           {
-            day: splittedValue[1],
-            month: splittedValue[0],
-            year: splittedValue[2],
+            day: splittedValue[formatIndexes['day']],
+            month: splittedValue[formatIndexes['month']],
+            year: splittedValue[formatIndexes['year']],
           },
           yearMin,
           yearMax,

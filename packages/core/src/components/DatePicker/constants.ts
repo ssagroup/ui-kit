@@ -1,5 +1,4 @@
 export const DEFAULT_MASK_FORMAT = 'mm/dd/yyyy';
-export const DEFAULT_LUXON_FORMAT = 'MM/dd/yyyy';
 export const DEFAULT_MASK = '__/__/____';
 export const MONTHS = [
   'Jan',

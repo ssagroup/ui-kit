@@ -10,6 +10,7 @@ export const YearsView = () => {
     setCalendarType,
     setCalendarViewDateTime,
     setDateTime,
+    onYearChange,
   } = useDatePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
   const yearsList = getYearsList();
@@ -29,6 +30,7 @@ export const YearsView = () => {
     setCalendarType('months');
     setCalendarViewDateTime(newDate);
     setDateTime(newDate);
+    newDate && onYearChange?.(newDate.toJSDate());
   };
   return (
     <Wrapper

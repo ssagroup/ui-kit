@@ -17,6 +17,7 @@ export interface InputProps
   disabled?: boolean;
   className?: string;
   wrapperClassName?: string;
+  helperClassName?: string;
   as?: React.ElementType;
   startElement?: React.ReactElement;
   endElement?: React.ReactElement;

@@ -2,12 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { CalendarType, DatePickerContextProps, DatePickerProps } from './types';
-import {
-  DEFAULT_LUXON_FORMAT,
-  DEFAULT_MASK_FORMAT,
-  YEAR_MAX,
-  YEAR_MIN,
-} from './constants';
+import { DEFAULT_MASK_FORMAT, YEAR_MAX, YEAR_MIN } from './constants';
 import { useDatePickerMask } from './useDatePickerMask';
 
 export const DatePickerContext = createContext<DatePickerContextProps>({
@@ -47,9 +42,10 @@ export const DatePickerProvider = ({
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     DateTime | undefined
   >(undefined);
-  const { watch, setValue } = useFormContext();
-  const value = watch(rest.name);
-  const { format, maskOptions } = rest;
+  const { watch, setValue, clearErrors, setError } = useFormContext();
+  const { format, maskOptions, name, onError } = rest;
+  const value = watch(name);
+  const luxonFormat = format.replace('mm', 'MM');
   const inputRef = useDatePickerMask({
     format,
     maskOptions,
@@ -64,29 +60,53 @@ export const DatePickerProvider = ({
     }
     const newDateTime =
       typeof value === 'string' && value.length === 10
-        ? // TODO: make this format flexible
-          DateTime.fromFormat(value, DEFAULT_LUXON_FORMAT)
+        ? DateTime.fromFormat(value, luxonFormat)
         : undefined;
-    if (newDateTime !== undefined) {
-      setDateTime(newDateTime);
-    }
+    if (!newDateTime?.isValid) {
+      setError(
+        name,
+        {
+          message: newDateTime?.invalidExplanation || '',
+        },
+        {
+          shouldFocus: true,
+        },
+      );
 
-    const newCalendarViewDateTime = newDateTime
-      ? newDateTime
-      : DateTime.now().set({ day: 15 });
+      onError?.(value, {
+        explanation: newDateTime?.invalidExplanation,
+        reason: newDateTime?.invalidReason,
+      });
+    } else if (newDateTime !== undefined) {
+      setDateTime(newDateTime);
+      clearErrors();
+      onError?.(null);
+    }
+    const newCalendarViewDateTime =
+      newDateTime && newDateTime.isValid
+        ? newDateTime
+        : DateTime.now().set({ day: 1 });
 
     // TODO: check it
     setCalendarViewDateTime(newCalendarViewDateTime);
+    // console.log('>>>value', value);
+    rest.onChange?.(dateTime?.toJSDate());
   }, [value]);
 
   useEffect(() => {
     if (dateTime) {
-      const newValue = dateTime.toFormat(DEFAULT_LUXON_FORMAT);
+      const newValue = dateTime.toFormat(luxonFormat);
       if (value !== newValue) {
+        console.log('>>>setting value to ', newValue);
         setValue(rest.name, newValue);
       }
     }
+    // TODO: pass a validation result as well
   }, [dateTime]);
+
+  useEffect(() => {
+    isOpen ? rest.onOpen?.() : rest.onClose?.();
+  }, [isOpen]);
 
   return (
     <DatePickerContext.Provider

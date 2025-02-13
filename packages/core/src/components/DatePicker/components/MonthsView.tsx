@@ -10,15 +10,17 @@ export const MonthsView = () => {
     setCalendarType,
     setDateTime,
     setCalendarViewDateTime,
+    onMonthChange,
   } = useDatePickerContext();
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
     const selectedMonth = (target as HTMLDivElement).innerHTML;
     const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
     const newDate = calendarViewDateTime?.set({ month: monthNumber + 1 });
-    setCalendarType('days');
     setCalendarViewDateTime(newDate);
     setDateTime(newDate);
+    newDate && onMonthChange?.(newDate.toJSDate());
+    setCalendarType('days');
   };
   return (
     <Wrapper

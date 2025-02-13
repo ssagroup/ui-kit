@@ -75,7 +75,7 @@ export const processDate = (
     const yearMinPart = Number(yearMinStr.slice(0, year.length));
     const yearMaxPart = Number(yearMaxStr.slice(0, year.length));
 
-    if (yearN < yearMinPart || yearN > yearMaxPart) {
+    if (yearN < yearMinPart || yearN >= yearMaxPart) {
       return false;
     }
   }

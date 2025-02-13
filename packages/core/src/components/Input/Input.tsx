@@ -27,6 +27,7 @@ const InputInner = (
     endElement,
     className,
     wrapperClassName,
+    helperClassName,
     inputProps = {},
     errorTooltip,
     successTooltip,
@@ -92,7 +93,8 @@ const InputInner = (
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-          }}>
+          }}
+          className={helperClassName}>
           <FormHelperText role="status" status={status} disabled={disabled}>
             {errors ? errors?.message : helperText}
           </FormHelperText>

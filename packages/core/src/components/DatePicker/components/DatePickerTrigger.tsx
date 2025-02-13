@@ -1,18 +1,28 @@
 import { MouseEventHandler } from 'react';
-import { useForm, useFormContext } from 'react-hook-form';
+import { FieldError, useForm, useFormContext } from 'react-hook-form';
+import { css } from '@emotion/css';
+import { useTheme } from '@emotion/react';
 import * as C from '@components';
+import { InputProps } from '@components/Input/types';
 import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DatePickerTrigger = () => {
-  const { format, name, openCalendarMode, inputRef, setIsOpen } =
+  const { format, name, openCalendarMode, inputRef, disabled, setIsOpen } =
     useDatePickerContext();
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
   const useFormResult = useForm();
+  const theme = useTheme();
   const hookFormResult = formContext ?? useFormResult;
-  const { register } = hookFormResult;
+  const {
+    register,
+    formState: { errors },
+  } = hookFormResult;
+  const fieldError = errors[name];
+  const fieldStatus: InputProps['status'] = fieldError?.message
+    ? 'error'
+    : 'basic';
 
   const toggleOpen = () => {
-    // console.log('>>>toggleOpen', isOpen);
     setIsOpen((current) => !current);
   };
 
@@ -33,18 +43,33 @@ export const DatePickerTrigger = () => {
         placeholder={format}
         showHelperText
         ref={inputRef}
+        disabled={disabled}
         register={register}
-        inputProps={{
-          onClick: handleToggleOpen,
-        }}
+        errors={fieldError as FieldError}
+        status={fieldStatus}
+        helperClassName={css`
+          & > span:first-letter {
+            text-transform: uppercase;
+          }
+        `}
         endElement={
           <C.Button
-            endIcon={<C.Icon name="calendar" size={16} />}
+            endIcon={
+              <C.Icon
+                name="calendar"
+                size={16}
+                color={disabled ? theme.colors.grey : theme.colors.greyDarker}
+              />
+            }
             onClick={handleToggleOpen}
             variant="tertiary"
+            isDisabled={disabled}
             css={{
               padding: 0,
-              cursor: openCalendarMode === 'input' ? 'default' : 'pointer',
+              cursor:
+                openCalendarMode === 'input' || disabled
+                  ? 'default'
+                  : 'pointer',
               '&:focus::before': {
                 display: 'none',
               },
