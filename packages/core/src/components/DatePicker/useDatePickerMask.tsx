@@ -1,24 +1,18 @@
 import { useMask, format as maskFormat } from '@react-input/mask';
 import { DatePickerProps } from './types';
-import {
-  DEFAULT_MASK_FORMAT,
-  DEFAULT_MASK,
-  YEAR_MAX,
-  YEAR_MIN,
-} from './constants';
+import { DEFAULT_MASK } from './constants';
 import { processDate } from './utils';
+import { useDatePickerContext } from './useDatePickerContext';
 
 export const useDatePickerMask = ({
-  format = DEFAULT_MASK_FORMAT,
   maskOptions,
-  yearMin = YEAR_MIN,
-  yearMax = YEAR_MAX,
-}: Pick<DatePickerProps, 'format' | 'maskOptions' | 'yearMin' | 'yearMax'>) => {
+}: Pick<DatePickerProps, 'maskOptions'>) => {
   const {
     mask = DEFAULT_MASK,
     replacement = { _: /\d/ },
     ...restMaskOptions
   } = maskOptions || {};
+  const { formatIndexes, dateMinParts, dateMaxParts } = useDatePickerContext();
 
   const useMaskResult = useMask({
     mask,
@@ -32,20 +26,14 @@ export const useDatePickerMask = ({
 
         const updatedValue = maskFormat(newValue, { mask, replacement });
         const splittedValue = updatedValue.split('/');
-        const splittedFormat = format.split('/');
-        const formatIndexes = {
-          day: splittedFormat.findIndex((item) => item === 'dd'),
-          month: splittedFormat.findIndex((item) => item === 'mm'),
-          year: splittedFormat.findIndex((item) => item === 'yyyy'),
-        };
         const isChecked = processDate(
           {
             day: splittedValue[formatIndexes['day']],
             month: splittedValue[formatIndexes['month']],
             year: splittedValue[formatIndexes['year']],
           },
-          yearMin,
-          yearMax,
+          dateMinParts[formatIndexes['year']],
+          dateMaxParts[formatIndexes['year']],
         );
 
         return isChecked ? data : '';

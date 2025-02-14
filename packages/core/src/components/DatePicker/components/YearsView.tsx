@@ -7,13 +7,22 @@ import * as S from '../styles';
 export const YearsView = () => {
   const {
     calendarViewDateTime,
+    dateMinParts,
+    dateMaxParts,
+    formatIndexes,
     setCalendarType,
     setCalendarViewDateTime,
     setDateTime,
     onYearChange,
   } = useDatePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
-  const yearsList = getYearsList();
+  const yearsList = getYearsList({
+    yearsFrom: dateMinParts[formatIndexes['year']],
+    yearsCount:
+      dateMaxParts[formatIndexes['year']] -
+      dateMinParts[formatIndexes['year']] +
+      1,
+  });
   useEffect(() => {
     if (calendarViewDateTime && wrapper.current) {
       wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
@@ -34,7 +43,12 @@ export const YearsView = () => {
   };
   return (
     <Wrapper
-      css={{ flexWrap: 'wrap', overflowY: 'auto', height: 280 }}
+      css={{
+        flexWrap: 'wrap',
+        overflowY: 'auto',
+        height: 280,
+        alignContent: 'flex-start',
+      }}
       ref={wrapper}
       onClick={handleYearSelect}>
       {yearsList.map((year) => {

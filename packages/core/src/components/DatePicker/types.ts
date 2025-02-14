@@ -9,8 +9,8 @@ export type DatePickerProps = {
   maskOptions: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: InputProps['inputProps'];
-  yearMin?: number;
-  yearMax?: number;
+  dateMin?: string; // depends on the format
+  dateMax?: string; // depends on the format
   disabled?: boolean;
   onChange?: (date: Date | undefined) => void;
   onOpen?: () => void;
@@ -29,7 +29,7 @@ export type DatePickerProps = {
 
 export type DatePickerContextProps = Omit<
   DatePickerProps,
-  'yearMin' | 'yearMax'
+  'dateMin' | 'dateMax'
 > & {
   inputRef: MutableRefObject<HTMLInputElement | null>;
   isOpen: boolean;
@@ -37,8 +37,17 @@ export type DatePickerContextProps = Omit<
   value?: string;
   dateTime?: DateTime;
   calendarViewDateTime?: DateTime;
-  yearMin: number;
-  yearMax: number;
+  dateMin: string;
+  dateMax: string;
+  dateMinParts: number[];
+  dateMaxParts: number[];
+  yearMinReached: boolean;
+  yearMaxReached: boolean;
+  formatIndexes: {
+    day: number;
+    month: number;
+    year: number;
+  };
   setCalendarViewDateTime: Dispatch<SetStateAction<DateTime | undefined>>;
   setDateTime: Dispatch<SetStateAction<DateTime<boolean> | undefined>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;

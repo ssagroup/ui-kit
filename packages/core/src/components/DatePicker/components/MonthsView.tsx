@@ -4,6 +4,7 @@ import * as S from '../styles';
 import { useDatePickerContext } from '../useDatePickerContext';
 import { MONTHS } from '../constants';
 
+// TODO: disable specific months, depends on chose year
 export const MonthsView = () => {
   const {
     calendarViewDateTime,

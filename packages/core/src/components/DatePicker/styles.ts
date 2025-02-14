@@ -37,6 +37,42 @@ export const DaysViewCell = styled(Wrapper)<{
   }
 `;
 
+// export const DaysViewCell = styled(Wrapper)<{
+//   isCalendarDateNow: boolean;
+//   isCalendarDateSelected: boolean;
+//   isAriaDisabled: boolean;
+// }>`
+//   width: 40px;
+//   height: 40px;
+//   justify-content: center;
+//   font-size: 14px;
+//   font-weight: 500;
+//   border-radius: 6px;
+//   border: ${({ theme, isCalendarDateNow }) =>
+//     isCalendarDateNow ? `1px solid ${theme.colors.greyFocused}` : 'none'};
+//   color: ${({ theme, isAriaDisabled, isCalendarDateSelected }) =>
+//     isCalendarDateSelected
+//       ? theme.colors.white
+//       : isAriaDisabled
+//       ? theme.colors.grey
+//       : theme.colors.greyDarker};
+//   background: ${({ theme, isCalendarDateSelected }) =>
+//     isCalendarDateSelected
+//       ? `linear-gradient(247deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
+//       : 'none'};
+//   cursor: ${({ isAriaDisabled }) => (isAriaDisabled ? 'default' : 'pointer')};
+//   pointer-events: ${({ isAriaDisabled }) => isAriaDisabled && 'none'};
+//   user-select: none;
+//   &:hover {
+//     background: ${({ theme, isAriaDisabled }) =>
+//       !isAriaDisabled && theme.colors.greyLighter};
+//     color: ${({ theme, isAriaDisabled }) =>
+//       !isAriaDisabled && theme.colors.greyDarker};
+//     border: ${({ theme, isCalendarDateNow }) =>
+//       isCalendarDateNow && `1px solid ${theme.colors.greyFocused}`};
+//   }
+// `;
+
 export const YearsViewCell = styled.div<{
   isCalendarYear: boolean;
 }>`

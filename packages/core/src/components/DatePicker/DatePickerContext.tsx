@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { CalendarType, DatePickerContextProps, DatePickerProps } from './types';
-import { DEFAULT_MASK_FORMAT, YEAR_MAX, YEAR_MIN } from './constants';
+import { DATE_MAX, DATE_MIN, DEFAULT_MASK_FORMAT } from './constants';
 import { useDatePickerMask } from './useDatePickerMask';
 
 export const DatePickerContext = createContext<DatePickerContextProps>({
@@ -16,8 +16,13 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
   value: undefined,
   dateTime: undefined,
   calendarViewDateTime: undefined,
-  yearMin: YEAR_MIN,
-  yearMax: YEAR_MAX,
+  dateMin: DATE_MIN,
+  dateMax: DATE_MAX,
+  dateMinParts: DATE_MIN.split('/').map(Number),
+  dateMaxParts: DATE_MAX.split('/').map(Number),
+  yearMinReached: false,
+  yearMaxReached: false,
+  formatIndexes: { day: 1, month: 0, year: 2 },
   setIsOpen: () => {
     // no-op
   },
@@ -39,6 +44,8 @@ export const DatePickerProvider = ({
   const [isOpen, setIsOpen] = useState(false);
   const [calendarType, setCalendarType] = useState<CalendarType>('days');
   const [dateTime, setDateTime] = useState<DateTime | undefined>(undefined);
+  const [yearMinReached, setYearMinReached] = useState(false);
+  const [yearMaxReached, setYearMaxReached] = useState(false);
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     DateTime | undefined
   >(undefined);
@@ -47,9 +54,38 @@ export const DatePickerProvider = ({
   const value = watch(name);
   const luxonFormat = format.replace('mm', 'MM');
   const inputRef = useDatePickerMask({
-    format,
     maskOptions,
   });
+  const splittedFormat = format.split('/');
+  const formatIndexes = {
+    day: splittedFormat.findIndex((item) => item === 'dd'),
+    month: splittedFormat.findIndex((item) => item === 'mm'),
+    year: splittedFormat.findIndex((item) => item === 'yyyy'),
+  };
+
+  const dateMin = rest.dateMin || DATE_MIN;
+  const dateMax = rest.dateMax || DATE_MAX;
+  const dateMinParts = dateMin.split('/').map(Number);
+  const dateMaxParts = dateMax.split('/').map(Number);
+
+  useEffect(() => {
+    const nextYearDT = calendarViewDateTime?.plus({
+      month: 1,
+    });
+    const previousYearDT = calendarViewDateTime?.minus({
+      month: 1,
+    });
+    setYearMaxReached(
+      nextYearDT
+        ? nextYearDT.year >= dateMaxParts[formatIndexes['year']]
+        : true,
+    );
+    setYearMinReached(
+      previousYearDT
+        ? previousYearDT.year < dateMinParts[formatIndexes['year']]
+        : true,
+    );
+  }, [calendarViewDateTime]);
 
   useEffect(() => {
     if (typeof value === 'string' && value.length < 10) {
@@ -118,8 +154,13 @@ export const DatePickerProvider = ({
         value,
         dateTime,
         calendarViewDateTime,
-        yearMin: rest.yearMin || YEAR_MIN,
-        yearMax: rest.yearMax || YEAR_MAX,
+        dateMin,
+        dateMax,
+        dateMinParts,
+        dateMaxParts,
+        formatIndexes,
+        yearMinReached,
+        yearMaxReached,
         setDateTime,
         setCalendarViewDateTime,
         setIsOpen,

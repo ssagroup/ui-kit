@@ -110,3 +110,15 @@ Disabled.args = {
   disabled: true,
   ...commonArgs,
 };
+
+export const WithSpecificDateRange: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+WithSpecificDateRange.args = {
+  name: 'field5',
+  dateMin: '10/02/2025',
+  dateMax: '12/05/2030',
+  ...commonArgs,
+};
