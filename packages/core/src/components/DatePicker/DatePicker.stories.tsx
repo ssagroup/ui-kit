@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useForm, FieldValues, FormProvider } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -51,6 +52,7 @@ export default {
 } as Meta<typeof DatePicker>;
 
 const commonArgs: Partial<DatePickerProps> = {
+  label: 'Field',
   onChange: (date) => {
     console.log('event: onChange', date);
   },
@@ -76,6 +78,7 @@ export const Default: StoryObj<typeof DatePicker> = (args: DatePickerProps) => {
 };
 Default.args = {
   name: 'field1',
+  helperText: 'some nice text',
   ...commonArgs,
 };
 
@@ -118,7 +121,41 @@ export const WithSpecificDateRange: StoryObj<typeof DatePicker> = (
 };
 WithSpecificDateRange.args = {
   name: 'field5',
-  dateMin: '10/02/2025',
-  dateMax: '12/05/2030',
+  dateMin: '02/10/2025',
+  dateMax: '11/05/2030',
+  ...commonArgs,
+};
+
+export const WithDefaultValue: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+WithDefaultValue.args = {
+  name: 'field6',
+  defaultValue: '02/10/2025',
+  ...commonArgs,
+};
+
+export const WithExternalValue: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  const dates = ['01/15/2025', '02/10/2025', '11/05/2030'];
+  const [index, setIndex] = useState(0);
+  const [value, setValue] = useState(dates[index]);
+  setTimeout(() => {
+    let newIndex = index + 1;
+    if (newIndex === dates.length) {
+      newIndex = 0;
+    }
+    setIndex(newIndex);
+  }, 3000);
+  useEffect(() => {
+    setValue(dates[index]);
+  }, [index]);
+  return <DatePicker {...args} value={value} />;
+};
+WithExternalValue.args = {
+  name: 'field7',
   ...commonArgs,
 };

@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { FieldError, useForm, useFormContext } from 'react-hook-form';
 import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
@@ -7,8 +7,17 @@ import { InputProps } from '@components/Input/types';
 import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DatePickerTrigger = () => {
-  const { format, name, openCalendarMode, inputRef, disabled, setIsOpen } =
-    useDatePickerContext();
+  const {
+    format,
+    name,
+    label,
+    openCalendarMode,
+    inputRef,
+    disabled,
+    helperText,
+    handleBlur,
+    setIsOpen,
+  } = useDatePickerContext();
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
   const useFormResult = useForm();
   const theme = useTheme();
@@ -36,47 +45,55 @@ export const DatePickerTrigger = () => {
       toggleOpen();
     }
   };
+
   return (
-    <C.PopoverTrigger asChild>
-      <C.Input
-        name={name}
-        placeholder={format}
-        showHelperText
-        ref={inputRef}
-        disabled={disabled}
-        register={register}
-        errors={fieldError as FieldError}
-        status={fieldStatus}
-        helperClassName={css`
-          & > span:first-letter {
-            text-transform: uppercase;
-          }
-        `}
-        endElement={
-          <C.Button
-            endIcon={
-              <C.Icon
-                name="calendar"
-                size={16}
-                color={disabled ? theme.colors.grey : theme.colors.greyDarker}
-              />
+    <React.Fragment>
+      {label && <C.Label htmlFor={name}>{label}</C.Label>}
+      <C.PopoverTrigger asChild>
+        <C.Input
+          name={name}
+          placeholder={format}
+          showHelperText
+          ref={inputRef}
+          disabled={disabled}
+          register={register}
+          inputProps={{
+            onBlur: handleBlur,
+          }}
+          errors={fieldError as FieldError}
+          status={fieldStatus}
+          helperText={helperText}
+          helperClassName={css`
+            & > span::first-letter {
+              text-transform: uppercase;
             }
-            onClick={handleToggleOpen}
-            variant="tertiary"
-            isDisabled={disabled}
-            css={{
-              padding: 0,
-              cursor:
-                openCalendarMode === 'input' || disabled
-                  ? 'default'
-                  : 'pointer',
-              '&:focus::before': {
-                display: 'none',
-              },
-            }}
-          />
-        }
-      />
-    </C.PopoverTrigger>
+          `}
+          endElement={
+            <C.Button
+              endIcon={
+                <C.Icon
+                  name="calendar"
+                  size={16}
+                  color={disabled ? theme.colors.grey : theme.colors.greyDarker}
+                />
+              }
+              onClick={handleToggleOpen}
+              variant="tertiary"
+              isDisabled={disabled}
+              css={{
+                padding: 0,
+                cursor:
+                  openCalendarMode === 'input' || disabled
+                    ? 'default'
+                    : 'pointer',
+                '&:focus::before': {
+                  display: 'none',
+                },
+              }}
+            />
+          }
+        />
+      </C.PopoverTrigger>
+    </React.Fragment>
   );
 };

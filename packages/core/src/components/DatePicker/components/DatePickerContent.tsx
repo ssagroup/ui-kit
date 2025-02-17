@@ -11,7 +11,6 @@ export const DatePickerContent = () => {
       interactionsEnabled={'click'}
       onOpenChange={handleOpenChange}
       placement={'top-start'}
-      // open
       open={isOpen}>
       <DatePickerTrigger />
       <DatePickerCalendar />

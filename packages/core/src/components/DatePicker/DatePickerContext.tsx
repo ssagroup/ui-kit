@@ -1,10 +1,18 @@
 import { createContext, useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { CalendarType, DatePickerContextProps, DatePickerProps } from './types';
-import { DATE_MAX, DATE_MIN, DEFAULT_MASK_FORMAT } from './constants';
+import {
+  DATE_MAX,
+  DATE_MIN,
+  DEFAULT_MASK_FORMAT,
+  INVALID_DATE,
+  OUT_OF_RANGE,
+} from './constants';
 import { useDatePickerMask } from './useDatePickerMask';
 
+// TODO: optimize context properties - do we need all of them?
+// TODO: check FOCUS! +Tab!
 export const DatePickerContext = createContext<DatePickerContextProps>({
   format: DEFAULT_MASK_FORMAT,
   name: '',
@@ -13,13 +21,15 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
   inputRef: { current: null },
   isOpen: false,
   calendarType: 'days',
-  value: undefined,
+  inputValue: undefined,
   dateTime: undefined,
   calendarViewDateTime: undefined,
   dateMin: DATE_MIN,
   dateMax: DATE_MAX,
   dateMinParts: DATE_MIN.split('/').map(Number),
   dateMaxParts: DATE_MAX.split('/').map(Number),
+  dateMinDT: DateTime.fromFormat(DATE_MIN, DEFAULT_MASK_FORMAT),
+  dateMaxDT: DateTime.fromFormat(DATE_MAX, DEFAULT_MASK_FORMAT),
   yearMinReached: false,
   yearMaxReached: false,
   formatIndexes: { day: 1, month: 0, year: 2 },
@@ -49,9 +59,9 @@ export const DatePickerProvider = ({
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     DateTime | undefined
   >(undefined);
-  const { watch, setValue, clearErrors, setError } = useFormContext();
+  const { setValue, clearErrors, setError } = useFormContext();
   const { format, maskOptions, name, onError } = rest;
-  const value = watch(name);
+  const inputValue = useWatch({ name });
   const luxonFormat = format.replace('mm', 'MM');
   const inputRef = useDatePickerMask({
     maskOptions,
@@ -68,6 +78,45 @@ export const DatePickerProvider = ({
   const dateMinParts = dateMin.split('/').map(Number);
   const dateMaxParts = dateMax.split('/').map(Number);
 
+  const maxDT = DateTime.fromObject({
+    year: dateMaxParts[formatIndexes['year']],
+    month: dateMaxParts[formatIndexes['month']],
+    day: dateMaxParts[formatIndexes['day']],
+  });
+  const minDT = DateTime.fromObject({
+    year: dateMinParts[formatIndexes['year']],
+    month: dateMinParts[formatIndexes['month']],
+    day: dateMinParts[formatIndexes['day']],
+  });
+
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    const blurredValue = event.currentTarget.value;
+    const newDateTime =
+      typeof blurredValue === 'string' && blurredValue.length === 10
+        ? DateTime.fromFormat(blurredValue, luxonFormat)
+        : undefined;
+    if (!newDateTime?.isValid) {
+      // TODO: need to set an error only onBlur!
+      setError(
+        name,
+        { message: newDateTime?.invalidExplanation || INVALID_DATE },
+        { shouldFocus: true },
+      );
+
+      onError?.(blurredValue, newDateTime?.invalidExplanation);
+    } else if (newDateTime !== undefined) {
+      if (newDateTime < minDT || newDateTime > maxDT) {
+        const errorMessage = OUT_OF_RANGE;
+        setError(name, { message: errorMessage }, { shouldFocus: true });
+        onError?.(blurredValue, errorMessage);
+      } else {
+        setDateTime(newDateTime);
+        clearErrors();
+        onError?.(null);
+      }
+    }
+  };
+
   useEffect(() => {
     const nextYearDT = calendarViewDateTime?.plus({
       month: 1,
@@ -76,9 +125,7 @@ export const DatePickerProvider = ({
       month: 1,
     });
     setYearMaxReached(
-      nextYearDT
-        ? nextYearDT.year >= dateMaxParts[formatIndexes['year']]
-        : true,
+      nextYearDT ? nextYearDT.year > dateMaxParts[formatIndexes['year']] : true,
     );
     setYearMinReached(
       previousYearDT
@@ -87,62 +134,72 @@ export const DatePickerProvider = ({
     );
   }, [calendarViewDateTime]);
 
+  // TODO: Make common validation logic? Use it for the onBlur event either.
   useEffect(() => {
-    if (typeof value === 'string' && value.length < 10) {
+    if (typeof inputValue === 'string' && inputValue.length < 10) {
       setIsOpen(false);
       setTimeout(() => {
         inputRef.current.focus();
       }, 10);
     }
     const newDateTime =
-      typeof value === 'string' && value.length === 10
-        ? DateTime.fromFormat(value, luxonFormat)
+      typeof inputValue === 'string' && inputValue.length === 10
+        ? DateTime.fromFormat(inputValue, luxonFormat)
         : undefined;
-    if (!newDateTime?.isValid) {
-      setError(
-        name,
-        {
-          message: newDateTime?.invalidExplanation || '',
-        },
-        {
-          shouldFocus: true,
-        },
-      );
 
-      onError?.(value, {
-        explanation: newDateTime?.invalidExplanation,
-        reason: newDateTime?.invalidReason,
-      });
-    } else if (newDateTime !== undefined) {
-      setDateTime(newDateTime);
-      clearErrors();
-      onError?.(null);
-    }
     const newCalendarViewDateTime =
       newDateTime && newDateTime.isValid
         ? newDateTime
         : DateTime.now().set({ day: 1 });
 
-    // TODO: check it
+    if (newCalendarViewDateTime < minDT) {
+      newCalendarViewDateTime.set({
+        year: minDT.year,
+        month: minDT.month,
+        day: minDT.day,
+      });
+    }
+    if (newCalendarViewDateTime > maxDT) {
+      newCalendarViewDateTime.set({
+        year: maxDT.year,
+        month: maxDT.month,
+        day: maxDT.day,
+      });
+    }
+
     setCalendarViewDateTime(newCalendarViewDateTime);
-    // console.log('>>>value', value);
+    // TODO: move to the onBlur event?
     rest.onChange?.(dateTime?.toJSDate());
-  }, [value]);
+  }, [inputValue]);
 
   useEffect(() => {
     if (dateTime) {
       const newValue = dateTime.toFormat(luxonFormat);
-      if (value !== newValue) {
-        console.log('>>>setting value to ', newValue);
+      if (inputValue !== newValue) {
         setValue(rest.name, newValue);
       }
     }
-    // TODO: pass a validation result as well
   }, [dateTime]);
 
   useEffect(() => {
     isOpen ? rest.onOpen?.() : rest.onClose?.();
   }, [isOpen]);
+
+  useEffect(() => {
+    if ('value' in rest) {
+      setValue(rest.name, rest.value);
+    }
+  }, [rest.value]);
+
+  useEffect(() => {
+    if (rest.defaultValue) {
+      const newDateTime = DateTime.fromFormat(rest.defaultValue, luxonFormat);
+      if (newDateTime.isValid) {
+        setDateTime(newDateTime);
+        setValue(rest.name, rest.defaultValue);
+      }
+    }
+  }, []);
 
   return (
     <DatePickerContext.Provider
@@ -151,13 +208,15 @@ export const DatePickerProvider = ({
         inputRef,
         isOpen,
         calendarType,
-        value,
+        inputValue,
         dateTime,
         calendarViewDateTime,
         dateMin,
         dateMax,
         dateMinParts,
         dateMaxParts,
+        dateMinDT: minDT,
+        dateMaxDT: maxDT,
         formatIndexes,
         yearMinReached,
         yearMaxReached,
@@ -165,6 +224,7 @@ export const DatePickerProvider = ({
         setCalendarViewDateTime,
         setIsOpen,
         setCalendarType,
+        handleBlur,
       }}>
       {children}
     </DatePickerContext.Provider>

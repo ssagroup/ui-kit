@@ -55,6 +55,11 @@ const InputInner = (
     onKeyUp?.(e);
   };
 
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    registerResult?.onBlur(e);
+    inputProps.onBlur?.(e);
+  };
+
   return (
     <>
       <InputGroup
@@ -74,7 +79,8 @@ const InputInner = (
           className={className}
           onKeyUp={handleCount}
           {...inputProps}
-          {...register?.(name, validationSchema)}
+          {...registerResult}
+          onBlur={handleBlur}
           ref={useMergeRefs([registerResult?.ref, inputRef])}
         />
 
