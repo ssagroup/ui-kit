@@ -1,17 +1,23 @@
+import { forwardRef } from 'react';
 import { DatePickerProps } from './types';
 import { DEFAULT_MASK_FORMAT } from './constants';
 import { DatePickerContent } from './components';
 import { DatePickerProvider } from './DatePickerContext';
 
-// - process backspace key
 // - storybook controls - remove unused, add the specific types...
+// - add different stories!!!
+// --- maskOptions
+// --- inputProps
 // - replace of existing values?
-// - add API (onChange, ...)
 // - fix default event trigger (onClose, onChange...)
-// TODO: different loading logic
-// - by the external value (external useFormContext + loader) - useFormResult.setValue(...)
-// - by the property (instantaneous value)
 // - add tests
+// + process backspace key
+// + remove extra props
+// + onBlur validation
+// TODO: different loading logic
+// + by the external value (external useFormContext + loader) - useFormResult.setValue(...)
+// + by the property (instantaneous value)
+// + add API (onChange, ...)
 // +/- errors texts? keep as is? changes?
 // +/- process errors and visibility of them, try 02/31/2025, for example
 // +++ placement - calculate automatically - bottom-start / top-start
@@ -23,12 +29,11 @@ import { DatePickerProvider } from './DatePickerContext';
 // + store available date formats as constant?
 
 /**
--inputRef
-e
 -displayWeekNumber - do it later
 -loading - do it later
 +/-onOpen
 +/-onChange
++inputRef
 +format
 +onClose
 +onError
@@ -39,18 +44,26 @@ e
 +label
 +defaultValue
 The default value. Used when the component is not controlled.
--value (selected)
++value (selected)
 The selected value. Used when the component is controlled.
  */
-export const DatePicker = ({
-  format = DEFAULT_MASK_FORMAT,
-  openCalendarMode = 'icon',
-  ...rest
-}: DatePickerProps) => (
+const DatePickerInner = (
+  {
+    format = DEFAULT_MASK_FORMAT,
+    openCalendarMode = 'icon',
+    ...rest
+  }: DatePickerProps,
+  inputRef?: React.ForwardedRef<HTMLInputElement | null>,
+) => (
   <DatePickerProvider
     format={format}
     openCalendarMode={openCalendarMode}
+    inputRef={inputRef}
     {...rest}>
     <DatePickerContent />
   </DatePickerProvider>
+);
+
+export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
+  DatePickerInner,
 );

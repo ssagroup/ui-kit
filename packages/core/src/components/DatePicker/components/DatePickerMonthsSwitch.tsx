@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import { useTheme } from '@emotion/react';
 import * as C from '../..';
 import { useDatePickerContext } from '../useDatePickerContext';
@@ -7,34 +6,21 @@ export const DatePickerMonthsSwitch = () => {
   const {
     calendarType,
     calendarViewDateTime,
-    dateMaxParts,
-    dateMinParts,
-    formatIndexes,
+    dateMinDT,
+    dateMaxDT,
     setCalendarViewDateTime,
     onMonthChange,
   } = useDatePickerContext();
   const theme = useTheme();
-  // Change this component's code to use the dateMin and dateMax values
   const isDayCalendarType = calendarType === 'days';
-  // TODO: move to the context
-  const maxDT = DateTime.fromObject({
-    year: dateMaxParts[formatIndexes['year']],
-    month: dateMaxParts[formatIndexes['month']],
-    day: dateMaxParts[formatIndexes['day']],
-  });
-  // TODO: move to the context
-  const minDT = DateTime.fromObject({
-    year: dateMinParts[formatIndexes['year']],
-    month: dateMinParts[formatIndexes['month']],
-    day: dateMinParts[formatIndexes['day']],
-  });
+
   const isMinMonthReached = calendarViewDateTime
-    ? calendarViewDateTime.month === minDT.month &&
-      calendarViewDateTime.year === minDT.year
+    ? calendarViewDateTime.month === dateMinDT.month &&
+      calendarViewDateTime.year === dateMinDT.year
     : false;
   const isMaxMonthReached = calendarViewDateTime
-    ? calendarViewDateTime.month === maxDT.month &&
-      calendarViewDateTime.year === maxDT.year
+    ? calendarViewDateTime.month === dateMaxDT.month &&
+      calendarViewDateTime.year === dateMaxDT.year
     : false;
 
   const handlePreviousMonth = () => {
@@ -56,7 +42,6 @@ export const DatePickerMonthsSwitch = () => {
     return null;
   }
 
-  // TODO: process disabling of the buttons
   return (
     <C.Wrapper css={{ width: 72, gap: 24 }}>
       <C.Button

@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useMask } from '@react-input/mask';
 import { DateTime } from 'luxon';
 import { InputProps } from '@components/Input/types';
@@ -16,7 +16,7 @@ export type DatePickerProps = {
   dateMax?: string; // depends on the format
   disabled?: boolean;
   helperText?: string;
-  onChange?: (date: Date | undefined) => void;
+  onChange?: (date?: Date) => void;
   onOpen?: () => void;
   onClose?: () => void;
   onError?: (
@@ -26,25 +26,21 @@ export type DatePickerProps = {
   ) => void;
   onMonthChange?: (date: Date) => void;
   onYearChange?: (date: Date) => void;
-  handleBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 };
 
 export type DatePickerContextProps = Omit<
   DatePickerProps,
   'dateMin' | 'dateMax'
 > & {
-  inputRef: MutableRefObject<HTMLInputElement | null>;
+  inputRef?: React.ForwardedRef<HTMLInputElement | null>;
   isOpen: boolean;
   calendarType: CalendarType;
   inputValue?: string;
   dateTime?: DateTime;
   calendarViewDateTime?: DateTime;
-  dateMin: string;
-  dateMax: string;
   dateMinParts: number[];
   dateMaxParts: number[];
-  yearMinReached: boolean;
-  yearMaxReached: boolean;
   dateMinDT: DateTime;
   dateMaxDT: DateTime;
   formatIndexes: {

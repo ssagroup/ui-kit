@@ -1,18 +1,23 @@
 import { useMask, format as maskFormat } from '@react-input/mask';
-import { DatePickerProps } from './types';
-import { DEFAULT_MASK } from './constants';
-import { processDate } from './utils';
-import { useDatePickerContext } from './useDatePickerContext';
+import { DatePickerProps } from '../types';
+import { DEFAULT_MASK } from '../constants';
+import { processDate } from '../utils';
 
 export const useDatePickerMask = ({
   maskOptions,
-}: Pick<DatePickerProps, 'maskOptions'>) => {
+  formatIndexes,
+  dateMinParts,
+  dateMaxParts,
+}: Pick<DatePickerProps, 'maskOptions'> & {
+  formatIndexes: { day: number; month: number; year: number };
+  dateMinParts: number[];
+  dateMaxParts: number[];
+}) => {
   const {
     mask = DEFAULT_MASK,
     replacement = { _: /\d/ },
     ...restMaskOptions
   } = maskOptions || {};
-  const { formatIndexes, dateMinParts, dateMaxParts } = useDatePickerContext();
 
   const useMaskResult = useMask({
     mask,

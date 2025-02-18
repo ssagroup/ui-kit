@@ -15,7 +15,7 @@ export const DatePickerTrigger = () => {
     inputRef,
     disabled,
     helperText,
-    handleBlur,
+    onBlur: handleBlur,
     setIsOpen,
   } = useDatePickerContext();
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
@@ -59,6 +59,7 @@ export const DatePickerTrigger = () => {
           register={register}
           inputProps={{
             onBlur: handleBlur,
+            onClick: handleToggleOpen,
           }}
           errors={fieldError as FieldError}
           status={fieldStatus}

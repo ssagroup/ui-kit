@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, FieldValues, FormProvider } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -11,10 +11,16 @@ export default {
   title: 'Components/DatePicker',
   component: DatePicker,
   argTypes: {
-    register: {
-      control: {
-        disable: true,
-      },
+    openCalendarMode: {
+      defaultValue: 'icon',
+    },
+    defaultValue: {
+      type: 'string',
+    },
+  },
+  parameters: {
+    controls: {
+      include: ['disabled', 'label', 'openCalendarMode', 'helperText'],
     },
   },
   decorators: [
@@ -32,7 +38,7 @@ export default {
         <FormProvider {...useFormResult}>
           <Form
             onSubmit={useFormResult.handleSubmit((data) => {
-              console.log('>>>onSubmit', data);
+              console.log('event: onSubmit', data);
             })}
             css={{
               width: 400,
@@ -53,6 +59,7 @@ export default {
 
 const commonArgs: Partial<DatePickerProps> = {
   label: 'Field',
+  openCalendarMode: 'icon',
   onChange: (date) => {
     console.log('event: onChange', date);
   },
@@ -71,25 +78,18 @@ const commonArgs: Partial<DatePickerProps> = {
   onYearChange: (date) => {
     console.log('event: onYearChange', date);
   },
+  onBlur: (event) => {
+    console.log('event: onBlur', event);
+  },
 };
 
 export const Default: StoryObj<typeof DatePicker> = (args: DatePickerProps) => {
   return <DatePicker {...args} />;
 };
 Default.args = {
+  ...commonArgs,
   name: 'field1',
   helperText: 'some nice text',
-  ...commonArgs,
-};
-
-export const CurrentDate: StoryObj<typeof DatePicker> = (
-  args: DatePickerProps,
-) => {
-  return <DatePicker {...args} />;
-};
-CurrentDate.args = {
-  name: 'field2',
-  ...commonArgs,
 };
 
 export const AnotherFormat: StoryObj<typeof DatePicker> = (
@@ -98,9 +98,9 @@ export const AnotherFormat: StoryObj<typeof DatePicker> = (
   return <DatePicker {...args} />;
 };
 AnotherFormat.args = {
-  name: 'field3',
-  format: 'dd/mm/yyyy',
   ...commonArgs,
+  name: 'field2',
+  format: 'dd/mm/yyyy',
 };
 
 export const Disabled: StoryObj<typeof DatePicker> = (
@@ -109,9 +109,9 @@ export const Disabled: StoryObj<typeof DatePicker> = (
   return <DatePicker {...args} />;
 };
 Disabled.args = {
-  name: 'field4',
-  disabled: true,
   ...commonArgs,
+  name: 'field3',
+  disabled: true,
 };
 
 export const WithSpecificDateRange: StoryObj<typeof DatePicker> = (
@@ -120,10 +120,13 @@ export const WithSpecificDateRange: StoryObj<typeof DatePicker> = (
   return <DatePicker {...args} />;
 };
 WithSpecificDateRange.args = {
-  name: 'field5',
-  dateMin: '02/10/2025',
-  dateMax: '11/05/2030',
   ...commonArgs,
+  name: 'field4',
+  dateMin: DateTime.now().set({ day: 10 }).toFormat('MM/dd/yyyy'),
+  dateMax: DateTime.now()
+    .plus({ years: 5 })
+    .set({ month: 5, day: 11 })
+    .toFormat('MM/dd/yyyy'),
 };
 
 export const WithDefaultValue: StoryObj<typeof DatePicker> = (
@@ -132,9 +135,9 @@ export const WithDefaultValue: StoryObj<typeof DatePicker> = (
   return <DatePicker {...args} />;
 };
 WithDefaultValue.args = {
-  name: 'field6',
-  defaultValue: '02/10/2025',
   ...commonArgs,
+  name: 'field5',
+  defaultValue: '02/10/2025',
 };
 
 export const WithExternalValue: StoryObj<typeof DatePicker> = (
@@ -156,6 +159,19 @@ export const WithExternalValue: StoryObj<typeof DatePicker> = (
   return <DatePicker {...args} value={value} />;
 };
 WithExternalValue.args = {
-  name: 'field7',
   ...commonArgs,
+  name: 'field6',
+};
+
+export const WithInputRef: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  console.log('inputRef:', inputRef.current?.value);
+  return <DatePicker {...args} ref={inputRef} />;
+};
+WithInputRef.args = {
+  ...commonArgs,
+  name: 'field7',
+  defaultValue: '02/10/2025',
 };
