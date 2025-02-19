@@ -5,7 +5,6 @@ import NavToggleWrapper from './NavToggleWrapper';
 
 const NavToggle = ({ htmlFor }: { htmlFor: string }) => (
   <NavToggleWrapper>
-    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     <label
       htmlFor={htmlFor}
       css={css`

@@ -1,5 +1,5 @@
 import { waitFor } from '../../../customTest';
-import { Point } from '@nivo/line';
+import type { Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
 import theme from '@themes/main';

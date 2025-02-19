@@ -27,12 +27,6 @@
     "@ssa-ui-kit/utils": "workspace:^",
     "usehooks-ts": "3.1.0"
   },
-  "devDependencies": {
-    "extend-expect": "^1.0.2",
-    "resolve-tspaths": "^0.8.16",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
-  },
   "peerDependencies": {
     "react": "18.x"
   },

@@ -16,7 +16,6 @@ module.exports = () => {
       react: 'react',
       'react-dom': 'react-dom',
       'react-router-dom': 'react-router-dom',
-      '@emotion/core': '@emotion/core',
       '@emotion/css': '@emotion/css',
       '@emotion/react': '@emotion/react',
       '@emotion/styled': '@emotion/styled',

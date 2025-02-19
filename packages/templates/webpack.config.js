@@ -17,13 +17,13 @@ module.exports = () => {
       react: 'react',
       'react-dom': 'react-dom',
       'react-router-dom': 'react-router-dom',
-      '@emotion/core': '@emotion/core',
       '@emotion/css': '@emotion/css',
       '@emotion/react': '@emotion/react',
       '@emotion/styled': '@emotion/styled',
+      '@nivo/colors': '@nivo/colors',
       '@nivo/core': '@nivo/core',
       '@nivo/pie': '@nivo/pie',
-      '@nivo/line': '@nivo/line',
+      '@nivo/scales': '@nivo/scales',
     },
   });
 

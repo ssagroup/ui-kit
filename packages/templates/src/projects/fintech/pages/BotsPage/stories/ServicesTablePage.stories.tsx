@@ -18,7 +18,6 @@ import { RightPaneBase } from '../../AppLayout/RightPaneBase';
 import { BotsPage } from '../BotsPage';
 import { Header } from '../../AppLayout/components/Header';
 import { TOASTIFY_OPTIONS } from '../../../../../consts';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default {
   title: 'Templates/Services Table Page',

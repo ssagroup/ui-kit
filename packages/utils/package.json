@@ -25,13 +25,6 @@
     "ts-check": "tsc -p ./tsconfig.json",
     "ts-check-build": "tsc -p ./tsconfig.build.json"
   },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "extend-expect": "^1.0.2",
-    "resolve-tspaths": "^0.8.16",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
-  },
   "browserslist": [
     ">0.1%",
     "not dead",

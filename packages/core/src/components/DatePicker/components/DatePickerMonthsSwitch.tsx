@@ -28,14 +28,18 @@ export const DatePickerMonthsSwitch = () => {
       month: 1,
     });
     setCalendarViewDateTime(newDate);
-    newDate && onMonthChange?.(newDate.toJSDate());
+    if (newDate) {
+      onMonthChange?.(newDate.toJSDate());
+    }
   };
   const handleNextMonth = () => {
     const newDate = calendarViewDateTime?.plus({
       month: 1,
     });
     setCalendarViewDateTime(newDate);
-    newDate && onMonthChange?.(newDate.toJSDate());
+    if (newDate) {
+      onMonthChange?.(newDate.toJSDate());
+    }
   };
 
   if (!isDayCalendarType) {

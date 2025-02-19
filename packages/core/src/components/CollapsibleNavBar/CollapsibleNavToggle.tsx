@@ -8,7 +8,6 @@ const CollapsibleNavToggle = ({ id }: { id: string }) => {
   return (
     <Fragment>
       <CollapsibleNavToggleWrapper>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label
           htmlFor={id}
           css={css`
