@@ -25,7 +25,7 @@ const MOUSE_POSITIONS = {
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6007/iframe.html?args=&id=fitness-heartrate--default&viewMode=story',
+    'iframe.html?args=&id=fitness-heartrate--default&viewMode=story',
   );
 };
 

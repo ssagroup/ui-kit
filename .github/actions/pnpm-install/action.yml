@@ -1,0 +1,19 @@
+name: 'Install dependencies with pnpm'
+description: 'Install dependencies with pnpm'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Installing pnpm...
+      # uses packageManager field to identify the package manager version
+      uses: pnpm/action-setup@v4
+
+    - name: Installing Node.js...
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'pnpm'
+
+    - name: Installing dependencies...
+      shell: bash
+      run: pnpm install
