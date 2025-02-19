@@ -2,10 +2,11 @@ import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
 import initBabelConfig from '../../../.babelrc';
+
 const appWebpackConfig: Configuration = initWebpackConfig();
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.mdx'],
   addons: [
     '@storybook/addon-controls',
     '@storybook/addon-links',
@@ -54,9 +55,6 @@ const config: StorybookConfig = {
     };
 
     return newConfig;
-  },
-  docs: {
-    autodocs: true, //cspell:disable-line
   },
   managerHead: (head) => `
     ${head}

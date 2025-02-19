@@ -88,10 +88,10 @@ const sectionActivity = css`
 const Dashboard = () => {
   const { user } = useAuth();
   const { data, query: loadData } = useApi(API.topWidgets.get, {
-    steps: {},
-    water: { steps: [] },
-    calories: {},
-    heartRate: { data: [] },
+    steps: { current: 0, max: 0, unit: '' },
+    water: { current: 0, max: 0, steps: [] },
+    calories: { current: 0, max: 0 },
+    heartRate: { id: '', data: [] },
   });
   const { data: mealData, query: loadMealData } = useApi(
     API.mealPlanner.get,

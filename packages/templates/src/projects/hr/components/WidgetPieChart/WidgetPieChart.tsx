@@ -49,6 +49,7 @@ export const WidgetPieChart = ({
     value: count,
   }));
   const currentColors = chartColors || categoricalColorSchemes[colorSchemeId];
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const labelListStyles: any = S.labelListStyles(
     theme,
     isFullscreenMode,

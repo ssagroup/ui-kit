@@ -1,9 +1,11 @@
+import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
+import initBabelConfig from '../../../.babelrc';
 const appWebpackConfig = initWebpackConfig();
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.mdx'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -27,16 +29,30 @@ const config: StorybookConfig = {
       },
     },
   },
+  babel: (options) => ({
+    ...options,
+    ...initBabelConfig,
+  }),
   webpackFinal: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      ...appWebpackConfig.resolve.alias,
+    const newConfig: Configuration = {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve?.alias,
+          ...appWebpackConfig.resolve?.alias,
+        },
+      },
+      module: {
+        ...config.module,
+        rules: [
+          ...(config.module?.rules || []),
+          ...(appWebpackConfig.module?.rules || []),
+        ],
+      },
     };
 
-    return config;
-  },
-  docs: {
-    autodocs: true, // cspell:disable-line
+    return newConfig;
   },
   managerHead: (head) => `
     ${head}

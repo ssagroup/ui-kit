@@ -1,8 +1,9 @@
-type UnknownFn = (...args: any[]) => unknown;
-
-export const debounce = (func: UnknownFn, wait = 200) => {
+export const debounce = <T extends unknown[]>(
+  func: (...args: T) => unknown,
+  wait = 200,
+) => {
   let timeoutId: NodeJS.Timeout | null = null;
-  const executedFunction = (...args: any[]) => {
+  const executedFunction = (...args: T) => {
     const postponedFn = () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -20,5 +21,5 @@ export const debounce = (func: UnknownFn, wait = 200) => {
       clearTimeout(timeoutId);
     }
   };
-  return [executedFunction, cancel];
+  return [executedFunction, cancel] as const;
 };

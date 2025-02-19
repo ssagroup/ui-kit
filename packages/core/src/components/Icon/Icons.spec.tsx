@@ -33,7 +33,7 @@ const checkFillOrStrokeAttrs = (
   } catch {
     try {
       expect(el).toHaveAttribute('stroke');
-    } catch (e) {
+    } catch {
       throw new Error(`the icon "${name}" is missing attribute fill or stroke`);
     }
   }

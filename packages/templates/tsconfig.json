@@ -25,7 +25,8 @@
     "src/**/*",
     "./jest-setup.ts",
     "./customTest.tsx",
-    "./src/types/svg.d.ts"
+    "./src/types/svg.d.ts",
+    ".storybook/*.tsx"
   ],
   "exclude": ["dist/**/*"]
 }

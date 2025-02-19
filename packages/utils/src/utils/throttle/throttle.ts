@@ -1,17 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UnknownFn = (...args: any[]) => unknown;
-type ThrottleFn = (
-  fn: UnknownFn,
+export const throttle = <T extends unknown[]>(
+  fn: (...args: T) => unknown,
   delayMs: number,
-) => [(...args: unknown[]) => void, () => void];
-/* eslint-enable @typescript-eslint/no-explicit-any */
-
-export const throttle: ThrottleFn = (fn, delayMs) => {
+) => {
   let isThrottled = false;
-  let savedArgs: unknown[] | null = null;
+  let savedArgs: T | null = null;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  function throttledFn(...args: unknown[]) {
+  function throttledFn(...args: T) {
     if (isThrottled) {
       savedArgs = args;
       return;
@@ -39,5 +34,5 @@ export const throttle: ThrottleFn = (fn, delayMs) => {
         clearTimeout(timeoutId);
       }
     },
-  ];
+  ] as const;
 };

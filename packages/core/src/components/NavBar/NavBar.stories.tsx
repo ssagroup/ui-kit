@@ -1,21 +1,11 @@
 import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import { Meta } from '@storybook/react';
+import { Meta, Decorator } from '@storybook/react';
 import { Title, Description, Subtitle, Primary } from '@storybook/addon-docs';
 
 import { NavBar } from './NavBar';
-import { DecoratorFunction } from '@storybook/types';
 
-type Args = Parameters<typeof NavBar>[0];
-
-const reactRouterDecorator: DecoratorFunction<
-  {
-    component: typeof NavBar;
-    storyResult: React.ReactElement;
-    canvasElement: unknown;
-  },
-  Args
-> = (Story) => {
+const reactRouterDecorator: Decorator = (Story) => {
   return (
     <MemoryRouter>
       <Routes>

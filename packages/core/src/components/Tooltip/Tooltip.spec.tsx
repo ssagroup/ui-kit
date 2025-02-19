@@ -238,7 +238,7 @@ describe('Tooltip', () => {
       getByText(valueFormatted);
       await findByTitle('Arrow Up');
 
-      const progressBar = getByRole(/progressbar/i);
+      const progressBar = getByRole('progressbar');
 
       expect(progressBar).toHaveStyle(
         `background-color: ${theme.colors.green}`,
@@ -265,7 +265,7 @@ describe('Tooltip', () => {
         expect(queryByTitle('Arrow Up')).not.toBeInTheDocument(),
       );
 
-      const progressBar = getByRole(/progressbar/i);
+      const progressBar = getByRole('progressbar');
 
       expect(progressBar).toHaveStyle(
         `background-color: ${theme.colors.green}`,
@@ -294,7 +294,7 @@ describe('Tooltip', () => {
       getByText(valueFormatted);
       expect(queryByTitle('Arrow Up')).not.toBeInTheDocument();
 
-      const progressBar = getByRole(/progressbar/i);
+      const progressBar = getByRole('progressbar');
 
       expect(progressBar).toHaveStyle(
         `background-color: ${theme.colors.purple}`,

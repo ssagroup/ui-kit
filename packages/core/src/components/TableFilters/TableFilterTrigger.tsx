@@ -3,46 +3,44 @@ import { PopoverTrigger } from '@components/Popover';
 import Icon from '@components/Icon';
 import { Theme } from '@emotion/react';
 
-export const filterButtonStyles = (count?: number) => (theme: Theme) =>
-  css`
-    height: 40px;
-    color: ${theme.colors.greyDisabled};
-    background: ${theme.colors.white};
-    border: 1px solid ${theme.colors.greyDropdownMain};
-    border-radius: 6.5px;
-    padding: 0 11px 0 13px;
-    font-size: 14px;
-    letter-spacing: normal;
-    gap: 5px;
-    user-select: none;
+export const filterButtonStyles = (count?: number) => (theme: Theme) => css`
+  height: 40px;
+  color: ${theme.colors.greyDisabled};
+  background: ${theme.colors.white};
+  border: 1px solid ${theme.colors.greyDropdownMain};
+  border-radius: 6.5px;
+  padding: 0 11px 0 13px;
+  font-size: 14px;
+  letter-spacing: normal;
+  gap: 5px;
+  user-select: none;
 
+  &::before {
+    display: block;
+    content: '"Filter"';
+    content: ${count ? '"More"' : '"Filter"'};
+  }
+
+  @media screen and (min-width: 900px) {
     &::before {
-      display: block;
-      content: '"Filter"';
-      content: ${count ? '"More"' : '"Filter"'};
+      content: 'More';
     }
+  }
 
-    @media screen and (min-width: 900px) {
-      &::before {
-        content: 'More';
-      }
-    }
+  &:hover {
+    border-color: ${theme.colors.greyDropdownFocused};
+  }
 
-    &:hover {
-      border-color: ${theme.colors.greyDropdownFocused};
-    }
+  &:active {
+    border-color: ${theme.colors.blueNotification};
+  }
 
-    &:active {
-      border-color: ${theme.colors.blueNotification};
-    }
-
-    &:disabled {
-      background: ${theme.colors.grey};
-    }
-  `;
+  &:disabled {
+    background: ${theme.colors.grey};
+  }
+`;
 
 export const TableFilterTrigger = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   children,
   count,
   ...rest

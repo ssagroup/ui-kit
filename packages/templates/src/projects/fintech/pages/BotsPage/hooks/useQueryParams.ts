@@ -28,8 +28,8 @@ const getRunState = (currentValue: SearchType[0], newValue: SearchType[0]) => {
   return newValue === 'All' || undefined
     ? null
     : typeof newValue === 'string'
-    ? newValue
-    : currentValue;
+      ? newValue
+      : currentValue;
 };
 
 export const useQueryParams = ({

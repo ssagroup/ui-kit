@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '@emotion/react';
 import { offset } from '@floating-ui/react';
 import { Wrapper, useTranslation } from '@ssa-ui-kit/core';

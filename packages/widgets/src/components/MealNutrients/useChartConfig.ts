@@ -11,7 +11,7 @@ const THROTTLE_DELAY_MS = 50;
 const useChartConfig: UseChartConfig = (elRef, data, precision = 'day') => {
   const [width, setWidth] = useState(0);
   const throttledRef = useRef(
-    throttle((entries) => {
+    throttle((entries: ResizeObserverEntry[]) => {
       setWidth(entries[0].contentRect.width);
     }, THROTTLE_DELAY_MS),
   );
@@ -58,8 +58,8 @@ const useChartConfig: UseChartConfig = (elRef, data, precision = 'day') => {
           precision === 'hour'
             ? formatTime
             : precision === 'week'
-            ? formatDayOfWeek
-            : formatDate,
+              ? formatDayOfWeek
+              : formatDate,
       },
     }),
     [data, width, precision],

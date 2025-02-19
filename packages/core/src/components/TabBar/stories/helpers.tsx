@@ -1,11 +1,8 @@
 import React from 'react';
 import { Fragment, useLayoutEffect } from 'react';
-import { DecoratorFunction } from '@storybook/types';
+import { Decorator } from '@storybook/react';
 import { useTabBarContext, TabBarContextProvider } from '@components/TabBar';
-import TabBar from '../TabBar';
 import { TabProps } from '../types';
-
-type Args = Parameters<typeof TabBar>[0];
 
 export const TabBarWrapper = ({
   children,
@@ -51,14 +48,7 @@ export const TabContents = ({
 };
 
 /* istanbul ignore next */
-export const TabBarDecorator: DecoratorFunction<
-  {
-    component: typeof TabBar;
-    storyResult: React.ReactElement;
-    canvasElement: unknown;
-  },
-  Args
-> = (Story, { args }) => {
+export const TabBarDecorator: Decorator = (Story, { args }) => {
   return (
     <TabBarContextProvider>
       <TabBarWrapper {...args}>

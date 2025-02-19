@@ -5,6 +5,7 @@ import * as S from './styles';
 
 export const DistributionMultiline = ({
   rows,
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   isAdditionalRightBar = false,
   ...props
 }: DistributionMultilineProps) => {

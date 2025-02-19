@@ -1,4 +1,3 @@
-import React from 'react';
 import { css } from '@emotion/react';
 import { WithVisibleMD, WithVisibleSM } from '@ssa-ui-kit/core';
 import { WithPagination } from '@ssa-ui-kit/core';

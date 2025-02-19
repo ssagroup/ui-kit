@@ -25,14 +25,16 @@ const config: StorybookConfig = {
     },
     '@storybook/addon-mdx-gfm',
     '@storybook/addon-controls',
+    '@storybook/addon-webpack5-compiler-babel',
   ],
   refs,
-  docs: {
-    autodocs: false,
-  },
+  docs: {},
   managerHead: (head) => `
     ${head}
     <meta name="description" content="SSA UI kit is an open-source React-based library that accelerates frontend development of dashboard and administrative panels" />
   `,
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
 };
 export default config;

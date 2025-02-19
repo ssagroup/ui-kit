@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const R = require('ramda');

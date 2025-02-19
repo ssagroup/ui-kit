@@ -1,4 +1,4 @@
-import { userEvent } from '@storybook/testing-library';
+import { userEvent } from '@storybook/test';
 import { screen } from '../../../customTest';
 
 import Icon from '@components/Icon';

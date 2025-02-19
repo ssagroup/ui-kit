@@ -132,7 +132,9 @@ const DropdownToggle = ({
     onClick={(e) => {
       // Safari doesn't support focus on buttons 🤔
       (e.currentTarget as HTMLButtonElement).focus();
-      onClick && onClick(e);
+      if (onClick) {
+        onClick(e);
+      }
     }}
     onFocus={onFocus}
     disabled={disabled}

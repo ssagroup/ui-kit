@@ -56,7 +56,7 @@ export const SortableTable = ({
                   <Icon
                     name={sortInfo.order === 'asc' ? 'arrow-up' : 'arrow-down'}
                     size={10}
-                    data-testId="sort-icon"
+                    data-testid="sort-icon"
                   />
                 )}
               </Wrapper>

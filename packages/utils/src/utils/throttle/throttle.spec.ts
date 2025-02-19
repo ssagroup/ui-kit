@@ -1,7 +1,6 @@
 import { throttle } from './throttle';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const callNTimes = (fn: any, n: number) => {
+const callNTimes = (fn: () => void, n: number) => {
   for (let i = 0; i < n; i++) {
     fn();
   }

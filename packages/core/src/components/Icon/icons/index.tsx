@@ -11,7 +11,7 @@ type IconResultType = ({
 
 const componentsList = (Object.keys(Icons) as Array<keyof typeof Icons>).map(
   (keyName) => path<typeof Icons, IconResultType>([keyName, keyName])(Icons),
-) as unknown as Array<IconResultType>;
+);
 
 const iconsMap: MapIconsType = iconsList.reduce((res, name, index) => {
   res[name] = componentsList[index];

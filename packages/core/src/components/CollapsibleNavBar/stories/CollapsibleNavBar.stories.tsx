@@ -1,24 +1,14 @@
 import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj, type Decorator } from '@storybook/react';
 import { Title, Description, Subtitle, Stories } from '@storybook/addon-docs';
-import { DecoratorFunction } from '@storybook/types';
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
 import { DarkLogo, Logo } from './Logo';
 import { Layout } from './Layout';
 import { CustomIcon } from './CustomIcon';
 
-type Args = Parameters<typeof CollapsibleNavBar>[0];
-
-const reactRouterDecorator: DecoratorFunction<
-  {
-    component: typeof CollapsibleNavBar;
-    storyResult: React.ReactElement;
-    canvasElement: unknown;
-  },
-  Args
-> = (Story) => {
+const reactRouterDecorator: Decorator = (Story) => {
   return (
     <MemoryRouter>
       <Routes>

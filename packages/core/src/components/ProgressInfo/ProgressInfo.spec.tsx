@@ -35,9 +35,8 @@ describe('ProgressInfo', () => {
 
     await waitFor(async () => {
       const [listActivities, listTotal] = await screen.findAllByRole('list');
-      const listActivitiesEls = await within(listActivities).findAllByRole(
-        'listitem',
-      );
+      const listActivitiesEls =
+        await within(listActivities).findAllByRole('listitem');
       const listTotalEls = await within(listTotal).findAllByRole('listitem');
 
       expect(listActivitiesEls).toHaveLength(2);

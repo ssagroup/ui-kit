@@ -211,7 +211,9 @@ export const PieChartInternal = ({
               layers={['arcs', 'arcLinkLabels', 'arcLabels']}
               activeId={activeId}
               onActiveIdChange={(activeId: string | number | null) => {
-                activeHighlight && setActiveId(activeId);
+                if (activeHighlight) {
+                  setActiveId(activeId);
+                }
               }}
               data={dataForChart}
               onMouseEnter={(data) => {

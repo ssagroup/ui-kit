@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import { NotificationCard } from '@components/NotificationCard';
 
 const Main = styled.main`
-  background: linear-gradient(
+  background:
+    linear-gradient(
       143deg,
       #e7ebf1 -4.16%,
       #d7d9dd 39.37%,

@@ -10,9 +10,11 @@ import {
 export const FiltersContext = createContext<UseTableDataResult>({
   checkboxData: mockData,
   selectedItemsByGroup: {},
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   onCheckboxToggle: (groupName: string, name: string | number) => () => {
     // no action
   },
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   onDropdownChange: (groupName: string, name: string | number) => () => {
     // no action
   },
@@ -22,10 +24,12 @@ export const FiltersContext = createContext<UseTableDataResult>({
   onReset: () => {
     // no action
   },
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   onSubmit: (event?: BaseSyntheticEvent) => {
     // no action
   },
   refsList: [],
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   setElementRef: (groupName: string, element: HTMLElement | null) => {
     // no action
   },

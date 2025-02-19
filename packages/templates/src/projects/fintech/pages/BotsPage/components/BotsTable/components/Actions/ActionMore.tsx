@@ -1,4 +1,4 @@
-import React, { MouseEvent, MouseEventHandler, useState } from 'react';
+import { MouseEvent, MouseEventHandler, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import {
   Icon,

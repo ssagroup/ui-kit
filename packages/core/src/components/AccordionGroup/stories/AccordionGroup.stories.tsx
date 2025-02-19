@@ -22,7 +22,7 @@ export default {
 } as Meta<typeof AccordionGroup>;
 
 const StoryTemplate: Args = {
-  render: ({ ...args }) => <AccordionTemplate {...(args as any)} />,
+  render: ({ ...args }) => <AccordionTemplate {...args} />,
 };
 
 export const Large = {

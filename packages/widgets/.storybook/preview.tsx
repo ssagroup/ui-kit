@@ -1,12 +1,10 @@
-import React from 'react';
-import '@storybook/react-webpack5';
-
+import type { Preview } from '@storybook/react';
 import { ThemeProvider } from '@emotion/react';
 import { mainTheme } from '@ssa-ui-kit/core';
 
 import './style.css';
 
-const preview = {
+const preview: Preview = {
   parameters: {
     controls: { expanded: true, hideNoControlsWarning: true },
   },
@@ -17,6 +15,7 @@ const preview = {
       </ThemeProvider>
     ),
   ],
+  tags: ['autodocs'],
 };
 
 export default preview;

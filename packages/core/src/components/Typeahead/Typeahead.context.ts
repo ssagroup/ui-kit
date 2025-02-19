@@ -29,6 +29,7 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
     /* no-op */
   },
   register: () => {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     return {} as any;
   },
   handleChange: () => {
