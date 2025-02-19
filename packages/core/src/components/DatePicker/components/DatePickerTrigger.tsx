@@ -48,7 +48,7 @@ export const DatePickerTrigger = () => {
 
   return (
     <React.Fragment>
-      {label && <C.Label htmlFor={name}>{label}</C.Label>}
+      {label && <C.Label htmlFor={`field-${name}`}>{label}</C.Label>}
       <C.PopoverTrigger asChild>
         <C.Input
           name={name}
@@ -58,8 +58,11 @@ export const DatePickerTrigger = () => {
           disabled={disabled}
           register={register}
           inputProps={{
+            // TODO: check working of this event!
             onBlur: handleBlur,
             onClick: handleToggleOpen,
+            id: `field-${name}`,
+            'data-testid': 'datepicker-input',
           }}
           errors={fieldError as FieldError}
           status={fieldStatus}
@@ -78,8 +81,10 @@ export const DatePickerTrigger = () => {
                   color={disabled ? theme.colors.grey : theme.colors.greyDarker}
                 />
               }
+              data-testid={'datepicker-button'}
               onClick={handleToggleOpen}
               variant="tertiary"
+              aria-label="Calendar"
               isDisabled={disabled}
               css={{
                 padding: 0,

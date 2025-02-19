@@ -15,6 +15,7 @@ export const DaysView = () => {
     setCalendarViewDateTime,
     setDateTime,
     setIsOpen,
+    onChange,
   } = useDatePickerContext();
   const selectedDateTime = dateTime?.toFormat('D');
   const currentDate = calendarViewDateTime?.toJSDate();
@@ -30,6 +31,7 @@ export const DaysView = () => {
       const newDate = calendarViewDateTime?.set({ day: selectedDay });
       setCalendarViewDateTime(newDate);
       setDateTime(newDate);
+      onChange?.(newDate?.toJSDate());
       setIsOpen(false);
     }
   };
@@ -56,15 +58,11 @@ export const DaysView = () => {
         css={{ flexWrap: 'wrap', paddingLeft: 9 }}
         onClick={handleDaySelect}>
         {dates.map((currentDate, index) => {
-          const calendarDate = DateTime.fromJSDate(currentDate).toFormat('D');
+          const currentDT = DateTime.fromJSDate(currentDate);
+          const calendarDate = currentDT.toFormat('D');
           const calendarDay = currentDate.getDate();
           const calendarMonth = currentDate.getMonth();
-          const calendarYear = currentDate.getFullYear();
-          const currentDT = DateTime.fromObject({
-            year: calendarYear,
-            month: calendarMonth + 1,
-            day: calendarDay,
-          });
+          const ariaLabel = currentDT.toLocaleString(DateTime.DATE_HUGE);
           const isCalendarDateNow = nowDate === calendarDate;
           const isCalendarDateSelected = selectedDateTime === calendarDate;
           const isCalendarMonth = currentMonth === calendarMonth;
@@ -87,6 +85,7 @@ export const DaysView = () => {
             <S.DaysViewCell
               key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}-${index}`}
               aria-disabled={isAriaDisabled}
+              aria-label={ariaLabel}
               isCalendarDateNow={isCalendarDateNow}
               isCalendarDateSelected={isCalendarDateSelected}>
               {calendarDay}

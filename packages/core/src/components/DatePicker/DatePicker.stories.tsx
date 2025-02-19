@@ -41,7 +41,7 @@ export default {
               console.log('event: onSubmit', data);
             })}
             css={{
-              width: 400,
+              width: 350,
             }}>
             <FormGroup>
               {Story({

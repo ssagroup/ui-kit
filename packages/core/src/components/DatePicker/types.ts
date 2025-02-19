@@ -6,8 +6,8 @@ import { InputProps } from '@components/Input/types';
 export type DatePickerProps = {
   name: string;
   label?: string;
-  format: 'mm/dd/yyyy' | 'dd/mm/yyyy';
-  maskOptions: Parameters<typeof useMask>[0];
+  format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
+  maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: InputProps['inputProps'];
   value?: string; // depends on the format

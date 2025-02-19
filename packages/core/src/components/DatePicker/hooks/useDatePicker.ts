@@ -131,7 +131,12 @@ export const useDatePicker = ({
 
   useEffect(() => {
     if (!isLoading) {
-      isOpen ? onOpen?.() : onClose?.();
+      if (isOpen) {
+        onOpen?.();
+      } else {
+        onClose?.();
+        setCalendarType('days');
+      }
     }
   }, [isOpen]);
 

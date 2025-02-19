@@ -4,13 +4,11 @@ import { DEFAULT_MASK_FORMAT } from './constants';
 import { DatePickerContent } from './components';
 import { DatePickerProvider } from './DatePickerContext';
 
-// - storybook controls - remove unused, add the specific types...
-// - add different stories!!!
-// --- maskOptions
-// --- inputProps
 // - replace of existing values?
-// - fix default event trigger (onClose, onChange...)
 // - add tests
+// + storybook controls - remove unused, add the specific types...
+// + fix default event trigger (onClose, onChange...)
+// + aria?
 // + process backspace key
 // + remove extra props
 // + onBlur validation

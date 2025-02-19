@@ -59,7 +59,8 @@ export const MonthsView = () => {
           <S.MonthsViewCell
             key={month}
             isCalendarMonth={isCalendarMonth}
-            aria-disabled={isAriaDisabled}>
+            aria-disabled={isAriaDisabled}
+            aria-label={`${month}, ${calendarViewDateTime?.year}`}>
             {month}
           </S.MonthsViewCell>
         );

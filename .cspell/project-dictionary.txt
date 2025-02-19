@@ -34,6 +34,7 @@ csstype
 cubehelix
 customdata
 customicon
+datepicker
 disbalance
 displaylogo
 Dissoc

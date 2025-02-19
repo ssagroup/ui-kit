@@ -45,13 +45,19 @@ export const DatePickerProvider = ({
     ...rest,
   });
 
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    restHook.handleBlur(e);
+    rest.onBlur?.(e);
+  };
+
   return (
     <DatePickerContext.Provider
       value={{
         ...rest,
-        inputRef: useMergeRefs([maskInputRef, rest.inputRef]),
         ...restHook,
         formatIndexes,
+        inputRef: useMergeRefs([maskInputRef, rest.inputRef]),
+        onBlur: handleBlur,
       }}>
       {children}
     </DatePickerContext.Provider>
