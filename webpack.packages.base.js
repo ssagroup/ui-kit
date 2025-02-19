@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const R = require('ramda');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -16,19 +16,7 @@ const baseConfig = {
   },
   devtool: isProduction ? 'source-map' : 'eval',
   optimization: {
-    // Remove License.txt files from the ./dist/
-    // https://github.com/webpack-contrib/terser-webpack-plugin#remove-comments
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
+    minimize: false,
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -68,6 +56,7 @@ const baseConfig = {
   stats: {
     errorDetails: true,
   },
+  externals: [nodeExternals()],
 };
 
 const isNotNilOrEmpty = R.compose(R.not, R.either(R.isNil, R.isEmpty));

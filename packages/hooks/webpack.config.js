@@ -9,9 +9,6 @@ module.exports = () => {
       '@src': path.resolve(__dirname, './src'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
     },
-    externals: {
-      react: 'react',
-    },
   });
 
   return currentConfig;

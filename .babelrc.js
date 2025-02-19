@@ -16,13 +16,6 @@ module.exports = {
       },
     ],
     '@babel/preset-typescript',
-    [
-      '@emotion/babel-preset-css-prop',
-      {
-        autoLabel: 'dev-only',
-        labelFormat: '[local]',
-      },
-    ],
   ],
   plugins: ['@emotion', '@babel/plugin-transform-runtime'],
 };

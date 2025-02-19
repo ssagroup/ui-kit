@@ -8,18 +8,6 @@ module.exports = () => {
     alias: {
       '@components': path.resolve(__dirname, './src/components'),
     },
-    externals: {
-      react: 'react',
-      'react-dom': 'react-dom',
-      'react-router-dom': 'react-router-dom',
-      '@emotion/css': '@emotion/css',
-      '@emotion/react': '@emotion/react',
-      '@emotion/styled': '@emotion/styled',
-      '@nivo/core': '@nivo/core',
-      '@nivo/line': '@nivo/line',
-      '@nivo/pie': '@nivo/pie',
-      '@nivo/scales': '@nivo/scales',
-    },
   });
 
   return currentConfig;

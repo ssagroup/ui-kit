@@ -13,18 +13,6 @@ module.exports = () => {
       '@fitness': path.resolve('./src/projects/fitness'),
       '@hr': path.resolve('./src/projects/hr'),
     },
-    externals: {
-      react: 'react',
-      'react-dom': 'react-dom',
-      'react-router-dom': 'react-router-dom',
-      '@emotion/css': '@emotion/css',
-      '@emotion/react': '@emotion/react',
-      '@emotion/styled': '@emotion/styled',
-      '@nivo/colors': '@nivo/colors',
-      '@nivo/core': '@nivo/core',
-      '@nivo/pie': '@nivo/pie',
-      '@nivo/scales': '@nivo/scales',
-    },
   });
 
   return currentConfig;
