@@ -13,7 +13,9 @@ export const WithVisibleSM = <T extends object>(
 ) => {
   const decoratedComp = (props: T) => (
     <VisibleSM data-testid="with-visible-sm" css={styles}>
-      <Component {...props} />
+      {/* TODO: HoC prop types not working with new emotion https://github.com/emotion-js/emotion/issues/3261 */}
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <Component {...(props as any)} />
     </VisibleSM>
   );
 

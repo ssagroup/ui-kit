@@ -20,8 +20,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   background: #fff;
   border-radius: 8px;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
 
   z-index: 1;
 
