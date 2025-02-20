@@ -16,9 +16,6 @@ describe('DatePicker', () => {
     const mockOnChange = jest.fn();
     const mockOnOpen = jest.fn();
     const mockOnClose = jest.fn();
-    // const mockOnClose = () => {
-    //   console.log('>>>close');
-    // };
     const mockOnError = jest.fn();
     const mockOnMonthChange = jest.fn();
     const mockOnYearChange = jest.fn();
@@ -90,7 +87,7 @@ describe('DatePicker', () => {
     expect(inputEl).toHaveValue('01/15/2025');
   });
 
-  it('Open and close events must be called', async () => {
+  it('Open, close, and change events must be called', async () => {
     const {
       user,
       mockOnClose,
@@ -138,91 +135,5 @@ describe('DatePicker', () => {
     expect(mockOnOpen).toBeCalledTimes(1);
     expect(mockOnClose).toBeCalledTimes(1);
     expect(mockOnChange).toBeCalled();
-
-    // let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
-    // expect(dropdownToggleEl).toHaveTextContent('Select something');
-    // expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
-    // expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
-    // expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    // expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    // findByTitle('Carrot down');
-
-    // let listboxEl = queryByRole('listbox');
-    // expect(listboxEl).not.toBeInTheDocument();
-
-    // await user.click(dropdownToggleEl);
-
-    // listboxEl = getByRole('listbox');
-    // const listItemEls = within(listboxEl).getAllByRole('listitem');
-    // expect(listItemEls.length).toBe(items.length);
-
-    // dropdownToggleEl = within(dropdownEl).getByRole('combobox');
-    // expect(dropdownToggleEl).toHaveFocus();
-    // expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
-    // findByTitle('Carrot up');
-
-    // for (let i = 0; i < items.length; ++i) {
-    //   const listItem = items[i];
-    //   const listItemEl = listItemEls[i];
-
-    //   expect(listItemEl).toHaveAttribute('aria-selected', 'false');
-    //   const itemListValue = getListItemValue(listItem);
-    //   expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-    //     itemListValue,
-    //   );
-    //   await within(listItemEl).findByText(itemListValue);
-    // }
   });
-
-  //   const selectedItem = items[2];
-  //   const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup({
-  //     selectedItem,
-  //   });
-
-  //   expect(mockOnChange).not.toBeCalled();
-
-  //   const dropdownEl = getByTestId('dropdown');
-
-  //   let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
-  //   expect(dropdownToggleEl).toHaveTextContent(getListItemValue(selectedItem));
-  //   expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
-  //   expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
-  //   expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-  //   expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-  //   await within(dropdownToggleEl).findByTitle('Carrot down');
-
-  //   let listboxEl = queryByRole('listbox');
-  //   expect(listboxEl).not.toBeInTheDocument();
-
-  //   await user.click(dropdownToggleEl);
-
-  //   listboxEl = getByRole('listbox');
-  //   const listItemEls = within(listboxEl).getAllByRole('listitem');
-  //   expect(listItemEls.length).toBe(items.length);
-
-  //   dropdownToggleEl = within(dropdownEl).getByRole('combobox');
-
-  //   expect(dropdownToggleEl).toHaveFocus();
-  //   expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
-  //   await within(dropdownToggleEl).findByTitle('Carrot up');
-
-  //   for (let i = 0; i < items.length; ++i) {
-  //     const listItem = items[i];
-  //     const listItemEl = listItemEls[i];
-
-  //     const itemListValue = getListItemValue(listItem);
-
-  //     await within(listItemEl).findByText(itemListValue);
-  //     expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-  //       itemListValue,
-  //     );
-
-  //     if (listItem.id === selectedItem.id) {
-  //       expect(listItemEl).toHaveAttribute('aria-selected', 'true');
-  //       expect(listItemEl).toHaveStyle('background: #DEE1EC');
-  //     } else {
-  //       expect(listItemEl).toHaveAttribute('aria-selected', 'false');
-  //     }
-  //   }
-  // });
 });
