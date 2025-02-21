@@ -8,12 +8,6 @@ const CollapsibleNavBarList = styled(NavBarList)<{
   height: auto;
   padding: 0 0 0 15px;
   margin: 14px 0 0 0;
-  & li:nth-of-type(5) {
-    & svg path {
-      stroke: ${({ theme, navBarTheme }) =>
-        navBarTheme === 'light' && theme.colors.greyDropdownFocused};
-    }
-  }
   ${({ theme }) => theme.mediaQueries.md} {
     margin-top: 90px;
     width: 100%;
