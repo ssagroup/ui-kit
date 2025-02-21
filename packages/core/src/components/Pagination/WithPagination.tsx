@@ -5,7 +5,9 @@ export const WithPagination = <T extends object>(
 ) => {
   const decoratedComp = (props: T) => (
     <PaginationContextProvider selectedPage={1}>
-      <Component {...props} />
+      {/* TODO: HoC prop types not working with new emotion https://github.com/emotion-js/emotion/issues/3261 */}
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <Component {...(props as any)} />
     </PaginationContextProvider>
   );
 

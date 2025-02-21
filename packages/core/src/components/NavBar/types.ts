@@ -1,4 +1,3 @@
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { MapIconsType } from '@components/Icon/types';
 
 export interface NavBarProps {
@@ -6,7 +5,7 @@ export interface NavBarProps {
 }
 
 export type NavBarExtendedItem = {
-  CustomIcon?: () => EmotionJSX.Element;
+  CustomIcon?: () => JSX.Element;
   path: string;
   iconName: keyof MapIconsType;
   title: string;
@@ -20,7 +19,7 @@ export type NavBarExtendedSubItem<T extends object = object> = {
 export interface NavBarExtendedGroup<
   T extends NavBarExtendedSubItem = NavBarExtendedSubItem,
 > {
-  CustomIcon?: () => EmotionJSX.Element;
+  CustomIcon?: () => JSX.Element;
   prefix?: string;
   iconName: keyof MapIconsType;
   title: string;

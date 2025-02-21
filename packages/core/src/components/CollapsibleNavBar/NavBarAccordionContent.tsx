@@ -18,11 +18,6 @@ const Link = styled(CollapsibleNavBarLink)`
   &:not(.active):hover {
     filter: initial;
   }
-
-  &.active {
-    text-decoration: underline;
-    filter: initial;
-  }
 `;
 
 export const NavBarAccordionContent = ({

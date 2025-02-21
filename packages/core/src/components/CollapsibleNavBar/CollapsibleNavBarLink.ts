@@ -12,9 +12,7 @@ const CollapsibleNavBarLink = styled(NavLink)<{
   align-items: center;
   gap: 20px;
   color: ${({ theme, navbartheme }) =>
-    navbartheme === 'default'
-      ? theme.colors.white80
-      : theme.colors.greyDarker80};
+    navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
 
   svg {
     backdrop-filter: blur(0);
@@ -23,9 +21,7 @@ const CollapsibleNavBarLink = styled(NavLink)<{
   & > span {
     font-weight: ${({ navbartheme }) => navbartheme === 'light' && 500};
     color: ${({ theme, navbartheme }) =>
-      navbartheme === 'default'
-        ? theme.colors.white80
-        : theme.colors.greyDarker80};
+      navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
 
     ${({ theme }) => theme.mediaQueries.md} {
       display: none;
@@ -50,12 +46,17 @@ const CollapsibleNavBarLink = styled(NavLink)<{
   &.active {
     cursor: default;
     backdrop-filter: blur(0);
-    filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
+    font-weight: 900;
+    filter: ${({ navbartheme, theme }) =>
+      navbartheme === 'default'
+        ? `drop-shadow(-4px 4px 14px ${theme.colors.white})`
+        : `drop-shadow(-4px 4px 14px ${theme.colors.greyDropdownFocused})`};
     color: ${({ theme, navbartheme }) =>
-      navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
+      navbartheme === 'default'
+        ? theme.colors.white80
+        : theme.colors.greyDarker80};
     & > span {
-      font-weight: ${({ navbartheme }) =>
-        navbartheme === 'default' ? 500 : 600};
+      font-weight: 900;
       color: ${({ theme, navbartheme }) =>
         navbartheme === 'default'
           ? theme.colors.white80
