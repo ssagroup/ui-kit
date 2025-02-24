@@ -1,0 +1,66 @@
+name: Release packages to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      increment:
+        description: Increment a version by the specified level
+        required: true
+        type: choice
+        options:
+          - 'major'
+          - 'minor'
+          - 'patch'
+          - 'premajor'
+          - 'preminor'
+          - 'prepatch'
+          - 'prerelease'
+          - 'canary'
+      preid:
+        description: Identifier to be used to prefix premajor, preminor, prepatch or prerelease version increments
+        required: false
+        type: string
+      tag:
+        description: Tag to be used for the release
+        required: false
+        type: string
+      dryRun:
+        description: Perform a dry-run without publishing to npm
+        required: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies (pnpm)
+        uses: ./.github/actions/pnpm-install
+
+      - name: Release packages
+        run: |
+          declare -a release_options
+
+          if [ -n "${{ inputs.preid }}" ]; then
+            release_options+=(--preid "${{ inputs.preid }}")
+          fi
+
+          if [ -n "${{ inputs.tag }}" ]; then
+            release_options+=(--tag "${{ inputs.tag }}")
+          fi
+
+          if [ "${{ inputs.dryRun }}" = "true" ]; then
+            release_options+=(--dry-run)
+          fi
+
+          pnpm release \
+            --increment ${{ inputs.increment }} \
+            ${release_options[@]}
+        shell: bash
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
