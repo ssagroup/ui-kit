@@ -1,7 +1,7 @@
 import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
-import initBabelConfig from '../../../.babelrc';
+import initBabelConfig from '../../../babel.config';
 const appWebpackConfig = initWebpackConfig();
 
 const config: StorybookConfig = {

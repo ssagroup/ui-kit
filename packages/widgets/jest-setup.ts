@@ -1,4 +1,8 @@
 import '@testing-library/jest-dom';
+
+URL.createObjectURL = jest.fn();
+HTMLCanvasElement.prototype.getContext = jest.fn();
+
 import { createSerializer, matchers } from '@emotion/jest';
 
 import { mainTheme } from '@ssa-ui-kit/core';
@@ -15,6 +19,3 @@ global.render = customRender;
 
 expect.addSnapshotSerializer(createSerializer());
 expect.extend(matchers);
-
-window.URL.createObjectURL = jest.fn();
-window.HTMLCanvasElement.prototype.getContext = jest.fn();
