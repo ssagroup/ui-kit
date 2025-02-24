@@ -18,6 +18,7 @@
     "url": "https://github.com/ssagroup/ui-kit.git",
     "directory": "packages/hooks"
   },
+  "files": ["dist"],
   "scripts": {
     "build": "webpack --mode=production --node-env=production && tsc --build --force && resolve-tspaths",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
