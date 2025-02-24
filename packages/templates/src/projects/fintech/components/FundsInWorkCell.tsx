@@ -9,7 +9,7 @@ export const FundsInWorkCell = ({ value }: { value: number | null }) => {
     value > 80
       ? theme.colors.green
       : value < 20
-      ? theme.colors.red
-      : theme.colors.yellowLighter;
+        ? theme.colors.red
+        : theme.colors.yellowLighter;
   return <span css={{ color }}>{value}%</span>;
 };

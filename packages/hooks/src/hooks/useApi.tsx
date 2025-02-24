@@ -1,14 +1,12 @@
 import { useState } from 'react';
 
-export function useApi<D>(
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  fetcherFn: (...args: any[]) => Promise<D>,
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  initialValue?: any,
+export function useApi<T extends unknown[], D>(
+  fetcherFn: (...args: T) => Promise<D>,
+  initialValue?: D,
 ) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown | null>(null);
-  const [data, setData] = useState<D>(initialValue);
+  const [data, setData] = useState<D | undefined>(initialValue);
 
   const query = async (...args: Parameters<typeof fetcherFn>) => {
     setIsLoading(true);
@@ -27,7 +25,8 @@ export function useApi<D>(
   return {
     isLoading,
     error,
-    data,
+    // TODO: useApi users should use type guards instead of "data as D"
+    data: data as D,
     query,
   };
 }

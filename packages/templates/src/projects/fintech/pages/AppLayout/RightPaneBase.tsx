@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 export const RightPaneBase = styled.main`
-  background: linear-gradient(
+  background:
+    linear-gradient(
       143deg,
       #e7ebf1 -4.16%,
       #d7d9dd 39.37%,

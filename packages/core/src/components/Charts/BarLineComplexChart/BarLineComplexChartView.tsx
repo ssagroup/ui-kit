@@ -220,8 +220,8 @@ export const BarLineComplexChartView = ({
                     deviceType,
                   )(TITLE_PADDING_LEFT)
                 : isFullscreenMode
-                ? 30
-                : 15,
+                  ? 30
+                  : 15,
             r: orientation === 'v' ? 40 : 0,
             t:
               propOr(TITLE_PADDING_TOP.other, deviceType)(TITLE_PADDING_TOP) +

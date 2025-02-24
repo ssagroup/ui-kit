@@ -1,5 +1,6 @@
 import { injectGlobal } from '@emotion/css';
 
+/* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
 injectGlobal`
   * {
     outline: none;
@@ -11,7 +12,7 @@ injectGlobal`
     &::before {
       box-sizing: border-box;
     }
-  } 
+  }
 
   html {
     font-size: 1rem;
@@ -37,5 +38,5 @@ injectGlobal`
   #root {
     height: 100vh;
   }
-  
+
 `;

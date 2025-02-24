@@ -1,5 +1,5 @@
 import { mergeLeft } from 'ramda';
-import { devices } from '@playwright/test';
+import { devices, type PlaywrightTestConfig } from '@playwright/test';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -37,5 +37,5 @@ const baseConfig = {
   ],
 };
 
-export const createConfig = (extendedConfig = {}) =>
+export const createConfig = (extendedConfig: PlaywrightTestConfig = {}) =>
   mergeLeft(extendedConfig)(baseConfig);

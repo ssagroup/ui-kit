@@ -25,7 +25,8 @@ const CollapsibleNavToggle = ({ id }: { id: string }) => {
               display: block;
               margin: 4px 0;
               transform-origin: 4px 0;
-              transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1),
+              transition:
+                transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1),
                 background 0.3s cubic-bezier(0.77, 0.2, 0.05, 1),
                 opacity 0.35s ease;
 

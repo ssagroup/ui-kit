@@ -43,7 +43,7 @@ const routes = [
   { path: 'settings', iconName: 'settings' as unknown as keyof MapIconsType },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const Default = (Component: JSX.ElementType) => (props: any) => {
   const theme = useTheme();
   const { user } = useAuth();

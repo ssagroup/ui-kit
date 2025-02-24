@@ -42,7 +42,9 @@ export const MealNutrients = ({
     const item = options.filter((item) => item.value === e.value)[0];
 
     setSelectedOption(item);
-    onOptionChange && onOptionChange(item);
+    if (onOptionChange) {
+      onOptionChange(item);
+    }
   };
 
   return (

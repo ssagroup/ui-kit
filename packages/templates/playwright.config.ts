@@ -4,4 +4,12 @@ import { createConfig } from '../../playwright.base.config';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig(createConfig());
+export default defineConfig(
+  createConfig({
+    webServer: {
+      command: 'pnpm sb:dev',
+      port: 6008,
+      reuseExistingServer: !process.env.CI,
+    },
+  }),
+);

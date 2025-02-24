@@ -5,7 +5,7 @@ const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6006/iframe.html?args=&id=widgets-filters--default&viewMode=story',
+    'iframe.html?args=&id=widgets-filters--default&viewMode=story',
   );
 };
 
@@ -85,7 +85,7 @@ test('Widgets: Filters - Filter button should be shown when items not selected',
   page,
 }) => {
   await page.goto(
-    'http://localhost:6006/iframe.html?args=&id=widgets-filters--all-items-enabled&viewMode=story',
+    'iframe.html?args=&id=widgets-filters--all-items-enabled&viewMode=story',
   );
   await page.setViewportSize(SCREEN_SIZES[390]);
   const triggerButton = page.getByTestId('trigger-button');

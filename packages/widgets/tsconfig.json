@@ -12,6 +12,6 @@
       "@components/*": ["./src/components/*"]
     }
   },
-  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx"],
+  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx", ".storybook/*.tsx"],
   "exclude": ["dist/**/*"]
 }

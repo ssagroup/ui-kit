@@ -15,8 +15,8 @@ export const PNLCell = ({
     amount > 0
       ? theme.colors.green
       : amount < 0
-      ? theme.colors.red
-      : theme.colors.greyDarker;
+        ? theme.colors.red
+        : theme.colors.greyDarker;
 
   return (
     <Wrapper>

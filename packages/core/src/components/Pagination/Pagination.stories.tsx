@@ -1,5 +1,4 @@
-import type { Meta } from '@storybook/react';
-import { StoryAnnotations } from '@storybook/types';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Pagination, PaginationContextProvider } from './index';
 
 export default {
@@ -16,7 +15,9 @@ export default {
   ],
 } as Meta<typeof Pagination>;
 
-export const PageSelected = {
+type Story = StoryObj<typeof Pagination>;
+
+export const PageSelected: Story = {
   args: {
     pagesCount: 10,
   },
@@ -25,13 +26,13 @@ export const PageSelected = {
   },
 };
 
-export const NoPagesSelected = {
+export const NoPagesSelected: Story = {
   args: {
     pagesCount: 10,
   },
 };
 
-export const FirstPageSelected = {
+export const FirstPageSelected: Story = {
   args: {
     pagesCount: 10,
   },
@@ -40,7 +41,7 @@ export const FirstPageSelected = {
   },
 };
 
-export const LastPageSelected = {
+export const LastPageSelected: Story = {
   args: {
     pagesCount: 10,
   },
@@ -49,7 +50,7 @@ export const LastPageSelected = {
   },
 };
 
-export const Disabled = {
+export const Disabled: Story = {
   args: {
     pagesCount: 10,
     isDisabled: true,
@@ -59,7 +60,7 @@ export const Disabled = {
   },
 };
 
-export const WithManualPageSettingAndPerPage: StoryAnnotations = {
+export const WithManualPageSettingAndPerPage: Story = {
   args: {
     pagesCount: 10,
     isPageSettingVisible: true,
@@ -70,7 +71,7 @@ export const WithManualPageSettingAndPerPage: StoryAnnotations = {
   },
 };
 
-export const WithoutPageFromCount: StoryAnnotations = {
+export const WithoutPageFromCount: Story = {
   args: {
     pagesCount: 10,
     isPageSettingVisible: true,

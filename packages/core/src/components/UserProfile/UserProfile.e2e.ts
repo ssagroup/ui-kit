@@ -5,7 +5,7 @@ const CUSTOM_SHOTS_PATH = './custom-shots/';
 
 const gotoPage = (page: Page) => {
   return page.goto(
-    'http://localhost:6006/iframe.html?args=&id=widgets-userprofile--default&viewMode=story',
+    'iframe.html?args=&id=widgets-userprofile--default&viewMode=story',
   );
 };
 

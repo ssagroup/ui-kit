@@ -13,8 +13,8 @@ const ProgressLegendItem = ({
         position === 'start'
           ? 0
           : position === 'current'
-          ? `${percentage}%`
-          : '100%',
+            ? `${percentage}%`
+            : '100%',
       transform:
         position === 'current' || position === 'end'
           ? 'translateX(-50%)'
@@ -26,14 +26,14 @@ const ProgressLegendItem = ({
         position === 'start'
           ? '100%'
           : position === 'current'
-          ? `${100 - percentage}%`
-          : 0,
+            ? `${100 - percentage}%`
+            : 0,
       transform:
         position === 'start'
           ? 'translateY(-100%)'
           : position === 'current'
-          ? 'translateY(-50%)'
-          : 'none',
+            ? 'translateY(-50%)'
+            : 'none',
     },
   };
   return (

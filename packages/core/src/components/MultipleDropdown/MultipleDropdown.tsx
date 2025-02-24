@@ -100,7 +100,9 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
       setIsOpen(false);
     }
 
-    handleChange && handleChange(item.value, isSelected);
+    if (handleChange) {
+      handleChange(item.value, isSelected);
+    }
   };
 
   useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));

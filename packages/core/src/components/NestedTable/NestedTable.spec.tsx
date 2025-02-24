@@ -1,5 +1,5 @@
-import { act } from 'react-dom/test-utils';
-import { fireEvent } from '@storybook/testing-library';
+import { act } from 'react';
+import { fireEvent } from '@storybook/test';
 import { NestedTableStory } from './stories/NestedTableStory';
 import { screen } from '../../../customTest';
 

@@ -23,7 +23,7 @@ export const TOASTIFY_OPTIONS = {
   position: 'bottom-right' as ToastPosition,
   autoClose: 3000,
   hideProgressBar: false,
-  newestOnTop: true,
+  newestOnTop: false,
   closeOnClick: true,
   rtl: false,
   pauseOnHover: false,

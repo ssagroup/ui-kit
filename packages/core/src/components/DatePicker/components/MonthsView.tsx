@@ -27,7 +27,9 @@ export const MonthsView = () => {
     const newDate = calendarViewDateTime?.set({ month: monthNumber + 1 });
     setCalendarViewDateTime(newDate);
     setDateTime(newDate);
-    newDate && onMonthChange?.(newDate.toJSDate());
+    if (newDate) {
+      onMonthChange?.(newDate.toJSDate());
+    }
     setCalendarType('days');
   };
   return (

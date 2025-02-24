@@ -91,8 +91,8 @@ export const useTypeahead = ({
     const status = success
       ? 'success'
       : useFormResult.formState.errors[name]
-      ? 'error'
-      : 'basic';
+        ? 'error'
+        : 'basic';
     setStatus(status);
   }, [useFormResult.formState.errors[name], success]);
 
@@ -235,7 +235,9 @@ export const useTypeahead = ({
     setStatus('basic');
     useFormResult.clearErrors(name);
     useFormResult.trigger(name);
-    onChange && onChange(changingValue, isNewSelected);
+    if (onChange) {
+      onChange(changingValue, isNewSelected);
+    }
   };
 
   const handleClearAll = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {

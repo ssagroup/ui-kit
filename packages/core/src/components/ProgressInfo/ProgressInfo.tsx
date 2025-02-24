@@ -27,13 +27,9 @@ export const ProgressInfo = ({ data, className }: ProgressInfoProps) => {
 
   useEffect(() => {
     if (Object.keys(data).length > 0) {
-      const options: PeriodOption[] = [];
-
-      Object.keys(data).forEach((key) => {
-        Object.keys(data[key]).length > 0
-          ? options.push({ value: key, id: key })
-          : null;
-      });
+      const options: PeriodOption[] = Object.keys(data)
+        .filter((key) => Object.keys(data[key]).length > 0)
+        .map((key) => ({ value: key, id: key }));
 
       setOptions(options);
       if (options.length > 0) {

@@ -2,54 +2,52 @@ import { Theme, css } from '@emotion/react';
 import { CollapsibleNavBarExtendedProps } from './types';
 
 export const AccordionTitleWrapper =
-  (navBarTheme: CollapsibleNavBarExtendedProps['theme']) => (theme: Theme) =>
-    css`
-      cursor: pointer;
-      align-items: center;
+  (navBarTheme: CollapsibleNavBarExtendedProps['theme']) =>
+  (theme: Theme) => css`
+    cursor: pointer;
+    align-items: center;
 
-      ${theme.mediaQueries.md} {
-        display: flex;
-        justify-content: center;
-      }
+    ${theme.mediaQueries.md} {
+      display: flex;
+      justify-content: center;
+    }
 
-      & div.icon-wrapper {
-        width: 100%;
-        gap: 0;
-      }
+    & div.icon-wrapper {
+      width: 100%;
+      gap: 0;
+    }
 
-      & div.icon-wrapper:not(.active):hover > button svg path,
-      & div.icon-wrapper.active > button svg path {
-        stroke: ${navBarTheme === 'default'
-          ? '#fff'
-          : theme.colors.greyDarker80};
-        fill: none;
-      }
+    & div.icon-wrapper:not(.active):hover > button svg path,
+    & div.icon-wrapper.active > button svg path {
+      stroke: ${navBarTheme === 'default' ? '#fff' : theme.colors.greyDarker80};
+      fill: none;
+    }
 
-      & .trigger-icon {
-        height: 22px;
-      }
+    & .trigger-icon {
+      height: 22px;
+    }
 
-      &:has(+ div > a.active) {
-        & div:nth-of-type(2) button {
-          font-weight: 900;
-        }
+    &:has(+ div > a.active) {
+      & div:nth-of-type(2) button {
+        font-weight: 900;
       }
-    `;
+    }
+  `;
 
 export const AccordionTitle =
-  (navBarTheme: CollapsibleNavBarExtendedProps['theme']) => (theme: Theme) =>
-    css`
-      padding: 0 14px 0 20px;
-      color: ${navBarTheme === 'default'
-        ? theme.colors.white
-        : theme.colors.greyDarker};
-      svg path {
-        stroke: ${navBarTheme === 'light' && theme.colors.greyDropdownFocused};
-      }
-      ${theme.mediaQueries.md} {
-        display: none;
-      }
-    `;
+  (navBarTheme: CollapsibleNavBarExtendedProps['theme']) =>
+  (theme: Theme) => css`
+    padding: 0 14px 0 20px;
+    color: ${navBarTheme === 'default'
+      ? theme.colors.white
+      : theme.colors.greyDarker};
+    svg path {
+      stroke: ${navBarTheme === 'light' && theme.colors.greyDropdownFocused};
+    }
+    ${theme.mediaQueries.md} {
+      display: none;
+    }
+  `;
 
 export const AccordionContent = (theme: Theme) => css`
   display: flex;
@@ -89,31 +87,30 @@ export const LogoWrapper = (theme: Theme) => css`
 
 export const ContentToggle =
   (navBarTheme: CollapsibleNavBarExtendedProps['theme'], isChecked: boolean) =>
-  (theme: Theme) =>
-    css`
+  (theme: Theme) => css`
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    right: -17px;
+    width: 34px;
+    height: 34px;
+    background: ${navBarTheme === 'default'
+      ? theme.colors.greyLighter
+      : theme.colors.greyFocused};
+    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+    & input {
       display: none;
-      position: absolute;
+    }
+    & svg {
       cursor: pointer;
-      right: -17px;
-      width: 34px;
-      height: 34px;
-      background: ${navBarTheme === 'default'
-        ? theme.colors.greyLighter
-        : theme.colors.greyFocused};
-      border-radius: 12px;
-      justify-content: center;
-      align-items: center;
-      & input {
-        display: none;
-      }
-      & svg {
-        cursor: pointer;
-      }
-      ${theme.mediaQueries.lg} {
-        display: flex;
-      }
-      ${theme.mediaQueries.xlg} {
-        display: flex;
-        right: ${isChecked ? '-32px' : '-17px'};
-      }
-    `;
+    }
+    ${theme.mediaQueries.lg} {
+      display: flex;
+    }
+    ${theme.mediaQueries.xlg} {
+      display: flex;
+      right: ${isChecked ? '-32px' : '-17px'};
+    }
+  `;

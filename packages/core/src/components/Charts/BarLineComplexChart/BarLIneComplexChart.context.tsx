@@ -56,7 +56,7 @@ export const BarLineComplexChartContextProvider = ({
   useEffect(() => {
     const filtered = data.filter((item) => item.selected);
     const selectedBarNames = filtered
-      .filter((item) => item.type === 'bar' && typeof item.name !== undefined)
+      .filter((item) => item.type === 'bar' && typeof item.name !== 'undefined')
       .map((item) => item.name) as string[];
     const selectedOtherNames = filtered
       .filter((item) => item.type !== 'bar' && item.name !== undefined)
@@ -92,7 +92,7 @@ export const BarLineComplexChartContextProvider = ({
           ({
             ...item,
             selected: newSelected.includes(item.name || ''),
-          } as BarLineChartItem),
+          }) as BarLineChartItem,
       );
       setData(newData);
     }

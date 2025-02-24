@@ -67,7 +67,7 @@ const DropdownOptionButton = styled.div<{
     },
   },
 
-  '&:has(> label > input:checked)': {
+  '&:has(:scope > label > input:checked)': {
     fontWeight: '800',
   },
 

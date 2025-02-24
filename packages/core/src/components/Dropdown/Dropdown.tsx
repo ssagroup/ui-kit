@@ -63,7 +63,9 @@ const Dropdown = <T extends DropdownOptionProps>({
     }
 
     setActiveItem(innerItem);
-    handleChange && handleChange(innerItem);
+    if (handleChange) {
+      handleChange(innerItem);
+    }
   };
 
   useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));

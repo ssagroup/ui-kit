@@ -11,7 +11,7 @@ import API from '@fitness/apis/index';
 const AuthContext = createContext<{ user: User | null }>({ user: null });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: user, query: loadUser } = useApi<User | null>(API.user.get, {});
+  const { data: user, query: loadUser } = useApi(API.user.get, {} as User);
 
   useEffect(() => {
     loadUser();

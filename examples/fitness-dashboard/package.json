@@ -12,25 +12,22 @@
     "Dashboard"
   ],
   "dependencies": {
-    "@emotion/core": "^11.0.0",
-    "@emotion/css": "^11.11.2",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@floating-ui/react": "0.25.4",
-    "@nivo/core": "^0.84.0",
-    "@nivo/line": "^0.84.0",
-    "@nivo/pie": "^0.84.0",
-    "@nivo/scales": "^0.84.0",
+    "@emotion/css": "^11.13.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@floating-ui/react": "0.27.4",
+    "@nivo/core": "^0.88.0",
+    "@nivo/line": "^0.88.0",
+    "@nivo/pie": "^0.88.0",
+    "@nivo/scales": "^0.88.0",
     "@ssa-ui-kit/core": "workspace:^",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/widgets": "workspace:^",
     "dotenv": "^16.0.3",
-    "js-tokens": "^4.0.0",
     "loose-envify": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.2",
-    "scheduler": "^0.23.0"
+    "react-router-dom": "^6.11.2"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -68,13 +65,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@emotion/jest": "^11.11.0",
+    "@emotion/jest": "^11.13.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@types/testing-library__jest-dom": "^5.14.6",
-    "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.1",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.85.0"
+    "terser-webpack-plugin":"^5.3.11",
+    "webpack": "^5.98.0"
   }
 }

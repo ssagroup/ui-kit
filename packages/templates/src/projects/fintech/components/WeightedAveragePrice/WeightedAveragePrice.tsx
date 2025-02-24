@@ -198,8 +198,8 @@ export const WeightedAveragePrice = ({
             y: isFullscreenMode
               ? undefined
               : ['mobile', 'md'].includes(deviceType)
-              ? -0.7
-              : -0.5,
+                ? -0.7
+                : -0.5,
             x: 0.5,
           },
           ...plotlyDefaultLayoutConfig.layout,

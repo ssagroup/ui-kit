@@ -4,8 +4,10 @@ export const Toastify = styled(ToastContainer)`
   .custom-toast {
     position: relative;
     display: flex;
-    padding: 10px;
+    align-items: center;
+    padding: 10px 16px;
     min-height: 70px;
+    min-width: var(--toastify-toast-width);
     overflow: hidden;
     background: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.greyDarker};

@@ -13,6 +13,7 @@ barmode
 BMI
 BmiHeatbar
 bordercolor
+botstable
 btc
 btcfdusd
 btn
@@ -62,6 +63,7 @@ fns
 fte
 gfm
 greylight
+heartrate
 HIIT
 HMR
 hocs
@@ -77,6 +79,7 @@ IBMP
 ipsum
 itemclick
 jsdom
+lastname
 legendgroup
 legendgrouptitle
 legendtitletext
@@ -89,6 +92,7 @@ lostpixel
 LTC
 luxon
 Mauris
+mealnutrients
 metus
 Millis
 MMM
@@ -102,11 +106,14 @@ neque
 nisl
 nivo
 nocontrol
+notificationmenu
+nvmrc
 PLN
 Plotly
 PMO
 PNL
 porttitor
+progressinfo
 ramda
 rangemode
 Rebalance
@@ -132,9 +139,9 @@ subcomponents
 suscipit
 svgr
 swp
+tablefilters
 tanstack
 testid
-Threashold
 tickangle
 tickfont
 tickformat
@@ -147,6 +154,7 @@ titlefont
 toastify
 tomdata
 traceorder
+tradinginfocard
 translatex
 tsbuildcache
 Typeahead

@@ -106,7 +106,7 @@ export const PNL = ({
                 `<b>${t('pnl.totalText')}:</b> %{y:} ${currency}` +
                 '<extra></extra>',
             },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
           ] as any
         }
         layout={{

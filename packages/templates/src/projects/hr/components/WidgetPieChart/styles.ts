@@ -50,4 +50,4 @@ export const valueList = (theme: Theme) =>
         lineHeight: '18px',
       },
     },
-  } as unknown as SerializedStyles);
+  }) as unknown as SerializedStyles;

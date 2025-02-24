@@ -1,5 +1,12 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ColorsKeys } from '../..';
+
+const generateGradient = (svgOffset: number) => keyframes`
+  100% {
+    stroke-dashoffset: ${svgOffset};
+  }
+`;
 
 export const ProgressCircleBase = styled.div<{
   gradientId: string;
@@ -34,12 +41,7 @@ export const ProgressCircleBase = styled.div<{
     stroke-dasharray: ${({ fullStroke }) => fullStroke};
     stroke-dashoffset: ${({ fullStroke }) => fullStroke};
 
-    animation: ${({ gradientId }) => gradientId} 1s linear forwards;
-  }
-
-  @keyframes ${({ gradientId }) => gradientId} {
-    100% {
-      stroke-dashoffset: ${(props) => props.svgOffset};
-    }
+    animation: ${({ svgOffset }) => generateGradient(svgOffset)} 1s linear
+      forwards;
   }
 `;

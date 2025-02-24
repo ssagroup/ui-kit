@@ -1,6 +1,6 @@
+import { useId } from 'react';
 import { useTheme } from '@emotion/react';
 import { ColorsKeys } from '@global-types/emotion';
-import { v4 as uuidv4 } from 'uuid';
 
 import { ProgressCircleBase } from './ProgressCircleBase';
 import { ProgressCircleOuter } from './ProgressCircleOuter';
@@ -15,8 +15,8 @@ const ProgressCircle = ({
   infoContent,
 }: ProgressCircleProps) => {
   const theme = useTheme();
+  const gradientId = useId();
 
-  const gradientId = `gradient-${uuidv4()}`;
   const barStroke = size / 10 / 2;
   const currentPercentage = (currentValue / max) * 100;
   const fullStroke = 2 * (22 / 7) * (size / 2 - barStroke);

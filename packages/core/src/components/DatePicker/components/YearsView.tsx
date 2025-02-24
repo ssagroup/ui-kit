@@ -39,7 +39,9 @@ export const YearsView = () => {
     setCalendarType('months');
     setCalendarViewDateTime(newDate);
     setDateTime(newDate);
-    newDate && onYearChange?.(newDate.toJSDate());
+    if (newDate) {
+      onYearChange?.(newDate.toJSDate());
+    }
   };
   return (
     <Wrapper

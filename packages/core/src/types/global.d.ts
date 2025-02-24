@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
+/// <reference types="@emotion/react/types/css-prop" />
+
 import { MainSizes as MS, MainColors as MC } from './global';
 
 declare global {
-  export interface MainSizes extends MS {}
-  export interface MainColors extends MC {}
+  export type MainSizes = MS;
+  export type MainColors = MC;
 }

@@ -16,7 +16,7 @@ export const HRTableCell = styled(TableCell)`
     padding: 0 18px;
   }
   &:first-of-type a {
-    padding-left: 16;
+    padding-left: 16px;
   }
   ${({ theme }) => theme.mediaQueries.lg} {
     font-size: 14px;
