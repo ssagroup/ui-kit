@@ -3,6 +3,13 @@ import { screen, within } from '../../../customTest';
 
 import { Pagination, PaginationContextProvider } from './index';
 
+const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
+
+jest.mock('@nivo/pie', () => ({
+  PieCustomLayerProps: {},
+  ResponsivePie: ResponsivePieMock,
+}));
+
 function setup(component: React.ReactNode, selectedPage?: number) {
   return {
     user: userEvent.setup(),

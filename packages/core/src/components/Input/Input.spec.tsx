@@ -1,6 +1,13 @@
 import { screen, fireEvent, mockUseForm } from '../../../customTest';
 import Input from '@components/Input';
 
+const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
+
+jest.mock('@nivo/pie', () => ({
+  PieCustomLayerProps: {},
+  ResponsivePie: ResponsivePieMock,
+}));
+
 const { register } = mockUseForm();
 
 describe('Inputs', () => {

@@ -5,6 +5,13 @@ import { highlightInputMatch } from './utils';
 import { TypeaheadOption } from './components';
 import { DynamicallyChangedItems } from './Typeahead.stories';
 
+const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
+
+jest.mock('@nivo/pie', () => ({
+  PieCustomLayerProps: {},
+  ResponsivePie: ResponsivePieMock,
+}));
+
 const items = [
   { id: 1, value: 'First' },
   { id: 2, value: 'Second' },

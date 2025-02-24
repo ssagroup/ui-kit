@@ -5,6 +5,13 @@ import TextField from '@components/TextField';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 
+const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
+
+jest.mock('@nivo/pie', () => ({
+  PieCustomLayerProps: {},
+  ResponsivePie: ResponsivePieMock,
+}));
+
 const mockError: FieldError = {
   type: 'required',
   message: 'Required field',
