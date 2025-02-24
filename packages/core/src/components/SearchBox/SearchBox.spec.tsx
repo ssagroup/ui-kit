@@ -1,13 +1,6 @@
 import { fireEvent } from '@testing-library/dom';
 import { StoryComponent } from './stories/StoryComponent';
 
-const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
-
-jest.mock('@nivo/pie', () => ({
-  PieCustomLayerProps: {},
-  ResponsivePie: ResponsivePieMock,
-}));
-
 describe('SearchBox', () => {
   beforeEach(() => {
     jest.useFakeTimers();

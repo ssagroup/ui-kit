@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
-import { FormHelperText } from '@components';
+import FormHelperText from '@components/FormHelperText';
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
 import { InputProps, InputStatusColors } from './types';
