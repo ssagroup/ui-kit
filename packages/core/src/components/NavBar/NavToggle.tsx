@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { css } from '@emotion/react';
 
 import NavToggleWrapper from './NavToggleWrapper';

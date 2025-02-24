@@ -123,6 +123,9 @@ export const CollapsibleNavBarPopover = ({
                 padding: 5,
                 fontSize: 12,
                 fontWeight: navBarTheme === 'default' ? 400 : 500,
+                '&.active': {
+                  filter: 'none',
+                },
                 '&:first-of-type': {
                   paddingTop: 5,
                 },

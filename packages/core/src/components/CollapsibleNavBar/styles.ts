@@ -28,6 +28,12 @@ export const AccordionTitleWrapper =
       & .trigger-icon {
         height: 22px;
       }
+
+      &:has(+ div > a.active) {
+        & div:nth-of-type(2) button {
+          font-weight: 900;
+        }
+      }
     `;
 
 export const AccordionTitle =
@@ -35,8 +41,8 @@ export const AccordionTitle =
     css`
       padding: 0 14px 0 20px;
       color: ${navBarTheme === 'default'
-        ? theme.colors.white80
-        : theme.colors.greyDarker80};
+        ? theme.colors.white
+        : theme.colors.greyDarker};
       svg path {
         stroke: ${navBarTheme === 'light' && theme.colors.greyDropdownFocused};
       }
