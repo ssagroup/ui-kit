@@ -76,6 +76,10 @@ jobs:
           LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
           LOST_PIXEL_CONFIG_DIR: ./packages/${{ matrix.project }}
 
+      - name: Install firebase tools
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: curl -sL https://firebase.tools | bash
+
       - name: Authenticate with Google Cloud
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: google-github-actions/auth@v2
@@ -135,6 +139,9 @@ jobs:
 
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install
+
+      - name: Install firebase tools
+        run: curl -sL https://firebase.tools | bash
 
       - name: Build all packages
         run: pnpm build:all
