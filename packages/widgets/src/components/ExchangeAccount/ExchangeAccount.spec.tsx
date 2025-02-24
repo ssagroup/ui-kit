@@ -48,7 +48,7 @@ describe('ExchangeAccount', () => {
       <ExchangeAccount {...commonProps} onDelete={mockOnClick} />,
     );
 
-    const deleteButton = getByRole('button');
+    const deleteButton = getByRole('button', { name: 'Bin' });
 
     await user.click(deleteButton);
     expect(mockOnClick).toBeCalledTimes(1);
