@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, KeyboardEventHandler } from 'react';
-import type { UseFormReturn } from 'react-hook-form';
+import type { FieldError, UseFormReturn } from 'react-hook-form';
 import type { Interpolation, Theme } from '@emotion/react';
 
 interface ExtendedInputProps
@@ -17,6 +17,7 @@ export interface InputProps
   disabled?: boolean;
   className?: string;
   wrapperClassName?: string;
+  helperClassName?: string;
   as?: React.ElementType;
   startElement?: React.ReactElement;
   endElement?: React.ReactElement;
@@ -24,6 +25,10 @@ export interface InputProps
   inputProps?: ExtendedInputProps;
   errorTooltip?: string;
   successTooltip?: string;
+  showHelperText?: boolean;
+  helperText?: string;
+  maxLength?: number;
+  errors?: FieldError;
   onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
   onStartElementClick?: (event: BaseSyntheticEvent) => void;
   onEndElementClick?: (event: BaseSyntheticEvent) => void;

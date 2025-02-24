@@ -7,10 +7,10 @@ export const basic = (theme: Theme) =>
     [`& ${InputBase}`]: {
       border: `1px solid ${theme.colors.grey}`,
       '&:hover': {
-        border: `1.4px solid ${theme.colors.greyDarker60}`,
+        borderColor: theme.colors.greyDarker80,
       },
       '&:focus': {
-        border: `2px solid ${theme.colors.grey40}`,
+        borderColor: `2px solid ${theme.colors.blueRoyal}`,
       },
     },
   });
@@ -18,20 +18,12 @@ export const basic = (theme: Theme) =>
 export const error = (theme: Theme) =>
   css({
     [`& ${InputBase}`]: {
-      border: 'double 1px transparent',
-      backgroundImage: `linear-gradient(white, white),
-      linear-gradient(to right, ${theme.colors.red}, ${theme.colors.redLighter})`,
+      border: `1px solid ${theme.colors.dangerShades300}`,
       '&:hover': {
-        border: 'double 1.4px transparent',
+        borderColor: theme.colors.dangerShades500,
       },
       '&:focus': {
-        border: 'double 2px transparent',
-        backgroundImage: `linear-gradient(white, white),
-        linear-gradient(
-          to right,
-          ${theme.colors.red40},
-          ${theme.colors.redLighter40}
-        )`,
+        borderColor: theme.colors.dangerShades700,
       },
     },
   });
@@ -39,24 +31,12 @@ export const error = (theme: Theme) =>
 export const success = (theme: Theme) =>
   css({
     [`& ${InputBase}`]: {
-      border: 'double 1px transparent',
-      backgroundImage: `linear-gradient(white, white),
-        linear-gradient(
-          to right,
-          ${theme.colors.greenLighter},
-          ${theme.colors.green}
-        )`,
+      border: `1px solid ${theme.colors.green}`,
       '&:hover': {
-        border: 'double 1.4px transparent',
+        borderColor: theme.colors.successShades500,
       },
       '&:focus': {
-        border: 'double 2px transparent',
-        backgroundImage: `linear-gradient(white, white),
-          linear-gradient(
-            to right,
-            ${theme.colors.greenLighter40},
-            ${theme.colors.green40}
-          )`,
+        borderColor: theme.colors.successShades700,
       },
     },
     svg: {

@@ -34,6 +34,7 @@ csstype
 cubehelix
 customdata
 customicon
+datepicker
 disbalance
 displaylogo
 Dissoc
@@ -41,6 +42,7 @@ dolor
 domcontentloaded
 dompurify
 Donec
+DPC
 dtick
 Dto
 dui
@@ -121,6 +123,7 @@ showarrow
 showgrid
 showlegend
 spikesnap
+splitted
 ssa
 ssagroup
 SSAHOCs

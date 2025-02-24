@@ -108,6 +108,11 @@ const main: Theme = {
     blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
     blueRoyal: 'rgba(72, 125, 225, 1)', //#487de1
     blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
+    dangerShades300: 'rgb(253, 128, 122)', //#FD807A
+    dangerShades500: 'rgb(223, 90, 96)', //#DF5A60
+    dangerShades700: 'rgb(187, 68, 80)', //#BB4450
+    successShades500: 'rgb(42, 164, 96)', //#2AA460
+    successShades700: 'rgb(36, 135, 72)', //#248748
   },
   mediaQueries: {
     xs: '@media screen and (max-width: 389px)',
