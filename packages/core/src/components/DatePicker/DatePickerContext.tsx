@@ -41,9 +41,7 @@ export const DatePickerProvider = ({
 }: React.PropsWithChildren<
   DatePickerProps & Pick<DatePickerContextProps, 'inputRef'>
 >) => {
-  const { maskInputRef, formatIndexes, ...restHook } = useDatePicker({
-    ...rest,
-  });
+  const { maskInputRef, formatIndexes, ...restHook } = useDatePicker(rest);
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     restHook.handleBlur(e);

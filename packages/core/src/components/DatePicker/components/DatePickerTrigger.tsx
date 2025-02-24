@@ -58,7 +58,6 @@ export const DatePickerTrigger = () => {
           disabled={disabled}
           register={register}
           inputProps={{
-            // TODO: check working of this event!
             onBlur: handleBlur,
             onClick: handleToggleOpen,
             id: `field-${name}`,
