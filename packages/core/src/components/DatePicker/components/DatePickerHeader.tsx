@@ -32,6 +32,7 @@ export const DatePickerHeader = () => {
         }
         variant="tertiary"
         onClick={handleCalendarTypeChange}
+        data-testid="calendar-type-change-button"
         css={{
           padding: 0,
           fontSize: 18,

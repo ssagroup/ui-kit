@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
+import { useDatePickerMask } from './useDatePickerMask';
 import { DATE_MAX, DATE_MIN, INVALID_DATE, OUT_OF_RANGE } from '../constants';
 import { CalendarType, DatePickerProps } from '../types';
-import { useDatePickerMask } from './useDatePickerMask';
 
 export const useDatePicker = ({
   dateMin = DATE_MIN,
@@ -55,23 +55,24 @@ export const useDatePicker = ({
     day: dateMinParts[formatIndexes['day']],
   });
 
-  const processValue = (blurredValue: string) => {
+  const processValue = (newValue: string) => {
     const newDateTime =
-      typeof blurredValue === 'string' && blurredValue.length === 10
-        ? DateTime.fromFormat(blurredValue, luxonFormat)
+      typeof newValue === 'string' && newValue.length === 10
+        ? DateTime.fromFormat(newValue, luxonFormat)
         : undefined;
+
     if (!newDateTime?.isValid) {
       const errorMessage = newDateTime?.invalidExplanation || INVALID_DATE;
       setError(name, { message: errorMessage }, { shouldFocus: true });
       setDateTime(undefined);
       onChange?.();
-      onError?.(blurredValue, errorMessage);
+      onError?.(newValue, errorMessage);
     } else if (newDateTime !== undefined) {
       if (newDateTime < dateMinDT || newDateTime > dateMaxDT) {
         const errorMessage = OUT_OF_RANGE;
         setError(name, { message: errorMessage }, { shouldFocus: true });
         setDateTime(undefined);
-        onError?.(blurredValue, errorMessage);
+        onError?.(newValue, errorMessage);
         onChange?.();
       } else {
         setDateTime(newDateTime);
@@ -100,7 +101,7 @@ export const useDatePicker = ({
     if (typeof inputValue === 'string' && inputValue.length === 10) {
       newDateTime = DateTime.fromFormat(inputValue, luxonFormat);
       setValue(name, inputValue);
-      setDateTime(newDateTime);
+      processValue(inputValue);
     }
 
     const newCalendarViewDateTime =
