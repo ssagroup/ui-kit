@@ -21,7 +21,7 @@ export default tseslint.config(
       '**/node_modules',
       '**/coverage',
       '**/@types',
-      '!**/.babelrc.js',
+      '!**/babel.config.js',
       '!**/.storybook',
     ],
   },

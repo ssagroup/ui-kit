@@ -1,17 +1,53 @@
+import { resolve } from 'node:path';
+import { existsSync } from 'node:fs';
+
 import type { JestConfigWithTsJest } from 'ts-jest';
+import { mergeLeft } from 'ramda';
 
 // NOTE: we didn't manage to configure Jest-projects setup for UI Kit Core and
 // an example Dashboard. Thus, the have Jest configured locally (in the
 // corresponding package.json).
 
-const transformIgnorePatterns = [
-  'node_modules/',
-  'node_modules/.pnpm/(?!(d3-color)/)',
-  'node_modules/.pnpm/(?!(d3-interpolate)/)',
-  'node_modules/.pnpm/(?!(d3-scale)/)',
-  'node_modules/.pnpm/(?!(d3-scale-chromatic)/)',
-  'node_modules/.pnpm/(?!(d3-shape)/)',
-];
+const esm = ['d3-interpolate', 'd3-scale', 'd3-shape', 'd3-path'];
+
+type ProjectConfig = Exclude<
+  Exclude<JestConfigWithTsJest['projects'], undefined>[number],
+  string
+>;
+
+function defineProjectConfig(
+  projectPath: string,
+  projectConfig: ProjectConfig,
+) {
+  const baseConfig = {
+    preset: 'ts-jest',
+    displayName: 'UI Kit Widgets',
+    testEnvironment: 'jsdom',
+    setupFilesAfterEnv: [] as string[],
+    transform: {
+      '^.+\\.[jt]sx?$': [
+        'ts-jest',
+        {
+          tsconfig: resolve(projectPath, 'tsconfig.json'),
+          babelConfig: resolve('babel.config.js'),
+        },
+      ],
+    },
+    testMatch: [
+      `<rootDir>/${projectPath}/src/**/*.spec.ts`,
+      `<rootDir>/${projectPath}/src/**/*.spec.tsx`,
+    ],
+    transformIgnorePatterns: [`node_modules/(?!.pnpm|${esm.join('|')})`],
+  } satisfies JestConfigWithTsJest;
+
+  if (existsSync(resolve(projectPath, 'jest-setup.ts'))) {
+    baseConfig.setupFilesAfterEnv.push(
+      `<rootDir>/${projectPath}/jest-setup.ts`,
+    );
+  }
+
+  return mergeLeft(projectConfig, baseConfig);
+}
 
 const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
@@ -39,25 +75,17 @@ const config: JestConfigWithTsJest = {
   verbose: true,
   globalSetup: '<rootDir>/global-setup.ts',
   projects: [
-    {
-      preset: 'ts-jest',
-      displayName: 'UI Kit Core',
-      testEnvironment: 'jsdom',
-      setupFilesAfterEnv: ['<rootDir>/packages/core/jest-setup.ts'],
-      transform: {
-        '^.+\\.(ts|tsx)$': [
-          'ts-jest',
-          {
-            tsconfig: './packages/core/tsconfig.json',
-            // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
-            babelConfig: './.babelrc.js',
-          },
-        ],
+    defineProjectConfig('packages/utils', {
+      displayName: 'UI Kit Utils',
+    }),
+    defineProjectConfig('packages/hooks', {
+      displayName: 'UI Kit Hooks',
+      moduleNameMapper: {
+        '^@(hooks)/(.*)$': ['<rootDir>/packages/hooks/src/$1/$2'],
       },
-      testMatch: [
-        '<rootDir>/packages/core/src/**/*.spec.ts',
-        '<rootDir>/packages/core/src/**/*.spec.tsx',
-      ],
+    }),
+    defineProjectConfig('packages/core', {
+      displayName: 'UI Kit Core',
       moduleNameMapper: {
         '^@(components|themes|styles|types)$': [
           '<rootDir>/packages/core/src/index.ts',
@@ -68,63 +96,9 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/core/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns,
-    },
-    {
-      displayName: 'UI Kit Utils',
-      testEnvironment: 'jsdom',
-      transform: {
-        '^.+\\.(ts|tsx)$': [
-          'ts-jest',
-          {
-            tsconfig: './packages/utils/tsconfig.json',
-            babelConfig: './.babelrc.js',
-          },
-        ],
-      },
-      testMatch: [
-        '<rootDir>/packages/utils/src/**/*.spec.ts',
-        '<rootDir>/packages/utils/src/**/*.spec.tsx',
-      ],
-    },
-    {
-      displayName: 'UI Kit Hooks',
-      testEnvironment: 'jsdom',
-      transform: {
-        '^.+\\.(ts|tsx)$': [
-          'ts-jest',
-          {
-            tsconfig: './packages/hooks/tsconfig.json',
-            babelConfig: './.babelrc.js',
-          },
-        ],
-      },
-      testMatch: [
-        '<rootDir>/packages/hooks/src/**/*.spec.ts',
-        '<rootDir>/packages/hooks/src/**/*.spec.tsx',
-      ],
-      moduleNameMapper: {
-        '^@(hooks)/(.*)$': ['<rootDir>/packages/hooks/src/$1/$2'],
-      },
-    },
-    {
-      preset: 'ts-jest',
+    }),
+    defineProjectConfig('packages/widgets', {
       displayName: 'UI Kit Widgets',
-      testEnvironment: 'jsdom',
-      setupFilesAfterEnv: ['<rootDir>/packages/widgets/jest-setup.ts'],
-      transform: {
-        '^.+\\.(ts|tsx)$': [
-          'ts-jest',
-          {
-            tsconfig: './packages/widgets/tsconfig.json',
-            babelConfig: './.babelrc.js',
-          },
-        ],
-      },
-      testMatch: [
-        '<rootDir>/packages/widgets/src/**/*.spec.ts',
-        '<rootDir>/packages/widgets/src/**/*.spec.tsx',
-      ],
       moduleNameMapper: {
         '^@(apis|components)/(.*)$': [
           '<rootDir>/packages/widgets/src/$1/$2',
@@ -132,26 +106,9 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/widgets/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns,
-    },
-    {
-      preset: 'ts-jest',
+    }),
+    defineProjectConfig('packages/templates', {
       displayName: 'UI Kit Templates',
-      testEnvironment: 'jsdom',
-      setupFilesAfterEnv: ['<rootDir>/packages/core/jest-setup.ts'],
-      transform: {
-        '^.+\\.(ts|tsx)$': [
-          'ts-jest',
-          {
-            tsconfig: './packages/templates/tsconfig.json',
-            babelConfig: './.babelrc.js',
-          },
-        ],
-      },
-      testMatch: [
-        '<rootDir>/packages/templates/src/**/*.spec.ts',
-        '<rootDir>/packages/templates/src/**/*.spec.tsx',
-      ],
       moduleNameMapper: {
         '^@(components|themes|styles|types)$': [
           '<rootDir>/packages/templates/src/index.ts',
@@ -162,28 +119,9 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/templates/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns,
-    },
-    {
-      preset: 'ts-jest',
+    }),
+    defineProjectConfig('examples/fitness-dashboard', {
       displayName: 'Examples: Fitness Dashboard',
-      testEnvironment: 'jsdom',
-      setupFilesAfterEnv: [
-        '<rootDir>/examples/fitness-dashboard/jest-setup.ts',
-      ],
-      transform: {
-        '^.+\\.(ts|tsx)$': [
-          'ts-jest',
-          {
-            tsconfig: './examples/fitness-dashboard/tsconfig.json',
-            babelConfig: './.babelrc.js',
-          },
-        ],
-      },
-      testMatch: [
-        '<rootDir>/examples/fitness-dashboard/src/**/*.spec.ts',
-        '<rootDir>/examples/fitness-dashboard/src/**/*.spec.tsx',
-      ],
       moduleNameMapper: {
         '^@(apis|hooks|components)/(.*)$': [
           '<rootDir>/examples/fitness-dashboard/src/$1/$2',
@@ -191,8 +129,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/examples/fitness-dashboard/src/$1/$2.tsx',
         ],
       },
-      transformIgnorePatterns,
-    },
+    }),
   ],
 };
 

@@ -30,7 +30,7 @@ const baseConfig = {
         loader: 'babel-loader',
         exclude: ['/node_modules/'],
         options: {
-          configFile: '../../.babelrc.js',
+          configFile: '../../babel.config.js',
         },
       },
       {

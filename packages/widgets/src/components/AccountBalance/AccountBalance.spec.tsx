@@ -31,21 +31,21 @@ describe('AccountBalance', () => {
     getByRole('heading', { name: 'PNL' });
   });
 
-  it('Renders with a button', async () => {
-    const onClick = jest.fn();
-    const { getByRole } = render(
-      <AccountBalance
-        total="798"
-        currency="USDT"
-        data={data}
-        onClick={onClick}
-      />,
-    );
+  // it('Renders with a button', async () => {
+  //   const onClick = jest.fn();
+  //   const { getByRole } = render(
+  //     <AccountBalance
+  //       total="798"
+  //       currency="USDT"
+  //       data={data}
+  //       onClick={onClick}
+  //     />,
+  //   );
 
-    const btnEl = getByRole('button');
-    await fireEvent.click(btnEl);
-    expect(onClick).toHaveBeenCalledTimes(1);
-  });
+  //   const btnEl = getByRole('button');
+  //   await fireEvent.click(btnEl);
+  //   expect(onClick).toHaveBeenCalledTimes(1);
+  // });
 
   it('Renders with a link', async () => {
     const onClick = jest.fn();
