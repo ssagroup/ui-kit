@@ -28,6 +28,7 @@ export const NavBarItemWithoutSubMenu = ({
     <CollapsibleNavBarItem key={path}>
       <CollapsibleNavBarLink
         to={isExternalLink ? path : '/' + path}
+        end
         onClick={onClick}
         navbartheme={theme}
         data-customicon={!!CustomIcon}>
