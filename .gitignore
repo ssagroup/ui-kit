@@ -9,6 +9,8 @@ storybook-static
 coverage
 stats.json
 .firebase
+.pnpm-store
+.npmrc
 tsbuildcache
 tsconfig.tsbuildinfo
 **/custom-shots/**
