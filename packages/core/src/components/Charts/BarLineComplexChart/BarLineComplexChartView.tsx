@@ -235,6 +235,17 @@ export const BarLineComplexChartView = ({
               : {
                   x: 0,
                   y: 1,
+                  font: {
+                    size: isFullscreenMode
+                      ? 24
+                      : propOr(
+                          TITLE_FONT_SIZE.other,
+                          deviceType,
+                        )(TITLE_FONT_SIZE),
+                    weight: 700,
+                    family: FONT_FAMILY,
+                    ...titlefont,
+                  },
                   pad: {
                     l: propOr(
                       TITLE_PADDING_LEFT.other,
@@ -247,14 +258,6 @@ export const BarLineComplexChartView = ({
                   },
                   ...title,
                 },
-          titlefont: {
-            size: isFullscreenMode
-              ? 24
-              : propOr(TITLE_FONT_SIZE.other, deviceType)(TITLE_FONT_SIZE),
-            weight: 700,
-            family: FONT_FAMILY,
-            ...titlefont,
-          },
           barmode: 'group',
           autosize: false,
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
