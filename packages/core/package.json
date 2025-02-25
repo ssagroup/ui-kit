@@ -71,7 +71,7 @@
     "react": "18.x",
     "react-dom": "18.x",
     "react-hook-form": "^7.46.1",
-    "react-router-dom": "6.x"
+    "react-router-dom": "6.x || 7.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {
