@@ -129,6 +129,13 @@ const config = {
       '@src': path.resolve(__dirname, './src'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@apis': path.resolve(__dirname, './src/apis'),
+      // workaround for a react-router bug that can lead to multiple react-router versions
+      // being installed across the main package and dependencies that list react-router as a peer dependency
+      // https://github.com/remix-run/react-router/issues/12785
+      'react-router-dom': path.resolve(
+        __dirname,
+        './node_modules/react-router-dom/dist/index.mjs',
+      ),
     },
   },
 };
