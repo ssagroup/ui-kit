@@ -7,32 +7,26 @@ import {
 } from './fixtures';
 import { SegmentedPieChart } from '../SegmentedPieChart';
 
+const currency = 'USDT';
+
 export default {
   title: 'Charts/SegmentedPieChart',
   component: SegmentedPieChart,
+  render: (props) => <SegmentedPieChart {...props} />,
+  args: {
+    data: balanceData,
+    totalAmount: Number(balanceTotalAmount),
+    totalDimension: currency,
+  },
 } as Meta<typeof SegmentedPieChart>;
 
-type Args = StoryObj<Partial<Parameters<typeof SegmentedPieChart>[0]>>;
+type Story = StoryObj<typeof SegmentedPieChart>;
 
-const currency = 'USDT';
-const StoryTemplate: Args = {
-  render: ({ ...args }) => (
-    <SegmentedPieChart
-      data={balanceData}
-      totalAmount={Number(balanceTotalAmount)}
-      totalDimension={currency}
-      {...args}
-    />
-  ),
-};
-
-export const AccountExample = {
-  ...StoryTemplate,
+export const AccountExample: Story = {
   args: {},
 };
 
-export const CustomColors = {
-  ...StoryTemplate,
+export const CustomColors: Story = {
   args: {
     legendBackgrounds: [
       'linear-gradient(90deg, #6A9FDC 0%, #85BCE8 100%)',
@@ -49,35 +43,30 @@ export const CustomColors = {
   },
 };
 
-export const CustomCurrency = {
-  ...StoryTemplate,
+export const CustomCurrency: Story = {
   args: {
     currency: 'EUR',
     totalDimension: 'PLN',
     totalAmount: 17737.12,
   },
+  storyName: 'Custom currency, total dimension and amount',
 };
 
-CustomCurrency.storyName = 'Custom currency, total dimension and amount';
-
-export const MissedPartsData = {
-  ...StoryTemplate,
+export const MissedPartsData: Story = {
   args: {
     data: balanceMissedPartsData,
     totalAmount: balanceMissedPartsDataTotalAmount,
   },
 };
 
-export const PercentageRoundingDigits = {
-  ...StoryTemplate,
+export const PercentageRoundingDigits: Story = {
   args: {
     legendValueRoundingDigits: 1,
     legendPercentageRoundingDigits: 2,
   },
 };
 
-export const WithoutTooltip = {
-  ...StoryTemplate,
+export const WithoutTooltip: Story = {
   args: {
     pieChartProps: {
       isInteractive: false,
@@ -85,22 +74,19 @@ export const WithoutTooltip = {
   },
 };
 
-export const WithoutPercentage = {
-  ...StoryTemplate,
+export const WithoutPercentage: Story = {
   args: {
     showPercentage: false,
   },
 };
 
-export const WithoutDimensions = {
-  ...StoryTemplate,
+export const WithoutDimensions: Story = {
   args: {
     showDimensions: false,
   },
 };
 
-export const WithTotalTooltip = {
-  ...StoryTemplate,
+export const WithTotalTooltip: Story = {
   args: {
     titleTooltipOptions: [
       {
@@ -119,5 +105,16 @@ export const WithTotalTooltip = {
         dimension: 'USDT',
       },
     ],
+  },
+};
+
+export const FullscreenWithTitle: Story = {
+  args: {
+    pieChartProps: {
+      features: ['header', 'fullscreenMode'],
+      cardProps: {
+        title: 'Segmented Pie Chart',
+      },
+    },
   },
 };

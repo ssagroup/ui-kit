@@ -1,5 +1,11 @@
 import { css, useTheme } from '@emotion/react';
-import { PieChart, PieChartLegend } from '@components';
+
+import { PieChartComponent, PieChartLegend } from '@components';
+import {
+  useFullscreenMode,
+  WithFullscreenMode,
+} from '@components/FullscreenModeContext';
+
 import {
   defaultLegendBackgrounds,
   defaultPieChartColors,
@@ -9,7 +15,7 @@ import { ChartTitle, ChartTooltip, LegendItem } from './components';
 import { useData } from './hooks';
 import { SegmentedPieChartProvider } from './SegmentedPieChartContext';
 
-export const SegmentedPieChart = ({
+export const SegmentedPieChartComponent = ({
   data,
   pieChartProps,
   pieChartLegendProps,
@@ -28,12 +34,15 @@ export const SegmentedPieChart = ({
   renderTitleTooltipContent,
 }: SegmentedPieChartProps) => {
   const theme = useTheme();
+  const { isFullscreenMode } = useFullscreenMode();
 
-  const { balanceDataForTheGraph, balanceDataForTheLegend } = useData({
-    data,
-    legendValueRoundingDigits,
-    pieChartColors,
-  });
+  const { balanceDataForTheGraph, balanceDataForTheLegend, legendColors } =
+    useData({
+      data,
+      legendValueRoundingDigits,
+      pieChartColors,
+      legendBackgrounds,
+    });
 
   return (
     <SegmentedPieChartProvider
@@ -48,12 +57,13 @@ export const SegmentedPieChart = ({
       currency={currency}
       renderTitleTooltipContent={renderTitleTooltipContent}
       tooltipConfig={tooltipConfig}>
-      <PieChart
+      <PieChartComponent
         data={balanceDataForTheGraph}
         animate={true}
         css={{
-          width: '400px',
-          margin: '40px 120px',
+          ...(isFullscreenMode
+            ? { padding: '20px' }
+            : { margin: '40px 120px' }),
         }}
         isInteractive
         activeInnerRadiusOffset={0}
@@ -63,7 +73,7 @@ export const SegmentedPieChart = ({
         {...pieChartProps}>
         <PieChartLegend
           data={balanceDataForTheLegend}
-          backgroundColors={legendBackgrounds}
+          backgroundColors={legendColors}
           renderValue={(props) => (
             <LegendItem
               {...props}
@@ -88,7 +98,9 @@ export const SegmentedPieChart = ({
           `}
           {...pieChartLegendProps}
         />
-      </PieChart>
+      </PieChartComponent>
     </SegmentedPieChartProvider>
   );
 };
+
+export const SegmentedPieChart = WithFullscreenMode(SegmentedPieChartComponent);

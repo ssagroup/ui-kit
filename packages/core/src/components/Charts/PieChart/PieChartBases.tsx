@@ -54,4 +54,5 @@ export const PieChartTextBase = styled.div<{ isFullscreenMode: boolean }>`
   left: 17px;
   top: 17px;
   border-radius: 50%;
+  pointer-events: none;
 `;
