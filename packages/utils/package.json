@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/utils",
-  "version": "1.1.55",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
@@ -18,7 +18,9 @@
     "url": "https://github.com/ssagroup/ui-kit.git",
     "directory": "packages/utils"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
