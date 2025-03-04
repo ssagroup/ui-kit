@@ -8,7 +8,7 @@ import { PieChartProps } from './types';
 import { PieChartInternal } from './PieChartInternal';
 import { ChartBackground } from '../common';
 
-const PieChartComponent = (props: PieChartProps) => {
+export const PieChartComponent = (props: PieChartProps) => {
   const fullscreenModeProps = useFullscreenMode();
 
   if (fullscreenModeProps.isFullscreenMode) {
