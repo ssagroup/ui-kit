@@ -11,7 +11,7 @@ const renderIcon = async (
 ) => {
   render(<Icon name={icon} size={size} color="#fff" css={css} />);
 
-  const iconTitle = new RegExp(icon.replace('-', ' '), 'i');
+  const iconTitle = new RegExp(icon.replaceAll('-', ' '), 'i');
 
   const titleEl = await screen.findByTitle(iconTitle);
   const svg = titleEl.closest('svg') as unknown as HTMLElement;
