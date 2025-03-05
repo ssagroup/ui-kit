@@ -15,6 +15,7 @@ export const DatePickerTrigger = () => {
     inputRef,
     disabled,
     helperText,
+    // datepickerMode,
     onBlur: handleBlur,
     setIsOpen,
   } = useDatePickerContext();
@@ -53,7 +54,7 @@ export const DatePickerTrigger = () => {
         <C.Input
           name={name}
           placeholder={format}
-          showHelperText
+          // showHelperText={datepickerMode === 'default'}
           ref={inputRef}
           disabled={disabled}
           register={register}

@@ -36,6 +36,7 @@ cubehelix
 customdata
 customicon
 datepicker
+daterangepicker
 disbalance
 displaylogo
 Dissoc

@@ -1,20 +1,30 @@
-import { DatePicker } from '@components/DatePicker';
-import Icon from '@components/Icon';
-import Wrapper from '@components/Wrapper';
+// import { forwardRef } from 'react';
 import { DateRangePickerProps } from './types';
+import { DEFAULT_MASK_FORMAT } from './constants';
+import { DateRangePickerContent } from './components';
+import { DateRangePickerProvider } from './DateRangePickerContext';
 
-export const DateRangePicker = (props: DateRangePickerProps) => {
-  /**
-   * TODO:
-   * - output both datepickers without own label + calendar icon
-   * - handle helper text as a single helper text region
-   * --- input props? add an additional prop?
-   */
-  return (
-    <Wrapper>
-      <DatePicker name="datepicker-range-from" {...props} />
-      <Icon name="carrot-right" size={10} />
-      <DatePicker name="datepicker-range-to" {...props} />
-    </Wrapper>
-  );
-};
+/**
+ * TODO:
+ * - use only one "name" attr
+ * - onChange => [null, null], [DateTime, null], [null, DateTime], [DateTime, DateTime]
+ * - check working of the mask for the each of fields
+ */
+// const DateRangePickerInner = (
+export const DateRangePicker = ({
+  format = DEFAULT_MASK_FORMAT,
+  openCalendarMode = 'icon',
+  ...rest
+}: DateRangePickerProps) => (
+  <DateRangePickerProvider
+    format={format}
+    openCalendarMode={openCalendarMode}
+    {...rest}>
+    <DateRangePickerContent />
+  </DateRangePickerProvider>
+);
+
+// export const DateRangePicker = forwardRef<
+//   HTMLInputElement,
+//   DateRangePickerProps
+// >(DateRangePickerInner);

@@ -7,6 +7,7 @@ export type DatePickerProps = {
   name: string;
   label?: string;
   format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
+  // datepickerMode?: 'default' | 'dateRangePicker';
   maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: InputProps['inputProps'];
