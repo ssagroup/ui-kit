@@ -73,6 +73,7 @@ export * from './CollapsibleNavBar';
 export * from './DatePicker';
 export * from './Field';
 export * from './Filters';
+export * from './FiltersMultiSelect';
 export * from './FormCheckbox';
 export * from './FullscreenModeContext';
 export * from './Icon';
