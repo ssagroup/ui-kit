@@ -1,3 +1,5 @@
+import { resolve } from 'node:path';
+
 import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
@@ -41,6 +43,13 @@ const config: StorybookConfig = {
         alias: {
           ...config.resolve?.alias,
           ...appWebpackConfig.resolve?.alias,
+          // workaround for a react-router bug that can lead to multiple react-router versions
+          // being installed across the main package and dependencies that list react-router as a peer dependency
+          // https://github.com/remix-run/react-router/issues/12785
+          'react-router-dom': resolve(
+            __dirname,
+            '../node_modules/react-router-dom/dist/index.mjs',
+          ),
         },
       },
       module: {
