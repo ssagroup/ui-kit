@@ -10,7 +10,7 @@ import { useDateRangePickerContext } from '../useDateRangePickerContext';
  * - inputRef
  * - name
  * - wrap up with the new Field component
- *
+ * - try using two separate DatePickers!!!
  */
 export const DateRangePickerTrigger = () => {
   const {

@@ -3,12 +3,12 @@ import { useMask } from '@react-input/mask';
 import { DateTime } from 'luxon';
 import { InputProps } from '@components/Input/types';
 
-export type DatePickerProps = {
+export type LastFocusedElement = 'from' | 'to';
+
+export type DateRangePickerProps = {
   name: string;
   label?: string;
   format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
-  isOpenToggle?: boolean;
-  // datepickerMode?: 'default' | 'dateRangePicker';
   maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: Partial<InputProps>;
@@ -18,7 +18,6 @@ export type DatePickerProps = {
   dateMax?: string; // depends on the format
   disabled?: boolean;
   helperText?: string;
-  showCalendarIcon?: boolean;
   onChange?: (date?: Date) => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -32,11 +31,12 @@ export type DatePickerProps = {
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 };
 
-export type DatePickerContextProps = Omit<
-  DatePickerProps,
+export type DateRangePickerContextProps = Omit<
+  DateRangePickerProps,
   'dateMin' | 'dateMax'
 > & {
-  inputRef?: React.ForwardedRef<HTMLInputElement | null>;
+  // TODO: do we need it?
+  inputFromRef?: React.ForwardedRef<HTMLInputElement | null>;
   isOpen: boolean;
   calendarType: CalendarType;
   inputValue?: string;
@@ -51,6 +51,8 @@ export type DatePickerContextProps = Omit<
     month: number;
     year: number;
   };
+  lastFocusedElement: LastFocusedElement;
+  setLastFocusedElement: Dispatch<SetStateAction<LastFocusedElement>>;
   setCalendarViewDateTime: Dispatch<SetStateAction<DateTime | undefined>>;
   setDateTime: Dispatch<SetStateAction<DateTime<boolean> | undefined>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
