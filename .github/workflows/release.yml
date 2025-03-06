@@ -50,6 +50,8 @@ jobs:
 
       - name: Release packages
         run: |
+          cp ./scripts/release/ci-npmrc ~/.npmrc
+
           declare -a release_options
 
           if [ -n "${{ inputs.preid }}" ]; then
