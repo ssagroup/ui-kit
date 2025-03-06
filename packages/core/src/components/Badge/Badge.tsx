@@ -31,10 +31,14 @@ const mapColors: MainColors = {
   blue,
 };
 
-const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(function Badge(
+const Badge = React.forwardRef<
+  HTMLDivElement,
+  Omit<React.HTMLProps<HTMLDivElement>, 'size'> & BadgeProps
+>(function Badge(
   { color = 'purple', size = 'medium', children, ...props },
   ref,
 ) {
+  const sizeProps = mapSizes[size as keyof MainSizes];
   return (
     <BadgeBase
       ref={ref}
@@ -44,7 +48,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(function Badge(
           : {
               background: color,
             },
-        mapSizes[size],
+        sizeProps,
       ]}
       {...props}>
       {children ? children : null}

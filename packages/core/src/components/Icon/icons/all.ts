@@ -8,10 +8,15 @@ export * as Stats from './Stats';
 export * as Trainings from './Trainings';
 
 export * as Plus from './Plus';
+export * as PlusCircle from './PlusCircle';
+export * as PlusCircleInverted from './PlusCircleInverted';
 export * as Minus from './Minus';
+export * as MinusCircle from './MinusCircle';
+export * as MinusCircleInverted from './MinusCircleInverted';
 export * as Cross from './Cross';
 export * as Check from './Check';
 export * as CheckCircle from './CheckCircle';
+export * as CheckCircleInverted from './CheckCircleInverted';
 export * as More from './More';
 export * as MoreVertical from './MoreVertical';
 export * as Notification from './Notification';
