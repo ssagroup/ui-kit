@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { Interpolation, Theme } from '@emotion/react';
 import TableCell from '@components/TableCell';
 import Wrapper from '@components/Wrapper';
@@ -6,7 +7,7 @@ import { useNestedTableRowContext } from '../useNestedTableRowContext';
 export const NestedTableCell = ({
   children,
   ...props
-}: React.PropsWithChildren) => {
+}: React.PropsWithChildren<HTMLAttributes<HTMLTableCellElement>>) => {
   const { isCollapsed, isSubHeader } = useNestedTableRowContext();
   const notSubHeaderCSS: Interpolation<Theme> =
     !isSubHeader && isCollapsed
