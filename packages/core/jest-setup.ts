@@ -5,6 +5,11 @@ global.TextEncoder = TextEncoder;
 
 import '@testing-library/jest-dom';
 
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
 URL.createObjectURL = jest.fn();
 HTMLCanvasElement.prototype.getContext = jest.fn();
 

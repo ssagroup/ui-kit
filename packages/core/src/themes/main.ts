@@ -44,14 +44,19 @@ const main: Theme = {
     greyFilterIcon: 'rgb(133, 137, 147)', // #858993
     greyCancelClearButton: 'rgb(101, 101, 103)', // #656567
     redLighter: 'rgba(242, 136, 142, 1)', // #f2888e
+    redLighter6: 'rgba(242, 136, 142, 0.06)', // #f2888e
     redLighter40: 'rgba(242, 136, 142, 0.4)', // #f2888e
     red: 'rgba(235, 117, 86, 1)', // #eb7556
+    red6: 'rgba(235, 117, 86, 0.06)', // #eb7556
+    redDark: 'rgba(229, 53, 14, 1)', // #e5350e
     red40: 'rgba(235, 117, 86, 0.4)', // #eb7556
     greenLighter: 'rgba(137, 217, 150, 1)', // #89d996
+    greenLighter6: 'rgba(137, 217, 150, 0.06)', // #89d996
     greenLighter20: 'rgba(137, 217, 150, 0.2)', // #89d996
     greenLighter40: 'rgba(137, 217, 150, 0.4)', // #89d996
     greenLighter60: 'rgba(137, 217, 150, 0.6)', // #89d996
     green: 'rgba(82, 197, 135, 1)', // #52c587
+    green6: 'rgba(82, 197, 135, 0.06)', // #52c587
     green20: 'rgba(82, 197, 135, 0.2)', // #52c587
     green40: 'rgba(82, 197, 135, 0.4)', // #52c587
     green60: 'rgba(82, 197, 135, 0.6)', // #52c587
@@ -87,12 +92,14 @@ const main: Theme = {
     purpleDark: 'rgba(156, 122, 235, 1)', // #9c7aeb
     purpleDark40: 'rgba(156, 122, 235, 0.4)', // #9c7aeb
     blue: 'rgba(65, 120, 225, 1)', // #4178e1
+    blue6: 'rgba(65, 120, 225, 0.06)', // #4178e1
     blue20: 'rgba(65, 120, 225, 0.2)', // #4178e1
     blueDark: 'rgba(36, 101, 227, 1)', // #2465e3
     blueLightDarker: 'rgba(127, 159, 221)', // #7f9fdd
     blueDropdownWithSelectedItems: 'rgba(236, 247, 255, 1)', // #ECF7FF
     blueDropdownWithSelectedItemsBorder: 'rgba(166, 213, 244, 1)', // #A6D5F4
     blueLighter: 'rgba(117, 153, 222, 1)', // #7599de
+    blueLighter6: 'rgba(117, 153, 222, 0.06)', // #7599de
     blueLighter20: 'rgba(117, 153, 222, 0.2)', // #7599de
     blueLighter40: 'rgba(117, 153, 222, 0.4)', // #7599de
     blueLight: 'rgba(68, 179, 252, 1)', // #44b3fc
@@ -107,6 +114,7 @@ const main: Theme = {
     blueButtonHoverGradientTo: 'rgb(14, 75, 193)', //#0e4bc1
     blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
     blueRoyal: 'rgba(72, 125, 225, 1)', //#487de1
+    blueRoyal6: 'rgba(72, 125, 225, 0.06)', //#487DE1
     blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
     dangerShades300: 'rgb(253, 128, 122)', //#FD807A
     dangerShades500: 'rgb(223, 90, 96)', //#DF5A60
