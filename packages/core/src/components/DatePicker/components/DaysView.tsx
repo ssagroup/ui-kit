@@ -15,7 +15,7 @@ export const DaysView = () => {
     setCalendarViewDateTime,
     setDateTime,
     setIsOpen,
-    onChange,
+    safeOnChange,
   } = useDatePickerContext();
   const selectedDateTime = dateTime?.toFormat('D');
   const currentDate = calendarViewDateTime?.toJSDate();
@@ -31,7 +31,7 @@ export const DaysView = () => {
       const newDate = calendarViewDateTime?.set({ day: selectedDay });
       setCalendarViewDateTime(newDate);
       setDateTime(newDate);
-      onChange?.(newDate?.toJSDate());
+      safeOnChange?.(newDate);
       setIsOpen(false);
     }
   };

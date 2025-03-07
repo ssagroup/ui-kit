@@ -1,24 +1,18 @@
 import { Dispatch, SetStateAction } from 'react';
-import { useMask } from '@react-input/mask';
 import { DateTime } from 'luxon';
-import { InputProps } from '@components/Input/types';
+import { DatePickerProps } from '@components/DatePicker/types';
+import { FieldContextValue } from '@components/Field/FieldProvider';
 
 export type LastFocusedElement = 'from' | 'to';
 
-export type DateRangePickerProps = {
-  name: string;
-  label?: string;
-  format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
-  maskOptions?: Parameters<typeof useMask>[0];
-  openCalendarMode?: 'icon' | 'input' | 'both';
-  inputProps?: InputProps['inputProps'];
-  value?: string; // depends on the format
-  defaultValue?: string; // depends on the format
-  dateMin?: string; // depends on the format
-  dateMax?: string; // depends on the format
-  disabled?: boolean;
-  helperText?: string;
-  onChange?: (date?: Date) => void;
+export type DateRangePickerProps = Omit<
+  DatePickerProps,
+  'isOpenToggle' | 'value' | 'defaultValue' | 'onChange'
+> & {
+  value?: [string, string]; // depends on the format
+  defaultValue?: [string, string]; // depends on the format
+  status?: FieldContextValue['status'];
+  onChange?: (dates?: [Date | null, Date | null]) => void;
   onOpen?: () => void;
   onClose?: () => void;
   onError?: (
@@ -35,8 +29,8 @@ export type DateRangePickerContextProps = Omit<
   DateRangePickerProps,
   'dateMin' | 'dateMax'
 > & {
+  // TODO: do we need it?
   inputFromRef?: React.ForwardedRef<HTMLInputElement | null>;
-  // inputRef?: React.MutableRefObject<HTMLInputElement> | null;
   isOpen: boolean;
   calendarType: CalendarType;
   inputValue?: string;

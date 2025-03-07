@@ -11,7 +11,7 @@ export type DateRangePickerProps = {
   format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
   maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
-  inputProps?: Partial<InputProps>;
+  inputProps?: InputProps['inputProps'];
   value?: string; // depends on the format
   defaultValue?: string; // depends on the format
   dateMin?: string; // depends on the format
@@ -35,8 +35,8 @@ export type DateRangePickerContextProps = Omit<
   DateRangePickerProps,
   'dateMin' | 'dateMax'
 > & {
-  // TODO: do we need it?
   inputFromRef?: React.ForwardedRef<HTMLInputElement | null>;
+  // inputRef?: React.MutableRefObject<HTMLInputElement> | null;
   isOpen: boolean;
   calendarType: CalendarType;
   inputValue?: string;

@@ -11,7 +11,7 @@ export default {
   component: DateRangePicker,
   argTypes: {
     openCalendarMode: {
-      defaultValue: 'icon',
+      defaultValue: 'both',
     },
     defaultValue: {
       type: 'string',
@@ -58,9 +58,9 @@ export default {
 
 const commonArgs: Partial<DateRangePickerProps> = {
   label: 'Field',
-  openCalendarMode: 'icon',
-  onChange: (date) => {
-    console.log('event: onChange', date);
+  openCalendarMode: 'both',
+  onChange: (dates) => {
+    console.log('event: onChange', dates);
   },
   onOpen: () => {
     console.log('event: onOpen');

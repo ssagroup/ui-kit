@@ -19,6 +19,7 @@ export type DatePickerProps = {
   disabled?: boolean;
   helperText?: string;
   showCalendarIcon?: boolean;
+  safeOnChange?: (date?: DateTime) => void;
   onChange?: (date?: Date) => void;
   onOpen?: () => void;
   onClose?: () => void;

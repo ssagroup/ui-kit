@@ -3,15 +3,15 @@ import { DateTime } from 'luxon';
 import type { Meta, StoryObj } from '@storybook/react';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
-import { DateRangePicker2 } from './DateRangePicker2';
+import { DateRangePicker } from './DateRangePicker';
 import { DateRangePickerProps } from './types';
 
 export default {
-  title: 'Components/DateRangePicker2',
-  component: DateRangePicker2,
+  title: 'Components/DateRangePicker',
+  component: DateRangePicker,
   argTypes: {
     openCalendarMode: {
-      defaultValue: 'both',
+      defaultValue: 'icon',
     },
     defaultValue: {
       type: 'string',
@@ -54,11 +54,11 @@ export default {
       );
     },
   ],
-} as Meta<typeof DateRangePicker2>;
+} as Meta<typeof DateRangePicker>;
 
 const commonArgs: Partial<DateRangePickerProps> = {
   label: 'Field',
-  openCalendarMode: 'both',
+  openCalendarMode: 'icon',
   onChange: (date) => {
     console.log('event: onChange', date);
   },
@@ -82,10 +82,10 @@ const commonArgs: Partial<DateRangePickerProps> = {
   },
 };
 
-export const Default: StoryObj<typeof DateRangePicker2> = (
+export const Default: StoryObj<typeof DateRangePicker> = (
   args: DateRangePickerProps,
 ) => {
-  return <DateRangePicker2 {...args} />;
+  return <DateRangePicker {...args} />;
 };
 Default.args = {
   ...commonArgs,

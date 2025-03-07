@@ -22,6 +22,17 @@ export const useDatePicker = ({
   const inputValue = useWatch({ name });
   const [isLoading, setLoading] = useState(true);
   const [dateTime, setDateTime] = useState<DateTime | undefined>();
+  const [dateTimeForChangeEvent, setDateTimeForChangeEvent] = useState<
+    DateTime | undefined
+  >(undefined);
+  const [currentError, setCurrentError] = useState<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    date: any;
+    error?: string | null;
+  }>({
+    date: null,
+    error: null,
+  });
   const [isOpen, setIsOpen] = useState(false);
   const splittedFormat = format.split('/');
   const [formatIndexes, setFormatIndexes] = useState({
@@ -55,6 +66,30 @@ export const useDatePicker = ({
     day: dateMinParts[formatIndexes['day']],
   });
 
+  const safeOnChange = (newDateTime?: DateTime) => {
+    const _newDateTime = newDateTime ? newDateTime.startOf('day') : undefined;
+
+    const _dateTimeForChangeEvent = dateTimeForChangeEvent
+      ? dateTimeForChangeEvent.startOf('day')
+      : undefined;
+    if (_newDateTime?.toMillis() !== _dateTimeForChangeEvent?.toMillis()) {
+      setDateTimeForChangeEvent(newDateTime);
+      if (_newDateTime) {
+        onChange?.(_newDateTime.toJSDate());
+      } else {
+        onChange?.();
+      }
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const safeOnError = (date: any, error?: string | null) => {
+    if (currentError.date !== date && currentError.error !== error) {
+      setCurrentError({ date, error });
+      onError?.(date, error);
+    }
+  };
+
   const processValue = (newValue: string) => {
     const newDateTime =
       typeof newValue === 'string' && newValue.length === 10
@@ -65,20 +100,20 @@ export const useDatePicker = ({
       const errorMessage = newDateTime?.invalidExplanation || INVALID_DATE;
       setError(name, { message: errorMessage }, { shouldFocus: true });
       setDateTime(undefined);
-      onChange?.();
-      onError?.(newValue, errorMessage);
+      safeOnChange();
+      safeOnError?.(newValue, errorMessage);
     } else if (newDateTime !== undefined) {
       if (newDateTime < dateMinDT || newDateTime > dateMaxDT) {
         const errorMessage = OUT_OF_RANGE;
         setError(name, { message: errorMessage }, { shouldFocus: true });
         setDateTime(undefined);
-        onError?.(newValue, errorMessage);
-        onChange?.();
+        safeOnError?.(newValue, errorMessage);
+        safeOnChange();
       } else {
         setDateTime(newDateTime);
         clearErrors();
-        onError?.(null);
-        onChange?.(newDateTime.toJSDate());
+        safeOnError?.(null);
+        safeOnChange?.(newDateTime);
       }
     }
   };
@@ -86,7 +121,9 @@ export const useDatePicker = ({
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
     const blurredValue = event.currentTarget.value;
-    processValue(blurredValue);
+    if (blurredValue.length > 0) {
+      processValue(blurredValue);
+    }
   };
 
   useEffect(() => {
@@ -179,6 +216,7 @@ export const useDatePicker = ({
     calendarViewDateTime,
     maskInputRef,
     calendarType,
+    safeOnChange,
     setCalendarType,
     setCalendarViewDateTime,
     setDateTime,
