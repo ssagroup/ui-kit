@@ -1,18 +1,18 @@
 export {
   FiltersMultiSelect,
-  FiltersMultiSelectProps,
+  type FiltersMultiSelectProps,
 } from './FiltersMultiSelect';
 export {
   FiltersMultiSelectOption,
-  FiltersMultiSelectOptionProps,
+  type FiltersMultiSelectOptionProps,
 } from './components/FiltersMultiSelectOption';
 export { FiltersMultiSelectOptions } from './components/FiltersMultiSelectOptions';
 export {
   FiltersMultiSelectEmpty,
-  FiltersMultiSelectEmptyProps,
+  type FiltersMultiSelectEmptyProps,
 } from './components/FiltersMultiSelectEmpty';
 export {
   useFilterMultiSelect,
-  Filter,
-  SelectedFilter,
+  type Filter,
+  type SelectedFilter,
 } from './useFiltersMultiSelect';

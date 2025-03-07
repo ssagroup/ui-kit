@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import Icon from '@components/Icon';
 import { NestedTableCell } from './NestedTableCell';
 import { useNestedTableRowContext } from '../useNestedTableRowContext';
@@ -7,7 +8,7 @@ export const NestedTableCellSubHeader = ({
   ...props
 }: {
   isHeader?: boolean;
-}) => {
+} & HTMLAttributes<HTMLTableCellElement>) => {
   const {
     childRowsCount,
     isSubHeader: isSubHeaderGlobal,

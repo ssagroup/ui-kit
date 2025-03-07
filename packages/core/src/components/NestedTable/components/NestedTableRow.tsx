@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { Interpolation, Theme, useTheme } from '@emotion/react';
 import TableRow from '@components/TableRow';
 import { NestedTableCellSubHeader } from './NestedTableCellSubHeader';
@@ -7,9 +8,11 @@ export const NestedTableRow = ({
   children,
   isHeader,
   ...props
-}: React.PropsWithChildren<{
-  isHeader?: boolean;
-}>) => {
+}: React.PropsWithChildren<
+  {
+    isHeader?: boolean;
+  } & HTMLAttributes<HTMLTableRowElement>
+>) => {
   const theme = useTheme();
   const { isCollapsed, isSubHeader } = useNestedTableRowContext();
   const headerCSS: Interpolation<Theme> = isSubHeader
