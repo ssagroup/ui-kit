@@ -7,7 +7,7 @@ import {
   commitRelease,
   resetWorkingDirectory,
 } from './git';
-import { setAccessToken, promptForOTP } from './npm';
+import { expectAccessToken, promptForOTP } from './npm';
 import { PACKAGES_TO_RELEASE } from './packages';
 import { publishPackage } from '../publish/publishPackage';
 import packageJson from '../../package.json';
@@ -37,9 +37,8 @@ const program = new Command()
     'Identifier to be used to prefix premajor, preminor, prepatch or prerelease version increments',
   )
   .option('-t, --tag <tag>', 'npm tag', 'latest')
-  .option('--npm-access-token <token>', 'NPM access token')
   .option('--dry-run', 'Dry run')
-  .action(async ({ increment, preid, tag, npmAccessToken, dryRun }) => {
+  .action(async ({ increment, preid, tag, dryRun }) => {
     await ensureCleanWorkingDirectory();
 
     const isCanary = increment === 'canary';
@@ -89,7 +88,7 @@ const program = new Command()
     };
 
     try {
-      await setAccessToken(npmAccessToken);
+      expectAccessToken();
       await setPackagesVersion({
         version: incrementedVersion,
         packages,
