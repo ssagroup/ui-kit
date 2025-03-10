@@ -12,6 +12,8 @@ export const DaysView = () => {
     calendarViewDateTime,
     dateMinDT,
     dateMaxDT,
+    lastChangedDate,
+    highlightDates,
     setCalendarViewDateTime,
     setDateTime,
     setIsOpen,
@@ -22,6 +24,10 @@ export const DaysView = () => {
   const currentMonth = currentDate?.getMonth();
   const dates = getDaysForCalendarMonth(currentDate);
   const nowDate = DateTime.fromJSDate(new Date()).toFormat('D');
+  const isHighlightEnabled = !!highlightDates?.enabled;
+  const { otherDate } = highlightDates || {};
+  const otherDateDT = otherDate && DateTime.fromJSDate(otherDate);
+
   const handleDaySelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
     const selectedDay = Number((target as HTMLDivElement).innerHTML);
@@ -64,8 +70,25 @@ export const DaysView = () => {
           const calendarMonth = currentDate.getMonth();
           const ariaLabel = currentDT.toLocaleString(DateTime.DATE_HUGE);
           const isCalendarDateNow = nowDate === calendarDate;
-          const isCalendarDateSelected = selectedDateTime === calendarDate;
           const isCalendarMonth = currentMonth === calendarMonth;
+          const isCalendarFirstDateSelected = calendarDate === selectedDateTime;
+          const isCalendarSecondDateSelected =
+            calendarDate === otherDateDT?.toFormat('D');
+          const isCalendarDateSelected =
+            isCalendarFirstDateSelected || isCalendarSecondDateSelected;
+          let isHighlightDate = false;
+
+          if (
+            isHighlightEnabled &&
+            lastChangedDate &&
+            otherDateDT &&
+            dateTime
+          ) {
+            isHighlightDate =
+              highlightDates.mode === 'dateTo'
+                ? otherDateDT < currentDT && currentDT < dateTime
+                : dateTime < currentDT && currentDT < otherDateDT;
+          }
 
           let isAriaDisabled = false;
           if (dateMinDT && dateMaxDT) {
@@ -87,7 +110,10 @@ export const DaysView = () => {
               aria-disabled={isAriaDisabled}
               aria-label={ariaLabel}
               isCalendarDateNow={isCalendarDateNow}
-              isCalendarDateSelected={isCalendarDateSelected}>
+              isCalendarDateSelected={isCalendarDateSelected}
+              isCalendarFirstDateSelected={isCalendarFirstDateSelected}
+              isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+              isHighlighted={isHighlightDate}>
               {calendarDay}
             </S.DaysViewCell>
           );

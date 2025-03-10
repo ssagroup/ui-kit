@@ -1,4 +1,5 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
+import { DateTime } from 'luxon';
 import Wrapper from '@components/Wrapper';
 import { useDatePickerContext } from '../useDatePickerContext';
 import { getYearsList } from '../utils';
@@ -6,10 +7,13 @@ import * as S from '../styles';
 
 export const YearsView = () => {
   const {
+    dateTime,
     calendarViewDateTime,
     dateMinParts,
     dateMaxParts,
     formatIndexes,
+    lastChangedDate,
+    highlightDates,
     setCalendarType,
     setCalendarViewDateTime,
     setDateTime,
@@ -23,6 +27,11 @@ export const YearsView = () => {
       dateMinParts[formatIndexes['year']] +
       1,
   });
+
+  const isHighlightEnabled = !!highlightDates?.enabled;
+  const { otherDate } = highlightDates || {};
+  const otherDateDT = otherDate && DateTime.fromJSDate(otherDate);
+
   useEffect(() => {
     if (calendarViewDateTime && wrapper.current) {
       wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
@@ -61,10 +70,27 @@ export const YearsView = () => {
         if (isCalendarYear) {
           additionalProps['aria-current'] = 'date';
         }
+
+        const isCalendarFirstDateSelected =
+          year.toString() === dateTime?.toFormat('yyyy');
+        const isCalendarSecondDateSelected =
+          year.toString() === otherDateDT?.toFormat('yyyy');
+
+        let isHighlightDate = false;
+
+        if (isHighlightEnabled && lastChangedDate && otherDateDT && dateTime) {
+          isHighlightDate =
+            highlightDates.mode === 'dateTo'
+              ? otherDateDT.year < year && year < dateTime.year
+              : dateTime.year < year && year < otherDateDT.year;
+        }
         return (
           <S.YearsViewCell
             key={`year-${year}`}
             isCalendarYear={isCalendarYear}
+            isCalendarFirstDateSelected={isCalendarFirstDateSelected}
+            isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+            isHighlighted={isHighlightDate}
             {...additionalProps}>
             {year}
           </S.YearsViewCell>

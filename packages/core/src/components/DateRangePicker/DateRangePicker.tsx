@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { DateTime } from 'luxon';
 import { useTheme } from '@emotion/react';
 import * as C from '@components';
 import { DateRangePickerProps } from './types';
@@ -26,6 +27,7 @@ export const DateRangePicker = ({
   ...rest
 }: DateRangePickerProps) => {
   const theme = useTheme();
+  // const [_value, _setValue] = useState(value || []);
   const formContext = useFormContext();
   const [currentStatus, setCurrentStatus] = useState(rest.status);
   const errorsFrom = formContext.formState.errors[`${name}From`]?.message;
@@ -45,6 +47,13 @@ export const DateRangePicker = ({
   const [defaultValueFrom, defaultValueTo] = defaultValue || [];
   const datepickerFromRef = useRef<HTMLInputElement | null>(null);
   const datepickerToRef = useRef<HTMLInputElement | null>(null);
+
+  // const datepickerFromAdditionalProps = {};
+  // const datepickerToAdditionalProps = {};
+
+  // useEffect(() => {
+  //   _setValue(value || []);
+  // }, [value]);
 
   useEffect(() => {
     setCurrentStatus(rest.status);
@@ -108,6 +117,23 @@ export const DateRangePicker = ({
 
   const onChangeTo = (date?: Date) => {
     const newDate = date || null;
+    if (changedDate[0] && newDate) {
+      const selectedDateFromDT = DateTime.fromJSDate(changedDate[0]);
+      const selectedDateToDT = DateTime.fromJSDate(newDate);
+      if (selectedDateFromDT > selectedDateToDT) {
+        const changedData: [Date | null, Date | null] = [newDate, null];
+        setChangedDate(changedData);
+
+        // const dateStr = DateTime.fromJSDate(newDate).toFormat(
+        //   format.replace('mm', 'MM'),
+        // );
+        // _setValue([dateStr, _value[1] === undefined ? '' : undefined]);
+        // _setValue([dateStr, undefined]);
+        datepickerToRef.current?.focus();
+        rest.onChange?.(changedData);
+        return;
+      }
+    }
     if (newDate !== changedDate?.[1]) {
       const changedData: [Date | null, Date | null] = [
         changedDate ? changedDate[0] : null,
@@ -149,6 +175,11 @@ export const DateRangePicker = ({
             {...rest}
             ref={datepickerFromRef}
             onChange={onChangeFrom}
+            highlightDates={{
+              enabled: true,
+              mode: 'dateFrom',
+              otherDate: changedDate[1],
+            }}
             inputProps={{
               showStatusIcon: false,
               ...rest.inputProps,
@@ -179,6 +210,11 @@ export const DateRangePicker = ({
             {...rest}
             ref={datepickerToRef}
             onChange={onChangeTo}
+            highlightDates={{
+              enabled: true,
+              mode: 'dateTo',
+              otherDate: changedDate[0],
+            }}
             inputProps={{
               showStatusIcon: false,
               ...rest.inputProps,

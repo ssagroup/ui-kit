@@ -9,7 +9,7 @@ export type DateRangePickerProps = Omit<
   DatePickerProps,
   'isOpenToggle' | 'value' | 'defaultValue' | 'onChange'
 > & {
-  value?: [string, string]; // depends on the format
+  value?: [string | undefined, string | undefined]; // depends on the format
   defaultValue?: [string, string]; // depends on the format
   status?: FieldContextValue['status'];
   onChange?: (dates?: [Date | null, Date | null]) => void;

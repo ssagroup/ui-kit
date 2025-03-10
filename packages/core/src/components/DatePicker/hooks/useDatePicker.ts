@@ -22,6 +22,9 @@ export const useDatePicker = ({
   const inputValue = useWatch({ name });
   const [isLoading, setLoading] = useState(true);
   const [dateTime, setDateTime] = useState<DateTime | undefined>();
+  const [lastChangedDate, setLastChangedDate] = useState<Date | undefined>(
+    undefined,
+  );
   const [dateTimeForChangeEvent, setDateTimeForChangeEvent] = useState<
     DateTime | undefined
   >(undefined);
@@ -75,8 +78,10 @@ export const useDatePicker = ({
     if (_newDateTime?.toMillis() !== _dateTimeForChangeEvent?.toMillis()) {
       setDateTimeForChangeEvent(newDateTime);
       if (_newDateTime) {
+        setLastChangedDate(_newDateTime.toJSDate());
         onChange?.(_newDateTime.toJSDate());
       } else {
+        setLastChangedDate(undefined);
         onChange?.();
       }
     }
@@ -127,7 +132,11 @@ export const useDatePicker = ({
   };
 
   useEffect(() => {
-    if (typeof inputValue === 'string' && inputValue.length < 10) {
+    if (
+      typeof inputValue === 'string' &&
+      inputValue.length &&
+      inputValue.length < 10
+    ) {
       setIsOpen(false);
       setTimeout(() => {
         maskInputRef.current.focus();
@@ -216,6 +225,8 @@ export const useDatePicker = ({
     calendarViewDateTime,
     maskInputRef,
     calendarType,
+    lastChangedDate,
+    luxonFormat,
     safeOnChange,
     setCalendarType,
     setCalendarViewDateTime,
