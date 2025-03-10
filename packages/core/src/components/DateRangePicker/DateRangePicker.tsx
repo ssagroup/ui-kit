@@ -12,11 +12,11 @@ import * as C from '@components';
 import { DateRangePickerProps } from './types';
 import { DEFAULT_MASK_FORMAT } from './constants';
 
-/**
- * - highlight the selected date range, when two dates are selected
- * - keep the same place for datepicker (from / to)
- * - don't close the datepicker while switching between from / to
- */
+// keep the same place for datepicker (from / to)
+// don't close the datepicker while switching between from / to
+// add errors (date to less than date from...)
+// add a logic to reset date to when date to less than date from
+// create subcomponents
 export const DateRangePicker = ({
   format = DEFAULT_MASK_FORMAT,
   openCalendarMode = 'both',
