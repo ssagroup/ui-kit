@@ -39,6 +39,7 @@ datepicker
 daterangepicker
 disbalance
 displaylogo
+dismissable
 Dissoc
 dolor
 domcontentloaded
