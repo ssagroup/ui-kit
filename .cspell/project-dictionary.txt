@@ -38,6 +38,7 @@ customicon
 datepicker
 disbalance
 displaylogo
+dismissable
 Dissoc
 dolor
 domcontentloaded

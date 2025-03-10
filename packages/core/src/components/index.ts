@@ -71,6 +71,7 @@ export * from './CardList';
 export * from './Checkbox';
 export * from './CollapsibleNavBar';
 export * from './DatePicker';
+export * from './Drawer';
 export * from './Field';
 export * from './Filters';
 export * from './FiltersMultiSelect';
