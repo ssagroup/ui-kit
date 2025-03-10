@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const R = require('ramda');
 
@@ -18,11 +17,6 @@ const baseConfig = {
   optimization: {
     minimize: false,
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env),
-    }),
-  ],
   module: {
     rules: [
       {
