@@ -7,14 +7,22 @@ import { MONTHS } from '../constants';
 
 export const MonthsView = () => {
   const {
+    dateTime,
     calendarViewDateTime,
     dateMinDT,
     dateMaxDT,
+    lastChangedDate,
+    highlightDates,
     setCalendarType,
     setDateTime,
     setCalendarViewDateTime,
     onMonthChange,
   } = useDatePickerContext();
+
+  const isHighlightEnabled = !!highlightDates?.enabled;
+  const { otherDate } = highlightDates || {};
+  const otherDateDT = otherDate && DateTime.fromJSDate(otherDate);
+
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
     if ((target as HTMLDivElement).getAttribute('aria-disabled') === null) {
@@ -54,12 +62,30 @@ export const MonthsView = () => {
             currentMonthDT.year === dateMaxDT.year
           : false;
         const isAriaDisabled = isMinMonthReached || isMaxMonthReached;
+
+        const isCalendarFirstDateSelected =
+          currentMonthDT.toFormat('yyyy-MM') === dateTime?.toFormat('yyyy-MM');
+        const isCalendarSecondDateSelected =
+          currentMonthDT.toFormat('yyyy-MM') ===
+          otherDateDT?.toFormat('yyyy-MM');
+
+        let isHighlightDate = false;
+
+        if (isHighlightEnabled && lastChangedDate && otherDateDT && dateTime) {
+          isHighlightDate =
+            highlightDates.mode === 'dateTo'
+              ? otherDateDT < currentMonthDT && currentMonthDT < dateTime
+              : dateTime < currentMonthDT && currentMonthDT < otherDateDT;
+        }
         return (
           <S.MonthsViewCell
             key={month}
             isCalendarMonth={isCalendarMonth}
             aria-disabled={isAriaDisabled}
-            aria-label={`${month}, ${calendarViewDateTime?.year}`}>
+            aria-label={`${month}, ${calendarViewDateTime?.year}`}
+            isCalendarFirstDateSelected={isCalendarFirstDateSelected}
+            isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+            isHighlighted={isHighlightDate}>
             {month}
           </S.MonthsViewCell>
         );

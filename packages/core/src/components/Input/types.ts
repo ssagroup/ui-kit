@@ -26,6 +26,8 @@ export interface InputProps
   errorTooltip?: string;
   successTooltip?: string;
   showHelperText?: boolean;
+  showStatusIcon?: boolean;
+  showBorders?: boolean;
   helperText?: string;
   maxLength?: number;
   errors?: FieldError;

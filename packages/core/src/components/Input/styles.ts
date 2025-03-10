@@ -10,7 +10,7 @@ export const basic = (theme: Theme) =>
         borderColor: theme.colors.greyDarker80,
       },
       '&:focus': {
-        borderColor: `2px solid ${theme.colors.blueRoyal}`,
+        borderColor: theme.colors.blueRoyal,
       },
     },
   });

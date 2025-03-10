@@ -4,7 +4,7 @@ import { useToggle } from '@ssa-ui-kit/hooks';
 import Button from '@components/Button';
 import Wrapper from '@components/Wrapper';
 import Input from '@components/Input';
-import Field from '@components/Field';
+import { Field } from '@components/Field';
 
 const meta = {
   title: 'Components/Field',

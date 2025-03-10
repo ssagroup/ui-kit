@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import userEvent from '@testing-library/user-event';
 
-import Field from './';
+import { Field } from './';
 
 describe('Field', () => {
   it('Render with label and helper text', () => {
