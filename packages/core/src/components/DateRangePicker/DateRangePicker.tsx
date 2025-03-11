@@ -17,6 +17,7 @@ import { DEFAULT_MASK_FORMAT } from './constants';
 // add errors (date to less than date from...)
 // add a logic to reset date to when date to less than date from
 // create subcomponents
+// hover daterange effect for the datepicker (from design)
 export const DateRangePicker = ({
   format = DEFAULT_MASK_FORMAT,
   openCalendarMode = 'both',
@@ -149,11 +150,7 @@ export const DateRangePicker = ({
   return (
     <C.Field.Root status={currentStatus} disabled={rest.disabled}>
       <C.Field.Label
-        htmlFor={
-          lastFocusedElement === 'from'
-            ? `formElement-${name}From`
-            : `formElement-${name}To`
-        }>
+        htmlFor={lastFocusedElement === 'from' ? `${name}From` : `${name}To`}>
         {label}
       </C.Field.Label>
       <C.Field.Control>

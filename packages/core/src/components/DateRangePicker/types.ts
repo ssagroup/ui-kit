@@ -15,11 +15,7 @@ export type DateRangePickerProps = Omit<
   onChange?: (dates?: [Date | null, Date | null]) => void;
   onOpen?: () => void;
   onClose?: () => void;
-  onError?: (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    date: any,
-    error?: string | null,
-  ) => void;
+  onError?: (date: unknown, error?: string | null) => void;
   onMonthChange?: (date: Date) => void;
   onYearChange?: (date: Date) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
