@@ -13,6 +13,17 @@ import { useDrawer } from './useDrawer';
 
 const meta = {
   title: 'Components/Drawer',
+  component: Drawer.Root,
+  args: {
+    title: 'Title',
+    withCloseButton: true,
+  },
+  decorators: [
+    (Story, { args, viewMode }) => {
+      args.defaultOpened = args.defaultOpened ?? viewMode === 'story';
+      return <Story />;
+    },
+  ],
   // required due to https://github.com/storybookjs/storybook/issues/17025
   parameters: {
     docs: {
@@ -43,12 +54,8 @@ const DrawerContent = () => {
 };
 
 export const Default: Story = {
-  render: (props, context) => {
-    const drawer = useDrawer({
-      defaultOpened: context.viewMode === 'story',
-      title: 'Title',
-      withCloseButton: true,
-    });
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -69,13 +76,9 @@ export const Default: Story = {
 };
 
 export const PositionRight: Story = {
-  render: (props, context) => {
-    const drawer = useDrawer({
-      position: 'right',
-      defaultOpened: context.viewMode === 'story',
-      title: 'Title',
-      withCloseButton: true,
-    });
+  args: { position: 'right' },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -96,13 +99,9 @@ export const PositionRight: Story = {
 };
 
 export const PositionTop: Story = {
-  render: (props, context) => {
-    const drawer = useDrawer({
-      position: 'top',
-      defaultOpened: context.viewMode === 'story',
-      title: 'Title',
-      withCloseButton: true,
-    });
+  args: { position: 'top' },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -123,13 +122,9 @@ export const PositionTop: Story = {
 };
 
 export const PositionBottom: Story = {
-  render: (props, context) => {
-    const drawer = useDrawer({
-      position: 'bottom',
-      defaultOpened: context.viewMode === 'story',
-      title: 'Title',
-      withCloseButton: true,
-    });
+  args: { position: 'bottom' },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -150,8 +145,13 @@ export const PositionBottom: Story = {
 };
 
 export const WithinContainer: Story = {
-  render: () => {
-    const drawer = useDrawer({ defaultOpened: true });
+  args: {
+    defaultOpened: true,
+    title: undefined,
+    withCloseButton: undefined,
+  },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -185,8 +185,14 @@ export const WithinContainer: Story = {
 };
 
 export const WithinContainerPositionTop: Story = {
-  render: () => {
-    const drawer = useDrawer({ defaultOpened: true, position: 'top' });
+  args: {
+    defaultOpened: true,
+    position: 'top',
+    title: undefined,
+    withCloseButton: undefined,
+  },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -219,8 +225,9 @@ export const WithinContainerPositionTop: Story = {
 };
 
 export const WithinContainerOverlap: Story = {
-  render: () => {
-    const drawer = useDrawer({ defaultOpened: true });
+  args: { defaultOpened: true, title: undefined, withCloseButton: undefined },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -257,8 +264,14 @@ export const WithinContainerOverlap: Story = {
 };
 
 export const WithinContainerOverlapPositionTop: Story = {
-  render: () => {
-    const drawer = useDrawer({ defaultOpened: true, position: 'top' });
+  args: {
+    defaultOpened: true,
+    position: 'top',
+    title: undefined,
+    withCloseButton: undefined,
+  },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -296,12 +309,12 @@ export const WithinContainerOverlapPositionTop: Story = {
 };
 
 export const DismissableWithLockScroll: Story = {
-  render: (props, context) => {
-    const drawer = useDrawer({
-      position: 'right',
-      dismissable: true,
-      defaultOpened: context.viewMode === 'story',
-    });
+  args: {
+    position: 'right',
+    dismissable: true,
+  },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
@@ -313,7 +326,7 @@ export const DismissableWithLockScroll: Story = {
               lockScroll
               css={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
               <Drawer.Content css={{ padding: '12px', maxWidth: '400px' }}>
-                <Button onClick={() => drawer.toggle(false)}>Close</Button>
+                <p>Content</p>
               </Drawer.Content>
             </Drawer.Overlay>
           </Drawer.Portal>
@@ -324,11 +337,13 @@ export const DismissableWithLockScroll: Story = {
 };
 
 export const WithHeaderComponent: Story = {
-  render: (props, context) => {
-    const drawer = useDrawer({
-      defaultOpened: context.viewMode === 'story',
-      dismissable: true,
-    });
+  args: {
+    title: undefined,
+    withCloseButton: undefined,
+    dismissable: true,
+  },
+  render: (args) => {
+    const drawer = useDrawer(args);
     return (
       <>
         <Button {...drawer.interactions.getReferenceProps()}>
