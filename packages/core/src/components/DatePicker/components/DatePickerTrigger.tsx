@@ -13,11 +13,16 @@ export const DatePickerTrigger = () => {
     label,
     openCalendarMode,
     inputRef,
+    inputProps,
     disabled,
     helperText,
+    showCalendarIcon,
     onBlur: handleBlur,
     setIsOpen,
   } = useDatePickerContext();
+
+  const { inputProps: inputElementProps, ...restInputProps } =
+    (inputProps as Partial<InputProps>) || {};
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
   const useFormResult = useForm();
   const theme = useTheme();
@@ -35,7 +40,9 @@ export const DatePickerTrigger = () => {
     setIsOpen((current) => !current);
   };
 
-  const handleToggleOpen: MouseEventHandler<HTMLElement> = (e) => {
+  const handleToggleOpen: MouseEventHandler<
+    HTMLButtonElement | HTMLInputElement
+  > = (e) => {
     const tagName = e.currentTarget.tagName.toLowerCase();
     if (
       openCalendarMode === 'both' ||
@@ -44,24 +51,30 @@ export const DatePickerTrigger = () => {
     ) {
       toggleOpen();
     }
+    if (e.currentTarget instanceof HTMLInputElement) {
+      inputProps?.inputProps?.onClick?.(
+        e as React.MouseEvent<HTMLInputElement>,
+      );
+    }
   };
 
   return (
     <React.Fragment>
-      {label && <C.Label htmlFor={`field-${name}`}>{label}</C.Label>}
+      {label && <C.Label htmlFor={name}>{label}</C.Label>}
       <C.PopoverTrigger asChild>
         <C.Input
           name={name}
           placeholder={format}
-          showHelperText
           ref={inputRef}
           disabled={disabled}
           register={register}
           inputProps={{
             onBlur: handleBlur,
             onClick: handleToggleOpen,
-            id: `field-${name}`,
+            id: inputProps?.inputProps?.id || name,
             'data-testid': 'datepicker-input',
+            autoComplete: 'off',
+            ...inputElementProps,
           }}
           errors={fieldError as FieldError}
           status={fieldStatus}
@@ -72,31 +85,36 @@ export const DatePickerTrigger = () => {
             }
           `}
           endElement={
-            <C.Button
-              endIcon={
-                <C.Icon
-                  name="calendar"
-                  size={16}
-                  color={disabled ? theme.colors.grey : theme.colors.greyDarker}
-                />
-              }
-              data-testid={'datepicker-button'}
-              onClick={handleToggleOpen}
-              variant="tertiary"
-              aria-label="Calendar"
-              isDisabled={disabled}
-              css={{
-                padding: 0,
-                cursor:
-                  openCalendarMode === 'input' || disabled
-                    ? 'default'
-                    : 'pointer',
-                '&:focus::before': {
-                  display: 'none',
-                },
-              }}
-            />
+            showCalendarIcon ? (
+              <C.Button
+                endIcon={
+                  <C.Icon
+                    name="calendar"
+                    size={16}
+                    color={
+                      disabled ? theme.colors.grey : theme.colors.greyDarker
+                    }
+                  />
+                }
+                data-testid={'datepicker-button'}
+                onClick={handleToggleOpen}
+                variant="tertiary"
+                aria-label="Calendar"
+                isDisabled={disabled}
+                css={{
+                  padding: 0,
+                  cursor:
+                    openCalendarMode === 'input' || disabled
+                      ? 'default'
+                      : 'pointer',
+                  '&:focus::before': {
+                    display: 'none',
+                  },
+                }}
+              />
+            ) : undefined
           }
+          {...restInputProps}
         />
       </C.PopoverTrigger>
     </React.Fragment>

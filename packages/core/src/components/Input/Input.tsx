@@ -35,6 +35,8 @@ const InputInner = (
     maxLength,
     helperText,
     showHelperText = false,
+    showStatusIcon = true,
+    showBorders = true,
     register,
     onKeyUp,
   }: InputProps,
@@ -47,7 +49,7 @@ const InputInner = (
   }, []);
 
   const [countChar, setCountChar] = React.useState(0);
-  const showStatusIcon = () => !disabled && !endElement;
+  const showStatusIconByProps = !disabled && !endElement && showStatusIcon;
   const registerResult = register?.(name, validationSchema);
 
   const handleCount: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -70,6 +72,7 @@ const InputInner = (
         <InputBase
           type={type}
           id={`formElement-${name}`}
+          showBorders={showBorders}
           placeholder={placeholder}
           disabled={disabled}
           css={{
@@ -84,10 +87,10 @@ const InputInner = (
           ref={useMergeRefs([registerResult?.ref, inputRef])}
         />
 
-        {status === 'error' && showStatusIcon() ? (
+        {status === 'error' && showStatusIconByProps ? (
           <InputStatusError errorTooltip={errorTooltip} />
         ) : null}
-        {status === 'success' && showStatusIcon() ? (
+        {status === 'success' && showStatusIconByProps ? (
           <InputStatusSuccess successTooltip={successTooltip} />
         ) : null}
 

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const InputBase = styled.input`
+export const InputBase = styled.input<{ showBorders: boolean }>`
   flex: 1;
 
   background: ${({ theme }) => theme.colors.white};
@@ -8,7 +8,8 @@ export const InputBase = styled.input`
   background-origin: border-box;
   background-clip: padding-box, border-box;
 
-  border: ${({ theme }) => `1px solid ${theme.colors.grey}`};
+  border: ${({ showBorders, theme }) =>
+    showBorders ? `1px solid ${theme.colors.grey}` : 'none'};
 
   color: ${({ theme }) => theme.colors.greyDarker};
 
@@ -35,7 +36,8 @@ export const InputBase = styled.input`
 
     &:disabled,
     &:disabled:hover {
-      border: ${({ theme }) => `1px solid  ${theme.colors.grey}`};
+      border: ${({ showBorders, theme }) =>
+        showBorders ? `1px solid  ${theme.colors.grey}` : 'none'};
       background-image: none;
     }
   }

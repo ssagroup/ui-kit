@@ -2,20 +2,19 @@ import { useId, useRef } from 'react';
 import { css } from '@emotion/css';
 import { UseFormReturn } from 'react-hook-form';
 import { useResizeObserver } from '@ssa-ui-kit/hooks';
-
-import Wrapper from '@components/Wrapper';
 import {
+  Input,
+  Field,
+  FieldProps,
+  Button,
+  Icon,
+  Wrapper,
   Popover,
   PopoverContent,
   PopoverDescription,
   PopoverTrigger,
-} from '@components/Popover';
-import Input from '@components/Input';
+} from '@components';
 import { InputProps } from '@components/Input/types';
-import Field, { FieldProps } from '@components/Field';
-import Button from '@components/Button';
-import Icon from '@components/Icon';
-
 import {
   SelectedFilter,
   useFilterMultiSelect,

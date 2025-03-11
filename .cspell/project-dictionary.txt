@@ -36,9 +36,11 @@ cubehelix
 customdata
 customicon
 datepicker
+daterange
+daterangepicker
 disbalance
-displaylogo
 dismissable
+displaylogo
 Dissoc
 dolor
 domcontentloaded

@@ -7,15 +7,25 @@ export type DatePickerProps = {
   name: string;
   label?: string;
   format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
+  isOpenToggle?: boolean;
+  // datepickerMode?: 'default' | 'dateRangePicker';
   maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
-  inputProps?: InputProps['inputProps'];
+  inputProps?: Partial<InputProps>;
   value?: string; // depends on the format
   defaultValue?: string; // depends on the format
   dateMin?: string; // depends on the format
   dateMax?: string; // depends on the format
   disabled?: boolean;
   helperText?: string;
+  showCalendarIcon?: boolean;
+  lastChangedDate?: Date;
+  highlightDates?: {
+    enabled: boolean;
+    mode: 'dateFrom' | 'dateTo';
+    otherDate: Date | null;
+  };
+  safeOnChange?: (date?: DateTime) => void;
   onChange?: (date?: Date) => void;
   onOpen?: () => void;
   onClose?: () => void;

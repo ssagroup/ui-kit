@@ -115,6 +115,7 @@ const main: Theme = {
     blueButtonActive: 'rgb(7, 69, 189)', //#0745bd
     blueRoyal: 'rgba(72, 125, 225, 1)', //#487de1
     blueRoyal6: 'rgba(72, 125, 225, 0.06)', //#487DE1
+    blueRoyal16: 'rgba(72, 125, 225, 0.16)', //#487DE1
     blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
     dangerShades300: 'rgb(253, 128, 122)', //#FD807A
     dangerShades500: 'rgb(223, 90, 96)', //#DF5A60
