@@ -14,6 +14,15 @@ const OUTPUT_PATH = path.resolve(__dirname, 'dist');
 // Comments on HMR for React:
 // https://github.com/gaearon/react-hot-loader/issues/1150
 
+const publicEnvironmentVariables = [
+  'FIREBASE_API_KEY',
+  'FIREBASE_AUTH_DOMAIN',
+  'FIREBASE_PROJECT_ID',
+  'FIREBASE_STORAGE_BUCKET',
+  'FIREBASE_MESSAGING_SENDERID',
+  'FIREBASE_APP_ID',
+];
+
 const config = {
   entry: ['./src/index.tsx'],
   output: {
@@ -78,6 +87,8 @@ const config = {
     },
   },
   plugins: [
+    new webpack.EnvironmentPlugin(publicEnvironmentVariables),
+
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
@@ -87,10 +98,6 @@ const config = {
       hashFunction: 'sha256',
       hashDigest: 'hex',
       hashDigestLength: 20,
-    }),
-
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env),
     }),
 
     new webpack.NormalModuleReplacementPlugin(
