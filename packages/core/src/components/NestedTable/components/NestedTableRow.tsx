@@ -23,8 +23,12 @@ export const NestedTableRow = ({
   const notSubHeaderCSS: Interpolation<Theme> =
     !isSubHeader && isCollapsed
       ? {
-          height: 0,
           maxHeight: 0,
+          padding: 0,
+          '& td': {
+            maxHeight: 0,
+            padding: 0,
+          },
         }
       : {};
 

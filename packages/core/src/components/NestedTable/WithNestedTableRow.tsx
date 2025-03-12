@@ -6,12 +6,11 @@ import {
   useState,
 } from 'react';
 import { NestedTableRowProvider } from './NestedTableRowContext';
-import { NestedTableRowChildren } from './types';
 
 export const WithNestedTableRow = ({
   children,
 }: {
-  children: NestedTableRowChildren | NestedTableRowChildren[];
+  children: React.ReactNode | React.ReactNode[];
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const childRowsCount =
