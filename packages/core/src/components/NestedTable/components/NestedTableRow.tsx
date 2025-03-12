@@ -25,6 +25,12 @@ export const NestedTableRow = ({
       ? {
           height: 0,
           maxHeight: 0,
+          padding: 0,
+          '& td': {
+            height: 0,
+            maxHeight: 0,
+            padding: 0,
+          },
         }
       : {};
 
