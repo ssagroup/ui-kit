@@ -127,6 +127,21 @@ type Colors = MakeColors<
     'dangerShades700',
     'successShades500',
     'successShades700',
+    'chartPink',
+    'chartViolet',
+    'chartPurple',
+    'chartDarkBlue',
+    'chartBlue',
+    'chartCyan',
+    'chartDarkGreen',
+    'chartMiddleGreen',
+    'chartLightGreen',
+    'chartLimeGreen',
+    'chartYellow',
+    'chartLightOrange',
+    'chartMiddleOrange',
+    'chartDarkOrange',
+    'chartRed',
   ]
 >;
 

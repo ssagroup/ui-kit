@@ -40,6 +40,7 @@
     "@nivo/core": "^0.88.0",
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
+    "@nivo/treemap": "^0.88.0",
     "@playwright/test": "^1.48.0",
     "@types/luxon": "^3.4.2",
     "@types/react-plotly.js": "2.6.3"
@@ -70,6 +71,7 @@
     "@nivo/core": "^0.88.0",
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
+    "@nivo/treemap": "^0.88.0",
     "react": "18.x",
     "react-dom": "18.x",
     "react-hook-form": "^7.46.1",

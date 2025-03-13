@@ -122,6 +122,21 @@ const main: Theme = {
     dangerShades700: 'rgb(187, 68, 80)', //#BB4450
     successShades500: 'rgb(42, 164, 96)', //#2AA460
     successShades700: 'rgb(36, 135, 72)', //#248748
+    chartPink: 'rgba(244, 99, 234, 1)', //#F463EA
+    chartViolet: 'rgba(190, 73, 236, 1)', //#BE49EC
+    chartPurple: 'rgba(146, 96, 252, 1)', //#9260FC
+    chartDarkBlue: 'rgba(91, 141, 236, 1)', //#5B8DEC
+    chartBlue: 'rgba(76, 191, 253, 1)', //#4CBFFD
+    chartCyan: 'rgba(98, 225, 247, 1)', //#62E1F7
+    chartDarkGreen: 'rgba(44, 187, 151, 1)', //#2CBB97
+    chartMiddleGreen: 'rgba(95, 200, 85, 1)', //#5FC855
+    chartLightGreen: 'rgba(153, 225, 118, 1)', //#99E176
+    chartLimeGreen: 'rgba(206, 236, 131, 1)', //#CEEC83
+    chartYellow: 'rgba(249, 247, 137, 1)', //#F9F789
+    chartLightOrange: 'rgba(253, 228, 125, 1)', //#FDE47D
+    chartMiddleOrange: 'rgba(253, 198, 125, 1)', //#FDC67D
+    chartDarkOrange: 'rgba(255, 160, 105, 1)', //#FFA069
+    chartRed: 'rgba(255, 115, 121, 1)', //#FF7379
   },
   mediaQueries: {
     xs: '@media screen and (max-width: 389px)',

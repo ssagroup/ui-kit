@@ -166,6 +166,7 @@ tomdata
 traceorder
 tradinginfocard
 translatex
+treemap
 tsbuildcache
 Typeahead
 umd
