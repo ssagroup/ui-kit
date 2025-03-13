@@ -32,6 +32,7 @@ export interface FiltersMultiSelectProps
   error?: string;
   icon?: React.ReactNode;
   inputProps?: InputProps['inputProps'];
+  fieldProps?: FieldProps;
   label?: string;
   placeholder?: string;
   searchable?: boolean;
@@ -52,6 +53,7 @@ export const FiltersMultiSelect = ({
   emptyNode: controlledEmptyNode,
   error,
   icon,
+  fieldProps,
   inputProps,
   label,
   placeholder,
@@ -85,7 +87,7 @@ export const FiltersMultiSelect = ({
 
   return (
     <FiltersMultiSelectProvider value={{ store, emptyNode }}>
-      <Field.Root disabled={disabled} status={status}>
+      <Field.Root disabled={disabled} status={status} {...fieldProps}>
         {label && (
           <Field.Label htmlFor={`formElement-search-${id}`}>
             {label}

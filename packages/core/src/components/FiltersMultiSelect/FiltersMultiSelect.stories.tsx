@@ -32,11 +32,12 @@ type Story = StoryObj<typeof FiltersMultiSelect>;
 const filters: Filter[] = [
   { id: '1', label: 'Filter 1' },
   { id: '2', label: 'Filter 2' },
-  { id: '3', label: 'Filter Group', group: true },
+  { id: '3', label: 'Filter Group 1', group: true },
   { id: '4', label: 'Filter 4' },
   { id: '5', label: 'Filter 5' },
   { id: '6', label: 'Filter 6' },
   { id: '7', label: 'Filter 7' },
+  { id: '8', label: 'Filter Group 2', group: true },
 ];
 
 export const Default: Story = {
@@ -45,7 +46,7 @@ export const Default: Story = {
       defaultSelectedFilters: [
         { id: '1', label: 'Filter 1', type: 'include' },
         { id: '2', label: 'Filter 2', type: 'exclude' },
-        { id: '3', label: 'Filter 3', type: 'group' },
+        { id: '3', label: 'Filter Group 1', type: 'group' },
       ],
     });
     const filtersToShow = filters.filter((filter) =>

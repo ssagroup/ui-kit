@@ -1,13 +1,17 @@
 import { DrawerProvider } from './DrawerProvider';
-import { useDrawer, UseDrawerStore } from './useDrawer';
+import { useDrawer, UseDrawerStore, UseDrawerOptions } from './useDrawer';
 
-export interface DrawerProps {
-  children: React.ReactElement;
+export interface DrawerProps extends UseDrawerOptions {
+  children?: React.ReactElement;
   store?: UseDrawerStore;
 }
 
-export const Drawer = ({ children, store: controlledStore }: DrawerProps) => {
-  const uncontrolledStore = useDrawer({});
+export const Drawer = ({
+  children,
+  store: controlledStore,
+  ...drawerProps
+}: DrawerProps) => {
+  const uncontrolledStore = useDrawer(drawerProps);
   const store = controlledStore || uncontrolledStore;
 
   if (!store.transition.isMounted) {
