@@ -5,21 +5,20 @@ export const NestedTableRowContext = createContext<NestedTableRowContextType>({
   childRowsCount: 0,
   isCollapsed: false,
   isSubHeader: false,
+  setIsCollapsed: () => {
+    // no-op
+  },
 });
 
 export const NestedTableRowProvider = ({
   children,
-  isCollapsed: isCollapsedInput,
+  isCollapsed,
   isSubHeader: isSubHeaderInput,
   childRowsCount: childRowsCountInput,
+  setIsCollapsed,
 }: React.PropsWithChildren<NestedTableRowContextType>) => {
-  const [isCollapsed, setIsCollapsed] = useState(isCollapsedInput);
   const [isSubHeader, setIsSubHeader] = useState(isSubHeaderInput);
   const [childRowsCount, setChildRowsCount] = useState(childRowsCountInput);
-
-  useEffect(() => {
-    setIsCollapsed(isCollapsedInput);
-  }, [isCollapsedInput]);
 
   useEffect(() => {
     setIsSubHeader(isSubHeaderInput);
@@ -33,6 +32,7 @@ export const NestedTableRowProvider = ({
     <NestedTableRowContext.Provider
       value={{
         isCollapsed,
+        setIsCollapsed,
         isSubHeader,
         childRowsCount,
       }}>

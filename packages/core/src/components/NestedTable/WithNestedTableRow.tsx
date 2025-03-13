@@ -21,29 +21,13 @@ export const WithNestedTableRow = ({
   return Children.map(children, (child, index) => {
     if (isValidElement(child)) {
       const isSubHeader = index === 0;
-      const classNames: string[] = [];
-      if (isSubHeader) {
-        classNames.push('first-row');
-      }
-      if (isCollapsed) {
-        classNames.push('collapsed');
-      }
       return (
         <NestedTableRowProvider
           isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
           isSubHeader={isSubHeader}
           childRowsCount={childRowsCount}>
-          {cloneElement(child as ReactElement, {
-            className: classNames.length > 0 ? classNames.join(' ') : undefined,
-            isCollapsed,
-            childRowsCount,
-            onClick:
-              childRowsCount > 1
-                ? () => {
-                    setIsCollapsed((currentState) => !currentState);
-                  }
-                : undefined,
-          })}
+          {cloneElement(child as ReactElement)}
         </NestedTableRowProvider>
       );
     }

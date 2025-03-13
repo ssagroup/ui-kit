@@ -14,12 +14,21 @@ export const NestedTableRow = ({
   } & HTMLAttributes<HTMLTableRowElement>
 >) => {
   const theme = useTheme();
-  const { isCollapsed, isSubHeader } = useNestedTableRowContext();
+  const { isCollapsed, isSubHeader, childRowsCount, setIsCollapsed } =
+    useNestedTableRowContext();
   const headerCSS: Interpolation<Theme> = isSubHeader
     ? {
         background: theme.colors.greyLighter60,
       }
     : {};
+
+  const classNames: string[] = [];
+  if (isSubHeader) {
+    classNames.push('first-row');
+  }
+  if (isCollapsed) {
+    classNames.push('collapsed');
+  }
   const notSubHeaderCSS: Interpolation<Theme> =
     !isSubHeader && isCollapsed
       ? {
@@ -32,12 +41,20 @@ export const NestedTableRow = ({
         }
       : {};
 
+  const handleClick = () => {
+    if (childRowsCount > 1 && isSubHeader) {
+      setIsCollapsed((currentState) => !currentState);
+    }
+  };
+
   return (
     <TableRow
       css={{
         ...headerCSS,
         ...notSubHeaderCSS,
       }}
+      onClick={handleClick}
+      className={classNames.join(' ')}
       {...props}>
       <NestedTableCellSubHeader
         isHeader={isHeader}
