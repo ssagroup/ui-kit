@@ -94,6 +94,7 @@ const main: Theme = {
     blue: 'rgba(65, 120, 225, 1)', // #4178e1
     blue6: 'rgba(65, 120, 225, 0.06)', // #4178e1
     blue20: 'rgba(65, 120, 225, 0.2)', // #4178e1
+    blueCool: 'rgba(108, 148, 247, 1)', // #6c94f7
     blueDark: 'rgba(36, 101, 227, 1)', // #2465e3
     blueLightDarker: 'rgba(127, 159, 221)', // #7f9fdd
     blueDropdownWithSelectedItems: 'rgba(236, 247, 255, 1)', // #ECF7FF
@@ -117,6 +118,7 @@ const main: Theme = {
     blueRoyal6: 'rgba(72, 125, 225, 0.06)', //#487DE1
     blueRoyal16: 'rgba(72, 125, 225, 0.16)', //#487DE1
     blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
+    cyanTeal: 'rgba(85, 214, 210, 1)', //#55D6D2
     dangerShades300: 'rgb(253, 128, 122)', //#FD807A
     dangerShades500: 'rgb(223, 90, 96)', //#DF5A60
     dangerShades700: 'rgb(187, 68, 80)', //#BB4450
