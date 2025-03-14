@@ -1,0 +1,293 @@
+import { useEffect, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { DateTime } from 'luxon';
+import { useDatePickerMask } from './useDatePickerMask';
+import { DATE_MAX, DATE_MIN, INVALID_DATE, OUT_OF_RANGE } from '../constants';
+import {
+  CalendarType,
+  DateRangePickerContextProps,
+  DateRangePickerProps,
+} from '../types';
+
+export const useDateRangePicker = ({
+  dateMin = DATE_MIN,
+  dateMax = DATE_MAX,
+  name: _name,
+  format = 'mm/dd/yyyy',
+  maskOptions,
+  isOpen,
+  setIsOpen,
+  onOpen,
+  onClose,
+  onError,
+  onChange,
+  ...rest
+}: DateRangePickerProps) => {
+  const { clearErrors, setError, setValue } = useFormContext();
+
+  const nameFrom = `${_name}From`;
+  const nameTo = `${_name}To`;
+
+  const inputValueFrom = useWatch({ name: nameFrom });
+  const inputValueTo = useWatch({ name: nameTo });
+
+  const [dateTime, setDateTime] = useState<
+    DateRangePickerContextProps['dateTime']
+  >([undefined, undefined]);
+  const [lastChangedDate, setLastChangedDate] = useState<
+    [Date | undefined, Date | undefined]
+  >([undefined, undefined]);
+  const [lastFocusedElement, setLastFocusedElement] = useState<'from' | 'to'>(
+    'from',
+  );
+  const currentName = lastFocusedElement === 'from' ? nameFrom : nameTo;
+  const [dateTimeForChangeEvent, setDateTimeForChangeEvent] = useState<
+    DateTime | undefined
+  >(undefined);
+  const [currentError, setCurrentError] = useState<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    date: any;
+    error?: string | null;
+  }>({
+    date: null,
+    error: null,
+  });
+  const splittedFormat = format.split('/');
+  const [formatIndexes, setFormatIndexes] = useState({
+    day: splittedFormat.findIndex((item) => item === 'dd'),
+    month: splittedFormat.findIndex((item) => item === 'mm'),
+    year: splittedFormat.findIndex((item) => item === 'yyyy'),
+  });
+  const [calendarType, setCalendarType] = useState<CalendarType>('days');
+  const [calendarViewDateTime, setCalendarViewDateTime] = useState<
+    [DateTime | undefined, DateTime | undefined]
+  >([undefined, undefined]);
+  const luxonFormat = format.replace('mm', 'MM');
+  const dateMinParts = dateMin.split('/').map(Number);
+  const dateMaxParts = dateMax.split('/').map(Number);
+
+  const maskInputRef = useDatePickerMask({
+    maskOptions,
+    dateMaxParts,
+    dateMinParts,
+    formatIndexes,
+  });
+
+  const dateMaxDT = DateTime.fromObject({
+    year: dateMaxParts[formatIndexes['year']],
+    month: dateMaxParts[formatIndexes['month']],
+    day: dateMaxParts[formatIndexes['day']],
+  });
+  const dateMinDT = DateTime.fromObject({
+    year: dateMinParts[formatIndexes['year']],
+    month: dateMinParts[formatIndexes['month']],
+    day: dateMinParts[formatIndexes['day']],
+  });
+
+  const safeOnChange = (newDateTime?: DateTime) => {
+    const _newDateTime = newDateTime ? newDateTime.startOf('day') : undefined;
+
+    const _dateTimeForChangeEvent = dateTimeForChangeEvent
+      ? dateTimeForChangeEvent.startOf('day')
+      : undefined;
+    if (_newDateTime?.toMillis() !== _dateTimeForChangeEvent?.toMillis()) {
+      setDateTimeForChangeEvent(newDateTime);
+      if (_newDateTime) {
+        const _newDateTimeJS = _newDateTime.toJSDate();
+        if (lastFocusedElement === 'from') {
+          setLastChangedDate([_newDateTimeJS, lastChangedDate[1]]);
+          onChange?.([_newDateTimeJS, lastChangedDate[1] || null]);
+        } else {
+          setLastChangedDate([lastChangedDate[0], _newDateTimeJS]);
+          onChange?.([lastChangedDate[0] || null, _newDateTimeJS]);
+        }
+      } else {
+        setLastChangedDate([
+          lastFocusedElement === 'from' ? undefined : lastChangedDate[0],
+          lastFocusedElement === 'to' ? undefined : lastChangedDate[1],
+        ]);
+        onChange?.();
+      }
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const safeOnError = (date: any, error?: string | null) => {
+    if (currentError.date !== date && currentError.error !== error) {
+      setCurrentError({ date, error });
+      onError?.(date, error);
+    }
+  };
+
+  const processValue = (newValue: string) => {
+    const newDateTime =
+      typeof newValue === 'string' && newValue.length === 10
+        ? DateTime.fromFormat(newValue, luxonFormat)
+        : undefined;
+
+    if (!newDateTime?.isValid) {
+      const errorMessage = newDateTime?.invalidExplanation || INVALID_DATE;
+      setError(currentName, { message: errorMessage }, { shouldFocus: true });
+      setDateTime([
+        lastFocusedElement === 'from' ? undefined : dateTime?.[0],
+        lastFocusedElement === 'to' ? undefined : dateTime?.[1],
+      ]);
+      safeOnChange();
+      safeOnError?.(newValue, errorMessage);
+    } else if (newDateTime !== undefined) {
+      if (newDateTime < dateMinDT || newDateTime > dateMaxDT) {
+        const errorMessage = OUT_OF_RANGE;
+        setError(currentName, { message: errorMessage }, { shouldFocus: true });
+        setDateTime([
+          lastFocusedElement === 'from' ? undefined : dateTime?.[0],
+          lastFocusedElement === 'to' ? undefined : dateTime?.[1],
+        ]);
+        safeOnError?.(newValue, errorMessage);
+        safeOnChange();
+      } else {
+        setDateTime([
+          lastFocusedElement === 'from' ? newDateTime : dateTime?.[0],
+          lastFocusedElement === 'to' ? newDateTime : dateTime?.[1],
+        ]);
+        clearErrors();
+        safeOnError?.(null);
+        safeOnChange?.(newDateTime);
+      }
+    }
+  };
+
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    event.preventDefault();
+    const blurredValue = event.currentTarget.value;
+    if (blurredValue.length > 0) {
+      processValue(blurredValue);
+    }
+  };
+
+  const processInputValue = (inputValue: string) => {
+    if (
+      typeof inputValue === 'string' &&
+      inputValue.length &&
+      inputValue.length < 10
+    ) {
+      setIsOpen(false);
+      setTimeout(() => {
+        maskInputRef.current.focus();
+      }, 10);
+    }
+    let newDateTime;
+
+    if (typeof inputValue === 'string' && inputValue.length === 10) {
+      newDateTime = DateTime.fromFormat(inputValue, luxonFormat);
+      setValue(currentName, inputValue);
+      processValue(inputValue);
+    }
+
+    const newCalendarViewDateTime =
+      newDateTime && newDateTime.isValid
+        ? newDateTime
+        : DateTime.now().set({ day: 1 });
+
+    if (newCalendarViewDateTime < dateMinDT) {
+      const { year, month, day } = dateMinDT;
+      newCalendarViewDateTime.set({ year, month, day });
+    }
+    if (newCalendarViewDateTime > dateMaxDT) {
+      const { year, month, day } = dateMaxDT;
+      newCalendarViewDateTime.set({ year, month, day });
+    }
+
+    setCalendarViewDateTime(
+      lastFocusedElement === 'from'
+        ? [newCalendarViewDateTime, calendarViewDateTime[1]]
+        : [calendarViewDateTime[0], newCalendarViewDateTime],
+    );
+  };
+
+  useEffect(() => {
+    if (lastFocusedElement === 'from') {
+      processInputValue(inputValueFrom);
+    } else {
+      processInputValue(inputValueTo);
+    }
+  }, [inputValueFrom, inputValueTo]);
+
+  useEffect(() => {
+    const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
+    const currentInputValue =
+      currentIndex === 0 ? inputValueFrom : inputValueTo;
+    if (dateTime?.[currentIndex]) {
+      const newValue = dateTime[currentIndex].toFormat(luxonFormat);
+      if (currentInputValue !== newValue) {
+        setValue(currentName, newValue);
+      }
+    }
+  }, [dateTime, lastFocusedElement, currentName]);
+
+  useEffect(() => {
+    if (isOpen) {
+      onOpen?.();
+    } else {
+      onClose?.();
+      setCalendarType('days');
+      setCalendarViewDateTime([dateTime[0], dateTime[1]]);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const splittedFormat = format.split('/');
+    setFormatIndexes({
+      day: splittedFormat.findIndex((item) => item === 'dd'),
+      month: splittedFormat.findIndex((item) => item === 'mm'),
+      year: splittedFormat.findIndex((item) => item === 'yyyy'),
+    });
+  }, [format]);
+
+  useEffect(() => {
+    if ('value' in rest) {
+      setValue(currentName, rest.value);
+    }
+  }, [rest.value, currentName]);
+
+  useEffect(() => {
+    const newCalendarViewDateTime = DateTime.now().set({ day: 1 });
+    setCalendarViewDateTime([newCalendarViewDateTime, newCalendarViewDateTime]);
+  }, []);
+
+  // TODO!
+  // useEffect(() => {
+  //   if (defaultValue) {
+  //     const newDateTime = DateTime.fromFormat(defaultValue, luxonFormat);
+  //     if (newDateTime.isValid) {
+  //       setDateTime(newDateTime);
+  //       setValue(name, defaultValue);
+  //     }
+  //   }
+  //   setLoading(false);
+  // }, []);
+
+  return {
+    formatIndexes,
+    dateMinParts,
+    dateMaxParts,
+    dateMinDT,
+    dateMaxDT,
+    dateTime,
+    inputValueFrom,
+    inputValueTo,
+    calendarViewDateTime,
+    maskInputRef,
+    calendarType,
+    lastChangedDate,
+    luxonFormat,
+    lastFocusedElement,
+    nameFrom,
+    nameTo,
+    setLastFocusedElement,
+    safeOnChange,
+    setCalendarType,
+    setCalendarViewDateTime,
+    setDateTime,
+    handleBlur,
+  };
+};

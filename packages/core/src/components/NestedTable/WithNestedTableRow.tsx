@@ -1,10 +1,4 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  ReactElement,
-  useState,
-} from 'react';
+import { Children, isValidElement, useState } from 'react';
 import { NestedTableRowProvider } from './NestedTableRowContext';
 
 export const WithNestedTableRow = ({
@@ -27,7 +21,7 @@ export const WithNestedTableRow = ({
           setIsCollapsed={setIsCollapsed}
           isSubHeader={isSubHeader}
           childRowsCount={childRowsCount}>
-          {cloneElement(child as ReactElement)}
+          {child}
         </NestedTableRowProvider>
       );
     }
