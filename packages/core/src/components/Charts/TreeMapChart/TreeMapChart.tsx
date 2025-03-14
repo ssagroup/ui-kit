@@ -33,24 +33,19 @@ export const TreeMapChartComponent = ({
   ...treeMapProps
 }: TreeMapChartProps) => {
   const theme = useTheme();
-  const nodeToLabelColors = {
-    [theme.colors.chartPink as string]: theme.colors.white,
-    [theme.colors.chartViolet as string]: theme.colors.white,
-    [theme.colors.chartPurple as string]: theme.colors.white,
-    [theme.colors.chartDarkBlue as string]: theme.colors.white,
-    [theme.colors.chartBlue as string]: theme.colors.white,
-    [theme.colors.chartCyan as string]: theme.colors.white,
-    [theme.colors.chartDarkGreen as string]: theme.colors.white,
-    [theme.colors.chartMiddleGreen as string]: theme.colors.white,
-    [theme.colors.chartLightGreen as string]: theme.colors.white,
-    [theme.colors.chartLimeGreen as string]: theme.colors.white,
-    [theme.colors.chartYellow as string]: theme.colors.white,
-    [theme.colors.chartLightOrange as string]: theme.colors.white,
-    [theme.colors.chartMiddleOrange as string]: theme.colors.white,
-    [theme.colors.chartDarkOrange as string]: theme.colors.white,
-    [theme.colors.chartRed as string]: theme.colors.white,
-  };
-  const colors = Object.keys(nodeToLabelColors);
+
+  const colors = [
+    theme.colors.purple,
+    theme.colors.blue,
+    theme.colors.blueLight,
+    theme.colors.turquoise,
+    theme.colors.green,
+    theme.colors.yellowLighter,
+    theme.colors.yellow,
+    theme.colors.pink,
+    theme.colors.blueCool,
+    theme.colors.cyanTeal,
+  ] as string[];
 
   return (
     <WithWidgetCard
@@ -76,10 +71,8 @@ export const TreeMapChartComponent = ({
             innerPadding={4}
             label={(node) => `${node.id} (${node.formattedValue})`}
             labelSkipSize={10}
-            labelTextColor={({ color }) => nodeToLabelColors[color] as string}
-            parentLabelTextColor={({ color }) =>
-              nodeToLabelColors[color] as string
-            }
+            labelTextColor={theme.colors.white}
+            parentLabelTextColor={theme.colors.white}
             leavesOnly={true}
             nodeOpacity={1}
             theme={{

@@ -10,8 +10,8 @@ export const getBalancePalette = (theme: Theme) => {
     'turquoise',
     'pink',
     'purple',
-    '#6C94F7',
-    '#55D6D2',
+    'blueCool',
+    'cyanTeal',
   ] as unknown as Array<keyof MainColors>;
 
   const pieChartColors = [
@@ -23,8 +23,8 @@ export const getBalancePalette = (theme: Theme) => {
     theme.colors.turquoise,
     theme.colors.pink,
     theme.colors.purple,
-    '#6C94F7',
-    '#55D6D2',
+    theme.colors.blueCool,
+    theme.colors.cyanTeal,
   ] as unknown as string[];
 
   return { legendColorNames, pieChartColors };
