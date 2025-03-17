@@ -49,7 +49,7 @@ export const CustomCurrency: Story = {
     totalDimension: 'PLN',
     totalAmount: 17737.12,
   },
-  storyName: 'Custom currency, total dimension and amount',
+  name: 'Custom currency, total dimension and amount',
 };
 
 export const MissedPartsData: Story = {

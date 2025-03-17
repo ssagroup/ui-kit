@@ -12,14 +12,11 @@ export const MonthsView = () => {
     dateMinDT,
     dateMaxDT,
     lastFocusedElement,
+    currentCalendarViewDT,
     setCalendarType,
-    setDateTime,
     setCalendarViewDateTime,
     onMonthChange,
   } = useDateRangePickerContext();
-
-  const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
-  const currentCalendarViewDT = calendarViewDateTime[currentIndex];
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
@@ -35,11 +32,6 @@ export const MonthsView = () => {
       lastFocusedElement === 'from'
         ? [newDate, calendarViewDateTime[1]]
         : [calendarViewDateTime[0], newDate],
-    );
-    setDateTime(
-      lastFocusedElement === 'from'
-        ? [newDate, dateTime[1]]
-        : [dateTime[0], newDate],
     );
     if (newDate) {
       onMonthChange?.(newDate.toJSDate());

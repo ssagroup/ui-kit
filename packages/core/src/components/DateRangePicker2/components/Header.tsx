@@ -3,18 +3,10 @@ import * as DPC from '.';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
 export const Header = () => {
-  const {
-    calendarType,
-    setCalendarType,
-    calendarViewDateTime,
-    lastFocusedElement,
-  } = useDateRangePickerContext();
+  const { calendarType, currentCalendarViewDT, setCalendarType } =
+    useDateRangePickerContext();
   const handleCalendarTypeChange = () => {
-    if (calendarType === 'days') {
-      setCalendarType('years');
-    } else {
-      setCalendarType('days');
-    }
+    setCalendarType(calendarType === 'days' ? 'years' : 'days');
   };
   return (
     <C.PopoverHeading
@@ -48,9 +40,7 @@ export const Header = () => {
             display: 'none',
           },
         }}>
-        {calendarViewDateTime[lastFocusedElement === 'from' ? 0 : 1]?.toFormat(
-          'LLLL yyyy',
-        )}
+        {currentCalendarViewDT.toFormat('LLLL yyyy')}
       </C.Button>
       <DPC.MonthsSwitch />
     </C.PopoverHeading>

@@ -83,10 +83,25 @@ export const YearsViewCell = styled.div<{
   font-weight: 500px;
   user-select: none;
   cursor: pointer;
-  color: ${({ theme, isCalendarYear, isCalendarSecondDateSelected }) =>
-    (isCalendarYear || isCalendarSecondDateSelected) && theme.colors.white};
-  background: ${({ theme, isCalendarYear, isCalendarSecondDateSelected }) =>
-    isCalendarYear || isCalendarSecondDateSelected
+  color: ${({
+    theme,
+    isCalendarYear,
+    isCalendarFirstDateSelected,
+    isCalendarSecondDateSelected,
+  }) =>
+    (isCalendarYear ||
+      isCalendarFirstDateSelected ||
+      isCalendarSecondDateSelected) &&
+    theme.colors.white};
+  background: ${({
+    theme,
+    isCalendarYear,
+    isCalendarFirstDateSelected,
+    isCalendarSecondDateSelected,
+  }) =>
+    isCalendarYear ||
+    isCalendarFirstDateSelected ||
+    isCalendarSecondDateSelected
       ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
       : 'none'};
   background: ${({ theme, isHighlighted, isCalendarYear }) =>
@@ -94,6 +109,7 @@ export const YearsViewCell = styled.div<{
   &:hover {
     background: ${({ theme }) => theme.colors.greyLighter};
     color: ${({ theme }) => theme.colors.greyDarker};
+    border-radius: 6px;
   }
   &::before {
     content: '';
@@ -136,11 +152,26 @@ export const MonthsViewCell = styled.div<{
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  color: ${({ theme, isCalendarMonth, isCalendarSecondDateSelected }) =>
-    (isCalendarMonth || isCalendarSecondDateSelected) && theme.colors.white};
+  color: ${({
+    theme,
+    isCalendarMonth,
+    isCalendarFirstDateSelected,
+    isCalendarSecondDateSelected,
+  }) =>
+    (isCalendarMonth ||
+      isCalendarFirstDateSelected ||
+      isCalendarSecondDateSelected) &&
+    theme.colors.white};
   user-select: none;
-  background: ${({ theme, isCalendarMonth, isCalendarSecondDateSelected }) =>
-    isCalendarMonth || isCalendarSecondDateSelected
+  background: ${({
+    theme,
+    isCalendarMonth,
+    isCalendarFirstDateSelected,
+    isCalendarSecondDateSelected,
+  }) =>
+    isCalendarMonth ||
+    isCalendarFirstDateSelected ||
+    isCalendarSecondDateSelected
       ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
       : 'none'};
   &[aria-disabled='true'] {

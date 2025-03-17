@@ -25,6 +25,8 @@ export type DateRangePickerProps = {
   showCalendarIcon?: boolean;
   lastChangedDate?: [Date | undefined, Date | undefined];
   calendarViewDateTime: [DateTime | undefined, DateTime | undefined];
+  currentCalendarViewDT: DateTime;
+  currentIndex: number;
   safeOnChange?: (date?: DateTime) => void;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   onChange?: (dates?: [Date | null, Date | null]) => void;
@@ -36,14 +38,14 @@ export type DateRangePickerProps = {
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 };
 
-type DateTimeTuple = [DateTime | undefined, DateTime | undefined];
+export type DateTimeTuple = [DateTime | undefined, DateTime | undefined];
 
 export type DateRangePickerContextProps = Omit<
   DateRangePickerProps,
   'dateMin' | 'dateMax'
 > & {
-  inputFromRef: React.MutableRefObject<HTMLInputElement | null>;
-  inputToRef: React.MutableRefObject<HTMLInputElement | null>;
+  inputFromRef: React.ForwardedRef<HTMLInputElement | null>;
+  inputToRef: React.ForwardedRef<HTMLInputElement | null>;
   nameFrom: string;
   nameTo: string;
   isOpen: boolean;

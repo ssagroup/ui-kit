@@ -16,9 +16,15 @@ export default {
       type: 'string',
     },
   },
+  // required due to https://github.com/storybookjs/storybook/issues/17025
   parameters: {
     controls: {
       include: ['disabled', 'label', 'openCalendarMode', 'helperText'],
+    },
+    docs: {
+      source: {
+        type: 'code',
+      },
     },
   },
   decorators: [

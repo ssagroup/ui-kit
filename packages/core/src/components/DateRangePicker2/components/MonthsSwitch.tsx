@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { useTheme } from '@emotion/react';
 import * as C from '../..';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
@@ -15,7 +16,8 @@ export const MonthsSwitch = () => {
   const theme = useTheme();
   const isDayCalendarType = calendarType === 'days';
   const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
-  const currentCalendarViewDT = calendarViewDateTime[currentIndex];
+  const currentCalendarViewDT =
+    calendarViewDateTime[currentIndex] || DateTime.now().set({ day: 1 });
 
   const isMinMonthReached = calendarViewDateTime
     ? currentCalendarViewDT?.month === dateMinDT.month &&

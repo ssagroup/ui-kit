@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { useMergeRefs } from '@floating-ui/react';
 import { DateRangePickerContextProps, DateRangePickerProps } from './types';
 import { useDateRangePicker } from './hooks';
 import { DateRangePickerContext } from './DateRangePickerContext';
@@ -13,14 +14,12 @@ export const DateRangePickerProvider = ({
     setIsOpen(open);
   };
 
-  const { formatIndexes, ...restHook } = useDateRangePicker({
-    ...rest,
-    isOpen,
-    setIsOpen,
-  });
-
-  const inputFromRef = useRef<HTMLInputElement | null>(null);
-  const inputToRef = useRef<HTMLInputElement | null>(null);
+  const { formatIndexes, maskInputRef, inputFromRef, inputToRef, ...restHook } =
+    useDateRangePicker({
+      ...rest,
+      isOpen,
+      setIsOpen,
+    });
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     restHook.handleBlur(e);
@@ -54,9 +53,9 @@ export const DateRangePickerProvider = ({
         ...rest,
         ...restHook,
         formatIndexes,
-        inputFromRef,
-        inputToRef,
         isOpen,
+        inputFromRef: useMergeRefs([maskInputRef, inputFromRef]),
+        inputToRef: useMergeRefs([maskInputRef, inputToRef]),
         setIsOpen,
         handleSetIsOpen,
         handleToggleOpen,

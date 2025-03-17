@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useDatePickerMask } from './useDatePickerMask';
@@ -7,6 +7,7 @@ import {
   CalendarType,
   DateRangePickerContextProps,
   DateRangePickerProps,
+  DateTimeTuple,
 } from '../types';
 
 export const useDateRangePicker = ({
@@ -23,7 +24,11 @@ export const useDateRangePicker = ({
   onChange,
   ...rest
 }: DateRangePickerProps) => {
-  const { clearErrors, setError, setValue } = useFormContext();
+  const inputFromRef = useRef<HTMLInputElement | null>(null);
+  const inputToRef = useRef<HTMLInputElement | null>(null);
+
+  const { clearErrors, setError, setValue, resetField, setFocus } =
+    useFormContext();
 
   const nameFrom = `${_name}From`;
   const nameTo = `${_name}To`;
@@ -40,6 +45,7 @@ export const useDateRangePicker = ({
   const [lastFocusedElement, setLastFocusedElement] = useState<'from' | 'to'>(
     'from',
   );
+  const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
   const currentName = lastFocusedElement === 'from' ? nameFrom : nameTo;
   const [dateTimeForChangeEvent, setDateTimeForChangeEvent] = useState<
     DateTime | undefined
@@ -62,6 +68,8 @@ export const useDateRangePicker = ({
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     [DateTime | undefined, DateTime | undefined]
   >([undefined, undefined]);
+  const currentCalendarViewDT =
+    calendarViewDateTime[currentIndex] || DateTime.now().set({ day: 1 });
   const luxonFormat = format.replace('mm', 'MM');
   const dateMinParts = dateMin.split('/').map(Number);
   const dateMaxParts = dateMax.split('/').map(Number);
@@ -125,30 +133,31 @@ export const useDateRangePicker = ({
         ? DateTime.fromFormat(newValue, luxonFormat)
         : undefined;
 
+    const newDateTimeIfInvalid: DateTimeTuple = [
+      lastFocusedElement === 'from' ? undefined : dateTime?.[0],
+      lastFocusedElement === 'to' ? undefined : dateTime?.[1],
+    ];
+
+    const newDateTimeIfValid: DateTimeTuple = [
+      lastFocusedElement === 'from' ? newDateTime : dateTime?.[0],
+      lastFocusedElement === 'to' ? newDateTime : dateTime?.[1],
+    ];
+
     if (!newDateTime?.isValid) {
       const errorMessage = newDateTime?.invalidExplanation || INVALID_DATE;
       setError(currentName, { message: errorMessage }, { shouldFocus: true });
-      setDateTime([
-        lastFocusedElement === 'from' ? undefined : dateTime?.[0],
-        lastFocusedElement === 'to' ? undefined : dateTime?.[1],
-      ]);
-      safeOnChange();
+      setDateTime(newDateTimeIfInvalid);
       safeOnError?.(newValue, errorMessage);
+      safeOnChange();
     } else if (newDateTime !== undefined) {
       if (newDateTime < dateMinDT || newDateTime > dateMaxDT) {
         const errorMessage = OUT_OF_RANGE;
         setError(currentName, { message: errorMessage }, { shouldFocus: true });
-        setDateTime([
-          lastFocusedElement === 'from' ? undefined : dateTime?.[0],
-          lastFocusedElement === 'to' ? undefined : dateTime?.[1],
-        ]);
+        setDateTime(newDateTimeIfInvalid);
         safeOnError?.(newValue, errorMessage);
         safeOnChange();
       } else {
-        setDateTime([
-          lastFocusedElement === 'from' ? newDateTime : dateTime?.[0],
-          lastFocusedElement === 'to' ? newDateTime : dateTime?.[1],
-        ]);
+        setDateTime(newDateTimeIfValid);
         clearErrors();
         safeOnError?.(null);
         safeOnChange?.(newDateTime);
@@ -205,12 +214,10 @@ export const useDateRangePicker = ({
   };
 
   useEffect(() => {
-    if (lastFocusedElement === 'from') {
-      processInputValue(inputValueFrom);
-    } else {
-      processInputValue(inputValueTo);
-    }
-  }, [inputValueFrom, inputValueTo]);
+    processInputValue(
+      lastFocusedElement === 'from' ? inputValueFrom : inputValueTo,
+    );
+  }, [inputValueFrom, inputValueTo, lastFocusedElement]);
 
   useEffect(() => {
     const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
@@ -223,6 +230,25 @@ export const useDateRangePicker = ({
       }
     }
   }, [dateTime, lastFocusedElement, currentName]);
+
+  useEffect(() => {
+    if (dateTime[0] && dateTime[1] && dateTime[0] > dateTime[1]) {
+      resetField(nameFrom);
+      resetField(nameTo);
+      setDateTime([dateTime[1], undefined]);
+      setLastChangedDate([dateTime[1].toJSDate(), undefined]);
+      setValue(nameFrom, dateTime[1].toFormat(luxonFormat));
+      setLastFocusedElement('to');
+
+      setTimeout(() => {
+        setFocus(nameTo, {
+          shouldSelect: true,
+        });
+      }, 50);
+
+      setIsOpen(true);
+    }
+  }, [dateTime]);
 
   useEffect(() => {
     if (isOpen) {
@@ -250,9 +276,16 @@ export const useDateRangePicker = ({
   }, [rest.value, currentName]);
 
   useEffect(() => {
-    const newCalendarViewDateTime = DateTime.now().set({ day: 1 });
-    setCalendarViewDateTime([newCalendarViewDateTime, newCalendarViewDateTime]);
-  }, []);
+    if (lastChangedDate[0] || lastChangedDate[1]) {
+      if (lastFocusedElement === 'from' && !lastChangedDate[1]) {
+        setFocus(nameTo);
+      }
+      if (lastFocusedElement === 'to' && !lastChangedDate[0]) {
+        setFocus(nameFrom);
+        inputFromRef.current?.focus();
+      }
+    }
+  }, [lastChangedDate]);
 
   // TODO!
   // useEffect(() => {
@@ -283,6 +316,10 @@ export const useDateRangePicker = ({
     lastFocusedElement,
     nameFrom,
     nameTo,
+    inputFromRef,
+    inputToRef,
+    currentIndex,
+    currentCalendarViewDT,
     setLastFocusedElement,
     safeOnChange,
     setCalendarType,

@@ -4,6 +4,7 @@ import Wrapper from '@components/Wrapper';
 import * as S from '../styles';
 import { getDaysForCalendarMonth, getWeekDays } from '../utils';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { DateTimeTuple } from '../types';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();
@@ -13,11 +14,12 @@ export const DaysView = () => {
     dateMinDT,
     dateMaxDT,
     lastFocusedElement,
+    currentCalendarViewDT,
     setCalendarViewDateTime,
     setDateTime,
+    setIsOpen,
   } = useDateRangePickerContext();
-  const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
-  const currentDate = calendarViewDateTime[currentIndex]?.toJSDate();
+  const currentDate = currentCalendarViewDT.toJSDate();
   const currentMonth = currentDate?.getMonth();
   const dates = getDaysForCalendarMonth(currentDate);
   const nowDate = DateTime.fromJSDate(new Date()).toFormat('D');
@@ -28,19 +30,22 @@ export const DaysView = () => {
     const isEnabled =
       (target as HTMLDivElement).getAttribute('aria-disabled') === 'false';
     if (isEnabled) {
-      const newDate = calendarViewDateTime[currentIndex]?.set({
+      const newDate = currentCalendarViewDT.set({
         day: selectedDay,
       });
-      setCalendarViewDateTime(
-        lastFocusedElement === 'from'
-          ? [newDate, calendarViewDateTime[1]]
-          : [calendarViewDateTime[0], newDate],
-      );
-      setDateTime(
+      const newDateTuple: DateTimeTuple =
         lastFocusedElement === 'from'
           ? [newDate, dateTime[1]]
-          : [dateTime[0], newDate],
+          : [dateTime[0], newDate];
+      setCalendarViewDateTime(
+        lastFocusedElement === 'from'
+          ? [newDate, dateTime[1] ? calendarViewDateTime[1] : newDate]
+          : [dateTime[0] ? calendarViewDateTime[0] : newDate, newDate],
       );
+      setDateTime(newDateTuple);
+      if (newDateTuple[0] && newDateTuple[1]) {
+        setIsOpen(false);
+      }
     }
   };
 

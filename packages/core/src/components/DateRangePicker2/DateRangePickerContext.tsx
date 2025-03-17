@@ -26,6 +26,8 @@ export const DateRangePickerContext =
     dateMaxDT: DateTime.fromFormat(DATE_MAX, DEFAULT_MASK_FORMAT),
     formatIndexes: { day: 1, month: 0, year: 2 },
     lastFocusedElement: 'from',
+    currentCalendarViewDT: DateTime.now().set({ day: 1 }),
+    currentIndex: 0,
     handleSetIsOpen: () => {
       // no-op
     },

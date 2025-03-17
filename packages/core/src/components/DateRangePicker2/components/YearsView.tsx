@@ -1,4 +1,10 @@
-import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
+import {
+  HTMLAttributes,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Wrapper from '@components/Wrapper';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { getYearsList } from '../utils';
@@ -8,17 +14,16 @@ export const YearsView = () => {
   const {
     dateTime,
     calendarViewDateTime,
+    currentCalendarViewDT,
     dateMinParts,
     dateMaxParts,
     formatIndexes,
     lastFocusedElement,
+    currentIndex,
     setCalendarType,
     setCalendarViewDateTime,
-    setDateTime,
     onYearChange,
   } = useDateRangePickerContext();
-  const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
-  const currentCalendarViewDT = calendarViewDateTime[currentIndex];
   const wrapper = useRef<HTMLDivElement>(null);
   const yearsList = getYearsList({
     yearsFrom: dateMinParts[formatIndexes['year']],
@@ -28,11 +33,10 @@ export const YearsView = () => {
       1,
   });
 
+  const [hoveredYear, setHoveredYear] = useState<number | null>(null);
+
   useEffect(() => {
-    if (
-      calendarViewDateTime[lastFocusedElement === 'from' ? 0 : 1] &&
-      wrapper.current
-    ) {
+    if (currentCalendarViewDT && wrapper.current) {
       wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
         behavior: 'instant',
         block: 'center',
@@ -52,15 +56,21 @@ export const YearsView = () => {
         ? [newDate, calendarViewDateTime[1]]
         : [calendarViewDateTime[0], newDate],
     );
-    setDateTime(
-      lastFocusedElement === 'from'
-        ? [newDate, dateTime[1]]
-        : [dateTime[0], newDate],
-    );
     if (newDate) {
       onYearChange?.(newDate.toJSDate());
     }
   };
+
+  const handleYearHover: MouseEventHandler<HTMLDivElement> = (event) => {
+    const { target } = event;
+    const hoveredYear = Number((target as HTMLDivElement).innerHTML);
+    setHoveredYear(hoveredYear);
+  };
+
+  const handleYearMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
+    setHoveredYear(null);
+  };
+
   return (
     <Wrapper
       css={{
@@ -70,7 +80,8 @@ export const YearsView = () => {
         alignContent: 'flex-start',
       }}
       ref={wrapper}
-      onClick={handleYearSelect}>
+      onClick={handleYearSelect}
+      onMouseLeave={handleYearMouseLeave}>
       {yearsList.map((year) => {
         const additionalProps: HTMLAttributes<HTMLDivElement> = {};
         const isCalendarYear = currentCalendarViewDT
@@ -91,13 +102,37 @@ export const YearsView = () => {
           isHighlightDate = year > dateTime[0].year && year < dateTime[1].year;
         }
 
+        let isHoverRangeHighlightFrom = false;
+        let isHoverRangeHighlightTo = false;
+
+        const classNames = [];
+        if (hoveredYear !== null) {
+          if (dateTime[0] && hoveredYear < dateTime[0].year) {
+            isHoverRangeHighlightFrom =
+              year >= hoveredYear && year <= dateTime[0].year;
+          } else if (dateTime[1] && hoveredYear > dateTime[1].year) {
+            isHoverRangeHighlightTo =
+              year <= hoveredYear && year >= dateTime[1].year;
+          }
+        }
+
+        if (isHoverRangeHighlightFrom) {
+          classNames.push('hover-range-from');
+        }
+
+        if (isHoverRangeHighlightTo) {
+          classNames.push('hover-range-to');
+        }
+
         return (
           <S.YearsViewCell
             key={`year-${year}`}
+            className={classNames.join(' ')}
             isCalendarYear={isCalendarYear}
             isCalendarFirstDateSelected={isCalendarFirstDateSelected}
             isCalendarSecondDateSelected={isCalendarSecondDateSelected}
             isHighlighted={isHighlightDate}
+            onMouseEnter={handleYearHover}
             {...additionalProps}>
             {year}
           </S.YearsViewCell>
