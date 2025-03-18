@@ -1,14 +1,10 @@
-import {
-  HTMLAttributes,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import Wrapper from '@components/Wrapper';
+import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
+import { DateTime } from 'luxon';
+import { useRangeHighlighting } from '../hooks';
+import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { getYearsList } from '../utils';
-import * as S from '../styles';
+import { DatesListWrapper } from './DatesListWrapper';
 
 export const YearsView = () => {
   const {
@@ -19,7 +15,6 @@ export const YearsView = () => {
     dateMaxParts,
     formatIndexes,
     lastFocusedElement,
-    currentIndex,
     setCalendarType,
     setCalendarViewDateTime,
     onYearChange,
@@ -33,7 +28,8 @@ export const YearsView = () => {
       1,
   });
 
-  const [hoveredYear, setHoveredYear] = useState<number | null>(null);
+  const { handleDateHover, getClassNames, isHighlightDate } =
+    useRangeHighlighting();
 
   useEffect(() => {
     if (currentCalendarViewDT && wrapper.current) {
@@ -47,7 +43,7 @@ export const YearsView = () => {
   const handleYearSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
     const selectedYear = Number((target as HTMLDivElement).innerHTML);
-    const newDate = calendarViewDateTime[currentIndex]?.set({
+    const newDate = currentCalendarViewDT.set({
       year: selectedYear,
     });
     setCalendarType('months');
@@ -61,29 +57,22 @@ export const YearsView = () => {
     }
   };
 
-  const handleYearHover: MouseEventHandler<HTMLDivElement> = (event) => {
-    const { target } = event;
-    const hoveredYear = Number((target as HTMLDivElement).innerHTML);
-    setHoveredYear(hoveredYear);
-  };
-
-  const handleYearMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
-    setHoveredYear(null);
-  };
-
   return (
-    <Wrapper
+    <DatesListWrapper
       css={{
-        flexWrap: 'wrap',
         overflowY: 'auto',
         height: 280,
         alignContent: 'flex-start',
       }}
       ref={wrapper}
-      onClick={handleYearSelect}
-      onMouseLeave={handleYearMouseLeave}>
+      onClick={handleYearSelect}>
       {yearsList.map((year) => {
         const additionalProps: HTMLAttributes<HTMLDivElement> = {};
+        const currentYearDT = DateTime.fromObject({
+          year,
+          month: 1,
+          day: 1,
+        });
         const isCalendarYear = currentCalendarViewDT
           ? currentCalendarViewDT.year === year
           : false;
@@ -96,33 +85,10 @@ export const YearsView = () => {
         const isCalendarSecondDateSelected =
           year.toString() === dateTime[1]?.toFormat('yyyy');
 
-        let isHighlightDate = false;
-
-        if (dateTime[0] && dateTime[1]) {
-          isHighlightDate = year > dateTime[0].year && year < dateTime[1].year;
-        }
-
-        let isHoverRangeHighlightFrom = false;
-        let isHoverRangeHighlightTo = false;
-
-        const classNames = [];
-        if (hoveredYear !== null) {
-          if (dateTime[0] && hoveredYear < dateTime[0].year) {
-            isHoverRangeHighlightFrom =
-              year >= hoveredYear && year <= dateTime[0].year;
-          } else if (dateTime[1] && hoveredYear > dateTime[1].year) {
-            isHoverRangeHighlightTo =
-              year <= hoveredYear && year >= dateTime[1].year;
-          }
-        }
-
-        if (isHoverRangeHighlightFrom) {
-          classNames.push('hover-range-from');
-        }
-
-        if (isHoverRangeHighlightTo) {
-          classNames.push('hover-range-to');
-        }
+        const classNames = getClassNames(currentYearDT, {
+          isCalendarFirstDateSelected,
+          isCalendarSecondDateSelected,
+        });
 
         return (
           <S.YearsViewCell
@@ -131,13 +97,14 @@ export const YearsView = () => {
             isCalendarYear={isCalendarYear}
             isCalendarFirstDateSelected={isCalendarFirstDateSelected}
             isCalendarSecondDateSelected={isCalendarSecondDateSelected}
-            isHighlighted={isHighlightDate}
-            onMouseEnter={handleYearHover}
+            isHighlighted={isHighlightDate(currentYearDT)}
+            onMouseEnter={() => handleDateHover(currentYearDT)}
+            onMouseLeave={() => handleDateHover(null)}
             {...additionalProps}>
             {year}
           </S.YearsViewCell>
         );
       })}
-    </Wrapper>
+    </DatesListWrapper>
   );
 };

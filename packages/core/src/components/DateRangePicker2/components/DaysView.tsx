@@ -1,10 +1,12 @@
 import React, { MouseEventHandler } from 'react';
 import { DateTime } from 'luxon';
 import Wrapper from '@components/Wrapper';
+import { DatesListWrapper } from './DatesListWrapper';
 import * as S from '../styles';
 import { getDaysForCalendarMonth, getWeekDays } from '../utils';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { DateTimeTuple } from '../types';
+import { useRangeHighlighting } from '../hooks';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();
@@ -23,6 +25,9 @@ export const DaysView = () => {
   const currentMonth = currentDate?.getMonth();
   const dates = getDaysForCalendarMonth(currentDate);
   const nowDate = DateTime.fromJSDate(new Date()).toFormat('D');
+
+  const { handleDateHover, getClassNames, isHighlightDate } =
+    useRangeHighlighting();
 
   const handleDaySelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
@@ -68,8 +73,10 @@ export const DaysView = () => {
           </Wrapper>
         ))}
       </Wrapper>
-      <Wrapper
-        css={{ flexWrap: 'wrap', paddingLeft: 9 }}
+      <DatesListWrapper
+        css={{
+          paddingLeft: 9,
+        }}
         onClick={handleDaySelect}>
         {dates.map((currentDate, index) => {
           const currentDT = DateTime.fromJSDate(currentDate);
@@ -85,12 +92,6 @@ export const DaysView = () => {
             calendarDate === dateTime[1]?.toFormat('D');
           const isCalendarDateSelected =
             isCalendarFirstDateSelected || isCalendarSecondDateSelected;
-          let isHighlightDate = false;
-
-          if (dateTime[0] && dateTime[1]) {
-            isHighlightDate =
-              currentDT > dateTime[0] && currentDT < dateTime[1];
-          }
 
           let isAriaDisabled = false;
           if (dateMinDT && dateMaxDT) {
@@ -106,6 +107,12 @@ export const DaysView = () => {
               isAriaDisabled = currentDT > dateMaxDT || !isCalendarMonth;
             }
           }
+
+          const classNames = getClassNames(currentDT, {
+            isCalendarFirstDateSelected,
+            isCalendarSecondDateSelected,
+          });
+
           return (
             <S.DaysViewCell
               key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}-${index}`}
@@ -115,12 +122,15 @@ export const DaysView = () => {
               isCalendarDateSelected={isCalendarDateSelected}
               isCalendarFirstDateSelected={isCalendarFirstDateSelected}
               isCalendarSecondDateSelected={isCalendarSecondDateSelected}
-              isHighlighted={isHighlightDate}>
+              isHighlighted={isHighlightDate(currentDT)}
+              className={classNames.join(' ')}
+              onMouseEnter={() => handleDateHover(currentDT)}
+              onMouseLeave={() => handleDateHover(null)}>
               {calendarDay}
             </S.DaysViewCell>
           );
         })}
-      </Wrapper>
+      </DatesListWrapper>
     </React.Fragment>
   );
 };

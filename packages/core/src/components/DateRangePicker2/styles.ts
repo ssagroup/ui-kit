@@ -48,10 +48,10 @@ export const DaysViewCell = styled(Wrapper)<{
       position: absolute;
       width: 10px;
       height: 40px;
-      left: ${({ isCalendarFirstDateSelected }) =>
-        isCalendarFirstDateSelected ? '0' : 'auto'};
-      right: ${({ isCalendarSecondDateSelected }) =>
+      left: ${({ isCalendarSecondDateSelected }) =>
         isCalendarSecondDateSelected ? '0' : 'auto'};
+      right: ${({ isCalendarFirstDateSelected }) =>
+        isCalendarFirstDateSelected ? '0' : 'auto'};
       z-index: -1;
       background: ${({ theme }) => theme.colors.blueRoyal16};
     }

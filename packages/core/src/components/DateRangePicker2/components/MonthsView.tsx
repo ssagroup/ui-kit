@@ -1,9 +1,10 @@
-import { MouseEventHandler } from 'react';
 import { DateTime } from 'luxon';
-import Wrapper from '@components/Wrapper';
+import { MouseEventHandler } from 'react';
+import { MONTHS } from '../constants';
+import { useRangeHighlighting } from '../hooks';
 import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
-import { MONTHS } from '../constants';
+import { DatesListWrapper } from './DatesListWrapper';
 
 export const MonthsView = () => {
   const {
@@ -17,6 +18,9 @@ export const MonthsView = () => {
     setCalendarViewDateTime,
     onMonthChange,
   } = useDateRangePickerContext();
+
+  const { handleDateHover, getClassNames, isHighlightDate } =
+    useRangeHighlighting();
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
@@ -39,9 +43,7 @@ export const MonthsView = () => {
     setCalendarType('days');
   };
   return (
-    <Wrapper
-      css={{ flexWrap: 'wrap', paddingTop: 10 }}
-      onClick={handleMonthSelect}>
+    <DatesListWrapper css={{ paddingTop: 10 }} onClick={handleMonthSelect}>
       {MONTHS.map((month, index) => {
         const isCalendarMonth = currentCalendarViewDT
           ? currentCalendarViewDT.month === index + 1
@@ -68,12 +70,10 @@ export const MonthsView = () => {
           currentMonthDT.toFormat('yyyy-MM') ===
           dateTime[1]?.toFormat('yyyy-MM');
 
-        let isHighlightDate = false;
-
-        if (dateTime[0] && dateTime[1]) {
-          isHighlightDate =
-            dateTime[0] < currentMonthDT && currentMonthDT < dateTime[1];
-        }
+        const classNames = getClassNames(currentMonthDT, {
+          isCalendarFirstDateSelected,
+          isCalendarSecondDateSelected,
+        });
 
         return (
           <S.MonthsViewCell
@@ -83,11 +83,14 @@ export const MonthsView = () => {
             aria-label={`${month}, ${currentCalendarViewDT?.year}`}
             isCalendarFirstDateSelected={isCalendarFirstDateSelected}
             isCalendarSecondDateSelected={isCalendarSecondDateSelected}
-            isHighlighted={isHighlightDate}>
+            isHighlighted={isHighlightDate(currentMonthDT)}
+            className={classNames.join(' ')}
+            onMouseEnter={() => handleDateHover(currentMonthDT)}
+            onMouseLeave={() => handleDateHover(null)}>
             {month}
           </S.MonthsViewCell>
         );
       })}
-    </Wrapper>
+    </DatesListWrapper>
   );
 };

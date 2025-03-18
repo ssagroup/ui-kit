@@ -6,3 +6,4 @@ export * from './Header';
 export * from './DaysView';
 export * from './MonthsView';
 export * from './YearsView';
+export * from './DatesListWrapper';

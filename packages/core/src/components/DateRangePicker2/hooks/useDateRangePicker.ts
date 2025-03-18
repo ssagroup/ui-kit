@@ -193,24 +193,24 @@ export const useDateRangePicker = ({
     }
 
     const newCalendarViewDateTime =
-      newDateTime && newDateTime.isValid
-        ? newDateTime
-        : DateTime.now().set({ day: 1 });
+      newDateTime && newDateTime.isValid ? newDateTime : undefined;
 
-    if (newCalendarViewDateTime < dateMinDT) {
-      const { year, month, day } = dateMinDT;
-      newCalendarViewDateTime.set({ year, month, day });
-    }
-    if (newCalendarViewDateTime > dateMaxDT) {
-      const { year, month, day } = dateMaxDT;
-      newCalendarViewDateTime.set({ year, month, day });
-    }
+    if (newCalendarViewDateTime) {
+      if (newCalendarViewDateTime < dateMinDT) {
+        const { year, month, day } = dateMinDT;
+        newCalendarViewDateTime.set({ year, month, day });
+      }
+      if (newCalendarViewDateTime > dateMaxDT) {
+        const { year, month, day } = dateMaxDT;
+        newCalendarViewDateTime.set({ year, month, day });
+      }
 
-    setCalendarViewDateTime(
-      lastFocusedElement === 'from'
-        ? [newCalendarViewDateTime, calendarViewDateTime[1]]
-        : [calendarViewDateTime[0], newCalendarViewDateTime],
-    );
+      setCalendarViewDateTime(
+        lastFocusedElement === 'from'
+          ? [newCalendarViewDateTime, calendarViewDateTime[1]]
+          : [calendarViewDateTime[0], newCalendarViewDateTime],
+      );
+    }
   };
 
   useEffect(() => {
@@ -286,6 +286,21 @@ export const useDateRangePicker = ({
       }
     }
   }, [lastChangedDate]);
+
+  useEffect(() => {
+    if (calendarViewDateTime[0] && !calendarViewDateTime[1]) {
+      setCalendarViewDateTime([
+        calendarViewDateTime[0],
+        calendarViewDateTime[0],
+      ]);
+    }
+    if (calendarViewDateTime[1] && !calendarViewDateTime[0]) {
+      setCalendarViewDateTime([
+        calendarViewDateTime[1],
+        calendarViewDateTime[1],
+      ]);
+    }
+  }, [calendarViewDateTime]);
 
   // TODO!
   // useEffect(() => {
