@@ -5,14 +5,14 @@ export const DatesListWrapper = styled(Wrapper)`
   flex-wrap: wrap;
   & > div.hover-range-from.date-hovered,
   & > div.hover-range-to.date-hovered {
-    background: ${({ theme }) => theme.colors.greenLighter};
+    background: ${({ theme }) => theme.colors.greyLighter};
     border-left: none;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
   }
   & > div.hover-range-from:not(.selected-range-from, .date-hovered),
   & > div.hover-range-to:not(.selected-range-to, .date-hovered) {
-    background: ${({ theme }) => theme.colors.greenLighter60};
+    background: ${({ theme }) => theme.colors.greyLighter60};
     border-radius: 0;
   }
   & > div.hover-range-from.selected-range-from::after,
@@ -24,7 +24,7 @@ export const DatesListWrapper = styled(Wrapper)`
     width: 10px;
     height: 40px;
     z-index: -1;
-    background: ${({ theme }) => theme.colors.greenLighter60};
+    background: ${({ theme }) => theme.colors.greyLighter60};
   }
   & > div.hover-range-from.selected-range-from::after,
   & > div.hover-range-to.date-hovered::after {
@@ -39,6 +39,6 @@ export const DatesListWrapper = styled(Wrapper)`
   & > div.date-hovered:has(+ div.selected-range-from)::after,
   & > div.hover-range-to.selected-range-to + div.date-hovered::after,
   & > div.date-hovered + div.selected-range-from::after {
-    background: ${({ theme }) => theme.colors.greenLighter};
+    background: ${({ theme }) => theme.colors.greyLighter};
   }
 `;

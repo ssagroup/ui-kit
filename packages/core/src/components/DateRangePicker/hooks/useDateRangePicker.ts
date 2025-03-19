@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
+import { useMergeRefs } from '@floating-ui/react';
 import { useDatePickerMask } from './useDatePickerMask';
 import { DATE_MAX, DATE_MIN, INVALID_DATE, OUT_OF_RANGE } from '../constants';
 import {
@@ -16,16 +17,22 @@ export const useDateRangePicker = ({
   name: _name,
   format = 'mm/dd/yyyy',
   maskOptions,
-  isOpen,
-  setIsOpen,
+  isOpenState = false,
+  defaultValue,
   onOpen,
   onClose,
   onError,
   onChange,
   ...rest
-}: DateRangePickerProps) => {
+}: DateRangePickerProps & { isOpenState?: boolean }) => {
   const inputFromRef = useRef<HTMLInputElement | null>(null);
   const inputToRef = useRef<HTMLInputElement | null>(null);
+  const [isOpen, setIsOpen] = useState(isOpenState);
+  const previousOpenState = useRef(isOpenState);
+
+  const handleSetIsOpen = (open: boolean) => {
+    setIsOpen(open);
+  };
 
   const { clearErrors, setError, setValue, resetField, setFocus } =
     useFormContext();
@@ -127,20 +134,22 @@ export const useDateRangePicker = ({
     }
   };
 
-  const processValue = (newValue: string) => {
+  const processValue = (newValue: string, elementName?: 'from' | 'to') => {
+    const currentElementType = elementName || lastFocusedElement;
+    const currentName = currentElementType === 'from' ? nameFrom : nameTo;
     const newDateTime =
       typeof newValue === 'string' && newValue.length === 10
         ? DateTime.fromFormat(newValue, luxonFormat)
         : undefined;
 
     const newDateTimeIfInvalid: DateTimeTuple = [
-      lastFocusedElement === 'from' ? undefined : dateTime?.[0],
-      lastFocusedElement === 'to' ? undefined : dateTime?.[1],
+      currentElementType === 'from' ? undefined : dateTime?.[0],
+      currentElementType === 'to' ? undefined : dateTime?.[1],
     ];
 
     const newDateTimeIfValid: DateTimeTuple = [
-      lastFocusedElement === 'from' ? newDateTime : dateTime?.[0],
-      lastFocusedElement === 'to' ? newDateTime : dateTime?.[1],
+      currentElementType === 'from' ? newDateTime : dateTime?.[0],
+      currentElementType === 'to' ? newDateTime : dateTime?.[1],
     ];
 
     if (!newDateTime?.isValid) {
@@ -173,7 +182,12 @@ export const useDateRangePicker = ({
     }
   };
 
-  const processInputValue = (inputValue: string) => {
+  const processInputValue = (
+    inputValue: string,
+    elementName?: 'from' | 'to',
+  ) => {
+    const currentElementType = elementName || lastFocusedElement;
+    const currentName = currentElementType === 'from' ? nameFrom : nameTo;
     if (
       typeof inputValue === 'string' &&
       inputValue.length &&
@@ -189,7 +203,7 @@ export const useDateRangePicker = ({
     if (typeof inputValue === 'string' && inputValue.length === 10) {
       newDateTime = DateTime.fromFormat(inputValue, luxonFormat);
       setValue(currentName, inputValue);
-      processValue(inputValue);
+      processValue(inputValue, elementName);
     }
 
     const newCalendarViewDateTime =
@@ -206,7 +220,7 @@ export const useDateRangePicker = ({
       }
 
       setCalendarViewDateTime(
-        lastFocusedElement === 'from'
+        currentElementType === 'from'
           ? [newCalendarViewDateTime, calendarViewDateTime[1]]
           : [calendarViewDateTime[0], newCalendarViewDateTime],
       );
@@ -251,12 +265,15 @@ export const useDateRangePicker = ({
   }, [dateTime]);
 
   useEffect(() => {
-    if (isOpen) {
-      onOpen?.();
-    } else {
-      onClose?.();
-      setCalendarType('days');
-      setCalendarViewDateTime([dateTime[0], dateTime[1]]);
+    if (previousOpenState.current !== isOpen) {
+      if (isOpen) {
+        onOpen?.();
+      } else {
+        onClose?.();
+        setCalendarType('days');
+        setCalendarViewDateTime([dateTime[0], dateTime[1]]);
+      }
+      previousOpenState.current = isOpen;
     }
   }, [isOpen]);
 
@@ -270,10 +287,29 @@ export const useDateRangePicker = ({
   }, [format]);
 
   useEffect(() => {
-    if ('value' in rest) {
-      setValue(currentName, rest.value);
+    if (Array.isArray(rest.value)) {
+      const newDateTimeFrom =
+        typeof rest.value[0] === 'string' && rest.value[0].length === 10
+          ? DateTime.fromFormat(rest.value[0], luxonFormat)
+          : undefined;
+      const newDateTimeTo =
+        typeof rest.value[1] === 'string' && rest.value[1].length === 10
+          ? DateTime.fromFormat(rest.value[1], luxonFormat)
+          : undefined;
+
+      const newDateTime: DateTimeTuple = [
+        newDateTimeFrom?.isValid ? newDateTimeFrom : undefined,
+        newDateTimeTo?.isValid ? newDateTimeTo : undefined,
+      ];
+      setDateTime(newDateTime);
+      setLastChangedDate([
+        newDateTime[0]?.toJSDate(),
+        newDateTime[1]?.toJSDate(),
+      ]);
+      setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat));
+      setValue(nameTo, newDateTime[1]?.toFormat(luxonFormat));
     }
-  }, [rest.value, currentName]);
+  }, [rest.value]);
 
   useEffect(() => {
     if (lastChangedDate[0] || lastChangedDate[1]) {
@@ -302,17 +338,18 @@ export const useDateRangePicker = ({
     }
   }, [calendarViewDateTime]);
 
-  // TODO!
-  // useEffect(() => {
-  //   if (defaultValue) {
-  //     const newDateTime = DateTime.fromFormat(defaultValue, luxonFormat);
-  //     if (newDateTime.isValid) {
-  //       setDateTime(newDateTime);
-  //       setValue(name, defaultValue);
-  //     }
-  //   }
-  //   setLoading(false);
-  // }, []);
+  useEffect(() => {
+    if (isOpenState !== isOpen) {
+      setIsOpen(isOpenState);
+    }
+  }, [isOpenState]);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(nameFrom, defaultValue[0]);
+      setValue(nameTo, defaultValue[1]);
+    }
+  }, []);
 
   return {
     formatIndexes,
@@ -331,10 +368,19 @@ export const useDateRangePicker = ({
     lastFocusedElement,
     nameFrom,
     nameTo,
-    inputFromRef,
-    inputToRef,
     currentIndex,
     currentCalendarViewDT,
+    isOpen,
+    inputFromRef: useMergeRefs<HTMLInputElement | null>([
+      maskInputRef,
+      inputFromRef,
+    ]),
+    inputToRef: useMergeRefs<HTMLInputElement | null>([
+      maskInputRef,
+      inputToRef,
+    ]),
+    setIsOpen,
+    handleSetIsOpen,
     setLastFocusedElement,
     safeOnChange,
     setCalendarType,

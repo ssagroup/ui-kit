@@ -7,8 +7,6 @@ export type DatePickerProps = {
   name: string;
   label?: string;
   format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
-  isOpenToggle?: boolean;
-  // datepickerMode?: 'default' | 'dateRangePicker';
   maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: Partial<InputProps>;
@@ -25,7 +23,6 @@ export type DatePickerProps = {
     mode: 'dateFrom' | 'dateTo';
     otherDate: Date | null;
   };
-  safeOnChange?: (date?: DateTime) => void;
   onChange?: (date?: Date) => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -58,6 +55,7 @@ export type DatePickerContextProps = Omit<
     month: number;
     year: number;
   };
+  safeOnChange?: (date?: DateTime) => void;
   setCalendarViewDateTime: Dispatch<SetStateAction<DateTime | undefined>>;
   setDateTime: Dispatch<SetStateAction<DateTime<boolean> | undefined>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { useMergeRefs } from '@floating-ui/react';
 import { DateRangePickerContextProps, DateRangePickerProps } from './types';
 import { useDateRangePicker } from './hooks';
 import { DateRangePickerContext } from './DateRangePickerContext';
@@ -8,17 +6,10 @@ export const DateRangePickerProvider = ({
   children,
   ...rest
 }: React.PropsWithChildren<DateRangePickerProps>) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleSetIsOpen = (open: boolean) => {
-    setIsOpen(open);
-  };
-
-  const { formatIndexes, maskInputRef, inputFromRef, inputToRef, ...restHook } =
+  const { formatIndexes, inputFromRef, inputToRef, ...restHook } =
     useDateRangePicker({
       ...rest,
-      isOpen,
-      setIsOpen,
+      isOpenState: rest.isOpenState,
     });
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
@@ -27,7 +18,7 @@ export const DateRangePickerProvider = ({
   };
 
   const toggleOpen = () => {
-    setIsOpen((current) => !current);
+    restHook.setIsOpen((current) => !current);
   };
 
   const handleToggleOpen: DateRangePickerContextProps['handleToggleOpen'] = (
@@ -53,11 +44,8 @@ export const DateRangePickerProvider = ({
         ...rest,
         ...restHook,
         formatIndexes,
-        isOpen,
-        inputFromRef: useMergeRefs([maskInputRef, inputFromRef]),
-        inputToRef: useMergeRefs([maskInputRef, inputToRef]),
-        setIsOpen,
-        handleSetIsOpen,
+        inputFromRef,
+        inputToRef,
         handleToggleOpen,
         onBlur: handleBlur,
       }}>

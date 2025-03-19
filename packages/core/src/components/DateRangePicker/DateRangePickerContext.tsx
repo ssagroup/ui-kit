@@ -15,6 +15,7 @@ export const DateRangePickerContext =
     inputToRef: { current: null },
     inputProps: {},
     isOpen: false,
+    isOpenState: false,
     calendarType: 'days',
     inputValueFrom: undefined,
     inputValueTo: undefined,

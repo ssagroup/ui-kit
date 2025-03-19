@@ -44,8 +44,8 @@ export const DaysView = () => {
           : [dateTime[0], newDate];
       setCalendarViewDateTime(
         lastFocusedElement === 'from'
-          ? [newDate, dateTime[1] ? calendarViewDateTime[1] : newDate]
-          : [dateTime[0] ? calendarViewDateTime[0] : newDate, newDate],
+          ? [newDate, dateTime[1] ? calendarViewDateTime?.[1] : newDate]
+          : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
       );
       setDateTime(newDateTuple);
       if (newDateTuple[0] && newDateTuple[1]) {
@@ -118,6 +118,7 @@ export const DaysView = () => {
               key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}-${index}`}
               aria-disabled={isAriaDisabled}
               aria-label={ariaLabel}
+              data-day={calendarDate}
               isCalendarDateNow={isCalendarDateNow}
               isCalendarDateSelected={isCalendarDateSelected}
               isCalendarFirstDateSelected={isCalendarFirstDateSelected}

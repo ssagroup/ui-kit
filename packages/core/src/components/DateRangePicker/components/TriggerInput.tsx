@@ -85,7 +85,7 @@ export const TriggerInput = ({
           onClick: handleOpen,
           onFocus: handleFocus,
           id: inputProps?.inputProps?.id || currentName,
-          'data-testid': `datepicker-input-${datepickerType}`,
+          'data-testid': `daterangepicker-input-${datepickerType}`,
           autoComplete: 'off',
           className: css`
             border: none !important;

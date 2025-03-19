@@ -9,7 +9,6 @@ const DatePickerInner = (
     format = DEFAULT_MASK_FORMAT,
     openCalendarMode = 'icon',
     showCalendarIcon = true,
-    isOpenToggle,
     ...rest
   }: DatePickerProps,
   inputRef?: React.ForwardedRef<HTMLInputElement | null>,
@@ -19,7 +18,6 @@ const DatePickerInner = (
     openCalendarMode={openCalendarMode}
     inputRef={inputRef}
     showCalendarIcon={showCalendarIcon}
-    isOpenToggle={isOpenToggle}
     {...rest}>
     <DatePickerContent />
   </DatePickerProvider>

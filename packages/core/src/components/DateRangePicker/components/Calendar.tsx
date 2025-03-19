@@ -17,6 +17,7 @@ export const DatePickerCalendar = () => {
   return (
     <C.PopoverContent
       className="popover"
+      data-testid="daterangepicker-calendar"
       css={{
         background: theme.colors.white,
         boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,

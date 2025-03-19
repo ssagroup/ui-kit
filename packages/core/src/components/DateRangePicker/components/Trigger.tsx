@@ -39,7 +39,10 @@ export const Trigger = () => {
   const errorMessage = [errorsFrom, errorsTo].filter(Boolean) as string[];
 
   return (
-    <C.Field.Root status={status} disabled={disabled}>
+    <C.Field.Root
+      status={status}
+      disabled={disabled}
+      data-testid="daterangepicker">
       <C.Field.Label
         htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}>
         {label}
