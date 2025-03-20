@@ -18,6 +18,7 @@ export const Trigger = () => {
     openCalendarMode,
     isOpen,
     showCalendarIcon,
+    triggerClassname,
     setIsOpen,
     handleToggleOpen,
   } = useDateRangePickerContext();
@@ -42,7 +43,8 @@ export const Trigger = () => {
     <C.Field.Root
       status={status}
       disabled={disabled}
-      data-testid="daterangepicker">
+      data-testid="daterangepicker"
+      className={triggerClassname}>
       <C.Field.Label
         htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}>
         {label}

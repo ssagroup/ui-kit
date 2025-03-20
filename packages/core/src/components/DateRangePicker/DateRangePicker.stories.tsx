@@ -23,11 +23,6 @@ export default {
     controls: {
       include: ['disabled', 'label', 'openCalendarMode', 'helperText'],
     },
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
   },
   decorators: [
     (Story, context) => {

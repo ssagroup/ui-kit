@@ -22,6 +22,8 @@ export type DateRangePickerProps = {
   disabled?: boolean;
   helperText?: string;
   showCalendarIcon?: boolean;
+  triggerClassname?: string;
+  calendarClassname?: string;
   onChange?: (dates?: [Date | null, Date | null]) => void;
   onOpen?: () => void;
   onClose?: () => void;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DateTime } from 'luxon';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { ClassnameArray } from '../helpers';
 
 export const useRangeHighlighting = () => {
   const [hoveredDate, setHoveredDate] = useState<DateTime | null>(null);
@@ -20,8 +21,7 @@ export const useRangeHighlighting = () => {
       isCalendarSecondDateSelected: boolean;
     },
   ) => {
-    const fakeNode = document.createElement('div');
-    const classNames = fakeNode.classList;
+    const classNames = new ClassnameArray();
     let isHoverRangeHighlightFrom = false;
     let isHoverRangeHighlightTo = false;
     if (hoveredDate !== null) {

@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, MouseEventHandler } from 'react';
+import React, { FocusEventHandler, MouseEvent, MouseEventHandler } from 'react';
 import { FieldError, useForm, useFormContext } from 'react-hook-form';
 import { css } from '@emotion/css';
 import * as C from '@components';
@@ -67,8 +67,7 @@ export const TriggerInput = ({
     inputProps?.inputProps?.onFocus?.(e);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleOpen = (event: any) => {
+  const handleOpen = (event: MouseEvent<HTMLInputElement>) => {
     onClick?.(event);
   };
 
