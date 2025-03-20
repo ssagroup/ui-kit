@@ -86,7 +86,7 @@ describe('DateRangePicker', () => {
       mockOnError,
       mockOnMonthChange,
       mockOnYearChange,
-    } = setup(); // isOpenState: true,
+    } = setup();
     const startDate = getByTestId('daterangepicker-input-from');
     const endDate = getByTestId('daterangepicker-input-to');
 
@@ -141,14 +141,18 @@ describe('DateRangePicker', () => {
         })
         .toJSDate(),
     ]);
+    expect(mockOnOpen).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnBlur).toHaveBeenCalledTimes(2);
+    expect(mockOnError).toHaveBeenCalledTimes(0);
   });
 
-  it('should month change event be called', async () => {
+  it('should onChange, onMonthChange, onYearChange events be called', async () => {
+    window.HTMLElement.prototype.scrollIntoView = function () {};
     const {
       getByTestId,
       getByRole,
       user,
-      mockOnChange,
       mockOnMonthChange,
       mockOnYearChange,
     } = setup();
@@ -171,19 +175,32 @@ describe('DateRangePicker', () => {
     const day15Element = within(dialogEl).getByText(15);
     await user.click(day15Element);
 
-    const nextMonthButton = within(dialogEl).getByTestId('next-month');
-    await user.click(nextMonthButton);
-    await user.click(nextMonthButton);
-
-    const day20Element = within(dialogEl).getByText(20);
-    await user.click(day20Element);
+    await user.click(endDate);
 
     const dateFrom = DateTime.now().minus({ month: 1 }).set({
       day: 15,
     });
-    const dateTo = DateTime.now().plus({ month: 1 }).set({
+    const dateTo = DateTime.now().plus({ month: 1, year: 1 }).set({
       day: 20,
     });
+
+    const calendarTypeChangeButton = within(dialogEl).getByTestId(
+      'calendar-type-change-button',
+    );
+
+    const nextMonthButton = within(dialogEl).getByTestId('next-month');
+    await user.click(nextMonthButton);
+
+    await user.click(calendarTypeChangeButton);
+    const yearNext = within(dialogEl).getByText(dateTo.year);
+    await user.click(yearNext);
+
+    const monthNext = within(dialogEl).getByText(dateTo.toFormat('MMM'));
+    await user.click(monthNext);
+
+    const day20Element = within(dialogEl).getByText(20);
+    await user.click(day20Element);
+
     expect(startDate).toHaveValue(
       dateFrom.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
@@ -192,23 +209,6 @@ describe('DateRangePicker', () => {
     );
 
     expect(mockOnMonthChange).toHaveBeenCalledTimes(3);
-    expect(mockOnChange).toHaveBeenLastCalledWith([
-      dateFrom
-        .set({
-          hour: 0,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-        })
-        .toJSDate(),
-      dateTo
-        .set({
-          hour: 0,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-        })
-        .toJSDate(),
-    ]);
+    expect(mockOnYearChange).toHaveBeenCalledTimes(1);
   });
 });

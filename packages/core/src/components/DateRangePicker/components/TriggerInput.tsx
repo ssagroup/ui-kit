@@ -92,6 +92,7 @@ export const TriggerInput = ({
           `,
           ...inputElementProps,
         }}
+        showStatusIcon={false}
         errors={fieldError as FieldError}
         status={fieldStatus}
         helperText={helperText}

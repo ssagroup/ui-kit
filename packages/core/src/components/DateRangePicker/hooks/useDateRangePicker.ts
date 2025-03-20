@@ -28,6 +28,7 @@ export const useDateRangePicker = ({
   const inputFromRef = useRef<HTMLInputElement | null>(null);
   const inputToRef = useRef<HTMLInputElement | null>(null);
   const [isOpen, setIsOpen] = useState(isOpenState);
+  const [status, setStatus] = useState(rest.status);
   const previousOpenState = useRef(isOpenState);
 
   const handleSetIsOpen = (open: boolean) => {
@@ -155,6 +156,7 @@ export const useDateRangePicker = ({
     if (!newDateTime?.isValid) {
       const errorMessage = newDateTime?.invalidExplanation || INVALID_DATE;
       setError(currentName, { message: errorMessage }, { shouldFocus: true });
+      setStatus('error');
       setDateTime(newDateTimeIfInvalid);
       safeOnError?.(newValue, errorMessage);
       safeOnChange();
@@ -162,12 +164,14 @@ export const useDateRangePicker = ({
       if (newDateTime < dateMinDT || newDateTime > dateMaxDT) {
         const errorMessage = OUT_OF_RANGE;
         setError(currentName, { message: errorMessage }, { shouldFocus: true });
+        setStatus('error');
         setDateTime(newDateTimeIfInvalid);
         safeOnError?.(newValue, errorMessage);
         safeOnChange();
       } else {
         setDateTime(newDateTimeIfValid);
         clearErrors();
+        setStatus('basic');
         safeOnError?.(null);
         safeOnChange?.(newDateTime);
       }
@@ -231,7 +235,7 @@ export const useDateRangePicker = ({
     processInputValue(
       lastFocusedElement === 'from' ? inputValueFrom : inputValueTo,
     );
-  }, [inputValueFrom, inputValueTo, lastFocusedElement]);
+  }, [lastFocusedElement]);
 
   useEffect(() => {
     const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
@@ -312,6 +316,10 @@ export const useDateRangePicker = ({
   }, [rest.value]);
 
   useEffect(() => {
+    setStatus(rest.status);
+  }, [rest.status]);
+
+  useEffect(() => {
     if (lastChangedDate[0] || lastChangedDate[1]) {
       if (lastFocusedElement === 'from' && !lastChangedDate[1]) {
         setFocus(nameTo);
@@ -371,6 +379,7 @@ export const useDateRangePicker = ({
     currentIndex,
     currentCalendarViewDT,
     isOpen,
+    status,
     inputFromRef: useMergeRefs<HTMLInputElement | null>([
       maskInputRef,
       inputFromRef,
