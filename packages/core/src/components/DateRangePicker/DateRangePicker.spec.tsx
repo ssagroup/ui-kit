@@ -1,10 +1,10 @@
+import { FieldValues, Form, FormProvider, useForm } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { fireEvent, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
 import { DateRangePicker } from './DateRangePicker';
 import { DEFAULT_MASK_FORMAT } from './constants';
-import { FieldValues, Form, FormProvider, useForm } from 'react-hook-form';
 import { DateRangePickerProps } from './types';
 import { FormGroup, mainTheme } from '../..';
 
