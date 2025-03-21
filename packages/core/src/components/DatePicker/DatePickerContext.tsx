@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react';
+import { createContext } from 'react';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
 import { DatePickerContextProps, DatePickerProps } from './types';
@@ -48,12 +48,6 @@ export const DatePickerProvider = ({
     restHook.handleBlur(e);
     rest.onBlur?.(e);
   };
-
-  useEffect(() => {
-    if (typeof rest.isOpenToggle === 'boolean') {
-      restHook.setIsOpen((current) => !current);
-    }
-  }, [rest.isOpenToggle]);
 
   return (
     <DatePickerContext.Provider

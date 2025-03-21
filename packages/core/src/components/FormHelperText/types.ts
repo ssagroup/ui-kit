@@ -5,4 +5,5 @@ export interface FormHelperTextProps extends CommonProps {
   role?: string;
   status?: 'error' | 'success' | 'basic' | 'custom';
   disabled?: boolean;
+  'data-testid'?: string;
 }

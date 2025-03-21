@@ -13,5 +13,9 @@ export const FieldError = ({ children }: FieldErrorProps) => {
     return null;
   }
 
-  return <FormHelperText status="error">{children}</FormHelperText>;
+  return (
+    <FormHelperText status="error" data-testid="field-error">
+      {children}
+    </FormHelperText>
+  );
 };
