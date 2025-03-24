@@ -114,13 +114,14 @@ export const CollapsibleNavBarPopover = ({
                   ? theme.colors.greyGraphite
                   : '#F4F5F9',
               borderRadius: 5,
-              width: 85,
+              minWidth: 85,
               '& > a': {
                 color:
                   navBarTheme === 'default'
                     ? theme.colors.white
                     : theme.colors.greyDarker80,
                 padding: 5,
+                whiteSpace: 'nowrap',
                 fontSize: 12,
                 fontWeight: navBarTheme === 'default' ? 400 : 500,
                 '&.active': {
