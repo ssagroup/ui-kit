@@ -6,5 +6,5 @@ export interface RadioGroupProps {
   initialState?: string;
   className?: string;
   onChange: (value: string) => void;
-  children: React.ReactElement<RadioProps>[];
+  children?: React.ReactElement<RadioProps>[] | React.ReactElement<RadioProps>;
 }
