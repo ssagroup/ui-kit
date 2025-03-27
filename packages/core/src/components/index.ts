@@ -110,4 +110,5 @@ export * from './WithVisibleMD';
 export * from './WithVisibleSM';
 export * from './WithVisibleUpToLG';
 export * from './Wrapper';
+export * as JsonSchema from './JsonSchemaForm';
 export type { DropdownOptionProps } from './DropdownOptions';

@@ -1,0 +1,1690 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form (rjsf) Render form 1`] = `
+.emotion-0 .form-group {
+  margin-bottom: 16px;
+}
+
+.emotion-0 .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-2 {
+  font-weight: 600;
+}
+
+.emotion-3 {
+  font-size: 12px;
+}
+
+.emotion-4 {
+  display: inline-block;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 22px;
+  color: rgba(43, 45, 49, 1);
+  margin: 0 0 6px 4px;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: 44px;
+  height: auto;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(195, 197, 204, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+.emotion-5>* {
+  background: transparent;
+}
+
+.emotion-5:active,
+.emotion-5:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: none;
+}
+
+.emotion-5:hover {
+  cursor: pointer;
+}
+
+.emotion-5:focus-within,
+.emotion-5:active {
+  border-color: rgba(72, 125, 225, 1);
+}
+
+.emotion-6 {
+  position: relative;
+  width: 100%;
+}
+
+.emotion-6 * {
+  color: inherit;
+}
+
+.emotion-6 .undefined {
+  border: 1px solid rgba(195, 197, 204, 1);
+}
+
+.emotion-6 .undefined:hover {
+  border-color: rgba(43, 45, 49, 0.8);
+}
+
+.emotion-6 .undefined:focus {
+  border-color: rgba(72, 125, 225, 1);
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  background-origin: border-box;
+  -webkit-background-clip: padding-box,border-box;
+  background-clip: padding-box,border-box;
+  border: 1px solid rgba(195, 197, 204, 1);
+  color: rgba(43, 45, 49, 1);
+  width: 100%;
+  height: 44px;
+  padding: 14px;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  border: 0!important;
+}
+
+.emotion-7::-webkit-input-placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-7::-moz-placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-7:-ms-input-placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-7::placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-7:disabled {
+  color: rgba(195, 197, 204, 1);
+  background: rgba(238, 241, 247, 1);
+}
+
+.emotion-7:disabled::-webkit-input-placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-7:disabled::-moz-placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-7:disabled:-ms-input-placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-7:disabled::placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-7:disabled:disabled,
+.emotion-7:disabled:disabled:hover {
+  border: 1px solid rgba(195, 197, 204, 1);
+  background-image: none;
+}
+
+.emotion-8 {
+  display: block;
+  font-weight: 400;
+  font-size: 0.688rem;
+  margin: 6px 0 0 4px;
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.emotion-12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: top;
+  -webkit-box-align: top;
+  -ms-flex-align: top;
+  align-items: top;
+  width: 100%;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.emotion-13 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 4px;
+}
+
+.emotion-19 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  border: none;
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 12px;
+  height: 36px;
+  font-size: 13.33px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  padding: 0 16px;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.emotion-19:focus::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(208,	210,	220, 1);
+  border-radius: 12px;
+}
+
+.emotion-20 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin-right: 6px;
+}
+
+.emotion-38 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  border: none;
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 12px;
+  height: 36px;
+  font-size: 13.33px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  padding: 0 16px;
+  background: transparent;
+}
+
+.emotion-38:focus::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(208,	210,	220, 1);
+  border-radius: 12px;
+}
+
+.emotion-40 {
+  display: inline-block;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 22px;
+  color: rgba(43, 45, 49, 1);
+  margin: 0 0 6px 4px;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.emotion-40:has(input:disabled) {
+  cursor: default;
+}
+
+.emotion-40>div {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.emotion-40 input+div svg {
+  z-index: 2;
+}
+
+.emotion-40 input+div::before {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  height: 20px;
+  width: 20px;
+  top: 0;
+  left: 0;
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.emotion-40 input:focus+div {
+  box-shadow: -4px 4px 10px rgba(82, 197, 135, 0.4);
+}
+
+.emotion-40 input:disabled+div,
+.emotion-40 input:indeterminate:disabled+div {
+  background: rgba(210, 212, 219, 1);
+}
+
+.emotion-40 input:not(:checked, :indeterminate, :disabled)+div::before {
+  border: 1.5px solid rgba(82, 197, 135, 1);
+}
+
+.emotion-40 input:not(:checked, :indeterminate, :disabled)+div:hover::before {
+  border: 1.5px solid rgba(82, 197, 135, 0.6);
+}
+
+.emotion-40 input:not(:disabled):checked+div::before,
+.emotion-40 input:not(:disabled):indeterminate+div::before {
+  background: linear-gradient(
+        117.5deg,
+        rgba(137, 217, 150, 1) 17.12%,
+        rgba(82, 197, 135, 1) 85.53%
+      );
+}
+
+.emotion-40 input:not(:disabled):checked+div:hover::before,
+.emotion-40 input:not(:disabled):indeterminate+div:hover::before {
+  background: linear-gradient(
+        117.5deg,
+        rgba(137, 217, 150, 0.6) 17.12%,
+        rgba(82, 197, 135, 0.6) 85.53%
+      );
+}
+
+.emotion-40 input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.emotion-40 span {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.emotion-43>label {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.emotion-44 {
+  margin-bottom: 0;
+}
+
+.emotion-45 {
+  display: inline-block;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 22px;
+  color: rgba(43, 45, 49, 1);
+  margin: 0 0 6px 4px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.emotion-45:has(input:disabled) {
+  cursor: default;
+}
+
+.emotion-45 input:focus+svg {
+  -webkit-filter: drop-shadow(
+        -4px 4px 10px rgba(82, 197, 135, 0.4)
+      );
+  filter: drop-shadow(
+        -4px 4px 10px rgba(82, 197, 135, 0.4)
+      );
+}
+
+.emotion-45 input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.emotion-45 span {
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.emotion-49 {
+  display: inline-block;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 22px;
+  color: rgba(43, 45, 49, 1);
+  margin: 0 0 6px 4px;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.emotion-49:has(input:disabled) {
+  cursor: default;
+}
+
+.emotion-49>div {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.emotion-49 input+div svg {
+  z-index: 2;
+}
+
+.emotion-49 input+div::before {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  height: 20px;
+  width: 20px;
+  top: 0;
+  left: 0;
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.emotion-49 input:focus+div {
+  box-shadow: -4px 4px 10px rgba(82, 197, 135, 0.4);
+}
+
+.emotion-49 input:disabled+div,
+.emotion-49 input:indeterminate:disabled+div {
+  background: rgba(210, 212, 219, 1);
+}
+
+.emotion-49 input:not(:checked, :indeterminate, :disabled)+div::before {
+  border: 1.5px solid rgba(82, 197, 135, 1);
+}
+
+.emotion-49 input:not(:checked, :indeterminate, :disabled)+div:hover::before {
+  border: 1.5px solid rgba(82, 197, 135, 0.6);
+}
+
+.emotion-49 input:not(:disabled):checked+div::before,
+.emotion-49 input:not(:disabled):indeterminate+div::before {
+  background: linear-gradient(
+        117.5deg,
+        rgba(137, 217, 150, 1) 17.12%,
+        rgba(82, 197, 135, 1) 85.53%
+      );
+}
+
+.emotion-49 input:not(:disabled):checked+div:hover::before,
+.emotion-49 input:not(:disabled):indeterminate+div:hover::before {
+  background: linear-gradient(
+        117.5deg,
+        rgba(137, 217, 150, 0.6) 17.12%,
+        rgba(82, 197, 135, 0.6) 85.53%
+      );
+}
+
+.emotion-49 input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.emotion-49 span {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.emotion-55 {
+  display: inline-block;
+  position: relative;
+}
+
+.emotion-56 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex-flow: row nowrap;
+  -webkit-flex-flow: row nowrap;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  position: relative;
+  color: initial;
+  width: auto;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  line-height: 18px;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 12px;
+  background: rgba(238, 241, 247, 1);
+}
+
+.emotion-56:focus::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(43, 45, 49, 1);
+  border-radius: 12px;
+}
+
+.emotion-56:disabled {
+  background: rgba(195, 197, 204, 1);
+  cursor: default;
+}
+
+.emotion-56:focus {
+  color: rgba(43, 45, 49, 1);
+  background: rgba(210, 212, 219, 1);
+}
+
+.emotion-56 svg path {
+  stroke: rgba(43, 45, 49, 1);
+}
+
+.emotion-57 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-61 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  background-origin: border-box;
+  -webkit-background-clip: padding-box,border-box;
+  background-clip: padding-box,border-box;
+  border: 1px solid rgba(195, 197, 204, 1);
+  color: rgba(43, 45, 49, 1);
+  width: 100%;
+  height: 44px;
+  padding: 14px;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  padding-right: 40px;
+  border: 0!important;
+}
+
+.emotion-61::-webkit-input-placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-61::-moz-placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-61:-ms-input-placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-61::placeholder {
+  color: rgba(43, 45, 49, 0.6);
+}
+
+.emotion-61:disabled {
+  color: rgba(195, 197, 204, 1);
+  background: rgba(238, 241, 247, 1);
+}
+
+.emotion-61:disabled::-webkit-input-placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-61:disabled::-moz-placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-61:disabled:-ms-input-placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-61:disabled::placeholder {
+  color: rgba(195, 197, 204, 1);
+}
+
+.emotion-61:disabled:disabled,
+.emotion-61:disabled:disabled:hover {
+  border: 1px solid rgba(195, 197, 204, 1);
+  background-image: none;
+}
+
+.emotion-62 {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  height: 100%;
+  width: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.emotion-64 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin-left: 6px;
+}
+
+.emotion-66 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  border: none;
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 12px;
+  height: 36px;
+  font-size: 13.33px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  padding: 0 16px;
+  color: rgba(255, 255, 255, 1);
+  background: linear-gradient(
+      108.3deg,
+      rgba(43, 45, 49, 1) -0.36%,
+      rgb(64, 72, 83) 100%
+    );
+  margin-top: 12px;
+}
+
+.emotion-66:hover {
+  background: linear-gradient(
+        108.3deg,
+        rgba(77, 82, 87, 1) -0.36%,
+        rgba(94, 103, 114, 1) 100%
+      );
+  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+}
+
+.emotion-66:active {
+  background: rgba(43, 45, 49, 1);
+  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+}
+
+.emotion-66:disabled {
+  background: rgba(195, 197, 204, 1);
+}
+
+.emotion-66:focus {
+  background: linear-gradient(
+        108.3deg,
+        rgb(64, 68, 73) -0.36%,
+        rgb(76, 84, 93) 100%
+      );
+  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+}
+
+<div>
+  <form
+    class="emotion-0"
+  >
+    <div
+      class="form-group field field-object"
+    >
+      <div
+        class="form-group emotion-1"
+        direction="column"
+        id="root"
+      >
+        <label
+          class="emotion-2"
+          for="root__title"
+          title="Test Form"
+        >
+          Test Form
+        </label>
+        <div
+          class="emotion-3"
+        >
+          <p
+            class="field-description"
+            id="root__description"
+          >
+            Test Form Description
+          </p>
+        </div>
+        <div
+          class="form-group field field-string"
+        >
+          <label
+            class="emotion-4"
+            for="root_stringField"
+          >
+            String field title
+          </label>
+          <div
+            class="emotion-5"
+          >
+            <div
+              class="emotion-6"
+            >
+              <input
+                class="emotion-7"
+                id="root_stringField"
+                name="stringField"
+                placeholder="String field placeholder"
+                type="text"
+                value="String field value"
+              />
+            </div>
+          </div>
+          <span
+            class="emotion-8"
+          >
+            <p
+              class="help-block"
+              id="root_stringField__help"
+            >
+              String field help
+            </p>
+          </span>
+        </div>
+        <div
+          class="form-group field field-array"
+        >
+          <div
+            class="emotion-9"
+            direction="column"
+          >
+            <label
+              class="emotion-2"
+              for="root_arrayField__title"
+              title="Array field title"
+            >
+              Array field title
+            </label>
+            <div
+              class="emotion-3"
+            >
+              <p
+                class="field-description"
+                id="root_arrayField__description"
+              >
+                Array field description
+              </p>
+            </div>
+            <div
+              class="emotion-12"
+              style="gap: 8px;"
+            >
+              <div
+                class="emotion-13"
+              >
+                <div
+                  class="form-group field field-string"
+                >
+                  <label
+                    class="emotion-4"
+                    for="root_arrayField_0"
+                  >
+                    Array field title-1
+                  </label>
+                  <div
+                    class="emotion-5"
+                  >
+                    <div
+                      class="emotion-6"
+                    >
+                      <input
+                        class="emotion-7"
+                        id="root_arrayField_0"
+                        name="arrayField-0"
+                        placeholder=""
+                        type="text"
+                        value="Item 1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="emotion-18"
+              >
+                <button
+                  class="emotion-19"
+                  disabled=""
+                  title="Move up"
+                  type="button"
+                >
+                  <span
+                    class="emotion-20"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="16px"
+                      viewBox="0 0 7 8"
+                      width="16px"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        Arrow Up
+                      </title>
+                      <path
+                        d="M3.17757 0.92293L3.17757 7.07727"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                      <path
+                        d="M0.416507 3.40515L3.17751 0.922901L5.93896 3.40515"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  class="emotion-19"
+                  title="Move down"
+                  type="button"
+                >
+                  <span
+                    class="emotion-20"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="16px"
+                      viewBox="0 0 7 8"
+                      width="16px"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        Arrow Down
+                      </title>
+                      <path
+                        d="M3.1779 7.07707L3.1779 0.922729"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                      <path
+                        d="M5.93896 4.59485L3.17796 7.0771L0.416504 4.59485"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  class="emotion-19"
+                  title="Remove"
+                  type="button"
+                >
+                  <span
+                    class="emotion-20"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="14px"
+                      viewBox="0 0 8 8"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        Cross
+                      </title>
+                      <path
+                        d="M1 6.66L6.66 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M6.66 6.66L1 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="emotion-12"
+              style="gap: 8px;"
+            >
+              <div
+                class="emotion-13"
+              >
+                <div
+                  class="form-group field field-string"
+                >
+                  <label
+                    class="emotion-4"
+                    for="root_arrayField_1"
+                  >
+                    Array field title-2
+                  </label>
+                  <div
+                    class="emotion-5"
+                  >
+                    <div
+                      class="emotion-6"
+                    >
+                      <input
+                        class="emotion-7"
+                        id="root_arrayField_1"
+                        name="arrayField-1"
+                        placeholder=""
+                        type="text"
+                        value="Item 2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="emotion-18"
+              >
+                <button
+                  class="emotion-19"
+                  title="Move up"
+                  type="button"
+                >
+                  <span
+                    class="emotion-20"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="16px"
+                      viewBox="0 0 7 8"
+                      width="16px"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        Arrow Up
+                      </title>
+                      <path
+                        d="M3.17757 0.92293L3.17757 7.07727"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                      <path
+                        d="M0.416507 3.40515L3.17751 0.922901L5.93896 3.40515"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  class="emotion-19"
+                  disabled=""
+                  title="Move down"
+                  type="button"
+                >
+                  <span
+                    class="emotion-20"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="16px"
+                      viewBox="0 0 7 8"
+                      width="16px"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        Arrow Down
+                      </title>
+                      <path
+                        d="M3.1779 7.07707L3.1779 0.922729"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                      <path
+                        d="M5.93896 4.59485L3.17796 7.0771L0.416504 4.59485"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="0.8"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  class="emotion-19"
+                  title="Remove"
+                  type="button"
+                >
+                  <span
+                    class="emotion-20"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="14px"
+                      viewBox="0 0 8 8"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        Cross
+                      </title>
+                      <path
+                        d="M1 6.66L6.66 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M6.66 6.66L1 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <button
+              class="emotion-38"
+              title="Add Item"
+              type="button"
+            >
+              <span
+                class="emotion-20"
+                style="margin: 0px;"
+              >
+                <svg
+                  fill="none"
+                  height="16px"
+                  viewBox="0 0 10 10"
+                  width="16px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <title>
+                    Plus
+                  </title>
+                  <path
+                    d="M1 5H9"
+                    stroke="#000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.4"
+                  />
+                  <path
+                    d="M5 9V1"
+                    stroke="#000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.4"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="form-group field field-boolean"
+        >
+          <div>
+            <label
+              class="emotion-40"
+              for="root_checkboxField"
+            >
+              <input
+                checked=""
+                id="root_checkboxField"
+                name=""
+                type="checkbox"
+              />
+              <div>
+                <svg
+                  fill="none"
+                  height="12px"
+                  viewBox="0 0 11 8"
+                  width="12px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <title>
+                    Check
+                  </title>
+                  <path
+                    d="M1 3.83L3.83 6.66L9.5 1"
+                    stroke="rgba(255, 255, 255, 1)"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.4"
+                  />
+                </svg>
+              </div>
+              <span>
+                Checkbox field title
+              </span>
+            </label>
+          </div>
+          <span
+            class="emotion-8"
+          >
+            <p
+              class="help-block"
+              id="root_checkboxField__help"
+            >
+              checkbox
+            </p>
+          </span>
+        </div>
+        <div
+          class="form-group field field-string"
+        >
+          <label
+            class="emotion-4"
+            for="root_radioField"
+          >
+            Radio field title
+          </label>
+          <div
+            aria-required="false"
+            class="emotion-43"
+            role="radiogroup"
+          >
+            <label
+              class="emotion-44 emotion-45"
+              for="root_radioField-0"
+            >
+              <input
+                checked=""
+                id="root_radioField-0"
+                name="radioField"
+                type="radio"
+                value="0"
+              />
+              <svg
+                fill="#fff"
+                height="20px"
+                viewBox="0 0 20 21"
+                width="20px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  Radio on
+                </title>
+                <rect
+                  fill="rgba(82, 197, 135, 1)"
+                  height="18.6"
+                  rx="9.3"
+                  width="18.6"
+                  x="0.7"
+                  y="1.39995"
+                />
+                <rect
+                  height="18.6"
+                  rx="9.3"
+                  stroke="rgba(82, 197, 135, 1)"
+                  stroke-width="1.4"
+                  width="18.6"
+                  x="0.7"
+                  y="1.39995"
+                />
+                <circle
+                  cx="10"
+                  cy="10.7"
+                  fill="rgba(82, 197, 135, 1)"
+                  r="5"
+                />
+              </svg>
+              <span
+                data-testid="root_radioField-0"
+              >
+                Option 1
+              </span>
+            </label>
+            <label
+              class="emotion-44 emotion-45"
+              for="root_radioField-1"
+            >
+              <input
+                id="root_radioField-1"
+                name="radioField"
+                type="radio"
+                value="1"
+              />
+              <svg
+                fill="#fff"
+                height="20px"
+                viewBox="0 0 20 21"
+                width="20px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  Circle
+                </title>
+                <rect
+                  fill="none"
+                  height="18.6"
+                  rx="9.3"
+                  width="18.6"
+                  x="0.7"
+                  y="1.39995"
+                />
+                <rect
+                  height="18.6"
+                  rx="9.3"
+                  stroke="rgba(82, 197, 135, 1)"
+                  stroke-width="1.4"
+                  width="18.6"
+                  x="0.7"
+                  y="1.39995"
+                />
+              </svg>
+              <span
+                data-testid="root_radioField-1"
+              >
+                Option 2
+              </span>
+            </label>
+          </div>
+        </div>
+        <div
+          class="form-group field field-array"
+        >
+          <label
+            class="emotion-4"
+            for="root_checkboxesField"
+          >
+            Checkboxes field title
+          </label>
+          <div
+            id="root_checkboxesField"
+          >
+            <label
+              class="emotion-49"
+              for="root_checkboxesField-0"
+            >
+              <input
+                checked=""
+                id="root_checkboxesField-0"
+                name="root_checkboxesField"
+                type="checkbox"
+              />
+              <div>
+                <svg
+                  fill="none"
+                  height="12px"
+                  viewBox="0 0 11 8"
+                  width="12px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <title>
+                    Check
+                  </title>
+                  <path
+                    d="M1 3.83L3.83 6.66L9.5 1"
+                    stroke="rgba(255, 255, 255, 1)"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.4"
+                  />
+                </svg>
+              </div>
+              <span>
+                foo
+              </span>
+            </label>
+            <br />
+            <label
+              class="emotion-49"
+              for="root_checkboxesField-1"
+            >
+              <input
+                checked=""
+                id="root_checkboxesField-1"
+                name="root_checkboxesField"
+                type="checkbox"
+              />
+              <div>
+                <svg
+                  fill="none"
+                  height="12px"
+                  viewBox="0 0 11 8"
+                  width="12px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <title>
+                    Check
+                  </title>
+                  <path
+                    d="M1 3.83L3.83 6.66L9.5 1"
+                    stroke="rgba(255, 255, 255, 1)"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.4"
+                  />
+                </svg>
+              </div>
+              <span>
+                bar
+              </span>
+            </label>
+            <br />
+            <label
+              class="emotion-49"
+              for="root_checkboxesField-2"
+            >
+              <input
+                id="root_checkboxesField-2"
+                name="root_checkboxesField"
+                type="checkbox"
+              />
+              <div />
+              <span>
+                fuzz
+              </span>
+            </label>
+            <br />
+            <label
+              class="emotion-49"
+              for="root_checkboxesField-3"
+            >
+              <input
+                id="root_checkboxesField-3"
+                name="root_checkboxesField"
+                type="checkbox"
+              />
+              <div />
+              <span>
+                qux
+              </span>
+            </label>
+            <br />
+          </div>
+          <span
+            class="emotion-8"
+          >
+            <p
+              class="help-block"
+              id="root_checkboxesField__help"
+            >
+              Checkboxes field help
+            </p>
+          </span>
+        </div>
+        <div
+          class="form-group field field-string"
+        >
+          <label
+            class="emotion-4"
+            for="root_selectField"
+          >
+            Select field title
+          </label>
+          <div>
+            <div
+              class="emotion-55"
+              data-testid="dropdown"
+            >
+              <button
+                aria-controls="dropdown-popup-:r7:"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="dropdown-label-:r7:"
+                class="emotion-56"
+                role="combobox"
+                type="button"
+              >
+                Option 2
+                <div
+                  class="emotion-57"
+                >
+                  <svg
+                    height="12px"
+                    viewBox="0 0 18 10"
+                    width="12px"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <title>
+                      Carrot down
+                    </title>
+                    <path
+                      d="M17 1L9 9L1 1"
+                      fill="none"
+                      stroke="#000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group field field-string"
+        >
+          <label
+            class="emotion-4"
+            for="root_passwordField"
+          >
+            Password field title
+          </label>
+          <div
+            class="emotion-5"
+          >
+            <div
+              class="emotion-6"
+            >
+              <input
+                class="emotion-61"
+                id="root_passwordField"
+                name="passwordField"
+                placeholder=""
+                type="password"
+                value="password"
+              />
+              <div
+                class="emotion-62"
+              >
+                <button
+                  class="emotion-38"
+                  type="button"
+                >
+                  <span
+                    class="emotion-64"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="16px"
+                      viewBox="0 0 24 24"
+                      width="16px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        Visible
+                      </title>
+                      <path
+                        d="M15.5799 11.9999C15.5799 13.9799 13.9799 15.5799 11.9999 15.5799C10.0199 15.5799 8.41992 13.9799 8.41992 11.9999C8.41992 10.0199 10.0199 8.41992 11.9999 8.41992C13.9799 8.41992 15.5799 10.0199 15.5799 11.9999Z"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M11.9998 20.27C15.5298 20.27 18.8198 18.19 21.1098 14.59C22.0098 13.18 22.0098 10.81 21.1098 9.39997C18.8198 5.79997 15.5298 3.71997 11.9998 3.71997C8.46984 3.71997 5.17984 5.79997 2.88984 9.39997C1.98984 10.81 1.98984 13.18 2.88984 14.59C5.17984 18.19 8.46984 20.27 11.9998 20.27Z"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <span
+            class="emotion-8"
+          >
+            <p
+              class="help-block"
+              id="root_passwordField__help"
+            >
+              Password field help
+            </p>
+          </span>
+        </div>
+      </div>
+    </div>
+    <button
+      class="emotion-66"
+      data-testid="rjsf-submit-button"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+`;

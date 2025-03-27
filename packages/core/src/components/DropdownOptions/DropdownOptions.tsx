@@ -10,6 +10,7 @@ import { DropdownItemsListProps } from './types';
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   position: absolute;
   width: 100%;
+  min-width: max-content;
 
   list-style: none;
 
