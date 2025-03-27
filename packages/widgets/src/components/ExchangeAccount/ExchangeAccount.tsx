@@ -1,17 +1,16 @@
-import { css } from '@emotion/css';
-import { useTheme } from '@emotion/react';
-import {
-  Button,
-  CardBase,
-  CardContent,
-  CardHeader,
-  Icon,
-  Typography,
-  WithLink,
-} from '@ssa-ui-kit/core';
-import { BalancePieChart } from '@components/AccountBalance';
-import { ExchangeAccountProps } from './types';
+import React, { isValidElement } from 'react';
+import { CardBase, WithLink } from '@ssa-ui-kit/core';
+
 import * as S from './styles';
+import { ExchangeAccountProps } from './types';
+import {
+  ExchangeAccountProvider,
+  ExchangeAccountHeader,
+  ExchangeAccountPlatform,
+  ExchangeAccountTitle,
+  ExchangeAccountStatus,
+  ExchangeAccountContent,
+} from './components';
 
 export const ExchangeAccount = ({
   platform,
@@ -19,72 +18,83 @@ export const ExchangeAccount = ({
   status,
   link,
   data,
+  children,
   pieChartProps,
+  disabled = false,
   onClick,
   onDelete,
 }: ExchangeAccountProps) => {
-  const theme = useTheme();
-  const isActive = status === 'Active';
-  const handleClickDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    onDelete();
+  const seen = {
+    header: false,
+    status: false,
+    content: false,
   };
 
+  const childrenArray = React.Children.toArray(children).filter(Boolean);
+  childrenArray.forEach((children) => {
+    if (isValidElement(children)) {
+      const type = children.type;
+      if (type === ExchangeAccountHeader) {
+        seen.header = true;
+      } else if (type === ExchangeAccountStatus) {
+        seen.status = true;
+      } else if (type === ExchangeAccountContent) {
+        seen.content = true;
+      }
+    }
+  });
+
+  if (!seen.header) {
+    childrenArray.unshift(
+      <ExchangeAccountHeader key="header">
+        <ExchangeAccountPlatform>{platform}</ExchangeAccountPlatform>
+        <ExchangeAccountTitle>{title}</ExchangeAccountTitle>
+      </ExchangeAccountHeader>,
+    );
+  }
+  if (!seen.content) {
+    childrenArray.push(<ExchangeAccountContent key="content" />);
+  }
+  if (!seen.status) {
+    const headerIndex = childrenArray.findIndex(
+      (child) => isValidElement(child) && child.type === ExchangeAccountHeader,
+    );
+    childrenArray.splice(
+      headerIndex + 1,
+      0,
+      <ExchangeAccountStatus key="status" />,
+    );
+  }
+
+  const _onClick = !disabled ? onClick : undefined;
+
   return (
-    <WithLink link={link} onClick={onClick}>
-      <CardBase
-        noShadow
-        css={S.CardBase}
-        data-testid="card"
-        onClick={link ? undefined : onClick}>
-        <CardHeader css={S.CardHeader}>
-          <Typography
-            variant="subtitle"
-            weight="bold"
-            color={theme.colors.greyDarker}
-            css={S.Platform}>
-            {platform}
-          </Typography>
-          <Typography
-            color={theme.colors.greyDropdownFocused}
-            variant="subtitle"
-            weight="regular">
-            {title}
-          </Typography>
-          <Button css={S.RemoveButton} onClick={(e) => handleClickDelete(e)}>
-            <Icon
-              name="bin"
-              color={theme.colors.greyDropdownFocused}
-              size={20}
-            />
-          </Button>
-        </CardHeader>
-        <Typography
-          css={S.Status}
-          className={isActive ? 'active' : 'not-available'}
-          variant="body1"
-          weight="regular">
-          {isActive ? status : 'Not available'}
-        </Typography>
-        <CardContent css={S.CardContent} direction="column">
-          <BalancePieChart
-            theme={theme}
-            pieChartProps={{
-              className: css`
-                ${theme.mediaQueries.md} {
-                  flex-direction: row;
-                }
-                ${theme.mediaQueries.lg} {
-                  flex-direction: column;
-                }
-              `,
-              ...pieChartProps,
-            }}
-            {...data}
-          />
-        </CardContent>
-      </CardBase>
-    </WithLink>
+    <ExchangeAccountProvider
+      value={{
+        data,
+        platform,
+        title,
+        status,
+        disabled,
+        pieChartProps,
+        onDelete,
+        onClick,
+      }}>
+      <WithLink link={!disabled ? link : undefined} onClick={_onClick}>
+        <CardBase
+          noShadow
+          css={S.CardBase({ disabled })}
+          data-testid="card"
+          onClick={link ? undefined : _onClick}>
+          {childrenArray}
+        </CardBase>
+      </WithLink>
+    </ExchangeAccountProvider>
   );
 };
+
+ExchangeAccount.Header = ExchangeAccountHeader;
+ExchangeAccount.Platform = ExchangeAccountPlatform;
+ExchangeAccount.Title = ExchangeAccountTitle;
+ExchangeAccount.Status = ExchangeAccountStatus;
+ExchangeAccount.Content = ExchangeAccountContent;
