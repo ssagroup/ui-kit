@@ -8,7 +8,7 @@ import { mergeLeft } from 'ramda';
 // an example Dashboard. Thus, the have Jest configured locally (in the
 // corresponding package.json).
 
-const esm = ['d3-interpolate', 'd3-scale', 'd3-shape', 'd3-path'];
+const esm = ['d3-interpolate', 'd3-scale', 'd3-shape', 'd3-path', 'nanoid'];
 
 type ProjectConfig = Exclude<
   Exclude<JestConfigWithTsJest['projects'], undefined>[number],
