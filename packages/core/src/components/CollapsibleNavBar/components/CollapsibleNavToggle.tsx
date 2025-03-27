@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Fragment } from 'react';
 import { css } from '@emotion/react';
+import { CollapsibleNavToggleWrapper } from '.';
 
-import CollapsibleNavToggleWrapper from './CollapsibleNavToggleWrapper';
-
-const CollapsibleNavToggle = ({ id }: { id: string }) => {
+export const CollapsibleNavToggle = ({ id }: { id: string }) => {
   return (
     <Fragment>
       <CollapsibleNavToggleWrapper>
@@ -47,5 +46,3 @@ const CollapsibleNavToggle = ({ id }: { id: string }) => {
     </Fragment>
   );
 };
-
-export default CollapsibleNavToggle;

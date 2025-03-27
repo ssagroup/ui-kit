@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import NavBarWrapper from '@components/NavBar/NavBarWrapper';
-import { CollapsibleNavBarExtendedProps } from './types';
+import { CollapsibleNavBarExtendedProps } from '../types';
 
-const CollapsibleNavBarWrapper = styled(NavBarWrapper)<{
+export const CollapsibleNavBarWrapper = styled(NavBarWrapper)<{
   navBarTheme?: CollapsibleNavBarExtendedProps['theme'];
 }>`
   transform: none;
@@ -24,5 +24,3 @@ const CollapsibleNavBarWrapper = styled(NavBarWrapper)<{
     padding-top: 35px;
   }
 `;
-
-export default CollapsibleNavBarWrapper;

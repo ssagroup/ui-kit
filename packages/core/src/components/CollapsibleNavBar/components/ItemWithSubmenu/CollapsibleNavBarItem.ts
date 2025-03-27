@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import NavBarItem from '@components/NavBar/NavBarItem';
 
-const CollapsibleNavBarItem = styled(NavBarItem)`
+export const CollapsibleNavBarItem = styled(NavBarItem)`
   align-items: flex-start;
   justify-content: flex-start;
-
+  width: 100%;
   height: auto;
   min-height: 24px;
   padding: 12px 0;
@@ -14,7 +14,6 @@ const CollapsibleNavBarItem = styled(NavBarItem)`
   &:last-of-type {
     padding-bottom: 0;
   }
-  width: 100%;
   & > a {
     height: 26px;
   }
@@ -24,5 +23,3 @@ const CollapsibleNavBarItem = styled(NavBarItem)`
     width: 100%;
   }
 `;
-
-export default CollapsibleNavBarItem;

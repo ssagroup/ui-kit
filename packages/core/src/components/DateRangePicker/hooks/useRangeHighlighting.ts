@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DateTime } from 'luxon';
+import { ClassnameArray } from '@ssa-ui-kit/utils';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
-import { ClassnameArray } from '../helpers';
 
 export const useRangeHighlighting = () => {
   const [hoveredDate, setHoveredDate] = useState<DateTime | null>(null);

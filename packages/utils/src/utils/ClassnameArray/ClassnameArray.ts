@@ -12,4 +12,9 @@ export class ClassnameArray extends Array<string> {
     }
     return this;
   }
+
+  clear() {
+    this.length = 0;
+    return this;
+  }
 }

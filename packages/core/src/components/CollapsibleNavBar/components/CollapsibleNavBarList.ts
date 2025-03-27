@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import NavBarList from '@components/NavBar/NavBarList';
-import { CollapsibleNavBarExtendedProps } from './types';
+import { CollapsibleNavBarExtendedProps } from '../types';
 
-const CollapsibleNavBarList = styled(NavBarList)<{
+export const CollapsibleNavBarList = styled(NavBarList)<{
   navBarTheme?: CollapsibleNavBarExtendedProps['theme'];
 }>`
   height: auto;
@@ -17,5 +17,3 @@ const CollapsibleNavBarList = styled(NavBarList)<{
     margin-top: 84px;
   }
 `;
-
-export default CollapsibleNavBarList;

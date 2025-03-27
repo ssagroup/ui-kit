@@ -2,15 +2,16 @@ import { useState, useId, useEffect } from 'react';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
 import Wrapper from '@components/Wrapper';
 import * as S from './styles';
-import CollapsibleNavBarBase from './CollapsibleNavBarBase';
-import CollapsibleNavBarWrapper from './CollapsibleNavBarWrapper';
-import CollapsibleNavBarList from './CollapsibleNavBarList';
-import CollapsibleNavToggle from './CollapsibleNavToggle';
-import { CollapsibleNavBarExtendedProps } from './types';
-import { NavContentToggle } from './CollapsibleNavContentToggle';
-import { NavBarItemWithSubMenu } from './NavBarItemWithSubMenu';
-import { NavBarItemWithoutSubMenu } from './NavBarItemWithoutSubMenu';
+import {
+  CollapsibleNavBarBase,
+  CollapsibleNavBarWrapper,
+  CollapsibleNavBarList,
+  CollapsibleNavToggle,
+  NavContentToggle,
+  NavBarItem,
+} from './components';
 import { CollapsibleNavBarProvider } from './CollapsibleNavBarContext';
+import { CollapsibleNavBarExtendedProps } from './types';
 import { SCREEN_SIZES } from '../../consts';
 /**
  * UI Component that shows the collapsible navigation bar
@@ -68,18 +69,12 @@ export const CollapsibleNavBar = ({
             {items.map((item) => {
               const { iconName, title } = item;
               const keyName = iconName + title.replace(' ', '').toLowerCase();
-              return 'items' in item ? (
-                <NavBarItemWithSubMenu
-                  item={item}
-                  key={keyName}
+              return (
+                <NavBarItem
                   onClick={handleCloseMobileMenu}
                   useMatchPattern={useMatchPattern}
-                />
-              ) : (
-                <NavBarItemWithoutSubMenu
                   item={item}
                   key={keyName}
-                  onClick={handleCloseMobileMenu}
                 />
               );
             })}

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { css, Theme } from '@emotion/react';
 import NavBarBase from '@components/NavBar/NavBarBase';
-import { CollapsibleNavBarExtendedProps } from './types';
+import { CollapsibleNavBarExtendedProps } from '../types';
 
 // TODO: refactor this
 const popupIconsToggle = (isVisible: boolean) => css`
@@ -48,7 +48,7 @@ const backgroundByTheme = (
       );`};
 `;
 
-const CollapsibleNavBarBase = styled(NavBarBase)<{
+export const CollapsibleNavBarBase = styled(NavBarBase)<{
   'data-theme': CollapsibleNavBarExtendedProps['theme'];
 }>`
   padding: 15px 0 0 15px;
@@ -160,5 +160,3 @@ const CollapsibleNavBarBase = styled(NavBarBase)<{
     }
   }
 `;
-
-export default CollapsibleNavBarBase;

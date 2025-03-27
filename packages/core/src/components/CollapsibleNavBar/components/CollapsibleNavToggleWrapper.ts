@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import NavToggleWrapper from '@components/NavBar/NavToggleWrapper';
 
-const CollapsibleNavToggleWrapper = styled(NavToggleWrapper)`
+export const CollapsibleNavToggleWrapper = styled(NavToggleWrapper)`
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.greyLighter};
 
@@ -12,5 +12,3 @@ const CollapsibleNavToggleWrapper = styled(NavToggleWrapper)`
     display: none;
   }
 `;
-
-export default CollapsibleNavToggleWrapper;

@@ -4,8 +4,10 @@ export interface NavBarProps {
   items: Array<{ path: string; iconName: keyof MapIconsType }>;
 }
 
+export type CustomIconProps = (props: { className?: string }) => JSX.Element;
+
 export type NavBarExtendedItem = {
-  CustomIcon?: () => JSX.Element;
+  CustomIcon?: CustomIconProps;
   path: string;
   iconName: keyof MapIconsType;
   title: string;
@@ -19,7 +21,7 @@ export type NavBarExtendedSubItem<T extends object = object> = {
 export interface NavBarExtendedGroup<
   T extends NavBarExtendedSubItem = NavBarExtendedSubItem,
 > {
-  CustomIcon?: () => JSX.Element;
+  CustomIcon?: CustomIconProps;
   prefix?: string;
   iconName: keyof MapIconsType;
   title: string;

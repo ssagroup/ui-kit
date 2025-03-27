@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
-import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
-import * as S from './styles';
+import { useCollapsibleNavBarContext } from '../CollapsibleNavBarContext';
+import * as S from '../styles';
 
 export const NavContentToggle = ({
   id,

@@ -87,7 +87,7 @@ export const WithCustomIcon: Meta<typeof CollapsibleNavBar> = () => {
         {
           path: 'custom',
           CustomIcon,
-          title: 'Item with custom icon',
+          title: 'Custom icon',
           iconSize: 22,
           iconName: 'archive',
         },
