@@ -1,20 +1,22 @@
 import { Theme, css } from '@emotion/react';
 
-export const CardBase = (theme: Theme) => css`
-  padding: 0;
-  border-radius: 20px;
-  box-shadow: 0px 10px 40px 0px ${theme.colors.greyShadow};
-  transition: 0.3s;
+export const CardBase =
+  ({ disabled }: { disabled: boolean }) =>
+  (theme: Theme) => css`
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0px 10px 40px 0px ${theme.colors.greyShadow};
+    transition: 0.3s;
 
-  &:hover {
-    box-shadow: 5px 5px 20px 0px ${theme.colors.black25};
-  }
-`;
+    &:hover {
+      ${!disabled &&
+      `box-shadow: 0px 10px 40px 0px ${theme.colors.greyShadowHover};`}
+    }
+  `;
 
 export const CardHeader = (theme: Theme) => css`
-  display: grid;
-  grid-template-columns: auto 1fr 20px;
-  align-items: center;
+  display: flex;
+  justify-content: start;
   width: 100%;
   padding: 10px;
   border-radius: 20px 20px 0 0;
@@ -38,6 +40,7 @@ export const RemoveButton = (theme: Theme) => css`
   padding: 0;
   background: none;
   box-shadow: none;
+  margin-left: auto;
 
   &:hover,
   &:focus {

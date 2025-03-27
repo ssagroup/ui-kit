@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { css, useTheme } from '@emotion/react';
 import { css as cssClassname } from '@emotion/css';
 import { Icon, AddNewAccountCard } from '@ssa-ui-kit/core';
+
 import { ExchangeAccount } from './ExchangeAccount';
 import { dataValues } from './helpers';
 
@@ -32,6 +33,58 @@ export const Default: StoryObj<typeof ExchangeAccount> = () => {
 
 Default.args = {};
 
+export const Composition: StoryObj<typeof ExchangeAccount> = () => {
+  return (
+    <ExchangeAccount
+      status={dataValues[0].status}
+      data={dataValues[0].data}
+      onClick={() => alert('Card is clicked!')}
+      onDelete={() => alert('Card is deleted!')}>
+      <ExchangeAccount.Header>
+        <ExchangeAccount.Title css={{ background: 'yellow' }}>
+          Custom Title
+        </ExchangeAccount.Title>
+      </ExchangeAccount.Header>
+      <ExchangeAccount.Status>
+        {(status) => (status === 'Active' ? 'Custom Active Status' : status)}
+      </ExchangeAccount.Status>
+      <ExchangeAccount.Content
+        pieChartProps={{
+          className: cssClassname`
+            align-self: center;
+            max-width: 300px;
+          `,
+        }}
+      />
+    </ExchangeAccount>
+  );
+};
+
+Composition.args = {};
+
+export const ReadOnly: StoryObj<typeof ExchangeAccount> = () => {
+  return (
+    <ExchangeAccount
+      status={dataValues[0].status}
+      platform={dataValues[0].platform}
+      data={dataValues[0].data}
+      disabled={true}
+      onClick={() => alert('Card is clicked!')}
+      onDelete={() => alert('Card is deleted!')}>
+      <ExchangeAccount.Content
+        pieChartProps={{
+          className: cssClassname`
+            align-self: center;
+            max-width: 300px;
+          `,
+        }}
+      />
+    </ExchangeAccount>
+  );
+};
+
+ReadOnly.args = {};
+
 export const WithLink: StoryObj<typeof ExchangeAccount> = () => {
   return (
     <MemoryRouter>
@@ -46,14 +99,16 @@ export const WithLink: StoryObj<typeof ExchangeAccount> = () => {
               data={dataValues[0].data}
               link="/link"
               onClick={() => alert('Card is clicked!')}
-              onDelete={() => alert('Card is deleted!')}
-              pieChartProps={{
-                className: cssClassname`
-                  align-self: center;
-                  max-width: 300px;
-                `,
-              }}
-            />
+              onDelete={() => alert('Card is deleted!')}>
+              <ExchangeAccount.Content
+                pieChartProps={{
+                  className: cssClassname`
+                    align-self: center;
+                    max-width: 300px;
+                  `,
+                }}
+              />
+            </ExchangeAccount>
           }
         />
       </Routes>
@@ -91,14 +146,16 @@ export const List: StoryObj<typeof ExchangeAccount> = () => {
             status={item.status}
             data={item.data}
             onClick={() => alert('Card is clicked!')}
-            onDelete={() => alert('Card is deleted!')}
-            pieChartProps={{
-              className: cssClassname`
+            onDelete={() => alert('Card is deleted!')}>
+            <ExchangeAccount.Content
+              pieChartProps={{
+                className: cssClassname`
                 align-self: center;
                 max-width: 300px;
               `,
-            }}
-          />
+              }}
+            />
+          </ExchangeAccount>
         );
       })}
     </div>
