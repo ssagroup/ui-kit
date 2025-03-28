@@ -9,7 +9,7 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@components/Popover';
-import { useCollapsibleNavBarContext } from './CollapsibleNavBarContext';
+import { useCollapsibleNavBarContext } from '../CollapsibleNavBarContext';
 
 export const CollapsibleNavBarPopover = ({
   triggerIcon,

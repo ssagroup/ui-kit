@@ -6,7 +6,7 @@ import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { ITEMS } from './consts';
 import { DarkLogo, Logo } from './Logo';
 import { Layout } from './Layout';
-import { CustomIcon } from './CustomIcon';
+import { CustomIcon, CustomIconWithOwnLogic } from './CustomIcon';
 
 const reactRouterDecorator: Decorator = (Story) => {
   return (
@@ -79,7 +79,7 @@ export const LightTheme: StoryObj<typeof CollapsibleNavBar> = () => {
 
 LightTheme.args = {};
 
-export const WithCustomIcon: Meta<typeof CollapsibleNavBar> = () => {
+export const WithCustomIcons: Meta<typeof CollapsibleNavBar> = () => {
   return (
     <CollapsibleNavBar
       items={[
@@ -87,7 +87,14 @@ export const WithCustomIcon: Meta<typeof CollapsibleNavBar> = () => {
         {
           path: 'custom',
           CustomIcon,
-          title: 'Item with custom icon',
+          title: 'Custom icon',
+          iconSize: 22,
+          iconName: 'archive',
+        },
+        {
+          path: 'custom-2',
+          CustomIcon: CustomIconWithOwnLogic,
+          title: 'Custom icon (own logic)',
           iconSize: 22,
           iconName: 'archive',
         },
@@ -100,7 +107,7 @@ export const WithCustomIcon: Meta<typeof CollapsibleNavBar> = () => {
   );
 };
 
-WithCustomIcon.title = 'With Custom Icon';
-WithCustomIcon.parameters = {
+WithCustomIcons.title = 'With Custom Icons';
+WithCustomIcons.parameters = {
   layout: 'fullscreen',
 };

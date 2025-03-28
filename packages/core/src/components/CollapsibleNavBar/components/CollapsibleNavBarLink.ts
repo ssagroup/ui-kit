@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { CollapsibleNavBarExtendedProps } from './types';
+import { CollapsibleNavBarExtendedProps } from '../types';
 
-const CollapsibleNavBarLink = styled(NavLink)<{
+export const CollapsibleNavBarLink = styled(NavLink)<{
   navbartheme: CollapsibleNavBarExtendedProps['theme'];
   ['data-customicon']?: boolean;
 }>`
@@ -42,19 +42,16 @@ const CollapsibleNavBarLink = styled(NavLink)<{
         theme.colors.greyDropdownFocused};
     }
   }
-
-  &.active {
-    cursor: default;
+  &.active,
+  &:not(.active):hover {
     backdrop-filter: blur(0);
-    font-weight: 900;
-    filter: ${({ navbartheme, theme }) =>
-      navbartheme === 'default'
-        ? `drop-shadow(-4px 4px 14px ${theme.colors.white})`
-        : `drop-shadow(-4px 4px 14px ${theme.colors.greyDropdownFocused})`};
+    filter: ${({ theme }) =>
+      `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
     color: ${({ theme, navbartheme }) =>
       navbartheme === 'default'
         ? theme.colors.white80
         : theme.colors.greyDarker80};
+
     & > span {
       font-weight: 900;
       color: ${({ theme, navbartheme }) =>
@@ -62,46 +59,34 @@ const CollapsibleNavBarLink = styled(NavLink)<{
           ? theme.colors.white80
           : theme.colors.greyDarker80};
     }
+
     div > svg {
-      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
       & path {
         fill: ${({ theme, navbartheme, ...rest }) =>
-          !rest['data-customicon'] && navbartheme === 'default'
+          !rest['data-customicon'] &&
+          (navbartheme === 'default'
             ? theme.colors.white
-            : theme.colors.greyDarker};
+            : theme.colors.greyDarker)};
       }
       & circle {
         stroke: ${({ theme, navbartheme, ...rest }) =>
-          !rest['data-customicon'] && navbartheme === 'default'
+          !rest['data-customicon'] &&
+          (navbartheme === 'default'
             ? theme.colors.white
-            : theme.colors.greyDarker};
+            : theme.colors.greyDarker)};
       }
     }
   }
-  &:not(.active):hover {
-    backdrop-filter: blur(0);
-    filter: ${({ theme }) =>
-      `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
-    color: ${({ theme, navbartheme }) =>
-      navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
+  &.active {
+    cursor: default;
+    font-weight: 900;
+    filter: ${({ navbartheme, theme }) =>
+      navbartheme === 'default'
+        ? `drop-shadow(-4px 4px 14px ${theme.colors.white})`
+        : `drop-shadow(-4px 4px 14px ${theme.colors.greyDropdownFocused})`};
 
     div > svg {
-      filter: ${({ theme }) =>
-        `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
-      & path {
-        fill: ${({ theme, navbartheme }) =>
-          navbartheme === 'default'
-            ? theme.colors.white
-            : theme.colors.greyDarker};
-      }
-      & circle {
-        stroke: ${({ theme, navbartheme }) =>
-          navbartheme === 'default'
-            ? theme.colors.white
-            : theme.colors.greyDarker};
-      }
+      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
     }
   }
 `;
-
-export default CollapsibleNavBarLink;
