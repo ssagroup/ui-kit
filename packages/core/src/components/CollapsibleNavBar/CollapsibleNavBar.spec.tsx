@@ -19,13 +19,11 @@ describe('CollapsibleNavBar', () => {
   });
 
   it('Should expand the group', () => {
-    const { container } = render(
+    const { getByTestId } = render(
       <StoryComponent items={ITEMS} renderLogo={<Logo />} />,
     );
 
-    const statisticsArrow = container.querySelector(
-      'button#chartstatisticsaccordion',
-    );
+    const statisticsArrow = getByTestId('accordion-title');
 
     expect(statisticsArrow as Node).toHaveAttribute('aria-expanded', 'false');
 
