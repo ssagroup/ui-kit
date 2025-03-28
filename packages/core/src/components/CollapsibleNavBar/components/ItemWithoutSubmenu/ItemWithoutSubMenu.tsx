@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  CollapsibleNavBarPopover,
-  TriggerIcon,
-  CollapsibleNavBarLink,
   useCollapsibleNavBarContext,
   CollapsibleNavBarItemProvider,
-  ItemWithSubMenu,
-} from '../../index.parts';
+} from '@components/CollapsibleNavBar';
 import * as T from '../../types';
+import { ItemWithSubMenu } from '..';
+import { CollapsibleNavBarLink } from '../CollapsibleNavBarLink';
+import { CollapsibleNavBarPopover } from '../NavBarPopover';
+import { TriggerIcon } from '../TriggerIcon';
 
 export const Item = ({
   item,

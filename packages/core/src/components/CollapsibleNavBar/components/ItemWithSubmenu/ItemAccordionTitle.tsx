@@ -1,27 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
-import { PathPattern, useLocation } from 'react-router-dom';
+import { PathPattern, useLocation, useMatch } from 'react-router-dom';
 import Wrapper from '@components/Wrapper';
 import { AccordionProps, AccordionTitle } from '@components/AccordionGroup';
 import {
   useCollapsibleNavBarContext,
   CollapsibleNavBarItemProvider,
-  CollapsibleNavBarPopover,
-  CollapsibleNavBarLink,
-  ItemWithSubMenu,
-  TriggerIcon,
-} from '@components/CollapsibleNavBar/index.parts';
+} from '@components/CollapsibleNavBar';
 import { CollapsibleNavBarGroup } from '@components/CollapsibleNavBar/types';
 import * as S from './styles';
+import { NavBarAccordionContent } from './AccordionContent';
+import { CollapsibleNavBarLink } from '../CollapsibleNavBarLink';
+import { CollapsibleNavBarPopover } from '../NavBarPopover';
+import { TriggerIcon } from '../TriggerIcon';
 
 const Link = CollapsibleNavBarLink.withComponent('div');
 
 export const ItemAccordionTitle = ({
   data,
   item,
+  accordionUniqueName,
   useMatchPattern,
 }: {
   data: Parameters<AccordionProps['renderTitle']>[0];
   item: CollapsibleNavBarGroup;
+  accordionUniqueName: string;
   useMatchPattern?: (prefix: string) => string | PathPattern<string>;
 }) => {
   const { theme } = useCollapsibleNavBarContext();
@@ -32,8 +34,11 @@ export const ItemAccordionTitle = ({
   const [isActive, setIsActive] = useState(classNamesList.includes('active'));
   const [isHover, setIsHover] = useState(false);
   const { pathname } = useLocation();
-  const uniqName = item.iconName + item.title.replace(' ', '').toLowerCase();
-  const accordionUniqName = uniqName + 'accordion';
+
+  const matchPattern = useMatchPattern
+    ? useMatchPattern(item.prefix)
+    : item.prefix + ':id';
+  const match = useMatch(matchPattern);
 
   useEffect(() => {
     const classNamesList = Array.from(linkRef.current?.classList || []);
@@ -63,16 +68,19 @@ export const ItemAccordionTitle = ({
         css={S.AccordionTitleWrapper(theme)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}>
-        <Link to="" navbartheme={theme} className={isActive ? ' active' : ''}>
+        <Link
+          to=""
+          navbartheme={theme}
+          className={isActive || match ? ' active' : ''}>
           <CollapsibleNavBarPopover
             triggerIcon={<Icon />}
             title={data.title}
             content={
-              <ItemWithSubMenu.NavBarAccordionContent
+              <NavBarAccordionContent
                 items={item.items}
-                accordionUniqueName={accordionUniqName}
+                accordionUniqueName={accordionUniqueName}
                 prefix={item.prefix}
-                id={accordionUniqName}
+                id={accordionUniqueName}
                 isOpened
                 isPopover
                 useMatchPattern={useMatchPattern}

@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import {
-  CollapsibleNavBarLink,
-  useCollapsibleNavBarContext,
-} from '../../index.parts';
+import { useCollapsibleNavBarContext } from '@components/CollapsibleNavBar';
+import { CollapsibleNavBarLink } from '../CollapsibleNavBarLink';
 
 const Link = styled(CollapsibleNavBarLink)`
   width: 100%;

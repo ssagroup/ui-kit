@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { PathPattern } from 'react-router-dom';
 import {
   AccordionGroupContextProvider,
@@ -20,8 +21,8 @@ export const Item = ({
   onClick?: () => void;
 }) => {
   const { subMenuMaxWidth } = useCollapsibleNavBarContext();
-  const { iconName, title, items, prefix = '' } = item;
-  const uniqName = iconName + title.replace(' ', '').toLowerCase();
+  const { title, items, prefix = '' } = item;
+  const uniqName = useId();
   const accordionUniqName = uniqName + 'accordion';
 
   return (
@@ -59,6 +60,7 @@ export const Item = ({
                 data={data}
                 item={item}
                 useMatchPattern={useMatchPattern}
+                accordionUniqueName={accordionUniqName}
               />
             )}
           />
