@@ -3,7 +3,7 @@ import { AccountKeys } from '../AccountKeys';
 import { getMockData } from '../helpers';
 
 interface onDelete {
-  onDelete: () => void;
+  onDelete?: () => void;
 }
 
 export const StoryComponent = ({ onDelete }: onDelete) => {
