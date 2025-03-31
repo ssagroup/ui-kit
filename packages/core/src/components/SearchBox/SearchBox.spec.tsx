@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { fireEvent } from '@testing-library/dom';
 import { StoryComponent } from './stories/StoryComponent';
 
@@ -59,6 +60,38 @@ describe('SearchBox', () => {
       ['Searching for the term...', 'test'],
     ]);
     consoleLogMock.mockRestore();
+  });
+
+  it('should not capture stale state in the callback', () => {
+    const callbackMock = jest.fn();
+
+    const Component = () => {
+      const [prevValue, setPrevValue] = useState<string | null>(null);
+
+      const callback = (value: string) => {
+        setPrevValue(value);
+        callbackMock({ prevValue, value });
+      };
+
+      return <StoryComponent handleCallback={callback} />;
+    };
+
+    const { getByPlaceholderText } = render(<Component />);
+
+    const inputElement = getByPlaceholderText('Search by name');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    jest.runAllTimers();
+    expect(callbackMock).toHaveBeenCalledWith({
+      prevValue: null,
+      value: 'test',
+    });
+
+    fireEvent.change(inputElement, { target: { value: 'new' } });
+    jest.runAllTimers();
+    expect(callbackMock).toHaveBeenLastCalledWith({
+      prevValue: 'test',
+      value: 'new',
+    });
   });
 
   it('should call the callback by pressing the Enter key', () => {

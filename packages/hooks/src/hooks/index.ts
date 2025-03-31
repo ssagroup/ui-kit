@@ -8,4 +8,6 @@ export { useToggle } from './useToggle';
 export { useUncontrolled } from './useUncontrolled';
 export { createSafeContext } from './useSafeContext';
 export { useResizeObserver, useElementSize } from './useResizeObserver';
+export { useCallbackRef } from './useCallbackRef';
+export { useDebouncedCallback } from './useDebouncedCallback';
 export * from './mediaQueries';

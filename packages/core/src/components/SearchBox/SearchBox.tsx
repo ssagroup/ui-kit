@@ -1,7 +1,7 @@
 import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useWatch } from 'react-hook-form';
+import { useDebouncedCallback } from '@ssa-ui-kit/hooks';
 import Icon from '@components/Icon';
-import { debounce } from '@ssa-ui-kit/utils';
 import { SearchBoxWrapper } from './SearchBoxWrapper';
 import { SearchBoxInput } from './SearchBoxInput';
 import { SearchBoxCrossIcon } from '.';
@@ -20,8 +20,8 @@ export const SearchBox = ({
 }: SearchBoxProps) => {
   const watchResult = useWatch({ control });
   const inputRef = useRef<HTMLInputElement>(null);
-  const debounceThrottled = useRef(debounce(callback, callbackDelay));
-  const [debouncedFn, cancel] = debounceThrottled.current;
+
+  const [debouncedFn, cancel] = useDebouncedCallback(callback, callbackDelay);
 
   useEffect(() => {
     const searchTerm = watchResult[name];
