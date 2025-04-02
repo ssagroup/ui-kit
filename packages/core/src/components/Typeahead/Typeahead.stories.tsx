@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FieldError,
   FieldValues,
@@ -61,7 +61,7 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typeahead
-        initialSelectedItems={[items[2].id]}
+        selectedItems={[items[2].id]}
         isDisabled={args.isDisabled}
         onEmptyChange={(isEmpty) => {
           console.log('>>>onEmptyChange event', isEmpty);
@@ -124,7 +124,7 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typeahead
-        initialSelectedItems={[items[2].id, items[1].id]}
+        selectedItems={[items[2].id, items[1].id]}
         isMultiple
         isDisabled={args.isDisabled}
         onEmptyChange={(isEmpty) => {
@@ -173,7 +173,7 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
   const { register, setValue } = useFormResult;
   return (
     <Typeahead
-      initialSelectedItems={[imageItems[2].id, imageItems[1].id]}
+      selectedItems={[imageItems[2].id, imageItems[1].id]}
       isMultiple
       isDisabled={args.isDisabled}
       name={'typeahead-dropdown'}
@@ -220,7 +220,7 @@ export const WithError: StoryObj = (args: TypeaheadProps) => {
   const { register, setValue } = useFormResult;
   return (
     <Typeahead
-      initialSelectedItems={[]}
+      selectedItems={[]}
       isDisabled={args.isDisabled}
       name={'typeahead-dropdown'}
       label="Label"
@@ -247,7 +247,7 @@ export const WithSuccess: StoryObj = (args: TypeaheadProps) => {
   const { register, setValue } = useFormResult;
   return (
     <Typeahead
-      initialSelectedItems={[items[2].id]}
+      selectedItems={[items[2].id]}
       isDisabled={args.isDisabled}
       name={'typeahead-dropdown'}
       label="Label"
@@ -315,7 +315,7 @@ export const DynamicallyChangedItems = (args: TypeaheadProps) => {
       <Wrapper
         css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
         <Typeahead
-          initialSelectedItems={[localItems[2].id]}
+          selectedItems={[localItems[2].id]}
           isMultiple
           name={'typeahead-dropdown'}
           label="Label"
@@ -345,13 +345,66 @@ export const DynamicallyChangedItems = (args: TypeaheadProps) => {
 
 DynamicallyChangedItems.args = { isDisabled: false };
 
+export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
+  const selectedItemIndex = useRef(0);
+  const [selectedItems, setSelectedItems] = useState([items[0].id]);
+
+  const handleUpdate = () => {
+    const newValue =
+      selectedItemIndex.current + 1 >= items.length
+        ? 0
+        : selectedItemIndex.current + 1;
+    selectedItemIndex.current = newValue;
+    setSelectedItems(() => {
+      return [items[selectedItemIndex.current].id];
+    });
+  };
+
+  const useFormResult = useForm<FieldValues>();
+  const { handleSubmit, register, setValue } = useFormResult;
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Wrapper
+        css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
+        <Typeahead
+          selectedItems={selectedItems}
+          isMultiple
+          name={'typeahead-dropdown'}
+          label="Label"
+          register={register}
+          setValue={setValue}
+          validationSchema={{
+            required: 'Required',
+          }}
+          renderOption={({ label, input }) => highlightInputMatch(label, input)}
+          {...args}>
+          {items.map(({ label, value, id }) => (
+            <TypeaheadOption key={id} value={id} label={label || value}>
+              {label || value}
+            </TypeaheadOption>
+          ))}
+        </Typeahead>
+        <Button variant="primary" onClick={handleUpdate}>
+          Update selected items
+        </Button>
+        <Button type="submit" variant="info">
+          Submit
+        </Button>
+      </Wrapper>
+    </form>
+  );
+};
+
+DynamicallyChangedSelectedItems.args = { isDisabled: false };
+
 export const Disabled: StoryObj = (args: TypeaheadProps) => {
   const theme = useTheme();
   const useFormResult = useForm<FieldValues>();
   const { register, setValue } = useFormResult;
   return (
     <Typeahead
-      initialSelectedItems={[items[2].id, items[1].id]}
+      selectedItems={[items[2].id, items[1].id]}
       isMultiple
       isDisabled={args.isDisabled}
       name={'typeahead-dropdown'}

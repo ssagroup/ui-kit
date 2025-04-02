@@ -427,7 +427,7 @@ describe('Typeahead', () => {
 
   it('New item should be rendered correctly', async () => {
     const { getByTestId, getByText, getByRole } = render(
-      <DynamicallyChangedItems initialSelectedItems={[]} />,
+      <DynamicallyChangedItems selectedItems={[]} />,
     );
 
     const mainElement = getByTestId('typeahead');

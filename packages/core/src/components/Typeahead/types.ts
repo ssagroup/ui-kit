@@ -11,7 +11,7 @@ export type TypeaheadValue = string | number;
 export type TypeaheadOptionProps = Record<string, TypeaheadValue>;
 
 export interface TypeaheadProps {
-  initialSelectedItems?: Array<TypeaheadValue>;
+  selectedItems?: Array<TypeaheadValue>;
   isMultiple?: boolean;
   isDisabled?: boolean;
   children?: React.ReactNode;
@@ -44,7 +44,7 @@ export interface TypeaheadProps {
 
 export type UseTypeaheadProps = Pick<
   TypeaheadProps,
-  | 'initialSelectedItems'
+  | 'selectedItems'
   | 'isDisabled'
   | 'children'
   | 'isMultiple'
