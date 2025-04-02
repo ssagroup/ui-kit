@@ -91,6 +91,7 @@ export const Typeahead = ({
           </Label>
         )}
         <Popover
+          keyboardHandlers={false}
           floatingOptions={{
             onOpenChange: hookResult.handleOpenChange,
             open: hookResult.isOpen,

@@ -95,6 +95,7 @@ export const FiltersMultiSelect = ({
         )}
         <Field.Control controlRef={inputRef}>
           <Popover
+            keyboardHandlers={false}
             floatingOptions={{
               onOpenChange: (open, event, reason) => {
                 if (disabled) return;
