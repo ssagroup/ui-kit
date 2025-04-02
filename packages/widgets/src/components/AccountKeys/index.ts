@@ -1,2 +1,2 @@
-export { AccountKeys } from './AccountKeys';
-export * from './types';
+export { AccountKeys, type AccountKeysProps } from './AccountKeys';
+export * from './useAccountKeys';

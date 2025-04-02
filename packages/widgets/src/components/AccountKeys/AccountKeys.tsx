@@ -1,73 +1,51 @@
-import { useEffect, useState } from 'react';
-import { useTheme } from '@emotion/react';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Icon,
-  Typography,
-} from '@ssa-ui-kit/core';
-import { AccountKeysProps } from './types';
+import { Card } from '@ssa-ui-kit/core';
+
 import * as S from './styles';
+import {
+  AccountKeysContent,
+  AccountKeysHeader,
+  AccountKeysProvider,
+} from './components';
+import {
+  useAccountKeys,
+  UseAccountKeysOptions,
+  UseAccountKeysStore,
+} from './useAccountKeys';
+
+type OptionalIfStore<T> =
+  | (T & { store?: undefined })
+  | (Partial<T> & { store: UseAccountKeysStore });
+
+export type AccountKeysProps = OptionalIfStore<UseAccountKeysOptions> & {
+  children?: React.ReactNode;
+};
 
 export const AccountKeys = ({
-  title,
-  apiKey,
-  secretKey,
-  onDelete,
-  onVisibilityChange,
-  isDisabled,
+  children,
+  store: controlledStore,
+  ...accountKeysProps
 }: AccountKeysProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const theme = useTheme();
-  const placeholder = <span>******</span>;
-
-  const handleClickVisible = () => {
-    setIsVisible((prev) => !prev);
-  };
-
-  useEffect(() => {
-    onVisibilityChange(isVisible);
-  }, [isVisible]);
+  const uncontrolledStore = useAccountKeys(
+    accountKeysProps as UseAccountKeysOptions,
+  );
+  const store = controlledStore || uncontrolledStore;
 
   return (
-    <Card noShadow css={S.Card} className={isDisabled ? 'disabled' : ''}>
-      <CardHeader css={S.CardHeader}>
-        <Typography variant="h5" weight="bold">
-          {title}
-        </Typography>
-        <Button css={S.DeleteButton} onClick={onDelete}>
-          <Icon name="bin" size={15} color={theme.colors.greyDropdownFocused} />
-        </Button>
-      </CardHeader>
-      <CardContent css={S.CardContent} direction="column">
-        <div css={S.KeyItem}>
-          <Typography variant="h6" color={theme.colors.greyDropdownFocused}>
-            API Key
-          </Typography>
-          <Typography variant="h5" weight="bold" css={S.LetterWrap}>
-            {apiKey}
-          </Typography>
-        </div>
-        <div css={S.KeyItem}>
-          <Typography variant="h6" color={theme.colors.greyDropdownFocused}>
-            Secret Key
-          </Typography>
-          <Typography variant="h5" weight="bold" css={S.SecretKey}>
-            <span css={S.LetterWrap}>
-              {isVisible ? secretKey || placeholder : placeholder}
-            </span>
-            <Button css={S.VisibleButton} onClick={handleClickVisible}>
-              <Icon
-                name={isVisible ? 'visible' : 'invisible'}
-                size={20}
-                color={theme.colors.greyDropdownFocused}
-              />
-            </Button>
-          </Typography>
-        </div>
-      </CardContent>
-    </Card>
+    <AccountKeysProvider value={{ store }}>
+      <Card
+        noShadow
+        css={S.Card}
+        className={store.isDisabled ? 'disabled' : ''}>
+        {children || (
+          <>
+            <AccountKeysHeader />
+            <AccountKeysContent />
+          </>
+        )}
+      </Card>
+    </AccountKeysProvider>
   );
 };
+
+AccountKeys.Header = AccountKeysHeader;
+AccountKeys.Content = AccountKeysContent;
