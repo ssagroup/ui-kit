@@ -51,7 +51,7 @@ export const Typeahead = ({
   const theme = useTheme();
   const hookResult = useTypeahead({
     name,
-    selectedItems: selectedItems,
+    selectedItems,
     isOpen,
     isDisabled,
     isMultiple,
