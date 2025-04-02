@@ -14,6 +14,7 @@ export interface PopoverOptions {
   open?: boolean;
   floatingOptions?: Partial<UseFloatingOptions>;
   interactionsEnabled?: InteractionsEnabled;
+  keyboardHandlers?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 

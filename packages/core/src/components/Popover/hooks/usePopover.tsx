@@ -20,6 +20,7 @@ export const usePopover: UsePopover = ({
   modal,
   open: controlledOpen,
   onOpenChange: setControlledOpen,
+  keyboardHandlers = true,
   floatingOptions = {},
   interactionsEnabled = 'click',
 }: PopoverOptions = {}) => {
@@ -53,6 +54,7 @@ export const usePopover: UsePopover = ({
   const click = useClick(context, {
     enabled:
       controlledOpen == null && ['click', 'both'].includes(interactionsEnabled),
+    keyboardHandlers,
   });
   const dismiss = useDismiss(context, {
     referencePress: true,
