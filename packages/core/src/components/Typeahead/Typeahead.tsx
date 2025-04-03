@@ -46,6 +46,8 @@ export const Typeahead = ({
   register,
   onChange,
   onEmptyChange,
+  onClearAll,
+  onRemoveSelectedClick,
   renderOption,
 }: TypeaheadProps) => {
   const theme = useTheme();
@@ -70,6 +72,8 @@ export const Typeahead = ({
     onChange,
     onEmptyChange,
     renderOption,
+    onRemoveSelectedClick,
+    onClearAll,
   });
 
   return (

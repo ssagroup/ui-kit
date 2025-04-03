@@ -350,13 +350,15 @@ export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
   const [selectedItems, setSelectedItems] = useState([items[0].id]);
 
   const handleUpdate = () => {
-    const newValue =
+    const newSelectedIndex =
       selectedItemIndex.current + 1 >= items.length
         ? 0
         : selectedItemIndex.current + 1;
-    selectedItemIndex.current = newValue;
+    selectedItemIndex.current = newSelectedIndex;
     setSelectedItems(() => {
-      return [items[selectedItemIndex.current].id];
+      return newSelectedIndex === items.length - 1
+        ? []
+        : [items[selectedItemIndex.current].id];
     });
   };
 
@@ -376,6 +378,15 @@ export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
           setValue={setValue}
           validationSchema={{
             required: 'Required',
+          }}
+          onClearAll={() => {
+            console.log('>>>onClearAll event');
+          }}
+          onRemoveSelectedClick={(selectedItem) => {
+            console.log('>>>onRemoveSelectedClick event', selectedItem);
+          }}
+          onEmptyChange={(isEmpty) => {
+            console.log('>>>onEmptyChange event', isEmpty);
           }}
           renderOption={({ label, input }) => highlightInputMatch(label, input)}
           {...args}>
