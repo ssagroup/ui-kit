@@ -29,6 +29,8 @@ export const useTypeahead = ({
   register,
   setValue,
   onChange,
+  onClearAll,
+  onRemoveSelectedClick,
   onEmptyChange,
   renderOption,
 }: UseTypeaheadProps) => {
@@ -40,7 +42,7 @@ export const useTypeahead = ({
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, Record<string, string | number>>
   >({});
-  const [isEmpty, setIsEmpty] = useState<boolean>();
+  const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [isFirstRender, setFirstRender] = useState<boolean>(true);
   const [items, setItems] = useState<Array<React.ReactElement> | undefined>();
   const [inputValue, setInputValue] = useState<string>('');
@@ -72,14 +74,8 @@ export const useTypeahead = ({
       });
     }
 
-    if (!isFirstRender) {
-      setIsEmpty(!selected.length);
-    }
+    handleOnEmptyChange(!selected.length);
   }, [selected]);
-
-  useEffect(() => {
-    onEmptyChange?.(isEmpty);
-  }, [isEmpty]);
 
   useEffect(() => {
     if (isDisabled && isOpen) {
@@ -206,6 +202,16 @@ export const useTypeahead = ({
     }
   }, [inputValue, items, selected]);
 
+  useEffect(() => {
+    onEmptyChange?.(isEmpty);
+  }, [isEmpty]);
+
+  const handleOnEmptyChange = (newIsEmptyValue: boolean) => {
+    if (newIsEmptyValue !== isEmpty) {
+      setIsEmpty(newIsEmptyValue);
+    }
+  };
+
   const handleOpenChange = (open: boolean) => {
     if (!isDisabled) {
       setIsOpen(open);
@@ -239,9 +245,7 @@ export const useTypeahead = ({
     setStatus('basic');
     useFormResult.clearErrors(name);
     useFormResult.trigger(name);
-    if (onChange) {
-      onChange(changingValue, isNewSelected);
-    }
+    onChange?.(changingValue, isNewSelected);
   };
 
   const handleClearAll = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -256,6 +260,7 @@ export const useTypeahead = ({
     setFirstSuggestion('');
     useFormResult.trigger(name);
     inputRef.current?.focus();
+    onClearAll?.();
   };
 
   const handleInputClick: React.MouseEventHandler<HTMLInputElement> = (
@@ -323,6 +328,7 @@ export const useTypeahead = ({
     (event) => {
       event.stopPropagation();
       handleChange(selectedItem);
+      onRemoveSelectedClick?.(selectedItem);
     };
 
   return {

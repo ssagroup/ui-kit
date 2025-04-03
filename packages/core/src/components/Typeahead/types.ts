@@ -34,6 +34,8 @@ export interface TypeaheadProps {
   setValue?: UseFormSetValue<FieldValues>;
   register?: UseFormReturn['register'];
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
+  onClearAll?: () => void;
+  onRemoveSelectedClick?: (selectedItem: TypeaheadValue) => void;
   onEmptyChange?: (isEmpty?: boolean) => void;
   renderOption?: (data: {
     value: string | number;
@@ -49,6 +51,8 @@ export type UseTypeaheadProps = Pick<
   | 'children'
   | 'isMultiple'
   | 'onChange'
+  | 'onClearAll'
+  | 'onRemoveSelectedClick'
   | 'onEmptyChange'
   | 'renderOption'
   | 'isOpen'
