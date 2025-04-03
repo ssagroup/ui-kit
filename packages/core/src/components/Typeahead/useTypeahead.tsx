@@ -245,9 +245,7 @@ export const useTypeahead = ({
     setStatus('basic');
     useFormResult.clearErrors(name);
     useFormResult.trigger(name);
-    if (onChange) {
-      onChange(changingValue, isNewSelected);
-    }
+    onChange?.(changingValue, isNewSelected);
   };
 
   const handleClearAll = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -262,9 +260,7 @@ export const useTypeahead = ({
     setFirstSuggestion('');
     useFormResult.trigger(name);
     inputRef.current?.focus();
-    if (onClearAll) {
-      onClearAll();
-    }
+    onClearAll?.();
   };
 
   const handleInputClick: React.MouseEventHandler<HTMLInputElement> = (
@@ -332,9 +328,7 @@ export const useTypeahead = ({
     (event) => {
       event.stopPropagation();
       handleChange(selectedItem);
-      if (onRemoveSelectedClick) {
-        onRemoveSelectedClick(selectedItem);
-      }
+      onRemoveSelectedClick?.(selectedItem);
     };
 
   return {
