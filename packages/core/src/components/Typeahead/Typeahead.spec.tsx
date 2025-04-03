@@ -67,7 +67,7 @@ describe('Typeahead', () => {
   it('Renders without a selected item', async () => {
     const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup();
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', undefined, {
+    expect(mockOnChange).toHaveBeenCalledWith('typeahead-dropdown', undefined, {
       shouldDirty: false,
     });
 
@@ -108,14 +108,18 @@ describe('Typeahead', () => {
   it('Renders with a selected item', async () => {
     const selectedIDs = selectedItems.map((item) => item.id);
     const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: true,
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
-      shouldDirty: false,
-    });
+    expect(mockOnChange).toHaveBeenCalledWith(
+      'typeahead-dropdown',
+      selectedIDs,
+      {
+        shouldDirty: false,
+      },
+    );
 
     let mainElement = getByTestId('typeahead');
 
@@ -175,7 +179,7 @@ describe('Typeahead', () => {
       />,
     );
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', [], {
+    expect(mockOnChange).toHaveBeenCalledWith('typeahead-dropdown', [], {
       shouldDirty: false,
     });
 
@@ -211,14 +215,18 @@ describe('Typeahead', () => {
   it("Chooses an item when it's clicked [isMultiple = true]", async () => {
     const selectedIDs = selectedItems.map((item) => item.id);
     const { user, mockOnChange, getByRole, getByTestId } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: true,
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
-      shouldDirty: false,
-    });
+    expect(mockOnChange).toHaveBeenCalledWith(
+      'typeahead-dropdown',
+      selectedIDs,
+      {
+        shouldDirty: false,
+      },
+    );
 
     const mainElement = getByTestId('typeahead');
 
@@ -253,7 +261,7 @@ describe('Typeahead', () => {
   it("Chooses an item when it's clicked [isMultiple = false]", async () => {
     const selectedIDs = [selectedItems[0].id];
     const { user, mockOnChange, getByRole } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: false,
       label: 'Label',
     });
@@ -310,7 +318,7 @@ describe('Typeahead', () => {
   it('Toggle option if clicked on the same option', async () => {
     const selectedIDs = [selectedItems[0].id];
     const { user, getByRole, getByTestId } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: false,
       label: 'Label',
     });
@@ -356,15 +364,19 @@ describe('Typeahead', () => {
   it('Renders in the disabled state', async () => {
     const selectedIDs = selectedItems.map((item) => item.id);
     const { user, mockOnChange, queryByRole, getByTestId } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: true,
       isDisabled: true,
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
-      shouldDirty: false,
-    });
+    expect(mockOnChange).toHaveBeenCalledWith(
+      'typeahead-dropdown',
+      selectedIDs,
+      {
+        shouldDirty: false,
+      },
+    );
 
     let mainElement = getByTestId('typeahead');
 
@@ -427,7 +439,7 @@ describe('Typeahead', () => {
 
   it('New item should be rendered correctly', async () => {
     const { getByTestId, getByText, getByRole } = render(
-      <DynamicallyChangedItems initialSelectedItems={[]} />,
+      <DynamicallyChangedItems selectedItems={[]} />,
     );
 
     const mainElement = getByTestId('typeahead');
@@ -462,14 +474,18 @@ describe('Typeahead', () => {
   it('"Remove all" functionality should be worked', async () => {
     const selectedIDs = selectedItems.map((item) => item.id);
     const { mockOnChange, getByRole, getByTestId } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: true,
       label: 'Label',
     });
 
-    expect(mockOnChange).toBeCalledWith('typeahead-dropdown', selectedIDs, {
-      shouldDirty: false,
-    });
+    expect(mockOnChange).toHaveBeenCalledWith(
+      'typeahead-dropdown',
+      selectedIDs,
+      {
+        shouldDirty: false,
+      },
+    );
 
     let mainElement = getByTestId('typeahead');
     let toggleElement = within(mainElement).getByRole('combobox');
@@ -502,7 +518,7 @@ describe('Typeahead', () => {
   it('Helper text should be displayed', () => {
     const selectedIDs = selectedItems.map((item) => item.id);
     const { getByTestId } = setup({
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: true,
       label: 'Label',
       helperText: 'Helper text',
@@ -515,7 +531,7 @@ describe('Typeahead', () => {
     const selectedIDs = selectedItems.map((item) => item.id);
 
     const additionalProps = {
-      initialSelectedItems: selectedIDs,
+      selectedItems: selectedIDs,
       isMultiple: true,
       label: 'Label',
       error: {

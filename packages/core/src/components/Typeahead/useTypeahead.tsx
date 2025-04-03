@@ -13,7 +13,7 @@ import { TypeaheadOptionProps, UseTypeaheadProps } from './types';
 export const useTypeahead = ({
   name = 'typeahead-input',
   isOpen: isInitOpen,
-  initialSelectedItems,
+  selectedItems,
   isDisabled,
   isMultiple,
   children,
@@ -35,7 +35,7 @@ export const useTypeahead = ({
   const inputName = `${name}-text`;
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [selected, setSelected] = useState<Array<string | number>>(
-    initialSelectedItems || [],
+    selectedItems || [],
   );
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, Record<string, string | number>>
@@ -125,7 +125,11 @@ export const useTypeahead = ({
     setOptionsWithKey(keyedOptions);
     setItems(childItems);
     setFirstRender(false);
-  }, [initialSelectedItems, children]);
+  }, [selectedItems, children]);
+
+  useEffect(() => {
+    setSelected(selectedItems || []);
+  }, [selectedItems]);
 
   useEffect(() => {
     const childrenArray = React.Children.toArray(children).filter(Boolean);

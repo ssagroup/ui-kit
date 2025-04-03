@@ -24,7 +24,7 @@ import { TypeaheadProps } from './types';
 export const Typeahead = ({
   name = 'typeahead-search',
   label,
-  initialSelectedItems,
+  selectedItems,
   isOpen,
   isDisabled,
   isMultiple,
@@ -51,7 +51,7 @@ export const Typeahead = ({
   const theme = useTheme();
   const hookResult = useTypeahead({
     name,
-    initialSelectedItems,
+    selectedItems,
     isOpen,
     isDisabled,
     isMultiple,
