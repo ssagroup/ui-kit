@@ -7,6 +7,8 @@ import { PopoverTrigger } from '@components/Popover';
 import { useTypeahead } from './useTypeahead';
 import { TypeaheadItemProps } from './types';
 
+// TODO: automatically calculate max-height
+// https://github.com/ssagroup/ui-kit/issues/385
 export const TypeaheadOptionsBase = styled.ul`
   padding: 0;
   margin: 0;
@@ -17,6 +19,8 @@ export const TypeaheadOptionsBase = styled.ul`
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
   backdrop-filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
+  overflow-y: auto;
+  max-height: 350px;
 `;
 
 export const TypeaheadOption = styled.li<TypeaheadItemProps>`
