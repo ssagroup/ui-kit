@@ -74,6 +74,10 @@ export const Default: Story = {
           title: 'Password field title',
           minLength: 8,
         },
+        dateField: {
+          type: 'string',
+          title: 'Date field title',
+        },
       },
     },
     uiSchema: {
@@ -97,6 +101,10 @@ export const Default: Story = {
       passwordField: {
         'ui:widget': 'password',
         'ui:help': 'Password field help',
+      },
+      dateField: {
+        'ui:widget': 'date',
+        'ui:help': 'Date field help',
       },
     },
   },
