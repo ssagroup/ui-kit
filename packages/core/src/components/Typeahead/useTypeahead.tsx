@@ -125,6 +125,10 @@ export const useTypeahead = ({
 
   useEffect(() => {
     setSelected(selectedItems || []);
+    if (!selectedItems?.length) {
+      setInputValue('');
+      setFirstSuggestion('');
+    }
   }, [selectedItems]);
 
   useEffect(() => {
