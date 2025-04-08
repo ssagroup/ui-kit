@@ -26,7 +26,6 @@ export const SubmitButton = <
   return (
     <Button
       type="submit"
-      css={{ marginTop: '12px' }}
       {...submitButtonProps}
       data-testid="rjsf-submit-button">
       {submitText}
