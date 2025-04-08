@@ -1,5 +1,4 @@
 import { ResponsiveTreeMap } from '@nivo/treemap';
-import React from 'react';
 import { useTheme } from '@emotion/react';
 
 import { WithWidgetCard, WidgetCardProps } from '@components/WidgetCard';
@@ -11,12 +10,15 @@ import { TreeMapChartTooltip } from './TreeMapChartTooltip';
 export type TreeNode = {
   name: string;
   value?: number;
+  color?: string;
   children?: TreeNode[];
 };
 
 export type TreeMapChartFeature = 'header' | 'fullscreenMode';
 
-type NivoTreeMapChartProps = React.ComponentProps<typeof ResponsiveTreeMap>;
+type NivoTreeMapChartProps = React.ComponentProps<
+  typeof ResponsiveTreeMap<TreeNode>
+>;
 export interface TreeMapChartProps extends Omit<NivoTreeMapChartProps, 'data'> {
   data: TreeNode;
   title?: string;
@@ -63,7 +65,7 @@ export const TreeMapChartComponent = ({
             width: '100%',
             height: '100%',
           }}>
-          <ResponsiveTreeMap
+          <ResponsiveTreeMap<TreeNode>
             borderWidth={0}
             colors={colors}
             data={data}

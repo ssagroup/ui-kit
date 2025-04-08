@@ -60,7 +60,7 @@ const meta: Meta<typeof TreeMapChart> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TreeMapChart>;
 
 export const Default: Story = {};
 
@@ -70,6 +70,15 @@ export const WithoutWidgetCard: Story = {
 
 export const CustomColors: Story = {
   args: { colors: ['red', 'green', 'orange'] },
+};
+
+export const CustomColorsCallback: Story = {
+  args: {
+    colors: ({ treeDepth, data }) => {
+      const colors = ['red', 'green', 'orange'];
+      return data.color ?? colors[treeDepth % colors.length];
+    },
+  },
 };
 
 export const FullScreen: Story = {
