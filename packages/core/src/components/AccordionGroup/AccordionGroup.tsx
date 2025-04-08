@@ -47,8 +47,7 @@ export const AccordionGroup = ({
     <AccordionBase data-testid="accordion-group" tabIndex={0} {...rest}>
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
-          const { renderContent, renderTitle, ...rest } = child.props;
-          const id = rest.id;
+          const { id } = child.props;
           const isOpened = !!openedAccordions?.find(
             (activeAccordion) => activeAccordion.id === id,
           );
@@ -60,8 +59,6 @@ export const AccordionGroup = ({
             onClick: () =>
               toggleOpenedAccordion({
                 id,
-                renderContent: renderContent.bind(null, rest),
-                renderTitle: renderTitle.bind(null, rest),
               }),
           });
         }

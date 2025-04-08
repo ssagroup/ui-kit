@@ -51,10 +51,12 @@ export interface AccordionViewProps extends AccordionProps {
   contentProps?: Record<string, unknown>;
 }
 
+export type OpenedAccordion = { id: string | number };
+
 export interface AccordionGroupContextProps {
-  openedAccordions: Array<AccordionProps> | [];
+  openedAccordions: Array<OpenedAccordion> | [];
   stayOpen: boolean;
-  setOpenedAccordions: (accordions: Array<AccordionProps>) => void;
-  toggleOpenedAccordion: (accordion: AccordionProps) => void;
+  setOpenedAccordions: (accordions: Array<OpenedAccordion>) => void;
+  toggleOpenedAccordion: (accordion: OpenedAccordion, opened?: boolean) => void;
   setStayOpen: (isStayOpen: boolean) => void;
 }

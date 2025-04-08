@@ -15,6 +15,7 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
   ariaControls,
   className,
   onClick,
+  ...props
 }) => {
   const theme = useTheme();
   const styles = createTitleStyles(theme, isOpened);
@@ -31,7 +32,8 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
         if (typeof onClick === 'function') {
           onClick();
         }
-      }}>
+      }}
+      {...props}>
       <Fragment>
         {title}
         {isOpened ? <Icon name="carrot-down" /> : <Icon name="carrot-up" />}

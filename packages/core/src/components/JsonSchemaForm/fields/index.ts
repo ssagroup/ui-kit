@@ -5,6 +5,7 @@ import {
   StrictRJSFSchema,
 } from '@rjsf/utils';
 
+import { AccordionField } from './AccordionField';
 import { DateRangeField } from './DateRangeField';
 
 export const generateFields = <
@@ -13,6 +14,7 @@ export const generateFields = <
   F extends FormContextType = Record<string, unknown>,
 >(): RegistryFieldsType<T, S, F> => {
   return {
+    accordion: AccordionField,
     daterange: DateRangeField,
   };
 };

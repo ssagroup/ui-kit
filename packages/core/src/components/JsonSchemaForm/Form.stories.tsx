@@ -1,13 +1,24 @@
+import { useState } from 'react';
 import { type StoryObj, type Meta } from '@storybook/react';
 import validator from '@rjsf/validator-ajv8';
 
+import TextField from '@components/TextField';
+import Icon from '@components/Icon';
+import Button from '@components/Button';
+import { applyHiddenWidget, getFieldsToHide } from './utils';
 import { Form } from './';
+import { AccordionGroupContextProvider } from '@components/AccordionGroup';
 
 type FormProps = Omit<React.ComponentProps<typeof Form>, 'validator'>;
 
 const meta = {
   title: 'Forms/FormBuilder',
   render: (args) => <Form {...args} validator={validator} />,
+  args: {
+    onSubmit: (data) => {
+      console.log('Form submitted:', data.formData);
+    },
+  },
   tags: ['autodocs'],
 } satisfies Meta<FormProps>;
 
@@ -16,9 +27,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onSubmit: (data) => {
-      console.log('Form submitted:', data.formData);
-    },
     formData: {
       stringField: 'String field value',
       arrayField: ['Item 1', 'Item 2'],
@@ -105,6 +113,133 @@ export const Default: Story = {
       dateField: {
         'ui:widget': 'date',
         'ui:help': 'Date field help',
+      },
+    },
+  },
+};
+
+export const Accordion: Story = {
+  render: (args) => {
+    const [search, setSearch] = useState('');
+    const [formData, setFormData] = useState({});
+
+    const searchResults = search ? getFieldsToHide(args.schema, search) : [];
+    const updatedUiSchema = applyHiddenWidget(
+      args.uiSchema || {},
+      searchResults,
+    );
+
+    if (search) {
+      Object.values(updatedUiSchema).forEach((field) => {
+        field!['ui:options']!.collapsed = false;
+      });
+    }
+
+    return (
+      <>
+        <TextField
+          name="search"
+          placeholder="Search"
+          inputProps={{
+            value: search,
+            onChange: (e) => setSearch(e.target.value),
+          }}
+          startElement={<Icon name="search" />}
+        />
+        <AccordionGroupContextProvider>
+          <Form
+            {...args}
+            css={{ marginTop: '10px' }}
+            formContext={{
+              onAccordionChange: (id: string, value: boolean) => {
+                updatedUiSchema[id]['ui:options'].collapsed = value;
+              },
+            }}
+            formData={formData}
+            onChange={(data) => {
+              setFormData(data.formData as object);
+            }}
+            uiSchema={updatedUiSchema}
+            validator={validator}>
+            <Button onClick={() => setFormData({})}>Clear</Button>
+            <Button type="submit" css={{ marginLeft: '10px' }}>
+              Submit
+            </Button>
+          </Form>
+        </AccordionGroupContextProvider>
+      </>
+    );
+  },
+  args: {
+    schema: {
+      type: 'object',
+      properties: {
+        employmentDetails: {
+          type: 'object',
+          title: 'Employment Details',
+          properties: {
+            employmentStatus: {
+              type: 'string',
+              title: 'Employment status',
+              enum: ['Employed', 'Unemployed'],
+            },
+            employmentType: {
+              type: 'string',
+              title: 'Employment type',
+              enum: ['Full-time', 'Part-time', 'Contract'],
+            },
+            employmentStartDate: {
+              type: 'object',
+              title: 'Employment start date',
+              properties: {
+                start: {
+                  type: 'string',
+                },
+                end: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+        companyAndWorkConditions: {
+          type: 'object',
+          title: 'Company & Work Conditions',
+          properties: {
+            department: {
+              type: 'string',
+              title: 'Department',
+              enum: ['Engineering', 'Marketing', 'Sales'],
+            },
+            workMode: {
+              type: 'string',
+              title: 'Work mode',
+              enum: ['remote-id', 'on-site-id'],
+            },
+          },
+        },
+      },
+    },
+    uiSchema: {
+      employmentDetails: {
+        'ui:field': 'accordion',
+        'ui:options': {
+          targetField: 'ObjectField',
+          collapsed: true,
+        },
+        employmentStartDate: {
+          'ui:field': 'daterange',
+        },
+      },
+      companyAndWorkConditions: {
+        'ui:field': 'accordion',
+        'ui:options': {
+          targetField: 'ObjectField',
+          collapsed: true,
+        },
+        workMode: {
+          'ui:enumNames': ['Remote', 'On-site'],
+        },
       },
     },
   },

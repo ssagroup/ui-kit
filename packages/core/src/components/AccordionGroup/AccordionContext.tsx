@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from 'react';
-import { AccordionProps, AccordionGroupContextProps } from './types';
+import { AccordionGroupContextProps, OpenedAccordion } from './types';
 
 export const AccordionGroupContext = createContext<AccordionGroupContextProps>(
   {} as AccordionGroupContextProps,
@@ -8,15 +8,20 @@ export const AccordionGroupContext = createContext<AccordionGroupContextProps>(
 export const useAccordionGroupContext = () => useContext(AccordionGroupContext);
 
 const useAccordionGroup = (): AccordionGroupContextProps => {
-  const [openedAccordions, setOpenedAccordions] = useState<AccordionProps[]>(
+  const [openedAccordions, setOpenedAccordions] = useState<OpenedAccordion[]>(
     [],
   );
   const [stayOpen, setStayOpen] = useState<boolean>(false);
 
-  const toggleOpenedAccordion = (accordion: AccordionProps) => {
-    const isOpened = !!openedAccordions.find(
-      (activeAccordion) => activeAccordion.id === accordion.id,
-    );
+  const toggleOpenedAccordion = (
+    accordion: OpenedAccordion,
+    opened?: boolean,
+  ) => {
+    const isOpened =
+      opened ??
+      !!openedAccordions.find(
+        (activeAccordion) => activeAccordion.id === accordion.id,
+      );
     if (stayOpen) {
       const newOpenedAccordions = isOpened
         ? openedAccordions.filter(
