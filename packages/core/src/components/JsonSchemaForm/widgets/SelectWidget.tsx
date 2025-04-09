@@ -1,13 +1,13 @@
 import {
   enumOptionsIndexForValue,
-  enumOptionsValueForIndex,
   FormContextType,
   RJSFSchema,
   StrictRJSFSchema,
   WidgetProps,
 } from '@rjsf/utils';
 
-import { Dropdown, DropdownOption } from '@components';
+import { highlightInputMatch, Typeahead, TypeaheadOption } from '@components';
+import { ChangeHandler, FieldValues, UseFormRegister } from 'react-hook-form';
 
 export const SelectWidget = <
   T = unknown,
@@ -16,8 +16,17 @@ export const SelectWidget = <
 >(
   props: WidgetProps<T, S, F>,
 ) => {
-  const { disabled, options, placeholder, onChange, onChangeOverride, value } =
-    props;
+  const {
+    id,
+    name,
+    disabled,
+    options,
+    placeholder,
+    onChange,
+    onBlur,
+    onChangeOverride,
+    value,
+  } = props;
   const { enumOptions = [], enumDisabled = [] } = options;
 
   const selectedIndex = enumOptionsIndexForValue<S>(
@@ -27,37 +36,55 @@ export const SelectWidget = <
 
   const handleChange = onChangeOverride
     ? onChangeOverride
-    : ({ value }: { value: string }) =>
-        onChange(enumOptionsValueForIndex<S>(value, enumOptions));
+    : (value?: string) => {
+        onChange(value);
+      };
+  const handleBlur = ({ target }: React.FocusEvent<HTMLInputElement>) =>
+    onBlur(id, target && target.value);
+
+  const onEmptyChange = (isEmpty?: boolean) => {
+    if (isEmpty) {
+      handleChange();
+    }
+  };
+
+  const register: UseFormRegister<FieldValues> = (fieldName) => ({
+    onBlur: handleBlur as ChangeHandler,
+    onChange: handleChange as ChangeHandler,
+    name: fieldName,
+    ref: () => {},
+  });
+
+  const items = Array.isArray(enumOptions) ? enumOptions : [];
+  const selectedItems = selectedIndex
+    ? [items[Number(selectedIndex)].value]
+    : [];
 
   return (
-    <div>
-      <Dropdown
-        isDisabled={disabled}
-        onChange={handleChange}
-        placeholder={placeholder}
-        selectedItem={
-          selectedIndex
-            ? {
-                value: selectedIndex,
-                label: enumOptions[Number(selectedIndex)].label,
-              }
-            : undefined
-        }>
-        {Array.isArray(enumOptions) &&
-          enumOptions.map((option, i) => (
-            <DropdownOption
-              key={i}
-              value={String(i)}
-              label={option.label}
-              isDisabled={
-                disabled ||
-                (Array.isArray(enumDisabled) &&
-                  enumDisabled.indexOf(option.value) !== -1)
-              }
-            />
-          ))}
-      </Dropdown>
-    </div>
+    <Typeahead
+      width="100%"
+      selectedItems={selectedItems}
+      isDisabled={disabled}
+      name={name}
+      // RJSF provides placeholder as empty string
+      placeholder={placeholder || undefined}
+      onChange={handleChange}
+      register={register}
+      onEmptyChange={onEmptyChange}
+      renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+      {items.map(({ label, value }) => (
+        <TypeaheadOption
+          key={value}
+          value={value}
+          label={label || value}
+          isDisabled={
+            disabled ||
+            (Array.isArray(enumDisabled) &&
+              enumDisabled.includes(value as string))
+          }>
+          {label || value}
+        </TypeaheadOption>
+      ))}
+    </Typeahead>
   );
 };

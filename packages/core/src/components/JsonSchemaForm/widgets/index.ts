@@ -11,6 +11,7 @@ import { RadioWidget } from './RadioWidget';
 import { SelectWidget } from './SelectWidget';
 import { PasswordWidget } from './PasswordWidget';
 import { RangeWidget } from './RangeWidget';
+import { DateWidget } from './DateWidget';
 
 export function generateWidgets<
   T = unknown,
@@ -24,6 +25,7 @@ export function generateWidgets<
     PasswordWidget,
     SelectWidget,
     RangeWidget,
+    DateWidget,
   };
 }
 

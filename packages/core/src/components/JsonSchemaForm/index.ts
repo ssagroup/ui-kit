@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 
 import Templates, { generateTemplates } from './templates';
 import Widgets, { generateWidgets } from './widgets';
+import Fields, { generateFields } from './fields';
 
 export function generateTheme<
   T = unknown,
@@ -14,6 +15,7 @@ export function generateTheme<
   return {
     templates: generateTemplates<T, S, F>(),
     widgets: generateWidgets<T, S, F>(),
+    fields: generateFields<T, S, F>(),
   };
 }
 
@@ -37,4 +39,13 @@ const Form = styled(UnstyledForm)`
   }
 `;
 
-export { Form, Templates, Theme, Widgets, generateTemplates, generateWidgets };
+export {
+  Form,
+  Templates,
+  Theme,
+  Widgets,
+  Fields,
+  generateTemplates,
+  generateWidgets,
+  generateFields,
+};
