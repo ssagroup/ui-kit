@@ -28,9 +28,7 @@
     "@ssa-ui-kit/utils": "workspace:^",
     "dotenv": "^16.0.3",
     "loose-envify": "^1.4.0",
-    "luxon": "^3.5.0",
-    "plotly.js": "3.0.0",
-    "react-plotly.js": "2.6.0"
+    "luxon": "^3.5.0"
   },
   "devDependencies": {
     "@emotion/css": "^11.13.5",
@@ -41,6 +39,8 @@
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
     "@nivo/treemap": "^0.88.0",
+    "plotly.js": "3.0.0",
+    "react-plotly.js": "2.6.0",
     "@rjsf/core": "^5.24.8",
     "@rjsf/utils": "^5.24.8",
     "@rjsf/validator-ajv8": "^5.24.8",
@@ -75,6 +75,8 @@
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
     "@nivo/treemap": "^0.88.0",
+    "plotly.js": "^3.0.0",
+    "react-plotly.js": "^2.6.0",
     "@rjsf/core": "^5.0.0",
     "@rjsf/utils": "^5.0.0",
     "react": "18.x",
@@ -84,6 +86,30 @@
   },
   "peerDependenciesMeta": {
     "@types/react": {
+      "optional": true
+    },
+    "@nivo/core": {
+      "optional": true
+    },
+    "@nivo/line": {
+      "optional": true
+    },
+    "@nivo/pie": {
+      "optional": true
+    },
+    "@nivo/treemap": {
+      "optional": true
+    },
+    "plotly.js": {
+      "optional": true
+    },
+    "react-plotly.js": {
+      "optional": true
+    },
+    "@rjsf/core": {
+      "optional": true
+    },
+    "@rjsf/utils": {
       "optional": true
     }
   }
