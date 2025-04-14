@@ -166,9 +166,11 @@ export const useTypeahead = ({
         (item) => item.label === inputValue,
       );
       if (!foundItem && selected.length) {
+        handleChange(undefined);
         setSelected([]);
       }
       if (foundItem && !selected.includes(foundItem?.value)) {
+        handleChange(foundItem?.value);
         setSelected([foundItem?.value]);
       }
     }
