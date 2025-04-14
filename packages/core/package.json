@@ -22,8 +22,9 @@
     "dist"
   ],
   "dependencies": {
-    "@react-input/mask": "^2.0.4",
     "@floating-ui/react": "0.27.4",
+    "@react-input/mask": "^2.0.4",
+    "@react-input/number-format": "^2.0.3",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@ssa-ui-kit/utils": "workspace:^",
     "dotenv": "^16.0.3",
@@ -41,10 +42,10 @@
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
     "@nivo/treemap": "^0.88.0",
+    "@playwright/test": "^1.48.0",
     "@rjsf/core": "^5.24.8",
     "@rjsf/utils": "^5.24.8",
     "@rjsf/validator-ajv8": "^5.24.8",
-    "@playwright/test": "^1.48.0",
     "@types/luxon": "^3.4.2",
     "@types/react-plotly.js": "2.6.3"
   },
