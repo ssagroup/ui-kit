@@ -1,4 +1,5 @@
 import { type StoryObj, type Meta } from '@storybook/react';
+import { css } from '@emotion/css';
 
 import { TreeMapChart } from '@components/Charts/TreeMapChart';
 
@@ -84,5 +85,17 @@ export const CustomColorsCallback: Story = {
 export const FullScreen: Story = {
   args: {
     features: ['header', 'fullscreenMode'],
+  },
+};
+
+export const Square: Story = {
+  args: {
+    widgetCardProps: {
+      contentClassName: css`
+        width: unset !important;
+        max-width: 100% !important;
+        aspect-ratio: 1/1;
+      `,
+    },
   },
 };
