@@ -329,7 +329,7 @@ importers:
         version: 5.6.3(webpack@5.98.0)
       terser-webpack-plugin:
         specifier: ^5.3.11
-        version: 5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0)
+        version: 5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1))
       webpack:
         specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)
@@ -342,6 +342,9 @@ importers:
       '@react-input/mask':
         specifier: ^2.0.4
         version: 2.0.4(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-input/number-format':
+        specifier: ^2.0.3
+        version: 2.0.3(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ssa-ui-kit/hooks':
         specifier: workspace:^
         version: link:../hooks
@@ -2606,6 +2609,16 @@ packages:
 
   '@react-input/mask@2.0.4':
     resolution: {integrity: sha512-NOielvQSBOlGLVuEcxtkjaGneC0GJFXjC7KOF99ed9H9XSDruWnQirjht5uSbWqLeeiOup0VD2YjM+6FH+aWBg==}
+    peerDependencies:
+      '@types/react': '>=16.8'
+      react: '>=16.8 || ^19.0.0-rc'
+      react-dom: '>=16.8 || ^19.0.0-rc'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@react-input/number-format@2.0.3':
+    resolution: {integrity: sha512-rgvp32USB+g+ZuQv+TJJHmM+2Te+hn88uMBKvLbY965gUMfYS6hONTcw0UzwUnm5IRWyEkiTyZQmd/1648fw8w==}
     peerDependencies:
       '@types/react': '>=16.8'
       react: '>=16.8 || ^19.0.0-rc'
@@ -10864,6 +10877,14 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.18
 
+  '@react-input/number-format@2.0.3(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@react-input/core': 2.0.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.18
+
   '@react-spring/animated@9.7.5(react@18.3.1)':
     dependencies:
       '@react-spring/shared': 9.7.5(react@18.3.1)
@@ -11071,7 +11092,7 @@ snapshots:
       semver: 7.7.1
       storybook: 8.6.10(prettier@3.5.1)
       style-loader: 3.3.4(webpack@5.98.0)
-      terser-webpack-plugin: 5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0)
+      terser-webpack-plugin: 5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1))
       ts-dedent: 2.2.0
       url: 0.11.4
       util: 0.12.5
@@ -17341,7 +17362,7 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  terser-webpack-plugin@5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0):
+  terser-webpack-plugin@5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -17900,7 +17921,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0)
+      terser-webpack-plugin: 5.3.11(@swc/core@1.10.16)(esbuild@0.25.0)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     optionalDependencies:

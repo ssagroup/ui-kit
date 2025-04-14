@@ -99,6 +99,7 @@ export * from './TableFilters';
 export * from './Tag';
 export * from './Textarea';
 export * from './TextField';
+export * from './NumberField';
 export * from './Tooltip';
 export * from './Typeahead';
 export * from './Typography';
