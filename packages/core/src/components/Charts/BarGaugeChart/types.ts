@@ -1,5 +1,5 @@
-import { WidgetCardProps } from '@components/WidgetCard';
 import { MustInclude } from '@ssa-ui-kit/utils';
+import { WidgetCardProps } from '@components/WidgetCard';
 
 export type BarGaugeChartFeature = 'header' | 'fullscreenMode';
 
