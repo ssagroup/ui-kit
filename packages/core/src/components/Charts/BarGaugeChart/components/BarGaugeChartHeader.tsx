@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { MustInclude } from '@ssa-ui-kit/utils';
 import Button from '@components/Button';
 import { useFullscreenMode, Icon, Wrapper } from '@components';
+import { BarGaugeChartHeaderProps } from '../types';
 
 export const FullScreenButton = styled(Button)`
   height: auto;
@@ -25,10 +26,6 @@ export const FullScreenButton = styled(Button)`
     }
   }
 `;
-
-export interface BarGaugeChartHeaderProps<T extends string[]> {
-  features: MustInclude<T, 'fullscreenMode'>;
-}
 
 export const BarGaugeChartHeader = <F extends string[]>({
   features = [] as unknown as MustInclude<F, 'fullscreenMode'>,

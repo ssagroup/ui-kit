@@ -4,10 +4,10 @@ import { useTheme } from '@emotion/react';
 
 import { BarGaugeChart } from './BarGaugeChart';
 import {
+  GaugeBarProps,
   GaugeBarThreshold,
   GaugeBarValueFormatter,
-  GaugeBarProps,
-} from './components';
+} from './types';
 
 const meta = {
   title: 'Charts/BarGaugeChart',
