@@ -67,7 +67,7 @@ describe('Typeahead', () => {
   it('Renders without a selected item', async () => {
     const { user, mockOnChange, getByRole, queryByRole, getByTestId } = setup();
 
-    expect(mockOnChange).toHaveBeenCalledWith('typeahead-dropdown', undefined, {
+    expect(mockOnChange).toHaveBeenCalledWith('typeahead-dropdown', [], {
       shouldDirty: false,
     });
 
@@ -266,9 +266,13 @@ describe('Typeahead', () => {
       label: 'Label',
     });
 
-    expect(mockOnChange).lastCalledWith('typeahead-dropdown', selectedIDs[0], {
-      shouldDirty: true,
-    });
+    expect(mockOnChange).toHaveBeenLastCalledWith(
+      'typeahead-dropdown',
+      selectedIDs[0],
+      {
+        shouldDirty: false,
+      },
+    );
 
     let inputEl = screen.queryByTestId('typeahead-input');
     expect(inputEl).toHaveValue('First');
