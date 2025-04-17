@@ -63,6 +63,7 @@ export const MultipleTrigger = () => {
             name={context.inputName}
             status={'custom'}
             disabled={context.isDisabled}
+            validationSchema={context.validationSchema}
             inputProps={{
               onClick: context.handleInputClick,
               onKeyDown: context.handleInputKeyDown,

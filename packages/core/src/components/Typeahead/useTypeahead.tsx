@@ -69,7 +69,7 @@ export const useTypeahead = ({
       setInputValue('');
       setFirstSuggestion('');
     } else {
-      setValue?.(name, selected.length ? selected[0] : undefined, {
+      setValue?.(name, selected.length ? selected[0] : [], {
         shouldDirty: !isFirstRender,
       });
     }
@@ -102,33 +102,30 @@ export const useTypeahead = ({
   }, [error]);
 
   useEffect(() => {
-    const keyedOptions: Record<
-      number | string,
-      Record<string, string | number>
-    > = {};
-    const childItems = (
-      React.Children.toArray(children).filter(Boolean) as React.ReactElement[]
-    ).map((child, index) => {
-      keyedOptions[child.props.value] = {
-        ...child.props,
-      };
-
-      return React.cloneElement(child, {
-        index,
-        ...child.props,
-      });
+    processChildren({
+      selectedLocal: selected,
     });
-    setOptionsWithKey(keyedOptions);
-    setItems(childItems);
-    setFirstRender(false);
-  }, [selectedItems, children]);
+  }, [children]);
 
   useEffect(() => {
     setSelected(selectedItems || []);
-    if (!selectedItems?.length) {
+    if (selectedItems?.length) {
+      if (!isMultiple) {
+        const currentOption = optionsWithKey[selectedItems[0]];
+        const optionText =
+          currentOption &&
+          (currentOption.children ||
+            currentOption.label ||
+            currentOption.value);
+        setInputValue(`${optionText}`);
+      }
+    } else {
       setInputValue('');
       setFirstSuggestion('');
     }
+    processChildren({
+      selectedLocal: selectedItems || [],
+    });
   }, [selectedItems]);
 
   useEffect(() => {
@@ -169,20 +166,17 @@ export const useTypeahead = ({
         setSelected([]);
       }
       if (foundItem && !selected.includes(foundItem?.value)) {
-        setSelected([foundItem?.value]);
+        setSelected([foundItem.value]);
       }
     }
   }, [optionsWithKey, inputValue]);
 
   useEffect(() => {
-    if (!isMultiple && selected.length && Object.keys(optionsWithKey).length) {
-      const currentOption = optionsWithKey[selected[0]];
-      const optionText =
-        currentOption &&
-        (currentOption.children || currentOption.label || currentOption.value);
-      setInputValue(`${optionText}`);
-    }
-  }, [selected, optionsWithKey]);
+    processSingleSelected({
+      optionsWithKeyLocal: optionsWithKey,
+      selectedLocal: selected,
+    });
+  }, [selected]);
 
   useEffect(() => {
     if (inputValue) {
@@ -206,13 +200,63 @@ export const useTypeahead = ({
     }
   }, [inputValue, items, selected]);
 
-  useEffect(() => {
-    onEmptyChange?.(isEmpty);
-  }, [isEmpty]);
+  const processSingleSelected = ({
+    optionsWithKeyLocal = {},
+    selectedLocal = [],
+  }: {
+    optionsWithKeyLocal: Record<
+      number | string,
+      Record<string, string | number>
+    >;
+    selectedLocal: Array<string | number>;
+  }) => {
+    if (
+      !isMultiple &&
+      selectedLocal.length &&
+      Object.keys(optionsWithKeyLocal).length
+    ) {
+      const currentOption = optionsWithKeyLocal[selectedLocal[0]];
+      const optionText =
+        currentOption &&
+        (currentOption.children || currentOption.label || currentOption.value);
+      setInputValue(`${optionText}`);
+    }
+  };
+
+  const processChildren = ({
+    selectedLocal,
+  }: {
+    selectedLocal: Array<string | number>;
+  }) => {
+    const keyedOptions: Record<
+      number | string,
+      Record<string, string | number>
+    > = {};
+    const childItems = (
+      React.Children.toArray(children).filter(Boolean) as React.ReactElement[]
+    ).map((child, index) => {
+      keyedOptions[child.props.value] = {
+        ...child.props,
+      };
+
+      return React.cloneElement(child, {
+        index,
+        ...child.props,
+      });
+    });
+    setOptionsWithKey(keyedOptions);
+    setItems(childItems);
+    processSingleSelected({
+      optionsWithKeyLocal: keyedOptions,
+      selectedLocal,
+    });
+    setFirstRender(false);
+  };
 
   const handleOnEmptyChange = (newIsEmptyValue: boolean) => {
     if (newIsEmptyValue !== isEmpty) {
       setIsEmpty(newIsEmptyValue);
+      onEmptyChange?.(newIsEmptyValue);
     }
   };
 
