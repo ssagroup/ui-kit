@@ -6,3 +6,4 @@ export * from './common';
 export * from './hooks';
 export * from './GaugeChart';
 export * from './BarGaugeChart';
+export * from './BigNumberChart';

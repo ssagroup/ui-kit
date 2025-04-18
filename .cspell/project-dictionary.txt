@@ -27,6 +27,7 @@ clldjub
 coef
 collapsiblenavbar
 commodo
+congruential
 connectgaps
 consectetur
 consts
@@ -38,6 +39,7 @@ customicon
 datepicker
 daterange
 daterangepicker
+delaunator
 disbalance
 dismissable
 displaylogo
