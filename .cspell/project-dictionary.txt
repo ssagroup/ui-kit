@@ -39,6 +39,7 @@ customicon
 datepicker
 daterange
 daterangepicker
+delaunator
 disbalance
 dismissable
 displaylogo
