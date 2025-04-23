@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/utils",
-  "version": "2.10.1",
+  "version": "2.11.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
