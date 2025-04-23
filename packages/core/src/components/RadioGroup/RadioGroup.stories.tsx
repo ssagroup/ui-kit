@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Typography from '@components/Typography';
@@ -45,15 +45,11 @@ export default {
 export const HorizontalRadioGroupStories: StoryObj<typeof RadioGroup> = (
   args: Args,
 ) => {
-  const [selected, setSelected] = useState<string>();
-  setTimeout(() => {
-    setSelected('orange');
-  }, 2000);
   return (
     <Fragment>
       <Typography variant="h4">Horizontal Radio Group</Typography>
       <RadioGroup
-        externalState={selected}
+        externalState={'orange'}
         {...args}
         css={{ marginTop: '10px', gap: 10, display: 'flex' }}>
         <Radio id="radio1" value="apple" text="Apple" />
