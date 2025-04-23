@@ -42,12 +42,7 @@ export const Composition: StoryObj<typeof ExchangeAccount> = () => {
       onDelete={() => alert('Card is deleted!')}>
       <ExchangeAccount.Header>
         <ExchangeAccount.Title css={{ background: 'yellow' }}>
-          <iframe
-            src="https://www.google.com/"
-            width="100%"
-            height="100%"
-            title="google"
-          />
+          Custom Title
         </ExchangeAccount.Title>
       </ExchangeAccount.Header>
       <ExchangeAccount.Status>
