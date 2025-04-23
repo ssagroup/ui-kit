@@ -27,13 +27,12 @@ const Radio = ({
   const disabledColor = colors?.disabled || theme.colors.greyFocused40;
   const hoveredColor = colors?.hovered || theme.colors.green60;
   const defaultColor = colors?.default || theme.colors.green;
-  const focusShadowColor = colors?.focusShadow || theme.colors.green40;
 
   return (
     <RadioBase
       htmlFor={radioId}
       className={className}
-      focusShadowColor={focusShadowColor}
+      focusShadowColor={colors?.focusShadow}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <input
