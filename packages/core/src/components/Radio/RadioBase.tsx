@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Label from '@components/Label';
 
-export const RadioBase = styled(Label)`
+export const RadioBase = styled(Label)<{ focusShadowColor?: string }>`
   display: inline-flex;
   flex-grow: 0;
   align-items: center;
@@ -14,7 +14,8 @@ export const RadioBase = styled(Label)`
 
   input:focus + svg {
     filter: drop-shadow(
-      ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`}
+      ${({ theme, focusShadowColor }) =>
+        `-4px 4px 10px ${focusShadowColor || theme.colors.green40}`}
     );
   }
 
