@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Label from '@components/Label';
 
-export const RadioBase = styled(Label)`
+export const RadioBase = styled(Label)<{ focusShadowColor?: string }>`
   display: inline-flex;
   flex-grow: 0;
   align-items: center;

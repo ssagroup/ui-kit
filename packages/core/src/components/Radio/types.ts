@@ -8,4 +8,10 @@ export interface RadioProps {
   onChange?: (value: string) => void;
   text?: string;
   className?: string;
+  colors?: {
+    default?: string;
+    hovered?: string;
+    disabled?: string;
+    focusShadow?: string;
+  };
 }
