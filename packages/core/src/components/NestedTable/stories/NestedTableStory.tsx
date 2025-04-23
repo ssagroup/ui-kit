@@ -6,6 +6,8 @@ import Icon from '@components/Icon';
 import Table from '@components/Table';
 import TableBody from '@components/TableBody';
 import TableHead from '@components/TableHead';
+import TableRow from '@components/TableRow';
+import TableCell from '@components/TableCell';
 import { NestedTableRow, NestedTableCell } from '../components';
 import { WithNestedTableRow } from '../WithNestedTableRow';
 
@@ -105,9 +107,37 @@ export const NestedTableStory = () => {
         </NestedTableRow>
       </TableHead>
       <TableBody>
+        <TableRow>
+          <TableCell css={{ border: 'none' }}></TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 1</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 2</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 3</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 4</TableCell>
+        </TableRow>
         <NestedTableRowStory />
         <StyledTableRowStory />
         <OtherTableRowStory />
+        <TableRow>
+          <TableCell css={{ border: 'none' }}></TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 1</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 2</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 3</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 4</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell css={{ border: 'none' }}></TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 1</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 2</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 3</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 4</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell css={{ border: 'none' }}></TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 1</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 2</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 3</TableCell>
+          <TableCell css={{ border: 'none' }}>Cell 4</TableCell>
+        </TableRow>
         <WithNestedTableRow>
           <NestedTableRow>
             <NestedTableCell>1234567890</NestedTableCell>

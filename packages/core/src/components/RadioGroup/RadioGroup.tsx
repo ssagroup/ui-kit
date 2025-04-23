@@ -1,4 +1,10 @@
-import { Children, isValidElement, cloneElement, useState } from 'react';
+import {
+  Children,
+  isValidElement,
+  cloneElement,
+  useState,
+  useEffect,
+} from 'react';
 
 import Radio from '@components/Radio';
 
@@ -8,14 +14,18 @@ import { RadioGroupProps } from './types';
 const RadioGroup = ({
   name,
   isRequired,
-  initialState,
+  externalState,
   onChange,
   children,
   className,
 }: RadioGroupProps) => {
-  const [activeValue, setActiveValue] = useState(initialState);
+  const [activeValue, setActiveValue] = useState(externalState);
 
-  const onRadioValueChange = (value: string) => {
+  useEffect(() => {
+    setActiveValue(externalState);
+  }, [externalState]);
+
+  const onRadioValueChange = (value: string | number) => {
     setActiveValue(value);
     onChange(value);
   };

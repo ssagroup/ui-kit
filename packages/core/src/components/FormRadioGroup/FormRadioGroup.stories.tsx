@@ -18,7 +18,7 @@ export default {
         disable: true,
       },
     },
-    initialState: {
+    externalState: {
       control: {
         disable: true,
       },
@@ -43,7 +43,7 @@ type DemoForm = {
 };
 
 export const FormRadioGroupStory = (args: FormRadioGroupProps<DemoForm>) => {
-  const { name, isRequired, initialState } = args;
+  const { name, isRequired, externalState } = args;
 
   const { handleSubmit, control } = useForm<DemoForm>();
 
@@ -58,7 +58,7 @@ export const FormRadioGroupStory = (args: FormRadioGroupProps<DemoForm>) => {
         <FormRadioGroup
           name={name}
           isRequired={isRequired}
-          initialState={initialState}
+          externalState={externalState}
           control={control}>
           <Radio id="radio1" value="oak" text="Oak" />
           <Radio id="radio2" value="spruce" text="Spruce" />

@@ -60,7 +60,7 @@ describe('RadioGroup', () => {
     const onChange = jest.fn();
 
     const { getAllByRole } = render(
-      <RadioGroup name="fruit" onChange={onChange} initialState="orange">
+      <RadioGroup name="fruit" onChange={onChange} externalState="orange">
         <Radio id="radio1" value="apple" text="Apple" />
         <Radio id="radio2" value="orange" text="Orange" />
         <Radio id="radio3" value="banana" text="Banana" />
@@ -79,7 +79,7 @@ describe('RadioGroup', () => {
       <RadioGroup
         name="fruit"
         onChange={onChange}
-        initialState="orange"
+        externalState="orange"
         css={{ backgroundColor: 'blue' }}>
         <Radio id="radio1" value="apple" text="Apple" />
         <Radio id="radio2" value="orange" text="Orange" />
@@ -98,7 +98,7 @@ describe('RadioGroup', () => {
       <RadioGroup
         name="fruit"
         onChange={onChange}
-        initialState="orange"
+        externalState="orange"
         isRequired={true}>
         <Radio id="radio1" value="apple" text="Apple" />
         <Radio id="radio2" value="orange" text="Orange" />

@@ -17,7 +17,7 @@ export default {
         disable: true,
       },
     },
-    initialState: {
+    externalState: {
       control: {
         disable: true,
       },
@@ -44,16 +44,21 @@ export default {
 
 export const HorizontalRadioGroupStories: StoryObj<typeof RadioGroup> = (
   args: Args,
-) => (
-  <Fragment>
-    <Typography variant="h4">Horizontal Radio Group</Typography>
-    <RadioGroup {...args} css={{ marginTop: '10px', gap: 10, display: 'flex' }}>
-      <Radio id="radio1" value="apple" text="Apple" />
-      <Radio id="radio2" value="orange" text="Orange" />
-      <Radio id="radio3" value="banana" text="Banana" isDisabled={true} />
-    </RadioGroup>
-  </Fragment>
-);
+) => {
+  return (
+    <Fragment>
+      <Typography variant="h4">Horizontal Radio Group</Typography>
+      <RadioGroup
+        externalState={'orange'}
+        {...args}
+        css={{ marginTop: '10px', gap: 10, display: 'flex' }}>
+        <Radio id="radio1" value="apple" text="Apple" />
+        <Radio id="radio2" value="orange" text="Orange" />
+        <Radio id="radio3" value="banana" text="Banana" isDisabled={true} />
+      </RadioGroup>
+    </Fragment>
+  );
+};
 HorizontalRadioGroupStories.args = {
   name: 'fruit',
 };

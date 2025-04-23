@@ -38,7 +38,7 @@ export const RadioWidget = <
     <RadioGroup
       name={name}
       onChange={handleChange}
-      initialState={selectedIndex}
+      externalState={selectedIndex}
       isRequired={required}
       css={{
         [`> label`]: {
