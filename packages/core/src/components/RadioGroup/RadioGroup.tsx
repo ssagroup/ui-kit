@@ -25,7 +25,7 @@ const RadioGroup = ({
     setActiveValue(externalState);
   }, [externalState]);
 
-  const onRadioValueChange = (value: string) => {
+  const onRadioValueChange = (value: string | number) => {
     setActiveValue(value);
     onChange(value);
   };
