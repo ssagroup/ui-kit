@@ -170,6 +170,7 @@ export const AccountExampleWithTooltip: StoryObj<typeof PieChart> = () => {
               css={css`
                 font-size: 20px;
                 line-height: 25px;
+                cursor: default;
               `}>
               18183 &nbsp;
               <Typography
@@ -184,7 +185,7 @@ export const AccountExampleWithTooltip: StoryObj<typeof PieChart> = () => {
               </Typography>
             </Typography>
           </TooltipTrigger>
-          <TooltipContent css={{ padding: '3px 0' }}>
+          <TooltipContent css={{ padding: 10 }}>
             Detailed information
           </TooltipContent>
         </Tooltip>
