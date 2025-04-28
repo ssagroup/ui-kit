@@ -49,6 +49,7 @@ domcontentloaded
 dompurify
 Donec
 DPC
+dragmode
 dtick
 Dto
 dui
@@ -128,6 +129,7 @@ prepatch
 progressinfo
 ramda
 rangemode
+rangeslider
 Rebalance
 rebalancing
 revparse
