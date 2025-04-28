@@ -29,16 +29,7 @@ type BalanceBase = {
 
 export interface BalancePieChartProps
   extends WithTheme,
-    Omit<
-      BalanceBase,
-      | 'variant'
-      | 'fullscreenModeFeature'
-      | 'activeHighlight'
-      | 'tooltipContent'
-      | 'tooltipConfig'
-      | 'total'
-      | 'currency'
-    > {
+    Pick<BalanceBase, 'legendColorPalette' | 'chartColorPalette' | 'data'> {
   pieChartProps?: Partial<PieChartProps>;
   activeHighlight?: boolean;
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
