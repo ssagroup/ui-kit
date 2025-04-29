@@ -36,11 +36,11 @@ const Dropdown = <T extends DropdownOptionProps>({
   children,
   onChange: handleChange,
   className,
+  placeholder = 'Select something',
 }: DropdownProps<T>) => {
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const placeholder = 'Select something';
   const dropdownId = useId();
   const options: T[] = [];
 

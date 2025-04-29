@@ -318,12 +318,12 @@ describe('Dropdown', () => {
   });
 
   it('Renders with a custom placeholder', () => {
-    const { getByTestId } = setup({ placeholder: 'Select something' });
+    const { getByTestId } = setup({ placeholder: 'Custom placeholder' });
 
     const dropdownToggleEl = within(getByTestId('dropdown')).getByRole(
       'combobox',
     );
-    expect(dropdownToggleEl).toHaveTextContent('Select something');
+    expect(dropdownToggleEl).toHaveTextContent('Custom placeholder');
   });
 
   it('Renders in the disabled state', async () => {

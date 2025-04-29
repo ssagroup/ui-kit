@@ -93,6 +93,29 @@ Custom.args = {
   ],
 };
 
+export const WithTotalTooltip: StoryObj<typeof AccountBalance> = (
+  args: AccountBalanceProps,
+) => {
+  return <AccountBalance {...args} />;
+};
+
+WithTotalTooltip.args = {
+  ...Default.args,
+  tooltipConfig: {
+    placement: 'top-start',
+  },
+  tooltipContent: (
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      `}>
+      <div css={{ padding: 10 }}>Tooltip Content</div>
+    </div>
+  ),
+};
+
 export const WithoutPaletteColors: StoryObj<typeof AccountBalance> = (
   args: AccountBalanceProps,
 ) => {

@@ -6,6 +6,7 @@ import * as S from '../styles';
 import { useExchangeAccountContext } from './ExchangeAccountProvider';
 
 import { BalancePieChart } from '@components/AccountBalance';
+import { AccountBalanceProvider } from '@components/AccountBalance/AccountBalanceContext';
 
 export interface ExchangeAccountContentProps
   extends Omit<React.ComponentProps<typeof CardContent>, 'children'> {
@@ -17,27 +18,40 @@ export const ExchangeAccountContent = ({
   ...cardProps
 }: ExchangeAccountContentProps) => {
   const theme = useTheme();
-  const { data, pieChartProps: contextPieChartProps } =
-    useExchangeAccountContext();
+  const {
+    data,
+    pieChartProps: contextPieChartProps,
+    title,
+  } = useExchangeAccountContext();
 
   return (
-    <CardContent css={S.CardContent} direction="column" {...cardProps}>
-      <BalancePieChart
-        theme={theme}
-        pieChartProps={{
-          className: css`
-            ${theme.mediaQueries.md} {
-              flex-direction: row;
-            }
-            ${theme.mediaQueries.lg} {
-              flex-direction: column;
-            }
-          `,
-          ...contextPieChartProps,
-          ...pieChartProps,
-        }}
-        {...data}
-      />
-    </CardContent>
+    <AccountBalanceProvider
+      activeHighlight={pieChartProps?.activeHighlight}
+      fullscreenModeFeature={false}
+      tooltipContent={data.tooltipContent}
+      tooltipConfig={data.tooltipConfig}
+      variant={data.variant}
+      total={data.total}
+      title={title}
+      currency={data.currency}>
+      <CardContent css={S.CardContent} direction="column" {...cardProps}>
+        <BalancePieChart
+          theme={theme}
+          pieChartProps={{
+            className: css`
+              ${theme.mediaQueries.md} {
+                flex-direction: row;
+              }
+              ${theme.mediaQueries.lg} {
+                flex-direction: column;
+              }
+            `,
+            ...contextPieChartProps,
+            ...pieChartProps,
+          }}
+          {...data}
+        />
+      </CardContent>
+    </AccountBalanceProvider>
   );
 };

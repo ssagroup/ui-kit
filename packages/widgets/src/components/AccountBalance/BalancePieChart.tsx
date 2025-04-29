@@ -10,21 +10,23 @@ import {
 import { BalancePieChartTitle } from './BalancePieChartTitle';
 
 import { BalancePieChartProps } from './types';
+import { useAccountBalanceContext } from './AccountBalanceContext';
 
 export const BalancePieChart = withTheme(
   ({
-    total,
-    currency,
     data,
     theme,
     chartColorPalette,
     legendColorPalette,
-    variant = 'valueList',
     pieChartProps = {},
-    fullscreenModeFeature = false,
     activeHighlight = false,
     onFullscreenModeChange,
   }: BalancePieChartProps) => {
+    const {
+      variant = 'valueList',
+      fullscreenModeFeature,
+      currency,
+    } = useAccountBalanceContext();
     const [isFullscreenMode, setFullscreenMode] = useState(false);
     const { legendColorNames, pieChartColors } =
       pieChartPalettes.getBalancePalette(theme);
@@ -66,13 +68,7 @@ export const BalancePieChart = withTheme(
         colors={chartColors}
         onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
-        title={
-          <BalancePieChartTitle
-            theme={theme}
-            total={total}
-            currency={currency}
-          />
-        }
+        title={<BalancePieChartTitle theme={theme} />}
         css={
           !isFullscreenMode &&
           css`
