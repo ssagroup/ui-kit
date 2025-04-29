@@ -36,7 +36,7 @@ export interface BalancePieChartProps
 }
 
 export interface AccountBalanceProps extends BalanceBase {
-  title?: string;
+  title?: React.ReactNode;
   className?: string;
   onClick?: () => void;
   link?: To;
