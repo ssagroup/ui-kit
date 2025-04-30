@@ -68,7 +68,7 @@ export const CollapsibleNavBarPopover = ({
           [theme.mediaQueries.md]: {
             display: 'block',
           },
-          zIndex: 9999,
+          zIndex: 20,
         }}
         isFocusManagerDisabled={true}>
         <PopoverHeading
