@@ -1,58 +1,25 @@
+import { ColorPicker } from '@components/ColorPicker';
 import { fireEvent, screen } from '../../../customTest';
-import ColorPicker from '@components/ColorPicker';
 
 describe('ColorPicker', () => {
-  it('Return the correct color onChange', async () => {
-    const mockOnChange = jest.fn();
+  it('should render with selected format', () => {
+    render(<ColorPicker format="rgb" />);
 
-    render(<ColorPicker onChange={mockOnChange} />);
+    const dropdown = screen.getByRole('combobox');
+    expect(dropdown).toBeInTheDocument();
 
-    const [
-      btnPink,
-      btnYellow,
-      btnGreen,
-      btnTurquoise,
-      btnBlueLight,
-      btnBlue,
-      btnPurple,
-    ] = await screen.queryAllByRole('button');
-
-    fireEvent.click(btnPink);
-
-    expect(mockOnChange).toBeCalledWith('pink');
-
-    fireEvent.click(btnYellow);
-
-    expect(mockOnChange).toBeCalledWith('yellow');
-
-    fireEvent.click(btnGreen);
-
-    expect(mockOnChange).toBeCalledWith('green');
-
-    fireEvent.click(btnTurquoise);
-
-    expect(mockOnChange).toBeCalledWith('turquoise');
-
-    fireEvent.click(btnBlueLight);
-
-    expect(mockOnChange).toBeCalledWith('blueLight');
-
-    fireEvent.click(btnBlue);
-
-    expect(mockOnChange).toBeCalledWith('blue');
-
-    fireEvent.click(btnPurple);
-
-    expect(mockOnChange).toBeCalledWith('purple');
+    expect(dropdown).toHaveTextContent(/RGB/);
   });
 
-  it('Return the correct init color', async () => {
+  it('should call onChange if color is change', () => {
     const mockOnChange = jest.fn();
+    render(<ColorPicker onChange={mockOnChange} />);
 
-    render(<ColorPicker onChange={mockOnChange} initColor="green" />);
+    const hexInput = screen.getByRole('textbox');
 
-    const [, , btnGreen] = await screen.queryAllByRole('button');
+    fireEvent.change(hexInput, { target: { value: '#00FF00' } });
+    fireEvent.blur(hexInput);
 
-    expect(btnGreen).toHaveStyleRule('border', '1.4px solid #fff');
+    expect(mockOnChange).toHaveBeenLastCalledWith('#00ff00');
   });
 });

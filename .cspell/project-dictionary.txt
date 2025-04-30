@@ -80,6 +80,7 @@ hoverinfo
 hoverlabel
 hovermode
 hovertemplate
+hsl
 HTMLSVGElement
 IBMP
 ipsum

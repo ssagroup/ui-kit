@@ -104,6 +104,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/core/src/$1/$2.ts',
           '<rootDir>/packages/core/src/$1/$2.tsx',
         ],
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
     defineProjectConfig('packages/widgets', {
@@ -114,6 +115,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/widgets/src/$1/$2.ts',
           '<rootDir>/packages/widgets/src/$1/$2.tsx',
         ],
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
     defineProjectConfig('packages/templates', {
@@ -127,6 +129,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/templates/src/$1/$2.ts',
           '<rootDir>/packages/templates/src/$1/$2.tsx',
         ],
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
     defineProjectConfig('examples/fitness-dashboard', {
@@ -137,6 +140,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/examples/fitness-dashboard/src/$1/$2.ts',
           '<rootDir>/examples/fitness-dashboard/src/$1/$2.tsx',
         ],
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
   ],
