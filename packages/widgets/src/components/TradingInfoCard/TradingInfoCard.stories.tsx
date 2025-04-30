@@ -99,7 +99,7 @@ WithIcon.args = {
   icon: <Icon name="arrow-up" color="#2CA24D" size={16} />,
 };
 
-export const WithoutUnit: StoryObj<typeof TradingInfoCard> = (
+export const WithoutUnitAndClick: StoryObj<typeof TradingInfoCard> = (
   args: TradingInfoCardProps,
 ) => {
   return (
@@ -112,7 +112,9 @@ export const WithoutUnit: StoryObj<typeof TradingInfoCard> = (
   );
 };
 
-WithoutUnit.args = {
+WithoutUnitAndClick.args = {
   value: 'ETH/USDT',
   title: 'Pairs',
 };
+
+WithoutUnitAndClick.storyName = 'Without unit and onClick handler';
