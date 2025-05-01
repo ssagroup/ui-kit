@@ -72,6 +72,7 @@ export interface TooltipContentSizes {
 
 export interface TooltipTriggerProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 export type SimpleChartTooltipProps = PointTooltipProps &
