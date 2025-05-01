@@ -11,7 +11,11 @@ export const MultipleTrigger = () => {
   const context = useTypeaheadContext();
   const typeaheadInputAdditionalProps: InputHTMLAttributes<HTMLInputElement> =
     {};
-  if (!context.selectedItems.length && !!context.placeholder) {
+  if (
+    !context.selectedItems.length &&
+    !context.inputValue &&
+    !!context.placeholder
+  ) {
     typeaheadInputAdditionalProps.placeholder = context.placeholder;
   }
   return (
@@ -28,7 +32,7 @@ export const MultipleTrigger = () => {
           return (
             <S.TypeaheadItem
               key={`typeahead-selected-selectedItem-${index}`}
-              onClick={context.handleSelectedClick}
+              onClick={(e) => e.stopPropagation()}
               isDisabled={context.isDisabled}>
               <S.TypeaheadItemLabel isDisabled={context.isDisabled}>
                 {optionText}
@@ -90,12 +94,6 @@ export const MultipleTrigger = () => {
             S.TypeaheadInputPlaceholder,
           ].join(' ')}
           {...typeaheadInputAdditionalProps}
-        />
-        <input
-          type="hidden"
-          readOnly
-          value={context.selectedItems as string[]}
-          {...context.register?.(context.name, context.validationSchema)}
         />
       </S.TypeaheadInputsGroupWrapper>
       {!context.isDisabled && context.selectedItems.length ? (

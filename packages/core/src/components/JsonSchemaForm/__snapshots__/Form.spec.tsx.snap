@@ -661,7 +661,7 @@ exports[`Form (rjsf) Render form 1`] = `
     );
   color: #fff;
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid rgba(195, 197, 204, 1);
   min-height: 44px;
   height: auto;
@@ -1771,86 +1771,84 @@ exports[`Form (rjsf) Render form 1`] = `
             Select field title
           </label>
           <div
-            class="emotion-55"
-            data-testid="typeahead"
+            id="root_selectField"
           >
             <div
-              aria-controls="typeahead-popup-:r7:"
-              aria-expanded="false"
-              aria-haspopup="dialog"
-              aria-labelledby="typeahead-label-:r7:"
-              class="emotion-56"
-              data-state="closed"
-              data-testid="trigger-button"
-              role="combobox"
-              type="button"
+              class="emotion-55"
+              data-testid="typeahead"
             >
               <div
-                class="emotion-57"
+                aria-controls="typeahead-popup-:r7:"
+                aria-expanded="false"
+                aria-haspopup="dialog"
+                aria-labelledby="typeahead-label-:r7:"
+                class="emotion-56"
+                data-state="closed"
+                data-testid="trigger-button"
+                role="combobox"
+                type="button"
               >
                 <div
-                  class="emotion-58 emotion-59"
+                  class="emotion-57"
                 >
+                  <div
+                    class="emotion-58 emotion-59"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="typeahead-input emotion-60 emotion-61"
+                      id="formElement-selectField-text"
+                      type="text"
+                      value="Option 2"
+                    />
+                  </div>
                   <input
-                    autocomplete="off"
-                    class="typeahead-input emotion-60 emotion-61"
-                    id="formElement-selectField-text"
+                    aria-hidden="false"
+                    class="typeahead-input emotion-60 emotion-63"
+                    data-testid="typeahead-input"
+                    readonly=""
+                    tabindex="-1"
                     type="text"
                     value="Option 2"
                   />
-                </div>
-                <input
-                  aria-hidden="false"
-                  class="typeahead-input emotion-60 emotion-63"
-                  data-testid="typeahead-input"
-                  readonly=""
-                  tabindex="-1"
-                  type="text"
-                  value="Option 2"
-                />
-                <input
-                  name="selectField"
-                  readonly=""
-                  type="hidden"
-                  value="Option 2"
-                />
-                <button
-                  class="emotion-64"
-                  data-testid="remove-all-button"
-                  type="button"
-                >
-                  <span
-                    class="emotion-65"
-                    style="margin: 0px;"
+                  <button
+                    class="emotion-64"
+                    data-testid="remove-all-button"
+                    type="button"
                   >
-                    <svg
-                      fill="none"
-                      height="8px"
-                      viewBox="0 0 8 8"
-                      width="8px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <span
+                      class="emotion-65"
+                      style="margin: 0px;"
                     >
-                      <title>
-                        Remove
-                      </title>
-                      <path
-                        d="M1 6.66L6.66 1"
-                        stroke="#000"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.4"
-                      />
-                      <path
-                        d="M6.66 6.66L1 1"
-                        stroke="#000"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.4"
-                      />
-                    </svg>
-                  </span>
-                </button>
+                      <svg
+                        fill="none"
+                        height="8px"
+                        viewBox="0 0 8 8"
+                        width="8px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          Remove
+                        </title>
+                        <path
+                          d="M1 6.66L6.66 1"
+                          stroke="#000"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                        <path
+                          d="M6.66 6.66L1 1"
+                          stroke="#000"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
