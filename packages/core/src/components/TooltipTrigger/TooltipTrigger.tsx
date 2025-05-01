@@ -11,7 +11,9 @@ const TooltipTrigger = ({ children, className }: TooltipTriggerProps) => {
       children,
       tooltipCtx?.getReferenceProps({
         ref: tooltipCtx.refs.setReference,
-        className,
+        className: [children.props?.className, className]
+          .filter(Boolean)
+          .join(' '),
       }),
     );
   }
