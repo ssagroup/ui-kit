@@ -68,7 +68,7 @@ export const BalancePieChart = withTheme(
         colors={chartColors}
         onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
-        title={<BalancePieChartTitle theme={theme} />}
+        title={<BalancePieChartTitle />}
         css={
           !isFullscreenMode &&
           css`

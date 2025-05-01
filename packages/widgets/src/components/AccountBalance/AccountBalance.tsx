@@ -15,8 +15,7 @@ export const AccountBalance = ({
   fullscreenModeFeature = false,
   activeHighlight = true,
   widgetMaxWidth = '280px',
-  tooltipContent,
-  tooltipConfig,
+  tooltip = {},
   total,
   currency,
   ...props
@@ -28,8 +27,7 @@ export const AccountBalance = ({
     <AccountBalanceProvider
       activeHighlight={activeHighlight}
       fullscreenModeFeature={fullscreenModeFeature}
-      tooltipContent={tooltipContent}
-      tooltipConfig={tooltipConfig}
+      tooltip={tooltip}
       variant={variant}
       total={total}
       title={title}
@@ -48,7 +46,7 @@ export const AccountBalance = ({
                     max-width: ${isFullscreenMode ? '100%' : widgetMaxWidth};
                   }
                   & .pie-chart-wrapper > div:last-of-type {
-                    pointer-events: ${tooltipContent ? 'auto' : 'none'};
+                    pointer-events: ${tooltip?.content ? 'auto' : 'none'};
                   }
                 `,
                 className,

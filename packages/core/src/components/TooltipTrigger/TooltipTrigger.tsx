@@ -3,7 +3,7 @@ import { cloneElement, isValidElement } from 'react';
 import { TooltipTriggerProps } from '@components/Tooltip/types';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 
-const TooltipTrigger = ({ children }: TooltipTriggerProps) => {
+const TooltipTrigger = ({ children, className }: TooltipTriggerProps) => {
   const tooltipCtx = useTooltipContext();
 
   if (isValidElement(children)) {
@@ -11,6 +11,9 @@ const TooltipTrigger = ({ children }: TooltipTriggerProps) => {
       children,
       tooltipCtx?.getReferenceProps({
         ref: tooltipCtx.refs.setReference,
+        className: [children.props?.className, className]
+          .filter(Boolean)
+          .join(' '),
       }),
     );
   }

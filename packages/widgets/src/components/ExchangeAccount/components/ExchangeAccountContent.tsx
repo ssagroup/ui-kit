@@ -28,8 +28,7 @@ export const ExchangeAccountContent = ({
     <AccountBalanceProvider
       activeHighlight={pieChartProps?.activeHighlight}
       fullscreenModeFeature={false}
-      tooltipContent={data.tooltipContent}
-      tooltipConfig={data.tooltipConfig}
+      tooltip={data.tooltip}
       variant={data.variant}
       total={data.total}
       title={title}

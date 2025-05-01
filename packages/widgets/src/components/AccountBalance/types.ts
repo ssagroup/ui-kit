@@ -11,14 +11,8 @@ interface WithTheme {
 }
 
 type BalanceBase = {
-  total: number | string;
-  currency: string;
   legendColorPalette?: Array<keyof MainColors | string>;
   chartColorPalette?: string[];
-  variant?: 'valueList' | 'withoutValueList';
-  fullscreenModeFeature?: boolean;
-  tooltipContent?: React.ReactNode;
-  tooltipConfig?: Partial<TooltipProps>;
   data: Array<{
     id: string | number;
     value: number;
@@ -27,22 +21,29 @@ type BalanceBase = {
   }>;
 };
 
-export interface BalancePieChartProps
-  extends WithTheme,
-    Pick<BalanceBase, 'legendColorPalette' | 'chartColorPalette' | 'data'> {
+export interface BalancePieChartProps extends WithTheme, BalanceBase {
   pieChartProps?: Partial<PieChartProps>;
   activeHighlight?: boolean;
   onFullscreenModeChange?: (isFullscreenMode: boolean) => void;
 }
 
 export interface AccountBalanceProps extends BalanceBase {
-  title?: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-  link?: To;
   activeHighlight?: boolean;
+  className?: string;
+  currency: string;
+  fullscreenModeFeature?: boolean;
+  link?: To;
+  title?: React.ReactNode;
+  tooltip?: {
+    config?: Partial<TooltipProps>;
+    content?: React.ReactNode;
+    classNames?: {
+      trigger?: string;
+      content?: string;
+    };
+  };
+  total: number | string;
+  variant?: 'valueList' | 'withoutValueList';
   widgetMaxWidth?: string;
-  tooltipConfig?: Partial<TooltipProps>;
+  onClick?: () => void;
 }
-
-export type BalancePieChartTitleProps = Pick<BalancePieChartProps, 'theme'>;
