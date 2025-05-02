@@ -3,7 +3,7 @@ import { SVGProps } from '@components/Icon/types';
 export const FilterFunnel = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Filter',
+  tooltip = 'Filter funnel',
   ...props
 }: SVGProps) => (
   <svg
