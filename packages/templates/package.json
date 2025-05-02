@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/templates",
-  "version": "2.14.0",
+  "version": "2.15.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
