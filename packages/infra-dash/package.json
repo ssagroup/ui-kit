@@ -1,0 +1,61 @@
+{
+  "name": "@ssa-ui-kit/infra-dash",
+  "version": "2.15.0-rc.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "sideEffects": false,
+  "author": "SSA Group",
+  "license": "MIT",
+  "description": "SSA UI Kit",
+  "scripts": {
+    "test": "jest -i --no-cache",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json",
+    "sb:dev": "storybook dev -p 6009",
+    "sb:build": "storybook build",
+    "test:e2e": "pnpm exec playwright test --project=chromium",
+    "test:e2e:ui": "pnpm exec playwright test --project=chromium --ui",
+    "test:e2e:debug": "pnpm exec playwright test --project=chromium --debug"
+  },
+  "keywords": [
+    "react",
+    "SSA UI Kit",
+    "ui",
+    "monitoring"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssagroup/ui-kit.git",
+    "directory": "packages/infra-dash"
+  },
+  "files": [
+    "dist"
+  ],
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "@ssa-ui-kit/core": "workspace:^"
+  },
+  "devDependencies": {
+    "@emotion/css": "^11.13.5",
+    "@emotion/jest": "^11.13.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@playwright/test": "^1.48.0"
+  },
+  "peerDependencies": {
+    "@emotion/css": "^11.13.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "react": "18.x",
+    "react-dom": "18.x"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  }
+}
