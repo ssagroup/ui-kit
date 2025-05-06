@@ -10,6 +10,7 @@ export { createSafeContext } from './useSafeContext';
 export { useResizeObserver, useElementSize } from './useResizeObserver';
 export { useCallbackRef } from './useCallbackRef';
 export { useDebouncedCallback } from './useDebouncedCallback';
+export { useClipboard } from './useClipboard';
 export {
   useThrottledCallback,
   useThrottledCallbackWithClearTimeout,
