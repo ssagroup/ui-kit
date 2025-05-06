@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useForm, useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
 import { useDatePickerMask } from './useDatePickerMask';
@@ -42,7 +42,7 @@ export const useDateRangePicker = ({
   };
 
   const { clearErrors, setError, setValue, resetField, setFocus } =
-    useFormContext();
+    useFormContext() || useForm();
 
   const nameFrom = `${_name}From`;
   const nameTo = `${_name}To`;
