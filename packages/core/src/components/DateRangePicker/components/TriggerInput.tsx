@@ -46,10 +46,8 @@ export const TriggerInput = ({
     setLastFocusedElement,
     onBlur: handleBlur,
   } = useDateRangePickerContext();
-  const formContext = useFormContext(); // Using FormProvider from react-hook-form
-  const useFormResult = useForm();
   const currentName = datepickerType === 'from' ? nameFrom : nameTo;
-  const hookFormResult = formContext ?? useFormResult;
+  const hookFormResult = useFormContext() ?? useForm();
   const {
     register,
     formState: { errors },

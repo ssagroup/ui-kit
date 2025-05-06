@@ -41,8 +41,9 @@ export const useDateRangePicker = ({
     setIsOpen(open);
   };
 
+  const hookFormResult = useFormContext() ?? useForm();
   const { clearErrors, setError, setValue, resetField, setFocus } =
-    useFormContext() || useForm();
+    hookFormResult;
 
   const nameFrom = `${_name}From`;
   const nameTo = `${_name}To`;

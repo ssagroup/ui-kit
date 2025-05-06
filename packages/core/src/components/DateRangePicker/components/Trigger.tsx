@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import * as C from '@components';
@@ -24,7 +24,7 @@ export const Trigger = () => {
   } = useDateRangePickerContext();
 
   const theme = useTheme();
-  const formContext = useFormContext();
+  const hookFormResult = useFormContext() || useForm();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(wrapperRef, (event) => {
@@ -35,8 +35,8 @@ export const Trigger = () => {
     }
   });
 
-  const errorsFrom = formContext.formState.errors[nameFrom]?.message;
-  const errorsTo = formContext.formState.errors[nameTo]?.message;
+  const errorsFrom = hookFormResult.formState.errors[nameFrom]?.message;
+  const errorsTo = hookFormResult.formState.errors[nameTo]?.message;
   const errorMessage = [errorsFrom, errorsTo].filter(Boolean) as string[];
 
   return (
