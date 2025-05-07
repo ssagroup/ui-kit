@@ -1,48 +1,33 @@
 import { useState } from 'react';
-import type { Meta } from '@storybook/react';
 import { css } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import ColorPicker, { mapColors } from './ColorPicker';
-import { ColorPickerProps, ColorsList } from './types';
+import { ColorPicker } from './ColorPicker';
 
-export default {
+const meta = {
   title: 'Components/ColorPicker',
   component: ColorPicker,
-} as Meta<typeof ColorPicker>;
+} satisfies Meta<typeof ColorPicker>;
 
-export const Default = ({ initColor }: ColorPickerProps) => {
-  const [color, setColor] = useState<ColorsList>(
-    initColor || ('' as ColorsList),
-  );
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <div>
-      <ColorPicker onChange={setColor} />
-      <div
-        css={[
-          mapColors[color],
-          css`
+export const Default: Story = {
+  render: (args) => {
+    const [color, setColor] = useState<string>(args.defaultColor ?? 'red');
+
+    return (
+      <div>
+        <ColorPicker defaultColor={color} onChange={setColor} />
+        <div
+          style={{ background: color }}
+          css={css`
             width: 50px;
             height: 50px;
-          `,
-        ]}
-      />
-    </div>
-  );
-};
-
-Default.args = {};
-Default.propTypes = {
-  initColor: String,
-};
-
-export const SelectedColor = () => {
-  return (
-    <Default
-      initColor="green"
-      onChange={() => {
-        console.log('onChange');
-      }}
-    />
-  );
+          `}
+        />
+        {color}
+      </div>
+    );
+  },
 };

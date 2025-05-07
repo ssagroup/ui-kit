@@ -1,47 +1,128 @@
-import { useState } from 'react';
-import {
-  blue,
-  green,
-  blueLight,
-  pink,
-  purple,
-  turquoise,
-  yellow,
-} from '@styles/global';
+import { useTheme } from '@emotion/react';
+import { css } from '@emotion/css';
+import ColorPickerBase, { Color } from '@rc-component/color-picker';
+import { useClipboard, useUncontrolled } from '@ssa-ui-kit/hooks';
+import Wrapper from '@components/Wrapper';
+import Icon from '@components/Icon';
+import Dropdown from '@components/Dropdown';
+import DropdownOption from '@components/DropdownOption';
+import { CopyButton, HexInput, HlsInput, RgbInput } from './components';
 
-import { ColorPickerProps, Colors, ColorsList } from './types';
-import { ColorMarker } from './styles';
+import '@rc-component/color-picker/assets/index.css';
 
-export const mapColors: Colors = {
-  pink,
-  yellow,
-  green,
-  turquoise,
-  blueLight,
-  blue,
-  purple,
+const COLOR_FORMAT = {
+  hex: 'HEX',
+  rgb: 'RGB',
+  hsl: 'HSL',
+} as const;
+type ColorFormat = keyof typeof COLOR_FORMAT;
+
+export interface ColorPickerProps {
+  defaultColor?: string;
+  color?: string;
+  disabledAlpha?: boolean;
+  disabled?: boolean;
+  format?: ColorFormat;
+  defaultFormat?: ColorFormat;
+  onChange?: (color: string) => void;
+}
+
+const colorFormatter: Record<ColorFormat, (color: Color) => string> = {
+  hex: (color) => color.toHexString(),
+  rgb: (color) => color.toRgbString(),
+  hsl: (color) => color.toHslString(),
 };
 
-const ColorPicker = ({ onChange, initColor }: ColorPickerProps) => {
-  const [activeColor, setActiveColor] = useState(initColor || '');
+export const ColorPicker = ({
+  color: providedColor,
+  defaultColor,
+  disabledAlpha,
+  disabled,
+  format: providedFormat,
+  defaultFormat,
+  onChange,
+}: ColorPickerProps) => {
+  const theme = useTheme();
+  const [format, setFormat] = useUncontrolled<ColorFormat, unknown[]>({
+    value: providedFormat,
+    defaultValue: defaultFormat,
+    finalValue: 'hex',
+  });
+  const [rawColor, setRawColor] = useUncontrolled<
+    Color | string | undefined,
+    unknown[]
+  >({
+    value: providedColor,
+    defaultValue: defaultColor,
+    onChange: (color) => {
+      if (color) {
+        onChange?.(colorFormatter[format](new Color(color)));
+      }
+    },
+  });
+  const { copy } = useClipboard();
 
-  const handleColorChange = (color: ColorsList) => {
-    onChange(color);
-    setActiveColor(color);
+  const parsedColor = rawColor ? new Color(rawColor) : undefined;
+
+  const handleFormatSelect = (format: ColorFormat) => {
+    onChange?.(colorFormatter[format](new Color(rawColor!)));
+    setFormat(format);
+  };
+
+  const Input: Record<ColorFormat, () => React.ReactNode> = {
+    hex: () => <HexInput color={rawColor} onChange={setRawColor} />,
+    rgb: () => <RgbInput color={rawColor} onChange={setRawColor} />,
+    hsl: () => <HlsInput color={rawColor} onChange={setRawColor} />,
   };
 
   return (
-    <ul css={{ display: 'flex', gap: 10, listStyle: 'none', padding: 0 }}>
-      {(Object.keys(mapColors) as ColorsList[]).map((color) => (
-        <li key={color}>
-          <ColorMarker
-            active={color === activeColor}
-            onClick={() => handleColorChange(color)}
-            css={[mapColors[color]]}
-          />
-        </li>
-      ))}
-    </ul>
+    <ColorPickerBase
+      value={rawColor}
+      onChange={setRawColor}
+      disabledAlpha={disabledAlpha}
+      disabled={disabled}
+      css={{ width: '280px' }}
+      panelRender={(panel) => (
+        <>
+          {panel}
+          <Wrapper
+            alignItems="center"
+            css={{ justifyContent: 'space-between', gap: 5 }}>
+            <Dropdown
+              css={{
+                background: theme.colors.white,
+                border: '1px solid',
+                borderColor: theme.colors.grey,
+                borderRadius: '8px',
+              }}
+              className={css`
+                height: 28px;
+              `}
+              selectedItem={{ value: COLOR_FORMAT[format], id: format }}
+              onChange={(selected) => handleFormatSelect(selected.id)}>
+              {Object.entries(COLOR_FORMAT).map(([key, value]) => (
+                <DropdownOption key={key} id={key} value={value} />
+              ))}
+            </Dropdown>
+            <div
+              css={{
+                border: '1px solid',
+                borderColor: theme.colors.grey,
+                borderRadius: '8px',
+                overflow: 'hidden',
+                alignSelf: 'stretch',
+              }}>
+              {Input[format]()}
+            </div>
+            <CopyButton
+              variant="tertiary"
+              isDisabled={!parsedColor || !parsedColor.isValid}
+              onClick={() => copy(colorFormatter[format](parsedColor!))}>
+              <Icon name="copy" size={14} color={theme.colors.greyFilterIcon} />
+            </CopyButton>
+          </Wrapper>
+        </>
+      )}
+    />
   );
 };
-export default ColorPicker;
