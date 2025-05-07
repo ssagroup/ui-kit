@@ -4,7 +4,7 @@ import Input from '@components/Input';
 export const SearchBoxInput = styled(Input)`
   height: 30px;
   font-size: 12px;
-  border-radius: 5px;
+  border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.greyLighter};
   border: 1px solid #dee0e8;
   color: ${({ theme }) => theme.colors.greyDarker};
