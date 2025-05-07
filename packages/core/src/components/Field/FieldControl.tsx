@@ -17,7 +17,7 @@ const FieldControlBase = styled.div<FieldContextValue>`
   min-height: 44px;
   height: auto;
 
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid
     ${({ status, theme }) => {

@@ -83,6 +83,9 @@ export const TriggerInput = ({
         disabled={disabled}
         register={register}
         className={className}
+        wrapperClassName={css`
+          display: flex;
+        `}
         inputProps={{
           onBlur: handleBlur,
           onClick: handleOpen,
@@ -93,6 +96,16 @@ export const TriggerInput = ({
           className: [
             css`
               border: none !important;
+              height: auto !important;
+              padding: 0 !important;
+              min-width: 75px;
+              line-height: 16px;
+              max-height: 16px;
+              letter-spacing: 0.8px;
+              border-radius: 0 !important;
+              &::placeholder {
+                letter-spacing: normal;
+              }
             `,
             datepickerType === 'from'
               ? classNames?.trigger?.inputFrom

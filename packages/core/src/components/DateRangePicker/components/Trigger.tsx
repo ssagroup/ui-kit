@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import * as C from '@components';
+import * as S from '../styles';
 import { TriggerInput } from './TriggerInput';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
@@ -44,6 +45,9 @@ export const Trigger = () => {
       status={status}
       disabled={disabled}
       data-testid="daterangepicker"
+      css={{
+        width: 233,
+      }}
       className={classNames?.trigger?.root}>
       <C.Field.Label
         htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}
@@ -51,7 +55,7 @@ export const Trigger = () => {
         {label}
       </C.Field.Label>
       <C.Field.Control>
-        <C.Wrapper
+        <S.TriggerWrapper
           ref={wrapperRef}
           className={classNames?.trigger?.controlsWrapper}>
           <TriggerInput
@@ -66,11 +70,11 @@ export const Trigger = () => {
           />
           <C.Icon
             name="carrot-right"
-            size={18}
-            color={theme.colors.greyDarker80}
+            size={16}
+            color={disabled ? theme.colors.grey : theme.colors.greyDarker}
             className={classNames?.trigger?.arrowIcon}
             css={{
-              margin: '0 14px',
+              margin: '0 3px',
             }}
           />
           <TriggerInput
@@ -99,7 +103,8 @@ export const Trigger = () => {
               className={classNames?.trigger?.calendarIcon}
               css={{
                 padding: 0,
-                margin: '0 8px 0 14px',
+                margin: '0 0 0 10px',
+                height: 'auto',
                 cursor:
                   openCalendarMode === 'input' || disabled
                     ? 'default'
@@ -110,7 +115,7 @@ export const Trigger = () => {
               }}
             />
           )}
-        </C.Wrapper>
+        </S.TriggerWrapper>
       </C.Field.Control>
       <C.Field.Description>{helperText}</C.Field.Description>
       <C.Field.Error>
