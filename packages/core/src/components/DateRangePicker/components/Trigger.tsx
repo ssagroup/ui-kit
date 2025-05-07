@@ -18,7 +18,7 @@ export const Trigger = () => {
     openCalendarMode,
     isOpen,
     showCalendarIcon,
-    triggerClassname,
+    classNames,
     setIsOpen,
     handleToggleOpen,
   } = useDateRangePickerContext();
@@ -44,16 +44,20 @@ export const Trigger = () => {
       status={status}
       disabled={disabled}
       data-testid="daterangepicker"
-      className={triggerClassname}>
+      className={classNames?.trigger?.root}>
       <C.Field.Label
-        htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}>
+        htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}
+        className={classNames?.label}>
         {label}
       </C.Field.Label>
       <C.Field.Control>
-        <C.Wrapper ref={wrapperRef}>
+        <C.Wrapper
+          ref={wrapperRef}
+          className={classNames?.trigger?.controlsWrapper}>
           <TriggerInput
             withPopover
             datepickerType="from"
+            className={classNames?.trigger?.inputFrom}
             onClick={() => {
               if (!isOpen) {
                 setIsOpen(true);
@@ -64,12 +68,14 @@ export const Trigger = () => {
             name="carrot-right"
             size={18}
             color={theme.colors.greyDarker80}
+            className={classNames?.trigger?.icon}
             css={{
               margin: '0 14px',
             }}
           />
           <TriggerInput
             datepickerType="to"
+            className={classNames?.trigger?.inputTo}
             onClick={() => {
               if (!isOpen) {
                 setIsOpen(true);

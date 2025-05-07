@@ -28,10 +28,12 @@ const WithTriggerPopover = ({
 export const TriggerInput = ({
   datepickerType,
   withPopover = false,
+  className,
   onClick,
 }: {
   datepickerType: 'from' | 'to';
   withPopover?: boolean;
+  className?: string;
   onClick: MouseEventHandler<HTMLInputElement>;
 }) => {
   const {
@@ -79,6 +81,7 @@ export const TriggerInput = ({
         ref={datepickerType === 'from' ? inputFromRef : inputToRef}
         disabled={disabled}
         register={register}
+        className={className}
         inputProps={{
           onBlur: handleBlur,
           onClick: handleOpen,
