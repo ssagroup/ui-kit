@@ -28,7 +28,8 @@ export type DateRangePickerProps = {
       controlsWrapper?: string;
       inputFrom?: string;
       inputTo?: string;
-      icon?: string;
+      arrowIcon?: string;
+      calendarIcon?: string;
     };
     calendar?: string;
     label?: string;

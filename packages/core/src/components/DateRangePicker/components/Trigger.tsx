@@ -68,7 +68,7 @@ export const Trigger = () => {
             name="carrot-right"
             size={18}
             color={theme.colors.greyDarker80}
-            className={classNames?.trigger?.icon}
+            className={classNames?.trigger?.arrowIcon}
             css={{
               margin: '0 14px',
             }}
@@ -96,6 +96,7 @@ export const Trigger = () => {
               variant="tertiary"
               aria-label="Calendar"
               isDisabled={disabled}
+              className={classNames?.trigger?.calendarIcon}
               css={{
                 padding: 0,
                 margin: '0 8px 0 14px',
