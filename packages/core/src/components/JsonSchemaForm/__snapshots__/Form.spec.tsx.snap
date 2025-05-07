@@ -55,7 +55,7 @@ exports[`Form (rjsf) Render form 1`] = `
   align-items: center;
   min-height: 44px;
   height: auto;
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(195, 197, 204, 1);
   background: rgba(255, 255, 255, 1);
