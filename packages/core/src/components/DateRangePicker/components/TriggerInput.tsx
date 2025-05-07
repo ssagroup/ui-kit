@@ -46,6 +46,7 @@ export const TriggerInput = ({
     disabled,
     helperText,
     setLastFocusedElement,
+    classNames,
     onBlur: handleBlur,
   } = useDateRangePickerContext();
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
@@ -89,9 +90,16 @@ export const TriggerInput = ({
           id: inputProps?.inputProps?.id || currentName,
           'data-testid': `daterangepicker-input-${datepickerType}`,
           autoComplete: 'off',
-          className: css`
-            border: none !important;
-          `,
+          className: [
+            css`
+              border: none !important;
+            `,
+            datepickerType === 'from'
+              ? classNames?.trigger?.inputFrom
+              : classNames?.trigger?.inputTo,
+          ]
+            .filter(Boolean)
+            .join(' '),
           ...inputElementProps,
         }}
         showStatusIcon={false}
