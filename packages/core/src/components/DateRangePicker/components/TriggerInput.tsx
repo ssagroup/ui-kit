@@ -85,6 +85,7 @@ export const TriggerInput = ({
         className={className}
         wrapperClassName={css`
           display: flex;
+          padding-left: ${datepickerType === 'from' ? 0 : 14}px;
         `}
         inputProps={{
           onBlur: handleBlur,
