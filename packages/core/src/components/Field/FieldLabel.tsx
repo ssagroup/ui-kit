@@ -5,6 +5,7 @@ import { useFieldContext } from './FieldProvider';
 
 export interface FieldLabelProps extends LabelProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 export const FieldLabel = ({ children, ...props }: FieldLabelProps) => {

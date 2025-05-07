@@ -11,12 +11,12 @@ export const DatePickerCalendar = () => {
     months: DPC.MonthsView,
     years: DPC.YearsView,
   };
-  const { calendarType, calendarClassname } = useDateRangePickerContext();
+  const { calendarType, classNames } = useDateRangePickerContext();
   const Component = components[calendarType];
 
   return (
     <C.PopoverContent
-      className={['popover', calendarClassname].filter(Boolean).join(' ')}
+      className={['popover', classNames?.calendar].filter(Boolean).join(' ')}
       data-testid="daterangepicker-calendar"
       css={{
         background: theme.colors.white,
