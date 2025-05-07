@@ -45,9 +45,6 @@ export const Trigger = () => {
       status={status}
       disabled={disabled}
       data-testid="daterangepicker"
-      css={{
-        width: 233,
-      }}
       className={classNames?.trigger?.root}>
       <C.Field.Label
         htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}

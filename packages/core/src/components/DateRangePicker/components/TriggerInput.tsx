@@ -103,7 +103,6 @@ export const TriggerInput = ({
               max-height: 16px;
               letter-spacing: 0.8px;
               border-radius: 0 !important;
-              text-align: center;
               &::placeholder {
                 letter-spacing: normal;
               }
