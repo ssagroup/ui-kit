@@ -211,4 +211,43 @@ describe('DateRangePicker', () => {
     expect(mockOnMonthChange).toHaveBeenCalledTimes(3);
     expect(mockOnYearChange).toHaveBeenCalledTimes(1);
   });
+
+  it('should not render description, success, or error fields when "messages" prop is not passed', () => {
+    const { queryByTestId } = setup();
+    expect(queryByTestId('field-description')).not.toBeInTheDocument();
+    expect(queryByTestId('field-success')).not.toBeInTheDocument();
+    expect(queryByTestId('field-error')).not.toBeInTheDocument();
+  });
+
+  it('should render "field-description" with correct text when "messages.description" is passed', () => {
+    const descriptionText = 'This is a description';
+    const { getByTestId } = setup({
+      messages: { description: descriptionText },
+    });
+    const descriptionField = getByTestId('field-description');
+    expect(descriptionField).toBeInTheDocument();
+    expect(descriptionField).toHaveTextContent(descriptionText);
+  });
+
+  it('should render "field-success" with correct text when "messages.success" is passed', () => {
+    const successText = 'This is a success message';
+    const { getByTestId } = setup({
+      messages: { success: successText },
+      status: 'success',
+    });
+    const successField = getByTestId('field-success');
+    expect(successField).toBeInTheDocument();
+    expect(successField).toHaveTextContent(successText);
+  });
+
+  it('should render "field-error" with correct text when "messages.defaultError" is passed', () => {
+    const errorText = 'This is an error message';
+    const { getByTestId } = setup({
+      messages: { error: errorText },
+      status: 'error',
+    });
+    const errorField = getByTestId('field-error');
+    expect(errorField).toBeInTheDocument();
+    expect(errorField).toHaveTextContent(errorText);
+  });
 });

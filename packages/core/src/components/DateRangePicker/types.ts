@@ -20,8 +20,12 @@ export type DateRangePickerProps = {
   dateMin?: string; // depends on the format
   dateMax?: string; // depends on the format
   disabled?: boolean;
-  helperText?: string;
   showCalendarIcon?: boolean;
+  messages?: {
+    description?: string;
+    success?: string;
+    error?: string;
+  };
   classNames?: {
     trigger?: {
       root?: string;

@@ -44,7 +44,7 @@ export const TriggerInput = ({
     inputToRef,
     inputProps,
     disabled,
-    helperText,
+    messages,
     setLastFocusedElement,
     classNames,
     onBlur: handleBlur,
@@ -119,7 +119,9 @@ export const TriggerInput = ({
         showStatusIcon={false}
         errors={fieldError as FieldError}
         status={fieldStatus}
-        helperText={helperText}
+        helperText={
+          fieldStatus === 'basic' ? messages?.description : messages?.error
+        }
         helperClassName={css`
           & > span::first-letter {
             text-transform: uppercase;
