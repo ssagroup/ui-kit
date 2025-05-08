@@ -17,6 +17,7 @@ export type DateRangePickerProps = {
   openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: Partial<InputProps>;
   status?: FieldContextValue['status'];
+  showStatusArea?: boolean;
   dateMin?: string; // depends on the format
   dateMax?: string; // depends on the format
   disabled?: boolean;

@@ -1,11 +1,11 @@
 import { useRef } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import * as C from '@components';
-import * as S from '../styles';
 import { TriggerInput } from './TriggerInput';
+import { TriggerStatusArea } from './TriggerStatusArea';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import * as S from '../styles';
 
 export const Trigger = () => {
   const {
@@ -15,17 +15,16 @@ export const Trigger = () => {
     lastFocusedElement,
     disabled,
     status,
-    messages,
     openCalendarMode,
     isOpen,
     showCalendarIcon,
+    showStatusArea,
     classNames,
     setIsOpen,
     handleToggleOpen,
   } = useDateRangePickerContext();
 
   const theme = useTheme();
-  const formContext = useFormContext();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(wrapperRef, (event) => {
@@ -35,10 +34,6 @@ export const Trigger = () => {
       setIsOpen(false);
     }
   });
-
-  const errorsFrom = formContext.formState.errors[nameFrom]?.message;
-  const errorsTo = formContext.formState.errors[nameTo]?.message;
-  const errorMessage = [errorsFrom, errorsTo].filter(Boolean) as string[];
 
   return (
     <C.Field.Root
@@ -114,28 +109,7 @@ export const Trigger = () => {
           )}
         </S.TriggerWrapper>
       </C.Field.Control>
-      {messages?.description && (
-        <C.Field.Description>{messages?.description}</C.Field.Description>
-      )}
-      {(errorMessage.length || messages?.error) && (
-        <C.Field.Error>
-          {errorMessage.length
-            ? errorMessage.map((error, index) => (
-                <span
-                  key={`error-${index}`}
-                  css={{
-                    color: 'inherit',
-                    '&::first-letter': { textTransform: 'uppercase' },
-                  }}>
-                  {error}
-                </span>
-              ))
-            : messages?.error}
-        </C.Field.Error>
-      )}
-      {messages?.success && (
-        <C.Field.Success>{messages?.success}</C.Field.Success>
-      )}
+      {showStatusArea && <TriggerStatusArea />}
     </C.Field.Root>
   );
 };
