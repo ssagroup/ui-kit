@@ -25,6 +25,7 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   options: [],
   placeholder: '',
   useFormResult: {} as UseFormReturn<FieldValues>,
+  error: undefined,
   setValue: () => {
     /* no-op */
   },
@@ -32,7 +33,7 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     return {} as any;
   },
-  handleChange: () => {
+  onChange: () => {
     /* no-op */
   },
   handleClearAll: () => {
@@ -51,9 +52,6 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
     /* no-op */
   },
   handleRemoveSelectedClick: () => () => {
-    /* no-op */
-  },
-  handleSelectedClick: () => {
     /* no-op */
   },
 });

@@ -1,10 +1,5 @@
 import { CommonProps } from '@global-types/emotion';
-import {
-  FieldError,
-  FieldValues,
-  UseFormReturn,
-  UseFormSetValue,
-} from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 
 export type TypeaheadValue = string | number;
 
@@ -12,6 +7,7 @@ export type TypeaheadOptionProps = Record<string, TypeaheadValue>;
 
 export interface TypeaheadProps {
   selectedItems?: Array<TypeaheadValue>;
+  defaultSelectedItems?: Array<TypeaheadValue>;
   isMultiple?: boolean;
   isDisabled?: boolean;
   children?: React.ReactNode;
@@ -31,8 +27,8 @@ export interface TypeaheadProps {
   success?: boolean;
   validationSchema?: Record<string, unknown>;
   placeholder?: string | null;
-  setValue?: UseFormSetValue<FieldValues>;
-  register?: UseFormReturn['register'];
+  filterOptions?: boolean;
+  autoSelect?: boolean;
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
   onClearAll?: () => void;
   onRemoveSelectedClick?: (selectedItem: TypeaheadValue) => void;
@@ -47,6 +43,7 @@ export interface TypeaheadProps {
 export type UseTypeaheadProps = Pick<
   TypeaheadProps,
   | 'selectedItems'
+  | 'defaultSelectedItems'
   | 'isDisabled'
   | 'children'
   | 'isMultiple'
@@ -62,12 +59,12 @@ export type UseTypeaheadProps = Pick<
   | 'startIconClassName'
   | 'endIconClassName'
   | 'name'
-  | 'register'
-  | 'setValue'
   | 'validationSchema'
   | 'error'
   | 'success'
   | 'placeholder'
+  | 'filterOptions'
+  | 'autoSelect'
 >;
 
 export interface TypeaheadItemsListProps extends CommonProps {

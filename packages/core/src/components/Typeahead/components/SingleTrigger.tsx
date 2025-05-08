@@ -11,7 +11,11 @@ export const SingleTrigger = () => {
   const theme = useTheme();
   const typeaheadInputAdditionalProps: InputHTMLAttributes<HTMLInputElement> =
     {};
-  if (!context.selectedItems.length && !!context.placeholder) {
+  if (
+    !context.selectedItems.length &&
+    !context.inputValue &&
+    !!context.placeholder
+  ) {
     typeaheadInputAdditionalProps.placeholder = context.placeholder;
   }
 
@@ -48,12 +52,6 @@ export const SingleTrigger = () => {
           S.TypeaheadInputPlaceholder,
         ].join(' ')}
         {...typeaheadInputAdditionalProps}
-      />
-      <input
-        type="hidden"
-        readOnly
-        value={(context.selectedItems[0] || '') as string | undefined}
-        {...context.register?.(context.name, context.validationSchema)}
       />
       {!context.isDisabled && context.selectedItems.length ? (
         <Button

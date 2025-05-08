@@ -1,19 +1,35 @@
-import React, {
-  BaseSyntheticEvent,
-  MouseEventHandler,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
-import { useForm } from 'react-hook-form';
-import { propOr } from '@ssa-ui-kit/utils';
-import { TypeaheadOptionProps, UseTypeaheadProps } from './types';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useController, useForm, useFormContext } from 'react-hook-form';
+import { OpenChangeReason } from '@floating-ui/react';
+import { useElementSize, useUncontrolled } from '@ssa-ui-kit/hooks';
+import {
+  TypeaheadOptionProps,
+  TypeaheadValue,
+  UseTypeaheadProps,
+} from './types';
+
+type HandleChangeParams = {
+  value?: string | number;
+  shouldClose?: boolean;
+  resetInput?: boolean;
+};
+
+const findExactMatch = (
+  input: string,
+  options: Record<string | number, TypeaheadOptionProps>,
+) => {
+  const normalizedInput = input.toLowerCase();
+  return Object.values(options).find((opt) => {
+    const labelText = (opt.label ?? opt.value).toString().toLowerCase();
+    return labelText === normalizedInput;
+  });
+};
 
 export const useTypeahead = ({
   name = 'typeahead-input',
   isOpen: isInitOpen,
-  selectedItems,
+  selectedItems: providedSelectedItems,
+  defaultSelectedItems,
   isDisabled,
   isMultiple,
   children,
@@ -26,8 +42,8 @@ export const useTypeahead = ({
   error,
   success,
   placeholder,
-  register,
-  setValue,
+  filterOptions = true,
+  autoSelect = true,
   onChange,
   onClearAll,
   onRemoveSelectedClick,
@@ -35,355 +51,293 @@ export const useTypeahead = ({
   renderOption,
 }: UseTypeaheadProps) => {
   const inputName = `${name}-text`;
-  const [isOpen, setIsOpen] = useState(isInitOpen || false);
-  const [selected, setSelected] = useState<Array<string | number>>(
-    selectedItems || [],
-  );
-  const [optionsWithKey, setOptionsWithKey] = useState<
-    Record<number | string, Record<string, string | number>>
-  >({});
-  const [isEmpty, setIsEmpty] = useState<boolean>(true);
-  const [isFirstRender, setFirstRender] = useState<boolean>(true);
-  const [items, setItems] = useState<Array<React.ReactElement> | undefined>();
-  const [inputValue, setInputValue] = useState<string>('');
-  const [status, setStatus] = useState<'basic' | 'success' | 'error'>('basic');
-  const [firstSuggestion, setFirstSuggestion] = useState('');
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const typeaheadId = useId();
-  const triggerRef: React.MutableRefObject<HTMLDivElement | null> =
-    useRef<HTMLDivElement>(null);
-  const useFormResult = useForm();
+  const defaultForm = useForm();
+  const form = useFormContext() ?? defaultForm;
+  const { register, setValue, watch } = form;
 
-  useEffect(() => {
-    if (!register) {
-      console.warn('Typeahead component must be used within a Form component');
+  const formFieldValue = watch(name) as number | number[] | undefined;
+  const controlledValue: TypeaheadValue[] | undefined = (() => {
+    if (providedSelectedItems) {
+      return providedSelectedItems;
     }
-  }, []);
-
-  useEffect(() => {
+    // controlledValue should be undefined if defaultSelectedItems is provided
+    if (defaultSelectedItems) {
+      return;
+    }
     if (isMultiple) {
-      setValue?.(name, selected, {
-        shouldDirty: !isFirstRender,
-      });
-      setInputValue('');
-      setFirstSuggestion('');
-    } else {
-      setValue?.(name, selected.length ? selected[0] : [], {
-        shouldDirty: !isFirstRender,
-      });
+      return Array.isArray(formFieldValue) ? formFieldValue : [];
     }
+    return ['number', 'string'].includes(typeof formFieldValue)
+      ? ([formFieldValue] as TypeaheadValue[])
+      : [];
+  })();
 
-    handleOnEmptyChange(!selected.length);
-  }, [selected]);
+  const [isOpen, _setIsOpen] = useUncontrolled({
+    defaultValue: isInitOpen,
+    finalValue: false,
+  });
+  const [selectedItems, setSelected] = useUncontrolled({
+    value: controlledValue,
+    defaultValue: defaultSelectedItems,
+    finalValue: [],
+  });
+  const [rawInput, setRawInput] = useState<string | null>(null);
+  const { ref: inputRef } = useElementSize<HTMLInputElement>();
+  const triggerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (isDisabled && isOpen) {
-      setIsOpen(false);
-    }
-  }, [isDisabled]);
+  useController({
+    control: form.control,
+    name,
+    rules: validationSchema,
+    defaultValue: isMultiple ? selectedItems : selectedItems[0],
+  });
 
-  useEffect(() => {
-    const status = success
-      ? 'success'
-      : useFormResult.formState.errors[name]
-        ? 'error'
-        : 'basic';
-    setStatus(status);
-  }, [useFormResult.formState.errors[name], success]);
+  const typeaheadId = useId();
 
-  useEffect(() => {
-    if (error) {
-      useFormResult.setError(name, error);
-    } else {
-      setStatus('basic');
-      useFormResult.resetField(name);
-    }
-  }, [error]);
-
-  useEffect(() => {
-    processChildren({
-      selectedLocal: selected,
+  const optionsWithKey = useMemo(() => {
+    const opts: Record<string | number, TypeaheadOptionProps> = {};
+    React.Children.forEach(children, (child) => {
+      if (React.isValidElement(child)) {
+        opts[child.props.value] = child.props;
+      }
     });
+    return opts;
   }, [children]);
 
   useEffect(() => {
-    setSelected(selectedItems || []);
-    if (selectedItems?.length) {
-      if (!isMultiple) {
-        const currentOption = optionsWithKey[selectedItems[0]];
-        const optionText =
-          currentOption &&
-          (currentOption.children ||
-            currentOption.label ||
-            currentOption.value);
-        setInputValue(`${optionText}`);
-      }
-    } else {
-      setInputValue('');
-      setFirstSuggestion('');
+    const validSelected = selectedItems.filter((item) => optionsWithKey[item]);
+    if (validSelected.length !== selectedItems.length) {
+      setSelected(validSelected);
+      const fieldValue = isMultiple ? validSelected : undefined;
+      setValue?.(name, fieldValue);
+      setRawInput(null);
+      form.clearErrors(name);
+      form.trigger(name);
+      onEmptyChange?.(validSelected.length === 0);
     }
-    processChildren({
-      selectedLocal: selectedItems || [],
-    });
-  }, [selectedItems]);
+  }, [optionsWithKey, selectedItems]);
 
-  useEffect(() => {
-    const childrenArray = React.Children.toArray(children).filter(Boolean);
-    const filteredOptions = [...childrenArray] as React.ReactElement[];
-    const childItems = filteredOptions.map((child, index) => {
-      const { id, value, label, isDisabled } = child.props;
-      const isActive = selected.includes(child.props.value);
+  const inputValue = useMemo(() => {
+    if (isMultiple) return rawInput ?? '';
+    if (rawInput != null) return rawInput;
+    return selectedItems.length === 1
+      ? optionsWithKey[selectedItems[0]]?.label?.toString() || ''
+      : '';
+  }, [isMultiple, rawInput, selectedItems, optionsWithKey]);
+
+  const filteredChildren = useMemo(() => {
+    // if filtering is disabled, or there's no input, show all
+    if (!filterOptions || !inputValue) return React.Children.toArray(children);
+
+    const needle = inputValue.toLowerCase();
+    return React.Children.toArray(children).filter((child) => {
+      if (!React.isValidElement(child)) return false;
+      const { label, value } = child.props as TypeaheadOptionProps;
+      const text = (label ?? value)?.toString().toLowerCase() || '';
+      return text.includes(needle);
+    });
+  }, [children, inputValue]);
+
+  const items = useMemo(() => {
+    return filteredChildren.map((child, index) => {
+      if (!React.isValidElement(child)) return null;
+      const isActive = selectedItems.includes(child.props.value);
+      const { value, label, id, isDisabled } = child.props;
+
       return React.cloneElement(child, {
-        index,
         ...child.props,
+        index,
         isActive,
         isDisabled,
-        id,
+        role: 'option',
         'aria-selected': isActive,
         'aria-labelledby': `typeahead-label-${name}`,
-        role: 'option',
-        onClick: (event: BaseSyntheticEvent) => {
-          event.preventDefault();
+        onClick: (e: React.BaseSyntheticEvent) => {
+          e.preventDefault();
           if (!isDisabled) {
-            handleChange(child.props.value);
+            const shouldClose = !isMultiple;
+            handleChange({ value, shouldClose });
           }
         },
-        children: renderOption
-          ? renderOption({ value: id || value, input: inputValue || '', label })
-          : child.props.children || child.props.label || child.props.value,
+        children:
+          renderOption?.({ value: id || value, input: inputValue, label }) ??
+          child.props.children ??
+          label ??
+          value,
       });
     });
-    setItems(childItems);
-  }, [inputValue, optionsWithKey, selected]);
+  }, [children, selectedItems, inputValue]);
 
-  useEffect(() => {
-    if (!isMultiple && Object.keys(optionsWithKey).length) {
-      const foundItem = Object.values(optionsWithKey).find(
-        (item) => item.label === inputValue,
-      );
-      if (!foundItem && selected.length) {
-        setSelected([]);
-      }
-      if (foundItem && !selected.includes(foundItem?.value)) {
-        setSelected([foundItem.value]);
+  const firstSuggestion = useMemo(() => {
+    if (!inputValue) return '';
+    const needle = inputValue.toLowerCase();
+    for (const child of filteredChildren) {
+      if (!React.isValidElement(child)) continue;
+      const labelText = (child.props.label ?? child.props.value).toString();
+      if (labelText.toLowerCase().startsWith(needle)) {
+        return inputValue + labelText.slice(inputValue.length);
       }
     }
-  }, [optionsWithKey, inputValue]);
+    return '';
+  }, [inputValue, filteredChildren]);
 
-  useEffect(() => {
-    processSingleSelected({
-      optionsWithKeyLocal: optionsWithKey,
-      selectedLocal: selected,
-    });
-  }, [selected]);
-
-  useEffect(() => {
-    if (inputValue) {
-      const newFirstSuggestion = Object.values(optionsWithKey)?.find((item) => {
-        const label = propOr<TypeaheadOptionProps, string>('', 'label')(item);
-        return label.toLowerCase().startsWith(inputValue.toLowerCase());
-      });
-      const firstSuggestionLabel = propOr<TypeaheadOptionProps, string>(
-        '',
-        'label',
-      )(newFirstSuggestion as unknown as TypeaheadOptionProps);
-      const humanSuggestionLabel = inputValue.concat(
-        firstSuggestionLabel.slice(inputValue.length),
-      );
-      setFirstSuggestion(humanSuggestionLabel);
-    } else {
-      setFirstSuggestion('');
-      if (isMultiple) {
-        setInputValue('');
-      }
+  const setIsOpen = (open: boolean) => {
+    if (!open) {
+      form.trigger(name);
     }
-  }, [inputValue, items, selected]);
-
-  const processSingleSelected = ({
-    optionsWithKeyLocal = {},
-    selectedLocal = [],
-  }: {
-    optionsWithKeyLocal: Record<
-      number | string,
-      Record<string, string | number>
-    >;
-    selectedLocal: Array<string | number>;
-  }) => {
-    if (
-      !isMultiple &&
-      selectedLocal.length &&
-      Object.keys(optionsWithKeyLocal).length
-    ) {
-      const currentOption = optionsWithKeyLocal[selectedLocal[0]];
-      const optionText =
-        currentOption &&
-        (currentOption.children || currentOption.label || currentOption.value);
-      setInputValue(`${optionText}`);
-    }
+    _setIsOpen(open);
   };
 
-  const processChildren = ({
-    selectedLocal,
-  }: {
-    selectedLocal: Array<string | number>;
-  }) => {
-    const keyedOptions: Record<
-      number | string,
-      Record<string, string | number>
-    > = {};
-    const childItems = (
-      React.Children.toArray(children).filter(Boolean) as React.ReactElement[]
-    ).map((child, index) => {
-      keyedOptions[child.props.value] = {
-        ...child.props,
-      };
+  const handleChange = ({
+    value,
+    shouldClose = true,
+    resetInput = true,
+  }: HandleChangeParams) => {
+    if (isDisabled || value == null) return;
 
-      return React.cloneElement(child, {
-        index,
-        ...child.props,
-      });
-    });
-    setOptionsWithKey(keyedOptions);
-    setItems(childItems);
-    processSingleSelected({
-      optionsWithKeyLocal: keyedOptions,
-      selectedLocal,
-    });
-    setFirstRender(false);
+    const alreadySelected = selectedItems.includes(value);
+    const updatedSelected = isMultiple
+      ? alreadySelected
+        ? selectedItems.filter((item) => item !== value)
+        : [...selectedItems, value]
+      : alreadySelected
+        ? []
+        : [value];
+
+    const fieldValue = isMultiple ? updatedSelected : updatedSelected[0];
+    setSelected(updatedSelected);
+    setValue?.(name, fieldValue);
+    form.clearErrors(name);
+
+    if (resetInput) {
+      const rawInputValue = isMultiple
+        ? null
+        : updatedSelected.length
+          ? String(optionsWithKey[value]?.label)
+          : null;
+      setRawInput(rawInputValue);
+    }
+
+    if (shouldClose) {
+      setIsOpen(false);
+    }
+
+    onChange?.(value, !alreadySelected);
+    onEmptyChange?.(updatedSelected.length === 0);
   };
 
-  const handleOnEmptyChange = (newIsEmptyValue: boolean) => {
-    if (newIsEmptyValue !== isEmpty) {
-      setIsEmpty(newIsEmptyValue);
-      onEmptyChange?.(newIsEmptyValue);
-    }
-  };
-
-  const handleOpenChange = (open: boolean) => {
-    if (!isDisabled) {
-      setIsOpen(open);
-    }
-  };
-
-  const handleChange = (changingValue?: string | number) => {
-    if (isDisabled || changingValue === undefined) {
-      return;
-    }
-    const isNewSelected = true;
-    const isChangingItemSelected = selected.includes(changingValue);
-    if (isMultiple) {
-      setSelected((currentSelected) =>
-        isChangingItemSelected
-          ? currentSelected.filter((current) => current !== changingValue)
-          : [...currentSelected, changingValue],
-      );
-      setInputValue('');
-    } else {
-      if (selected[0] === changingValue) {
-        setSelected([]);
-        setInputValue('');
-      } else {
-        setSelected([changingValue]);
-      }
-    }
-    setIsOpen(false);
-    setFirstSuggestion('');
-    inputRef.current?.focus();
-    setStatus('basic');
-    useFormResult.clearErrors(name);
-    useFormResult.trigger(name);
-    onChange?.(changingValue, isNewSelected);
-  };
-
-  const handleClearAll = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    if (isDisabled) {
-      return;
-    }
-    event.stopPropagation();
-    event.preventDefault();
+  const handleClearAll = (e: React.MouseEvent) => {
+    if (isDisabled) return;
+    e.preventDefault();
+    e.stopPropagation();
     setSelected([]);
-    setInputValue('');
+    setRawInput(null);
     setIsOpen(false);
-    setFirstSuggestion('');
-    useFormResult.trigger(name);
+    setValue?.(name, undefined);
+    form.trigger(name);
     inputRef.current?.focus();
     onClearAll?.();
+    onEmptyChange?.(true);
   };
 
-  const handleInputClick: React.MouseEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    setRawInput(input);
+    if (!autoSelect || !filterOptions) return;
+    const match = findExactMatch(input, optionsWithKey);
+    if (match) {
+      handleChange({ value: match.value, shouldClose: false });
+      return;
+    }
+    // unset selected value if not fully matched
+    if (!isMultiple && selectedItems.length > 0) {
+      handleChange({
+        value: selectedItems[0],
+        shouldClose: false,
+        resetInput: false,
+      });
+    }
+  };
+
+  const handleInputClick: React.MouseEventHandler<HTMLInputElement> = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!isDisabled) {
       inputRef.current?.focus();
       setIsOpen(true);
     }
-    event.stopPropagation();
-    event.preventDefault();
   };
 
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event,
+    e,
   ) => {
-    if (['Space'].includes(event.code) && !firstSuggestion) {
-      setIsOpen(true);
-      inputRef.current?.focus();
-      event.stopPropagation();
-      event.preventDefault();
-    } else if (
-      ['Tab', 'Enter'].includes(event.code) &&
-      firstSuggestion &&
-      firstSuggestion !== inputValue
-    ) {
-      const foundItem = Object.values(optionsWithKey).find(
-        (item) =>
-          `${item.label}`.toLowerCase() === firstSuggestion.toLowerCase(),
-      );
-      handleChange(foundItem?.value);
-      if (foundItem) {
-        setInputValue(`${foundItem?.label}`);
+    const isEnterOrTab = ['Enter', 'Tab'].includes(e.code);
+
+    if (isEnterOrTab && firstSuggestion && firstSuggestion !== inputValue) {
+      const match = findExactMatch(firstSuggestion, optionsWithKey);
+      if (match) {
+        handleChange({ value: match.value });
       }
-      event.preventDefault();
-      return false;
-    } else if (
+      e.preventDefault();
+      return;
+    }
+
+    if (
       isMultiple &&
-      event.code === 'Backspace' &&
-      selected.length > 0 &&
-      !firstSuggestion
+      e.code === 'Backspace' &&
+      selectedItems.length &&
+      !inputValue
     ) {
-      handleChange(selected[selected.length - 1]);
-      event.preventDefault();
-      return false;
-    } else if (!isOpen && firstSuggestion !== inputValue) {
+      const lastSelected = selectedItems[selectedItems.length - 1];
+      handleChange({ value: lastSelected, shouldClose: false });
+      e.preventDefault();
+      return;
+    }
+
+    if (!isOpen && firstSuggestion !== inputValue) {
       setIsOpen(true);
     }
   };
 
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleSelectedClick: React.MouseEventHandler<HTMLDivElement> = (
-    event,
-  ) => {
-    event.stopPropagation();
-  };
-
   const handleRemoveSelectedClick =
-    (selectedItem: number | string): MouseEventHandler<HTMLButtonElement> =>
-    (event) => {
-      event.stopPropagation();
-      handleChange(selectedItem);
-      onRemoveSelectedClick?.(selectedItem);
+    (value: string | number) => (e: React.MouseEvent) => {
+      e.stopPropagation();
+      handleChange({ value });
+      onRemoveSelectedClick?.(value);
+      form.trigger(name);
     };
+
+  const handleOpenChange = (
+    open: boolean,
+    event: Event,
+    reason?: OpenChangeReason,
+  ) => {
+    if (isDisabled || reason === 'reference-press') {
+      return;
+    }
+    setIsOpen(open);
+    if (!isMultiple && selectedItems.length > 0) {
+      const selectedValue = selectedItems[0];
+      const label = optionsWithKey[selectedValue]?.label;
+      setRawInput(label ? String(label) : null);
+      return;
+    }
+    setRawInput(null);
+  };
+
+  const status: 'basic' | 'success' | 'error' = (() => {
+    if (form.formState.errors[name]) return 'error';
+    if (error) return 'error';
+    if (success) return 'success';
+    return 'basic';
+  })();
 
   return {
     isOpen,
     isDisabled,
     optionsWithKey,
-    selectedItems: selected,
+    selectedItems,
     inputRef,
     firstSuggestion,
     isMultiple,
@@ -399,18 +353,18 @@ export const useTypeahead = ({
     inputValue,
     validationSchema,
     status,
+    error: error ?? form.formState.errors[name],
     placeholder,
     options: items,
-    useFormResult,
+    useFormResult: form,
     register,
     setValue,
-    handleChange,
+    onChange,
     handleClearAll,
     handleOpenChange,
     handleInputChange,
     handleInputClick,
     handleInputKeyDown,
-    handleSelectedClick,
     handleRemoveSelectedClick,
   };
 };

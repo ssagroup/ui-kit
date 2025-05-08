@@ -141,7 +141,7 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   status: ReturnType<typeof useTypeahead>['status'];
 }>`
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid
     ${({ status, theme }) =>
       status === 'basic'

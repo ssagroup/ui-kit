@@ -25,6 +25,7 @@ export const Typeahead = ({
   name = 'typeahead-search',
   label,
   selectedItems,
+  defaultSelectedItems,
   isOpen,
   isDisabled,
   isMultiple,
@@ -42,8 +43,6 @@ export const Typeahead = ({
   optionsClassName,
   wrapperClassName,
   width = 300,
-  setValue,
-  register,
   onChange,
   onEmptyChange,
   onClearAll,
@@ -54,6 +53,7 @@ export const Typeahead = ({
   const hookResult = useTypeahead({
     name,
     selectedItems,
+    defaultSelectedItems,
     isOpen,
     isDisabled,
     isMultiple,
@@ -67,8 +67,6 @@ export const Typeahead = ({
     success,
     validationSchema,
     placeholder,
-    setValue,
-    register,
     onChange,
     onEmptyChange,
     renderOption,
@@ -123,7 +121,9 @@ export const Typeahead = ({
             status={hookResult.status}
             disabled={isDisabled}
             data-testid="helper-text">
-            {error ? error?.message : helperText}
+            {hookResult.error
+              ? hookResult.error?.message?.toString()
+              : helperText}
           </FormHelperText>
         )}
       </Wrapper>
