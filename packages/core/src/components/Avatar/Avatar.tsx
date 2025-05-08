@@ -9,7 +9,7 @@ const Avatar = styled.div<{ size: number; image: string } & CommonProps>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
 
-  background: ${({ image }) => `url(${image})`} center no-repeat;
+  background: ${({ image }) => `url(${image})`} center / contain no-repeat;
 `;
 
 export default Avatar;
