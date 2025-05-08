@@ -27,6 +27,7 @@ export const DatePickerCalendar = () => {
         width: 346,
         height: 370,
         alignItems: 'flex-start',
+        margin: '14px 0 0 -14px',
       }}>
       <DPC.Header />
       <C.PopoverDescription
