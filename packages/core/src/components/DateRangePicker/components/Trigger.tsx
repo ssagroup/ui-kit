@@ -41,11 +41,13 @@ export const Trigger = () => {
       disabled={disabled}
       data-testid="daterangepicker"
       className={classNames?.trigger?.root}>
-      <C.Field.Label
-        htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}
-        className={classNames?.label}>
-        {label}
-      </C.Field.Label>
+      {label && (
+        <C.Field.Label
+          htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}
+          className={classNames?.label}>
+          {label}
+        </C.Field.Label>
+      )}
       <C.Field.Control>
         <S.TriggerWrapper
           ref={wrapperRef}
