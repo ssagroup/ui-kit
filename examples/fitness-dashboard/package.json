@@ -67,8 +67,10 @@
   "devDependencies": {
     "@emotion/jest": "^11.13.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.5.1",
-    "terser-webpack-plugin":"^5.3.11",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.11",
     "webpack": "^5.98.0"
   }
 }
