@@ -15,7 +15,7 @@ export const Trigger = () => {
     lastFocusedElement,
     disabled,
     status,
-    helperText,
+    messages,
     openCalendarMode,
     isOpen,
     showCalendarIcon,
@@ -114,22 +114,28 @@ export const Trigger = () => {
           )}
         </S.TriggerWrapper>
       </C.Field.Control>
-      <C.Field.Description>{helperText}</C.Field.Description>
-      <C.Field.Error>
-        {errorMessage
-          ? errorMessage.map((error, index) => (
-              <span
-                key={`error-${index}`}
-                css={{
-                  color: 'inherit',
-                  '&::first-letter': { textTransform: 'uppercase' },
-                }}>
-                {error}
-              </span>
-            ))
-          : helperText}
-      </C.Field.Error>
-      <C.Field.Success>{helperText}</C.Field.Success>
+      {messages?.description && (
+        <C.Field.Description>{messages?.description}</C.Field.Description>
+      )}
+      {(errorMessage.length || messages?.error) && (
+        <C.Field.Error>
+          {errorMessage.length
+            ? errorMessage.map((error, index) => (
+                <span
+                  key={`error-${index}`}
+                  css={{
+                    color: 'inherit',
+                    '&::first-letter': { textTransform: 'uppercase' },
+                  }}>
+                  {error}
+                </span>
+              ))
+            : messages?.error}
+        </C.Field.Error>
+      )}
+      {messages?.success && (
+        <C.Field.Success>{messages?.success}</C.Field.Success>
+      )}
     </C.Field.Root>
   );
 };

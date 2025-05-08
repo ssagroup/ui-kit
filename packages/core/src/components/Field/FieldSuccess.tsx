@@ -13,5 +13,9 @@ export const FieldSuccess = ({ children }: FieldSuccessProps) => {
     return null;
   }
 
-  return <FormHelperText status="success">{children}</FormHelperText>;
+  return (
+    <FormHelperText status="success" data-testid="field-success">
+      {children}
+    </FormHelperText>
+  );
 };

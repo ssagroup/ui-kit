@@ -13,5 +13,9 @@ export const FieldDescription = ({ children }: FieldDescriptionProps) => {
     return null;
   }
 
-  return <FormHelperText status="basic">{children}</FormHelperText>;
+  return (
+    <FormHelperText status="basic" data-testid="field-description">
+      {children}
+    </FormHelperText>
+  );
 };

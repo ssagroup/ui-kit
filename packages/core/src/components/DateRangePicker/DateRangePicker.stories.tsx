@@ -89,7 +89,37 @@ export const Default: StoryObj<typeof DateRangePicker> = (
 Default.args = {
   ...commonArgs,
   name: 'field1',
-  helperText: 'some nice text',
+  messages: {
+    description: 'custom description',
+  },
+};
+
+export const CustomError: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+CustomError.args = {
+  ...commonArgs,
+  name: 'field7',
+  status: 'error',
+  messages: {
+    error: 'custom error message',
+  },
+};
+
+export const CustomSuccess: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+CustomSuccess.args = {
+  ...commonArgs,
+  name: 'field8',
+  status: 'success',
+  messages: {
+    success: 'custom success message',
+  },
 };
 
 export const AnotherFormat: StoryObj<typeof DateRangePicker> = (
