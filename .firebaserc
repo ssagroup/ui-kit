@@ -16,6 +16,9 @@
         ],
         "fitness": [
           "ui-kit-fitness"
+        ],
+        "infra-dash": [
+          "ui-kit-infra-dash"
         ]
       }
     }
