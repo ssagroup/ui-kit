@@ -53,10 +53,12 @@
     "sb:build:core": "pnpm --filter ./packages/core sb:build",
     "sb:build:widgets": "pnpm --filter ./packages/widgets sb:build",
     "sb:build:templates": "pnpm --filter ./packages/templates sb:build",
+    "sb:build:infra-dash": "pnpm --filter ./packages/infra-dash sb:build",
     "sb:deploy:root": "vercel --prod  --archive=tgz",
     "sb:deploy:widgets": "pnpm sb:build:widgets && firebase deploy --only hosting:fitness",
     "sb:deploy:core": "pnpm sb:build:core && firebase deploy --only hosting:core",
     "sb:deploy:templates": "pnpm sb:build:templates && firebase deploy --only hosting:templates",
+    "sb:deploy:infra-dash": "pnpm sb:build:infra-dash && firebase deploy --only hosting:infra-dash",
     "deploy:dashboard": "pnpm --filter ./examples/fitness-dashboard build && firebase deploy --only hosting:fitness-dashboard",
     "release": "tsx ./scripts/release",
     "prepare": "husky"
