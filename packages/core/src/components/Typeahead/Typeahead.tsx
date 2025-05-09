@@ -9,7 +9,11 @@ import Wrapper from '@components/Wrapper';
 import Label from '@components/Label';
 import { TypeaheadContext } from './Typeahead.context';
 import { useTypeahead } from './useTypeahead';
-import { TypeaheadOptions, TypeaheadTrigger } from './components';
+import {
+  TypeaheadOptions,
+  TypeaheadTrigger,
+  TypeaheadFocusTrap,
+} from './components';
 import { TypeaheadProps } from './types';
 
 /**
@@ -98,22 +102,26 @@ export const Typeahead = ({
             onOpenChange: hookResult.handleOpenChange,
             open: hookResult.isOpen,
           }}>
-          <TypeaheadTrigger />
-          <PopoverContent
-            css={{
-              width: hookResult.triggerRef.current?.clientWidth,
-              boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
-              zIndex: 100,
-            }}
-            isFocusManagerDisabled>
-            <PopoverDescription css={{ width: '100%' }}>
-              {hookResult.isOpen ? (
-                <TypeaheadOptions className={optionsClassName}>
-                  {children}
-                </TypeaheadOptions>
-              ) : null}
-            </PopoverDescription>
-          </PopoverContent>
+          <TypeaheadFocusTrap>
+            <>
+              <TypeaheadTrigger />
+              <PopoverContent
+                css={{
+                  width: hookResult.triggerRef.current?.clientWidth,
+                  boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
+                  zIndex: 100,
+                }}
+                isFocusManagerDisabled>
+                <PopoverDescription css={{ width: '100%' }}>
+                  {hookResult.isOpen ? (
+                    <TypeaheadOptions className={optionsClassName}>
+                      {children}
+                    </TypeaheadOptions>
+                  ) : null}
+                </PopoverDescription>
+              </PopoverContent>
+            </>
+          </TypeaheadFocusTrap>
         </Popover>
         {(hookResult.status === 'error' || helperText) && (
           <FormHelperText

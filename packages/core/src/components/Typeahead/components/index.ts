@@ -4,4 +4,5 @@ export * from './TypeaheadTrigger';
 export * from './TypeaheadItem';
 export * from './TypeaheadOptions';
 export * from './TypeaheadOption';
+export * from './TypeaheadFocusTrap';
 export * from './NoOptions';
