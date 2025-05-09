@@ -14,6 +14,12 @@ const refs: StorybookConfig['refs'] = {
     title: 'Templates',
     url: IS_PROD ? 'https://ui-kit-template.web.app/' : 'http://localhost:6008',
   },
+  '@ssa-ui-kit/infra-dash': {
+    title: 'InfraDash',
+    url: IS_PROD
+      ? 'https://ui-kit-infra-dash.web.app'
+      : 'http://localhost:6009',
+  },
 };
 const config: StorybookConfig = {
   framework: '@storybook/react-webpack5',

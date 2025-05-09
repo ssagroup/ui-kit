@@ -35,7 +35,7 @@ const baseConfig = {
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-};
+} satisfies PlaywrightTestConfig;
 
 export const createConfig = (extendedConfig: PlaywrightTestConfig = {}) =>
   mergeLeft(extendedConfig)(baseConfig);

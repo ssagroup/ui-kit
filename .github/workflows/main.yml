@@ -47,6 +47,8 @@ jobs:
           - project: 'templates'
             # templates does not have e2e tests
             e2e: false
+          - project: 'infra-dash'
+            e2e: false
     steps:
       - name: Checkout source code (${{ github.ref }})
         uses: actions/checkout@v4

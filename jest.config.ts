@@ -132,6 +132,12 @@ const config: JestConfigWithTsJest = {
         '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
+    defineProjectConfig('packages/infra-dash', {
+      displayName: 'UI Kit InfraDash',
+      moduleNameMapper: {
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
+      },
+    }),
     defineProjectConfig('examples/fitness-dashboard', {
       displayName: 'Examples: Fitness Dashboard',
       moduleNameMapper: {

@@ -4,4 +4,5 @@ packages:
   - 'packages/hooks'
   - 'packages/widgets'
   - 'packages/templates'
+  - 'packages/infra-dash'
   - 'examples/fitness-dashboard'
