@@ -49,6 +49,7 @@ export const HlsInput = ({ color, onChange }: HlsInputProps) => {
     <Wrapper css={{ height: '100%' }}>
       {hslComponents.map((component) => (
         <BaseInput
+          type="number"
           key={component}
           value={rawHsl[component]}
           onBlur={() => setEditing(false)}

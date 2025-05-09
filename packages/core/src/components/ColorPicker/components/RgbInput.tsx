@@ -49,6 +49,7 @@ export const RgbInput = ({ color, onChange }: RgbInputProps) => {
     <Wrapper css={{ height: '100%' }}>
       {rgbComponents.map((component) => (
         <BaseInput
+          type="number"
           key={component}
           value={rawRgb[component]}
           onBlur={() => setEditing(false)}
