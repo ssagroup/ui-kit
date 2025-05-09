@@ -4,9 +4,14 @@ import ColorPickerBase, { Color } from '@rc-component/color-picker';
 import { useClipboard, useUncontrolled } from '@ssa-ui-kit/hooks';
 import Wrapper from '@components/Wrapper';
 import Icon from '@components/Icon';
-import Dropdown from '@components/Dropdown';
 import DropdownOption from '@components/DropdownOption';
-import { CopyButton, HexInput, HlsInput, RgbInput } from './components';
+import {
+  ColorDropdown,
+  CopyButton,
+  HexInput,
+  HlsInput,
+  RgbInput,
+} from './components';
 
 import '@rc-component/color-picker/assets/index.css';
 
@@ -88,22 +93,18 @@ export const ColorPicker = ({
           <Wrapper
             alignItems="center"
             css={{ justifyContent: 'space-between', gap: 5 }}>
-            <Dropdown
-              css={{
-                background: theme.colors.white,
-                border: '1px solid',
-                borderColor: theme.colors.grey,
-                borderRadius: '8px',
-              }}
+            <ColorDropdown
               className={css`
                 height: 28px;
               `}
               selectedItem={{ value: COLOR_FORMAT[format], id: format }}
-              onChange={(selected) => handleFormatSelect(selected.id)}>
+              onChange={(selected) =>
+                handleFormatSelect(selected.id as typeof format)
+              }>
               {Object.entries(COLOR_FORMAT).map(([key, value]) => (
                 <DropdownOption key={key} id={key} value={value} />
               ))}
-            </Dropdown>
+            </ColorDropdown>
             <div
               css={{
                 border: '1px solid',
