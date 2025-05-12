@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { ColorPicker } from './ColorPicker';
@@ -17,17 +16,7 @@ export const Default: Story = {
     const [color, setColor] = useState<string>(args.defaultColor ?? 'red');
 
     return (
-      <div>
-        <ColorPicker defaultColor={color} onChange={setColor} />
-        <div
-          style={{ background: color }}
-          css={css`
-            width: 50px;
-            height: 50px;
-          `}
-        />
-        {color}
-      </div>
+      <ColorPicker defaultColor={color} onChange={setColor} label="Label" />
     );
   },
 };

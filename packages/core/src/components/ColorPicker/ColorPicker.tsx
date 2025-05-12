@@ -14,6 +14,8 @@ import {
 } from './components';
 
 import '@rc-component/color-picker/assets/index.css';
+import { Popover, PopoverContent, PopoverTrigger } from '@components/Popover';
+import Button from '@components/Button';
 
 const COLOR_FORMAT = {
   hex: 'HEX',
@@ -29,6 +31,15 @@ export interface ColorPickerProps {
   disabled?: boolean;
   format?: ColorFormat;
   defaultFormat?: ColorFormat;
+  label?: string;
+  classnames?: {
+    trigger?: string;
+    content?: string;
+    button?: string;
+    colorPicker?: string;
+    colorDropdown?: string;
+    output?: string;
+  };
   onChange?: (color: string) => void;
 }
 
@@ -45,6 +56,8 @@ export const ColorPicker = ({
   disabled,
   format: providedFormat,
   defaultFormat,
+  label,
+  classnames,
   onChange,
 }: ColorPickerProps) => {
   const theme = useTheme();
@@ -81,49 +94,90 @@ export const ColorPicker = ({
   };
 
   return (
-    <ColorPickerBase
-      value={rawColor}
-      onChange={setRawColor}
-      disabledAlpha={disabledAlpha}
-      disabled={disabled}
-      css={{ width: '280px' }}
-      panelRender={(panel) => (
-        <>
-          {panel}
-          <Wrapper
-            alignItems="center"
-            css={{ justifyContent: 'space-between', gap: 5 }}>
-            <ColorDropdown
-              className={css`
-                height: 28px;
-              `}
-              selectedItem={{ value: COLOR_FORMAT[format], id: format }}
-              onChange={(selected) =>
-                handleFormatSelect(selected.id as typeof format)
-              }>
-              {Object.entries(COLOR_FORMAT).map(([key, value]) => (
-                <DropdownOption key={key} id={key} value={value} />
-              ))}
-            </ColorDropdown>
-            <div
+    <Popover interactionsEnabled={'click'} placement={'top-start'}>
+      <PopoverTrigger asChild className={classnames?.trigger}>
+        <Button
+          variant="tertiary"
+          className={classnames?.button}
+          css={{
+            padding: 0,
+            height: 20,
+            minWidth: 20,
+            fontSize: 16,
+            fontWeight: 500,
+            gap: 8,
+          }}
+          startIcon={
+            <Wrapper
               css={{
-                border: '1px solid',
-                borderColor: theme.colors.grey,
-                borderRadius: '8px',
-                overflow: 'hidden',
-                alignSelf: 'stretch',
-              }}>
-              {Input[format]()}
-            </div>
-            <CopyButton
-              variant="tertiary"
-              isDisabled={!parsedColor || !parsedColor.isValid}
-              onClick={() => copy(colorFormatter[format](parsedColor!))}>
-              <Icon name="copy" size={14} color={theme.colors.greyFilterIcon} />
-            </CopyButton>
-          </Wrapper>
-        </>
-      )}
-    />
+                width: 20,
+                height: 20,
+                background: rawColor && new Color(rawColor).toRgbString(),
+                borderRadius: 4,
+                '&:hover': {
+                  border: `1px solid ${theme.colors.grey}`,
+                },
+              }}
+            />
+          }>
+          {label}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className={classnames?.content}>
+        <ColorPickerBase
+          value={rawColor}
+          onChange={setRawColor}
+          disabledAlpha={disabledAlpha}
+          disabled={disabled}
+          css={{ width: '280px' }}
+          className={classnames?.colorPicker}
+          panelRender={(panel) => (
+            <>
+              {panel}
+              <Wrapper
+                alignItems="center"
+                css={{ justifyContent: 'space-between', gap: 5 }}>
+                <ColorDropdown
+                  className={[
+                    css`
+                      height: 28px;
+                    `,
+                    classnames?.colorDropdown,
+                  ].join(' ')}
+                  selectedItem={{ value: COLOR_FORMAT[format], id: format }}
+                  onChange={(selected) =>
+                    handleFormatSelect(selected.id as typeof format)
+                  }>
+                  {Object.entries(COLOR_FORMAT).map(([key, value]) => (
+                    <DropdownOption key={key} id={key} value={value} />
+                  ))}
+                </ColorDropdown>
+                <div
+                  css={{
+                    border: '1px solid',
+                    borderColor: theme.colors.grey,
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    alignSelf: 'stretch',
+                  }}
+                  className={classnames?.output}>
+                  {Input[format]()}
+                </div>
+                <CopyButton
+                  variant="tertiary"
+                  isDisabled={!parsedColor || !parsedColor.isValid}
+                  onClick={() => copy(colorFormatter[format](parsedColor!))}>
+                  <Icon
+                    name="copy"
+                    size={14}
+                    color={theme.colors.greyFilterIcon}
+                  />
+                </CopyButton>
+              </Wrapper>
+            </>
+          )}
+        />
+      </PopoverContent>
+    </Popover>
   );
 };
