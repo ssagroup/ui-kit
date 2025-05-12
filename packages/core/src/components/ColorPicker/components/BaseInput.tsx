@@ -5,4 +5,12 @@ export const BaseInput = styled.input`
   width: 100%;
   height: 100%;
   text-align: center;
+
+  -moz-appearance: textfield;
+  appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
