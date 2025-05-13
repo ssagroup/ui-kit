@@ -34,3 +34,8 @@ export interface TabBarContextProps {
   activeTab?: TabProps;
   setActiveTab: (tab?: TabProps) => void;
 }
+
+export interface TabBarByIdContextProps {
+  activeTabId?: number | string;
+  setActiveTabId: (tabId?: number | string) => void;
+}
