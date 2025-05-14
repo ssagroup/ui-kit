@@ -1,6 +1,6 @@
 import { Color } from '@rc-component/color-picker';
-import { COLOR_FORMAT } from './constants';
 import { SmallTabProps, TabProps } from '@components/TabBar/types';
+import { COLOR_FORMAT } from './constants';
 
 export type ColorFormat = keyof typeof COLOR_FORMAT;
 
