@@ -11,11 +11,6 @@ export const ButtonItem = (theme: Theme) => css`
   box-shadow: none;
   user-select: none;
 
-  font-size: 0.694rem; //11px
-  line-height: 0.938rem;
-  font-style: normal;
-  font-weight: 500;
-
   &:hover,
   &:focus,
   &:active {
@@ -40,13 +35,19 @@ export const ButtonItem = (theme: Theme) => css`
 
   &:disabled {
     background: ${theme.colors.grey};
-    color: ${theme.colors.grey40};
+
+    p {
+      color: ${theme.colors.grey40};
+    }
   }
 
   ${theme.mediaQueries.md} {
     min-width: 65px;
     padding: 12px;
-    font-size: 13.3px;
-    line-height: 15px;
+
+    p {
+      font-size: 13.3px;
+      line-height: 15px;
+    }
   }
 `;
