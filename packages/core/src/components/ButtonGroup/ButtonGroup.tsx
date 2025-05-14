@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@components/Button';
-import Typography from '@components/Typography';
 import { ButtonGroupProps, ButtonGroupItem } from './types';
 import { ButtonItem } from './styles';
 
@@ -36,7 +35,7 @@ export const ButtonGroup = ({
             onClick={handleClick(item)}
             css={[ButtonItem, buttonStyles]}
             className={isActive ? 'active' : ''}>
-            <Typography variant="body1">{item.text}</Typography>
+            {item.text}
           </Button>
         );
       })}
