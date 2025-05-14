@@ -13,6 +13,7 @@ export const ColorPickerTrigger = () => {
       <Button
         variant="tertiary"
         className={classnames?.button}
+        data-testid="color-picker-trigger"
         css={{
           padding: 0,
           height: 20,

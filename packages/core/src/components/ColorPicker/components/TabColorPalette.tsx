@@ -13,7 +13,7 @@ const TabColorPaletteItem = styled(Wrapper)`
 export const TabColorPalette = () => {
   const { setRawColor, colorsPalette } = useColorPickerContext();
   const handleColorSelect = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
+    const target = event.currentTarget as HTMLElement;
     const selectedColor = target.getAttribute('data-color');
     if (selectedColor) {
       setRawColor(selectedColor);
