@@ -28,8 +28,12 @@ export const ColorPickerTrigger = () => {
               height: 20,
               background: rawColor && new Color(rawColor).toRgbString(),
               borderRadius: 4,
+              border: `1px solid ${theme.colors.greySelectedMenuItem}`,
               '&:hover': {
                 border: `1px solid ${theme.colors.grey}`,
+              },
+              '&:active': {
+                border: `1px solid ${theme.colors.greyBackground}`,
               },
             }}
           />

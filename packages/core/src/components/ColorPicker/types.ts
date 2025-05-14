@@ -12,6 +12,7 @@ export interface ColorPickerProps {
   color?: string;
   format?: ColorFormat;
   label?: string;
+  colorsPalette?: string[];
   classnames?: {
     trigger?: string;
     content?: string;

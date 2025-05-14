@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import Wrapper from '@components/Wrapper';
-import { COLORS_PALETTE } from '../constants';
 import { useColorPickerContext } from '../ColorPickerContext';
 
 const TabColorPaletteItem = styled(Wrapper)`
@@ -12,7 +11,7 @@ const TabColorPaletteItem = styled(Wrapper)`
 `;
 
 export const TabColorPalette = () => {
-  const { setRawColor } = useColorPickerContext();
+  const { setRawColor, colorsPalette } = useColorPickerContext();
   const handleColorSelect = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
     const selectedColor = target.getAttribute('data-color');
@@ -30,7 +29,7 @@ export const TabColorPalette = () => {
         alignContent: 'flex-start',
         flexWrap: 'wrap',
       }}>
-      {COLORS_PALETTE.map((color) => (
+      {colorsPalette?.map((color) => (
         <TabColorPaletteItem
           key={color}
           data-color={color}

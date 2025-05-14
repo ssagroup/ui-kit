@@ -28,14 +28,10 @@ export interface LargeTabProps extends TabProps {
 
 export interface TabBarProps {
   children: React.ReactElement<React.PropsWithChildren<TabProps>>[];
+  className?: string;
 }
 
 export interface TabBarContextProps {
   activeTab?: TabProps;
   setActiveTab: (tab?: TabProps) => void;
-}
-
-export interface TabBarByIdContextProps {
-  activeTabId?: number | string;
-  setActiveTabId: (tabId?: number | string) => void;
 }

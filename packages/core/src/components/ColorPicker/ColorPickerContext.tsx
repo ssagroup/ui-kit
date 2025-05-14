@@ -34,6 +34,7 @@ export const ColorPickerProvider = ({
   disabledAlpha,
   disabled,
   label,
+  colorsPalette,
   onChange,
 }: React.PropsWithChildren<ColorPickerProviderInputProps>) => {
   const { copy } = useClipboard();
@@ -67,6 +68,7 @@ export const ColorPickerProvider = ({
         disabledAlpha,
         disabled,
         label,
+        colorsPalette,
         copy,
         setFormat,
         setRawColor,

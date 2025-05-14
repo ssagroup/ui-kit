@@ -12,12 +12,12 @@ const TabBarBase = styled.div``;
  * component to decide where to render the contents of the
  * selected tab.
  * */
-const TabBar = ({ children }: TabBarProps) => {
+const TabBar = ({ children, className }: TabBarProps) => {
   const { activeTab, setActiveTab } = useTabBarContext();
   const activeTabId = activeTab?.tabId;
 
   return (
-    <TabBarBase role="tablist">
+    <TabBarBase role="tablist" className={className}>
       {Children.map(children, (child) => {
         // istanbul ignore else
         if (isValidElement(child)) {
