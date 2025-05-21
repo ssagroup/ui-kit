@@ -3,7 +3,7 @@ import * as DPC from '.';
 import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DatePickerHeader = () => {
-  const { calendarType, setCalendarType, calendarViewDateTime } =
+  const { calendarType, setCalendarType, calendarViewDateTime, classNames } =
     useDatePickerContext();
   const handleCalendarTypeChange = () => {
     if (calendarType === 'days') {
@@ -21,6 +21,7 @@ export const DatePickerHeader = () => {
         height: 32,
         marginBottom: 12,
       }}
+      className={classNames?.header}
       as={'div'}>
       <C.Button
         endIcon={

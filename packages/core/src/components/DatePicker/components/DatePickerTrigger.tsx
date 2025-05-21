@@ -11,6 +11,7 @@ export const DatePickerTrigger = () => {
     format,
     name,
     label,
+    classNames,
     openCalendarMode,
     inputRef,
     inputProps,
@@ -60,13 +61,18 @@ export const DatePickerTrigger = () => {
 
   return (
     <React.Fragment>
-      {label && <C.Label htmlFor={name}>{label}</C.Label>}
+      {label && (
+        <C.Label htmlFor={name} className={classNames?.label}>
+          {label}
+        </C.Label>
+      )}
       <C.PopoverTrigger asChild>
         <C.Input
           name={name}
           placeholder={format}
           ref={inputRef}
           disabled={disabled}
+          className={classNames?.trigger?.input}
           register={register}
           inputProps={{
             onBlur: handleBlur,
@@ -101,6 +107,7 @@ export const DatePickerTrigger = () => {
                 variant="tertiary"
                 aria-label="Calendar"
                 isDisabled={disabled}
+                className={classNames?.trigger?.calendarIcon}
                 css={{
                   padding: 0,
                   cursor:

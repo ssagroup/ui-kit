@@ -8,6 +8,7 @@ export const DatePickerMonthsSwitch = () => {
     calendarViewDateTime,
     dateMinDT,
     dateMaxDT,
+    classNames,
     setCalendarViewDateTime,
     onMonthChange,
   } = useDatePickerContext();
@@ -47,7 +48,9 @@ export const DatePickerMonthsSwitch = () => {
   }
 
   return (
-    <C.Wrapper css={{ width: 72, gap: 24 }}>
+    <C.Wrapper
+      css={{ width: 72, gap: 24 }}
+      className={classNames?.monthsSwitch?.wrapper}>
       <C.Button
         endIcon={
           <C.Icon
@@ -59,6 +62,7 @@ export const DatePickerMonthsSwitch = () => {
             }
           />
         }
+        className={classNames?.monthsSwitch?.previousMonth}
         variant={'tertiary'}
         aria-label="Previous month"
         data-testid="previous-month"
@@ -82,6 +86,7 @@ export const DatePickerMonthsSwitch = () => {
             }
           />
         }
+        className={classNames?.monthsSwitch?.nextMonth}
         variant={'tertiary'}
         onClick={handleNextMonth}
         isDisabled={isMaxMonthReached}

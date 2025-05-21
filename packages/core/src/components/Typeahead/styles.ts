@@ -31,8 +31,10 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   cursor: pointer;
   font-size: 14px;
   gap: 8px;
-  padding: 12px;
-  height: 40px;
+  padding: 10px 12px;
+  min-height: 40px;
+  line-height: 20px;
+  overflow: hidden;
   background: ${({ isActive, theme }) =>
     isActive ? theme.colors.blueRoyal12 : 'none'};
   &:hover {
@@ -94,7 +96,7 @@ export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-weight: 500;
   font-size: 14px;
-  height: 32px;
+  min-height: 32px;
   align-items: center;
   padding: 6px;
   user-select: none;
