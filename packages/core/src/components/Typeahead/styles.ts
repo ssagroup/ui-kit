@@ -26,13 +26,17 @@ export const TypeaheadOptionsBase = styled.ul`
 export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 0 16px;
   border: none;
   cursor: pointer;
   font-size: 14px;
   gap: 8px;
-  padding: 12px;
-  height: 40px;
+  padding: 10px 12px;
+  min-height: 40px;
+  line-height: 20px;
+  justify-content: space-between;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background: ${({ isActive, theme }) =>
     isActive ? theme.colors.blueRoyal12 : 'none'};
   &:hover {
@@ -94,10 +98,11 @@ export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-weight: 500;
   font-size: 14px;
-  height: 32px;
+  min-height: 20px;
   align-items: center;
   padding: 6px;
   user-select: none;
+  overflow: hidden;
 `;
 
 export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
@@ -105,16 +110,19 @@ export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-size: 14px;
   font-weight: 500;
-  display: flex;
+  display: block;
   gap: 6px;
   align-items: center;
   cursor: default;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const TypeaheadItemCross = styled(Button)`
   background: none;
   padding: 0;
   padding-right: 5;
+  height: auto;
   &:active,
   &:focus,
   &:hover {

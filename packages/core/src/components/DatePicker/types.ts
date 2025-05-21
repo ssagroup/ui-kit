@@ -23,6 +23,20 @@ export type DatePickerProps = {
     mode: 'dateFrom' | 'dateTo';
     otherDate: Date | null;
   };
+  classNames?: {
+    header?: string;
+    trigger?: {
+      input?: string;
+      calendarIcon?: string;
+    };
+    monthsSwitch?: {
+      wrapper?: string;
+      previousMonth?: string;
+      nextMonth?: string;
+    };
+    calendar?: string;
+    label?: string;
+  };
   onChange?: (date?: Date) => void;
   onOpen?: () => void;
   onClose?: () => void;

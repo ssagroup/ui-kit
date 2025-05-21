@@ -11,4 +11,6 @@ export const TypeaheadItemIcon = styled(Icon)`
   width: 18px;
   height: 18px;
   border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
 `;

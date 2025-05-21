@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { Popover, PopoverContent } from '@components/Popover';
 import TabBar, { TabBarContextProvider } from '@components/TabBar';
 import Tab from '@components/Tab';
@@ -6,7 +7,6 @@ import { TabColorPalette, TabColorPicker, TabContent } from './components';
 import { ColorPickerProvider } from './ColorPickerContext';
 import { ColorPickerTrigger } from './components/ColorPickerTrigger';
 import { COLORS_PALETTE } from './constants';
-import '@rc-component/color-picker/assets/index.css';
 
 export const ColorPicker = ({
   color: providedColor,
@@ -14,6 +14,7 @@ export const ColorPicker = ({
   colorsPalette = COLORS_PALETTE,
   ...rest
 }: ColorPickerProps) => {
+  const theme = useTheme();
   const tabsConfig = {
     colorPalette: {
       tabId: 'color-palette',
@@ -47,6 +48,8 @@ export const ColorPicker = ({
               gap: 16,
               padding: 16,
               borderRadius: 8,
+              backgroundColor: theme.colors.white,
+              zIndex: 10,
               boxShadow:
                 '0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05)',
             }}
