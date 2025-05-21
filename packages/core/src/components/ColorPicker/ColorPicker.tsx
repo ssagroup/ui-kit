@@ -8,8 +8,6 @@ import { ColorPickerProvider } from './ColorPickerContext';
 import { ColorPickerTrigger } from './components/ColorPickerTrigger';
 import { COLORS_PALETTE } from './constants';
 
-// add background color to the popover content
-// + z-index 10
 export const ColorPicker = ({
   color: providedColor,
   format: providedFormat,
