@@ -17,14 +17,26 @@ import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
 import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
+import TableCellHeader from '@components/TableCellHeader';
 import { SortableTable } from './SortableTable';
 import { SortInfo } from './types';
+import { StyledTableStory } from './StyledTable/StoryComponent';
+import { NoControlOrdersStory } from './NoControlOrders/StoryComponent';
 
 export default {
   title: 'Components/Table',
   component: Table,
   parameters: {
     controls: { disable: true },
+    backgrounds: {
+      default: 'main',
+      values: [
+        {
+          name: 'main',
+          value: '#D0D1D6',
+        },
+      ],
+    },
     docs: {
       source: {
         type: 'code',
@@ -47,8 +59,8 @@ export const Default: StoryObj<typeof Table> = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Col</TableCell>
-          <TableCell>
+          <TableCellHeader>Col</TableCellHeader>
+          <TableCellHeader>
             <Wrapper
               css={css`
                 svg {
@@ -58,8 +70,8 @@ export const Default: StoryObj<typeof Table> = () => {
               <Icon name="calendar" size={16} />
               Col
             </Wrapper>
-          </TableCell>
-          <TableCell align="center">Col 3</TableCell>
+          </TableCellHeader>
+          <TableCellHeader align="center">Col 3</TableCellHeader>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -92,3 +104,11 @@ export const TableSorting: StoryObj<typeof Table> = () => {
 };
 
 TableSorting.args = {};
+
+export const StyledTable: StoryObj<typeof Table> = () => <StyledTableStory />;
+StyledTable.args = {};
+
+export const NoControlOrders: StoryObj<typeof Table> = () => (
+  <NoControlOrdersStory />
+);
+NoControlOrders.args = {};

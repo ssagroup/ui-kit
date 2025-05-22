@@ -16,7 +16,7 @@ describe('NestedTable', () => {
     );
 
     expect(table).toBeInTheDocument();
-    expect(cells.length).toEqual(65);
+    expect(cells.length).toEqual(60);
     expect(toggleIcons.length).toEqual(4);
     expect(collapsedRows.length).toEqual(0);
   });

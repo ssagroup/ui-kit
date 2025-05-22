@@ -6,6 +6,7 @@ import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
 import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
+import TableCellHeader from '@components/TableCellHeader';
 import { RowKeys, headers, dataForTableSorting } from './mock';
 import { capitalizeFirstLetter } from './utils';
 import { SortInfo } from './types';
@@ -40,7 +41,7 @@ export const SortableTable = ({
       <TableHead>
         <TableRow>
           {headers.map((name) => (
-            <TableCell
+            <TableCellHeader
               key={name}
               css={{
                 gap: 6,
@@ -60,7 +61,7 @@ export const SortableTable = ({
                   />
                 )}
               </Wrapper>
-            </TableCell>
+            </TableCellHeader>
           ))}
         </TableRow>
       </TableHead>

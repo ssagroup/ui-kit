@@ -1,13 +1,12 @@
 import React from 'react';
 import { useTheme } from '@emotion/react';
 import { useMergeRefs } from '@floating-ui/react';
-import { PopoverTrigger, usePopoverContext } from '@ssa-ui-kit/core';
-import { BotsTableRow } from '@ssa-ui-kit/widgets';
+import { PopoverTrigger, usePopoverContext, TableRow } from '@ssa-ui-kit/core';
 
 export const EventInfoPopoverTrigger = React.forwardRef<
   HTMLElement,
   React.HTMLProps<HTMLElement> &
-    Parameters<typeof BotsTableRow>[0] &
+    Parameters<typeof TableRow>[0] &
     Parameters<typeof PopoverTrigger>[0]
 >(function PopoverTrigger(
   { children, asChild = false, dataTestId = 'trigger-button', ...props },
@@ -34,7 +33,7 @@ export const EventInfoPopoverTrigger = React.forwardRef<
   }
 
   return (
-    <BotsTableRow
+    <TableRow
       css={{
         height: 'auto',
         fontSize: 12,
@@ -49,6 +48,6 @@ export const EventInfoPopoverTrigger = React.forwardRef<
       data-state={context?.open ? 'open' : 'closed'}
       {...context?.getReferenceProps(props)}>
       {children}
-    </BotsTableRow>
+    </TableRow>
   );
 });

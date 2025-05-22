@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { BotsTableCell } from '@ssa-ui-kit/widgets';
+import { TableCell } from '@ssa-ui-kit/core';
 import { useTableRow } from '@fintech/contexts';
 
 interface TableCellWithLinkProps
-  extends React.PropsWithChildren<Parameters<typeof BotsTableCell>[0]> {
+  extends React.PropsWithChildren<Parameters<typeof TableCell>[0]> {
   includeLink?: boolean;
   href?: string;
 }
@@ -14,7 +14,7 @@ export const TableCellWithLink = ({
   href,
   ...rest
 }: TableCellWithLinkProps) => (
-  <BotsTableCell
+  <TableCell
     css={{
       padding: includeLink ? 0 : '0 16px',
       whiteSpace: 'nowrap',
@@ -44,13 +44,13 @@ export const TableCellWithLink = ({
     ) : (
       children
     )}
-  </BotsTableCell>
+  </TableCell>
 );
 
 export const InformationLinkCell = ({
   children,
   ...rest
-}: React.PropsWithChildren<Parameters<typeof BotsTableCell>[0]> & {
+}: React.PropsWithChildren<Parameters<typeof TableCell>[0]> & {
   includeLink?: boolean;
 }) => {
   const { row } = useTableRow();

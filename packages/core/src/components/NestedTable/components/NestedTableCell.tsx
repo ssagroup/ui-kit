@@ -1,13 +1,15 @@
 import { HTMLAttributes } from 'react';
 import { Interpolation, Theme } from '@emotion/react';
+import { CommonProps } from '@global-types/emotion';
 import TableCell from '@components/TableCell';
 import Wrapper from '@components/Wrapper';
-import { useNestedTableRowContext } from '../useNestedTableRowContext';
+import { useNestedTableRowContext } from '../hooks/useNestedTableRowContext';
 
 export const NestedTableCell = ({
   children,
   ...props
-}: React.PropsWithChildren<HTMLAttributes<HTMLTableCellElement>>) => {
+}: React.PropsWithChildren<HTMLAttributes<HTMLTableCellElement>> &
+  CommonProps) => {
   const { isCollapsed, isSubHeader } = useNestedTableRowContext();
   const notSubHeaderCSS: Interpolation<Theme> =
     !isSubHeader && isCollapsed
@@ -30,6 +32,7 @@ export const NestedTableCell = ({
       css={{
         borderRight: 'none',
         borderBottom: 'none',
+        background: 'transparent',
         ...notSubHeaderCSS,
       }}
       {...props}>

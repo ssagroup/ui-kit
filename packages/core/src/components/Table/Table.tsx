@@ -8,6 +8,8 @@ const Table = styled.table<CommonProps>`
 
   border-collapse: collapse;
   border-spacing: 0;
+
+  background: none;
 `;
 
 export default Table;

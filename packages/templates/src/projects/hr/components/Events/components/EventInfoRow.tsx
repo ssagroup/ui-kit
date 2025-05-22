@@ -1,8 +1,7 @@
 import { useTheme } from '@emotion/react';
 import { offset } from '@floating-ui/react';
-import { Wrapper, useTranslation } from '@ssa-ui-kit/core';
+import { Wrapper, useTranslation, TableRow } from '@ssa-ui-kit/core';
 import { useMinLGMediaQuery, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
-import { BotsTableRow } from '@ssa-ui-kit/widgets';
 import { ComponentPopover, ComponentPopoverProps } from '@hr/components';
 import { formatDate } from '@hr/utils';
 import { UserPlaceholder } from '@icons';
@@ -75,7 +74,7 @@ const EventInfoRowComponent = ({
       }}
       content={<EventInfoTooltip />}
       asChild>
-      <BotsTableRow
+      <TableRow
         css={{
           height: 'auto',
           fontSize: 12,
@@ -162,7 +161,7 @@ const EventInfoRowComponent = ({
               : ''}
           </EventInfoCell>
         )}
-      </BotsTableRow>
+      </TableRow>
     </ComponentPopover>
   );
 };
