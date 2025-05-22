@@ -8,13 +8,22 @@ import {
   Stories,
 } from '@storybook/addon-docs';
 import Table from '@components/Table';
-import { NestedTableStory } from './NestedTableStory';
+import { NestedTableDefaultStory, NestedTableStory } from './NestedTableStory';
 
 export default {
   title: 'Components/NestedTable',
   component: Table,
   parameters: {
     controls: { disable: true },
+    backgrounds: {
+      default: 'main',
+      values: [
+        {
+          name: 'main',
+          value: '#D0D1D6',
+        },
+      ],
+    },
     docs: {
       source: {
         type: 'code',
@@ -32,6 +41,10 @@ export default {
   },
 } as Meta<typeof Table>;
 
-export const Default: StoryObj<typeof Table> = () => <NestedTableStory />;
-
+export const Default: StoryObj<typeof Table> = () => (
+  <NestedTableDefaultStory />
+);
 Default.args = {};
+
+export const Custom: StoryObj<typeof Table> = () => <NestedTableStory />;
+Custom.args = {};

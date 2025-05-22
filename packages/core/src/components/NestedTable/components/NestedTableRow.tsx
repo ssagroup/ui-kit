@@ -2,7 +2,7 @@ import { HTMLAttributes } from 'react';
 import { Interpolation, Theme, useTheme } from '@emotion/react';
 import TableRow from '@components/TableRow';
 import { NestedTableCellSubHeader } from './NestedTableCellSubHeader';
-import { useNestedTableRowContext } from '../useNestedTableRowContext';
+import { useNestedTableRowContext } from '../hooks/useNestedTableRowContext';
 
 export const NestedTableRow = ({
   children,
@@ -20,7 +20,9 @@ export const NestedTableRow = ({
     ? {
         background: theme.colors.greyLighter60,
       }
-    : {};
+    : {
+        background: theme.colors.white,
+      };
 
   const classNames: string[] = [];
   if (isSubHeader) {
@@ -32,9 +34,11 @@ export const NestedTableRow = ({
   const notSubHeaderCSS: Interpolation<Theme> =
     !isSubHeader && isCollapsed
       ? {
+          height: 0,
           maxHeight: 0,
           padding: 0,
           '& td': {
+            height: 0,
             maxHeight: 0,
             padding: 0,
           },

@@ -3,10 +3,9 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import { ButtonProps } from '@components/Button/types';
 import Icon from '@components/Icon';
-import Table from '@components/Table';
 import TableBody from '@components/TableBody';
 import TableHead from '@components/TableHead';
-import { NestedTableRow, NestedTableCell } from '../components';
+import { NestedTableRow, NestedTableCell, NestedTable } from '../components';
 import { WithNestedTableRow } from '../WithNestedTableRow';
 
 const TableCellActionButton = (props: ButtonProps) => (
@@ -29,24 +28,21 @@ const TableCellActionButton = (props: ButtonProps) => (
   />
 );
 
+export const NestedDefaultRow = () => (
+  <NestedTableRow>
+    <NestedTableCell>1234567890</NestedTableCell>
+    <NestedTableCell>Estate</NestedTableCell>
+    <NestedTableCell>json</NestedTableCell>
+    <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
+      <TableCellActionButton />
+    </NestedTableCell>
+  </NestedTableRow>
+);
+
 const NestedTableRowStory = () => (
   <WithNestedTableRow>
-    <NestedTableRow>
-      <NestedTableCell>!1234567890</NestedTableCell>
-      <NestedTableCell>!Estate</NestedTableCell>
-      <NestedTableCell>!json</NestedTableCell>
-      <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
-        <TableCellActionButton />
-      </NestedTableCell>
-    </NestedTableRow>
-    <NestedTableRow>
-      <NestedTableCell>@1234567890</NestedTableCell>
-      <NestedTableCell>@Estate</NestedTableCell>
-      <NestedTableCell>@json</NestedTableCell>
-      <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
-        <TableCellActionButton />
-      </NestedTableCell>
-    </NestedTableRow>
+    <NestedDefaultRow />
+    <NestedDefaultRow />
   </WithNestedTableRow>
 );
 
@@ -90,16 +86,52 @@ const StyledTableRowStory = () => (
   </WithNestedTableRow>
 );
 
+export const NestedTableDefaultStory = () => (
+  <NestedTable>
+    <TableHead>
+      <NestedTableRow isHeader>
+        <NestedTableCell as="th">Version</NestedTableCell>
+        <NestedTableCell as="th">Layer</NestedTableCell>
+        <NestedTableCell as="th">Type</NestedTableCell>
+        <NestedTableCell
+          as="th"
+          css={{ '& div': { justifyContent: 'center' } }}>
+          Action
+        </NestedTableCell>
+      </NestedTableRow>
+    </TableHead>
+    <TableBody>
+      <WithNestedTableRow>
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+      </WithNestedTableRow>
+      <WithNestedTableRow>
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+      </WithNestedTableRow>
+      <WithNestedTableRow>
+        <NestedDefaultRow />
+      </WithNestedTableRow>
+    </TableBody>
+  </NestedTable>
+);
+
 export const NestedTableStory = () => {
   const theme = useTheme();
   return (
-    <Table>
+    <NestedTable collapsedIconName="plus" expandedIconName="minus">
       <TableHead css={{ backgroundColor: theme.colors.white }}>
         <NestedTableRow isHeader>
-          <NestedTableCell>Version</NestedTableCell>
-          <NestedTableCell>Layer</NestedTableCell>
-          <NestedTableCell>Type</NestedTableCell>
-          <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
+          <NestedTableCell as="th">Version</NestedTableCell>
+          <NestedTableCell as="th">Layer</NestedTableCell>
+          <NestedTableCell as="th">Type</NestedTableCell>
+          <NestedTableCell
+            as="th"
+            css={{ '& div': { justifyContent: 'center' } }}>
             Action
           </NestedTableCell>
         </NestedTableRow>
@@ -109,43 +141,14 @@ export const NestedTableStory = () => {
         <StyledTableRowStory />
         <OtherTableRowStory />
         <WithNestedTableRow>
-          <NestedTableRow>
-            <NestedTableCell>1234567890</NestedTableCell>
-            <NestedTableCell>Estate</NestedTableCell>
-            <NestedTableCell>json</NestedTableCell>
-            <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
-              <TableCellActionButton />
-            </NestedTableCell>
-          </NestedTableRow>
-          <NestedTableRow>
-            <NestedTableCell>1234567890</NestedTableCell>
-            <NestedTableCell>Estate</NestedTableCell>
-            <NestedTableCell>json</NestedTableCell>
-            <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
-              <TableCellActionButton />
-            </NestedTableCell>
-          </NestedTableRow>
-          <NestedTableRow>
-            <NestedTableCell>1234567890</NestedTableCell>
-            <NestedTableCell>Estate</NestedTableCell>
-            <NestedTableCell>json</NestedTableCell>
-            <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
-              <TableCellActionButton />
-            </NestedTableCell>
-          </NestedTableRow>
+          <NestedDefaultRow />
+          <NestedDefaultRow />
+          <NestedDefaultRow />
         </WithNestedTableRow>
-
         <WithNestedTableRow>
-          <NestedTableRow>
-            <NestedTableCell>1234567890</NestedTableCell>
-            <NestedTableCell>Estate</NestedTableCell>
-            <NestedTableCell>json</NestedTableCell>
-            <NestedTableCell css={{ '& div': { justifyContent: 'center' } }}>
-              <TableCellActionButton />
-            </NestedTableCell>
-          </NestedTableRow>
+          <NestedDefaultRow />
         </WithNestedTableRow>
       </TableBody>
-    </Table>
+    </NestedTable>
   );
 };

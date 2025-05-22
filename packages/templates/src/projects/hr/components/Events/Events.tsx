@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { css } from '@emotion/css';
-import { ButtonGroupItem } from '@ssa-ui-kit/core';
-import { BotsTableWrapper } from '@ssa-ui-kit/widgets';
+import { ButtonGroupItem, Table } from '@ssa-ui-kit/core';
 import { pathOr, propOr } from '@ssa-ui-kit/utils';
 import { DashboardEvents } from '@/hr/types';
 import * as hooks from '@hr/hooks';
@@ -69,7 +68,7 @@ export const Events = ({
           marginBottom: 0,
         },
       }}>
-      <BotsTableWrapper
+      <Table
         css={{
           borderCollapse: 'separate',
           borderSpacing: '0 10px',
@@ -133,7 +132,7 @@ export const Events = ({
             `}
           />
         </tbody>
-      </BotsTableWrapper>
+      </Table>
     </Card>
   );
 };

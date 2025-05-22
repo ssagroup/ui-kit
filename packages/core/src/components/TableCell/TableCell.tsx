@@ -7,10 +7,25 @@ const TableCell = styled.td<{ align?: string } & CommonProps>`
   vertical-align: inherit;
   text-align: ${({ align }) => (align ? align : 'left')};
 
-  border-bottom: 1px solid #eef1f7;
-  border-right: 1px solid #eef1f7;
-
-  padding: 14px;
+  border: none;
+  padding: 0 16px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  height: 44px;
+  & a {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    padding: 0 18px;
+  }
+  &:first-of-type a {
+    padding-left: 16px;
+  }
+  ${({ theme }) => theme.mediaQueries.lg} {
+    font-size: 14px;
+  }
 `;
 
 export default TableCell;

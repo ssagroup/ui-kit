@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Wrapper, Icon } from '@ssa-ui-kit/core';
 import {
-  BotsTableHead,
-  BotsTableRow,
-  BotsTableCell,
-} from '@ssa-ui-kit/widgets';
+  Wrapper,
+  Icon,
+  TableRow,
+  TableHead,
+  TableCellHeader,
+} from '@ssa-ui-kit/core';
 import { useTranslation } from '@contexts';
 import { useTable } from '@fintech/contexts';
 import { HeaderProps, SortInfo } from '../types';
@@ -41,10 +42,10 @@ export const Header = ({
     }
   };
   return (
-    <BotsTableHead data-testid="table-header">
-      <BotsTableRow>
+    <TableHead data-testid="table-header">
+      <TableRow>
         {columnsTranslated.map((columnName, index) => (
-          <BotsTableCell
+          <TableCellHeader
             key={`column-${columnName.toLowerCase()}`}
             onClick={
               columnName === ''
@@ -75,9 +76,9 @@ export const Header = ({
                 />
               )}
             </Wrapper>
-          </BotsTableCell>
+          </TableCellHeader>
         ))}
-      </BotsTableRow>
-    </BotsTableHead>
+      </TableRow>
+    </TableHead>
   );
 };

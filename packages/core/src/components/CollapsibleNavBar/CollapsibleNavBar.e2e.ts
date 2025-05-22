@@ -3,8 +3,8 @@ import { SCREEN_SIZES } from '../../consts';
 
 test.describe.configure({ mode: 'serial' });
 
-const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';
-const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-collapsiblenavbar-opened__`;
+const CORE_CUSTOM_SHOTS_PATH = './custom-shots/';
+const SCREENSHOT_PREFIX = `${CORE_CUSTOM_SHOTS_PATH}widgets-collapsiblenavbar-opened__`;
 const MOBILE_SIZE = { width: 899, height: 1200 };
 
 const gotoPage = (page: Page) => {

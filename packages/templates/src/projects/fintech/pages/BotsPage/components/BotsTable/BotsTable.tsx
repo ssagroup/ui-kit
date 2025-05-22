@@ -1,5 +1,4 @@
-import { Wrapper } from '@ssa-ui-kit/core';
-import { BotsTableWrapper } from '@ssa-ui-kit/widgets';
+import { Wrapper, Table } from '@ssa-ui-kit/core';
 import { TableLoader } from '@fintech/components';
 import { BotsTableProps } from './types';
 import { Body, Header } from './components';
@@ -16,14 +15,14 @@ export const BotsTable = ({
       minWidth: 340,
       overflowX: 'auto',
     }}>
-    <BotsTableWrapper>
+    <Table>
       <Header
         handleSortingChange={handleSortingChange}
         columns={COLUMNS}
         columnsApiNames={COLUMN_API_NAMES}
       />
       <Body response={response} allRowsDisabled={allRowsDisabled} />
-    </BotsTableWrapper>
+    </Table>
     <TableLoader isLoading={false} />
   </Wrapper>
 );

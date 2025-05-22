@@ -30,7 +30,6 @@ export { default as UserCard } from './components/UserCard';
 export * from './components/UserCard';
 export * from './components/TradingInfoCard';
 export * from './components/TradingScoreboard';
-export * from './components/BotsTable';
 export * from './components/AccountBalance';
 export * from './components/ExchangeAccount';
 export * from './components/AccountKeys';

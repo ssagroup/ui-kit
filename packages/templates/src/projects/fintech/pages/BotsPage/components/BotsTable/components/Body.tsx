@@ -1,5 +1,4 @@
-import { TableBody } from '@ssa-ui-kit/core';
-import { BotsTableRow } from '@ssa-ui-kit/widgets';
+import { TableBody, TableRow } from '@ssa-ui-kit/core';
 import { propOr } from '@ssa-ui-kit/utils';
 import { useTranslation } from '@contexts';
 import {
@@ -30,7 +29,7 @@ export const Body = ({
   if (!totalCount) {
     return (
       <TableBody>
-        <BotsTableRow>
+        <TableRow>
           <InformationLinkCell
             includeLink={false}
             colSpan={7}
@@ -39,7 +38,7 @@ export const Body = ({
             }}>
             {t('pages.bots.table.noResults')}
           </InformationLinkCell>
-        </BotsTableRow>
+        </TableRow>
       </TableBody>
     );
   }
@@ -57,7 +56,7 @@ export const Body = ({
 
         return (
           <TableRowProvider key={`bots-table-row-${bot.id}-provider`} row={bot}>
-            <BotsTableRow
+            <TableRow
               key={`bots-table-row-${bot.id}`}
               isDisabled={allRowsDisabled}
               css={{
@@ -102,7 +101,7 @@ export const Body = ({
               <InformationLinkCell includeLink={false}>
                 <Actions row={bot} />
               </InformationLinkCell>
-            </BotsTableRow>
+            </TableRow>
           </TableRowProvider>
         );
       })}

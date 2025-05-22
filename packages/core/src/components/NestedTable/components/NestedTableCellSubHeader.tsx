@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import Icon from '@components/Icon';
 import { NestedTableCell } from './NestedTableCell';
-import { useNestedTableRowContext } from '../useNestedTableRowContext';
+import { useNestedTableContext, useNestedTableRowContext } from '../hooks';
 
 export const NestedTableCellSubHeader = ({
   isHeader,
@@ -9,6 +9,8 @@ export const NestedTableCellSubHeader = ({
 }: {
   isHeader?: boolean;
 } & HTMLAttributes<HTMLTableCellElement>) => {
+  const { collapsedIconName = 'carrot-up', expandedIconName = 'carrot-down' } =
+    useNestedTableContext();
   const {
     childRowsCount,
     isSubHeader: isSubHeaderGlobal,
@@ -19,7 +21,7 @@ export const NestedTableCellSubHeader = ({
     ''
   ) : isSubHeader ? (
     <Icon
-      name={isCollapsed ? 'carrot-up' : 'carrot-down'}
+      name={isCollapsed ? collapsedIconName : expandedIconName}
       size={18}
       css={{ cursor: 'pointer' }}
       tooltip=""
@@ -30,7 +32,10 @@ export const NestedTableCellSubHeader = ({
     ''
   );
   return (
-    <NestedTableCell css={{ width: 20, '& div': { width: 20 } }} {...props}>
+    <NestedTableCell
+      css={{ width: 20, '& div': { width: 20 } }}
+      as={isHeader ? 'th' : 'td'}
+      {...props}>
       {content}
     </NestedTableCell>
   );
