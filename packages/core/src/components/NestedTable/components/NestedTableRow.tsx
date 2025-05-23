@@ -19,6 +19,9 @@ export const NestedTableRow = ({
   const headerCSS: Interpolation<Theme> = isSubHeader
     ? {
         background: theme.colors.greyLighter60,
+        '& td': {
+          fontWeight: 700,
+        },
       }
     : {
         background: theme.colors.white,
