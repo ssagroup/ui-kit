@@ -14,15 +14,6 @@ const TableCell = styled.td<{ align?: string } & CommonProps>`
   font-weight: 500;
   white-space: nowrap;
   height: 44px;
-  & a {
-    display: flex;
-    align-items: center;
-    height: 44px;
-    padding: 0 18px;
-  }
-  &:first-of-type a {
-    padding-left: 16px;
-  }
   ${({ theme }) => theme.mediaQueries.lg} {
     font-size: 14px;
   }

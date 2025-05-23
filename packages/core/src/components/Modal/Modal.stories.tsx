@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Button from '@components/Button';
@@ -95,3 +96,34 @@ export const Opened: StoryObj<typeof Modal> = () => (
   </Modal>
 );
 Opened.args = {};
+
+export const ExternalState: StoryObj<typeof Modal> = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  setTimeout(() => {
+    setIsOpen(false);
+  }, 5000);
+  return (
+    <Modal isOpen={isOpen}>
+      <ModalOpenButton>
+        <Button size="small" text="Open modal" />
+      </ModalOpenButton>
+      <ModalContent noBackground={true} aria-label="label">
+        <div>
+          <Typography variant="h3" gutter={true}>
+            Hello
+          </Typography>
+
+          <Typography variant="body1" gutter={true}>
+            lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            auctor, nisl eget
+          </Typography>
+
+          <ModalDismissButton>
+            <Button size="small" text="close" />
+          </ModalDismissButton>
+        </div>
+      </ModalContent>
+    </Modal>
+  );
+};
+ExternalState.args = {};
