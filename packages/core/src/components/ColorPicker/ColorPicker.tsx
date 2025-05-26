@@ -7,6 +7,7 @@ import { TabColorPalette, TabColorPicker, TabContent } from './components';
 import { ColorPickerProvider } from './ColorPickerContext';
 import { ColorPickerTrigger } from './components/ColorPickerTrigger';
 import { COLORS_PALETTE } from './constants';
+import '@rc-component/color-picker/assets/index.css';
 
 export const ColorPicker = ({
   color: providedColor,
