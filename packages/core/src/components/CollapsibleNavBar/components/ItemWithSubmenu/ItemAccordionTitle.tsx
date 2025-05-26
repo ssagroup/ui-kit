@@ -66,8 +66,9 @@ export const ItemAccordionTitle = ({
       <Wrapper
         onClick={data.onClick}
         css={S.AccordionTitleWrapper(theme)}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
+        // onMouseEnter={handleMouseEnter}
+        // onMouseLeave={handleMouseLeave}
+      >
         <Link
           to=""
           navbartheme={theme}
