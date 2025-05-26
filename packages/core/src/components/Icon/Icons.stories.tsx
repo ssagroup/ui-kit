@@ -42,6 +42,10 @@ export const Default: StoryObj<typeof Icon> = (
         align-items: flex-start;
         padding-bottom: 54px;
         gap: 12px;
+
+        & p {
+          text-align: center;
+        }
       `}>
       {iconsList.map((iconName) => (
         <div css={iconWrapper} key={iconName}>
