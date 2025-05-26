@@ -52,7 +52,9 @@ export const Default: StoryObj<typeof Icon> = (
             }
             color={args.color}
           />
-          <Typography variant="body1">{iconName}</Typography>
+          <Typography variant="body1" css={{ textAlign: 'center' }}>
+            {iconName}
+          </Typography>
         </div>
       ))}
     </div>
