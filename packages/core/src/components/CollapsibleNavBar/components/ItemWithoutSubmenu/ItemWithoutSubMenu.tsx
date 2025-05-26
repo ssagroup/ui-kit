@@ -65,8 +65,9 @@ export const Item = ({
           ref={linkRef}
           navbartheme={theme}
           data-customicon={!!CustomIcon}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}>
+          // onMouseEnter={handleMouseEnter}
+          // onMouseLeave={handleMouseLeave}
+        >
           <CollapsibleNavBarPopover triggerIcon={<Icon />} title={title} />
           <Icon />
           <span>{title}</span>

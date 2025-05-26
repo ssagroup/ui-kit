@@ -33,8 +33,9 @@ const Radio = ({
       htmlFor={radioId}
       className={className}
       focusShadowColor={colors?.focusShadow}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
+      // onMouseEnter={() => setIsHovered(true)}
+      // onMouseLeave={() => setIsHovered(false)}
+    >
       <input
         id={radioId}
         type="radio"
