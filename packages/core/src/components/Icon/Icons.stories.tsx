@@ -42,6 +42,10 @@ export const Default: StoryObj<typeof Icon> = (
         align-items: flex-start;
         padding-bottom: 54px;
         gap: 12px;
+
+        & p {
+          text-align: center;
+        }
       `}>
       {iconsList.map((iconName) => (
         <div css={iconWrapper} key={iconName}>
@@ -52,9 +56,7 @@ export const Default: StoryObj<typeof Icon> = (
             }
             color={args.color}
           />
-          <Typography variant="body1" css={{ textAlign: 'center' }}>
-            {iconName}
-          </Typography>
+          <Typography variant="body1">{iconName}</Typography>
         </div>
       ))}
     </div>
