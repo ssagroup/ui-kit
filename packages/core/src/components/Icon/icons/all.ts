@@ -32,7 +32,6 @@ export * as Email from './Email';
 export * as Employee from './Employee';
 export * as EmployeeTerminated from './EmployeeTerminated';
 export * as ExcelDownload from './ExcelDownload';
-export * as Expertise from './Expertise';
 export * as Filter from './Filter';
 export * as FilterFunnel from './FilterFunnel';
 export * as FTE from './FTE';
