@@ -1,7 +1,7 @@
 import { TooltipProps } from '@nivo/treemap';
 import styled from '@emotion/styled';
 
-const Tooltip = styled.div`
+export const TreeMapTooltipBase = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.green20};
   border-radius: 4px;
@@ -16,9 +16,9 @@ const Tooltip = styled.div`
 
 export const TreeMapChartTooltip = ({ node }: TooltipProps<object>) => {
   return (
-    <Tooltip>
+    <TreeMapTooltipBase>
       <span>{node.id}</span>
       <span css={{ fontWeight: 700 }}>{node.formattedValue}</span>
-    </Tooltip>
+    </TreeMapTooltipBase>
   );
 };
