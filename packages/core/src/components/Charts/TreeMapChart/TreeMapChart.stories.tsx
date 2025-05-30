@@ -1,7 +1,10 @@
 import { type StoryObj, type Meta } from '@storybook/react';
 import { css } from '@emotion/css';
 
-import { TreeMapChart } from '@components/Charts/TreeMapChart';
+import {
+  TreeMapChart,
+  TreeMapTooltipBase,
+} from '@components/Charts/TreeMapChart';
 
 const meta: Meta<typeof TreeMapChart> = {
   title: 'Charts/TreeMap',
@@ -136,5 +139,16 @@ export const LabelSkipSize: Story = {
         },
       ],
     },
+  },
+};
+
+export const CustomTooltip: Story = {
+  args: {
+    tooltip: (data) => (
+      <TreeMapTooltipBase css={{ padding: '8px 16px', display: 'block' }}>
+        <h3>{new Date().toLocaleString()}</h3>
+        <p>{data.node.label}</p>
+      </TreeMapTooltipBase>
+    ),
   },
 };
