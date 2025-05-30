@@ -99,3 +99,42 @@ export const Square: Story = {
     },
   },
 };
+
+export const LabelSkipSize: Story = {
+  args: {
+    widgetCardProps: {
+      contentClassName: css`
+        width: unset !important;
+        max-width: 100% !important;
+        aspect-ratio: 1/1;
+      `,
+    },
+    labelSkipSize: 30,
+    features: ['header'],
+    data: {
+      name: 'root',
+      children: [
+        {
+          name: 'node1',
+          value: 50,
+        },
+        {
+          name: 'node2',
+          value: 100,
+        },
+        {
+          name: 'node3',
+          value: 3,
+        },
+        {
+          name: 'node4',
+          value: 2,
+        },
+        {
+          name: 'node5',
+          value: 1,
+        },
+      ],
+    },
+  },
+};
