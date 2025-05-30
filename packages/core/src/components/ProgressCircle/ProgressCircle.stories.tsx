@@ -56,7 +56,7 @@ export const Default = {
 
 const sizes = [80, 130, 180];
 
-export const SizesAndColors: StoryObj<typeof ProgressCircle> = (args: Args) => (
+export const SizesAndColors = (args: Args) => (
   <GridWrapper>
     <HeaderTitle>Color</HeaderTitle>
     <HeaderTitle>Size: 80</HeaderTitle>
@@ -97,4 +97,22 @@ SizesAndColors.argTypes = {
   max: {
     control: false,
   },
+};
+
+export const Infinite: StoryObj<Meta<typeof ProgressCircle>> = {
+  args: {
+    max: 10,
+    currentValue: 3,
+    mode: 'infinite',
+  },
+};
+
+export const InfiniteSizesAndColors = (args: Args) => (
+  <SizesAndColors {...args} />
+);
+
+InfiniteSizesAndColors.args = {
+  max: 10,
+  currentValue: 3,
+  mode: 'infinite',
 };

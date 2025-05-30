@@ -13,6 +13,8 @@ const ProgressCircle = ({
   color = 'green',
   size = 160,
   infoContent,
+  mode = 'default',
+  classnames,
 }: ProgressCircleProps) => {
   const theme = useTheme();
   const gradientId = useId();
@@ -33,9 +35,13 @@ const ProgressCircle = ({
       fullStroke={fullStroke}
       svgOffset={svgOffset}
       color={color}
-      size={size}>
-      <ProgressCircleOuter size={size}>
-        <ProgressCircleInner size={size}>{infoContent}</ProgressCircleInner>
+      size={size}
+      mode={mode}
+      className={classnames?.root}>
+      <ProgressCircleOuter size={size} className={classnames?.outer}>
+        <ProgressCircleInner size={size} className={classnames?.inner}>
+          {infoContent}
+        </ProgressCircleInner>
       </ProgressCircleOuter>
 
       <svg
@@ -44,14 +50,20 @@ const ProgressCircle = ({
         viewBox={`0 0 ${size} ${size}`}
         preserveAspectRatio="xMinYMin slice"
         width="100%"
-        height="100%">
+        height="100%"
+        className={classnames?.svg}>
         <defs>
           <linearGradient id={gradientId}>
             <stop offset="0%" stopColor={theme.colors[color]} />
             <stop offset="100%" stopColor={colorValue} />
           </linearGradient>
         </defs>
-        <circle cx={size / 2} cy={size / 2} r={size / 2 - barStroke} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={size / 2 - barStroke}
+          className={classnames?.svgCircle}
+        />
       </svg>
     </ProgressCircleBase>
   );
