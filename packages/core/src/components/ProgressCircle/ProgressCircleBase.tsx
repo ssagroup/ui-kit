@@ -8,17 +8,30 @@ const generateGradient = (svgOffset: number) => keyframes`
   }
 `;
 
+const generateInfinite = () => keyframes`
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+`;
+
 export const ProgressCircleBase = styled.div<{
   gradientId: string;
   fullStroke: number;
   svgOffset: number;
   color: string;
   size: number;
+  mode: 'default' | 'infinite';
 }>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
 
   position: relative;
+
+  animation: ${() => generateInfinite()} 2s linear infinite forwards;
+  animation: ${({ mode }) => mode === 'default' && 'none'};
 
   svg {
     position: absolute;
@@ -40,8 +53,11 @@ export const ProgressCircleBase = styled.div<{
     stroke-linecap: round;
     stroke-dasharray: ${({ fullStroke }) => fullStroke};
     stroke-dashoffset: ${({ fullStroke }) => fullStroke};
-
     animation: ${({ svgOffset }) => generateGradient(svgOffset)} 1s linear
       forwards;
+    animation-direction: ${({ mode }) =>
+      mode === 'infinite' && 'reverse !important'};
+    animation-play-state: ${({ mode }) =>
+      mode === 'infinite' && 'paused !important'};
   }
 `;
