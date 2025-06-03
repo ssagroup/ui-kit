@@ -24,15 +24,7 @@ const refs: StorybookConfig['refs'] = {
 const config: StorybookConfig = {
   framework: '@storybook/react-webpack5',
   stories: ['./intro.mdx'],
-  addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {},
-    },
-    '@storybook/addon-mdx-gfm',
-    '@storybook/addon-controls',
-    '@storybook/addon-webpack5-compiler-babel',
-  ],
+  addons: ['@storybook/addon-docs', '@storybook/addon-webpack5-compiler-babel'],
   refs,
   docs: {},
   managerHead: (head) => `

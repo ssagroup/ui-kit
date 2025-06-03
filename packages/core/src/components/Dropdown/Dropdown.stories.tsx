@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';

@@ -1,4 +1,4 @@
-import { type StoryObj, type Meta } from '@storybook/react';
+import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { css } from '@emotion/css';
 
 import {
@@ -143,6 +143,23 @@ export const LabelSkipSize: Story = {
 };
 
 export const CustomTooltip: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `
+          <TreeMapChart
+            {...args}
+            tooltip={(data) => (
+              <TreeMapTooltipBase css={{ padding: '8px 16px', display: 'block' }}>
+                <h3>{new Date().toLocaleString()}</h3>
+                <p>{data.node.label}</p>
+              </TreeMapTooltipBase>
+            )}
+          />
+        `,
+      },
+    },
+  },
   args: {
     tooltip: (data) => (
       <TreeMapTooltipBase css={{ padding: '8px 16px', display: 'block' }}>

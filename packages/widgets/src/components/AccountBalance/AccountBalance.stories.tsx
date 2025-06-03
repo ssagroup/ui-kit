@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { css as cssReact } from '@emotion/react';
 import { css } from '@emotion/css';

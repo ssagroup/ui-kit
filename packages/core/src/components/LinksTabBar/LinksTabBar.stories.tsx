@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { LinksTabBar, LinksTabBarProps } from './index';
 import { links } from './stories/mockData';

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import type { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react-webpack5';
 import { TranslationProvider } from '@contexts';
 import { USDT } from '@/fintech/constants';
 import {

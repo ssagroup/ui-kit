@@ -27,4 +27,6 @@ export const BarGaugeChartComponent = ({
   </WithWidgetCard>
 );
 
-export const BarGaugeChart = WithFullscreenMode(BarGaugeChartComponent);
+export const BarGaugeChart = WithFullscreenMode(
+  BarGaugeChartComponent,
+) as typeof BarGaugeChartComponent;

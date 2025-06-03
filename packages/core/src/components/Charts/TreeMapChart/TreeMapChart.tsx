@@ -95,4 +95,6 @@ export const TreeMapChartComponent = ({
   );
 };
 
-export const TreeMapChart = WithFullscreenMode(TreeMapChartComponent);
+export const TreeMapChart = WithFullscreenMode(
+  TreeMapChartComponent,
+) as typeof TreeMapChartComponent;

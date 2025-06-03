@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { UserProfile } from './UserProfile';
 import Icon from '@components/Icon';
 

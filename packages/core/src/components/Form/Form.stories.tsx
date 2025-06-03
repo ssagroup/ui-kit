@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {
   Title,
   Subtitle,
@@ -8,7 +8,7 @@ import {
   Primary,
   Stories,
 } from '@storybook/addon-docs';
-import { within, userEvent } from '@storybook/test';
+import { within, userEvent } from 'storybook/test';
 import {
   useForm,
   SubmitHandler,

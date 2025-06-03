@@ -8,13 +8,7 @@ const appWebpackConfig = initWebpackConfig();
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.mdx'],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm', // cspell:disable-line
-    'storybook-addon-pseudo-states',
-  ],
+  addons: ['@storybook/addon-links', 'storybook-addon-pseudo-states'],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
@@ -22,8 +16,7 @@ const config: StorybookConfig = {
   typescript: {
     check: false,
     checkOptions: {},
-    reactDocgen: 'react-docgen-typescript', // cspell:disable-line
-    // cspell:disable-next-line
+    reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       compilerOptions: {
         allowSyntheticDefaultImports: false,

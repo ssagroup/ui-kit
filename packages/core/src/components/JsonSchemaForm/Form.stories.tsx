@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { type StoryObj, type Meta } from '@storybook/react';
+import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import validator from '@rjsf/validator-ajv8';
 
 import TextField from '@components/TextField';

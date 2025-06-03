@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css, useTheme } from '@emotion/react';
 import { css as cssString } from '@emotion/css';
 import Typography from '@components/Typography';

@@ -122,4 +122,6 @@ export const CandlestickChartComponent = ({
   );
 };
 
-export const CandlestickChart = WithFullscreenMode(CandlestickChartComponent);
+export const CandlestickChart = WithFullscreenMode(
+  CandlestickChartComponent,
+) as typeof CandlestickChartComponent;

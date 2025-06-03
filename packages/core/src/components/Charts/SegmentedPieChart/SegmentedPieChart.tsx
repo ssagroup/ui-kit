@@ -103,4 +103,6 @@ export const SegmentedPieChartComponent = ({
   );
 };
 
-export const SegmentedPieChart = WithFullscreenMode(SegmentedPieChartComponent);
+export const SegmentedPieChart = WithFullscreenMode(
+  SegmentedPieChartComponent,
+) as typeof SegmentedPieChartComponent;

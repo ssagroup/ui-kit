@@ -1,5 +1,5 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Icon } from '@ssa-ui-kit/core';
 import TradingInfoCard from './TradingInfoCard';
 import { TradingInfoCardProps } from './types';

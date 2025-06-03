@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { type StoryObj, type Meta } from '@storybook/react';
+import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { DateTime } from 'luxon';
 import { seededRandom } from '@ssa-ui-kit/utils';
 

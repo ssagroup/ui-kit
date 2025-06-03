@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Button, Icon, Wrapper } from '@ssa-ui-kit/core';
 
 import { AccountKeys } from './AccountKeys';

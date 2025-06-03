@@ -173,4 +173,6 @@ const GaugeChartComponent = ({
   );
 };
 
-export const GaugeChart = WithFullscreenMode(GaugeChartComponent);
+export const GaugeChart = WithFullscreenMode(
+  GaugeChartComponent,
+) as typeof GaugeChartComponent;

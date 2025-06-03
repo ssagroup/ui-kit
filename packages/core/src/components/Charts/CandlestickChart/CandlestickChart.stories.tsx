@@ -1,8 +1,8 @@
-import { type StoryObj, type Meta } from '@storybook/react';
-import { seededRandom } from '@ssa-ui-kit/utils';
+import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { DateTime } from 'luxon';
+import { seededRandom } from '@ssa-ui-kit/utils';
 
-import { CandlestickChart } from './';
+import { CandlestickChart, CandlestickChartProps } from './';
 
 const generateMockData = (count = 60, stepMinutes = 1) => {
   const rand = seededRandom(10);
@@ -77,7 +77,9 @@ export const Fullscreen: Story = {
   },
 };
 
-export const Timeframe: Story = {
+export const Timeframe: StoryObj<
+  CandlestickChartProps & { timeframe: string }
+> = {
   argTypes: {
     timeframe: {
       control: { type: 'select' },

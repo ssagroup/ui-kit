@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/css';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Icon from '@components/Icon';
 import { IconProps } from '@components/Icon/types';
 import Button from '@components/Button';
