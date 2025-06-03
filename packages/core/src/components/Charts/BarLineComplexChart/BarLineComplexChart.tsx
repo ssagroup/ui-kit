@@ -60,4 +60,4 @@ const BarLineComplexChartComponent = ({
 
 export const BarLineComplexChart = WithFullscreenMode(
   BarLineComplexChartComponent,
-);
+) as typeof BarLineComplexChartComponent;

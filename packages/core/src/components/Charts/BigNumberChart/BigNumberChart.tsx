@@ -89,4 +89,6 @@ export const BigNumberChartComponent = ({
   );
 };
 
-export const BigNumberChart = WithFullscreenMode(BigNumberChartComponent);
+export const BigNumberChart = WithFullscreenMode(
+  BigNumberChartComponent,
+) as typeof BigNumberChartComponent;

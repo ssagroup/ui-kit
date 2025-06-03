@@ -78,4 +78,6 @@ export const RadarChartComponent = <D extends Record<string, unknown>>({
   );
 };
 
-export const RadarChart = WithFullscreenMode(RadarChartComponent);
+export const RadarChart = WithFullscreenMode(
+  RadarChartComponent,
+) as typeof RadarChartComponent;

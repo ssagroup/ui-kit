@@ -24,4 +24,6 @@ export const PieChartComponent = (props: PieChartProps) => {
   return <PieChartInternal {...props} {...fullscreenModeProps} />;
 };
 
-export const PieChart = WithFullscreenMode(PieChartComponent);
+export const PieChart = WithFullscreenMode(
+  PieChartComponent,
+) as typeof PieChartComponent;
