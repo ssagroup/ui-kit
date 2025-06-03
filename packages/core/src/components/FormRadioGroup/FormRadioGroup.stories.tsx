@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react-webpack5';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import Typography from '@components/Typography';

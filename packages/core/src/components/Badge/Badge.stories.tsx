@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react-webpack5';
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
 import {

@@ -1,4 +1,4 @@
-import { type StoryObj, type Meta } from '@storybook/react';
+import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 
 import { NumberField } from './NumberField';
 

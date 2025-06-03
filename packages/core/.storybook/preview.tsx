@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react-webpack5';
 
 import { ThemeProvider } from '@emotion/react';
 import theme from '../src/themes/main';

@@ -1,5 +1,5 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css } from '@emotion/react';
 import { Button } from '@ssa-ui-kit/core';
 import TradingScoreboard from './TradingScoreboard';

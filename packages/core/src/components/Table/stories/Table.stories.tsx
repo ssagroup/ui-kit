@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { css } from '@emotion/react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {
   Title,
   Subtitle,
@@ -26,16 +26,15 @@ import { NoControlOrdersStory } from './NoControlOrders/StoryComponent';
 export default {
   title: 'Components/Table',
   component: Table,
+  globals: {
+    backgrounds: { value: 'main' },
+  },
   parameters: {
     controls: { disable: true },
     backgrounds: {
-      default: 'main',
-      values: [
-        {
-          name: 'main',
-          value: '#D0D1D6',
-        },
-      ],
+      options: {
+        main: { name: 'Main', value: '#D0D1D6' },
+      },
     },
     docs: {
       source: {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Theme, useTheme } from '@emotion/react';
 import Typography from '@components/Typography';
 import Badge from '@components/Badge';

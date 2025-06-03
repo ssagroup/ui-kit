@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Textarea from '@components/Textarea';

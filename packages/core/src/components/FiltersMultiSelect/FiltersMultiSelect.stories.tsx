@@ -1,4 +1,4 @@
-import { type StoryObj, type Meta } from '@storybook/react';
+import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { useToggle } from '@ssa-ui-kit/hooks';
 
 import Button from '@components/Button';
