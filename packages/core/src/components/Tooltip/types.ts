@@ -18,6 +18,7 @@ export interface TooltipProps extends CommonProps {
   placement?: Placement;
   enableHover?: boolean;
   enableClick?: boolean;
+  enableClientPoint?: boolean;
   offsetOptions?: OffsetOptions;
   // TooltipContent-related props
   size?: TooltipSize;

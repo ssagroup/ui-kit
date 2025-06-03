@@ -10,6 +10,7 @@ import {
   useClick,
   useDismiss,
   useRole,
+  useClientPoint,
   useInteractions,
 } from '@floating-ui/react';
 import { UseTooltip } from './types';
@@ -19,6 +20,7 @@ export const useTooltip: UseTooltip = (props) => {
     placement,
     enableClick = true,
     enableHover = false,
+    enableClientPoint = false,
     offsetOptions = 12,
     size = 'small',
     hasArrow = true,
@@ -49,8 +51,15 @@ export const useTooltip: UseTooltip = (props) => {
   const click = useClick(context, { enabled: enableClick });
   const dismiss = useDismiss(context);
   const role = useRole(context);
+  const clientPoint = useClientPoint(context, { enabled: enableClientPoint });
 
-  const interactionsData = useInteractions([hover, click, dismiss, role]);
+  const interactionsData = useInteractions([
+    hover,
+    click,
+    dismiss,
+    role,
+    clientPoint,
+  ]);
 
   return useMemo(
     () => ({
