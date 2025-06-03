@@ -6,6 +6,9 @@ import ProgressLegendItem from '@components/ProgressLegendItem';
 import ProgressLegend from '@components/ProgressLegend';
 
 import Progress from './index';
+import Tooltip from '@components/Tooltip';
+import TooltipTrigger from '@components/TooltipTrigger';
+import TooltipContent from '@components/TooltipContent';
 
 type Args = Parameters<typeof ProgressBar>[0];
 
@@ -229,6 +232,28 @@ export const Horizontal: StoryObj = (args: Args) => {
   );
 };
 Horizontal.args = {
+  percentage: 80,
+  color: 'blue',
+};
+
+export const WithTooltip: StoryObj = (args: Args) => (
+  <Progress>
+    <Tooltip
+      enableHover
+      enableClientPoint
+      enableClick={false}
+      hasArrow={false}
+      placement="right-start">
+      <TooltipTrigger>
+        <ProgressBar percentage={args.percentage} color={args.color} />
+      </TooltipTrigger>
+      <TooltipContent style={{ padding: 8 }}>
+        <span>{args.percentage}% completed</span>
+      </TooltipContent>
+    </Tooltip>
+  </Progress>
+);
+WithTooltip.args = {
   percentage: 80,
   color: 'blue',
 };
