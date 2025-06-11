@@ -6,6 +6,7 @@ import { BarGaugeChartProps } from './types';
 export const BarGaugeChartComponent = ({
   title,
   widgetCardProps,
+  wrapperProps,
   bars = [],
   features = [],
 }: BarGaugeChartProps) => (
@@ -19,7 +20,8 @@ export const BarGaugeChartComponent = ({
     <Wrapper
       direction="column"
       alignItems="start"
-      css={{ height: '100%', gap: '12px' }}>
+      css={{ height: '100%', gap: '12px' }}
+      {...wrapperProps}>
       {bars.map((barProps, index) => (
         <GaugeBar key={index} {...barProps} />
       ))}

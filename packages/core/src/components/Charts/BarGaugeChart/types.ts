@@ -1,5 +1,6 @@
 import { MustInclude } from '@ssa-ui-kit/utils';
 import { WidgetCardProps } from '@components/WidgetCard';
+import Wrapper from '@components/Wrapper';
 
 export type BarGaugeChartFeature = 'header' | 'fullscreenMode';
 
@@ -30,4 +31,5 @@ export interface BarGaugeChartProps {
   widgetCardProps?: WidgetCardProps;
   bars?: GaugeBarProps[];
   features?: BarGaugeChartFeature[];
+  wrapperProps?: React.ComponentProps<typeof Wrapper>;
 }
