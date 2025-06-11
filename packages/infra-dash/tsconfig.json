@@ -8,6 +8,11 @@
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
+    "paths": {
+      "@shared/*": ["./src/shared/*"],
+      "@components/*": ["./src/components/*"],
+      "@entities/*": ["./src/entities/*"],
+    }
   },
   "include": [
     "src/**/*",

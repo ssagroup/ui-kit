@@ -6,10 +6,11 @@ import initBabelConfig from '../../../babel.config';
 const appWebpackConfig: Configuration = initWebpackConfig();
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.mdx'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../**/*.mdx'],
   addons: [
     'storybook/internal/controls',
     '@storybook/addon-links',
+    '@storybook/addon-docs',
     'storybook-addon-pseudo-states',
   ],
   framework: {

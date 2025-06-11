@@ -1,0 +1,97 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting started" />
+
+# @ssa-ui-kit/infra-dash
+
+A React library for building infrastructure monitoring dashboards with support for Grafana data sources, customizable panels, and dynamic dashboard management.
+
+## 🚀 Installation
+
+`@ssa-ui-kit/infra-dash` uses `@ssa-ui-kit/core` as a peer dependency, so ensure you have it installed and configured in your project.
+
+```bash
+npm install @ssa-ui-kit/infra-dash
+# or
+yarn add @ssa-ui-kit/infra-dash
+# or
+pnpm add @ssa-ui-kit/infra-dash
+```
+
+## 🏁 Quick Start
+
+```tsx
+import React from 'react';
+import {
+  InfraDashProvider,
+  DashboardView,
+  RestInfraDashTransport
+} from '@ssa-ui-kit/infra-dash';
+
+// Create a transport instance to handle data fetching
+const transport = new RestInfraDashTransport({
+  // Base InfraDash URL
+  baseUrl: '/api/InfraDash',
+  authMiddleware: (request) => {
+    request.headers.set(
+      'Authorization',
+      'Bearer your-auth-token-here',
+    );
+    return request;
+  },
+  unwrapResponse: (response) => {
+    // Unwrap the response data if needed
+    ...
+  },
+});
+
+function App() {
+  return (
+    <InfraDashProvider transport={transport}>
+      <DashboardView dashboardId={1} />
+    </InfraDashProvider>
+  );
+}
+```
+
+## 🛠️ API Reference
+
+### Core Components
+
+- **InfraDashProvider** - Main provider component for the infra-dash context
+- **DashboardView** - Component for rendering dashboards
+
+### Hooks
+
+- **useDashboards** - Fetch all dashboards
+- **useDashboard** - Fetch a specific dashboard
+- **useCreateDashboard** - Create new dashboards
+- **useUpdateDashboard** - Update existing dashboards
+- **useDeleteDashboard** - Delete dashboards
+- **useInfraDashContext** - Access the infra-dash context
+
+## 🎯 Examples
+
+### Basic Dashboard Display
+
+```tsx
+import { DashboardView } from '@ssa-ui-kit/infra-dash';
+
+function MyDashboard() {
+  return <DashboardView dashboardId={123} />;
+}
+```
+
+### Custom Transport
+
+```tsx
+import { InfraDashTransport } from '@ssa-ui-kit/infra-dash';
+
+const customTransport: InfraDashTransport = {
+  getDashboards: async () => {
+    const response = await fetch('/api/dashboards');
+    return response.json();
+  },
+  // ... other methods
+};
+```

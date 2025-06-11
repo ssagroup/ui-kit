@@ -8,6 +8,7 @@ automargin
 autosizable
 autosize
 barcornerradius
+bargauge
 bargroupgap
 barmode
 BMI
@@ -118,6 +119,7 @@ notificationmenu
 npmjs
 nvmrc
 otp
+percentunit
 PLN
 Plotly
 PMO
@@ -165,6 +167,8 @@ tickformat
 ticklabelmode
 ticklabelstep
 tickmode
+tickprefix
+ticksuffix
 ticktext
 tickvals
 titlefont
