@@ -42,6 +42,7 @@ export interface GaugeChartProps
   trackProps?: Omit<GaugeChartBaseProps, 'data'>;
   features?: GaugeChartFeature[];
   widgetCardProps?: WidgetCardProps;
+  containerProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
 const GaugeChartComponent = ({
@@ -56,6 +57,7 @@ const GaugeChartComponent = ({
   chartProps,
   trackProps,
   widgetCardProps,
+  containerProps,
   withLabels = true,
   withTrack = true,
   withNeedle = true,
@@ -113,7 +115,7 @@ const GaugeChartComponent = ({
   const pieOffset = centeredOffset(containerSize, pieSize);
 
   return (
-    <div css={{ height: '100%' }}>
+    <div css={{ height: '100%' }} {...containerProps}>
       <WithWidgetCard
         features={features}
         cardProps={{
