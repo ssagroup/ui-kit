@@ -1,11 +1,10 @@
 import Wrapper from '@components/Wrapper';
-import Table from '@components/Table/Table';
 import TableRow from '@components/TableRow';
 import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
 import TableHead from '@components/TableHead';
 import TableCellHeader from '@components/TableCellHeader';
-import { Exchange, PNL, ROI, Trade, Actions } from './components';
+import { Exchange, PNL, ROI, Trade, Actions, TableList } from './components';
 import { botsTableData } from './mockData';
 import { StyledTableItem } from './types';
 
@@ -30,8 +29,10 @@ export const StyledTableStory = () => {
       css={{
         width: '100%',
         height: '100%',
+        overflowX: 'auto',
+        whiteSpace: 'nowrap',
       }}>
-      <Table>
+      <TableList>
         <TableHead>
           <TableRow>
             {columns.map((columnName) => (
@@ -69,7 +70,7 @@ export const StyledTableStory = () => {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </TableList>
     </Wrapper>
   );
 };
