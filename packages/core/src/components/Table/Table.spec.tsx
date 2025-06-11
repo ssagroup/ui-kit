@@ -8,7 +8,6 @@ import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
 import { SortableTable } from './stories/SortableTable';
 import { StyledTableStory } from './stories/StyledTable/StoryComponent';
-import { NoControlOrdersStory } from './stories/NoControlOrders/StoryComponent';
 import { screen } from '../../../customTest';
 
 describe('Table', () => {
@@ -178,37 +177,5 @@ describe('StyledTable', () => {
     await user.keyboard('{ArrowDown}');
     await user.keyboard('{Enter}');
     expect(alertMock).toHaveBeenCalledWith('action copy');
-  });
-});
-
-describe('Table: NoControlOrdersStory', () => {
-  it('Should be correctly rendered', () => {
-    const { getAllByText } = render(<NoControlOrdersStory />);
-
-    getAllByText('Yevgen 2');
-    getAllByText('bot1');
-    getAllByText('New Run - 12/8/2023');
-    getAllByText('1A2B3C');
-    getAllByText('Active');
-    getAllByText('Less than minute ago');
-    getAllByText('BTC/TUSD');
-    getAllByText('0.003 BTC');
-  });
-
-  it('Should have the three dots button clicked', async () => {
-    const user = userEvent.setup();
-    const alertMock = jest.spyOn(window, 'alert');
-    const { container } = render(<NoControlOrdersStory />);
-    const threeDotsButton = container.querySelector(
-      'tbody > tr:nth-child(6) > td:last-child button:last-child',
-    );
-    fireEvent.click(threeDotsButton as Node);
-    fireEvent.keyDown(threeDotsButton as Node, {
-      key: 'ArrowDown',
-      code: 'ArrowDown',
-    });
-    await user.keyboard('{ArrowDown}');
-    await user.keyboard('{Enter}');
-    expect(alertMock).toHaveBeenCalledWith('action liquidate');
   });
 });

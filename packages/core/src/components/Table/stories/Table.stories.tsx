@@ -21,7 +21,6 @@ import TableCellHeader from '@components/TableCellHeader';
 import { SortableTable } from './SortableTable';
 import { SortInfo } from './types';
 import { StyledTableStory } from './StyledTable/StoryComponent';
-import { NoControlOrdersStory } from './NoControlOrders/StoryComponent';
 
 export default {
   title: 'Components/Table',
@@ -106,8 +105,3 @@ TableSorting.args = {};
 
 export const StyledTable: StoryObj<typeof Table> = () => <StyledTableStory />;
 StyledTable.args = {};
-
-export const NoControlOrders: StoryObj<typeof Table> = () => (
-  <NoControlOrdersStory />
-);
-NoControlOrders.args = {};
