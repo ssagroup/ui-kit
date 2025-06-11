@@ -1,4 +1,5 @@
 import { InfraDashInternalProvider } from '@shared/context';
+import { PanelRegistry } from '@shared/panelRegistry';
 import {
   mutationClient,
   MutationClient,
@@ -7,11 +8,14 @@ import {
 } from '@shared/query';
 import { InfraDashTransport } from '@shared/transport';
 
+import { panelRegistry } from './panels';
+
 export type InfraDashProviderProps = {
   transport: InfraDashTransport;
   children: React.ReactNode;
   queryClient?: QueryClient;
   mutationClient?: MutationClient;
+  panelRegistry?: PanelRegistry;
 };
 
 export const InfraDashProvider = ({
@@ -19,6 +23,7 @@ export const InfraDashProvider = ({
   transport,
   queryClient: providedQueryClient,
   mutationClient: providedMutationClient,
+  panelRegistry: providedPanelRegistry,
 }: InfraDashProviderProps) => {
   return (
     <InfraDashInternalProvider
@@ -26,6 +31,7 @@ export const InfraDashProvider = ({
         transport,
         queryClient: providedQueryClient ?? queryClient,
         mutationClient: providedMutationClient ?? mutationClient,
+        panelRegistry: providedPanelRegistry ?? panelRegistry,
       }}>
       {children}
     </InfraDashInternalProvider>

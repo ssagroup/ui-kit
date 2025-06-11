@@ -12,12 +12,7 @@ export type PanelDefinition = {
     props: Record<string, unknown>;
   };
   /** Grid positioning and sizing information */
-  gridPos: {
-    h: number;
-    w: number;
-    x: number;
-    y: number;
-  };
+  gridPos: Record<'h' | 'w' | 'x' | 'y', number>;
 };
 
 /**
