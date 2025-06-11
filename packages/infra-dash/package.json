@@ -37,14 +37,17 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@ssa-ui-kit/core": "workspace:^"
+    "@ssa-ui-kit/core": "workspace:^",
+    "@ssa-ui-kit/hooks": "workspace:^"
   },
   "devDependencies": {
     "@emotion/css": "^11.13.5",
     "@emotion/jest": "^11.13.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "^1.48.0",
+    "@grafana/schema": "^12.0.1",
+    "@grafana/data": "^12.0.1"
   },
   "peerDependencies": {
     "@emotion/css": "^11.13.5",
