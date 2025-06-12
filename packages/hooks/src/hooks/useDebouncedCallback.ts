@@ -24,5 +24,5 @@ export const useDebouncedCallback = <T extends unknown[]>(
       timeoutRef.current = null;
     }
   };
-  return [executedFunction, cancel] as const;
+  return [executedFunction, cancel, timeoutRef.current] as const;
 };
