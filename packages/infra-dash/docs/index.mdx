@@ -24,7 +24,7 @@ pnpm add @ssa-ui-kit/infra-dash
 import React from 'react';
 import {
   InfraDashProvider,
-  DashboardView,
+  DashboardViewer,
   RestInfraDashTransport
 } from '@ssa-ui-kit/infra-dash';
 
@@ -48,7 +48,7 @@ const transport = new RestInfraDashTransport({
 function App() {
   return (
     <InfraDashProvider transport={transport}>
-      <DashboardView dashboardId={1} />
+      <DashboardViewer dashboardId={1} />
     </InfraDashProvider>
   );
 }
@@ -59,7 +59,7 @@ function App() {
 ### Core Components
 
 - **InfraDashProvider** - Main provider component for the infra-dash context
-- **DashboardView** - Component for rendering dashboards
+- **DashboardViewer** - Component for rendering dashboards
 
 ### Hooks
 
@@ -75,10 +75,10 @@ function App() {
 ### Basic Dashboard Display
 
 ```tsx
-import { DashboardView } from '@ssa-ui-kit/infra-dash';
+import { DashboardViewer } from '@ssa-ui-kit/infra-dash';
 
 function MyDashboard() {
-  return <DashboardView dashboardId={123} />;
+  return <DashboardViewer dashboardId={123} />;
 }
 ```
 

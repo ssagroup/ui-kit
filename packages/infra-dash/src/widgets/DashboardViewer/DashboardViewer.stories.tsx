@@ -6,12 +6,12 @@ import { QueryClient } from '@shared/query';
 
 import { InfraDashProvider } from '../../provider';
 
-import { DashboardView } from './DashboardView';
+import { DashboardViewer } from './DashboardViewer';
 import { MockTransport, dashboard } from './__mock__';
 
-const meta: Meta<typeof DashboardView> = {
-  title: 'DashboardView',
-  component: DashboardView,
+const meta: Meta<typeof DashboardViewer> = {
+  title: 'DashboardViewer',
+  component: DashboardViewer,
   decorators: [
     (Story) => (
       <div style={{ height: '100vh', position: 'relative' }}>{Story()}</div>
@@ -45,6 +45,9 @@ export const Default: Story = {
   ],
   args: {
     dashboard,
+    header: (dashboard) => (
+      <h3 style={{ marginBottom: '20px' }}>{dashboard.title}</h3>
+    ),
   },
 };
 
