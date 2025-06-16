@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { Panel, PANEL_DATA_SOURCE, PanelData } from '@shared/panel';
 import { QueryOptions, useQuery } from '@shared/query';
 import { InfraDashTransport, useTransport } from '@shared/transport';
@@ -8,13 +6,8 @@ type Options = QueryOptions & {
   transport?: InfraDashTransport;
 };
 
-export const usePanelData = (
-  panel: Panel,
-  options?: Options & { refetchIntervalMs?: number },
-) => {
+export const usePanelData = (panel: Panel, options: Options = {}) => {
   const _transport = useTransport(options?.transport);
-  const { refetchIntervalMs = 60000, ...queryOptions } = options || {};
-
   const panelSource = panel.panelDefinition.source;
 
   const result = useQuery(
@@ -30,17 +23,8 @@ export const usePanelData = (
       }
       throw new Error(`Unsupported panel data source: ${panelSource}`);
     },
-    queryOptions,
+    options,
   );
-
-  useEffect(() => {
-    if (refetchIntervalMs) {
-      const intervalId = setInterval(() => {
-        result.refetch();
-      }, refetchIntervalMs);
-      return () => clearInterval(intervalId);
-    }
-  }, [refetchIntervalMs]);
 
   return result;
 };

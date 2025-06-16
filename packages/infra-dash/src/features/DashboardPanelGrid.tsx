@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { css } from '@emotion/react';
 import { useElementSize, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
 import GridLayout from 'react-grid-layout';
@@ -20,6 +20,11 @@ export type DashboardPanelGridProps = {
   rowHeight?: number;
   draggable?: boolean;
   resizable?: boolean;
+  /*
+    If 0 the panel-data will not be refetch
+    Default is 60000 (60 seconds)
+  */
+  refetchIntervalMs?: number;
   onLayoutChange?: (layout: GridLayout.Layout[]) => void;
   onDragStart?: GridLayout.ItemCallback;
   onResizeStart?: GridLayout.ItemCallback;
@@ -33,6 +38,7 @@ export const DashboardPanelGrid = ({
   rowHeight = 30,
   draggable = false,
   resizable = false,
+  refetchIntervalMs = 60000, // 60 seconds
   onLayoutChange,
   onDragStart,
   onResizeStart,
@@ -41,7 +47,17 @@ export const DashboardPanelGrid = ({
 }: DashboardPanelGridProps) => {
   const { ref, width } = useElementSize<HTMLDivElement>();
   const isMinMD = useMinMDMediaQuery();
-  const { panelRegistry } = useInfraDashContext();
+  const { panelRegistry, queryClient } = useInfraDashContext();
+
+  useEffect(() => {
+    if (refetchIntervalMs) {
+      queryClient.invalidateQueries({ key: ['panel-data'] });
+      const intervalId = setInterval(() => {
+        queryClient.invalidateQueries({ key: ['panel-data'] });
+      }, refetchIntervalMs);
+      return () => clearInterval(intervalId);
+    }
+  }, [refetchIntervalMs]);
 
   // sort panels by their grid position
   // for mobile view it will ensure they are stacked vertically in the right order
