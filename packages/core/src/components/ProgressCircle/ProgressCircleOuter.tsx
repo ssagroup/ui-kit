@@ -6,9 +6,9 @@ export const ProgressCircleOuter = styled.div<{
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
 
+  border: ${({ size }) => size / 10}px solid
+    ${({ theme }) => theme.colors.greyLighter};
   border-radius: 50%;
 
-  padding: ${({ size }) => size / 10}px;
-
-  background: ${({ theme }) => theme.colors.greyLighter};
+  background: none;
 `;
