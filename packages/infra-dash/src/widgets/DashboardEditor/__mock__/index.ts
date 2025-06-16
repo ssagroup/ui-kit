@@ -2,8 +2,16 @@ import { DataFrameType, FieldType, ThresholdsMode } from '@grafana/data';
 import { FieldColorModeId } from '@grafana/schema';
 
 import { Dashboard } from '@shared/dashboard';
-import { GrafanaPanelData } from '@shared/grafana';
-import { RestInfraDashTransport } from '@shared/transport';
+import {
+  GrafanaDashboard,
+  GrafanaPanel,
+  GrafanaPanelData,
+} from '@shared/grafana';
+import {
+  CreateDashboardPayload,
+  RestInfraDashTransport,
+  UpdateDashboardPayload,
+} from '@shared/transport';
 
 export const timeseriesData: GrafanaPanelData = {
   source: 'grafana',
@@ -436,6 +444,12 @@ export const dashboard: Dashboard = {
   ],
 };
 
+const dashboards: GrafanaDashboard[] = [
+  { id: '1', title: 'Sample Dashboard' },
+  { id: '2', title: 'Another Dashboard' },
+  { id: '3', title: 'Third Dashboard' },
+];
+
 export class MockTransport extends RestInfraDashTransport {
   constructor() {
     super({ baseUrl: 'http://mock-infradash/api' });
@@ -448,6 +462,41 @@ export class MockTransport extends RestInfraDashTransport {
 
   getDashboard() {
     return Promise.resolve(dashboard);
+  }
+
+  getGrafanaDashboards() {
+    return Promise.resolve(dashboards);
+  }
+
+  getGrafanaPanels(grafanaDashboardUid: string): Promise<GrafanaPanel[]> {
+    if (grafanaDashboardUid === '1') {
+      return Promise.resolve(
+        dashboard.panels.map((panel) => ({
+          id: panel.panelDefinition.source.panelId,
+          title: panel.title,
+          subPanels: null,
+          panelSchema: panel.panelSchema,
+        })),
+      );
+    }
+    if (grafanaDashboardUid === '2') {
+      return Promise.resolve([
+        {
+          id: 34,
+          title: '',
+          panelSchema: {
+            type: 'row',
+          },
+          subPanels: [dashboard.panels[0]].map((panel) => ({
+            id: panel.panelDefinition.source.panelId,
+            title: panel.title,
+            subPanels: null,
+            panelSchema: panel.panelSchema,
+          })),
+        },
+      ]);
+    }
+    return Promise.resolve([]);
   }
 
   getGrafanaPanelData({
@@ -470,5 +519,23 @@ export class MockTransport extends RestInfraDashTransport {
       }
     }
     throw new Error(`Dashboard UID ${dashboardUid} not found`);
+  }
+
+  createDashboard(payload: CreateDashboardPayload): Promise<unknown> {
+    alert(
+      `MockTransport: createDashboard called with payload: ${JSON.stringify(
+        payload,
+      )}`,
+    );
+    return Promise.resolve();
+  }
+
+  updateDashboard(payload: UpdateDashboardPayload): Promise<unknown> {
+    alert(
+      `MockTransport: updateDashboard called with payload: ${JSON.stringify(
+        payload,
+      )}`,
+    );
+    return Promise.resolve();
   }
 }

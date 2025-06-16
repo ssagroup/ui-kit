@@ -32,12 +32,7 @@ export type GrafanaPanel = {
  * information about the panel type and structure.
  */
 export type GrafanaPanelData = {
-  /** Type of chart/visualization for this panel */
-  chartType: string;
-  /** Unique numeric identifier for the panel */
-  id: number;
-  /** Display title of the panel */
-  title: string;
+  source: 'grafana';
   data: {
     /**
      * Query results indexed by query reference ID.

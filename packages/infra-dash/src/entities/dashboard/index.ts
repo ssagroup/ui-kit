@@ -10,7 +10,6 @@ import {
   UpdateDashboardPayload,
   useTransport,
 } from '@shared/transport';
-import { DashboardDefinition } from '@shared/dashboard';
 
 type QOptions = QueryOptions & {
   transport?: InfraDashTransport;
@@ -47,14 +46,31 @@ export const useDashboard = (dashboardId: number, options?: QOptions) => {
 };
 
 export const useCreateDashboard = (
-  options?: MOptions<unknown, DashboardDefinition>,
+  options?: MOptions<unknown, CreateDashboardPayload>,
 ) => {
   const { transport, ...mutationOptions } = options || {};
   const _transport = useTransport(transport);
   const result = useMutation(
     ['create-dashboard'],
     async (payload: CreateDashboardPayload, signal?: AbortSignal) => {
-      return await _transport.createDashboard(payload, signal);
+      const panels = payload.panels.map((panel) => ({
+        ...panel,
+        id: panel.panelDefinition.source.panelId,
+      }));
+      const dashboardsUid = new Set(
+        panels.map((panel) => panel.panelDefinition.source.dashboardUid),
+      );
+      if (!dashboardsUid.size) {
+        throw new Error('At least one panel must be provided');
+      }
+      return await _transport.createDashboard(
+        {
+          ...payload,
+          dashboardUid: dashboardsUid.values().next().value!,
+          panels,
+        },
+        signal,
+      );
     },
     mutationOptions,
   );
@@ -63,18 +79,25 @@ export const useCreateDashboard = (
 
 export const useUpdateDashboard = (
   dashboardId: number,
-  options?: MOptions<unknown, DashboardDefinition>,
+  options?: MOptions<unknown, Omit<UpdateDashboardPayload, 'dashboardId'>>,
 ) => {
   const { transport, ...mutationOptions } = options || {};
   const _transport = useTransport(transport);
   const result = useMutation(
     ['update-dashboard', dashboardId],
-    async (
-      payload: Omit<UpdateDashboardPayload, 'dashboardId'>,
-      signal?: AbortSignal,
-    ) => {
+    async (payload, signal?) => {
+      const panels = payload.panels.map((panel) => ({
+        ...panel,
+        id: panel.panelDefinition.source.panelId,
+      }));
+      const dashboardsUid = new Set(
+        panels.map((panel) => panel.panelDefinition.source.dashboardUid),
+      );
+      if (!dashboardsUid.size) {
+        throw new Error('At least one panel must be provided');
+      }
       return await _transport.updateDashboard(
-        { ...payload, dashboardId },
+        { ...payload, panels, dashboardId },
         signal,
       );
     },

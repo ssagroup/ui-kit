@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { PANEL_DATA_SOURCE, PanelData } from '@shared/panel';
+import { Panel, PANEL_DATA_SOURCE, PanelData } from '@shared/panel';
 import { QueryOptions, useQuery } from '@shared/query';
 import { InfraDashTransport, useTransport } from '@shared/transport';
 
@@ -9,21 +9,26 @@ type Options = QueryOptions & {
 };
 
 export const usePanelData = (
-  panelId: number,
+  panel: Panel,
   options?: Options & { refetchIntervalMs?: number },
 ) => {
-  const {
-    transport,
-    refetchIntervalMs = 60000, // 1 minute
-    ...queryOptions
-  } = options || {};
-  const _transport = useTransport(transport);
+  const _transport = useTransport(options?.transport);
+  const { refetchIntervalMs = 60000, ...queryOptions } = options || {};
+
+  const panelSource = panel.panelDefinition.source;
+
   const result = useQuery(
-    ['panel-data', panelId],
+    ['panel-data', panelSource],
     async (signal) => {
-      const data = await _transport.getPanelData(panelId, signal);
-      // currently, we only support Grafana as a data source
-      return { source: PANEL_DATA_SOURCE.GRAFANA, data } satisfies PanelData;
+      if (panelSource.type === PANEL_DATA_SOURCE.GRAFANA) {
+        const { dashboardUid, panelId } = panelSource;
+        const data = await _transport.getGrafanaPanelData(
+          { dashboardUid, panelId },
+          signal,
+        );
+        return { source: PANEL_DATA_SOURCE.GRAFANA, data } satisfies PanelData;
+      }
+      throw new Error(`Unsupported panel data source: ${panelSource}`);
     },
     queryOptions,
   );

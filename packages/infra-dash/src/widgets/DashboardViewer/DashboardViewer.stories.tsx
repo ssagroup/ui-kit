@@ -116,10 +116,8 @@ export const PanelLoading: Story = {
 };
 
 class PanelErrorTransport extends MockTransport {
-  getPanelData(panelId: number): Promise<GrafanaPanelData> {
-    return Promise.reject(
-      new Error(`Error fetching data for panel ${panelId}`),
-    );
+  getGrafanaPanelData(): Promise<GrafanaPanelData> {
+    return Promise.reject(new Error(`Error fetching data for panel`));
   }
 }
 

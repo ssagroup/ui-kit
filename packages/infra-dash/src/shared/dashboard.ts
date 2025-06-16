@@ -3,7 +3,9 @@ import { Panel } from './panel';
 /**
  * Represents the configuration data for a dashboard.
  */
-export type DashboardDefinition = Record<string, unknown>;
+export type DashboardDefinition = {
+  version: 1;
+};
 
 /**
  * Represents a complete dashboard with its metadata and associated panels.
