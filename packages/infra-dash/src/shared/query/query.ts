@@ -34,9 +34,12 @@ export class QueryEntry<T> {
   }
 
   private notify() {
-    for (const sub of this.subscribers) {
-      sub(this.state);
-    }
+    // ensure subscribers are notified after the current call stack
+    queueMicrotask(() => {
+      for (const sub of this.subscribers) {
+        sub(this.state);
+      }
+    });
   }
 
   updateEntity(fetcher: Fetcher<T>, options?: QueryOptions): QueryEntry<T> {
@@ -129,7 +132,16 @@ export class QueryEntry<T> {
     this.notify();
   }
 
-  invalidate() {
+  invalidate(reset = false) {
+    if (reset) {
+      // if reset is true, we reset the state to initial
+      this.state = {
+        data: undefined,
+        error: null,
+        isLoaded: false,
+        isFetching: false,
+      };
+    }
     // kick off a new fetch
     this.state.isFetching = true;
     this.cancel();
@@ -139,6 +151,7 @@ export class QueryEntry<T> {
   cancel() {
     if (this.controller) {
       this.controller.abort('Query cancelled');
+      this.controller = null;
     }
   }
 }
@@ -165,7 +178,15 @@ export class QueryClient {
     return entry;
   }
 
-  invalidateQueries({ key, exact }: { key: QueryKey; exact?: boolean }) {
+  invalidateQueries({
+    key,
+    exact,
+    reset,
+  }: {
+    key: QueryKey;
+    exact?: boolean;
+    reset?: boolean;
+  }) {
     const matchingEntries: QueryEntry<unknown>[] = [];
     for (const [hash, entry] of this.cache.entries()) {
       if (exact) {
@@ -179,7 +200,7 @@ export class QueryClient {
       }
     }
     for (const entry of matchingEntries) {
-      entry.invalidate();
+      entry.invalidate(reset);
     }
   }
 
