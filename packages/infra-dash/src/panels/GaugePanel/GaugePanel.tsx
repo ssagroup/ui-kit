@@ -10,15 +10,22 @@ import { grafanaDataAdapter } from './data-adapters/grafana';
 
 export type GaugePanelProps = {
   panel: Panel;
+  /** Optional title for the panel, defaults to panel.title */
+  title?: string;
 };
 
-export const GaugePanel = ({ panel }: GaugePanelProps) => {
-  const panelDataQuery = usePanelData(panel.id);
+export const GaugePanel = ({
+  panel,
+  title: providedTitle,
+}: GaugePanelProps) => {
+  const panelDataQuery = usePanelData(panel);
+  const title = providedTitle ?? panel.title;
+
   if (!panelDataQuery.isLoaded) {
-    return <LoadingPanel title={panel.title} />;
+    return <LoadingPanel title={title} />;
   }
   if (panelDataQuery.error) {
-    return <ErrorPanel title={panel.title} />;
+    return <ErrorPanel title={title} />;
   }
 
   const panelData = panelDataQuery.data;
@@ -31,7 +38,7 @@ export const GaugePanel = ({ panel }: GaugePanelProps) => {
     <GaugeChart
       features={['header']}
       containerProps={{ className: css({ width: '100%', height: '100%' }) }}
-      title={panel.title}
+      title={title}
       unitLabel={valueSuffix}
       maxValue={max}
       minValue={min}
@@ -43,9 +50,24 @@ export const GaugePanel = ({ panel }: GaugePanelProps) => {
   );
 };
 
-export const panelConfig: PanelConfig = {
+export const panelConfig: PanelConfig<GaugePanelProps> = {
   componentId: 'gauge-default',
   name: 'Gauge Panel',
   Component: GaugePanel,
   supportedTypes: ['gauge'],
+  propsSchema: {
+    type: 'object',
+    properties: {
+      title: {
+        type: 'string',
+        title: 'Panel Title',
+      },
+    },
+  },
+  uiSchema: {
+    title: {
+      'ui:help': 'Override the default panel title',
+      'ui:placeholder': 'Panel Title',
+    },
+  },
 };

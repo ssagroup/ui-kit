@@ -7,7 +7,8 @@ import { GrafanaPanelData } from '@shared/grafana';
 export const grafanaDataAdapter = ({
   panel,
   data,
-}: DataAdapterOptions<GrafanaPanelData>) => {
+  labelWidth,
+}: DataAdapterOptions<GrafanaPanelData> & { labelWidth: number }) => {
   const panelData = data.data;
 
   const yIndex = 1;
@@ -20,13 +21,21 @@ export const grafanaDataAdapter = ({
       value: value ?? 0,
     })) ?? [];
 
-  const unit = defaultFieldConfig?.unit;
+  const frames = Object.values(panelData.results).flatMap(
+    (result) => result.frames,
+  );
+
+  const unit =
+    frames[0]?.schema?.fields?.[yIndex]?.config?.unit ??
+    defaultFieldConfig?.unit;
   const valueFormat = getValueFormat(unit);
 
   const valueFormatter: GaugeBarValueFormatter = (v, color) => {
     const formattedValue = valueFormat(v);
     return (
-      <div css={{ color, width: '80px', textAlign: 'right' }}>
+      <div
+        css={{ color, textAlign: 'right' }}
+        style={{ width: `${labelWidth}px` }}>
         {formattedValue.prefix && (
           <span css={{ fontSize: '14px' }}>{formattedValue.prefix}</span>
         )}
@@ -38,24 +47,22 @@ export const grafanaDataAdapter = ({
     );
   };
 
-  const bars = Object.values(panelData.results)
-    .flatMap((result) =>
-      result.frames.map((frame) => {
-        const y = frame.data?.values?.[yIndex] ?? [];
-        const value = y.at(-1) as number;
-        const yField = frame.schema?.fields?.[yIndex];
-        return {
-          title:
-            yField?.config?.displayName ??
-            yField?.config?.displayNameFromDS ??
-            yField?.name ??
-            frame.schema?.refId,
-          value: Number(value.toFixed(2)),
-          valueFormatter,
-          thresholds,
-        };
-      }),
-    )
+  const bars = frames
+    .map((frame) => {
+      const y = frame.data?.values?.[yIndex] ?? [];
+      const value = (y.at(-1) as number) ?? 0;
+      const yField = frame.schema?.fields?.[yIndex];
+      return {
+        title:
+          yField?.config?.displayName ??
+          yField?.config?.displayNameFromDS ??
+          yField?.name ??
+          frame.schema?.refId,
+        value: Number(value.toFixed(2)),
+        valueFormatter,
+        thresholds,
+      };
+    })
     .filter((bar) => bar.value !== undefined);
 
   return { bars };
