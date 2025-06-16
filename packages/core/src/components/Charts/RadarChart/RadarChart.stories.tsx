@@ -29,7 +29,7 @@ const meta: Meta<typeof RadarChart> = {
       },
     ],
     colors: ['rgba(91, 141, 236, 1)', 'rgba(44, 187, 151, 1)'],
-    keys: ['chardonnay', 'merlot'],
+    keys: ['Senior', 'Middle'],
     indexBy: 'taste',
     legends: [{ itemWidth: 100 }],
   },
