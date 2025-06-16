@@ -64,14 +64,14 @@ export const FullScreen: Story = {
 export const Large: Story = {
   args: {
     data: [
-      { taste: 'fruity', chardonnay: 70, merlot: 58 },
-      { taste: 'bitter', chardonnay: 59, merlot: 111 },
-      { taste: 'heavy', chardonnay: 120, merlot: 83 },
-      { taste: 'dry', chardonnay: 80, merlot: 65 },
-      { taste: 'sweet', chardonnay: 90, merlot: 72 },
-      { taste: 'acidic', chardonnay: 110, merlot: 95 },
-      { taste: 'woody', chardonnay: 85, merlot: 77 },
-      { taste: 'spicy', chardonnay: 60, merlot: 50 },
+      { taste: 'General React', chardonnay: 70, merlot: 58 },
+      { taste: 'Redux', chardonnay: 59, merlot: 111 },
+      { taste: 'Routing', chardonnay: 120, merlot: 83 },
+      { taste: 'Performance', chardonnay: 80, merlot: 65 },
+      { taste: 'Components Design', chardonnay: 90, merlot: 72 },
+      { taste: 'Documenting', chardonnay: 110, merlot: 95 },
+      { taste: 'Context API', chardonnay: 85, merlot: 77 },
+      { taste: 'Errors Processing', chardonnay: 60, merlot: 50 },
     ],
     margin: { top: 20, bottom: 50 },
   },
