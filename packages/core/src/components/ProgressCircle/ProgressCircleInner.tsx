@@ -12,5 +12,5 @@ export const ProgressCircleInner = styled.div<{
 
   border-radius: 50%;
 
-  background: #fff;
+  background: none;
 `;
