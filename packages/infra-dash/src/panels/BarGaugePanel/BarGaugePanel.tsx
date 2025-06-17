@@ -1,15 +1,19 @@
 import { css } from '@emotion/css';
 import { BarGaugeChart } from '@ssa-ui-kit/core';
 
-import { LoadingPanel } from '@components/LoadingPanel';
-import { ErrorPanel } from '@components/ErrorPanel';
-import { usePanelData } from '@entities/panel';
-import { matchPanelDataSource, Panel, PanelConfig } from '@shared/panel';
+import { withPanelData } from '@entities/panel';
+import {
+  matchPanelDataSource,
+  Panel,
+  PanelConfig,
+  PanelData,
+} from '@shared/panel';
 
 import { grafanaDataAdapter } from './data-adapters/grafana';
 
 export type BarGaugePanelProps = {
   panel: Panel;
+  panelData: PanelData;
   /** Optional title for the panel, defaults to panel.title */
   title?: string;
   /** Optional label width for the bar gauge, defaults to 80 */
@@ -17,26 +21,16 @@ export type BarGaugePanelProps = {
 };
 
 export const GrafanaBarGaugePanel = ({
-  title: providedTitle,
   panel,
+  panelData,
+  title: providedTitle,
   labelWidth = 80,
 }: BarGaugePanelProps) => {
-  const panelDataQuery = usePanelData(panel);
   const title = providedTitle ?? panel.title;
-
-  if (!panelDataQuery.isLoaded) {
-    return <LoadingPanel title={title} />;
-  }
-  if (panelDataQuery.error) {
-    return <ErrorPanel title={title} />;
-  }
-
-  const panelData = panelDataQuery.data;
   const { bars } = matchPanelDataSource(panelData.source, {
     grafana: () =>
       grafanaDataAdapter({ panel, data: panelData.data, labelWidth }),
   });
-
   return (
     <BarGaugeChart
       features={['header']}
@@ -55,7 +49,7 @@ export const GrafanaBarGaugePanel = ({
 export const panelConfig: PanelConfig<BarGaugePanelProps> = {
   componentId: 'bargauge-default',
   name: 'Bar Gauge Panel',
-  Component: GrafanaBarGaugePanel,
+  Component: withPanelData(GrafanaBarGaugePanel),
   supportedTypes: ['bargauge', 'gauge'],
   propsSchema: {
     type: 'object',

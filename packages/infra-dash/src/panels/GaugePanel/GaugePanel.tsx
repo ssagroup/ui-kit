@@ -1,39 +1,33 @@
 import { GaugeChart } from '@ssa-ui-kit/core';
 import { css } from '@emotion/css';
 
-import { LoadingPanel } from '@components/LoadingPanel';
-import { ErrorPanel } from '@components/ErrorPanel';
-import { usePanelData } from '@entities/panel';
-import { matchPanelDataSource, Panel, PanelConfig } from '@shared/panel';
+import { withPanelData } from '@entities/panel';
+import {
+  matchPanelDataSource,
+  Panel,
+  PanelConfig,
+  PanelData,
+} from '@shared/panel';
 
 import { grafanaDataAdapter } from './data-adapters/grafana';
 
 export type GaugePanelProps = {
   panel: Panel;
+  panelData: PanelData;
   /** Optional title for the panel, defaults to panel.title */
   title?: string;
 };
 
 export const GaugePanel = ({
   panel,
+  panelData,
   title: providedTitle,
 }: GaugePanelProps) => {
-  const panelDataQuery = usePanelData(panel);
   const title = providedTitle ?? panel.title;
-
-  if (!panelDataQuery.isLoaded) {
-    return <LoadingPanel title={title} />;
-  }
-  if (panelDataQuery.error) {
-    return <ErrorPanel title={title} />;
-  }
-
-  const panelData = panelDataQuery.data;
   const { min, max, value, valuePrefix, valueSuffix, segments } =
     matchPanelDataSource(panelData.source, {
       grafana: () => grafanaDataAdapter({ panel, data: panelData.data }),
     });
-
   return (
     <GaugeChart
       features={['header']}
@@ -53,7 +47,7 @@ export const GaugePanel = ({
 export const panelConfig: PanelConfig<GaugePanelProps> = {
   componentId: 'gauge-default',
   name: 'Gauge Panel',
-  Component: GaugePanel,
+  Component: withPanelData(GaugePanel),
   supportedTypes: ['gauge'],
   propsSchema: {
     type: 'object',

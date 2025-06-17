@@ -63,7 +63,7 @@ export type PanelConfig<T extends Record<string, unknown> | undefined> = {
   /** Array of Grafana panel types this component can handle */
   supportedTypes: string[];
   uiSchema?: UiSchema;
-} & PanelConfigProps<Omit<T, 'panel'>>;
+} & PanelConfigProps<Omit<T, 'panel' | 'panelData'>>;
 
 /**
  * Constant object defining available panel data sources.

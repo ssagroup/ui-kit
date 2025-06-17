@@ -1,35 +1,31 @@
 import { BarLineComplexChart } from '@ssa-ui-kit/core';
 import { useElementSize } from '@ssa-ui-kit/hooks';
 
-import { LoadingPanel } from '@components/LoadingPanel';
-import { ErrorPanel } from '@components/ErrorPanel';
-import { usePanelData } from '@entities/panel';
-import { matchPanelDataSource, Panel, PanelConfig } from '@shared/panel';
+import { withPanelData } from '@entities/panel';
+import {
+  matchPanelDataSource,
+  Panel,
+  PanelConfig,
+  PanelData,
+} from '@shared/panel';
 
 import { grafanaDataAdapter } from './data-adapters/grafana';
 
 export type TimeseriesPanelProps = {
   panel: Panel;
+  panelData: PanelData;
   /** Optional title for the panel, defaults to panel.title */
   title?: string;
 };
 
 export const TimeseriesPanel = ({
   panel,
+  panelData,
   title: providedTitle,
 }: TimeseriesPanelProps) => {
   const { ref, width } = useElementSize<HTMLDivElement>();
-  const panelDataQuery = usePanelData(panel);
   const title = providedTitle ?? panel.title;
 
-  if (!panelDataQuery.isLoaded) {
-    return <LoadingPanel title={title} />;
-  }
-  if (panelDataQuery.error) {
-    return <ErrorPanel title={title} />;
-  }
-
-  const panelData = panelDataQuery.data;
   const { series, valuePrefix, valueSuffix } = matchPanelDataSource(
     panelData.source,
     {
@@ -69,7 +65,7 @@ export const TimeseriesPanel = ({
 export const panelConfig: PanelConfig<TimeseriesPanelProps> = {
   componentId: 'timeseries-default',
   name: 'Timeseries Panel',
-  Component: TimeseriesPanel,
+  Component: withPanelData(TimeseriesPanel),
   supportedTypes: ['timeseries', 'bargauge'],
   propsSchema: {
     type: 'object',
