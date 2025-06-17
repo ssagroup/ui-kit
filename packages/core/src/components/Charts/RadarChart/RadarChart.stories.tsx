@@ -10,19 +10,19 @@ const meta: Meta<typeof RadarChart> = {
     features: ['header'],
     data: [
       {
-        taste: 'Hard Skills',
+        skill: 'Hard Skills',
         Senior: 70,
         Middle: 58,
         color: '#FF0000',
       },
       {
-        taste: 'Soft Skills',
+        skill: 'Soft Skills',
         Senior: 59,
         Middle: 111,
         color: '#FF0000',
       },
       {
-        taste: 'Foreign language',
+        skill: 'Foreign language',
         Senior: 120,
         Middle: 83,
         color: '#FF0000',
@@ -30,7 +30,7 @@ const meta: Meta<typeof RadarChart> = {
     ],
     colors: ['rgba(91, 141, 236, 1)', 'rgba(44, 187, 151, 1)'],
     keys: ['Senior', 'Middle'],
-    indexBy: 'skills',
+    indexBy: 'skill',
     legends: [{ itemWidth: 100 }],
   },
   decorators: [
