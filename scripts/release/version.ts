@@ -43,17 +43,16 @@ type SetPackagesVersionOptions = {
   packages: {
     name: string;
     path: string;
+    version: string;
   }[];
-  version: string;
 };
 
 export async function setPackagesVersion({
   packages,
-  version,
 }: SetPackagesVersionOptions) {
   let failed = false;
 
-  for (const { name, path } of packages) {
+  for (const { name, path, version } of packages) {
     console.log(
       chalk.blue(`📦 Setting version ${version} for package ${name}`),
     );
@@ -68,7 +67,12 @@ export async function setPackagesVersion({
   if (failed) {
     throw new Error('Failed to update package version');
   }
+}
 
-  console.log(chalk.green(`📦 Setting version ${version} for package root`));
-  await writeVersionToPackageJson('.', version);
+export async function getCurrentVersion(path: string) {
+  const packageJsonPath = resolve(path, './package.json');
+  const packageJson = JSON.parse(
+    await readFile(packageJsonPath, { encoding: 'utf-8' }),
+  );
+  return packageJson.version;
 }

@@ -16,6 +16,15 @@ on:
           - 'prepatch'
           - 'prerelease'
           - 'canary'
+      packageLevel:
+        description: Specify the package level to release (e.g., 'core' for core packages, 'individual' for all individual packages, 'all' for all packages or a specific package name)
+        required: true
+        type: choice
+        options:
+          - 'core'
+          - 'individual'
+          - 'all'
+          - '@ssa-ui-kit/infra-dash'
       preid:
         description: Identifier to be used to prefix premajor, preminor, prepatch or prerelease version increments
         required: false
@@ -66,6 +75,7 @@ jobs:
 
           pnpm release \
             --increment ${{ inputs.increment }} \
+            --package-level ${{ inputs.packageLevel }} \
             ${release_options[@]}
         shell: bash
         env:
