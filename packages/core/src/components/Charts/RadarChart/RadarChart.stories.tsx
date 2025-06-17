@@ -64,14 +64,14 @@ export const FullScreen: Story = {
 export const Large: Story = {
   args: {
     data: [
-      { taste: 'General React', Senior: 3.5, Middle: 2.8 },
-      { taste: 'Redux', Senior: 3.6, Middle: 2.7 },
-      { taste: 'Routing', Senior: 3.9, Middle: 2.4 },
-      { taste: 'Performance', Senior: 3.2, Middle: 3.0 },
-      { taste: 'Components Design', Senior: 3.75, Middle: 3.1 },
-      { taste: 'Documenting', Senior: 3.2, Middle: 3.3 },
-      { taste: 'Context API', Senior: 3.8, Middle: 2.6 },
-      { taste: 'Errors Processing', Senior: 3.0, Middle: 3.1 },
+      { skill: 'General React', Senior: 3.5, Middle: 2.8 },
+      { skill: 'Redux', Senior: 3.6, Middle: 2.7 },
+      { skill: 'Routing', Senior: 3.9, Middle: 2.4 },
+      { skill: 'Performance', Senior: 3.2, Middle: 3.0 },
+      { skill: 'Components Design', Senior: 3.75, Middle: 3.1 },
+      { skill: 'Documenting', Senior: 3.2, Middle: 3.3 },
+      { skill: 'Context API', Senior: 3.8, Middle: 2.6 },
+      { skill: 'Errors Processing', Senior: 3.0, Middle: 3.1 },
     ],
     margin: { top: 20, bottom: 50 },
   },
