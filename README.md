@@ -2,6 +2,10 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ssagroup/ui-kit/blob/main/CODE_OF_CONDUCT.md)  
 
+![image](https://github.com/user-attachments/assets/3c2f2307-af95-4071-8427-b6ebb324973f)
+
+
+
 SSA UI kit is an open-source React-based library combining multiple UI Components, Widgets, Blocks, and Forms classified by application area and implemented following Atomic design principles.  
 
 SSA UI kit includes Figma design, integration with Firebase and examples of implementation for different business domains.  
