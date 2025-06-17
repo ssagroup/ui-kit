@@ -11,19 +11,19 @@ const meta: Meta<typeof RadarChart> = {
     data: [
       {
         skill: 'Hard Skills',
-        Senior: 70,
+        Senior: 80,
         Middle: 58,
         color: '#FF0000',
       },
       {
         skill: 'Soft Skills',
-        Senior: 59,
+        Senior: 79,
         Middle: 111,
         color: '#FF0000',
       },
       {
         skill: 'Foreign language',
-        Senior: 120,
+        Senior: 130,
         Middle: 83,
         color: '#FF0000',
       },
