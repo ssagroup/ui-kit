@@ -2,7 +2,9 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ssagroup/ui-kit/blob/main/CODE_OF_CONDUCT.md)  
 
-![image](https://github.com/user-attachments/assets/3c2f2307-af95-4071-8427-b6ebb324973f)
+![image](https://github.com/user-attachments/assets/48a55da6-0609-4575-8c58-34a7ddc5b7f0)
+
+
 
 
 
