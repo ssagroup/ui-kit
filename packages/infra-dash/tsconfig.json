@@ -12,6 +12,7 @@
       "@shared/*": ["./src/shared/*"],
       "@components/*": ["./src/components/*"],
       "@entities/*": ["./src/entities/*"],
+      "@features/*": ["./src/features/*"],
     }
   },
   "include": [

@@ -14,7 +14,16 @@ export const useGrafanaPanels = (
   const result = useQuery(
     ['grafana-panels', grafanaDashboardUid],
     async (signal) => {
-      return await _transport.getGrafanaPanels(grafanaDashboardUid, signal);
+      const panels = await _transport.getGrafanaPanels(
+        grafanaDashboardUid,
+        signal,
+      );
+      return panels.flatMap((panel) => {
+        if (!panel.panelSchema || panel.panelSchema.type === 'row') {
+          return panel.subPanels || [];
+        }
+        return panel;
+      });
     },
     queryOptions,
   );

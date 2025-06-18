@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { css } from '@emotion/react';
 import { useElementSize, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
 import GridLayout from 'react-grid-layout';
@@ -13,26 +13,51 @@ import { useInfraDashContext } from '@shared/context';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-export type DashboardViewBaseProps = {
+export type DashboardPanelGridProps = {
   dashboard: Dashboard;
+  header?: React.ReactNode | ((dashboard: Dashboard) => React.ReactNode);
   cols?: number;
   rowHeight?: number;
   draggable?: boolean;
   resizable?: boolean;
+  /*
+    If 0 the panel-data will not be refetch
+    Default is 60000 (60 seconds)
+  */
+  refetchIntervalMs?: number;
   onLayoutChange?: (layout: GridLayout.Layout[]) => void;
-};
+  onDragStart?: GridLayout.ItemCallback;
+  onResizeStart?: GridLayout.ItemCallback;
+  renderPanelControl?: (panel: Panel) => React.ReactNode;
+} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag'>;
 
-export const DashboardViewBase = ({
+export const DashboardPanelGrid = ({
   dashboard,
+  header,
   cols = 24,
   rowHeight = 30,
   draggable = false,
   resizable = false,
+  refetchIntervalMs = 60000, // 60 seconds
   onLayoutChange,
-}: DashboardViewBaseProps) => {
+  onDragStart,
+  onResizeStart,
+  renderPanelControl,
+  ...divProps
+}: DashboardPanelGridProps) => {
   const { ref, width } = useElementSize<HTMLDivElement>();
   const isMinMD = useMinMDMediaQuery();
-  const { panelRegistry } = useInfraDashContext();
+  const { panelRegistry, queryClient } = useInfraDashContext();
+
+  useEffect(() => {
+    if (refetchIntervalMs) {
+      queryClient.invalidateQueries({ key: ['panel-data'] });
+      const intervalId = setInterval(() => {
+        queryClient.invalidateQueries({ key: ['panel-data'] });
+      }, refetchIntervalMs);
+      return () => clearInterval(intervalId);
+    }
+  }, [refetchIntervalMs]);
 
   // sort panels by their grid position
   // for mobile view it will ensure they are stacked vertically in the right order
@@ -72,7 +97,10 @@ export const DashboardViewBase = ({
       return (
         <ErrorBoundary fallback={<ErrorPanel />}>
           <BasePanel>
-            <panelConfig.Component panel={panel} />
+            <panelConfig.Component
+              panel={panel}
+              {...panel.panelDefinition.component.props}
+            />
           </BasePanel>
         </ErrorBoundary>
       );
@@ -81,6 +109,8 @@ export const DashboardViewBase = ({
       <BasePanel>Unsupported panel type: {panel.panelSchema.type}</BasePanel>
     );
   };
+
+  const _header = typeof header === 'function' ? header(dashboard) : header;
 
   return (
     <div
@@ -94,7 +124,9 @@ export const DashboardViewBase = ({
         .react-grid-layout {
           transition: none;
         }
-      `}>
+      `}
+      {...divProps}>
+      {_header}
       <GridLayout
         autoSize
         layout={layout}
@@ -106,9 +138,21 @@ export const DashboardViewBase = ({
         // disable interaction for mobile view
         isDraggable={isMinMD && draggable}
         isResizable={isMinMD && resizable}
-        onLayoutChange={isMinMD ? onLayoutChange : undefined}>
+        onLayoutChange={isMinMD ? onLayoutChange : undefined}
+        onDragStart={onDragStart}
+        onResizeStart={onResizeStart}>
         {dashboard.panels.map((panel) => (
-          <GridItem key={panel.id.toString()}>{renderPanel(panel)}</GridItem>
+          <GridItem key={panel.id.toString()}>
+            {renderPanelControl && (
+              // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+              <div
+                css={{ position: 'absolute', zIndex: 100, right: 0 }}
+                onMouseDown={(e) => e.stopPropagation()}>
+                {renderPanelControl(panel)}
+              </div>
+            )}
+            {renderPanel(panel)}
+          </GridItem>
         ))}
       </GridLayout>
     </div>

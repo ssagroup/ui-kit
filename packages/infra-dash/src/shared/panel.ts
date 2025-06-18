@@ -1,3 +1,4 @@
+import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import { GrafanaPanelData, GrafanaPanelSchema } from './grafana';
 
 /**
@@ -5,6 +6,13 @@ import { GrafanaPanelData, GrafanaPanelSchema } from './grafana';
  * Contains both the component configuration and grid layout positioning.
  */
 export type PanelDefinition = {
+  source: {
+    type: typeof PANEL_DATA_SOURCE.GRAFANA;
+    /** Unique identifier for the Grafana dashboard */
+    dashboardUid: string;
+    /** Unique identifier for the Grafana panel within the dashboard */
+    panelId: number;
+  };
   component: {
     /** Unique identifier for the component type */
     id: string;
@@ -13,6 +21,9 @@ export type PanelDefinition = {
   };
   /** Grid positioning and sizing information */
   gridPos: Record<'h' | 'w' | 'x' | 'y', number>;
+
+  /** Version of the panel definition schema */
+  version: 1;
 };
 
 /**
@@ -31,10 +42,18 @@ export type Panel = {
 };
 
 /**
+ * Optional schema defining the structure of props this component expects.
+ * Used for validation and form generation in configuration UIs.
+ */
+type PanelConfigProps<T> = object extends T
+  ? { defaultProps?: T; propsSchema?: RJSFSchema } // all props are optional → defaultProps stays optional
+  : { defaultProps: T; propsSchema: RJSFSchema };
+
+/**
  * Configuration object for registering a panel component type.
  * Defines how a specific component should be rendered and what panel types it supports.
  */
-export type PanelConfig = {
+export type PanelConfig<T extends Record<string, unknown> | undefined> = {
   /** Unique identifier for this component type */
   componentId: string;
   /** React component that will render the panel */
@@ -43,12 +62,8 @@ export type PanelConfig = {
   name: string;
   /** Array of Grafana panel types this component can handle */
   supportedTypes: string[];
-  /**
-   * Optional schema defining the structure of props this component expects.
-   * Used for validation and form generation in configuration UIs.
-   */
-  propsSchema?: Record<string, unknown>;
-};
+  uiSchema?: UiSchema;
+} & PanelConfigProps<Omit<T, 'panel' | 'panelData'>>;
 
 /**
  * Constant object defining available panel data sources.

@@ -430,6 +430,12 @@ importers:
       '@grafana/data':
         specifier: ^12.0.1
         version: 12.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@rjsf/utils':
+        specifier: ^5.24.11
+        version: 5.24.11(react@18.3.1)
+      '@rjsf/validator-ajv8':
+        specifier: ^5.24.11
+        version: 5.24.11(@rjsf/utils@5.24.11(react@18.3.1))
       '@ssa-ui-kit/core':
         specifier: workspace:^
         version: link:../core
@@ -2741,11 +2747,23 @@ packages:
       '@rjsf/utils': ^5.24.x
       react: ^16.14.0 || >=17
 
+  '@rjsf/utils@5.24.11':
+    resolution: {integrity: sha512-2OyQM4Eum67jr4GJly6eflZhD8qoWkl7brCvCZ10z+pW6dgsGEusqRvTioK0L7thWJ5LwbJ2i4SFqJjiChZGxA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: ^16.14.0 || >=17
+
   '@rjsf/utils@5.24.8':
     resolution: {integrity: sha512-Y/D1orNsTnIswp23QtWKq7QEme07/nSdnSJoK4gSsm2cDBkSCW+9KUsWSvmE7poqHwCn3zpbIaa3ZWEAQUJEEg==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^16.14.0 || >=17
+
+  '@rjsf/validator-ajv8@5.24.11':
+    resolution: {integrity: sha512-x6pZojVPVFB1bVk3e8GvStyDXJN8ufa3Aoz4wx+UJRSdh7J4Iud+jaATPxyrjhLIuxsQhUy7ed39/4iP+YYZ/Q==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@rjsf/utils': ^5.24.x
 
   '@rjsf/validator-ajv8@5.24.8':
     resolution: {integrity: sha512-0l5/9CL2BhW5tUtP+vKg6o5Wpp5kuee5SPea3STtdBN/xbGf3dUX08jbKcvokTJt5552rFDcNjMZmu+C0H7ezQ==}
@@ -10953,6 +10971,15 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
+  '@rjsf/utils@5.24.11(react@18.3.1)':
+    dependencies:
+      json-schema-merge-allof: 0.8.1
+      jsonpointer: 5.0.1
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      react: 18.3.1
+      react-is: 18.3.1
+
   '@rjsf/utils@5.24.8(react@18.3.1)':
     dependencies:
       json-schema-merge-allof: 0.8.1
@@ -10961,6 +10988,14 @@ snapshots:
       lodash-es: 4.17.21
       react: 18.3.1
       react-is: 18.3.1
+
+  '@rjsf/validator-ajv8@5.24.11(@rjsf/utils@5.24.11(react@18.3.1))':
+    dependencies:
+      '@rjsf/utils': 5.24.11(react@18.3.1)
+      ajv: 8.17.1
+      ajv-formats: 2.1.1(ajv@8.17.1)
+      lodash: 4.17.21
+      lodash-es: 4.17.21
 
   '@rjsf/validator-ajv8@5.24.8(@rjsf/utils@5.24.8(react@18.3.1))':
     dependencies:

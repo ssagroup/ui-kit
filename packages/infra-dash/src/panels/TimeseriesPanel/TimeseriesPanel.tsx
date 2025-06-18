@@ -1,28 +1,31 @@
 import { BarLineComplexChart } from '@ssa-ui-kit/core';
 import { useElementSize } from '@ssa-ui-kit/hooks';
 
-import { LoadingPanel } from '@components/LoadingPanel';
-import { ErrorPanel } from '@components/ErrorPanel';
-import { usePanelData } from '@entities/panel';
-import { matchPanelDataSource, Panel, PanelConfig } from '@shared/panel';
+import { withPanelData } from '@entities/panel';
+import {
+  matchPanelDataSource,
+  Panel,
+  PanelConfig,
+  PanelData,
+} from '@shared/panel';
 
 import { grafanaDataAdapter } from './data-adapters/grafana';
 
 export type TimeseriesPanelProps = {
   panel: Panel;
+  panelData: PanelData;
+  /** Optional title for the panel, defaults to panel.title */
+  title?: string;
 };
 
-export const TimeseriesPanel = ({ panel }: TimeseriesPanelProps) => {
+export const TimeseriesPanel = ({
+  panel,
+  panelData,
+  title: providedTitle,
+}: TimeseriesPanelProps) => {
   const { ref, width } = useElementSize<HTMLDivElement>();
-  const panelDataQuery = usePanelData(panel.id);
-  if (!panelDataQuery.isLoaded) {
-    return <LoadingPanel title={panel.title} />;
-  }
-  if (panelDataQuery.error) {
-    return <ErrorPanel title={panel.title} />;
-  }
+  const title = providedTitle ?? panel.title;
 
-  const panelData = panelDataQuery.data;
   const { series, valuePrefix, valueSuffix } = matchPanelDataSource(
     panelData.source,
     {
@@ -38,7 +41,7 @@ export const TimeseriesPanel = ({ panel }: TimeseriesPanelProps) => {
         features={['header']}
         systemModeBarButtons={[]}
         cardProps={{
-          title: panel.title,
+          title,
         }}
         layout={{
           autosize: true,
@@ -59,10 +62,24 @@ export const TimeseriesPanel = ({ panel }: TimeseriesPanelProps) => {
   );
 };
 
-export const panelConfig: PanelConfig = {
+export const panelConfig: PanelConfig<TimeseriesPanelProps> = {
   componentId: 'timeseries-default',
   name: 'Timeseries Panel',
-  Component: TimeseriesPanel,
-  supportedTypes: ['timeseries'],
-  propsSchema: {},
+  Component: withPanelData(TimeseriesPanel),
+  supportedTypes: ['timeseries', 'bargauge'],
+  propsSchema: {
+    type: 'object',
+    properties: {
+      title: {
+        type: 'string',
+        title: 'Panel Title',
+      },
+    },
+  },
+  uiSchema: {
+    title: {
+      'ui:help': 'Override the default panel title',
+      'ui:placeholder': 'Panel Title',
+    },
+  },
 };

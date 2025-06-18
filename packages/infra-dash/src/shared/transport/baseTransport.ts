@@ -22,6 +22,16 @@ export interface InfraDashTransport {
     grafanaDashboardUid: string,
     signal?: AbortSignal,
   ) => Promise<GrafanaPanel[]>;
+  getGrafanaPanelData: (
+    {
+      dashboardUid,
+      panelId,
+    }: {
+      dashboardUid: string;
+      panelId: number;
+    },
+    signal?: AbortSignal,
+  ) => Promise<GrafanaPanelData>;
   getPanelData: (
     panelId: number,
     signal?: AbortSignal,

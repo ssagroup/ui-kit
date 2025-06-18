@@ -58,7 +58,7 @@ const StyledDrawerContent = styled.div<{
 
 export const DrawerContent = forwardRef<
   HTMLDivElement,
-  { children: React.ReactNode }
+  { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>
 >(function DrawerContent({ children, ...props }, ref) {
   const ctx = useDrawerContext();
   const {

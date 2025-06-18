@@ -15,9 +15,9 @@ export async function ensureCleanWorkingDirectory() {
   }
 }
 
-export async function commitRelease(version: string) {
+export async function commitRelease(message: string) {
   await git.add('.');
-  await git.commit(`Release v${version}\n\n[skip ci]`);
+  await git.commit(message);
   await git.push();
 }
 

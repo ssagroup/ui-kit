@@ -1,14 +1,20 @@
 import { DataFrameType, FieldType, ThresholdsMode } from '@grafana/data';
 import { FieldColorModeId } from '@grafana/schema';
-import { Dashboard } from '@shared/dashboard';
 
-import { GrafanaPanelData } from '@shared/grafana';
-import { RestInfraDashTransport } from '@shared/transport';
+import { Dashboard } from '@shared/dashboard';
+import {
+  GrafanaDashboard,
+  GrafanaPanel,
+  GrafanaPanelData,
+} from '@shared/grafana';
+import {
+  CreateDashboardPayload,
+  RestInfraDashTransport,
+  UpdateDashboardPayload,
+} from '@shared/transport';
 
 export const timeseriesData: GrafanaPanelData = {
-  id: 38,
-  title: 'Job Queue',
-  chartType: '',
+  source: 'grafana',
   data: {
     results: {
       A: {
@@ -177,9 +183,7 @@ export const timeseriesData: GrafanaPanelData = {
 };
 
 export const bargaugeData: GrafanaPanelData = {
-  id: 2,
-  title: 'Storage Utilization',
-  chartType: '',
+  source: 'grafana',
   data: {
     results: {
       A: {
@@ -289,9 +293,7 @@ export const bargaugeData: GrafanaPanelData = {
 };
 
 export const gaugeData: GrafanaPanelData = {
-  id: 3,
-  title: 'Resource Limits',
-  chartType: '',
+  source: 'grafana',
   data: {
     results: {
       A: {
@@ -336,11 +338,17 @@ export const gaugeData: GrafanaPanelData = {
 export const dashboard: Dashboard = {
   id: 1,
   title: 'Sample Dashboard',
-  dashboardDefinition: {},
+  dashboardDefinition: { version: 1 },
   panels: [
     {
       id: 1,
       panelDefinition: {
+        version: 1,
+        source: {
+          type: 'grafana',
+          dashboardUid: '1',
+          panelId: 31,
+        },
         gridPos: { w: 24, h: 6, x: 0, y: 0 },
         component: { id: 'timeseries-default', props: {} },
       },
@@ -352,6 +360,12 @@ export const dashboard: Dashboard = {
     {
       id: 2,
       panelDefinition: {
+        version: 1,
+        source: {
+          type: 'grafana',
+          dashboardUid: '1',
+          panelId: 32,
+        },
         gridPos: { w: 18, h: 7, x: 6, y: 6 },
         component: { id: 'bargauge-default', props: {} },
       },
@@ -391,6 +405,12 @@ export const dashboard: Dashboard = {
     {
       id: 3,
       panelDefinition: {
+        version: 1,
+        source: {
+          type: 'grafana',
+          dashboardUid: '1',
+          panelId: 33,
+        },
         gridPos: { w: 6, h: 7, x: 0, y: 6 },
         component: { id: 'gauge-default', props: {} },
       },
@@ -424,6 +444,12 @@ export const dashboard: Dashboard = {
   ],
 };
 
+const dashboards: GrafanaDashboard[] = [
+  { id: '1', title: 'Sample Dashboard' },
+  { id: '2', title: 'Another Dashboard' },
+  { id: '3', title: 'Third Dashboard' },
+];
+
 export class MockTransport extends RestInfraDashTransport {
   constructor() {
     super({ baseUrl: 'http://mock-infradash/api' });
@@ -433,19 +459,83 @@ export class MockTransport extends RestInfraDashTransport {
       `MockTransport does not support makeRequest. ${request.url}`,
     );
   }
-  getPanelData(panelId: number): Promise<GrafanaPanelData> {
-    switch (panelId) {
-      case 1:
-        return Promise.resolve(timeseriesData);
-      case 2:
-        return Promise.resolve(bargaugeData);
-      case 3:
-        return Promise.resolve(gaugeData);
-      default:
-        throw new Error(`Panel data not found for panel ID ${panelId}`);
-    }
-  }
+
   getDashboard() {
     return Promise.resolve(dashboard);
+  }
+
+  getGrafanaDashboards() {
+    return Promise.resolve(dashboards);
+  }
+
+  getGrafanaPanels(grafanaDashboardUid: string): Promise<GrafanaPanel[]> {
+    if (grafanaDashboardUid === '1') {
+      return Promise.resolve(
+        dashboard.panels.map((panel) => ({
+          id: panel.panelDefinition.source.panelId,
+          title: panel.title,
+          subPanels: null,
+          panelSchema: panel.panelSchema,
+        })),
+      );
+    }
+    if (grafanaDashboardUid === '2') {
+      return Promise.resolve([
+        {
+          id: 34,
+          title: '',
+          panelSchema: {
+            type: 'row',
+          },
+          subPanels: [dashboard.panels[0]].map((panel) => ({
+            id: panel.panelDefinition.source.panelId,
+            title: panel.title,
+            subPanels: null,
+            panelSchema: panel.panelSchema,
+          })),
+        },
+      ]);
+    }
+    return Promise.resolve([]);
+  }
+
+  getGrafanaPanelData({
+    dashboardUid,
+    panelId,
+  }: {
+    dashboardUid: string;
+    panelId: number;
+  }): Promise<GrafanaPanelData> {
+    if (dashboardUid === '1') {
+      switch (panelId) {
+        case 31:
+          return Promise.resolve(timeseriesData);
+        case 32:
+          return Promise.resolve(bargaugeData);
+        case 33:
+          return Promise.resolve(gaugeData);
+        default:
+          throw new Error(`Panel data not found for panel ID ${panelId}`);
+      }
+    }
+    throw new Error(`Dashboard UID ${dashboardUid} not found`);
+  }
+
+  createDashboard(payload: CreateDashboardPayload): Promise<unknown> {
+    alert(
+      `MockTransport: createDashboard called with payload: ${JSON.stringify(
+        payload,
+      )}`,
+    );
+    return Promise.resolve();
+  }
+
+  updateDashboard(payload: UpdateDashboardPayload): Promise<unknown> {
+    alert(
+      `MockTransport: updateDashboard called with payload: ${JSON.stringify(
+        payload,
+      )}`,
+    );
+    return Promise.resolve();
   }
 }

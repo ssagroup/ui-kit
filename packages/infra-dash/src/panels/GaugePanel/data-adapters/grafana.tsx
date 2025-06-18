@@ -10,6 +10,9 @@ const inferMinMax = (values: number[], unit?: string) => {
   if (unit === 'percentunit') {
     return { min: 0, max: 1 };
   }
+  if (!values.length) {
+    return { min: 0, max: 100 };
+  }
   return {
     min: Math.min(...values),
     max: Math.max(...values),
@@ -34,7 +37,7 @@ export const grafanaDataAdapter = ({
 
   const dataFrame = frames[0];
   const values = (dataFrame?.data?.values?.[yIndex] ?? []) as number[];
-  const value = values?.at(-1) as number;
+  const value = (values?.at(-1) as number) ?? 0;
   const unit =
     dataFrame?.schema?.fields?.[yIndex]?.config?.unit ??
     defaultFieldConfig?.unit;
