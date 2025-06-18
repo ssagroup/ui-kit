@@ -1,4 +1,4 @@
-<h1 align="center">SSA UI Kit</h1>
+<h1 align="center">SSA UI kit</h1>
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ssagroup/ui-kit/blob/main/CODE_OF_CONDUCT.md)  
 
