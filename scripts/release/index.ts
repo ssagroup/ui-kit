@@ -148,13 +148,18 @@ const program = new Command()
         }
         if (shouldPersistChanges) {
           await commitRelease(
-            `Release\n\n${packages.map(({ name, version }) => `- ${name}: ${version}`).join('\n')}\n[skip ci]`,
+            `Release\n\n${packages.map(({ name, version }) => `- ${name}: ${version}`).join('\n')}\n\n[skip ci]`,
           );
         }
+
+        const monorepoPath =
+          CORE_PACKAGES_TO_RELEASE['@ssa-ui-kit/ui-kit-monorepo'];
+
         const publishTasks = await Promise.allSettled(
-          packages.map(({ path }) =>
-            publishPackage({ ...publishOptions, path }),
-          ),
+          packages
+            // skip publishing the monorepo itself
+            .filter(({ path }) => path !== monorepoPath)
+            .map(({ path }) => publishPackage({ ...publishOptions, path })),
         );
         const failedPublishTasks = publishTasks.filter(
           (task) => task.status === 'rejected',
