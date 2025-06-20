@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Children, cloneElement, isValidElement } from 'react';
+import { Children, cloneElement, isValidElement, useEffect } from 'react';
 import { useTabBarContext } from './TabBarContext';
 import { TabBarProps } from './types';
 
@@ -13,26 +13,32 @@ const TabBarBase = styled.div``;
  * selected tab.
  * */
 const TabBar = ({ children, className }: TabBarProps) => {
-  const { activeTab, setActiveTab } = useTabBarContext();
-  const activeTabId = activeTab?.tabId;
+  const { activeTab, activeTabId, setActiveTab, setActiveTabId } =
+    useTabBarContext();
+
+  useEffect(() => {
+    if (activeTabId && activeTab?.tabId !== activeTabId) {
+      Children.forEach(children, (child) => {
+        if (isValidElement(child) && child.props.tabId === activeTabId) {
+          const { renderContent, ...rest } = child.props;
+          setActiveTab({
+            tabId: rest.tabId,
+            renderContent: renderContent.bind(null, rest),
+          });
+        }
+      });
+    }
+  }, [activeTabId]);
 
   return (
     <TabBarBase role="tablist" className={className}>
       {Children.map(children, (child) => {
         // istanbul ignore else
         if (isValidElement(child)) {
-          const { renderContent, ...rest } = child.props;
-          const tabId = rest.tabId;
-
           return cloneElement(child, {
-            key: tabId,
-            isActive: activeTabId === tabId,
-            onClick: () =>
-              activeTabId !== tabId &&
-              setActiveTab({
-                tabId,
-                renderContent: renderContent.bind(null, rest),
-              }),
+            key: child.props.tabId,
+            isActive: activeTab?.tabId === child.props.tabId,
+            onClick: () => setActiveTabId(child.props.tabId),
           });
         }
       })}

@@ -33,5 +33,7 @@ export interface TabBarProps {
 
 export interface TabBarContextProps {
   activeTab?: TabProps;
+  activeTabId?: TabProps['tabId'];
   setActiveTab: (tab?: TabProps) => void;
+  setActiveTabId: (tabId: number | string) => void;
 }
