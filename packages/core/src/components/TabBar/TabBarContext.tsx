@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 import { TabProps, TabBarContextProps } from './types';
 
 const defaultTab: TabProps = {
@@ -11,6 +11,7 @@ const defaultTab: TabProps = {
 export const TabBarContext = createContext<TabBarContextProps>({
   activeTab: defaultTab,
   activeTabId: undefined,
+  selectedTabId: undefined,
   setActiveTab() {
     /* default no-op */
   },
@@ -23,11 +24,11 @@ export const useTabBarContext = () => useContext(TabBarContext);
 
 export const TabBarContextProvider = ({
   initialTab = defaultTab,
-  initialTabId = defaultTab.tabId,
+  selectedTabId = defaultTab.tabId,
   children,
 }: {
   initialTab?: TabProps;
-  initialTabId?: TabProps['tabId'];
+  selectedTabId?: TabProps['tabId'];
   children: React.ReactNode;
 }) => {
   const [activeTab, setActiveTab] = useState<TabProps | undefined>(initialTab);
@@ -35,15 +36,15 @@ export const TabBarContextProvider = ({
     initialTab.tabId,
   );
 
-  useEffect(() => {
-    if (!Number.isNaN(initialTabId) && activeTab?.tabId !== initialTabId) {
-      setActiveTabId(initialTabId);
-    }
-  }, [initialTabId]);
-
   return (
     <TabBarContext.Provider
-      value={{ activeTab, activeTabId, setActiveTab, setActiveTabId }}>
+      value={{
+        activeTab,
+        activeTabId,
+        selectedTabId,
+        setActiveTab,
+        setActiveTabId,
+      }}>
       {children}
     </TabBarContext.Provider>
   );

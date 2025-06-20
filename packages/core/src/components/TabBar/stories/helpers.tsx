@@ -50,7 +50,7 @@ export const TabContents = ({
 /* istanbul ignore next */
 export const TabBarDecorator: Decorator = (Story, { args }) => {
   return (
-    <TabBarContextProvider initialTabId={'hour'}>
+    <TabBarContextProvider selectedTabId={'hour'}>
       <TabBarWrapper {...args}>
         <Story {...args} />
       </TabBarWrapper>
