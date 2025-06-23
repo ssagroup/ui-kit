@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Children, cloneElement, isValidElement } from 'react';
+import { Children, cloneElement, isValidElement, useEffect } from 'react';
 import { useTabBarContext } from './TabBarContext';
-import { TabBarProps } from './types';
+import { TabBarProps, TabProps } from './types';
 
 const TabBarBase = styled.div``;
 
@@ -13,26 +13,39 @@ const TabBarBase = styled.div``;
  * selected tab.
  * */
 const TabBar = ({ children, className }: TabBarProps) => {
-  const { activeTab, setActiveTab } = useTabBarContext();
-  const activeTabId = activeTab?.tabId;
+  const { activeTab, selectedTabId, setActiveTab, setActiveTabId } =
+    useTabBarContext();
+
+  const setSelectedTabId = (tabId?: TabProps['tabId']) => {
+    if (tabId && activeTab?.tabId !== tabId) {
+      Children.forEach(children, (child) => {
+        if (isValidElement(child) && child.props.tabId === tabId) {
+          const { renderContent, ...rest } = child.props;
+          setActiveTab({
+            tabId: rest.tabId,
+            renderContent: renderContent.bind(null, rest),
+          });
+        }
+      });
+    }
+    setActiveTabId(tabId);
+  };
+
+  useEffect(() => {
+    if (!Number.isNaN(selectedTabId) && activeTab?.tabId !== selectedTabId) {
+      setSelectedTabId(selectedTabId);
+    }
+  }, [selectedTabId]);
 
   return (
     <TabBarBase role="tablist" className={className}>
       {Children.map(children, (child) => {
         // istanbul ignore else
         if (isValidElement(child)) {
-          const { renderContent, ...rest } = child.props;
-          const tabId = rest.tabId;
-
           return cloneElement(child, {
-            key: tabId,
-            isActive: activeTabId === tabId,
-            onClick: () =>
-              activeTabId !== tabId &&
-              setActiveTab({
-                tabId,
-                renderContent: renderContent.bind(null, rest),
-              }),
+            key: child.props.tabId,
+            isActive: activeTab?.tabId === child.props.tabId,
+            onClick: () => setSelectedTabId(child.props.tabId),
           });
         }
       })}
