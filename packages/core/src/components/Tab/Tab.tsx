@@ -8,6 +8,7 @@ const Tab = ({
   text,
   ariaControls,
   tabId,
+  className,
 }: SmallTabProps) => {
   return (
     <TabBase
@@ -18,6 +19,7 @@ const Tab = ({
       tabIndex={0}
       isActive={isActive}
       title={text}
+      className={className}
       onClick={() => {
         // istanbul ignore else
         if (typeof onClick === 'function') {
