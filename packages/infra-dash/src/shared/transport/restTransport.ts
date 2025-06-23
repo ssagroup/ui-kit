@@ -88,14 +88,18 @@ export class RestInfraDashTransport implements InfraDashTransport {
     {
       dashboardUid,
       panelId,
+      period,
     }: {
       dashboardUid: string;
       panelId: number;
+      period?: number;
     },
     signal?: AbortSignal,
   ) {
     const request = new Request(
-      this.getUrl(`/grafana/dashboards/${dashboardUid}/panel/${panelId}`),
+      this.getUrl(
+        `/grafana/dashboards/${dashboardUid}/panel/${panelId}?period=${period ?? 0}`,
+      ),
       {
         method: 'POST',
         signal,

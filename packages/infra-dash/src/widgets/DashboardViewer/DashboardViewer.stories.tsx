@@ -23,7 +23,7 @@ const meta: Meta<typeof DashboardViewer> = {
   parameters: {
     backgrounds: {
       options: {
-        main: { name: 'Main', value: '#D0D1D6' },
+        main: { name: 'Main', value: '#D4D6DB' },
       },
     },
   },

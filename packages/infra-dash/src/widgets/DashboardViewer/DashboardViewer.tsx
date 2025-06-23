@@ -4,6 +4,11 @@ import { DashboardError } from '@components/DashboardError';
 import { LoadingDashboard } from '@components/LoadingDashboard';
 import { useDashboard } from '@entities/dashboard';
 import { Dashboard } from '@shared/dashboard';
+import {
+  InfraDashPanelDataPeriodProvider,
+  useInfraDashPanelDataPeriod,
+  UseInfraDashPanelDataPeriodOptions,
+} from '@shared/context';
 
 import {
   DashboardPanelGrid,
@@ -13,7 +18,8 @@ import {
 export type DashboardViewerProps = {
   dashboardId?: number;
   dashboard?: Dashboard;
-} & Omit<DashboardPanelGridProps, 'dashboard'>;
+} & Omit<DashboardPanelGridProps, 'dashboard'> &
+  UseInfraDashPanelDataPeriodOptions;
 
 export const DashboardViewer = ({
   dashboard,
@@ -23,13 +29,23 @@ export const DashboardViewer = ({
   const dashboardById = useDashboard(dashboardId ?? -1, {
     enabled: !!dashboardId && !dashboard,
   });
-  if (dashboard) {
+
+  const DashboardWrapper: React.FC<{
+    dashboard: Dashboard;
+  }> = ({ dashboard }) => {
+    const panelDataPeriod = useInfraDashPanelDataPeriod({ ...props });
     return (
-      <ErrorBoundary
-        fallback={<DashboardError>Something went wrong</DashboardError>}>
-        <DashboardPanelGrid {...props} dashboard={dashboard} />
-      </ErrorBoundary>
+      <InfraDashPanelDataPeriodProvider value={panelDataPeriod}>
+        <ErrorBoundary
+          fallback={<DashboardError>Something went wrong</DashboardError>}>
+          <DashboardPanelGrid {...props} dashboard={dashboard} />
+        </ErrorBoundary>
+      </InfraDashPanelDataPeriodProvider>
     );
+  };
+
+  if (dashboard) {
+    return <DashboardWrapper dashboard={dashboard} />;
   }
   if (!dashboardById.isLoaded) {
     return <LoadingDashboard />;
@@ -37,10 +53,5 @@ export const DashboardViewer = ({
   if (dashboardById.error) {
     return <DashboardError />;
   }
-  return (
-    <ErrorBoundary
-      fallback={<DashboardError>Something went wrong</DashboardError>}>
-      <DashboardPanelGrid {...props} dashboard={dashboardById.data} />
-    </ErrorBoundary>
-  );
+  return <DashboardWrapper dashboard={dashboardById.data} />;
 };
