@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import ReactGridLayout from 'react-grid-layout';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Button, Input, useDrawer, Wrapper } from '@ssa-ui-kit/core';
+import { Button, Checkbox, Input, useDrawer, Wrapper } from '@ssa-ui-kit/core';
 import { useUncontrolled } from '@ssa-ui-kit/hooks';
 
 import {
@@ -72,6 +72,7 @@ export const DashboardEditorInternal = ({
       dashboardDefinition: { version: 1 },
       id: -1,
       panels: [],
+      published: false,
       title: 'New Dashboard',
     },
     onChange,
@@ -129,12 +130,7 @@ export const DashboardEditorInternal = ({
         .then(() => onSaved?.(dashboard))
         .catch((error) => onError?.(error));
     } else {
-      createDashboard({
-        panels: dashboard.panels,
-        dashboardDefinition: dashboard.dashboardDefinition,
-        title: dashboard.title,
-        dashboardUid: dashboard.id.toString(),
-      })
+      createDashboard(dashboard)
         .then(() => onCreate?.())
         .catch((error) => onError?.(error));
     }
@@ -190,6 +186,11 @@ export const DashboardEditorInternal = ({
                 setDashboard({ ...dashboard, title: e.target.value }),
             }}
             css={{ maxWidth: '250px' }}
+          />
+          <Checkbox
+            text="Publish"
+            initialState={dashboard.published}
+            onChange={(published) => setDashboard({ ...dashboard, published })}
           />
           <Button
             variant="info"

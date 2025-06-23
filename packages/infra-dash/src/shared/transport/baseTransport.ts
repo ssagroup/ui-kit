@@ -1,21 +1,24 @@
 import { Dashboard, DashboardDefinition } from '../dashboard';
 import { GrafanaDashboard, GrafanaPanel, GrafanaPanelData } from '../grafana';
-import { PanelDefinition } from '../panel';
+import { PANEL_DATA_SOURCE, PanelDefinition } from '../panel';
 
 export type CreateDashboardPayload = {
   title: string;
-  dashboardUid: string;
   dashboardDefinition: DashboardDefinition;
-  panels: { id: number; panelDefinition: PanelDefinition }[];
+  published: boolean;
+  panels: {
+    source: {
+      type: typeof PANEL_DATA_SOURCE.GRAFANA;
+      dashboardUid: string;
+      panelId: number;
+    };
+    panelDefinition: PanelDefinition;
+  }[];
 };
 
 export type UpdateDashboardPayload = {
   dashboardId: number;
-  title: string;
-  dashboardDefinition: DashboardDefinition;
-  panels: { id: number; panelDefinition: PanelDefinition }[];
-};
-
+} & CreateDashboardPayload;
 export interface InfraDashTransport {
   getGrafanaDashboards: (signal?: AbortSignal) => Promise<GrafanaDashboard[]>;
   getGrafanaPanels: (
@@ -32,11 +35,10 @@ export interface InfraDashTransport {
     },
     signal?: AbortSignal,
   ) => Promise<GrafanaPanelData>;
-  getPanelData: (
-    panelId: number,
-    signal?: AbortSignal,
-  ) => Promise<GrafanaPanelData>;
   getDashboards: (
+    signal?: AbortSignal,
+  ) => Promise<Pick<Dashboard, 'id' | 'title'>[]>;
+  getPublishedDashboards: (
     signal?: AbortSignal,
   ) => Promise<Pick<Dashboard, 'id' | 'title'>[]>;
   getDashboard: (

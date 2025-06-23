@@ -104,16 +104,16 @@ export class RestInfraDashTransport implements InfraDashTransport {
     return await this.makeRequest<GrafanaPanelData>(request);
   }
 
-  async getPanelData(panelId: number, signal?: AbortSignal) {
-    const request = new Request(this.getUrl(`/dashboards/panels/${panelId}`), {
-      method: 'POST',
-      signal,
-    });
-    return await this.makeRequest<GrafanaPanelData>(request);
-  }
-
   async getDashboards(signal?: AbortSignal) {
     const request = new Request(this.getUrl(`/dashboards`), {
+      method: 'GET',
+      signal,
+    });
+    return await this.makeRequest<Pick<Dashboard, 'id' | 'title'>[]>(request);
+  }
+
+  async getPublishedDashboards(signal?: AbortSignal) {
+    const request = new Request(this.getUrl(`/dashboards/published`), {
       method: 'GET',
       signal,
     });

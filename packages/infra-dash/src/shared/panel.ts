@@ -6,13 +6,6 @@ import { GrafanaPanelData, GrafanaPanelSchema } from './grafana';
  * Contains both the component configuration and grid layout positioning.
  */
 export type PanelDefinition = {
-  source: {
-    type: typeof PANEL_DATA_SOURCE.GRAFANA;
-    /** Unique identifier for the Grafana dashboard */
-    dashboardUid: string;
-    /** Unique identifier for the Grafana panel within the dashboard */
-    panelId: number;
-  };
   component: {
     /** Unique identifier for the component type */
     id: string;
@@ -39,6 +32,11 @@ export type Panel = {
   panelSchema: GrafanaPanelSchema;
   /** Component and layout definition for the panel */
   panelDefinition: PanelDefinition;
+  source: {
+    type: typeof PANEL_DATA_SOURCE.GRAFANA;
+    dashboardUid: string;
+    panelId: number;
+  };
 };
 
 /**

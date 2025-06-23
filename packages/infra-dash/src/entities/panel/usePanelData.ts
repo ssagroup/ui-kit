@@ -8,7 +8,7 @@ type Options = QueryOptions & {
 
 export const usePanelData = (panel: Panel, options: Options = {}) => {
   const _transport = useTransport(options?.transport);
-  const panelSource = panel.panelDefinition.source;
+  const panelSource = panel.source;
 
   const result = useQuery(
     ['panel-data', panelSource],

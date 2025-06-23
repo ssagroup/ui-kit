@@ -31,13 +31,13 @@ export const appendPanel = (params: AppendPanelParams) => {
       );
       const newPanel: Panel = {
         id: -Date.now(), // use a negative ID to indicate a new panel
+        source: {
+          type: 'grafana',
+          dashboardUid: grafanaDashboard.id,
+          panelId: grafanaPanel.id,
+        },
         panelDefinition: {
           version: 1,
-          source: {
-            type: 'grafana',
-            dashboardUid: grafanaDashboard.id,
-            panelId: grafanaPanel.id,
-          },
           component: {
             id: defaultComponentConfig.componentId,
             props: {},

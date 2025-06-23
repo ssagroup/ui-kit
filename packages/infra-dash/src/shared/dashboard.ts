@@ -17,6 +17,8 @@ export type Dashboard = {
   id: number;
   /** Display title of the dashboard shown in the UI */
   title: string;
+  /** Indicates if the dashboard is published and available to users */
+  published: boolean;
   /** Dashboard-specific configuration and settings */
   dashboardDefinition: DashboardDefinition;
   /** Array of panels that belong to this dashboard */

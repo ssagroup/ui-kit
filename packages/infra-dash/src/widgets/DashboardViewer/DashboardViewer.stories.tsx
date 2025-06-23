@@ -94,7 +94,7 @@ export const DashboardError: Story = {
 };
 
 class PanelLoadingTransport extends MockTransport {
-  getPanelData(): Promise<GrafanaPanelData> {
+  getGrafanaPanelData(): Promise<GrafanaPanelData> {
     return new Promise(() => {});
   }
 }

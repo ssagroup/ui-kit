@@ -338,17 +338,18 @@ export const gaugeData: GrafanaPanelData = {
 export const dashboard: Dashboard = {
   id: 1,
   title: 'Sample Dashboard',
+  published: true,
   dashboardDefinition: { version: 1 },
   panels: [
     {
       id: 1,
+      source: {
+        type: 'grafana',
+        dashboardUid: '1',
+        panelId: 31,
+      },
       panelDefinition: {
         version: 1,
-        source: {
-          type: 'grafana',
-          dashboardUid: '1',
-          panelId: 31,
-        },
         gridPos: { w: 24, h: 6, x: 0, y: 0 },
         component: { id: 'timeseries-default', props: {} },
       },
@@ -359,13 +360,13 @@ export const dashboard: Dashboard = {
     },
     {
       id: 2,
+      source: {
+        type: 'grafana',
+        dashboardUid: '1',
+        panelId: 32,
+      },
       panelDefinition: {
         version: 1,
-        source: {
-          type: 'grafana',
-          dashboardUid: '1',
-          panelId: 32,
-        },
         gridPos: { w: 18, h: 7, x: 6, y: 6 },
         component: { id: 'bargauge-default', props: {} },
       },
@@ -404,13 +405,13 @@ export const dashboard: Dashboard = {
     },
     {
       id: 3,
+      source: {
+        type: 'grafana',
+        dashboardUid: '1',
+        panelId: 33,
+      },
       panelDefinition: {
         version: 1,
-        source: {
-          type: 'grafana',
-          dashboardUid: '1',
-          panelId: 33,
-        },
         gridPos: { w: 6, h: 7, x: 0, y: 6 },
         component: { id: 'gauge-default', props: {} },
       },
@@ -472,7 +473,7 @@ export class MockTransport extends RestInfraDashTransport {
     if (grafanaDashboardUid === '1') {
       return Promise.resolve(
         dashboard.panels.map((panel) => ({
-          id: panel.panelDefinition.source.panelId,
+          id: panel.source.panelId,
           title: panel.title,
           subPanels: null,
           panelSchema: panel.panelSchema,
@@ -488,7 +489,7 @@ export class MockTransport extends RestInfraDashTransport {
             type: 'row',
           },
           subPanels: [dashboard.panels[0]].map((panel) => ({
-            id: panel.panelDefinition.source.panelId,
+            id: panel.source.panelId,
             title: panel.title,
             subPanels: null,
             panelSchema: panel.panelSchema,
