@@ -59,7 +59,8 @@ const DropdownOptions = ({
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
-  const options = (childrenArray as React.ReactElement[]).map((child) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const options = (childrenArray as React.ReactElement<any>[]).map((child) => {
     const isActive = activeItem?.value === child.props.value;
 
     return React.cloneElement(

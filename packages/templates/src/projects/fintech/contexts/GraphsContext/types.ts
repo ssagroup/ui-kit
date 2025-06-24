@@ -1,10 +1,10 @@
-import { MutableRefObject } from 'react';
+import { RefObject } from 'react';
 import { GraphsListItem } from '@fintech/types';
 
 export interface GraphsContextValue {
   marginRight: number;
   marginLeft: number;
-  tooltipRef: MutableRefObject<HTMLDivElement | null>;
+  tooltipRef: RefObject<HTMLDivElement | null>;
   calculateMargins: (data: GraphsListItem[]) => void;
   updateRightMargin: (newRightMargin: number) => void;
   updateLeftMargin: (newLeftMargin: number) => void;

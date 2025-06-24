@@ -20,7 +20,7 @@ export const EventInfoPopoverTrigger = React.forwardRef<
   const ref = useMergeRefs([context?.refs.setReference, propRef, childrenRef]);
 
   // `asChild` allows the user to pass any element as the anchor
-  if (asChild && React.isValidElement(children)) {
+  if (asChild && React.isValidElement<object>(children)) {
     return React.cloneElement(
       children,
       context?.getReferenceProps({
@@ -28,7 +28,7 @@ export const EventInfoPopoverTrigger = React.forwardRef<
         ...props,
         ...children.props,
         'data-state': context.open ? 'open' : 'closed',
-      }),
+      } as React.HTMLProps<HTMLElement>),
     );
   }
 

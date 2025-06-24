@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import { RefObject } from 'react';
 import { PlotParams } from 'react-plotly.js';
 import { PieChartProps } from '../PieChart';
 
@@ -76,7 +76,7 @@ export interface BarLineComplexChartContextProviderProps
 export interface UseChartInfo {
   (): {
     transformedChartData: Plotly.Data[];
-    tooltipContentRef: MutableRefObject<HTMLDivElement | null>;
+    tooltipContentRef: RefObject<HTMLDivElement | null>;
     modeBarButtonsByKey: Record<string, Plotly.ModeBarButtonAny>;
   };
 }

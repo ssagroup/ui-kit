@@ -48,6 +48,10 @@ export const BigNumberChartComponent = ({
     setHoveredValueThrottled(data.data);
   };
 
+  const handleMouseLeave = () => {
+    setHoveredValueThrottled(null);
+  };
+
   const value = hoveredValue ?? lastValue;
 
   return (

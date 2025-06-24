@@ -44,7 +44,7 @@ const routes = [
 ];
 
 const Default =
-  (Component: JSX.ElementType) =>
+  (Component: React.JSX.ElementType) =>
   <P extends object>(props: P) => {
     const theme = useTheme();
     const { user } = useAuth();

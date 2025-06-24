@@ -17,7 +17,7 @@ export const TriggerIcon = ({
     props: Omit<SVGProps, 'fill'> & {
       showIconTooltip?: boolean;
     },
-  ) => JSX.Element;
+  ) => React.JSX.Element;
 }) => {
   const theme = useTheme();
   const { showIconTooltip } = useCollapsibleNavBarContext();

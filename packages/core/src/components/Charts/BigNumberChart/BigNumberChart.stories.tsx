@@ -35,9 +35,11 @@ const meta = {
       </span>
     ),
     trendLineProps: {
-      tooltipValueFormat: (value) => {
-        const date = DateTime.fromMillis(Number(value.x));
-        return date.toRelative();
+      tooltipProps: {
+        valueFormat: (value) => {
+          const date = DateTime.fromMillis(Number(value.x));
+          return date.toRelative();
+        },
       },
     },
     data: generateMockData(),
@@ -83,9 +85,11 @@ export const Dynamic: Story = {
   args: {
     trendLineProps: {
       curve: 'monotoneX',
-      tooltipValueFormat: (value) => {
-        const date = DateTime.fromMillis(Number(value.x));
-        return date.toRelative();
+      tooltipProps: {
+        valueFormat: (value) => {
+          const date = DateTime.fromMillis(Number(value.x));
+          return date.toRelative();
+        },
       },
     },
     features: ['header', 'fullscreenMode'],

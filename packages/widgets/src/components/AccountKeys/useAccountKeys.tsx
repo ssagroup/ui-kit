@@ -1,10 +1,10 @@
 import { useUncontrolled } from '@ssa-ui-kit/hooks';
 
 export type UseAccountKeysOptions = {
-  title?: string | JSX.Element;
+  title?: string | React.JSX.Element;
   apiKey: string;
   secretKey: string;
-  placeholder?: string | JSX.Element;
+  placeholder?: string | React.JSX.Element;
   visible?: boolean;
   defaultVisible?: boolean;
   onDelete?: () => void;

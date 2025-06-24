@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 export interface UserProfileProps {
   name: string;
   email: string;
-  trigger: string | JSX.Element;
+  trigger: string | React.JSX.Element;
   onClick: () => void;
   logOutText?: string;
   className?: string;

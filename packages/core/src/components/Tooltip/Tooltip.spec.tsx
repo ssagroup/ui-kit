@@ -1,5 +1,5 @@
 import { waitFor, fireEvent } from '../../../customTest';
-import type { Point } from '@nivo/line';
+import type {LineSeries, Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
 import theme from '@themes/main';
@@ -207,11 +207,13 @@ describe('Tooltip', () => {
   });
 
   describe('SimpleChartTooltip', () => {
-    const point: Point = {
+    const point: Point<LineSeries> = {
       id: '',
-      index: 0,
-      serieId: '',
-      serieColor: '',
+      seriesIndex: 0,
+      seriesId: '',
+      indexInSeries: 0,
+      absIndex: 0,
+      seriesColor: '',
       x: 1,
       y: 1,
       color: 'white',

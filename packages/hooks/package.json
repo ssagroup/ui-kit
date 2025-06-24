@@ -28,10 +28,10 @@
   },
   "dependencies": {
     "@ssa-ui-kit/utils": "workspace:^",
-    "usehooks-ts": "3.1.0"
+    "usehooks-ts": "3.1.1"
   },
   "peerDependencies": {
-    "react": "18.x"
+    "react": "19.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {
