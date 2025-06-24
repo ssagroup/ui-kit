@@ -66,7 +66,7 @@ export const PanelControlContent = ({
 export const PanelControl = (props: PanelControlProps) => {
   return (
     <Popover>
-      <PopoverTrigger variant="tertiary">
+      <PopoverTrigger variant="tertiary" css={{ marginRight: 5, marginTop: 5 }}>
         <Icon name="more-vertical" size={14} />
       </PopoverTrigger>
       <PanelControlContent {...props} />
