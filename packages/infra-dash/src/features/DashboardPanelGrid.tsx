@@ -51,9 +51,9 @@ export const DashboardPanelGrid = ({
 
   useEffect(() => {
     if (refetchIntervalMs) {
-      queryClient.invalidateQueries({ key: ['panel-data'] });
+      queryClient.invalidateQueries({ key: ['panel-data'], type: 'active' });
       const intervalId = setInterval(() => {
-        queryClient.invalidateQueries({ key: ['panel-data'] });
+        queryClient.invalidateQueries({ key: ['panel-data'], type: 'active' });
       }, refetchIntervalMs);
       return () => clearInterval(intervalId);
     }
