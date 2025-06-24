@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
 import {
   Accordion,
   AccordionGroup,
   AccordionGroupContextProvider,
+  AccordionViewProps,
   Button,
   Icon,
+  Input,
   ProgressCircle,
   Theme,
   Wrapper,
@@ -19,18 +22,21 @@ import { useInfraDashContext } from '@shared/context';
 
 type ExternalPanelListProps = {
   dashboard: GrafanaDashboard;
+  panels: GrafanaPanel[];
+  isLoaded: boolean;
+  error: Error | null;
   onPanelClick?: (dashboard: GrafanaDashboard, panel: GrafanaPanel) => void;
 };
 
 const ExternalPanelList = ({
   dashboard,
+  panels,
+  isLoaded,
+  error,
   onPanelClick,
 }: ExternalPanelListProps) => {
   const theme = useTheme() as Theme;
-  const { panelRegistry } = useInfraDashContext();
-  const externalPanels = useGrafanaPanels(dashboard.id);
-
-  if (!externalPanels.isLoaded) {
+  if (!isLoaded) {
     return (
       <Wrapper
         direction="column"
@@ -54,7 +60,7 @@ const ExternalPanelList = ({
       </Wrapper>
     );
   }
-  if (externalPanels.error) {
+  if (error) {
     return (
       <Wrapper
         direction="column"
@@ -64,7 +70,7 @@ const ExternalPanelList = ({
       </Wrapper>
     );
   }
-  if (!externalPanels.data.length) {
+  if (!panels.length) {
     return (
       <Wrapper
         direction="column"
@@ -75,19 +81,9 @@ const ExternalPanelList = ({
     );
   }
 
-  const availablePanels = externalPanels.data.filter((panel) => {
-    if (!panel.panelSchema?.type) {
-      return false;
-    }
-    const availableComponents = panelRegistry.findPanelConfigsByType(
-      panel.panelSchema.type,
-    );
-    return availableComponents.length > 0;
-  });
-
   return (
     <>
-      {availablePanels.map((panel) => (
+      {panels.map((panel) => (
         <Button
           key={panel.id}
           variant="tertiary"
@@ -114,6 +110,98 @@ const ExternalPanelList = ({
   );
 };
 
+type DashboardAccordionItemProps = {
+  dashboard: GrafanaDashboard;
+  search: string;
+  onPanelClick?: (dashboard: GrafanaDashboard, panel: GrafanaPanel) => void;
+} & Partial<AccordionViewProps>;
+
+const DashboardAccordionItem = ({
+  dashboard,
+  search,
+  onPanelClick,
+  ...accordionProps
+}: DashboardAccordionItemProps) => {
+  const theme = useTheme() as Theme;
+  const { panelRegistry } = useInfraDashContext();
+  const panelsQuery = useGrafanaPanels(dashboard.id);
+
+  const loadedPanels = panelsQuery.data ?? [];
+  const availablePanels = loadedPanels.filter((panel) => {
+    if (!panel.panelSchema?.type) {
+      return false;
+    }
+    if (search && !panel.title.toLowerCase().includes(search.toLowerCase())) {
+      return false;
+    }
+    const availableComponents = panelRegistry.findPanelConfigsByType(
+      panel.panelSchema.type,
+    );
+    return availableComponents.length > 0;
+  });
+
+  if (search && panelsQuery.isLoaded && !availablePanels.length) {
+    return null;
+  }
+
+  return (
+    <Accordion
+      key={dashboard.id}
+      id={dashboard.id}
+      title={dashboard.title}
+      className={css`
+        padding: 0 !important;
+        align-items: start !important;
+      `}
+      renderTitle={({ title, isOpened, onClick }) => (
+        <Button
+          onClick={onClick}
+          variant="tertiary"
+          className={css`
+            width: 100%;
+            min-height: 34px;
+            gap: 8px;
+            padding: 8px 14px !important;
+            text-align: left;
+            & svg {
+              & path {
+                stroke: ${theme.colors.greyDarker};
+                stroke-width: 1.4px;
+              }
+            }
+          `}
+          startIcon={
+            isOpened ? (
+              <Icon name="carrot-down" size={12} />
+            ) : (
+              <Icon name="carrot-right" size={12} />
+            )
+          }>
+          {title}
+        </Button>
+      )}
+      renderContent={({ isOpened }) => (
+        <div
+          css={{
+            width: '100%',
+            display: isOpened ? 'block' : 'none',
+            fontWeight: 500,
+            fontSize: '14px',
+          }}>
+          <ExternalPanelList
+            panels={availablePanels}
+            isLoaded={panelsQuery.isLoaded}
+            error={panelsQuery.error}
+            dashboard={dashboard}
+            onPanelClick={onPanelClick}
+          />
+        </div>
+      )}
+      {...accordionProps}
+    />
+  );
+};
+
 export type ExternalDashboardsListProps = {
   onPanelClick?: (dashboard: GrafanaDashboard, panel: GrafanaPanel) => void;
 } & React.HTMLAttributes<HTMLDivElement>;
@@ -123,6 +211,7 @@ export const ExternalDashboardsList = ({
   ...divProps
 }: ExternalDashboardsListProps) => {
   const theme = useTheme() as Theme;
+  const [search, setSearch] = useState('');
   const dashboardsQuery = useGrafanaDashboards();
 
   if (!dashboardsQuery.isLoaded) {
@@ -174,61 +263,33 @@ export const ExternalDashboardsList = ({
   }
 
   return (
-    <AccordionGroupContextProvider>
-      <AccordionGroup size="small" css={{ overflow: 'auto' }} {...divProps}>
-        {dashboardsQuery.data.map((dashboard) => (
-          <Accordion
-            key={dashboard.id}
-            id={dashboard.id}
-            title={dashboard.title}
-            className={css`
-              padding: 0 !important;
-              align-items: start !important;
-            `}
-            renderTitle={({ title, isOpened, onClick }) => (
-              <Button
-                onClick={onClick}
-                variant="tertiary"
-                className={css`
-                  width: 100%;
-                  min-height: 34px;
-                  gap: 8px;
-                  padding: 8px 14px !important;
-                  text-align: left;
-                  & svg {
-                    & path {
-                      stroke: ${theme.colors.greyDarker};
-                      stroke-width: 1.4px;
-                    }
-                  }
-                `}
-                startIcon={
-                  isOpened ? (
-                    <Icon name="carrot-down" size={12} />
-                  ) : (
-                    <Icon name="carrot-right" size={12} />
-                  )
-                }>
-                {title}
-              </Button>
-            )}
-            renderContent={({ isOpened }) => (
-              <div
-                css={{
-                  width: '100%',
-                  display: isOpened ? 'block' : 'none',
-                  fontWeight: 500,
-                  fontSize: '14px',
-                }}>
-                <ExternalPanelList
-                  dashboard={dashboard}
-                  onPanelClick={onPanelClick}
-                />
-              </div>
-            )}
-          />
-        ))}
-      </AccordionGroup>
-    </AccordionGroupContextProvider>
+    <>
+      <Input
+        name="panel-search"
+        placeholder="Search..."
+        inputProps={{
+          value: search,
+          onChange: (e) => setSearch(e.target.value),
+        }}
+        css={{ marginTop: '24px' }}
+      />
+      <AccordionGroupContextProvider>
+        <AccordionGroup
+          size="small"
+          css={{ overflow: 'auto', width: '100%' }}
+          {...divProps}>
+          {dashboardsQuery.data.map((dashboard) => (
+            <DashboardAccordionItem
+              // id is required by AccordionGroup logic
+              id={dashboard.id}
+              key={dashboard.id}
+              dashboard={dashboard}
+              search={search}
+              onPanelClick={onPanelClick}
+            />
+          ))}
+        </AccordionGroup>
+      </AccordionGroupContextProvider>
+    </>
   );
 };
