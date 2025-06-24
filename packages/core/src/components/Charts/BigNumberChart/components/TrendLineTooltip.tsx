@@ -1,7 +1,9 @@
-import styled from '@emotion/styled';
-import { Point, PointTooltipProps } from '@nivo/line';
+import { Theme } from '@emotion/react';
+import styled, { Interpolation } from '@emotion/styled';
+import { LineSeries, Point, PointTooltipProps } from '@nivo/line';
 
 const TrendLineTooltipStyled = styled.div`
+  white-space: nowrap;
   background: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.grey20};
   border-radius: 8px;
@@ -12,18 +14,21 @@ const TrendLineTooltipStyled = styled.div`
   padding: 0.5rem;
 `;
 
-export type TrendLineTooltipProps = PointTooltipProps & {
-  valueFormat?: (data: Point['data']) => React.ReactNode;
-};
+export interface TrendLineTooltipProps<Series extends LineSeries>
+  extends PointTooltipProps<Series> {
+  valueFormat?: (data: Point<Series>['data']) => React.ReactNode;
+  css?: Interpolation<Theme>;
+}
 
-export const TrendLineTooltip = ({
+export const TrendLineTooltip = <Series extends LineSeries>({
   point,
+  css,
   valueFormat,
-}: TrendLineTooltipProps) => {
+}: TrendLineTooltipProps<Series>) => {
   const { data } = point;
   const { xFormatted, yFormatted } = point.data;
   return (
-    <TrendLineTooltipStyled>
+    <TrendLineTooltipStyled css={css}>
       {valueFormat?.(data) ?? `${xFormatted} - ${yFormatted}`}
     </TrendLineTooltipStyled>
   );

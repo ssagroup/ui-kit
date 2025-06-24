@@ -13,7 +13,7 @@ import {
   TestPropsType,
 } from './fixtures';
 
-function setup(component: JSX.Element) {
+function setup(component: React.JSX.Element) {
   return {
     user: userEvent.setup(),
     ...render(component),

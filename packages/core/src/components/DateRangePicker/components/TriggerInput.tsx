@@ -10,7 +10,8 @@ const WithTriggerPopover = ({
   children,
 }: {
   isEnabled?: boolean;
-  children: React.ReactElement;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: React.ReactElement<any>;
 }) => {
   return isEnabled ? (
     <C.PopoverTrigger asChild>

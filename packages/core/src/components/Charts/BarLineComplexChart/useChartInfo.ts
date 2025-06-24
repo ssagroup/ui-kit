@@ -10,7 +10,7 @@ export const useChartInfo: UseChartInfo = () => {
   const { setIsOpen, isOpen, context } = useTooltipContext();
   const { filteredData, selected, lineShape } = useBarLineComplexChartContext();
   const { isFullscreenMode, setFullscreenMode } = useFullscreenMode();
-  const tooltipContentRef = useRef<HTMLDivElement | null>(null);
+  const tooltipContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     return () => {

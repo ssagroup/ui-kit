@@ -6,7 +6,7 @@ import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 const TooltipTrigger = ({ children, className }: TooltipTriggerProps) => {
   const tooltipCtx = useTooltipContext();
 
-  if (isValidElement(children)) {
+  if (isValidElement<TooltipTriggerProps>(children)) {
     return cloneElement(
       children,
       tooltipCtx?.getReferenceProps({

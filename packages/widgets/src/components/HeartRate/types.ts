@@ -1,7 +1,7 @@
-import { Serie } from '@nivo/line';
+import { LineSeries } from '@nivo/line';
 
 export interface HeartRateProps {
-  data: Serie;
+  data: LineSeries;
   caption?: string;
   color?: string;
 }

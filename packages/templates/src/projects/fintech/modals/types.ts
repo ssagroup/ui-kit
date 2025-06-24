@@ -2,9 +2,9 @@ import { CONFIRMATION_MODAL } from './constants';
 
 export interface ModalInformation {
   id: typeof CONFIRMATION_MODAL;
-  trigger?: JSX.Element;
+  trigger?: React.JSX.Element;
   title: React.ReactNode;
-  content: string | JSX.Element;
+  content: string | React.JSX.Element;
   isDismissButton?: boolean;
   confirmationBtnText: string;
   onClose?: () => void;

@@ -1,4 +1,4 @@
-import { MutableRefObject, ReactNode } from 'react';
+import { RefObject, ReactNode } from 'react';
 import {
   Control,
   FieldPath,
@@ -17,7 +17,7 @@ export interface CheckboxProps
   isIndeterminate?: boolean;
   name?: string;
   isRequired?: boolean;
-  ref?: MutableRefObject<HTMLInputElement>;
+  ref?: RefObject<HTMLInputElement>;
   color?: 'green' | 'blue' | 'custom';
   as?: React.ElementType;
   className?: string;

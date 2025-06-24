@@ -10,7 +10,7 @@ import {
 
 export interface UseTableDataParameters {
   initialState?: TableFilterConfig;
-  wrapperRef?: React.RefObject<HTMLElement>;
+  wrapperRef?: React.RefObject<HTMLElement | null>;
   updatedCheckboxData?: TableFilterConfig;
   handleCancel?: () => void;
   handleClear?: () => void;
@@ -36,13 +36,13 @@ export const useTableData = ({
   );
 
   const [refsList, setRefsList] = useState<
-    Array<React.MutableRefObject<HTMLElement | null>>
+    Array<React.RefObject<HTMLElement | null>>
   >([]);
   const [groupNames, setGroupNames] = useState<string[]>([]);
 
   const setElementRef = (groupName: string, element: HTMLElement | null) => {
     if (element !== null && !groupNames.includes(groupName)) {
-      const newRef: React.MutableRefObject<HTMLElement | null> =
+      const newRef: React.RefObject<HTMLElement | null> =
         createRef<HTMLElement>();
       newRef.current = element;
       setRefsList((currentList) => [...currentList, newRef]);

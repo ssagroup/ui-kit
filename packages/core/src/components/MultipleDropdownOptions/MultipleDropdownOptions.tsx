@@ -94,7 +94,8 @@ const MultipleDropdownOptions = ({
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
-  const options = (childrenArray as React.ReactElement[]).map((child) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const options = (childrenArray as React.ReactElement<any>[]).map((child) => {
     const element = allItems[child.props.value];
     const isActive = Boolean(element?.isSelected);
     const isDisabled = Boolean(element?.isDisabled);

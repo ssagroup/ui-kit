@@ -31,8 +31,8 @@ export const useDateRangePicker = ({
   onChange,
   ...rest
 }: DateRangePickerProps & { isOpenState?: boolean }) => {
-  const inputFromRef = useRef<HTMLInputElement | null>(null);
-  const inputToRef = useRef<HTMLInputElement | null>(null);
+  const inputFromRef = useRef<HTMLInputElement>(null);
+  const inputToRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState(isOpenState);
   const [status, setStatus] = useState(rest.status);
   const previousOpenState = useRef(isOpenState);
@@ -410,11 +410,11 @@ export const useDateRangePicker = ({
     inputFromRef: useMergeRefs<HTMLInputElement | null>([
       maskInputRef,
       inputFromRef,
-    ]),
+    ]) as React.RefCallback<HTMLInputElement | null>,
     inputToRef: useMergeRefs<HTMLInputElement | null>([
       maskInputRef,
       inputToRef,
-    ]),
+    ]) as React.RefCallback<HTMLInputElement | null>,
     setIsOpen,
     handleSetIsOpen,
     setLastFocusedElement,

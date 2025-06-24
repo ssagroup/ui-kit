@@ -1,8 +1,8 @@
 export interface ConfirmationModalProps {
-  trigger?: JSX.Element;
+  trigger?: React.JSX.Element;
   isOpen?: boolean;
   title: React.ReactNode;
-  content: JSX.Element | string;
+  content: React.JSX.Element | string;
   isDismissButton?: boolean;
   confirmationBtnText: string;
   cancelBtnText?: string;

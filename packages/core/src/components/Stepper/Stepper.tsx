@@ -18,7 +18,9 @@ const Stepper = ({
     childrenArray.reverse();
   }
 
-  const steps = (childrenArray as React.ReactElement[]).map((child, index) => {
+  const steps = (
+    childrenArray as React.ReactElement<Record<string, string | number>>[]
+  ).map((child, index) => {
     return React.cloneElement(child, {
       index: inverted ? childrenArray.length - index - 1 : index,
       ...child.props,
