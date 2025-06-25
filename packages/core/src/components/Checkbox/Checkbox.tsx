@@ -22,7 +22,7 @@ const Checkbox = ({
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
   const autoGenId = useId();
   const theme = useTheme();
-  const checkboxInputRef = useRef<HTMLInputElement | null>(null);
+  const checkboxInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // istanbul ignore else

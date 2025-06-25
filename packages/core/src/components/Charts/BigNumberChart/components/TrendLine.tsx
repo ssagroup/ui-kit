@@ -1,27 +1,23 @@
 import { useTheme } from '@emotion/react';
-import { DotsItem } from '@nivo/core';
+import { DotsItem, ResponsiveProps } from '@nivo/core';
 import {
-  CustomLayerProps,
-  Layer,
-  LineProps,
-  Point,
+  LineSeries,
+  LineCustomSvgLayerProps,
   ResponsiveLine,
+  LineSvgProps,
 } from '@nivo/line';
 import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
 
-export interface TrendLineProps extends LineProps {
+export interface TrendLineProps<Series extends LineSeries>
+  extends ResponsiveProps<LineSvgProps<Series>> {
   color?: string;
-  tooltipValueFormat?: TrendLineTooltipProps['valueFormat'];
+  tooltipProps?: Omit<TrendLineTooltipProps<Series>, 'point'>;
 }
 
-type CurrentPoint = {
-  currentPoint: Point;
-};
-
-const ActivePoint = ({
+const ActivePoint = <Series extends LineSeries>({
   currentPoint,
   ...props
-}: CustomLayerProps & CurrentPoint) => (
+}: LineCustomSvgLayerProps<Series>) => (
   <g>
     {currentPoint && (
       <DotsItem
@@ -39,15 +35,15 @@ const ActivePoint = ({
   </g>
 );
 
-export const TrendLine = ({
+export const TrendLine = <Series extends LineSeries>({
   color,
-  tooltipValueFormat,
+  tooltipProps,
   ...props
-}: TrendLineProps) => {
+}: TrendLineProps<Series>) => {
   const theme = useTheme();
   const _color = color ?? theme.colors.purpleDark;
   return (
-    <ResponsiveLine
+    <ResponsiveLine<Series>
       axisBottom={null}
       axisLeft={null}
       axisRight={null}
@@ -97,24 +93,20 @@ export const TrendLine = ({
       pointBorderColor={{ from: 'serieColor' }}
       margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
       legends={[]}
-      tooltip={(args) => (
-        <TrendLineTooltip {...args} valueFormat={tooltipValueFormat} />
-      )}
-      layers={
-        [
-          'grid',
-          'markers',
-          'axes',
-          'areas',
-          'crosshair',
-          'lines',
-          'points',
-          'slices',
-          'mesh',
-          'legends',
-          ActivePoint,
-        ] as Layer[]
-      }
+      tooltip={(args) => <TrendLineTooltip {...args} {...tooltipProps} />}
+      layers={[
+        'grid',
+        'markers',
+        'axes',
+        'areas',
+        'crosshair',
+        'lines',
+        'points',
+        'slices',
+        'mesh',
+        'legends',
+        ActivePoint,
+      ]}
       {...props}
     />
   );

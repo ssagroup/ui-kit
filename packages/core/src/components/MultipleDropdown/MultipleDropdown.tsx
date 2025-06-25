@@ -49,7 +49,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
   const theme = useTheme();
-  const dropdownBaseRef: React.MutableRefObject<HTMLDivElement | null> =
+  const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
   const dropdownId = useId();
   const [isFocused, setIsFocused] = useState(false);
@@ -127,24 +127,24 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     const childrenArray = React.Children.toArray(children).filter(Boolean);
     const newOptions: T[] = [];
     const keyedOptions: Record<number | string, T> = {};
-    const childItems: Array<React.ReactElement> = (
-      childrenArray as React.ReactElement[]
-    ).map((child, index) => {
-      const newOption = {
-        ...child.props,
-        isSelected: !!memoSelectedItems.find(
-          (selectedItem) => selectedItem.value === child.props.value,
-        ),
-      };
-      newOptions.push(newOption);
-      keyedOptions[newOption.value] = newOption;
+    const childItems = (childrenArray as React.ReactElement<T>[]).map(
+      (child, index) => {
+        const newOption = {
+          ...child.props,
+          isSelected: !!memoSelectedItems.find(
+            (selectedItem) => selectedItem.value === child.props.value,
+          ),
+        };
+        newOptions.push(newOption);
+        keyedOptions[newOption.value] = newOption;
 
-      return React.cloneElement(child, {
-        index,
-        onClick: onChange.bind(null),
-        ...child.props,
-      });
-    });
+        return React.cloneElement(child, {
+          index,
+          onClick: onChange.bind(null),
+          ...child.props,
+        });
+      },
+    );
 
     setOptionsWithKey(keyedOptions);
     setItems(childItems);

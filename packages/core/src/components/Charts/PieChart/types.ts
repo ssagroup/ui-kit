@@ -75,7 +75,7 @@ export type PieChartTooltipViewProps = {
   isOpen: boolean;
   point?: PieTooltipProps<
     MayHaveLabel & {
-      percentage?: number;
+      percentage?: number | string;
       dimension?: string;
     }
   > | null;

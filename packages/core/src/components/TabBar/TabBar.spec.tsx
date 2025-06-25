@@ -30,7 +30,7 @@ interface ComponentTabBarTests {
   (
     describeBlockName: string,
     tabs: TabTest[],
-    renderTab: (tab: TabTest) => React.ReactElement,
+    renderTab: (tab: TabTest) => React.ReactElement<TabProps>,
     getTabText: (tab: TabTest) => string[],
   ): void;
 }

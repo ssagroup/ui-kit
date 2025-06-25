@@ -12,7 +12,7 @@ export const TriggerIcon = ({
   iconName: keyof MapIconsType;
   iconSize?: number;
   className?: string;
-  CustomIcon?: (props: Omit<SVGProps, 'fill'>) => JSX.Element;
+  CustomIcon?: (props: Omit<SVGProps, 'fill'>) => React.JSX.Element;
 }) => {
   const theme = useTheme();
   return (

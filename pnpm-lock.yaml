@@ -52,16 +52,16 @@ importers:
         version: 0.5.15(react-refresh@0.16.0)(type-fest@2.19.0)(webpack-dev-server@5.2.0)(webpack-hot-middleware@2.26.1)(webpack@5.98.0)
       '@storybook/addon-docs':
         specifier: ^9.0.4
-        version: 9.0.4(@types/react@18.3.18)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
+        version: 9.0.4(@types/react@19.1.8)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
       '@storybook/addon-links':
         specifier: ^9.0.4
-        version: 9.0.4(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
+        version: 9.0.4(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
       '@storybook/addon-webpack5-compiler-babel':
         specifier: ^3.0.6
         version: 3.0.6(webpack@5.98.0)
       '@storybook/react-webpack5':
         specifier: ^9.0.4
-        version: 9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)
+        version: 9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.7.3)
@@ -73,7 +73,7 @@ importers:
         version: 6.6.3
       '@testing-library/react':
         specifier: ^16.2.0
-        version: 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@testing-library/user-event':
         specifier: ^14.4.3
         version: 14.6.1(@testing-library/dom@10.4.0)
@@ -87,11 +87,11 @@ importers:
         specifier: ^0.30.2
         version: 0.30.2
       '@types/react':
-        specifier: ^18.2.8
-        version: 18.3.18
+        specifier: ^19.1.0
+        version: 19.1.8
       '@types/react-dom':
-        specifier: ^18.2.4
-        version: 18.3.5(@types/react@18.3.18)
+        specifier: ^19.1.0
+        version: 19.1.6(@types/react@19.1.8)
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.24.0
         version: 8.24.0(@typescript-eslint/parser@8.24.0(eslint@9.20.1)(typescript@5.7.3))(eslint@9.20.1)(typescript@5.7.3)
@@ -174,17 +174,17 @@ importers:
         specifier: ^0.30.1
         version: 0.30.1
       react:
-        specifier: ^18.2.0
-        version: 18.3.1
+        specifier: ^19.1.0
+        version: 19.1.0
       react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
       react-refresh:
         specifier: ^0.16.0
         version: 0.16.0
       react-router-dom:
         specifier: ^7.2.0
-        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       resize-observer-polyfill:
         specifier: ^1.5.1
         version: 1.5.1
@@ -253,25 +253,25 @@ importers:
         version: 11.13.5
       '@emotion/react':
         specifier: ^11.14.0
-        version: 11.14.0(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@types/react@19.1.8)(react@19.1.0)
       '@emotion/styled':
         specifier: ^11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)
       '@floating-ui/react':
         specifier: 0.27.4
-        version: 0.27.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.27.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/core':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/line':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/pie':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/scales':
-        specifier: ^0.88.0
-        version: 0.88.0
+        specifier: ^0.99.0
+        version: 0.99.0
       '@ssa-ui-kit/core':
         specifier: workspace:^
         version: link:../../packages/core
@@ -288,14 +288,14 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       react:
-        specifier: ^18.2.0
-        version: 18.3.1
+        specifier: ^19.1.0
+        version: 19.1.0
       react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
       react-router-dom:
         specifier: ^7.2.0
-        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@emotion/jest':
         specifier: ^11.13.0
@@ -323,16 +323,16 @@ importers:
     dependencies:
       '@floating-ui/react':
         specifier: 0.27.4
-        version: 0.27.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.27.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rc-component/color-picker':
         specifier: ^3.0.1
-        version: 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 3.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@react-input/mask':
         specifier: ^2.0.4
-        version: 2.0.4(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 2.0.4(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@react-input/number-format':
         specifier: ^2.0.3
-        version: 2.0.3(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 2.0.3(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ssa-ui-kit/hooks':
         specifier: workspace:^
         version: link:../hooks
@@ -352,20 +352,20 @@ importers:
         specifier: 3.0.0
         version: 3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1))
       react:
-        specifier: 18.x
-        version: 18.3.1
+        specifier: 19.x
+        version: 19.1.0
       react-dom:
-        specifier: 18.x
-        version: 18.3.1(react@18.3.1)
+        specifier: 19.x
+        version: 19.1.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.46.1
-        version: 7.54.2(react@18.3.1)
+        version: 7.54.2(react@19.1.0)
       react-plotly.js:
         specifier: 2.6.0
-        version: 2.6.0(plotly.js@3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)))(react@18.3.1)
+        version: 2.6.0(plotly.js@3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)))(react@19.1.0)
       react-router-dom:
         specifier: 6.x || 7.x
-        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@emotion/css':
         specifier: ^11.13.5
@@ -375,37 +375,37 @@ importers:
         version: 11.13.0(@types/jest@29.5.14)
       '@emotion/react':
         specifier: ^11.14.0
-        version: 11.14.0(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@types/react@19.1.8)(react@19.1.0)
       '@emotion/styled':
         specifier: ^11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)
       '@nivo/core':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/line':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/pie':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/radar':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/treemap':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@playwright/test':
         specifier: ^1.48.0
         version: 1.50.1
       '@rjsf/core':
         specifier: ^5.24.8
-        version: 5.24.8(@rjsf/utils@5.24.8(react@18.3.1))(react@18.3.1)
+        version: 5.24.8(@rjsf/utils@5.24.11(react@19.1.0))(react@19.1.0)
       '@rjsf/utils':
         specifier: ^5.24.8
-        version: 5.24.8(react@18.3.1)
+        version: 5.24.11(react@19.1.0)
       '@rjsf/validator-ajv8':
         specifier: ^5.24.8
-        version: 5.24.8(@rjsf/utils@5.24.8(react@18.3.1))
+        version: 5.24.11(@rjsf/utils@5.24.11(react@19.1.0))
       '@types/luxon':
         specifier: ^3.4.2
         version: 3.4.2
@@ -419,23 +419,23 @@ importers:
         specifier: workspace:^
         version: link:../utils
       react:
-        specifier: 18.x
-        version: 18.3.1
+        specifier: 19.x
+        version: 19.1.0
       usehooks-ts:
-        specifier: 3.1.0
-        version: 3.1.0(react@18.3.1)
+        specifier: 3.1.1
+        version: 3.1.1(react@19.1.0)
 
   packages/infra-dash:
     dependencies:
       '@grafana/data':
         specifier: ^12.0.1
-        version: 12.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rjsf/utils':
         specifier: ^5.24.11
-        version: 5.24.11(react@18.3.1)
+        version: 5.24.11(react@19.1.0)
       '@rjsf/validator-ajv8':
         specifier: ^5.24.11
-        version: 5.24.11(@rjsf/utils@5.24.11(react@18.3.1))
+        version: 5.24.11(@rjsf/utils@5.24.11(react@19.1.0))
       '@ssa-ui-kit/core':
         specifier: workspace:^
         version: link:../core
@@ -443,20 +443,20 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       react:
-        specifier: 18.x
-        version: 18.3.1
+        specifier: 19.x
+        version: 19.1.0
       react-dom:
-        specifier: 18.x
-        version: 18.3.1(react@18.3.1)
+        specifier: 19.x
+        version: 19.1.0(react@19.1.0)
       react-error-boundary:
         specifier: ^6.0.0
-        version: 6.0.0(react@18.3.1)
+        version: 6.0.0(react@19.1.0)
       react-grid-layout:
         specifier: ^1.5.1
-        version: 1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 1.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-resizable:
         specifier: ^3.0.5
-        version: 3.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 3.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@emotion/css':
         specifier: ^11.13.5
@@ -466,10 +466,10 @@ importers:
         version: 11.13.0(@types/jest@29.5.14)
       '@emotion/react':
         specifier: ^11.14.0
-        version: 11.14.0(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@types/react@19.1.8)(react@19.1.0)
       '@emotion/styled':
         specifier: ^11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)
       '@grafana/schema':
         specifier: ^12.0.1
         version: 12.0.1
@@ -484,10 +484,10 @@ importers:
     dependencies:
       '@floating-ui/react':
         specifier: 0.27.4
-        version: 0.27.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.27.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/line':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ssa-ui-kit/core':
         specifier: workspace:^
         version: link:../core
@@ -502,7 +502,7 @@ importers:
         version: link:../widgets
       dompurify:
         specifier: ^3.2.4
-        version: 3.2.4
+        version: 3.2.5
       dotenv:
         specifier: ^16.0.3
         version: 16.4.7
@@ -519,26 +519,26 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1))
       react:
-        specifier: 18.x
-        version: 18.3.1
+        specifier: 19.x
+        version: 19.1.0
       react-dom:
-        specifier: 18.x
-        version: 18.3.1(react@18.3.1)
+        specifier: 19.x
+        version: 19.1.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.46.1
-        version: 7.54.2(react@18.3.1)
+        version: 7.54.2(react@19.1.0)
       react-plotly.js:
         specifier: ^2.6.0
-        version: 2.6.0(plotly.js@3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)))(react@18.3.1)
+        version: 2.6.0(plotly.js@3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)))(react@19.1.0)
       react-router-dom:
         specifier: 6.x || 7.x
-        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-toastify:
         specifier: ^11.0.3
-        version: 11.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       usehooks-ts:
-        specifier: ^3.1.0
-        version: 3.1.0(react@18.3.1)
+        specifier: ^3.1.1
+        version: 3.1.1(react@19.1.0)
     devDependencies:
       '@emotion/css':
         specifier: ^11.13.5
@@ -548,22 +548,22 @@ importers:
         version: 11.13.0(@types/jest@29.5.14)
       '@emotion/react':
         specifier: ^11.14.0
-        version: 11.14.0(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@types/react@19.1.8)(react@19.1.0)
       '@emotion/styled':
         specifier: ^11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)
       '@nivo/colors':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/core':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/pie':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/scales':
-        specifier: ^0.88.0
-        version: 0.88.0
+        specifier: ^0.99.0
+        version: 0.99.0
       '@playwright/test':
         specifier: ^1.48.0
         version: 1.50.1
@@ -583,7 +583,7 @@ importers:
     dependencies:
       '@floating-ui/react':
         specifier: 0.27.4
-        version: 0.27.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.27.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ssa-ui-kit/core':
         specifier: workspace:^
         version: link:../core
@@ -600,17 +600,17 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       react:
-        specifier: 18.x
-        version: 18.3.1
+        specifier: 19.x
+        version: 19.1.0
       react-dom:
-        specifier: 18.x
-        version: 18.3.1(react@18.3.1)
+        specifier: 19.x
+        version: 19.1.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.46.1
-        version: 7.54.2(react@18.3.1)
+        version: 7.54.2(react@19.1.0)
       react-router-dom:
         specifier: 6.x || 7.x
-        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@emotion/css':
         specifier: ^11.13.5
@@ -620,22 +620,22 @@ importers:
         version: 11.13.0(@types/jest@29.5.14)
       '@emotion/react':
         specifier: ^11.14.0
-        version: 11.14.0(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@types/react@19.1.8)(react@19.1.0)
       '@emotion/styled':
         specifier: ^11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)
       '@nivo/core':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/line':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/pie':
-        specifier: ^0.88.0
-        version: 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.99.0
+        version: 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nivo/scales':
-        specifier: ^0.88.0
-        version: 0.88.0
+        specifier: ^0.99.0
+        version: 0.99.0
       '@playwright/test':
         specifier: ^1.48.0
         version: 1.50.1
@@ -2420,68 +2420,78 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@nivo/annotations@0.88.0':
-    resolution: {integrity: sha512-NXE+1oIUn+EGWMQpnpeRMLgi2wyuzhGDoJQY4OUHissCUiNotid2oNQ/PXJwN0toiu+/j9SyhzI32xr70OPi7Q==}
+  '@nivo/annotations@0.99.0':
+    resolution: {integrity: sha512-jCuuXPbvpaqaz4xF7k5dv0OT2ubn5Nt0gWryuTe/8oVsC/9bzSuK8bM9vBty60m9tfO+X8vUYliuaCDwGksC2g==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/arcs@0.88.0':
-    resolution: {integrity: sha512-q7MHxT71s/KKlDDtSJS4L9+/JIa5HPZZrDr3ZFECLnvp0TC1qzyFMtVevN2CsXopSTj8poN4uFXPWxYVXOq8vg==}
+  '@nivo/arcs@0.99.0':
+    resolution: {integrity: sha512-UcvWLQPl+A3APk2Gm74N5xDfT+ATnVs2XkP73WxhYPWJk+dBzF00cndA5g/dptOwdFBvvo62VgcCsNiwUsjKTw==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/axes@0.88.0':
-    resolution: {integrity: sha512-jF7aIxzTNayV5cI1J/b9Q1FfpMBxTXGk3OwSigXMSfYWlliskDn2u0qGRLiYhuXFdQAWIp4oXsO1GcAQ0eRVdg==}
+  '@nivo/axes@0.99.0':
+    resolution: {integrity: sha512-3KschnmEL0acRoa7INSSOSEFwJLm54aZwSev7/r8XxXlkgRBriu6ReZy/FG0wfN+ljZ4GMvx+XyIIf6kxzvrZg==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/colors@0.88.0':
-    resolution: {integrity: sha512-IZ+leYIqAlo7dyLHmsQwujanfRgXyoQ5H7PU3RWLEn1PP0zxDKLgEjFEDADpDauuslh2Tx0L81GNkWR6QSP0Mw==}
+  '@nivo/colors@0.99.0':
+    resolution: {integrity: sha512-hyYt4lEFIfXOUmQ6k3HXm3KwhcgoJpocmoGzLUqzk7DzuhQYJo+4d5jIGGU0N/a70+9XbHIdpKNSblHAIASD3w==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/core@0.88.0':
-    resolution: {integrity: sha512-XjUkA5MmwjLP38bdrJwn36Gj7T5SYMKD55LYQp/1nIJPdxqJ38dUfE4XyBDfIEgfP6yrHOihw3C63cUdnUBoiw==}
+  '@nivo/core@0.99.0':
+    resolution: {integrity: sha512-olCItqhPG3xHL5ei+vg52aB6o+6S+xR2idpkd9RormTTUniZb8U2rOdcQojOojPY5i9kVeQyLFBpV4YfM7OZ9g==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/legends@0.88.0':
-    resolution: {integrity: sha512-d4DF9pHbD8LmGJlp/Gp1cF4e8y2wfQTcw3jVhbZj9zkb7ZWB7JfeF60VHRfbXNux9bjQ9U78/SssQqueVDPEmg==}
+  '@nivo/legends@0.99.0':
+    resolution: {integrity: sha512-P16FjFqNceuTTZphINAh5p0RF0opu3cCKoWppe2aRD9IuVkvRm/wS5K1YwMCxDzKyKh5v0AuTlu9K6o3/hk8hA==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/line@0.88.0':
-    resolution: {integrity: sha512-hFTyZ3BdAZvq2HwdwMj2SJGUeodjEW+7DLtFMIIoVIxmjZlAs3z533HcJ9cJd3it928fDm8SF/rgHs0TztYf9Q==}
+  '@nivo/line@0.99.0':
+    resolution: {integrity: sha512-bAqTXSjpnpcGMs341qWFUi7hJTqQiNoSeJHsYPuPS3icuXPcp3WETQH+zRZACeEF79ZigeOWCW+dzODgne1y9w==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/pie@0.88.0':
-    resolution: {integrity: sha512-BE6dFWlGne1SnaEkFHNbg0sZBiwtcIqBFwmMRJ0F11SiKOzVeJyq3KiyY1I2ySSCx5VR1V8/MNBXzXFu3vJMAQ==}
+  '@nivo/pie@0.99.0':
+    resolution: {integrity: sha512-zUbo8UdLndp2RMljrOqitAKKEnl7YypkJrOzjKLk8jQGU7qqUKtgFoJIPhiBsvNPs3xtX2KwgtS1+JKNTNns7A==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/radar@0.88.0':
-    resolution: {integrity: sha512-KYdfbKPl8n5NUanqrVm2GVS+xeesrxu6bgh1t7PJmKoxGbJ5mTQMvHtadjXei3N+1/3RlNOxi5ZZDx+LuoupSQ==}
+  '@nivo/radar@0.99.0':
+    resolution: {integrity: sha512-nLLUBs/TR8qEoXpvhawjg2Kt22Pma8MQRc35e/3HQGW2xuX9cZeIEx2gyx6jJAsaxTrBsb4ZcxRAflNXVWiZSQ==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/scales@0.88.0':
-    resolution: {integrity: sha512-HbpxkQp6tHCltZ1yDGeqdLcaJl5ze54NPjurfGtx/Uq+H5IQoBd4Tln49bUar5CsFAMsXw8yF1HQvASr7I1SIA==}
+  '@nivo/scales@0.99.0':
+    resolution: {integrity: sha512-g/2K4L6L8si6E2BWAHtFVGahtDKbUcO6xHJtlIZMwdzaJc7yB16EpWLK8AfI/A42KadLhJSJqBK3mty+c7YZ+w==}
 
-  '@nivo/tooltip@0.88.0':
-    resolution: {integrity: sha512-iEjVfQA8gumAzg/yUinjTwswygCkE5Iwuo8opwnrbpNIqMrleBV+EAKIgB0PrzepIoW8CFG/SJhoiRfbU8jhOw==}
+  '@nivo/text@0.99.0':
+    resolution: {integrity: sha512-ho3oZpAZApsJNjsIL5WJSAdg/wjzTBcwo1KiHBlRGUmD+yUWO8qp7V+mnYRhJchwygtRVALlPgZ/rlcW2Xr/MQ==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/treemap@0.88.0':
-    resolution: {integrity: sha512-hdnW/kCbxcurDVknyDtMkx+EJf9v0jX4N8XKBK75VqimEw6uTGJFpk3AZTcqLWarVM3AAq9oZAKUVCp5kpQ2xQ==}
+  '@nivo/theming@0.99.0':
+    resolution: {integrity: sha512-KvXlf0nqBzh/g2hAIV9bzscYvpq1uuO3TnFN3RDXGI72CrbbZFTGzprPju3sy/myVsauv+Bb+V4f5TZ0jkYKRg==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
-  '@nivo/voronoi@0.88.0':
-    resolution: {integrity: sha512-MyiNLvODthFoMjQ7Wjp693nogbTmVEx8Yn/7QkJhyPQbFyyA37TF/D1a/ox4h2OslXtP6K9QFN+42gB/zu7ixw==}
+  '@nivo/tooltip@0.99.0':
+    resolution: {integrity: sha512-weoEGR3xAetV4k2P6k96cdamGzKQ5F2Pq+uyDaHr1P3HYArM879Pl+x+TkU0aWjP6wgUZPx/GOBiV1Hb1JxIqg==}
     peerDependencies:
-      react: '>= 16.14.0 < 19.0.0'
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
+
+  '@nivo/treemap@0.99.0':
+    resolution: {integrity: sha512-zGVQyR+e38UqUsMrsnio8Ulz7IYDZ4HpUv+iVKSYX29Fa8TS39yHGyaGXTXt6PvL6owjvdwhJ/7TQAeO/qcWaQ==}
+    peerDependencies:
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
+
+  '@nivo/voronoi@0.99.0':
+    resolution: {integrity: sha512-KfmMdidbYzhiUCki1FG4X4nHEFT4loK8G5bMBnmCl9U+S78W+gvkfrgD2Aoqp/Q9yKQvr3Y8UcZKSFZnn3HgjQ==}
+    peerDependencies:
+      react: ^16.14 || ^17.0 || ^18.0 || ^19.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2713,32 +2723,32 @@ packages:
       '@types/react':
         optional: true
 
-  '@react-spring/animated@9.7.5':
-    resolution: {integrity: sha512-Tqrwz7pIlsSDITzxoLS3n/v/YCUHQdOIKtOJf4yL6kYVSDTSmVK1LI1Q3M/uu2Sx4X3pIWF3xLUhlsA6SPNTNg==}
+  '@react-spring/animated@10.0.1':
+    resolution: {integrity: sha512-BGL3hA66Y8Qm3KmRZUlfG/mFbDPYajgil2/jOP0VXf2+o2WPVmcDps/eEgdDqgf5Pv9eBbyj7LschLMuSjlW3Q==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@react-spring/core@9.7.5':
-    resolution: {integrity: sha512-rmEqcxRcu7dWh7MnCcMXLvrf6/SDlSokLaLTxiPlAYi11nN3B5oiCUAblO72o+9z/87j2uzxa2Inm8UbLjXA+w==}
+  '@react-spring/core@10.0.1':
+    resolution: {integrity: sha512-KaMMsN1qHuVTsFpg/5ajAVye7OEqhYbCq0g4aKM9bnSZlDBBYpO7Uf+9eixyXN8YEbF+YXaYj9eoWDs+npZ+sA==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@react-spring/rafz@9.7.5':
-    resolution: {integrity: sha512-5ZenDQMC48wjUzPAm1EtwQ5Ot3bLIAwwqP2w2owG5KoNdNHpEJV263nGhCeKKmuA3vG2zLLOdu3or6kuDjA6Aw==}
+  '@react-spring/rafz@10.0.1':
+    resolution: {integrity: sha512-UrzG/d6Is+9i0aCAjsjWRqIlFFiC4lFqFHrH63zK935z2YDU95TOFio4VKGISJ5SG0xq4ULy7c1V3KU+XvL+Yg==}
 
-  '@react-spring/shared@9.7.5':
-    resolution: {integrity: sha512-wdtoJrhUeeyD/PP/zo+np2s1Z820Ohr/BbuVYv+3dVLW7WctoiN7std8rISoYoHpUXtbkpesSKuPIw/6U1w1Pw==}
+  '@react-spring/shared@10.0.1':
+    resolution: {integrity: sha512-KR2tmjDShPruI/GGPfAZOOLvDgkhFseabjvxzZFFggJMPkyICLjO0J6mCIoGtdJSuHywZyc4Mmlgi+C88lS00g==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@react-spring/types@9.7.5':
-    resolution: {integrity: sha512-HVj7LrZ4ReHWBimBvu2SKND3cDVUPWKLqRTmWe/fNY6o1owGOX0cAHbdPDTMelgBlVbrTKrre6lFkhqGZErK/g==}
+  '@react-spring/types@10.0.1':
+    resolution: {integrity: sha512-Fk1wYVAKL+ZTYK+4YFDpHf3Slsy59pfFFvnnTfRjQQFGlyIo4VejPtDs3CbDiuBjM135YztRyZjIH2VbycB+ZQ==}
 
-  '@react-spring/web@9.7.5':
-    resolution: {integrity: sha512-lmvqGwpe+CSttsWNZVr+Dg62adtKhauGwLyGE/RRyZ8AAMLgb9x3NDMA5RMElXo+IMyTkPp7nxTB8ZQlmhb6JQ==}
+  '@react-spring/web@10.0.1':
+    resolution: {integrity: sha512-FgQk02OqFrYyJBTTnBTWAU0WPzkHkKXauc6aeexcvATvLapUxwnfGuLlsLYF8BYjEVfkivPT04ziAue6zyRBtQ==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   '@rjsf/core@5.24.8':
     resolution: {integrity: sha512-7YdOMl0UylldYR75rnKoQF5etibSwPQHA3rY8LEo28xyYek81ESGuqPTs37P14doBpGRL+SobggR76tYhDYO7A==}
@@ -2753,20 +2763,8 @@ packages:
     peerDependencies:
       react: ^16.14.0 || >=17
 
-  '@rjsf/utils@5.24.8':
-    resolution: {integrity: sha512-Y/D1orNsTnIswp23QtWKq7QEme07/nSdnSJoK4gSsm2cDBkSCW+9KUsWSvmE7poqHwCn3zpbIaa3ZWEAQUJEEg==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: ^16.14.0 || >=17
-
   '@rjsf/validator-ajv8@5.24.11':
     resolution: {integrity: sha512-x6pZojVPVFB1bVk3e8GvStyDXJN8ufa3Aoz4wx+UJRSdh7J4Iud+jaATPxyrjhLIuxsQhUy7ed39/4iP+YYZ/Q==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@rjsf/utils': ^5.24.x
-
-  '@rjsf/validator-ajv8@5.24.8':
-    resolution: {integrity: sha512-0l5/9CL2BhW5tUtP+vKg6o5Wpp5kuee5SPea3STtdBN/xbGf3dUX08jbKcvokTJt5552rFDcNjMZmu+C0H7ezQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@rjsf/utils': ^5.24.x
@@ -3132,8 +3130,8 @@ packages:
   '@types/d3-format@1.4.5':
     resolution: {integrity: sha512-mLxrC1MSWupOSncXN/HOlWUAAIffAEBaI4+PKy2uMPsKe4FNZlk7qrbTjmzJXITQQqBHivaks4Td18azgqnotA==}
 
-  '@types/d3-hierarchy@1.1.11':
-    resolution: {integrity: sha512-lnQiU7jV+Gyk9oQYk0GGYccuexmQPTp08E0+4BidgFdiJivjEvf+esPSdZqCZ2C7UwTWejWpqetVaU8A+eX3FA==}
+  '@types/d3-hierarchy@3.1.7':
+    resolution: {integrity: sha512-tJFtNoYBtRtkNysX1Xq4sxtjK8YgoWUNpIiUee0/jHGRwqvzYxkq0hGVbbOGSz+JgFxxRu4K8nb3YpG3CMARtg==}
 
   '@types/d3-interpolate@3.0.4':
     resolution: {integrity: sha512-mgLPETlrpVV1YRJIglr4Ez47g7Yxjl1lj7YKsiMCb27VJH9W8NVM6Bb9d8kkpG/uAQS5AmbA48q2IAolKKo1MA==}
@@ -3264,9 +3262,6 @@ packages:
   '@types/plotly.js@2.35.2':
     resolution: {integrity: sha512-tn0Kp7F6VWiu96jknCvR/PcdIGIATeIK+Z5WXH3bEvG6CRwUNfhy34yBhfPYmTea7mMQxXvTZKGMm6/Y4wxESg==}
 
-  '@types/prop-types@15.7.14':
-    resolution: {integrity: sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==}
-
   '@types/qs@6.9.18':
     resolution: {integrity: sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==}
 
@@ -3276,10 +3271,10 @@ packages:
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
-  '@types/react-dom@18.3.5':
-    resolution: {integrity: sha512-P4t6saawp+b/dFrUr2cvkVsfvPguwsxtH6dNIYRllMsefqFzkZk5UIjzyDOv5g1dXIPdG4Sp1yCR4Z6RCUsG/Q==}
+  '@types/react-dom@19.1.6':
+    resolution: {integrity: sha512-4hOiT/dwO8Ko0gV1m/TJZYk3y0KBnY9vzDh7W+DH17b2HFSOGgdj33dhihPeuy3l0q23+4e+hoXHV6hCC4dCXw==}
     peerDependencies:
-      '@types/react': ^18.0.0
+      '@types/react': ^19.0.0
 
   '@types/react-grid-layout@1.3.5':
     resolution: {integrity: sha512-WH/po1gcEcoR6y857yAnPGug+ZhkF4PaTUxgAbwfeSH/QOgVSakKHBXoPGad/sEznmkiaK3pqHk+etdWisoeBQ==}
@@ -3287,8 +3282,8 @@ packages:
   '@types/react-plotly.js@2.6.3':
     resolution: {integrity: sha512-HBQwyGuu/dGXDsWhnQrhH+xcJSsHvjkwfSRjP+YpOsCCWryIuXF78ZCBjpfgO3sCc0Jo8sYp4NOGtqT7Cn3epQ==}
 
-  '@types/react@18.3.18':
-    resolution: {integrity: sha512-t4yC+vtgnkYjNSKlFx1jkAhH8LgTo2N/7Qvi83kdEaUtMDiwpbLAktKDaAMlRcJ5eSxZkH74eEGt1ky31d7kfQ==}
+  '@types/react@19.1.8':
+    resolution: {integrity: sha512-AwAfQ2Wa5bCx9WP8nZL2uMZWod7J7/JSplxbTmBQ5ms6QpqNYm672H0Vu9ZVKVngQ+ii4R/byguVEUZQyeg44g==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
@@ -4357,6 +4352,10 @@ packages:
   d3-hierarchy@1.1.9:
     resolution: {integrity: sha512-j8tPxlqh1srJHAtxfvOUwKNYJkQuBFdM1+JAUfq6xqH5eAqf93L7oG1NVqDa4CpFZNvnNKtCYEUC8KY9yEn9lQ==}
 
+  d3-hierarchy@3.1.2:
+    resolution: {integrity: sha512-FX/9frcub54beBdugHjDCdikxThEqjnR93Qt7PvQTOHxyiNCAlvMrHhclk3cD5VeAaq9fxmfRp+CnWw9rEMBuA==}
+    engines: {node: '>=12'}
+
   d3-interpolate@3.0.1:
     resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
     engines: {node: '>=12'}
@@ -4599,9 +4598,6 @@ packages:
   domhandler@5.0.3:
     resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
     engines: {node: '>= 4'}
-
-  dompurify@3.2.4:
-    resolution: {integrity: sha512-ysFSFEDVduQpyhzAob/kkuJjf5zWkZD8/A9ywSp1byueyuCfHamrCBa14/Oc2iiB0e51B+NpxSl5gmzn+Ms/mg==}
 
   dompurify@3.2.5:
     resolution: {integrity: sha512-mLPd29uoRe9HpvwP2TxClGQBzGXeEC/we/q+bFlmPPmj2p2Ugl3r6ATu/UU1v77DXNcehiBg9zsr1dREyA/dJQ==}
@@ -7043,10 +7039,10 @@ packages:
     resolution: {integrity: sha512-hlSJDQ2synMPKFZOsKo9Hi8WWZTC7POR8EmWvTSjow+VDgKzkmjQvFm2fk0tmRw+f0vTOIYKlarR0iL4996pdg==}
     engines: {node: '>=16.14.0'}
 
-  react-dom@18.3.1:
-    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
+  react-dom@19.1.0:
+    resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
     peerDependencies:
-      react: ^18.3.1
+      react: ^19.1.0
 
   react-draggable@4.4.6:
     resolution: {integrity: sha512-LtY5Xw1zTPqHkVmtM3X8MUOxNDOUhv/khTgBgrUvwaS064bwVvxT+q5El0uUFNx5IEPKXuRejr7UqLwBIg5pdw==}
@@ -7130,8 +7126,14 @@ packages:
       react: '*'
       react-dom: '*'
 
-  react@18.3.1:
-    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+  react-virtualized-auto-sizer@1.0.26:
+    resolution: {integrity: sha512-CblNyiNVw2o+hsa5/49NH2ogGxZ+t+3aweRvNSq7TVjDIlwk7ir4lencEg5HxHeSzwNarSkNkiu0qJSOXtxm5A==}
+    peerDependencies:
+      react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  react@19.1.0:
+    resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
     engines: {node: '>=0.10.0'}
 
   readable-stream@1.0.34:
@@ -7361,8 +7363,8 @@ packages:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
 
-  scheduler@0.23.2:
-    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+  scheduler@0.26.0:
+    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
   schema-utils@3.3.0:
     resolution: {integrity: sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==}
@@ -8131,11 +8133,17 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  usehooks-ts@3.1.0:
-    resolution: {integrity: sha512-bBIa7yUyPhE1BCc0GmR96VU/15l/9gP1Ch5mYdLcFBaFGQsdmXkvjV0TtOqW1yUd6VjIwDunm+flSciCQXujiw==}
+  use-debounce@10.0.5:
+    resolution: {integrity: sha512-Q76E3lnIV+4YT9AHcrHEHYmAd9LKwUAbPXDm7FlqVGDHiSOhX3RDjT8dm0AxbJup6WgOb1YEcKyCr11kBJR5KQ==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '*'
+
+  usehooks-ts@3.1.1:
+    resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
     engines: {node: '>=16.15.0'}
     peerDependencies:
-      react: ^16.8.0  || ^17 || ^18
+      react: ^16.8.0  || ^17 || ^18 || ^19 || ^19.0.0-rc
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -9601,19 +9609,19 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1)':
+  '@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.26.9
       '@emotion/babel-plugin': 11.13.5
       '@emotion/cache': 11.14.0
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.1.0)
       '@emotion/utils': 1.4.2
       '@emotion/weak-memoize': 0.4.0
       hoist-non-react-statics: 3.3.2
-      react: 18.3.1
+      react: 19.1.0
     optionalDependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
     transitivePeerDependencies:
       - supports-color
 
@@ -9627,26 +9635,26 @@ snapshots:
 
   '@emotion/sheet@1.4.0': {}
 
-  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)':
+  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.26.9
       '@emotion/babel-plugin': 11.13.5
       '@emotion/is-prop-valid': 1.3.1
-      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/react': 11.14.0(@types/react@19.1.8)(react@19.1.0)
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.1.0)
       '@emotion/utils': 1.4.2
-      react: 18.3.1
+      react: 19.1.0
     optionalDependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
     transitivePeerDependencies:
       - supports-color
 
   '@emotion/unitless@0.10.0': {}
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@18.3.1)':
+  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.1.0)':
     dependencies:
-      react: 18.3.1
+      react: 19.1.0
 
   '@emotion/utils@1.4.2': {}
 
@@ -10176,23 +10184,23 @@ snapshots:
       '@floating-ui/core': 1.6.9
       '@floating-ui/utils': 0.2.9
 
-  '@floating-ui/react-dom@2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react-dom@2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@floating-ui/dom': 1.6.13
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  '@floating-ui/react@0.27.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react@0.27.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@floating-ui/utils': 0.2.9
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@grafana/data@12.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@grafana/data@12.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@braintree/sanitize-url': 7.0.1
       '@grafana/schema': 12.0.1
@@ -10212,9 +10220,9 @@ snapshots:
       moment-timezone: 0.5.47
       ol: 7.4.0
       papaparse: 5.5.2
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-use: 17.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-use: 17.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rxjs: 7.8.1
       string-hash: 1.1.3
       tinycolor2: 1.6.0
@@ -10539,66 +10547,72 @@ snapshots:
       rw: 1.3.3
       tinyqueue: 3.0.0
 
-  '@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1)':
+  '@mdx-js/react@3.1.0(@types/react@19.1.8)(react@19.1.0)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 18.3.18
-      react: 18.3.1
+      '@types/react': 19.1.8
+      react: 19.1.0
 
-  '@nivo/annotations@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/annotations@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lodash: 4.17.21
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/arcs@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/arcs@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/text': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@react-spring/core': 10.0.1(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/d3-shape': 3.1.7
       d3-shape: 3.2.0
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/axes@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/axes@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/scales': 0.88.0
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/scales': 0.99.0
+      '@nivo/text': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/d3-format': 1.4.5
       '@types/d3-time-format': 2.3.4
       d3-format: 1.4.5
       d3-time-format: 3.0.0
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/colors@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/colors@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
       '@types/d3-color': 3.1.3
       '@types/d3-scale': 4.0.9
       '@types/d3-scale-chromatic': 3.1.0
-      '@types/prop-types': 15.7.14
       d3-color: 3.1.0
       d3-scale: 4.0.2
       d3-scale-chromatic: 3.1.0
       lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/core@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/core@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/tooltip': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@nivo/tooltip': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/d3-shape': 3.1.7
       d3-color: 3.1.0
       d3-format: 1.4.5
@@ -10608,105 +10622,134 @@ snapshots:
       d3-shape: 3.2.0
       d3-time-format: 3.0.0
       lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.1.0
+      react-virtualized-auto-sizer: 1.0.26(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      use-debounce: 10.0.5(react@19.1.0)
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/legends@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/legends@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/text': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
       '@types/d3-scale': 4.0.9
       d3-scale: 4.0.2
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/line@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/line@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/annotations': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/axes': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/legends': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/scales': 0.88.0
-      '@nivo/tooltip': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/voronoi': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      d3-shape: 3.2.0
-      react: 18.3.1
-    transitivePeerDependencies:
-      - react-dom
-
-  '@nivo/pie@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@nivo/arcs': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/legends': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/tooltip': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/annotations': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/axes': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/legends': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/scales': 0.99.0
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@nivo/tooltip': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/voronoi': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/d3-shape': 3.1.7
       d3-shape: 3.2.0
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/radar@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/pie@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/legends': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/tooltip': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/arcs': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/legends': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@nivo/tooltip': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@types/d3-shape': 3.1.7
+      d3-shape: 3.2.0
+      react: 19.1.0
+    transitivePeerDependencies:
+      - react-dom
+
+  '@nivo/radar@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/legends': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/text': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@nivo/tooltip': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/d3-scale': 4.0.9
       '@types/d3-shape': 3.1.7
       d3-scale: 4.0.2
       d3-shape: 3.2.0
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/scales@0.88.0':
+  '@nivo/scales@0.99.0':
     dependencies:
+      '@types/d3-interpolate': 3.0.4
       '@types/d3-scale': 4.0.9
       '@types/d3-time': 1.1.4
       '@types/d3-time-format': 3.0.4
+      d3-interpolate: 3.0.1
       d3-scale: 4.0.2
       d3-time: 1.1.0
       d3-time-format: 3.0.0
       lodash: 4.17.21
 
-  '@nivo/tooltip@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/text@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/treemap@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/theming@0.99.0(react@19.1.0)':
     dependencies:
-      '@nivo/colors': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/tooltip': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-spring/web': 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/d3-hierarchy': 1.1.11
-      d3-hierarchy: 1.1.9
       lodash: 4.17.21
-      react: 18.3.1
+      react: 19.1.0
+
+  '@nivo/tooltip@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/voronoi@0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@nivo/treemap@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nivo/core': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nivo/tooltip': 0.88.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nivo/colors': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/text': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@nivo/tooltip': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@react-spring/core': 10.0.1(react@19.1.0)
+      '@react-spring/web': 10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@types/d3-hierarchy': 3.1.7
+      d3-hierarchy: 3.1.2
+      lodash: 4.17.21
+      react: 19.1.0
+    transitivePeerDependencies:
+      - react-dom
+
+  '@nivo/voronoi@0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@nivo/core': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@nivo/theming': 0.99.0(react@19.1.0)
+      '@nivo/tooltip': 0.99.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/d3-delaunay': 6.0.4
       '@types/d3-scale': 4.0.9
       d3-delaunay: 6.0.4
       d3-scale: 4.0.2
-      react: 18.3.1
+      react: 19.1.0
     transitivePeerDependencies:
       - react-dom
 
@@ -10892,114 +10935,97 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@rc-component/color-picker@3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@rc-component/color-picker@3.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/fast-color': 3.0.0
-      '@rc-component/util': 1.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@rc-component/util': 1.2.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       classnames: 2.5.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  '@rc-component/util@1.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@rc-component/util@1.2.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       react-is: 18.3.1
 
-  '@react-input/core@2.0.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@react-input/core@2.0.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     optionalDependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
 
-  '@react-input/mask@2.0.4(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@react-input/mask@2.0.4(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@react-input/core': 2.0.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      '@react-input/core': 2.0.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     optionalDependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
 
-  '@react-input/number-format@2.0.3(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@react-input/number-format@2.0.3(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@react-input/core': 2.0.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      '@react-input/core': 2.0.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     optionalDependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
 
-  '@react-spring/animated@9.7.5(react@18.3.1)':
+  '@react-spring/animated@10.0.1(react@19.1.0)':
     dependencies:
-      '@react-spring/shared': 9.7.5(react@18.3.1)
-      '@react-spring/types': 9.7.5
-      react: 18.3.1
+      '@react-spring/shared': 10.0.1(react@19.1.0)
+      '@react-spring/types': 10.0.1
+      react: 19.1.0
 
-  '@react-spring/core@9.7.5(react@18.3.1)':
+  '@react-spring/core@10.0.1(react@19.1.0)':
     dependencies:
-      '@react-spring/animated': 9.7.5(react@18.3.1)
-      '@react-spring/shared': 9.7.5(react@18.3.1)
-      '@react-spring/types': 9.7.5
-      react: 18.3.1
+      '@react-spring/animated': 10.0.1(react@19.1.0)
+      '@react-spring/shared': 10.0.1(react@19.1.0)
+      '@react-spring/types': 10.0.1
+      react: 19.1.0
 
-  '@react-spring/rafz@9.7.5': {}
+  '@react-spring/rafz@10.0.1': {}
 
-  '@react-spring/shared@9.7.5(react@18.3.1)':
+  '@react-spring/shared@10.0.1(react@19.1.0)':
     dependencies:
-      '@react-spring/rafz': 9.7.5
-      '@react-spring/types': 9.7.5
-      react: 18.3.1
+      '@react-spring/rafz': 10.0.1
+      '@react-spring/types': 10.0.1
+      react: 19.1.0
 
-  '@react-spring/types@9.7.5': {}
+  '@react-spring/types@10.0.1': {}
 
-  '@react-spring/web@9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@react-spring/web@10.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@react-spring/animated': 9.7.5(react@18.3.1)
-      '@react-spring/core': 9.7.5(react@18.3.1)
-      '@react-spring/shared': 9.7.5(react@18.3.1)
-      '@react-spring/types': 9.7.5
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      '@react-spring/animated': 10.0.1(react@19.1.0)
+      '@react-spring/core': 10.0.1(react@19.1.0)
+      '@react-spring/shared': 10.0.1(react@19.1.0)
+      '@react-spring/types': 10.0.1
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  '@rjsf/core@5.24.8(@rjsf/utils@5.24.8(react@18.3.1))(react@18.3.1)':
+  '@rjsf/core@5.24.8(@rjsf/utils@5.24.11(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@rjsf/utils': 5.24.8(react@18.3.1)
+      '@rjsf/utils': 5.24.11(react@19.1.0)
       lodash: 4.17.21
       lodash-es: 4.17.21
-      markdown-to-jsx: 7.7.4(react@18.3.1)
+      markdown-to-jsx: 7.7.4(react@19.1.0)
       nanoid: 3.3.8
       prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.1.0
 
-  '@rjsf/utils@5.24.11(react@18.3.1)':
+  '@rjsf/utils@5.24.11(react@19.1.0)':
     dependencies:
       json-schema-merge-allof: 0.8.1
       jsonpointer: 5.0.1
       lodash: 4.17.21
       lodash-es: 4.17.21
-      react: 18.3.1
+      react: 19.1.0
       react-is: 18.3.1
 
-  '@rjsf/utils@5.24.8(react@18.3.1)':
+  '@rjsf/validator-ajv8@5.24.11(@rjsf/utils@5.24.11(react@19.1.0))':
     dependencies:
-      json-schema-merge-allof: 0.8.1
-      jsonpointer: 5.0.1
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      react: 18.3.1
-      react-is: 18.3.1
-
-  '@rjsf/validator-ajv8@5.24.11(@rjsf/utils@5.24.11(react@18.3.1))':
-    dependencies:
-      '@rjsf/utils': 5.24.11(react@18.3.1)
-      ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-
-  '@rjsf/validator-ajv8@5.24.8(@rjsf/utils@5.24.8(react@18.3.1))':
-    dependencies:
-      '@rjsf/utils': 5.24.8(react@18.3.1)
+      '@rjsf/utils': 5.24.11(react@19.1.0)
       ajv: 8.17.1
       ajv-formats: 2.1.1(ajv@8.17.1)
       lodash: 4.17.21
@@ -11015,25 +11041,25 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@storybook/addon-docs@9.0.4(@types/react@18.3.18)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))':
+  '@storybook/addon-docs@9.0.4(@types/react@19.1.8)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))':
     dependencies:
-      '@mdx-js/react': 3.1.0(@types/react@18.3.18)(react@18.3.1)
+      '@mdx-js/react': 3.1.0(@types/react@19.1.8)(react@19.1.0)
       '@storybook/csf-plugin': 9.0.4(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
-      '@storybook/icons': 1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@storybook/react-dom-shim': 9.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      '@storybook/icons': 1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@storybook/react-dom-shim': 9.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       storybook: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1)
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - '@types/react'
 
-  '@storybook/addon-links@9.0.4(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))':
+  '@storybook/addon-links@9.0.4(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))':
     dependencies:
       '@storybook/global': 5.0.0
       storybook: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1)
     optionalDependencies:
-      react: 18.3.1
+      react: 19.1.0
 
   '@storybook/addon-webpack5-compiler-babel@3.0.6(webpack@5.98.0)':
     dependencies:
@@ -11082,21 +11108,21 @@ snapshots:
 
   '@storybook/global@5.0.0': {}
 
-  '@storybook/icons@1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@storybook/icons@1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  '@storybook/preset-react-webpack@9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)':
+  '@storybook/preset-react-webpack@9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)':
     dependencies:
       '@storybook/core-webpack': 9.0.4(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
       '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.7.3)(webpack@5.98.0)
       '@types/semver': 7.5.8
       find-up: 5.0.0
       magic-string: 0.30.17
-      react: 18.3.1
+      react: 19.1.0
       react-docgen: 7.1.1
-      react-dom: 18.3.1(react@18.3.1)
+      react-dom: 19.1.0(react@19.1.0)
       resolve: 1.22.10
       semver: 7.7.1
       storybook: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1)
@@ -11125,19 +11151,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/react-dom-shim@9.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))':
+  '@storybook/react-dom-shim@9.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))':
     dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       storybook: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1)
 
-  '@storybook/react-webpack5@9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)':
+  '@storybook/react-webpack5@9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)':
     dependencies:
       '@storybook/builder-webpack5': 9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)
-      '@storybook/preset-react-webpack': 9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)
-      '@storybook/react': 9.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      '@storybook/preset-react-webpack': 9.0.4(@swc/core@1.10.16)(esbuild@0.25.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)(webpack-cli@6.0.1)
+      '@storybook/react': 9.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       storybook: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1)
     optionalDependencies:
       typescript: 5.7.3
@@ -11149,12 +11175,12 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/react@9.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)':
+  '@storybook/react@9.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))(typescript@5.7.3)':
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 9.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      '@storybook/react-dom-shim': 9.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1))
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       storybook: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.1)
     optionalDependencies:
       typescript: 5.7.3
@@ -11328,15 +11354,15 @@ snapshots:
       lodash: 4.17.21
       redent: 3.0.0
 
-  '@testing-library/react@16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@testing-library/react@16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.26.9
       '@testing-library/dom': 10.4.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     optionalDependencies:
-      '@types/react': 18.3.18
-      '@types/react-dom': 18.3.5(@types/react@18.3.18)
+      '@types/react': 19.1.8
+      '@types/react-dom': 19.1.6(@types/react@19.1.8)
 
   '@testing-library/user-event@14.6.1(@testing-library/dom@10.4.0)':
     dependencies:
@@ -11434,7 +11460,7 @@ snapshots:
 
   '@types/d3-format@1.4.5': {}
 
-  '@types/d3-hierarchy@1.1.11': {}
+  '@types/d3-hierarchy@3.1.7': {}
 
   '@types/d3-interpolate@3.0.4':
     dependencies:
@@ -11581,8 +11607,6 @@ snapshots:
 
   '@types/plotly.js@2.35.2': {}
 
-  '@types/prop-types@15.7.14': {}
-
   '@types/qs@6.9.18': {}
 
   '@types/ramda@0.30.2':
@@ -11591,22 +11615,21 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@18.3.5(@types/react@18.3.18)':
+  '@types/react-dom@19.1.6(@types/react@19.1.8)':
     dependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
 
   '@types/react-grid-layout@1.3.5':
     dependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
 
   '@types/react-plotly.js@2.6.3':
     dependencies:
       '@types/plotly.js': 2.35.2
-      '@types/react': 18.3.18
+      '@types/react': 19.1.8
 
-  '@types/react@18.3.18':
+  '@types/react@19.1.8':
     dependencies:
-      '@types/prop-types': 15.7.14
       csstype: 3.1.3
 
   '@types/resolve@1.20.6': {}
@@ -12854,6 +12877,8 @@ snapshots:
 
   d3-hierarchy@1.1.9: {}
 
+  d3-hierarchy@3.1.2: {}
+
   d3-interpolate@3.0.1:
     dependencies:
       d3-color: 3.1.0
@@ -13063,10 +13088,6 @@ snapshots:
   domhandler@5.0.3:
     dependencies:
       domelementtype: 2.3.0
-
-  dompurify@3.2.4:
-    optionalDependencies:
-      '@types/trusted-types': 2.0.7
 
   dompurify@3.2.5:
     optionalDependencies:
@@ -15349,9 +15370,9 @@ snapshots:
       tinyqueue: 3.0.0
       vt-pbf: 3.1.3
 
-  markdown-to-jsx@7.7.4(react@18.3.1):
+  markdown-to-jsx@7.7.4(react@19.1.0):
     dependencies:
-      react: 18.3.1
+      react: 19.1.0
 
   marked-mangle@1.1.10(marked@15.0.6):
     dependencies:
@@ -15480,15 +15501,15 @@ snapshots:
 
   murmurhash-js@1.0.0: {}
 
-  nano-css@5.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  nano-css@5.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
       css-tree: 1.1.3
       csstype: 3.1.3
       fastest-stable-stringify: 2.0.2
       inline-style-prefixer: 7.0.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       rtl-css-js: 1.16.1
       stacktrace-js: 2.0.2
       stylis: 4.3.6
@@ -16095,38 +16116,37 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-dom@18.3.1(react@18.3.1):
+  react-dom@19.1.0(react@19.1.0):
     dependencies:
-      loose-envify: 1.4.0
-      react: 18.3.1
-      scheduler: 0.23.2
+      react: 19.1.0
+      scheduler: 0.26.0
 
-  react-draggable@4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-draggable@4.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       clsx: 1.2.1
       prop-types: 15.8.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  react-error-boundary@6.0.0(react@18.3.1):
+  react-error-boundary@6.0.0(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.26.9
-      react: 18.3.1
+      react: 19.1.0
 
-  react-grid-layout@1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-grid-layout@1.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       clsx: 2.1.1
       fast-equals: 4.0.3
       prop-types: 15.8.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-draggable: 4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-resizable: 3.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-draggable: 4.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-resizable: 3.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       resize-observer-polyfill: 1.5.1
 
-  react-hook-form@7.54.2(react@18.3.1):
+  react-hook-form@7.54.2(react@19.1.0):
     dependencies:
-      react: 18.3.1
+      react: 19.1.0
 
   react-is@16.13.1: {}
 
@@ -16134,50 +16154,50 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-plotly.js@2.6.0(plotly.js@3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)))(react@18.3.1):
+  react-plotly.js@2.6.0(plotly.js@3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1)))(react@19.1.0):
     dependencies:
       plotly.js: 3.0.0(mapbox-gl@1.13.3)(webpack@5.98.0(@swc/core@1.10.16)(esbuild@0.25.0)(webpack-cli@6.0.1))
       prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.1.0
 
   react-refresh@0.16.0: {}
 
-  react-resizable@3.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-resizable@3.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       prop-types: 15.8.1
-      react: 18.3.1
-      react-draggable: 4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 19.1.0
+      react-draggable: 4.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
       - react-dom
 
-  react-router-dom@7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router-dom@7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-router: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-router: 7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
-  react-router@7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router@7.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@types/cookie': 0.6.0
       cookie: 1.0.2
-      react: 18.3.1
+      react: 19.1.0
       set-cookie-parser: 2.7.1
       turbo-stream: 2.4.0
     optionalDependencies:
-      react-dom: 18.3.1(react@18.3.1)
+      react-dom: 19.1.0(react@19.1.0)
 
-  react-toastify@11.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-toastify@11.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       clsx: 2.1.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  react-universal-interface@0.6.2(react@18.3.1)(tslib@2.8.1):
+  react-universal-interface@0.6.2(react@19.1.0)(tslib@2.8.1):
     dependencies:
-      react: 18.3.1
+      react: 19.1.0
       tslib: 2.8.1
 
-  react-use@17.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-use@17.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@types/js-cookie': 2.2.7
       '@xobotyi/scrollbar-width': 1.9.5
@@ -16185,10 +16205,10 @@ snapshots:
       fast-deep-equal: 3.1.3
       fast-shallow-equal: 1.0.0
       js-cookie: 2.2.1
-      nano-css: 5.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-universal-interface: 0.6.2(react@18.3.1)(tslib@2.8.1)
+      nano-css: 5.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-universal-interface: 0.6.2(react@19.1.0)(tslib@2.8.1)
       resize-observer-polyfill: 1.5.1
       screenfull: 5.2.0
       set-harmonic-interval: 1.0.1
@@ -16196,9 +16216,12 @@ snapshots:
       ts-easing: 0.2.0
       tslib: 2.8.1
 
-  react@18.3.1:
+  react-virtualized-auto-sizer@1.0.26(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      loose-envify: 1.4.0
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
+  react@19.1.0: {}
 
   readable-stream@1.0.34:
     dependencies:
@@ -16487,9 +16510,7 @@ snapshots:
     dependencies:
       xmlchars: 2.2.0
 
-  scheduler@0.23.2:
-    dependencies:
-      loose-envify: 1.4.0
+  scheduler@0.26.0: {}
 
   schema-utils@3.3.0:
     dependencies:
@@ -17385,10 +17406,14 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  usehooks-ts@3.1.0(react@18.3.1):
+  use-debounce@10.0.5(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+
+  usehooks-ts@3.1.1(react@19.1.0):
     dependencies:
       lodash.debounce: 4.0.8
-      react: 18.3.1
+      react: 19.1.0
 
   util-deprecate@1.0.2: {}
 

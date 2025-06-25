@@ -3,8 +3,8 @@ import { createPortal } from 'react-dom';
 import { HeaderContextContent, HeaderContentRef } from './types';
 
 export const HeaderContext = createContext<HeaderContextContent>({
-  headerContentRef: createRef(),
-  breadcrumbContentRef: createRef(),
+  headerContentRef: createRef<HeaderContentRef>(),
+  breadcrumbContentRef: createRef<HeaderContentRef>(),
   renderHeaderContent() {
     return null;
   },

@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
 import { debounce, pathOr, propOr } from '@ssa-ui-kit/utils';
@@ -37,7 +37,7 @@ export const BarLineComplexChartView = ({
 }: BarLineComplexInternalProps & {
   isFullscreenMode: boolean;
   transformedChartData: Plotly.Data[];
-  tooltipContentRef: MutableRefObject<HTMLDivElement | null>;
+  tooltipContentRef: RefObject<HTMLDivElement | null>;
   extraModeBarButtons: Array<Plotly.ModeBarButtonAny>;
 }) => {
   const theme = useTheme();

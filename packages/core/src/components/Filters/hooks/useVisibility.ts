@@ -6,8 +6,8 @@ import { ElementInfo } from '../types';
 export type RefsByKey = Record<string, ElementInfo>;
 type UseVisibilityParams = {
   checkboxData: TableFilterConfig;
-  refsList: Array<React.MutableRefObject<HTMLElement | null>>;
-  wrapperRef?: React.RefObject<HTMLElement>;
+  refsList: Array<React.RefObject<HTMLElement | null>>;
+  wrapperRef?: React.RefObject<HTMLElement | null>;
   onVisibilityProcessed?: () => void;
 };
 
