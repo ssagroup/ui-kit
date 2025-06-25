@@ -51,9 +51,9 @@ export const DashboardPanelGrid = ({
 
   useEffect(() => {
     if (refetchIntervalMs) {
-      queryClient.invalidateQueries({ key: ['panel-data'] });
+      queryClient.invalidateQueries({ key: ['panel-data'], type: 'active' });
       const intervalId = setInterval(() => {
-        queryClient.invalidateQueries({ key: ['panel-data'] });
+        queryClient.invalidateQueries({ key: ['panel-data'], type: 'active' });
       }, refetchIntervalMs);
       return () => clearInterval(intervalId);
     }
@@ -124,6 +124,9 @@ export const DashboardPanelGrid = ({
         .react-grid-layout {
           transition: none;
         }
+        .react-grid-item.react-grid-placeholder {
+          background-color: transparent;
+        }
       `}
       {...divProps}>
       {_header}
@@ -173,6 +176,11 @@ const GridItem = forwardRef<HTMLDivElement, GridItemProps>(function GridItem(
       css={css`
         .react-resizable-handle-se {
           z-index: 1;
+          padding: 0;
+          ::after {
+            right: 0;
+            bottom: 0;
+          }
         }
       `}
       {...props}>

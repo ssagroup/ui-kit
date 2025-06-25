@@ -42,6 +42,10 @@ export class QueryEntry<T> {
     });
   }
 
+  isActive() {
+    return this.subscribers.size && this.options.enabled;
+  }
+
   updateEntity(fetcher: Fetcher<T>, options?: QueryOptions): QueryEntry<T> {
     this.fetcher = fetcher;
     this.options = { ...this.options, ...options };
@@ -182,13 +186,21 @@ export class QueryClient {
     key,
     exact,
     reset,
+    type = 'all',
   }: {
     key: QueryKey;
     exact?: boolean;
     reset?: boolean;
+    type?: 'active' | 'inactive' | 'all';
   }) {
     const matchingEntries: QueryEntry<unknown>[] = [];
     for (const [hash, entry] of this.cache.entries()) {
+      if (type !== 'all') {
+        const active = entry.isActive();
+        if ((type === 'active' && !active) || (type === 'inactive' && active)) {
+          continue; // skip entries that don't match the type
+        }
+      }
       if (exact) {
         if (hash === hashKey(key)) {
           matchingEntries.push(entry);

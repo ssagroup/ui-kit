@@ -1,8 +1,8 @@
 import { createSafeContext } from '@ssa-ui-kit/hooks';
 
-import { InfraDashTransport } from './transport';
-import { MutationClient, QueryClient } from './query';
-import { PanelRegistry } from './panelRegistry';
+import { PanelRegistry } from '@shared/panelRegistry';
+import { MutationClient, QueryClient } from '@shared/query';
+import { InfraDashTransport } from '@shared/transport';
 
 export interface InfraDashContextValue {
   transport: InfraDashTransport;

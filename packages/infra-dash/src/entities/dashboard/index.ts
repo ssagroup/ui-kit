@@ -1,3 +1,4 @@
+import { PanelDefinition } from '@shared/panel';
 import {
   useQuery,
   useMutation,
@@ -45,6 +46,19 @@ export const useDashboard = (dashboardId: number, options?: QOptions) => {
   return result;
 };
 
+export const usePublishedDashboards = (options?: QOptions) => {
+  const { transport, ...queryOptions } = options || {};
+  const _transport = useTransport(transport);
+  const result = useQuery(
+    ['dashboards', 'published'],
+    async (signal) => {
+      return await _transport.getPublishedDashboards(signal);
+    },
+    queryOptions,
+  );
+  return result;
+};
+
 export const useCreateDashboard = (
   options?: MOptions<unknown, CreateDashboardPayload>,
 ) => {
@@ -54,19 +68,23 @@ export const useCreateDashboard = (
     ['create-dashboard'],
     async (payload: CreateDashboardPayload, signal?: AbortSignal) => {
       const panels = payload.panels.map((panel) => ({
-        ...panel,
-        id: panel.panelDefinition.source.panelId,
+        // for some reason backend accepts stringified JSON but returns object
+        panelDefinition: JSON.stringify(
+          panel.panelDefinition,
+        ) as unknown as PanelDefinition,
+        source: panel.source,
       }));
       const dashboardsUid = new Set(
-        panels.map((panel) => panel.panelDefinition.source.dashboardUid),
+        panels.map((panel) => panel.source.dashboardUid),
       );
       if (!dashboardsUid.size) {
         throw new Error('At least one panel must be provided');
       }
       return await _transport.createDashboard(
         {
-          ...payload,
-          dashboardUid: dashboardsUid.values().next().value!,
+          title: payload.title,
+          published: payload.published,
+          dashboardDefinition: payload.dashboardDefinition,
           panels,
         },
         signal,
@@ -87,17 +105,25 @@ export const useUpdateDashboard = (
     ['update-dashboard', dashboardId],
     async (payload, signal?) => {
       const panels = payload.panels.map((panel) => ({
-        ...panel,
-        id: panel.panelDefinition.source.panelId,
+        panelDefinition: JSON.stringify(
+          panel.panelDefinition,
+        ) as unknown as PanelDefinition,
+        source: panel.source,
       }));
       const dashboardsUid = new Set(
-        panels.map((panel) => panel.panelDefinition.source.dashboardUid),
+        panels.map((panel) => panel.source.dashboardUid),
       );
       if (!dashboardsUid.size) {
         throw new Error('At least one panel must be provided');
       }
       return await _transport.updateDashboard(
-        { ...payload, panels, dashboardId },
+        {
+          title: payload.title,
+          published: payload.published,
+          dashboardDefinition: payload.dashboardDefinition,
+          panels,
+          dashboardId,
+        },
         signal,
       );
     },

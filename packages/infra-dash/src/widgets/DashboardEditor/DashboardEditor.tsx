@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import ReactGridLayout from 'react-grid-layout';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Button, Input, useDrawer, Wrapper } from '@ssa-ui-kit/core';
+import { Button, Checkbox, Input, useDrawer, Wrapper } from '@ssa-ui-kit/core';
 import { useUncontrolled } from '@ssa-ui-kit/hooks';
 
 import {
@@ -14,13 +14,19 @@ import {
   useDashboard,
   useUpdateDashboard,
 } from '@entities/dashboard';
+import { PeriodSelector } from '@components/PeriodSelector';
 import { DashboardError } from '@components/DashboardError';
 import { LoadingDashboard } from '@components/LoadingDashboard';
 import { GrafanaDashboard, GrafanaPanel } from '@shared/grafana';
 import { Dashboard } from '@shared/dashboard';
 import { DashboardIcon } from '@shared/icons';
 import { Panel, PANEL_DATA_SOURCE } from '@shared/panel';
-import { useInfraDashContext } from '@shared/context';
+import {
+  InfraDashPanelDataPeriodProvider,
+  useInfraDashContext,
+  useInfraDashPanelDataPeriod,
+  UseInfraDashPanelDataPeriodOptions,
+} from '@shared/context';
 
 import { DashboardSelectorDrawer } from './components/DashboardSelectorDrawer';
 import { PanelSettingsDrawer } from './components/PanelSettingsDrawer';
@@ -72,6 +78,7 @@ export const DashboardEditorInternal = ({
       dashboardDefinition: { version: 1 },
       id: -1,
       panels: [],
+      published: false,
       title: 'New Dashboard',
     },
     onChange,
@@ -129,12 +136,7 @@ export const DashboardEditorInternal = ({
         .then(() => onSaved?.(dashboard))
         .catch((error) => onError?.(error));
     } else {
-      createDashboard({
-        panels: dashboard.panels,
-        dashboardDefinition: dashboard.dashboardDefinition,
-        title: dashboard.title,
-        dashboardUid: dashboard.id.toString(),
-      })
+      createDashboard(dashboard)
         .then(() => onCreate?.())
         .catch((error) => onError?.(error));
     }
@@ -191,6 +193,12 @@ export const DashboardEditorInternal = ({
             }}
             css={{ maxWidth: '250px' }}
           />
+          <Checkbox
+            text="Publish"
+            initialState={dashboard.published}
+            onChange={(published) => setDashboard({ ...dashboard, published })}
+          />
+          <PeriodSelector />
           <Button
             variant="info"
             css={{ height: '46px' }}
@@ -233,19 +241,32 @@ export const DashboardEditorInternal = ({
 export const DashboardEditor = ({
   dashboardId,
   ...props
-}: DashboardEditorProps & { dashboardId?: number }) => {
+}: DashboardEditorProps & {
+  dashboardId?: number;
+} & UseInfraDashPanelDataPeriodOptions) => {
   const { dashboard, defaultDashboard } = props;
 
   const dashboardById = useDashboard(dashboardId ?? -1, {
     enabled: !!dashboardId && !dashboard && !defaultDashboard,
   });
-  if (!dashboardId) {
+
+  const DashboardWrapper: React.FC<DashboardEditorProps> = (editorProps) => {
+    const panelDataPeriod = useInfraDashPanelDataPeriod({
+      ...props,
+    });
+
     return (
-      <ErrorBoundary
-        fallback={<DashboardError>Something went wrong</DashboardError>}>
-        <DashboardEditorInternal {...props} />
-      </ErrorBoundary>
+      <InfraDashPanelDataPeriodProvider value={panelDataPeriod}>
+        <ErrorBoundary
+          fallback={<DashboardError>Something went wrong</DashboardError>}>
+          <DashboardEditorInternal {...editorProps} />
+        </ErrorBoundary>
+      </InfraDashPanelDataPeriodProvider>
     );
+  };
+
+  if (!dashboardId) {
+    return <DashboardWrapper {...props} />;
   }
   if (!dashboardById.isLoaded) {
     return <LoadingDashboard />;
@@ -253,13 +274,5 @@ export const DashboardEditor = ({
   if (dashboardById.error) {
     return <DashboardError />;
   }
-  return (
-    <ErrorBoundary
-      fallback={<DashboardError>Something went wrong</DashboardError>}>
-      <DashboardEditorInternal
-        {...props}
-        defaultDashboard={dashboardById.data}
-      />
-    </ErrorBoundary>
-  );
+  return <DashboardWrapper {...props} defaultDashboard={dashboardById.data} />;
 };

@@ -6,13 +6,6 @@ import { GrafanaPanelData, GrafanaPanelSchema } from './grafana';
  * Contains both the component configuration and grid layout positioning.
  */
 export type PanelDefinition = {
-  source: {
-    type: typeof PANEL_DATA_SOURCE.GRAFANA;
-    /** Unique identifier for the Grafana dashboard */
-    dashboardUid: string;
-    /** Unique identifier for the Grafana panel within the dashboard */
-    panelId: number;
-  };
   component: {
     /** Unique identifier for the component type */
     id: string;
@@ -39,6 +32,11 @@ export type Panel = {
   panelSchema: GrafanaPanelSchema;
   /** Component and layout definition for the panel */
   panelDefinition: PanelDefinition;
+  source: {
+    type: typeof PANEL_DATA_SOURCE.GRAFANA;
+    dashboardUid: string;
+    panelId: number;
+  };
 };
 
 /**
@@ -109,3 +107,13 @@ export type PanelData = {
   /** The actual panel data from Grafana */
   data: GrafanaPanelData;
 };
+
+export const PANEL_DATA_PERIOD = {
+  LAST_HOUR: 0,
+  LAST_6_HOURS: 1,
+  LAST_24_HOURS: 2,
+  LAST_7_DAYS: 3,
+  LAST_30_DAYS: 4,
+} as const;
+export type PanelDataPeriod =
+  (typeof PANEL_DATA_PERIOD)[keyof typeof PANEL_DATA_PERIOD];

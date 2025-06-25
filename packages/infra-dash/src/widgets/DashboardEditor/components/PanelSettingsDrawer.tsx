@@ -16,7 +16,8 @@ export const PanelSettingsDrawer = ({
   return (
     <Drawer.Root store={drawer}>
       <Drawer.Overlay>
-        <Drawer.Content css={{ maxWidth: '400px', padding: '24px 32px' }}>
+        <Drawer.Content
+          css={{ maxWidth: '400px', padding: '24px 32px', zIndex: 10 }}>
           <Drawer.Header css={{ width: '100%' }}>
             <Drawer.Title>Panel Settings</Drawer.Title>
             <Button

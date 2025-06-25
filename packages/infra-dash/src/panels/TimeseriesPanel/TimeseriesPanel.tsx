@@ -16,12 +16,15 @@ export type TimeseriesPanelProps = {
   panelData: PanelData;
   /** Optional title for the panel, defaults to panel.title */
   title?: string;
+  /** Optional hover format for the x axis */
+  xAxisHoverFormat?: string;
 };
 
 export const TimeseriesPanel = ({
   panel,
   panelData,
   title: providedTitle,
+  xAxisHoverFormat,
 }: TimeseriesPanelProps) => {
   const { ref, width } = useElementSize<HTMLDivElement>();
   const title = providedTitle ?? panel.title;
@@ -49,6 +52,7 @@ export const TimeseriesPanel = ({
           margin: { r: 50 },
           xaxis: {
             tickmode: 'auto',
+            hoverformat: xAxisHoverFormat,
           },
           yaxis2: {
             ticksuffix: valueSuffix,
@@ -74,12 +78,21 @@ export const panelConfig: PanelConfig<TimeseriesPanelProps> = {
         type: 'string',
         title: 'Panel Title',
       },
+      xAxisHoverFormat: {
+        type: 'string',
+        title: 'X Axis Hover Format',
+        default: '%H:%M, %d %b',
+      },
     },
   },
   uiSchema: {
     title: {
       'ui:help': 'Override the default panel title',
       'ui:placeholder': 'Panel Title',
+    },
+    xAxisHoverFormat: {
+      'ui:help': 'Format for the x-axis hover tooltip',
+      'ui:placeholder': 'X Axis Hover Format (e.g., %H:%M, %d %b)',
     },
   },
 };

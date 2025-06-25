@@ -23,7 +23,7 @@ const meta: Meta<typeof DashboardViewer> = {
   parameters: {
     backgrounds: {
       options: {
-        main: { name: 'Main', value: '#D0D1D6' },
+        main: { name: 'Main', value: '#D4D6DB' },
       },
     },
   },
@@ -94,7 +94,7 @@ export const DashboardError: Story = {
 };
 
 class PanelLoadingTransport extends MockTransport {
-  getPanelData(): Promise<GrafanaPanelData> {
+  getGrafanaPanelData(): Promise<GrafanaPanelData> {
     return new Promise(() => {});
   }
 }

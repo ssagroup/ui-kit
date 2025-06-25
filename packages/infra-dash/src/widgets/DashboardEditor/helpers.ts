@@ -31,13 +31,13 @@ export const appendPanel = (params: AppendPanelParams) => {
       );
       const newPanel: Panel = {
         id: -Date.now(), // use a negative ID to indicate a new panel
+        source: {
+          type: 'grafana',
+          dashboardUid: grafanaDashboard.id,
+          panelId: grafanaPanel.id,
+        },
         panelDefinition: {
           version: 1,
-          source: {
-            type: 'grafana',
-            dashboardUid: grafanaDashboard.id,
-            panelId: grafanaPanel.id,
-          },
           component: {
             id: defaultComponentConfig.componentId,
             props: {},
@@ -104,21 +104,29 @@ export const applyNewLayout = ({
   newLayout,
 }: ApplyNewLayoutParams) => {
   const newLayoutMap = newLayout.reduce(
-    (map, { i, ...layout }) => ({
+    (map, { i, x, y, w, h }) => ({
       ...map,
-      [i]: layout,
+      [i]: { x, y, w, h },
     }),
     {} as Record<string, Omit<ReactGridLayout.Layout, 'i'>>,
   );
 
-  dashboard.panels.forEach((panel) => {
-    const newGridPos = newLayoutMap[panel.id.toString()];
-    if (!newGridPos) {
-      throw new Error(`New position for the ${panel.id} not fount`);
-    }
-    panel.panelDefinition.gridPos = newGridPos;
-    return panel;
-  });
+  const newDashboard = {
+    ...dashboard,
+    panels: dashboard.panels.map((panel) => {
+      const newGridPos = newLayoutMap[panel.id.toString()];
+      if (!newGridPos) {
+        throw new Error(`New position for the panel ${panel.id} not found`);
+      }
+      return {
+        ...panel,
+        panelDefinition: {
+          ...panel.panelDefinition,
+          gridPos: newGridPos,
+        },
+      };
+    }),
+  };
 
-  return dashboard;
+  return newDashboard;
 };

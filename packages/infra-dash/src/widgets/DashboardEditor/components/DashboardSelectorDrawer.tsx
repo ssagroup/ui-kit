@@ -15,7 +15,8 @@ export const DashboardSelectorDrawer = ({
   const theme = useTheme() as Theme;
   return (
     <Drawer.Root store={drawer}>
-      <Drawer.Content css={{ width: '400px', padding: '24px 32px' }}>
+      <Drawer.Content
+        css={{ width: '400px', padding: '24px 32px', zIndex: 10 }}>
         <Wrapper direction="column" alignItems="start" css={{ height: '100%' }}>
           <Drawer.Header css={{ width: '100%' }}>
             <Drawer.Title>Dashboard Selector</Drawer.Title>
