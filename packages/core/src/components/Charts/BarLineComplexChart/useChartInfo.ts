@@ -36,6 +36,7 @@ export const useChartInfo: UseChartInfo = () => {
       },
       yaxis: 'y2',
       connectgaps: true,
+      showlegend: true,
     };
     if (!('hovertemplate' in item)) {
       extraParams.hovertemplate =
