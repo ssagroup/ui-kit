@@ -4,7 +4,10 @@ export interface NavBarProps {
   items: Array<{ path: string; iconName: keyof MapIconsType }>;
 }
 
-export type CustomIconProps = (props: { className?: string }) => JSX.Element;
+export type CustomIconProps = (props: {
+  className?: string;
+  showIconTooltip?: boolean;
+}) => JSX.Element;
 
 export type NavBarExtendedItem = {
   CustomIcon?: CustomIconProps;

@@ -2,6 +2,7 @@ import { css, useTheme } from '@emotion/react';
 import Wrapper from '@components/Wrapper';
 import Icon from '@components/Icon';
 import type { MapIconsType, SVGProps } from '@components/Icon/types';
+import { useCollapsibleNavBarContext } from '../CollapsibleNavBarContext';
 
 export const TriggerIcon = ({
   iconName,
@@ -12,9 +13,14 @@ export const TriggerIcon = ({
   iconName: keyof MapIconsType;
   iconSize?: number;
   className?: string;
-  CustomIcon?: (props: Omit<SVGProps, 'fill'>) => JSX.Element;
+  CustomIcon?: (
+    props: Omit<SVGProps, 'fill'> & {
+      showIconTooltip?: boolean;
+    },
+  ) => JSX.Element;
 }) => {
   const theme = useTheme();
+  const { showIconTooltip } = useCollapsibleNavBarContext();
   return (
     <Wrapper
       css={css`
@@ -31,6 +37,7 @@ export const TriggerIcon = ({
           size={iconSize}
           className={className}
           color={theme.colors.grey}
+          showIconTooltip={showIconTooltip}
         />
       ) : (
         <Icon
@@ -38,6 +45,7 @@ export const TriggerIcon = ({
           color={theme.colors.grey}
           size={iconSize}
           className={className}
+          tooltip={showIconTooltip ? undefined : ''}
         />
       )}
     </Wrapper>

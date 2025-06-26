@@ -26,7 +26,7 @@ export const ItemAccordionTitle = ({
   accordionUniqueName: string;
   useMatchPattern?: (prefix: string) => string | PathPattern<string>;
 }) => {
-  const { theme } = useCollapsibleNavBarContext();
+  const { theme, showIconTooltip } = useCollapsibleNavBarContext();
 
   const linkRef = useRef<HTMLElement>(null);
   const classNamesList = Array.from(linkRef.current?.classList || []);
@@ -95,7 +95,11 @@ export const ItemAccordionTitle = ({
           navbartheme={theme}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ref={linkRef as any}>
-          {item.CustomIcon ? <item.CustomIcon /> : <Icon />}
+          {item.CustomIcon ? (
+            <item.CustomIcon showIconTooltip={showIconTooltip} />
+          ) : (
+            <Icon />
+          )}
           <AccordionTitle {...data} css={S.AccordionTitle(theme)} />
         </Link>
       </Wrapper>

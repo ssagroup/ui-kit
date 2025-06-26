@@ -11,7 +11,7 @@ export const NavContentToggle = ({
   isChecked: boolean;
 }) => {
   const globalTheme = useTheme();
-  const { theme } = useCollapsibleNavBarContext();
+  const { theme, showIconTooltip } = useCollapsibleNavBarContext();
   return (
     <div css={S.ContentToggle(theme, isChecked)}>
       <label
@@ -28,6 +28,7 @@ export const NavContentToggle = ({
           name={isChecked ? 'carrot-left' : 'carrot-right'}
           color={theme === 'default' ? '#000' : globalTheme.colors.greyDarker}
           size={14}
+          tooltip={showIconTooltip ? undefined : ''}
         />
       </label>
     </div>

@@ -21,6 +21,7 @@ export const CollapsibleNavBar = ({
   renderLogo,
   theme = 'default',
   subMenuMaxWidth,
+  showIconTooltip = false,
   className,
   useMatchPattern,
   onChange,
@@ -45,7 +46,10 @@ export const CollapsibleNavBar = ({
   };
 
   return (
-    <CollapsibleNavBarProvider theme={theme} subMenuMaxWidth={subMenuMaxWidth}>
+    <CollapsibleNavBarProvider
+      theme={theme}
+      subMenuMaxWidth={subMenuMaxWidth}
+      showIconTooltip={showIconTooltip}>
       <CollapsibleNavBarBase
         className={className + (isChecked ? ' opened' : '')}
         data-theme={theme}>

@@ -3,7 +3,7 @@ import { CollapsibleNavBarExtendedProps } from './types';
 
 type ContextType = Pick<
   CollapsibleNavBarExtendedProps,
-  'theme' | 'subMenuMaxWidth'
+  'theme' | 'subMenuMaxWidth' | 'showIconTooltip'
 >;
 
 export const CollapsibleNavBarContext = createContext<ContextType>({
@@ -14,6 +14,7 @@ export const CollapsibleNavBarProvider = ({
   children,
   theme,
   subMenuMaxWidth,
+  showIconTooltip,
 }: {
   children: React.ReactNode;
 } & ContextType) => (
@@ -21,6 +22,7 @@ export const CollapsibleNavBarProvider = ({
     value={{
       theme,
       subMenuMaxWidth,
+      showIconTooltip,
     }}>
     {children}
   </CollapsibleNavBarContext.Provider>
