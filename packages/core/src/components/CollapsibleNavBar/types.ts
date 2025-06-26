@@ -27,6 +27,7 @@ export interface CollapsibleNavBarExtendedProps<
   theme?: 'default' | 'light';
   className?: string;
   subMenuMaxWidth?: CSSProperties['maxWidth'];
+  showIconTooltip?: boolean;
   useMatchPattern?: (prefix: string) => string | PathPattern<string>;
   onChange?: (isChecked: boolean) => void;
 }

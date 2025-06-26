@@ -63,6 +63,23 @@ export const Default: StoryObj<typeof CollapsibleNavBar> = () => {
 
 Default.args = {};
 
+export const WithDefaultIconTooltip: StoryObj<
+  typeof CollapsibleNavBar
+> = () => {
+  return (
+    <CollapsibleNavBar
+      items={ITEMS}
+      renderLogo={<Logo />}
+      showIconTooltip
+      onChange={(isChecked) => {
+        console.log('>>>onChange', isChecked);
+      }}
+    />
+  );
+};
+
+WithDefaultIconTooltip.args = {};
+
 export const LightTheme: StoryObj<typeof CollapsibleNavBar> = () => {
   return (
     <CollapsibleNavBar
