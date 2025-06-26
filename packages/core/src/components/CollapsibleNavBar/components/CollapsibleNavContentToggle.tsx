@@ -16,6 +16,7 @@ export const NavContentToggle = ({
     <div css={S.ContentToggle(theme, isChecked)}>
       <label
         htmlFor={id}
+        data-testid="collapsible-nav-content-toggle-label"
         css={{
           width: '100%',
           height: '100%',
