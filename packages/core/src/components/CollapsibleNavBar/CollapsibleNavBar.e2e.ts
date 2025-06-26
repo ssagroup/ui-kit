@@ -39,7 +39,7 @@ test.describe('Widgets: CollapsibleNavBar', () => {
   }) => {
     await page.setViewportSize(SCREEN_SIZES[1920]);
     await gotoPage(page);
-    await page.locator('label').filter({ hasText: 'Carrot right' }).click();
+    await page.getByTestId('collapsible-nav-content-toggle-label').click();
     await page.screenshot({
       path: `${SCREENSHOT_PREFIX}[w1920px]_side_menu_expanded.png`,
     });
@@ -50,7 +50,7 @@ test.describe('Widgets: CollapsibleNavBar', () => {
   }) => {
     await page.setViewportSize(SCREEN_SIZES[1920]);
     await gotoPage(page);
-    await page.locator('label').filter({ hasText: 'Carrot right' }).click();
+    await page.getByTestId('collapsible-nav-content-toggle-label').click();
     await page.getByTestId('accordion-title').click();
     await page.screenshot({
       path: `${SCREENSHOT_PREFIX}[w1920px]_statistics_submenu_expanded.png`,

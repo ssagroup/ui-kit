@@ -9,6 +9,7 @@ export const CollapsibleNavToggle = ({ id }: { id: string }) => {
       <CollapsibleNavToggleWrapper>
         <label
           htmlFor={id}
+          data-testid="collapsible-nav-toggle-label"
           css={css`
             cursor: pointer;
 
