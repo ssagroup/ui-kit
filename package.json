@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/ui-kit-monorepo",
-  "version": "2.26.1",
+  "version": "2.27.0",
   "private": true,
   "description": "SSA UI Kit",
   "main": "index.js",
