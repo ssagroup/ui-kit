@@ -11,6 +11,7 @@ export interface PieChartTooltipProps {
   isEnabled?: boolean;
   isFullscreenEnabled?: boolean;
   dimension?: string;
+  className?: string;
   outputType?:
     | 'value'
     | 'value+dimension'
@@ -83,4 +84,5 @@ export type PieChartTooltipViewProps = {
   dimension?: string;
   isFullscreenMode?: boolean;
   position: { x: number; y: number } | null;
+  className?: string;
 };

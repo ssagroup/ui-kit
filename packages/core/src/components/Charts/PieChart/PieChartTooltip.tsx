@@ -15,6 +15,7 @@ export const PieChartTooltip = forwardRef<
     isFullscreenMode,
     position,
     isOpen,
+    className,
   },
   ref,
 ) {
@@ -42,7 +43,8 @@ export const PieChartTooltip = forwardRef<
         transition: point ? 'all .3s ease-out' : 'none',
         visibility: point ? 'visible' : 'hidden',
         zIndex: 10,
-      }}>
+      }}
+      className={className}>
       {point && (
         <React.Fragment>
           <div

@@ -243,6 +243,7 @@ export const PieChartInternal = ({
                 position={tooltipPosition}
                 dimension={dimension}
                 outputType={outputType}
+                className={tooltipProps?.className}
                 isFullscreenMode={isFullscreenMode}
                 ref={refs.setFloating}
               />
