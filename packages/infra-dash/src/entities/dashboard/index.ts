@@ -1,4 +1,3 @@
-import { PanelDefinition } from '@shared/panel';
 import {
   useQuery,
   useMutation,
@@ -68,10 +67,7 @@ export const useCreateDashboard = (
     ['create-dashboard'],
     async (payload: CreateDashboardPayload, signal?: AbortSignal) => {
       const panels = payload.panels.map((panel) => ({
-        // for some reason backend accepts stringified JSON but returns object
-        panelDefinition: JSON.stringify(
-          panel.panelDefinition,
-        ) as unknown as PanelDefinition,
+        panelDefinition: panel.panelDefinition,
         source: panel.source,
       }));
       const dashboardsUid = new Set(
@@ -105,9 +101,7 @@ export const useUpdateDashboard = (
     ['update-dashboard', dashboardId],
     async (payload, signal?) => {
       const panels = payload.panels.map((panel) => ({
-        panelDefinition: JSON.stringify(
-          panel.panelDefinition,
-        ) as unknown as PanelDefinition,
+        panelDefinition: panel.panelDefinition,
         source: panel.source,
       }));
       const dashboardsUid = new Set(
