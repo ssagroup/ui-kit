@@ -44,6 +44,7 @@ export const Typeahead = ({
   placeholder = 'Select something',
   startIconClassName,
   endIconClassName,
+  popoverClassName,
   optionsClassName,
   wrapperClassName,
   filterOptions,
@@ -108,6 +109,7 @@ export const Typeahead = ({
             <>
               <TypeaheadTrigger />
               <PopoverContent
+                className={popoverClassName}
                 css={{
                   width: hookResult.triggerRef.current?.clientWidth,
                   boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
