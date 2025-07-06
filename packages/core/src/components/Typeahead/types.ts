@@ -12,6 +12,7 @@ export interface TypeaheadProps {
   isDisabled?: boolean;
   children?: React.ReactNode;
   className?: string;
+  popoverClassName?: string;
   optionsClassName?: string;
   wrapperClassName?: string;
   width?: string | number;
