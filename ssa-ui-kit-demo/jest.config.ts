@@ -1,0 +1,30 @@
+export default {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  coverageProvider: 'v8',
+  coverageDirectory: '<rootDir>/coverage',
+  collectCoverageFrom: [
+    '**/*.{ts,tsx}',
+    '!**/types.ts',
+    '!**/*.e2e.{ts,tsx}',
+    '!**/*.spec.{ts,tsx}',
+    '!**/*.d.{ts,tsx}',
+    '!**/global-setup.ts',
+    '!**/jest-setup.ts',
+    '!**/jest.config.ts',
+    '!**/node_modules/**',
+  ],
+  verbose: true,
+  globalSetup: '<rootDir>/global-setup.ts',
+  setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
+  transform: {
+    '^.+\\.ts?$': 'ts-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
+  transformIgnorePatterns: ['/node_modules/'],
+  testMatch: ['<rootDir>/src/**/*.spec.ts', '<rootDir>/src/**/*.spec.tsx'],
+  moduleNameMapper: {
+    '\\.svg': '<rootDir>/src/__mocks__/svgrMock.js',
+    '@/(.*)': '<rootDir>/src/$1',
+  },
+};

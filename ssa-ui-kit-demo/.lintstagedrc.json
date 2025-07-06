@@ -1,0 +1,4 @@
+{
+  "*": ["./spellcheck-from-args.sh"],
+  "*.{ts,tsx}": ["pnpm lint", "pnpm lint:styles"]
+}
