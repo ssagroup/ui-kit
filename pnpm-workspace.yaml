@@ -6,3 +6,4 @@ packages:
   - 'packages/templates'
   - 'packages/infra-dash'
   - 'examples/fitness-dashboard'
+  - 'ssa-ui-kit-demo'
