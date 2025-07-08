@@ -15,7 +15,10 @@ const meta: Meta<typeof DashboardEditor> = {
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '100vh', position: 'relative' }}>{Story()}</div>
+      <div
+        style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}>
+        {Story()}
+      </div>
     ),
   ],
   globals: {
