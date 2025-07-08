@@ -130,34 +130,36 @@ export const DashboardPanelGrid = ({
       `}
       {...divProps}>
       {_header}
-      <GridLayout
-        autoSize
-        layout={layout}
-        cols={cols}
-        rowHeight={rowHeight}
-        containerPadding={[0, 0]}
-        margin={[8, 8]}
-        width={width}
-        // disable interaction for mobile view
-        isDraggable={isMinMD && draggable}
-        isResizable={isMinMD && resizable}
-        onLayoutChange={isMinMD ? onLayoutChange : undefined}
-        onDragStart={onDragStart}
-        onResizeStart={onResizeStart}>
-        {dashboard.panels.map((panel) => (
-          <GridItem key={panel.id.toString()}>
-            {renderPanelControl && (
-              // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-              <div
-                css={{ position: 'absolute', zIndex: 100, right: 0 }}
-                onMouseDown={(e) => e.stopPropagation()}>
-                {renderPanelControl(panel)}
-              </div>
-            )}
-            {renderPanel(panel)}
-          </GridItem>
-        ))}
-      </GridLayout>
+      {width && (
+        <GridLayout
+          autoSize
+          layout={layout}
+          cols={cols}
+          rowHeight={rowHeight}
+          containerPadding={[0, 0]}
+          margin={[8, 8]}
+          width={width}
+          // disable interaction for mobile view
+          isDraggable={isMinMD && draggable}
+          isResizable={isMinMD && resizable}
+          onLayoutChange={isMinMD ? onLayoutChange : undefined}
+          onDragStart={onDragStart}
+          onResizeStart={onResizeStart}>
+          {dashboard.panels.map((panel) => (
+            <GridItem key={panel.id.toString()}>
+              {renderPanelControl && (
+                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                <div
+                  css={{ position: 'absolute', zIndex: 100, right: 0 }}
+                  onMouseDown={(e) => e.stopPropagation()}>
+                  {renderPanelControl(panel)}
+                </div>
+              )}
+              {renderPanel(panel)}
+            </GridItem>
+          ))}
+        </GridLayout>
+      )}
     </div>
   );
 };
