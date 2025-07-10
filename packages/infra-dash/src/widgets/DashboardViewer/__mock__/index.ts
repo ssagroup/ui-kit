@@ -343,7 +343,7 @@ export const dashboard: Dashboard = {
       panelDefinition: {
         version: 1,
 
-        gridPos: { w: 24, h: 6, x: 0, y: 0 },
+        gridPos: { w: 12, h: 4, x: 0, y: 0 },
         component: { id: 'timeseries-default', props: {} },
       },
       title: 'Job Queue',
@@ -360,7 +360,7 @@ export const dashboard: Dashboard = {
       },
       panelDefinition: {
         version: 1,
-        gridPos: { w: 18, h: 7, x: 6, y: 6 },
+        gridPos: { w: 9, h: 4, x: 3, y: 4 },
         component: { id: 'bargauge-default', props: {} },
       },
       title: 'Storage Utilization',
@@ -405,7 +405,7 @@ export const dashboard: Dashboard = {
       },
       panelDefinition: {
         version: 1,
-        gridPos: { w: 6, h: 7, x: 0, y: 6 },
+        gridPos: { w: 3, h: 4, x: 0, y: 4 },
         component: { id: 'gauge-default', props: {} },
       },
       title: 'CPU Percentage',
