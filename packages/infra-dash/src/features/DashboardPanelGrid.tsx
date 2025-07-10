@@ -34,8 +34,8 @@ export type DashboardPanelGridProps = {
 export const DashboardPanelGrid = ({
   dashboard,
   header,
-  cols = 24,
-  rowHeight = 30,
+  cols = 12,
+  rowHeight = 50,
   draggable = false,
   resizable = false,
   refetchIntervalMs = 60000, // 60 seconds
