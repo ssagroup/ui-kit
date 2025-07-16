@@ -514,8 +514,15 @@ export const NoData = {
     tooltipIsEnabled: true,
     data: [],
     noData: (
-      <Wrapper css={{ justifyContent: 'center', height: 136 }}>
+      <Wrapper
+        css={{
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 10,
+          height: 136,
+        }}>
         <NoDataYet />
+        No data
       </Wrapper>
     ),
   },
