@@ -29,6 +29,7 @@ export interface PieChartProps
   title?: React.ReactNode;
   children?: React.ReactNode;
   width?: string;
+  noData?: React.ReactNode;
   features?: Array<PieChartFeatures>;
   cardProps?: Omit<WidgetCardProps, 'children'>;
   activeHighlight?: boolean;

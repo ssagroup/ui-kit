@@ -6,6 +6,7 @@ import Typography from '@components/Typography';
 import Tooltip from '@components/Tooltip';
 import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
+import Wrapper from '@components/Wrapper';
 import {
   PieChart,
   PieChartLegend,
@@ -20,6 +21,7 @@ import {
   optionsDataBig,
   optionsDataBigDecimal,
 } from './stories/fixtures';
+import { NoDataYet } from './stories/noDataYet';
 
 export default {
   title: 'Charts/PieChart',
@@ -348,6 +350,7 @@ const WithTooltipTemplate: StoryObj<
     tooltipDimension: PieChartTooltipProps['dimension'];
     tooltipValueRoundingDigits: PieChartTooltipProps['valueRoundingDigits'];
     tooltipPercentageRoundingDigits: PieChartTooltipProps['percentageRoundingDigits'];
+    noData?: React.ReactNode;
   }
 > = {
   render: ({
@@ -359,6 +362,7 @@ const WithTooltipTemplate: StoryObj<
     tooltipOutputType,
     tooltipPercentageRoundingDigits,
     tooltipValueRoundingDigits,
+    noData,
   }) => {
     const theme = useTheme();
     const [isFullscreenMode, setFullscreenMode] = useState(false);
@@ -400,7 +404,8 @@ const WithTooltipTemplate: StoryObj<
           isEnabled: true,
           ...tooltipProps,
         }}
-        width={'500px'}>
+        width={'500px'}
+        noData={noData}>
         <PieChartLegend
           data={pieChartData as PieChartLegendItem[]}
           useChartData
@@ -508,6 +513,11 @@ export const NoData = {
     tooltipIsFullscreenEnabled: true,
     tooltipIsEnabled: true,
     data: [],
+    noData: (
+      <Wrapper css={{ justifyContent: 'center', height: 136 }}>
+        <NoDataYet />
+      </Wrapper>
+    ),
   },
   argTypes: {
     legendOutputType: {

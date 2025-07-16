@@ -37,6 +37,7 @@ export const PieChartInternal = ({
   data,
   legendOutputType: legendOutputTypeInitial = 'value',
   tooltipProps,
+  noData,
   setActiveId,
   onFullscreenModeChange,
   ...chartProps
@@ -259,7 +260,7 @@ export const PieChartInternal = ({
             {children}
           </PieChartBase>
         ) : (
-          <></>
+          noData
         )}
       </WithWidgetCard>
     </PieChartProvider>
