@@ -51,6 +51,12 @@ export const PieChartInternal = ({
     isInteractive = false,
   } = chartProps;
 
+  const localFeatures: PieChartProps['features'] = data.length
+    ? features
+    : features.includes('header')
+      ? ['header']
+      : [];
+
   const {
     valueRoundingDigits = false,
     percentageRoundingDigits = 0,
@@ -166,9 +172,9 @@ export const PieChartInternal = ({
   return (
     <PieChartProvider data={dataForChart} legendOutputType={legendOutputType}>
       <WithWidgetCard
-        features={features}
+        features={localFeatures}
         cardProps={{
-          headerContent: <PieChartHeader features={features} />,
+          headerContent: <PieChartHeader features={localFeatures} />,
           css:
             isHeaderIncluded && isFullscreenMode
               ? css`
@@ -180,77 +186,81 @@ export const PieChartInternal = ({
               : undefined,
           ...cardProps,
         }}>
-        <PieChartBase
-          as={as}
-          className={className}
-          width={width}
-          isFullscreenMode={isFullscreenMode}
-          isHeaderIncluded={isHeaderIncluded}>
-          <div
-            className="pie-chart-wrapper"
-            ref={refs.setReference}
-            {...getReferenceProps()}>
-            <ResponsivePie
-              margin={{
-                top: internalOffset,
-                right: internalOffset,
-                bottom: internalOffset,
-                left: internalOffset,
-              }}
-              innerRadius={0.8}
-              enableArcLinkLabels={false}
-              enableArcLabels={false}
-              padAngle={2}
-              cornerRadius={16}
-              colors={{ datum: 'data.color' }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
-              arcLinkLabelsThickness={2}
-              arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={10}
-              layers={['arcs', 'arcLinkLabels', 'arcLabels']}
-              activeId={activeId}
-              onActiveIdChange={(activeId: string | number | null) => {
-                if (activeHighlight) {
-                  setActiveId(activeId);
-                }
-              }}
-              data={dataForChart}
-              onMouseEnter={(data) => {
-                setTooltipData(() => ({ datum: data }));
-              }}
-              onMouseLeave={() => {
-                setTooltipData(() => null);
-              }}
-              onMouseMove={() => {
-                const newPosition = calcTooltipPosition();
-                if (newPosition) {
-                  setTooltipPosition(() => newPosition);
-                }
-              }}
-              tooltip={() => null}
-              {...chartProps}
-            />
-            {title && (
-              <PieChartTextBase isFullscreenMode={isFullscreenMode}>
-                {title}
-              </PieChartTextBase>
-            )}
-            <FloatingFocusManager context={context}>
-              <PieChartTooltip
-                isOpen={tooltipIsOpened}
-                point={tooltipData}
-                position={tooltipPosition}
-                dimension={dimension}
-                outputType={outputType}
-                className={tooltipProps?.className}
-                isFullscreenMode={isFullscreenMode}
-                ref={refs.setFloating}
+        {data.length ? (
+          <PieChartBase
+            as={as}
+            className={className}
+            width={width}
+            isFullscreenMode={isFullscreenMode}
+            isHeaderIncluded={isHeaderIncluded}>
+            <div
+              className="pie-chart-wrapper"
+              ref={refs.setReference}
+              {...getReferenceProps()}>
+              <ResponsivePie
+                margin={{
+                  top: internalOffset,
+                  right: internalOffset,
+                  bottom: internalOffset,
+                  left: internalOffset,
+                }}
+                innerRadius={0.8}
+                enableArcLinkLabels={false}
+                enableArcLabels={false}
+                padAngle={2}
+                cornerRadius={16}
+                colors={{ datum: 'data.color' }}
+                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsTextColor="#333333"
+                arcLinkLabelsThickness={2}
+                arcLinkLabelsColor={{ from: 'color' }}
+                arcLabelsSkipAngle={10}
+                layers={['arcs', 'arcLinkLabels', 'arcLabels']}
+                activeId={activeId}
+                onActiveIdChange={(activeId: string | number | null) => {
+                  if (activeHighlight) {
+                    setActiveId(activeId);
+                  }
+                }}
+                data={dataForChart}
+                onMouseEnter={(data) => {
+                  setTooltipData(() => ({ datum: data }));
+                }}
+                onMouseLeave={() => {
+                  setTooltipData(() => null);
+                }}
+                onMouseMove={() => {
+                  const newPosition = calcTooltipPosition();
+                  if (newPosition) {
+                    setTooltipPosition(() => newPosition);
+                  }
+                }}
+                tooltip={() => null}
+                {...chartProps}
               />
-            </FloatingFocusManager>
-          </div>
-          {children}
-        </PieChartBase>
+              {title && (
+                <PieChartTextBase isFullscreenMode={isFullscreenMode}>
+                  {title}
+                </PieChartTextBase>
+              )}
+              <FloatingFocusManager context={context}>
+                <PieChartTooltip
+                  isOpen={tooltipIsOpened}
+                  point={tooltipData}
+                  position={tooltipPosition}
+                  dimension={dimension}
+                  outputType={outputType}
+                  className={tooltipProps?.className}
+                  isFullscreenMode={isFullscreenMode}
+                  ref={refs.setFloating}
+                />
+              </FloatingFocusManager>
+            </div>
+            {children}
+          </PieChartBase>
+        ) : (
+          <></>
+        )}
       </WithWidgetCard>
     </PieChartProvider>
   );

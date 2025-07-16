@@ -498,3 +498,48 @@ export const WithTooltip = {
     },
   },
 };
+
+export const NoData = {
+  ...WithTooltipTemplate,
+  args: {
+    legendOutputType: 'value',
+    tooltipOutputType: 'value',
+    tooltipDimension: 'm',
+    tooltipIsFullscreenEnabled: true,
+    tooltipIsEnabled: true,
+    data: [],
+  },
+  argTypes: {
+    legendOutputType: {
+      options: ['value', 'percentage', 'value+percentage', 'percentage+value'],
+      control: { type: 'radio' },
+    },
+    tooltipIsEnabled: {
+      control: { type: 'boolean' },
+    },
+    tooltipIsFullscreenEnabled: {
+      control: { type: 'boolean' },
+    },
+    tooltipOutputType: {
+      options: [
+        'value',
+        'value+dimension',
+        'dimension',
+        'percentage',
+        'value+percentage',
+        'percentage+value',
+        'value+dimension+percentage',
+      ],
+      control: { type: 'radio' },
+    },
+    tooltipDimension: {
+      control: { type: 'text' },
+    },
+    tooltipValueRoundingDigits: {
+      control: { type: 'number' },
+    },
+    tooltipPercentageRoundingDigits: {
+      control: { type: 'number' },
+    },
+  },
+};
