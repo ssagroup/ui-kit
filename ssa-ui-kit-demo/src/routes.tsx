@@ -4,6 +4,7 @@ import App from './App';
 import { Layout } from './Layout';
 import { MainPage } from './MainPage';
 import { AnotherPage } from './AnotherPage';
+import AIDashboardGenerator from './AIDashboardGenerator';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <Layout>
             <AnotherPage />
+          </Layout>
+        ),
+      },
+      {
+        path: '/ai-dashboard',
+        element: (
+          <Layout>
+            <AIDashboardGenerator />
           </Layout>
         ),
       },

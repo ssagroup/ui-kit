@@ -26,6 +26,12 @@ const NAV_ITEMS = [
     iconSize: 20, 
     title: 'Another Page' 
   },
+  { 
+    path: 'ai-dashboard', 
+    iconName: 'plus' as const, 
+    iconSize: 20, 
+    title: 'AI Dashboard' 
+  },
 ];
 
 interface LayoutProps {

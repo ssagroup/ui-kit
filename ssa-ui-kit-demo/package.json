@@ -17,6 +17,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.1",
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.4",
