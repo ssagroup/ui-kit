@@ -33,16 +33,17 @@ describe('CollapsibleNavBar', () => {
   });
 
   it('Should be expanded', () => {
-    const { queryByLabelText, getByLabelText } = render(
+    const { getByTestId } = render(
       <StoryComponent items={ITEMS} renderLogo={<Logo />} />,
     );
 
-    const contentToggler = getByLabelText('Carrot right');
+    const contentToggler = getByTestId('collapsible-nav-content-toggle-label');
 
     fireEvent.click(contentToggler as Node);
 
-    expect(queryByLabelText('Carrot right')).not.toBeInTheDocument();
-
-    getByLabelText('Carrot left');
+    expect(getByTestId('collapsible-nav-content-toggle-label')).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
   });
 });
