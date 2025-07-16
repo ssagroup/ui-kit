@@ -6,6 +6,7 @@ import Typography from '@components/Typography';
 import Tooltip from '@components/Tooltip';
 import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
+import Wrapper from '@components/Wrapper';
 import {
   PieChart,
   PieChartLegend,
@@ -20,6 +21,7 @@ import {
   optionsDataBig,
   optionsDataBigDecimal,
 } from './stories/fixtures';
+import { NoDataYet } from './stories/noDataYet';
 
 export default {
   title: 'Charts/PieChart',
@@ -348,6 +350,7 @@ const WithTooltipTemplate: StoryObj<
     tooltipDimension: PieChartTooltipProps['dimension'];
     tooltipValueRoundingDigits: PieChartTooltipProps['valueRoundingDigits'];
     tooltipPercentageRoundingDigits: PieChartTooltipProps['percentageRoundingDigits'];
+    noData?: React.ReactNode;
   }
 > = {
   render: ({
@@ -359,6 +362,7 @@ const WithTooltipTemplate: StoryObj<
     tooltipOutputType,
     tooltipPercentageRoundingDigits,
     tooltipValueRoundingDigits,
+    noData,
   }) => {
     const theme = useTheme();
     const [isFullscreenMode, setFullscreenMode] = useState(false);
@@ -400,7 +404,8 @@ const WithTooltipTemplate: StoryObj<
           isEnabled: true,
           ...tooltipProps,
         }}
-        width={'500px'}>
+        width={'500px'}
+        noData={noData}>
         <PieChartLegend
           data={pieChartData as PieChartLegendItem[]}
           useChartData
@@ -463,6 +468,63 @@ export const WithTooltip = {
     tooltipDimension: 'm',
     tooltipIsFullscreenEnabled: true,
     tooltipIsEnabled: true,
+  },
+  argTypes: {
+    legendOutputType: {
+      options: ['value', 'percentage', 'value+percentage', 'percentage+value'],
+      control: { type: 'radio' },
+    },
+    tooltipIsEnabled: {
+      control: { type: 'boolean' },
+    },
+    tooltipIsFullscreenEnabled: {
+      control: { type: 'boolean' },
+    },
+    tooltipOutputType: {
+      options: [
+        'value',
+        'value+dimension',
+        'dimension',
+        'percentage',
+        'value+percentage',
+        'percentage+value',
+        'value+dimension+percentage',
+      ],
+      control: { type: 'radio' },
+    },
+    tooltipDimension: {
+      control: { type: 'text' },
+    },
+    tooltipValueRoundingDigits: {
+      control: { type: 'number' },
+    },
+    tooltipPercentageRoundingDigits: {
+      control: { type: 'number' },
+    },
+  },
+};
+
+export const NoData = {
+  ...WithTooltipTemplate,
+  args: {
+    legendOutputType: 'value',
+    tooltipOutputType: 'value',
+    tooltipDimension: 'm',
+    tooltipIsFullscreenEnabled: true,
+    tooltipIsEnabled: true,
+    data: [],
+    noData: (
+      <Wrapper
+        css={{
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 10,
+          height: 136,
+        }}>
+        <NoDataYet />
+        No data
+      </Wrapper>
+    ),
   },
   argTypes: {
     legendOutputType: {

@@ -18,6 +18,8 @@ export type TimeseriesPanelProps = {
   title?: string;
   /** Optional hover format for the x axis */
   xAxisHoverFormat?: string;
+  /** Optional label width for the y axis, defaults to 50 */
+  labelWidth?: number;
 };
 
 export const TimeseriesPanel = ({
@@ -25,6 +27,7 @@ export const TimeseriesPanel = ({
   panelData,
   title: providedTitle,
   xAxisHoverFormat,
+  labelWidth = 50,
 }: TimeseriesPanelProps) => {
   const { ref, width } = useElementSize<HTMLDivElement>();
   const title = providedTitle ?? panel.title;
@@ -49,7 +52,7 @@ export const TimeseriesPanel = ({
         layout={{
           autosize: true,
           width: width,
-          margin: { r: 50 },
+          margin: { r: labelWidth },
           xaxis: {
             tickmode: 'auto',
             hoverformat: xAxisHoverFormat,
@@ -83,6 +86,11 @@ export const panelConfig: PanelConfig<TimeseriesPanelProps> = {
         title: 'X Axis Hover Format',
         default: '%H:%M, %d %b',
       },
+      labelWidth: {
+        type: 'number',
+        title: 'Label Width',
+        default: 50,
+      },
     },
   },
   uiSchema: {
@@ -93,6 +101,10 @@ export const panelConfig: PanelConfig<TimeseriesPanelProps> = {
     xAxisHoverFormat: {
       'ui:help': 'Format for the x-axis hover tooltip',
       'ui:placeholder': 'X Axis Hover Format (e.g., %H:%M, %d %b)',
+    },
+    labelWidth: {
+      'ui:help': 'Set the width of the y axis label in pixels',
+      'ui:placeholder': 'Label Width',
     },
   },
 };
