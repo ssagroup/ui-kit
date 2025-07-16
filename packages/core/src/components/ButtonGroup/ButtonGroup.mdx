@@ -1,0 +1,103 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as ButtonGroupStories from './ButtonGroup.stories';
+
+<Meta of={ButtonGroupStories} />
+
+# ButtonGroup
+
+ButtonGroup is a collection of related buttons that work together as a unit for selecting between options or filtering content.
+
+## Default Usage
+
+A button group allows users to select one option from a set of related choices. Here's how to use it:
+
+```tsx
+import { ButtonGroup, ButtonGroupItem } from '@ssa-ui-kit/core';
+
+const items: ButtonGroupItem[] = [
+  { id: 1, text: 'All (10)', isDisabled: false },
+  { id: 2, text: 'Running (117)', isDisabled: false },
+  { id: 3, text: 'Stopped (2)', isDisabled: false },
+];
+
+function Demo() {
+  const handleClick = (item: ButtonGroupItem) => {
+    console.log('Selected:', item);
+  };
+
+  return <ButtonGroup items={items} onClick={handleClick} />;
+}
+```
+
+## Features
+
+### Single Selection
+
+ButtonGroup automatically manages the active state, ensuring only one button can be selected at a time.
+
+### External State Control
+
+You can control the selected item externally using the `externalState` prop:
+
+```tsx
+import { useState } from 'react';
+
+function ControlledDemo() {
+  const [selectedItem, setSelectedItem] = useState(items[0]);
+
+  return (
+    <ButtonGroup
+      items={items}
+      externalState={selectedItem}
+      onClick={setSelectedItem}
+    />
+  );
+}
+```
+
+### Disabled Items
+
+Individual buttons can be disabled by setting `isDisabled: true` in the item:
+
+```tsx
+const itemsWithDisabled: ButtonGroupItem[] = [
+  { id: 1, text: 'Available', isDisabled: false },
+  { id: 2, text: 'Disabled', isDisabled: true },
+  { id: 3, text: 'Active', isDisabled: false },
+];
+```
+
+### Custom Styling
+
+Apply custom styles to all buttons using the `buttonStyles` prop:
+
+```tsx
+import { css } from '@emotion/react';
+
+function StyledDemo() {
+  return (
+    <ButtonGroup
+      items={items}
+      onClick={handleClick}
+      buttonStyles={css`
+        background: white;
+        border: 1px solid #ddd;
+
+        &:hover {
+          background: #f5f5f5;
+        }
+
+        &.active {
+          background: #007bff;
+          color: white;
+        }
+      `}
+    />
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

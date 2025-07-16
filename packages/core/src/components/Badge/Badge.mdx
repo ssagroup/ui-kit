@@ -1,0 +1,103 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as BadgeStories from './Badge.stories';
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+Badge is for informing users about the status of an item.
+
+## Default Usage
+
+A badge is a small component used to highlight an item's status or properties. Here's a basic example:
+
+```tsx
+import { Badge } from '@ssa-ui-kit/core';
+
+function Demo() {
+  return (
+    <Badge color="purple" size="medium">
+      Status
+    </Badge>
+  );
+}
+```
+
+## Sizes
+
+Badge supports three different sizes to fit various use cases:
+
+### Small
+
+Compact size perfect for dense layouts or when space is limited.
+
+```tsx dark
+<Badge size="small" color="blue">
+  Small
+</Badge>
+```
+
+### Medium (Default)
+
+Balanced size suitable for most use cases.
+
+```tsx
+<Badge size="medium" color="green">
+  Medium
+</Badge>
+```
+
+### Large
+
+Larger size for emphasis or when more visibility is needed.
+
+```tsx
+<Badge size="large" color="pink">
+  Large
+</Badge>
+```
+
+## Colors
+
+Badge comes with predefined color variants that follow the design system:
+
+```tsx
+<Badge color="purple">Purple</Badge>
+<Badge color="blue">Blue</Badge>
+<Badge color="blueLight">Blue Light</Badge>
+<Badge color="green">Green</Badge>
+<Badge color="turquoise">Turquoise</Badge>
+<Badge color="pink">Pink</Badge>
+<Badge color="yellow">Yellow</Badge>
+<Badge color="yellowWarm">Yellow Warm</Badge>
+```
+
+### Custom Colors
+
+You can also use custom colors by passing a hex value or CSS color:
+
+```tsx
+<Badge color="#F7931A">Custom Orange</Badge>
+<Badge color="magenta">Custom Color</Badge>
+```
+
+## With Icons
+
+Badges can contain icons for better visual communication:
+
+```tsx
+import { Badge, Icon } from '@ssa-ui-kit/core';
+
+function IconBadge() {
+  return (
+    <Badge color="blueLight" size="small">
+      <Icon name="information" color="white" size={14} />
+    </Badge>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,324 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as InputStories from './Input.stories';
+
+<Meta of={InputStories} />
+
+# Input
+
+## Default Usage
+
+The Input component provides a flexible and customizable text input field with built-in form validation, status indicators, and icon support. It integrates seamlessly with React Hook Form for validation and form state management:
+
+```tsx
+import { Input, Icon } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
+
+function BasicInput() {
+  const { register } = useForm();
+
+  return (
+    <Input
+      name="email"
+      type="email"
+      placeholder="Enter your email"
+      register={register}
+      validationSchema={{
+        required: 'Email is required',
+        pattern: {
+          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          message: 'Invalid email address',
+        },
+      }}
+    />
+  );
+}
+```
+
+## Features
+
+### Input Types and Validation
+
+Support for various HTML input types with validation:
+
+```tsx
+// Text input with validation
+<Input
+  name="username"
+  type="text"
+  placeholder="Username"
+  register={register}
+  validationSchema={{
+    required: 'Username is required',
+    minLength: {
+      value: 3,
+      message: 'Username must be at least 3 characters'
+    }
+  }}
+/>
+
+// Password input
+<Input
+  name="password"
+  type="password"
+  placeholder="Password"
+  register={register}
+  validationSchema={{
+    required: 'Password is required',
+    minLength: {
+      value: 8,
+      message: 'Password must be at least 8 characters'
+    }
+  }}
+/>
+
+// Number input
+<Input
+  name="age"
+  type="number"
+  placeholder="Age"
+  register={register}
+  validationSchema={{
+    required: 'Age is required',
+    min: {
+      value: 18,
+      message: 'Must be at least 18 years old'
+    }
+  }}
+/>
+```
+
+### Status States
+
+Visual feedback for different input states:
+
+```tsx
+// Basic state (default)
+<Input
+  name="basic"
+  placeholder="Basic input"
+  register={register}
+  status="basic"
+/>
+
+// Error state
+<Input
+  name="error"
+  placeholder="Error input"
+  register={register}
+  status="error"
+  errors={{
+    type: 'validation',
+    message: 'This field is required'
+  }}
+/>
+
+// Success state
+<Input
+  name="success"
+  placeholder="Success input"
+  register={register}
+  status="success"
+/>
+```
+
+### Icons and Elements
+
+Add icons or custom elements to enhance the input:
+
+```tsx
+// Input with end icon
+<Input
+  name="search"
+  placeholder="Search..."
+  register={register}
+  endElement={<Icon name="search" size={16} />}
+/>
+
+// Input with start icon
+<Input
+  name="phone"
+  placeholder="Phone number"
+  register={register}
+  startElement={<Icon name="phone" size={16} />}
+/>
+
+// Input with both icons
+<Input
+  name="password"
+  type="password"
+  placeholder="Password"
+  register={register}
+  startElement={<Icon name="lock" size={16} />}
+  endElement={<Icon name="visible" size={16} />}
+/>
+
+// Input with custom action button
+<Input
+  name="confirmation"
+  placeholder="Confirmation code"
+  register={register}
+  endElement={
+    <button onClick={() => console.log('Resend code')}>
+      Resend
+    </button>
+  }
+/>
+```
+
+### Helper Text and Character Counting
+
+Provide additional guidance and limits:
+
+```tsx
+// Input with helper text
+<Input
+  name="description"
+  placeholder="Description"
+  register={register}
+  showHelperText={true}
+  helperText="Enter a brief description"
+/>
+
+// Input with character limit
+<Input
+  name="bio"
+  placeholder="Bio"
+  register={register}
+  showHelperText={true}
+  helperText="Tell us about yourself"
+  maxLength={200}
+/>
+
+// Input with error and helper text
+<Input
+  name="required"
+  placeholder="Required field"
+  register={register}
+  status="error"
+  showHelperText={true}
+  errors={{
+    type: 'required',
+    message: 'This field cannot be empty'
+  }}
+/>
+```
+
+### Disabled State
+
+Disable input interaction when needed:
+
+```tsx
+// Basic disabled input
+<Input
+  name="disabled"
+  placeholder="Disabled input"
+  register={register}
+  disabled={true}
+/>
+
+// Disabled input with status
+<Input
+  name="disabledSuccess"
+  placeholder="Disabled with status"
+  register={register}
+  disabled={true}
+  status="success"
+/>
+```
+
+### Custom Styling and Behavior
+
+Customize appearance and interaction:
+
+```tsx
+// Input with custom CSS
+<Input
+  name="custom"
+  placeholder="Custom styled"
+  register={register}
+  css={{
+    backgroundColor: '#f8f9fa',
+    borderRadius: '8px'
+  }}
+  className="custom-input"
+  wrapperClassName="custom-wrapper"
+/>
+
+// Input without borders
+<Input
+  name="borderless"
+  placeholder="No borders"
+  register={register}
+  showBorders={false}
+/>
+
+// Input without status icons
+<Input
+  name="noIcons"
+  placeholder="No status icons"
+  register={register}
+  showStatusIcon={false}
+  status="error"
+/>
+```
+
+### Form Integration Examples
+
+Complete form integration with validation:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log('Form data:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        name="firstName"
+        placeholder="First Name"
+        register={register}
+        validationSchema={{
+          required: 'First name is required',
+        }}
+        status={errors.firstName ? 'error' : 'basic'}
+        errors={errors.firstName}
+        showHelperText={true}
+      />
+
+      <Input
+        name="email"
+        type="email"
+        placeholder="Email Address"
+        register={register}
+        validationSchema={{
+          required: 'Email is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Invalid email format',
+          },
+        }}
+        status={errors.email ? 'error' : 'basic'}
+        errors={errors.email}
+        showHelperText={true}
+        endElement={<Icon name="mail" size={16} />}
+      />
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

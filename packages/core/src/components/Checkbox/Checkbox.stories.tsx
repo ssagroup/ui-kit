@@ -6,13 +6,6 @@ import Checkbox, { CheckboxProps } from './index';
 export default {
   title: 'Components/Checkbox',
   component: Checkbox,
-  parameters: {
-    docs: {
-      description: {
-        component: 'UI component that triggers an action or event.',
-      },
-    },
-  },
   argTypes: {
     id: {
       control: {

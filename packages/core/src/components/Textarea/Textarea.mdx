@@ -1,0 +1,137 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TextareaStories from './Textarea.stories';
+
+<Meta of={TextareaStories} />
+
+# Textarea
+
+## Default Usage
+
+The Textarea component provides a multi-line text input area designed specifically for React Hook Form integration. It offers a clean, modern design with hover and focus states, and must be used within a form context with the register function:
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { Textarea } from '@ssa-ui-kit/core';
+
+function BasicTextarea() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data: any) => {
+    console.log('Form data:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Textarea
+        name="description"
+        placeholder="Enter your description here..."
+        register={register}
+        validationSchema={{
+          required: 'Description is required',
+          minLength: { value: 10, message: 'Minimum 10 characters required' },
+        }}
+        rows={6}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Features
+
+### Basic Textarea
+
+Simple textarea with placeholder and validation:
+
+```tsx
+function BasicTextareaExample() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Textarea
+        name="comments"
+        placeholder="Enter your comments..."
+        register={register}
+        validationSchema={{
+          required: 'Comments are required',
+        }}
+        rows={4}
+      />
+
+      <Textarea
+        name="feedback"
+        placeholder="Share your feedback with us..."
+        register={register}
+        validationSchema={{
+          maxLength: { value: 500, message: 'Maximum 500 characters allowed' },
+        }}
+        rows={6}
+        maxLength={500}
+      />
+    </div>
+  );
+}
+```
+
+### Disabled and Read-Only States
+
+Handle different interaction states:
+
+```tsx
+function TextareaStates() {
+  const { register } = useForm({
+    defaultValues: {
+      disabled: 'This content cannot be edited',
+      readonly: 'This content is read-only but can be selected and copied',
+    },
+  });
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Disabled textarea */}
+      <div>
+        <label
+          style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+          Disabled Textarea
+        </label>
+        <Textarea
+          name="disabled"
+          placeholder="This textarea is disabled"
+          register={register}
+          disabled={true}
+          rows={4}
+        />
+      </div>
+
+      {/* Read-only textarea */}
+      <div>
+        <label
+          style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+          Read-Only Textarea
+        </label>
+        <Textarea
+          name="readonly"
+          placeholder="This textarea is read-only"
+          register={register}
+          readOnly={true}
+          rows={4}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

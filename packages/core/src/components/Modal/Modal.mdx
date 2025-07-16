@@ -1,0 +1,206 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as ModalStories from './Modal.stories';
+
+<Meta of={ModalStories} />
+
+# Modal
+
+## Default Usage
+
+The Modal component provides a flexible overlay system for displaying content above the main application interface. It consists of several components that work together to create a complete modal experience with built-in state management and accessibility features:
+
+```tsx
+import {
+  Modal,
+  ModalContent,
+  ModalOpenButton,
+  ModalDismissButton,
+  Button,
+} from '@ssa-ui-kit/core';
+
+function BasicModal() {
+  return (
+    <Modal>
+      <ModalOpenButton>
+        <Button>Open Modal</Button>
+      </ModalOpenButton>
+      <ModalContent aria-label="Basic modal">
+        <div style={{ padding: '20px' }}>
+          <h3>Modal Title</h3>
+          <p>This is the modal content. You can put any React content here.</p>
+          <ModalDismissButton>
+            <Button variant="secondary">Close</Button>
+          </ModalDismissButton>
+        </div>
+      </ModalContent>
+    </Modal>
+  );
+}
+```
+
+## Features
+
+### Basic Modal Structure
+
+The modal system uses a compound component pattern:
+
+```tsx
+// Complete modal with all standard components
+<Modal>
+  {/* Trigger button - can be any element */}
+  <ModalOpenButton>
+    <Button>Open Settings</Button>
+  </ModalOpenButton>
+  {/* Modal content container */}
+  <ModalContent aria-label="Settings modal">
+    <div>
+      <h2>Settings</h2>
+      <p>Configure your preferences</p>
+      {/* Close button - can be any element */}
+      <ModalDismissButton>
+        <Button>Close</Button>
+      </ModalDismissButton>
+    </div>
+  </ModalContent>
+</Modal>
+```
+
+### External State Control
+
+Control modal state from parent components:
+
+```tsx
+import { useState } from 'react';
+
+function ExternallyControlledModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(true)}>Open Modal Externally</button>
+      <Modal isOpen={isOpen}>
+        <ModalContent aria-label="Externally controlled modal">
+          <div>
+            <h3>Controlled Modal</h3>
+            <p>This modal's state is controlled by the parent component.</p>
+            <button onClick={() => setIsOpen(false)}>Close Externally</button>
+            <ModalDismissButton>
+              <Button>Or Close with Component</Button>
+            </ModalDismissButton>
+          </div>
+        </ModalContent>
+      </Modal>
+    </div>
+  );
+}
+```
+
+### Custom Styling and No Background
+
+Create modals without background overlays:
+
+```tsx
+// Modal without background overlay
+<Modal>
+  <ModalOpenButton>
+    <Button>Open Custom Modal</Button>
+  </ModalOpenButton>
+
+  <ModalContent
+    noBackground={true}
+    aria-label="Custom styled modal"
+    className="custom-modal">
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: '40px',
+        borderRadius: '12px',
+        color: 'white',
+        textAlign: 'center',
+      }}>
+      <h2 color="white">Custom Modal</h2>
+      <p color="white">This modal has no background and custom styling.</p>
+      <ModalDismissButton>
+        <Button variant="secondary">Close</Button>
+      </ModalDismissButton>
+    </div>
+  </ModalContent>
+</Modal>
+```
+
+### Form Modal Example
+
+Modal containing a form with validation:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+function FormModal() {
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmit = (data) => {
+    console.log('Form submitted:', data);
+    // Handle form submission
+  };
+
+  return (
+    <Modal>
+      <ModalOpenButton>
+        <Button>Add New Item</Button>
+      </ModalOpenButton>
+      <ModalContent aria-label="Add new item form">
+        <div style={{ padding: '24px', minWidth: '400px' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '20px',
+            }}>
+            <h3>Add New Item</h3>
+            <ModalDismissButton>
+              <Button
+                variant="tertiary"
+                startIcon={<Icon name="cross" size={16} />}
+              />
+            </ModalDismissButton>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              name="title"
+              placeholder="Item title"
+              register={register}
+              validationSchema={{ required: 'Title is required' }}
+            />
+            <Input
+              name="description"
+              placeholder="Description"
+              register={register}
+            />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                gap: '12px',
+                marginTop: '20px',
+              }}>
+              <ModalDismissButton>
+                <Button variant="secondary" onClick={() => reset()}>
+                  Cancel
+                </Button>
+              </ModalDismissButton>
+
+              <Button type="submit">Save Item</Button>
+            </div>
+          </form>
+        </div>
+      </ModalContent>
+    </Modal>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

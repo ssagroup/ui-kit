@@ -1,0 +1,167 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as CollapsibleNavBarStories from './CollapsibleNavBar.stories';
+
+<Meta of={CollapsibleNavBarStories} />
+
+# CollapsibleNavBar
+
+## Default Usage
+
+CollapsibleNavBar is a responsive navigation component that provides a clean, space-efficient sidebar navigation with collapsible functionality. Perfect for applications that need both desktop and mobile navigation patterns:
+
+```tsx
+import { CollapsibleNavBar } from '@ssa-ui-kit/core';
+import { MemoryRouter } from 'react-router-dom';
+
+function BasicNavigation() {
+  const navigationItems = [
+    { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
+    { path: 'users', iconName: 'user', iconSize: 20, title: 'Users' },
+    { path: 'settings', iconName: 'settings', iconSize: 20, title: 'Settings' },
+    {
+      prefix: 'reports/',
+      iconName: 'chart',
+      iconSize: 22,
+      title: 'Reports',
+      items: [
+        { path: 'analytics', title: 'Analytics' },
+        { path: 'sales', title: 'Sales' },
+        { path: 'performance', title: 'Performance' },
+      ],
+    },
+    {
+      path: 'notifications',
+      iconName: 'notification',
+      iconSize: 24,
+      title: 'Notifications',
+    },
+  ];
+
+  const Logo = () => (
+    <img src="/logo.svg" alt="Company Logo" width={48} height={42} />
+  );
+
+  return (
+    <MemoryRouter>
+      <CollapsibleNavBar
+        items={navigationItems}
+        renderLogo={<Logo />}
+        onChange={(isOpen) => console.log('Navigation toggled:', isOpen)}
+      />
+    </MemoryRouter>
+  );
+}
+```
+
+## Features
+
+### Responsive Design with Mobile Toggle
+
+Automatically adapts between desktop sidebar and mobile hamburger menu:
+
+```tsx
+function ResponsiveNavigation() {
+  const items = [
+    { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
+    { path: 'projects', iconName: 'folder', iconSize: 20, title: 'Projects' },
+    { path: 'team', iconName: 'user', iconSize: 20, title: 'Team' },
+    { path: 'calendar', iconName: 'calendar', iconSize: 20, title: 'Calendar' },
+  ];
+
+  const AppLogo = () => (
+    <div
+      style={{
+        width: '48px',
+        height: '42px',
+        background: 'linear-gradient(45deg, #667eea, #764ba2)',
+        borderRadius: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '16px',
+      }}>
+      APP
+    </div>
+  );
+
+  return (
+    <MemoryRouter>
+      <CollapsibleNavBar
+        items={items}
+        renderLogo={<AppLogo />}
+        onChange={(isExpanded) => {
+          console.log('Sidebar expanded:', isExpanded);
+          // Handle navigation state changes
+        }}
+      />
+    </MemoryRouter>
+  );
+}
+```
+
+### Nested Navigation with Submenus
+
+Create hierarchical navigation structures with expandable submenus:
+
+```tsx
+function NestedNavigation() {
+  const items = [
+    { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
+    {
+      prefix: 'ecommerce/',
+      iconName: 'shopping-cart',
+      iconSize: 22,
+      title: 'E-commerce',
+      items: [
+        { path: 'products', title: 'Products' },
+        { path: 'orders', title: 'Orders' },
+        { path: 'customers', title: 'Customers' },
+        { path: 'inventory', title: 'Inventory' },
+        { path: 'analytics', title: 'Analytics' },
+      ],
+    },
+    {
+      prefix: 'content/',
+      iconName: 'document',
+      iconSize: 20,
+      title: 'Content Management',
+      items: [
+        { path: 'posts', title: 'Blog Posts' },
+        { path: 'pages', title: 'Static Pages' },
+        { path: 'media', title: 'Media Library' },
+        { path: 'categories', title: 'Categories' },
+      ],
+    },
+    {
+      prefix: 'admin/',
+      iconName: 'settings',
+      iconSize: 20,
+      title: 'Administration',
+      items: [
+        { path: 'users', title: 'User Management' },
+        { path: 'roles', title: 'Roles & Permissions' },
+        { path: 'system', title: 'System Settings' },
+        { path: 'logs', title: 'Activity Logs' },
+      ],
+    },
+  ];
+
+  return (
+    <MemoryRouter>
+      <CollapsibleNavBar
+        items={items}
+        renderLogo={<div>📱 CMS</div>}
+        subMenuMaxWidth={220}
+        onChange={(isOpen) => console.log('Navigation state:', isOpen)}
+      />
+    </MemoryRouter>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,260 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as StepperStories from './Stepper.stories';
+
+<Meta of={StepperStories} />
+
+# Stepper
+
+## Default Usage
+
+The Stepper component provides a visual progress indicator that guides users through a multi-step process. It shows the current step, completed steps, and remaining steps in both horizontal and vertical orientations:
+
+```tsx
+import { Stepper, Step, StepLabel } from '@ssa-ui-kit/core';
+
+function BasicStepper() {
+  const [activeStep, setActiveStep] = useState(1);
+  const steps = [
+    'Account Setup',
+    'Profile Information',
+    'Preferences',
+    'Complete',
+  ];
+
+  return (
+    <Stepper activeStep={activeStep} color="#4178e1">
+      {steps.map((step, index) => (
+        <Step key={index}>
+          <StepLabel>{step}</StepLabel>
+        </Step>
+      ))}
+    </Stepper>
+  );
+}
+```
+
+## Features
+
+### Horizontal Layout
+
+Default horizontal stepper for most workflows:
+
+```tsx
+function HorizontalStepperExample() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    'Shipping Info',
+    'Payment Method',
+    'Review Order',
+    'Confirmation',
+  ];
+
+  return (
+    <div style={{ width: '600px' }}>
+      <Stepper
+        activeStep={currentStep}
+        orientation="horizontal"
+        color="#007bff">
+        {steps.map((step, index) => (
+          <Step key={index}>
+            <StepLabel>{step}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <div style={{ marginTop: '20px', display: 'flex', gap: '8px' }}>
+        <button
+          onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
+          disabled={currentStep === 0}>
+          Previous
+        </button>
+        <button
+          onClick={() =>
+            setCurrentStep(Math.min(steps.length - 1, currentStep + 1))
+          }
+          disabled={currentStep === steps.length - 1}>
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Vertical Layout
+
+Vertical orientation for sidebar workflows:
+
+```tsx
+function VerticalStepperExample() {
+  const [activeStep, setActiveStep] = useState(1);
+  const steps = [
+    'Create Account',
+    'Verify Email',
+    'Set Preferences',
+    'Welcome Tour',
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '40px' }}>
+      <div style={{ width: '200px' }}>
+        <Stepper activeStep={activeStep} orientation="vertical" color="#28a745">
+          {steps.map((step, index) => (
+            <Step key={index}>
+              <StepLabel>{step}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </div>
+      <div style={{ flex: 1, padding: '20px', backgroundColor: '#f8f9fa' }}>
+        <h3>
+          Step {activeStep + 1}: {steps[activeStep]}
+        </h3>
+        <p>Content for the current step goes here...</p>
+        <div style={{ marginTop: '20px', display: 'flex', gap: '8px' }}>
+          <button
+            onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
+            disabled={activeStep === 0}>
+            Previous
+          </button>
+          <button
+            onClick={() =>
+              setActiveStep(Math.min(steps.length - 1, activeStep + 1))
+            }
+            disabled={activeStep === steps.length - 1}>
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Custom Step Icons
+
+Replace default icons with custom step indicators:
+
+```tsx
+import { Icon } from '@ssa-ui-kit/core';
+
+function CustomIconStepper() {
+  const [activeStep, setActiveStep] = useState(1);
+
+  const CustomStepIcon = ({ index, active, completed }) => {
+    const iconMap = {
+      0: 'user',
+      1: 'settings',
+      2: 'check-circle',
+    };
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '32px',
+          height: '32px',
+          borderRadius: '50%',
+          backgroundColor: active || completed ? '#007bff' : '#e9ecef',
+          color: active || completed ? 'white' : '#6c757d',
+        }}>
+        <Icon
+          name={iconMap[index]}
+          size={16}
+          color={active || completed ? 'white' : '#6c757d'}
+        />
+      </div>
+    );
+  };
+
+  const steps = ['Profile', 'Settings', 'Complete'];
+
+  return (
+    <Stepper activeStep={activeStep} color="#007bff">
+      {steps.map((step, index) => (
+        <Step key={index}>
+          <StepLabel StepIcon={CustomStepIcon}>{step}</StepLabel>
+        </Step>
+      ))}
+    </Stepper>
+  );
+}
+```
+
+### Custom Connectors
+
+Customize the lines connecting steps:
+
+```tsx
+function CustomConnectorStepper() {
+  const [activeStep, setActiveStep] = useState(2);
+
+  const CustomConnector = ({ active, completed }) => (
+    <div
+      style={{
+        flex: '1 1 auto',
+        marginLeft: 'calc(12px - 1px)',
+      }}>
+      <span
+        style={{
+          display: 'block',
+          borderLeft: `3px dashed ${active || completed ? '#28a745' : '#dee2e6'}`,
+          minHeight: '40px',
+        }}
+      />
+    </div>
+  );
+
+  const steps = ['Start', 'In Progress', 'Review', 'Done'];
+
+  return (
+    <div style={{ width: '300px' }}>
+      <Stepper activeStep={activeStep} orientation="vertical" color="#28a745">
+        {steps.map((step, index) => (
+          <Step key={index} Connector={CustomConnector}>
+            <StepLabel>{step}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+    </div>
+  );
+}
+```
+
+### Inverted Order
+
+Display steps in reverse order:
+
+```tsx
+function InvertedStepper() {
+  const [activeStep, setActiveStep] = useState(1);
+  const steps = ['Final Step', 'Middle Step', 'First Step'];
+
+  return (
+    <div style={{ width: '300px' }}>
+      <h4>Inverted Order</h4>
+      <Stepper
+        activeStep={activeStep}
+        orientation="vertical"
+        inverted={true}
+        color="#dc3545">
+        {steps.map((step, index) => (
+          <Step key={index}>
+            <StepLabel>{step}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <div style={{ marginTop: '16px' }}>
+        <p>Active Step: {activeStep}</p>
+        <p>Steps are displayed in reverse order when inverted=true</p>
+      </div>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

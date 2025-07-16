@@ -1,0 +1,58 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as SwitchStories from './Switch.stories';
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+## Default Usage
+
+The Switch component provides a toggle control that allows users to switch between two states (on/off, enabled/disabled). It's commonly used for settings, preferences, and feature toggles with clear visual feedback:
+
+```tsx
+import { Switch, SwitchContextProvider } from '@ssa-ui-kit/core';
+
+function BasicSwitch() {
+  return (
+    <SwitchContextProvider initialState={false}>
+      <Switch label="Enable notifications" />
+    </SwitchContextProvider>
+  );
+}
+```
+
+## Features
+
+### Basic Toggle Functionality
+
+Simple on/off switch with context provider:
+
+```tsx
+import { useState } from 'react';
+
+function BasicToggleExample() {
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <SwitchContextProvider initialState={isEnabled}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Switch label="Dark mode" />
+          <span>Dark mode</span>
+        </div>
+      </SwitchContextProvider>
+      <SwitchContextProvider initialState={true}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Switch label="Auto-save" />
+          <span>Auto-save enabled</span>
+        </div>
+      </SwitchContextProvider>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

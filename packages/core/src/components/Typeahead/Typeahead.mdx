@@ -1,0 +1,321 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TypeaheadStories from './Typeahead.stories';
+
+<Meta of={TypeaheadStories} />
+
+# Typeahead
+
+## Default Usage
+
+The Typeahead component provides an advanced autocomplete search interface with dropdown functionality. It supports both single and multiple selections, filtering, custom rendering, and integrates seamlessly with React Hook Form for validation and form management:
+
+```tsx
+import { Typeahead, TypeaheadOption } from '@ssa-ui-kit/core';
+import { useForm, FormProvider } from 'react-hook-form';
+
+function BasicTypeahead() {
+  const useFormResult = useForm();
+  const { handleSubmit } = useFormResult;
+
+  const options = [
+    { id: 1, label: 'JavaScript' },
+    { id: 2, label: 'TypeScript' },
+    { id: 3, label: 'Python' },
+    { id: 4, label: 'Java' },
+    { id: 5, label: 'C#' },
+  ];
+
+  const onSubmit = (data: any) => {
+    console.log('Selected:', data);
+  };
+
+  return (
+    <FormProvider {...useFormResult}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Typeahead
+          name="language"
+          label="Programming Language"
+          placeholder="Select a language"
+          helperText="Choose your preferred programming language">
+          {options.map((option) => (
+            <TypeaheadOption
+              key={option.id}
+              value={option.id}
+              label={option.label}>
+              {option.label}
+            </TypeaheadOption>
+          ))}
+        </Typeahead>
+      </form>
+    </FormProvider>
+  );
+}
+```
+
+## Features
+
+### Single Selection
+
+Basic single-value selection with search functionality:
+
+```tsx
+function SingleSelection() {
+  const useFormResult = useForm();
+
+  const countries = [
+    { id: 'us', label: 'United States' },
+    { id: 'ca', label: 'Canada' },
+    { id: 'uk', label: 'United Kingdom' },
+    { id: 'de', label: 'Germany' },
+    { id: 'fr', label: 'France' },
+    { id: 'jp', label: 'Japan' },
+  ];
+
+  return (
+    <FormProvider {...useFormResult}>
+      <Typeahead
+        name="country"
+        label="Country"
+        placeholder="Search and select a country"
+        defaultSelectedItems={[countries[0].id]}
+        filterOptions={true}
+        helperText="Start typing to filter options">
+        {countries.map((country) => (
+          <TypeaheadOption
+            key={country.id}
+            value={country.id}
+            label={country.label}>
+            {country.label}
+          </TypeaheadOption>
+        ))}
+      </Typeahead>
+    </FormProvider>
+  );
+}
+```
+
+### Multiple Selection
+
+Allow users to select multiple options:
+
+```tsx
+function MultipleSelection() {
+  const useFormResult = useForm();
+
+  const skills = [
+    { id: 1, label: 'React' },
+    { id: 2, label: 'Vue.js' },
+    { id: 3, label: 'Angular' },
+    { id: 4, label: 'Node.js' },
+    { id: 5, label: 'Express' },
+    { id: 6, label: 'MongoDB' },
+    { id: 7, label: 'PostgreSQL' },
+    { id: 8, label: 'Docker' },
+  ];
+
+  return (
+    <FormProvider {...useFormResult}>
+      <Typeahead
+        name="skills"
+        label="Technical Skills"
+        placeholder="Select multiple skills"
+        isMultiple={true}
+        defaultSelectedItems={[skills[0].id, skills[3].id]}
+        filterOptions={true}
+        helperText="You can select multiple skills"
+        onClearAll={() => console.log('All selections cleared')}
+        onRemoveSelectedClick={(value) => console.log('Removed:', value)}>
+        {skills.map((skill) => (
+          <TypeaheadOption key={skill.id} value={skill.id} label={skill.label}>
+            {skill.label}
+          </TypeaheadOption>
+        ))}
+      </Typeahead>
+    </FormProvider>
+  );
+}
+```
+
+### Custom Option Rendering
+
+Enhance options with icons, highlighting, and custom layouts:
+
+```tsx
+import { Icon } from '@ssa/ui-kit';
+
+function CustomOptionRendering() {
+  const useFormResult = useForm();
+
+  const tools = [
+    {
+      id: 1,
+      label: 'Settings',
+      iconName: 'cogwheel',
+      description: 'Configure application settings',
+    },
+    {
+      id: 2,
+      label: 'Users',
+      iconName: 'user',
+      description: 'Manage user accounts',
+    },
+    {
+      id: 3,
+      label: 'Notifications',
+      iconName: 'notification',
+      description: 'Setup alerts and notifications',
+    },
+    {
+      id: 4,
+      label: 'Reports',
+      iconName: 'chart',
+      description: 'View analytics and reports',
+    },
+    {
+      id: 5,
+      label: 'Security',
+      iconName: 'lock',
+      description: 'Security and permissions',
+    },
+  ];
+
+  const highlightMatch = (text: string, input: string) => {
+    if (!input) return text;
+
+    const parts = text.split(new RegExp(`(${input})`, 'gi'));
+    return parts.map((part, index) =>
+      part.toLowerCase() === input.toLowerCase() ? (
+        <strong key={index} style={{ background: '#ffeb3b' }}>
+          {part}
+        </strong>
+      ) : (
+        part
+      ),
+    );
+  };
+
+  return (
+    <FormProvider {...useFormResult}>
+      <Typeahead
+        name="tools"
+        label="Admin Tools"
+        placeholder="Search tools"
+        filterOptions={true}
+        width={400}
+        renderOption={({ label, input, value }) => {
+          const tool = tools.find((t) => t.id === Number(value));
+          return (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Icon name={tool?.iconName} size={18} />
+              <div>
+                <div style={{ fontWeight: 600 }}>
+                  {highlightMatch(label, input)}
+                </div>
+                <div style={{ fontSize: '12px', color: '#666' }}>
+                  {tool?.description}
+                </div>
+              </div>
+            </div>
+          );
+        }}>
+        {tools.map((tool) => (
+          <TypeaheadOption key={tool.id} value={tool.id} label={tool.label}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Icon name={tool.iconName} size={18} />
+              <div>
+                <div style={{ fontWeight: 600 }}>{tool.label}</div>
+                <div style={{ fontSize: '12px', color: '#666' }}>
+                  {tool.description}
+                </div>
+              </div>
+            </div>
+          </TypeaheadOption>
+        ))}
+      </Typeahead>
+    </FormProvider>
+  );
+}
+```
+
+### Event Handling
+
+Handle various events and user interactions:
+
+```tsx
+function EventHandling() {
+  const useFormResult = useForm();
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(true);
+
+  const categories = [
+    { id: 'web', label: 'Web Development' },
+    { id: 'mobile', label: 'Mobile Development' },
+    { id: 'desktop', label: 'Desktop Applications' },
+    { id: 'ai', label: 'Artificial Intelligence' },
+    { id: 'cloud', label: 'Cloud Computing' },
+  ];
+
+  const handleChange = (value: any, isSelected: boolean) => {
+    console.log(`Item ${value} ${isSelected ? 'selected' : 'deselected'}`);
+
+    if (isSelected) {
+      setSelectedItems((prev) => [...prev, value]);
+    } else {
+      setSelectedItems((prev) => prev.filter((item) => item !== value));
+    }
+  };
+
+  const handleClearAll = () => {
+    console.log('All items cleared');
+    setSelectedItems([]);
+  };
+
+  const handleRemoveItem = (value: any) => {
+    console.log('Removed item:', value);
+    setSelectedItems((prev) => prev.filter((item) => item !== value));
+  };
+
+  return (
+    <FormProvider {...useFormResult}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <Typeahead
+          name="categories"
+          label="Development Categories"
+          placeholder="Select categories"
+          isMultiple={true}
+          selectedItems={selectedItems}
+          onChange={handleChange}
+          onClearAll={handleClearAll}
+          onRemoveSelectedClick={handleRemoveItem}
+          onEmptyChange={setIsEmpty}
+          helperText={`${selectedItems.length} categories selected`}>
+          {categories.map((category) => (
+            <TypeaheadOption
+              key={category.id}
+              value={category.id}
+              label={category.label}>
+              {category.label}
+            </TypeaheadOption>
+          ))}
+        </Typeahead>
+
+        <div
+          style={{
+            padding: '12px',
+            background: '#f5f5f5',
+            borderRadius: '4px',
+          }}>
+          <h4>Event Log:</h4>
+          <p>Selected items: {JSON.stringify(selectedItems)}</p>
+          <p>Is empty: {isEmpty ? 'Yes' : 'No'}</p>
+        </div>
+      </div>
+    </FormProvider>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

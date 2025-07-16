@@ -1,0 +1,316 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as SegmentedPieChartStories from './SegmentedPieChart.stories';
+
+<Meta of={SegmentedPieChartStories} />
+
+# SegmentedPieChart
+
+## Default Usage
+
+The SegmentedPieChart displays hierarchical data where each main category can be broken down into subcategories or parts.
+
+```jsx
+import { SegmentedPieChart } from '@ssa-ui-kit/core';
+
+const portfolioData = [
+  {
+    id: 1,
+    value: 5843.37,
+    legendValue: 0.091345, // Value in original units (BTC)
+    legendLabel: 'BTC',
+    label: 'BTC',
+    legendValueRoundingDigits: 6,
+    parts: [
+      {
+        label: 'Cold Storage',
+        value: 2300,
+        legendValue: 0.03595,
+      },
+      {
+        label: 'Trading Account',
+        value: 1800,
+        legendValue: 0.028132,
+      },
+      {
+        label: 'Staking',
+        value: 1743.37,
+        legendValue: 0.027263,
+      },
+    ],
+  },
+  {
+    id: 2,
+    value: 5249.25,
+    legendLabel: 'ETH',
+    label: 'ETH',
+    legendValue: 1.98,
+    legendValueRoundingDigits: 2,
+    parts: [
+      {
+        label: 'DeFi Protocols',
+        value: 2800,
+        legendValue: 1.06,
+      },
+      {
+        label: 'Spot Trading',
+        value: 2449.25,
+        legendValue: 0.92,
+      },
+    ],
+  },
+];
+
+export default function CryptoPortfolio() {
+  return (
+    <SegmentedPieChart
+      data={portfolioData}
+      totalAmount={18237.12}
+      totalDimension="USDT"
+      currency="USDT"
+    />
+  );
+}
+```
+
+## Features
+
+### Custom Color Schemes
+
+Create visually distinct segments with custom gradient backgrounds and color palettes:
+
+```jsx
+const customData = [
+  {
+    id: 1,
+    value: 6500,
+    legendValue: 6500,
+    legendLabel: 'Tech Stocks',
+    label: 'Technology',
+    legendValueRoundingDigits: 0,
+    parts: [
+      { label: 'Apple', value: 3000, legendValue: 3000 },
+      { label: 'Microsoft', value: 2000, legendValue: 2000 },
+      { label: 'Google', value: 1500, legendValue: 1500 },
+    ],
+  },
+  {
+    id: 2,
+    value: 4200,
+    legendValue: 4200,
+    legendLabel: 'Healthcare',
+    label: 'Healthcare',
+    legendValueRoundingDigits: 0,
+    parts: [
+      { label: 'Johnson & Johnson', value: 2500, legendValue: 2500 },
+      { label: 'Pfizer', value: 1700, legendValue: 1700 },
+    ],
+  },
+];
+
+return (
+  <SegmentedPieChart
+    data={customData}
+    totalAmount={15000}
+    totalDimension="USD"
+    currency="USD"
+    legendBackgrounds={[
+      'linear-gradient(90deg, #6A9FDC 0%, #85BCE8 100%)',
+      'linear-gradient(247deg, #A34EC6 14.71%, #D678F8 85.29%)',
+      'linear-gradient(296deg, #5FD1E4 16.38%, #7AE4F5 83.62%)',
+      'linear-gradient(68deg, #D77A61 12.3%, #E89C91 88.95%)',
+    ]}
+    pieChartColors={[
+      ['#6A9FDC', '#85BCE8', '#A3D7F2', '#BAE7FF', '#D1F2FF'],
+      ['#A34EC6', '#D678F8', '#E597FF', '#F5C0FF', '#FFD9FF'],
+      ['#5FD1E4', '#7AE4F5', '#A1F3FF', '#C0FFFF', '#D9FFFF'],
+      ['#D77A61', '#E89C91', '#F1B5A4', '#FFC3B5', '#FFDACC'],
+    ]}
+  />
+);
+```
+
+### Fullscreen Mode with Card Integration
+
+Enable fullscreen viewing with card wrapper for enhanced presentation:
+
+```jsx
+const investmentData = [
+  {
+    id: 1,
+    value: 45000,
+    legendValue: 45000,
+    legendLabel: 'Equities',
+    label: 'Stock Market',
+    legendValueRoundingDigits: 0,
+    parts: [
+      { label: 'US Markets', value: 25000, legendValue: 25000 },
+      { label: 'International', value: 15000, legendValue: 15000 },
+      { label: 'Emerging Markets', value: 5000, legendValue: 5000 },
+    ],
+  },
+  {
+    id: 2,
+    value: 30000,
+    legendValue: 30000,
+    legendLabel: 'Fixed Income',
+    label: 'Bonds',
+    legendValueRoundingDigits: 0,
+    parts: [
+      { label: 'Government Bonds', value: 18000, legendValue: 18000 },
+      { label: 'Corporate Bonds', value: 12000, legendValue: 12000 },
+    ],
+  },
+];
+
+return (
+  <SegmentedPieChart
+    data={investmentData}
+    totalAmount={100000}
+    totalDimension="USD"
+    currency="USD"
+    pieChartProps={{
+      features: ['header', 'fullscreenMode'],
+      cardProps: {
+        title: 'Investment Portfolio Analysis',
+      },
+    }}
+  />
+);
+```
+
+### Custom Rounding and Display Options
+
+Control precision of values and percentages, with options to hide dimensions or percentages:
+
+```jsx
+const preciseData = [
+  {
+    id: 1,
+    value: 3456.789,
+    legendValue: 0.054123,
+    legendLabel: 'BTC',
+    label: 'Bitcoin',
+    legendValueRoundingDigits: 6,
+  },
+  {
+    id: 2,
+    value: 2789.456,
+    legendValue: 1.052341,
+    legendLabel: 'ETH',
+    label: 'Ethereum',
+    legendValueRoundingDigits: 4,
+  },
+];
+
+return (
+  <SegmentedPieChart
+    data={preciseData}
+    totalAmount={8567.245}
+    totalDimension="USDT"
+    currency="USDT"
+    legendValueRoundingDigits={3}
+    legendPercentageRoundingDigits={2}
+    showDimensions={true}
+    showPercentage={true}
+  />
+);
+
+// Example without percentages
+return (
+  <SegmentedPieChart
+    data={preciseData}
+    totalAmount={8567.245}
+    totalDimension="USDT"
+    currency="USDT"
+    showPercentage={false}
+    showDimensions={true}
+  />
+);
+
+// Example without dimensions
+return (
+  <SegmentedPieChart
+    data={preciseData}
+    totalAmount={8567.245}
+    totalDimension="USDT"
+    currency="USDT"
+    showDimensions={false}
+    showPercentage={true}
+  />
+);
+```
+
+### Interactive Tooltips with Detailed Breakdown
+
+Add comprehensive tooltips showing detailed composition of total amounts:
+
+```jsx
+const detailedData = [
+  {
+    id: 1,
+    value: 8500,
+    legendValue: 8500,
+    legendLabel: 'Revenue',
+    label: 'Q4 Revenue',
+    legendValueRoundingDigits: 0,
+    parts: [
+      { label: 'Product Sales', value: 6000, legendValue: 6000 },
+      { label: 'Services', value: 2500, legendValue: 2500 },
+    ],
+  },
+  {
+    id: 2,
+    value: 3200,
+    legendValue: 3200,
+    legendLabel: 'Expenses',
+    label: 'Q4 Expenses',
+    legendValueRoundingDigits: 0,
+    parts: [
+      { label: 'Operations', value: 2000, legendValue: 2000 },
+      { label: 'Marketing', value: 1200, legendValue: 1200 },
+    ],
+  },
+];
+
+const tooltipOptions = [
+  {
+    value: 6000,
+    label: 'Product Sales',
+    dimension: 'USD',
+  },
+  {
+    value: 2500,
+    label: 'Services Revenue',
+    dimension: 'USD',
+  },
+  {
+    value: 2000,
+    label: 'Operational Costs',
+    dimension: 'USD',
+  },
+  {
+    value: 1200,
+    label: 'Marketing Spend',
+    dimension: 'USD',
+  },
+];
+
+return (
+  <SegmentedPieChart
+    data={detailedData}
+    totalAmount={11700}
+    totalDimension="USD"
+    currency="USD"
+    titleTooltipOptions={tooltipOptions}
+    tooltipConfig={{
+      placement: 'bottom',
+      offset: 10,
+    }}
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

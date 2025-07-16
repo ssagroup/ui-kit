@@ -1,0 +1,137 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as GaugeChartStories from './GaugeChart.stories';
+
+<Meta of={GaugeChartStories} />
+
+# GaugeChart
+
+## Default Usage
+
+The GaugeChart displays a value within a defined range using a semicircular gauge visualization.
+
+```jsx
+import { GaugeChart } from '@ssa-ui-kit/core';
+
+export default function PerformanceDashboard() {
+  return (
+    <div style={{ height: '250px', width: '355px' }}>
+      <GaugeChart
+        title="CPU Usage"
+        minValue={0}
+        maxValue={100}
+        value={75}
+        unitLabel="%"
+        minLabel="Low"
+        maxLabel="High"
+        totalLabel="Current"
+        features={['header']}
+        ticks={[0, 25, 50, 75, 100]}
+      />
+    </div>
+  );
+}
+```
+
+## Features
+
+### Segmented Gauge with Color Zones
+
+Create color-coded segments to represent different performance zones or thresholds:
+
+```jsx
+const performanceSegments = [
+  { id: 'Poor', value: 25, color: '#FF7379' },
+  { id: 'Fair', value: 50, color: '#FDC67D' },
+  { id: 'Good', value: 75, color: '#F9F789' },
+  { id: 'Excellent', value: 100, color: '#99E176' },
+];
+
+return (
+  <GaugeChart
+    title="Service Quality Score"
+    minValue={0}
+    maxValue={100}
+    value={82}
+    segments={performanceSegments}
+    unitLabel="pts"
+    minLabel="0"
+    maxLabel="100"
+    totalLabel="Score"
+    withTrack={false}
+    features={['header']}
+    ticks={[0, 25, 50, 75, 100]}
+  />
+);
+```
+
+### Customizable Labels and Units
+
+Display various types of measurements with appropriate labels and units:
+
+```jsx
+// Memory usage example
+return (
+  <GaugeChart
+    title="Memory Usage"
+    minValue={0}
+    maxValue={16}
+    value={12.4}
+    unitLabel="GB"
+    minLabel="Empty"
+    maxLabel="Full"
+    totalLabel="Used"
+    features={['header']}
+    ticks={[0, 4, 8, 12, 16]}
+  />
+);
+
+// Temperature monitoring
+return (
+  <GaugeChart
+    title="Server Temperature"
+    minValue={0}
+    maxValue={100}
+    value={68}
+    unitLabel="°C"
+    minLabel="Cold"
+    maxLabel="Hot"
+    totalLabel="Current"
+    segments={[
+      { value: 40, color: '#4CAF50' }, // Safe
+      { value: 70, color: '#FF9800' }, // Warning
+      { value: 100, color: '#F44336' }, // Danger
+    ]}
+    features={['header']}
+  />
+);
+```
+
+### Fullscreen Mode
+
+Enable fullscreen viewing for detailed gauge analysis:
+
+```jsx
+const [currentValue, setCurrentValue] = useState(45);
+
+return (
+  <GaugeChart
+    title="System Performance"
+    minValue={0}
+    maxValue={100}
+    value={currentValue}
+    unitLabel="%"
+    features={['header', 'fullscreenMode']}
+    segments={[
+      { value: 30, color: '#dc3545' },
+      { value: 70, color: '#ffc107' },
+      { value: 100, color: '#28a745' },
+    ]}
+    ticks={[0, 30, 70, 100]}
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

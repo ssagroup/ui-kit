@@ -1,0 +1,445 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as ProgressCircleStories from './ProgressCircle.stories';
+
+<Meta of={ProgressCircleStories} />
+
+# ProgressCircle
+
+## Default Usage
+
+The ProgressCircle component provides a visually appealing circular progress indicator with gradient colors, animations, and customizable content. It's perfect for displaying completion percentages, loading states, or any metric that benefits from a circular visualization:
+
+```tsx
+import { ProgressCircle } from '@ssa-ui-kit/core';
+
+function BasicProgressCircle() {
+  const [progress, setProgress] = useState(75);
+  const [maxValue] = useState(100);
+
+  return (
+    <ProgressCircle
+      currentValue={progress}
+      max={maxValue}
+      size={180}
+      color="blue"
+      infoContent={
+        <div style={{ textAlign: 'center' }}>
+          <h4>{Math.round((progress / maxValue) * 100)}%</h4>
+          <p>Complete</p>
+        </div>
+      }
+    />
+  );
+}
+```
+
+## Features
+
+### Basic Progress Display
+
+Simple circular progress with percentage display:
+
+```tsx
+function BasicProgressExamples() {
+  const examples = [
+    { value: 25, color: 'pink', label: 'Started' },
+    { value: 50, color: 'yellow', label: 'Half Way' },
+    { value: 75, color: 'blue', label: 'Almost Done' },
+    { value: 100, color: 'green', label: 'Complete' },
+  ];
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        gap: '30px',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }}>
+      {examples.map((example, index) => (
+        <div key={index} style={{ textAlign: 'center' }}>
+          <ProgressCircle
+            currentValue={example.value}
+            max={100}
+            size={120}
+            color={example.color}
+            infoContent={`${example.value}%`}
+          />
+          <div style={{ marginTop: '8px', fontSize: '14px', fontWeight: 500 }}>
+            {example.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Different Sizes
+
+Progressive circles at various sizes for different use cases:
+
+```tsx
+function SizeVariations() {
+  const sizes = [
+    { size: 60, label: 'Small', use: 'Inline indicators' },
+    { size: 100, label: 'Medium', use: 'Card components' },
+    { size: 150, label: 'Large', use: 'Dashboard widgets' },
+    { size: 200, label: 'XLarge', use: 'Hero sections' },
+  ];
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        gap: '40px',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }}>
+      {sizes.map((item, index) => (
+        <div key={index} style={{ textAlign: 'center' }}>
+          <ProgressCircle
+            currentValue={65}
+            max={100}
+            size={item.size}
+            color="purple"
+            infoContent={
+              item.size < 80 ? (
+                '65%'
+              ) : (
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
+                    65%
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#666' }}>
+                    Progress
+                  </div>
+                </div>
+              )
+            }
+          />
+          <div style={{ marginTop: '8px' }}>
+            <div style={{ fontSize: '14px', fontWeight: 600 }}>
+              {item.label} ({item.size}px)
+            </div>
+            <div style={{ fontSize: '12px', color: '#666' }}>{item.use}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Color Themes
+
+All available color options with their use cases:
+
+```tsx
+function ColorThemeExamples() {
+  const colors = [
+    { name: 'green', value: 85, context: 'Success, completion' },
+    { name: 'blue', value: 70, context: 'Information, progress' },
+    { name: 'purple', value: 60, context: 'Premium, quality' },
+    { name: 'turquoise', value: 90, context: 'Fresh, modern' },
+    { name: 'yellow', value: 45, context: 'Warning, attention' },
+    { name: 'pink', value: 30, context: 'Creative, playful' },
+    { name: 'blueLight', value: 55, context: 'Calm, professional' },
+  ];
+
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+        gap: '24px',
+      }}>
+      {colors.map((color, index) => (
+        <div key={index} style={{ textAlign: 'center' }}>
+          <ProgressCircle
+            currentValue={color.value}
+            max={100}
+            size={130}
+            color={color.name}
+            infoContent={
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                  {color.value}%
+                </div>
+                <div style={{ fontSize: '11px', color: '#666' }}>
+                  {color.name}
+                </div>
+              </div>
+            }
+          />
+          <div style={{ marginTop: '12px' }}>
+            <div
+              style={{
+                fontSize: '14px',
+                fontWeight: 600,
+                textTransform: 'capitalize',
+              }}>
+              {color.name}
+            </div>
+            <div style={{ fontSize: '12px', color: '#666' }}>
+              {color.context}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Rich Content Display
+
+Complex content within the progress circle:
+
+```tsx
+function RichContentExamples() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        gap: '40px',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }}>
+      {/* Score display */}
+      <ProgressCircle
+        currentValue={87}
+        max={100}
+        size={160}
+        color="green"
+        infoContent={
+          <div style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                color: '#28a745',
+              }}>
+              87
+            </div>
+            <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+              SCORE
+            </div>
+            <div style={{ fontSize: '10px', color: '#999' }}>out of 100</div>
+          </div>
+        }
+      />
+      {/* Time remaining */}
+      <ProgressCircle
+        currentValue={15}
+        max={60}
+        size={160}
+        color="yellow"
+        infoContent={
+          <div style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                color: '#ffc107',
+              }}>
+              15m
+            </div>
+            <div style={{ fontSize: '12px', color: '#666' }}>remaining</div>
+            <div style={{ fontSize: '10px', color: '#999' }}>of 60 minutes</div>
+          </div>
+        }
+      />
+      {/* Storage usage */}
+      <ProgressCircle
+        currentValue={4.2}
+        max={10}
+        size={160}
+        color="blue"
+        infoContent={
+          <div style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: '#007bff',
+              }}>
+              4.2GB
+            </div>
+            <div style={{ fontSize: '12px', color: '#666' }}>used</div>
+            <div style={{ fontSize: '10px', color: '#999' }}>of 10GB</div>
+          </div>
+        }
+      />
+    </div>
+  );
+}
+```
+
+### Infinite Loading Mode
+
+Continuous spinning animation for loading states:
+
+```tsx
+function InfiniteLoadingExamples() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        gap: '40px',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      {/* Loading spinner */}
+      <div style={{ textAlign: 'center' }}>
+        <ProgressCircle
+          currentValue={3}
+          max={10}
+          size={100}
+          color="blue"
+          mode="infinite"
+          infoContent={
+            <div style={{ fontSize: '12px', color: '#666' }}>Loading...</div>
+          }
+        />
+        <div style={{ marginTop: '8px', fontSize: '14px' }}>Data Loading</div>
+      </div>
+      {/* Processing spinner */}
+      <div style={{ textAlign: 'center' }}>
+        <ProgressCircle
+          currentValue={5}
+          max={8}
+          size={120}
+          color="purple"
+          mode="infinite"
+          infoContent={
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '14px', fontWeight: 'bold' }}>
+                Processing
+              </div>
+              <div style={{ fontSize: '10px', color: '#666' }}>Please wait</div>
+            </div>
+          }
+        />
+        <div style={{ marginTop: '8px', fontSize: '14px' }}>
+          File Processing
+        </div>
+      </div>
+      {/* Upload spinner */}
+      <div style={{ textAlign: 'center' }}>
+        <ProgressCircle
+          currentValue={7}
+          max={12}
+          size={80}
+          color="turquoise"
+          mode="infinite"
+          infoContent="⬆"
+        />
+        <div style={{ marginTop: '8px', fontSize: '14px' }}>Uploading</div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Interactive Progress
+
+Dynamic progress with user controls:
+
+```tsx
+import { useState, useEffect } from 'react';
+
+function InteractiveProgressExample() {
+  const [progress, setProgress] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [target, setTarget] = useState(100);
+
+  useEffect(() => {
+    let interval;
+    if (isRunning && progress < target) {
+      interval = setInterval(() => {
+        setProgress((prev) => {
+          const newValue = prev + 1;
+          if (newValue >= target) {
+            setIsRunning(false);
+          }
+          return Math.min(newValue, target);
+        });
+      }, 50);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, progress, target]);
+
+  const handleStart = () => setIsRunning(true);
+  const handlePause = () => setIsRunning(false);
+  const handleReset = () => {
+    setProgress(0);
+    setIsRunning(false);
+  };
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <ProgressCircle
+        currentValue={progress}
+        max={target}
+        size={200}
+        color="green"
+        infoContent={
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+              {Math.round((progress / target) * 100)}%
+            </div>
+            <div style={{ fontSize: '14px', color: '#666' }}>
+              {progress} / {target}
+            </div>
+            <div style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>
+              {isRunning
+                ? 'Running...'
+                : progress >= target
+                  ? 'Complete!'
+                  : 'Paused'}
+            </div>
+          </div>
+        }
+      />
+      <div
+        style={{
+          marginTop: '20px',
+          display: 'flex',
+          gap: '8px',
+          justifyContent: 'center',
+        }}>
+        <button
+          onClick={handleStart}
+          disabled={isRunning || progress >= target}>
+          Start
+        </button>
+        <button onClick={handlePause} disabled={!isRunning}>
+          Pause
+        </button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+      <div style={{ marginTop: '16px' }}>
+        <label>
+          Target:
+          <input
+            type="range"
+            min="10"
+            max="200"
+            value={target}
+            onChange={(e) => setTarget(Number(e.target.value))}
+            style={{ marginLeft: '8px' }}
+          />
+          {target}
+        </label>
+      </div>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

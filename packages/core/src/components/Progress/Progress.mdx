@@ -1,0 +1,355 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as ProgressStories from './Progress.stories';
+
+<Meta of={ProgressStories} />
+
+# Progress
+
+## Default Usage
+
+The Progress component provides a flexible system for displaying progress indicators with support for both horizontal and vertical orientations. It consists of several specialized components that work together to create comprehensive progress visualizations with legends and labels:
+
+```tsx
+import {
+  Progress,
+  ProgressBar,
+  ProgressLegend,
+  ProgressLegendItem,
+  ProgressVertical,
+} from '@ssa-ui-kit/core';
+
+function BasicProgress() {
+  const [progress, setProgress] = useState(75);
+
+  return (
+    <div style={{ width: '300px' }}>
+      {/* Horizontal progress bar */}
+      <Progress>
+        <ProgressBar percentage={progress} color="blue" />
+        <ProgressLegend>
+          <ProgressLegendItem position="current" percentage={progress}>
+            {progress}%
+          </ProgressLegendItem>
+        </ProgressLegend>
+      </Progress>
+    </div>
+  );
+}
+```
+
+## Features
+
+### Basic Horizontal Progress
+
+Simple horizontal progress bars with various configurations:
+
+```tsx
+function HorizontalProgressExamples() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Simple progress bar */}
+      <Progress>
+        <ProgressBar percentage={60} color="green" />
+      </Progress>
+      {/* Progress bar with label */}
+      <Progress>
+        <ProgressBar percentage={45} color="blue" />
+        <ProgressLegend>
+          <ProgressLegendItem position="current" percentage={45}>
+            45%
+          </ProgressLegendItem>
+        </ProgressLegend>
+      </Progress>
+      {/* Progress bar with multiple labels */}
+      <Progress>
+        <ProgressBar percentage={80} color="turquoise" />
+        <ProgressLegend>
+          <ProgressLegendItem position="start" percentage={0}>
+            0%
+          </ProgressLegendItem>
+          <ProgressLegendItem position="current" percentage={80}>
+            80%
+          </ProgressLegendItem>
+          <ProgressLegendItem position="end" percentage={100}>
+            100%
+          </ProgressLegendItem>
+        </ProgressLegend>
+      </Progress>
+    </div>
+  );
+}
+```
+
+### Vertical Progress Bars
+
+Create vertical progress indicators for different layouts:
+
+```tsx
+function VerticalProgressExamples() {
+  return (
+    <div style={{ display: 'flex', gap: '30px', height: '200px' }}>
+      {/* Simple vertical progress */}
+      <ProgressVertical>
+        <ProgressBar percentage={70} color="pink" />
+      </ProgressVertical>
+      {/* Vertical with legend on the right */}
+      <ProgressVertical>
+        <ProgressBar percentage={85} color="purple" />
+        <ProgressLegend>
+          <ProgressLegendItem position="end" percentage={100}>
+            100%
+          </ProgressLegendItem>
+          <ProgressLegendItem position="current" percentage={85}>
+            85%
+          </ProgressLegendItem>
+          <ProgressLegendItem position="start" percentage={0}>
+            0%
+          </ProgressLegendItem>
+        </ProgressLegend>
+      </ProgressVertical>
+      {/* Vertical with legend on the left */}
+      <ProgressVertical>
+        <ProgressLegend>
+          <ProgressLegendItem position="end" percentage={100}>
+            <span
+              style={{ textAlign: 'right', display: 'block', paddingRight: 6 }}>
+              Max
+            </span>
+          </ProgressLegendItem>
+          <ProgressLegendItem position="current" percentage={60}>
+            <span
+              style={{ textAlign: 'right', display: 'block', paddingRight: 6 }}>
+              Current
+            </span>
+          </ProgressLegendItem>
+          <ProgressLegendItem position="start" percentage={0}>
+            <span
+              style={{ textAlign: 'right', display: 'block', paddingRight: 6 }}>
+              Min
+            </span>
+          </ProgressLegendItem>
+        </ProgressLegend>
+        <ProgressBar percentage={60} color="yellow" />
+      </ProgressVertical>
+    </div>
+  );
+}
+```
+
+### Color Themes
+
+Use different colors to convey meaning and match your design:
+
+```tsx
+function ColorThemeExamples() {
+  const colors = [
+    { name: 'blue', percentage: 90 },
+    { name: 'green', percentage: 75 },
+    { name: 'yellow', percentage: 60 },
+    { name: 'pink', percentage: 45 },
+    { name: 'purple', percentage: 30 },
+    { name: 'turquoise', percentage: 85 },
+    { name: 'blueLight', percentage: 55 },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {colors.map((color) => (
+        <div key={color.name}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '4px',
+              fontSize: '12px',
+              fontWeight: 600,
+            }}>
+            <span>{color.name}</span>
+            <span>{color.percentage}%</span>
+          </div>
+          <Progress>
+            <ProgressBar percentage={color.percentage} color={color.name} />
+          </Progress>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Custom Sizing and Background
+
+Adjust the appearance with custom sizes and background colors:
+
+```tsx
+function CustomSizingExamples() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Thin progress bar */}
+      <div>
+        <h4>Thin (6px)</h4>
+        <Progress>
+          <ProgressBar percentage={70} color="blue" size={6} />
+        </Progress>
+      </div>
+      {/* Default progress bar */}
+      <div>
+        <h4>Default (12px)</h4>
+        <Progress>
+          <ProgressBar percentage={70} color="blue" size={12} />
+        </Progress>
+      </div>
+      {/* Thick progress bar */}
+      <div>
+        <h4>Thick (20px)</h4>
+        <Progress>
+          <ProgressBar percentage={70} color="blue" size={20} />
+        </Progress>
+      </div>
+      {/* Custom background color */}
+      <div>
+        <h4>Custom Background</h4>
+        <Progress>
+          <ProgressBar
+            percentage={70}
+            color="green"
+            bgColor="#f0f0f0"
+            size={16}
+          />
+        </Progress>
+      </div>
+    </div>
+  );
+}
+```
+
+### Interactive Progress with Tooltip
+
+Add tooltips for enhanced user interaction:
+
+```tsx
+import { Tooltip, TooltipTrigger, TooltipContent } from '@ssa-ui-kit/core';
+
+function InteractiveProgress() {
+  const [progress, setProgress] = useState(65);
+
+  return (
+    <div style={{ width: '400px' }}>
+      <div style={{ marginBottom: '16px' }}>
+        <label>
+          Progress: {progress}%
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={progress}
+            onChange={(e) => setProgress(Number(e.target.value))}
+            style={{ width: '100%', marginLeft: '10px' }}
+          />
+        </label>
+      </div>
+      <Progress>
+        <Tooltip
+          enableHover
+          enableClientPoint
+          enableClick={false}
+          hasArrow={false}
+          placement="right-start">
+          <TooltipTrigger>
+            <ProgressBar percentage={progress} color="purple" />
+          </TooltipTrigger>
+          <TooltipContent style={{ padding: 8 }}>
+            <span>{progress}% completed</span>
+          </TooltipContent>
+        </Tooltip>
+        <ProgressLegend>
+          <ProgressLegendItem position="current" percentage={progress}>
+            {progress}%
+          </ProgressLegendItem>
+        </ProgressLegend>
+      </Progress>
+    </div>
+  );
+}
+```
+
+### Multi-Step Progress Indicator
+
+Create step-by-step progress visualizations:
+
+```tsx
+function MultiStepProgress() {
+  const [currentStep, setCurrentStep] = useState(2);
+  const totalSteps = 4;
+  const progressPercentage = (currentStep / totalSteps) * 100;
+
+  const steps = [
+    'Account Setup',
+    'Profile Information',
+    'Preferences',
+    'Confirmation',
+  ];
+
+  return (
+    <div style={{ width: '500px' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <h4>
+          Setup Progress - Step {currentStep} of {totalSteps}
+        </h4>
+        <p>{steps[currentStep - 1]}</p>
+      </div>
+      <Progress>
+        <ProgressBar percentage={progressPercentage} color="blue" size={16} />
+        <ProgressLegend>
+          {steps.map((step, index) => {
+            const stepPercentage = ((index + 1) / totalSteps) * 100;
+            return (
+              <ProgressLegendItem
+                key={index}
+                position={
+                  index === 0
+                    ? 'start'
+                    : index === totalSteps - 1
+                      ? 'end'
+                      : 'current'
+                }
+                percentage={stepPercentage}>
+                <div
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '10px',
+                    color: index < currentStep ? '#007bff' : '#666',
+                  }}>
+                  {index + 1}
+                </div>
+              </ProgressLegendItem>
+            );
+          })}
+        </ProgressLegend>
+      </Progress>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '16px',
+        }}>
+        <button
+          onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
+          disabled={currentStep === 1}>
+          Previous
+        </button>
+        <button
+          onClick={() => setCurrentStep(Math.min(totalSteps, currentStep + 1))}
+          disabled={currentStep === totalSteps}>
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
