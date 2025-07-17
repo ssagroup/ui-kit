@@ -1,0 +1,138 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as AccordionGroupStories from './AccordionGroup.stories';
+
+<Meta of={AccordionGroupStories} />
+
+# AccordionGroup
+
+An AccordionGroup is a container that allows users to toggle the visibility of related content on a page.
+
+## Default Usage
+
+This example demonstrates a basic AccordionGroup with three accordions, each containing different content. The first two accordions are closed by default, while the second one is opened initially.
+
+```tsx
+import {
+  AccordionGroup,
+  Accordion,
+  AccordionContent,
+  AccordionTitle,
+  AccordionGroupContextProvider
+} from '@ssa-ui-kit/core';
+
+function App() {
+  return (
+    <AccordionGroupContextProvider>
+      <AccordionGroup size="large">
+        <Accordion
+          id="first"
+          title="Basic"
+          ariaControls="first-panel"
+          renderContent={(props) => (
+            <AccordionContent {...props}>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                eleifend, dui in commodo porttitor, neque metus lobortis sem, at
+                suscipit arcu ligula non enim.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                eleifend, dui in commodo porttitor, neque metus lobortis sem, at
+                suscipit arcu ligula non enim.
+              </p>
+            </AccordionContent>
+          )}
+          renderTitle={AccordionTitle}
+        />
+        <Accordion
+          id="second"
+          title="Advanced"
+          isOpened
+          ariaControls="second-panel"
+          renderContent={(props) => (
+            <AccordionContent {...props}>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                eleifend, dui in commodo porttitor, neque metus lobortis sem, at
+                suscipit arcu ligula non enim.
+              </p>
+            </AccordionContent>
+          )}
+          renderTitle={AccordionTitle}
+        />
+        <Accordion
+          id="third"
+          title="Indicator"
+          ariaControls="third-panel"
+          renderContent={(props) => (
+            <AccordionContent {...props}>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                eleifend, dui in commodo porttitor, neque metus lobortis sem, at
+                suscipit arcu ligula non enim.
+              </p>
+            </AccordionContent>
+          )}
+          renderTitle={AccordionTitle}
+        />
+      </AccordionGroup>
+    </AccordionGroupContextProvider>
+  );
+}
+```
+
+## Sizes
+
+The AccordionGroup supports different size variants that control the visual appearance and spacing:
+
+### Large
+The large size provides spacious padding and is ideal for main content sections.
+
+### Medium 
+The medium size offers a balanced appearance suitable for sidebars and secondary content areas.
+
+### Small
+The small size is compact and perfect for dense layouts or nested accordions.
+
+## Behavior Control
+
+### Multiple Accordions Open (Default)
+By default, multiple accordions can be open simultaneously. Users can expand and collapse accordions independently.
+
+```tsx
+<AccordionGroup size="large" accordionsStayOpen={true}>
+  {/* Multiple accordions can be open at once */}
+</AccordionGroup>
+```
+
+### Single Accordion Open
+Set `accordionsStayOpen={false}` to allow only one accordion to be open at a time. Opening a new accordion will automatically close the previously opened one.
+
+```tsx
+<AccordionGroup size="large" accordionsStayOpen={false}>
+  {/* Only one accordion can be open at a time */}
+</AccordionGroup>
+```
+
+## Context Provider
+
+The AccordionGroup requires an `AccordionGroupContextProvider` to manage state across multiple accordions. This provider should wrap your accordion group:
+
+```tsx
+import { AccordionGroupContextProvider } from '@ssa-ui-kit/core';
+
+function App() {
+  return (
+    <AccordionGroupContextProvider>
+      <AccordionGroup>
+        {/* Your accordions */}
+      </AccordionGroup>
+    </AccordionGroupContextProvider>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

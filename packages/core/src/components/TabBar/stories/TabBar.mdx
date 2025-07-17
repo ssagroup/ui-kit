@@ -1,0 +1,278 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TimePeriodTabBarStories from './TimePeriodTabBar.stories';
+import * as WeekTabBarStories from './WeekTabBar.stories';
+
+<Meta title="Components/TabBar" />
+
+# TabBar
+
+The TabBar component provides a flexible tab navigation system that allows users to switch between different content views. It uses a context-based approach where the tab content is rendered separately from the tab navigation itself.
+
+## Default Usage
+
+The TabBar component works with two types of tabs: small tabs (`Tab`) for simple text labels and large tabs (`LargeTab`) for displaying more detailed information like dates.
+
+### Small Tabs (Time Period Selection)
+
+```tsx
+import { Tab, TabBar, TabContextProvider } from '@ssa-ui-kit/core';
+
+const TabWrapper = ({ children }) => {
+  const { activeTab } = useTabBarContext();
+  return (
+    <div>
+      {children}
+      {activeTab?.renderContent()}
+    </div>
+  );
+};
+
+function TimePeriodTabBar() {
+  return (
+    <TabBarContextProvider>
+      <TabWrapper>
+        <TabBar>
+          <Tab
+            tabId="year"
+            text="Year"
+            ariaControls="year-panel"
+            renderContent={() => (
+              <div id="year-panel" role="tabpanel" aria-labelledby="year">
+                Year content goes here
+              </div>
+            )}
+          />
+          <Tab
+            tabId="month"
+            text="Month"
+            ariaControls="month-panel"
+            renderContent={() => (
+              <div id="month-panel" role="tabpanel" aria-labelledby="month">
+                Month content goes here
+              </div>
+            )}
+          />
+          <Tab
+            tabId="week"
+            text="Week"
+            ariaControls="week-panel"
+            renderContent={() => (
+              <div id="week-panel" role="tabpanel" aria-labelledby="week">
+                Week content goes here
+              </div>
+            )}
+          />
+        </TabBar>
+      </TabWrapper>
+    </TabBarContextProvider>
+  );
+}
+```
+
+### Large Tabs (Week Days Selection)
+
+```tsx
+import TabBar, { TabBarContextProvider } from '@components/TabBar';
+import LargeTab from '@components/LargeTab';
+
+function WeekTabBar() {
+  return (
+    <TabBarContextProvider>
+      <TabWrapper>
+        <TabBar>
+          <LargeTab
+            tabId="monday"
+            topText="Mon"
+            bottomText="02"
+            ariaControls="monday-panel"
+            renderContent={() => (
+              <div id="monday-panel" role="tabpanel" aria-labelledby="monday">
+                Monday's schedule and events
+              </div>
+            )}
+          />
+          <LargeTab
+            tabId="tuesday"
+            topText="Tue"
+            bottomText="03"
+            ariaControls="tuesday-panel"
+            renderContent={() => (
+              <div id="tuesday-panel" role="tabpanel" aria-labelledby="tuesday">
+                Tuesday's schedule and events
+              </div>
+            )}
+          />
+          {/* Additional days... */}
+        </TabBar>
+      </TabWrapper>
+    </TabBarContextProvider>
+  );
+}
+```
+
+## Features
+
+### Context-Based Content Management
+
+The TabBar uses a context provider to manage active tab state and content rendering, allowing for flexible placement of tab content.
+
+```tsx
+import { useTabBarContext } from '@components/TabBar';
+
+function CustomTabWrapper() {
+  const { activeTab, setActiveTab } = useTabBarContext();
+
+  return (
+    <div className="tab-layout">
+      <div className="tab-navigation">
+        <TabBar>{/* Tab components */}</TabBar>
+      </div>
+      <div className="tab-content">{activeTab?.renderContent()}</div>
+    </div>
+  );
+}
+```
+
+### Pre-selected Tab
+
+You can set an initial active tab using the context provider's `selectedTabId` prop.
+
+```tsx
+<TabBarContextProvider selectedTabId="month">
+  <TabWrapper>
+    <TabBar>
+      <Tab tabId="year" text="Year" renderContent={() => <YearView />} />
+      <Tab tabId="month" text="Month" renderContent={() => <MonthView />} />
+      <Tab tabId="week" text="Week" renderContent={() => <WeekView />} />
+    </TabBar>
+  </TabWrapper>
+</TabBarContextProvider>
+```
+
+### Dynamic Tab Content
+
+Each tab can render different content based on its current state or external data.
+
+```tsx
+function DynamicTabContent() {
+  const [data, setData] = useState(null);
+
+  return (
+    <TabBar>
+      <Tab
+        tabId="dashboard"
+        text="Dashboard"
+        renderContent={(tab) => (
+          <div id="dashboard-panel" role="tabpanel">
+            <h3>Dashboard for {tab?.tabId}</h3>
+            {data ? <DataView data={data} /> : <LoadingSpinner />}
+          </div>
+        )}
+      />
+      <Tab
+        tabId="analytics"
+        text="Analytics"
+        renderContent={() => <AnalyticsView />}
+      />
+    </TabBar>
+  );
+}
+```
+
+### Accessibility Support
+
+The TabBar component includes proper ARIA attributes and keyboard navigation support.
+
+```tsx
+<Tab
+  tabId="settings"
+  text="Settings"
+  ariaControls="settings-panel" // Links tab to its content panel
+  renderContent={() => (
+    <div
+      id="settings-panel"
+      role="tabpanel"
+      tabIndex={0}
+      aria-labelledby="settings">
+      Settings content
+    </div>
+  )}
+/>
+```
+
+### Custom Tab Styling
+
+You can apply custom styles to individual tabs or the entire TabBar.
+
+```tsx
+<TabBar className="custom-tab-bar">
+  <Tab
+    tabId="home"
+    text="Home"
+    className="highlighted-tab"
+    renderContent={() => <HomeView />}
+  />
+</TabBar>
+```
+
+### Programmatic Tab Control
+
+Access the TabBar context to control tabs programmatically.
+
+```tsx
+function TabController() {
+  const { setActiveTab, activeTab } = useTabBarContext();
+
+  const switchToSpecificTab = () => {
+    setActiveTab({
+      tabId: 'reports',
+      renderContent: () => <ReportsView />,
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={switchToSpecificTab}>Switch to Reports</button>
+      <p>Current tab: {activeTab?.tabId}</p>
+    </div>
+  );
+}
+```
+
+### Date-Based Large Tabs
+
+Large tabs are perfect for calendar-like interfaces where you need to display both day names and dates.
+
+```tsx
+function CalendarTabBar() {
+  const today = new Date();
+  const weekDays = getWeekDays(today); // Helper function to get week days
+
+  return (
+    <TabBar>
+      {weekDays.map((day, index) => (
+        <LargeTab
+          key={day.id}
+          tabId={day.id}
+          topText={day.shortName} // "Mon", "Tue", etc.
+          bottomText={day.date} // "02", "03", etc.
+          ariaControls={`day-${day.id}-panel`}
+          renderContent={() => (
+            <div id={`day-${day.id}-panel`} role="tabpanel">
+              <h3>
+                {day.fullName} - {day.fullDate}
+              </h3>
+              <DaySchedule date={day.date} />
+            </div>
+          )}
+        />
+      ))}
+    </TabBar>
+  );
+}
+```
+
+<Canvas of={TimePeriodTabBarStories.TimePeriodTabBarStory} />
+<Controls of={TimePeriodTabBarStories.TimePeriodTabBarStory} />
+
+<Stories includePrimary={false} />

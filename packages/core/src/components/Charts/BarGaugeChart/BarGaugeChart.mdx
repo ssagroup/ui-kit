@@ -1,0 +1,181 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as BarGaugeChartStories from './BarGaugeChart.stories';
+
+<Meta of={BarGaugeChartStories} />
+
+# BarGaugeChart
+
+## Default Usage
+
+The BarGaugeChart component displays multiple horizontal gauge bars with customizable thresholds, colors, and value formatting within a widget card.
+
+```tsx
+import { BarGaugeChart } from '@ssa-ui-kit/core';
+
+const App = () => {
+  const bars = [
+    {
+      value: 30,
+      title: 'CPU Usage',
+    },
+    {
+      value: 75,
+      title: 'Memory Usage',
+    },
+    {
+      value: 90,
+      title: 'Disk Usage',
+    },
+  ];
+
+  return (
+    <div style={{ height: '300px' }}>
+      <BarGaugeChart
+        title="System Resources"
+        bars={bars}
+        features={['header']}
+      />
+    </div>
+  );
+};
+```
+
+## Features
+
+### Basic Gauge Bars
+
+Simple gauge bars with titles and values.
+
+```tsx
+import { BarGaugeChart } from '@ssa-ui-kit/core';
+
+const BasicGauges = () => {
+  const bars = [
+    { value: 45, title: 'Progress A' },
+    { value: 68, title: 'Progress B' },
+    { value: 23, title: 'Progress C' },
+  ];
+
+  return (
+    <div style={{ height: '250px' }}>
+      <BarGaugeChart
+        title="Basic Progress Bars"
+        bars={bars}
+        features={['header']}
+      />
+    </div>
+  );
+};
+```
+
+### Gauge Bars with Thresholds
+
+Add color-coded thresholds to indicate different status levels.
+
+```tsx
+import { BarGaugeChart } from '@ssa-ui-kit/core';
+
+const GaugesWithThresholds = () => {
+  const thresholds = [
+    { value: 60, color: '#ff9800' }, // Warning at 60%
+    { value: 80, color: '#f44336' }, // Critical at 80%
+  ];
+
+  const bars = [
+    {
+      value: 45,
+      title: 'CPU Usage',
+      thresholds,
+    },
+    {
+      value: 75,
+      title: 'Memory Usage',
+      thresholds,
+    },
+    {
+      value: 95,
+      title: 'Disk Usage',
+      thresholds,
+    },
+  ];
+
+  return (
+    <div style={{ height: '300px' }}>
+      <BarGaugeChart
+        title="System Monitoring"
+        bars={bars}
+        features={['header']}
+      />
+    </div>
+  );
+};
+```
+
+### Custom Value Formatting
+
+Format displayed values with custom components and styling.
+
+```tsx
+import { BarGaugeChart } from '@ssa-ui-kit/core';
+
+const CustomFormattedGauges = () => {
+  const valueFormatter = (value, color) => (
+    <div style={{ color, width: '80px', textAlign: 'right' }}>
+      <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{value}</span>
+      <span style={{ fontSize: '12px', marginLeft: '2px' }}>%</span>
+    </div>
+  );
+
+  const temperatureFormatter = (value, color) => (
+    <div style={{ color, width: '90px', textAlign: 'right' }}>
+      <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{value}</span>
+      <span style={{ fontSize: '12px', marginLeft: '2px' }}>°C</span>
+    </div>
+  );
+
+  const bars = [
+    {
+      value: 67,
+      title: 'CPU Temperature',
+      valueFormatter: temperatureFormatter,
+      thresholds: [
+        { value: 70, color: '#ff9800' },
+        { value: 85, color: '#f44336' },
+      ],
+      min: 20,
+      max: 100,
+    },
+    {
+      value: 82,
+      title: 'GPU Temperature',
+      valueFormatter: temperatureFormatter,
+      thresholds: [
+        { value: 75, color: '#ff9800' },
+        { value: 90, color: '#f44336' },
+      ],
+      min: 20,
+      max: 100,
+    },
+    {
+      value: 34,
+      title: 'Network Usage',
+      valueFormatter,
+    },
+  ];
+
+  return (
+    <div style={{ height: '320px' }}>
+      <BarGaugeChart
+        title="Hardware Monitoring"
+        bars={bars}
+        features={['header']}
+      />
+    </div>
+  );
+};
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

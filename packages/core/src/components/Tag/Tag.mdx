@@ -1,0 +1,82 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TagStories from './Tag.stories';
+
+<Meta of={TagStories} />
+
+# Tag
+
+## Default Usage
+
+The Tag component provides a visually appealing way to display categorized information, labels, or status indicators. It extends the Badge component with specialized styling that includes gradients, borders, and shadow effects for enhanced visual prominence:
+
+```tsx
+import { Tag } from '@ssa-ui-kit/core';
+
+function BasicTag() {
+  return (
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      <Tag>Default Tag</Tag>
+      <Tag color="green">Success</Tag>
+      <Tag color="yellow">Warning</Tag>
+      <Tag color="pink">Error</Tag>
+      <Tag color="blue">Info</Tag>
+    </div>
+  );
+}
+```
+
+## Features
+
+### Color Variants
+
+The Tag component supports multiple color schemes with gradient backgrounds and shadow effects:
+
+```tsx
+function ColorVariants() {
+  const colors = [
+    'purple',
+    'blueLight',
+    'green',
+    'blue',
+    'pink',
+    'turquoise',
+    'yellow',
+    'yellowWarm',
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      {colors.map((color) => (
+        <Tag key={color} color={color}>
+          {color}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+```
+
+### Size Options
+
+Tags are available in three different sizes to fit various UI contexts:
+
+```tsx
+function SizeOptions() {
+  const sizes = ['small', 'medium', 'large'];
+
+  return (
+    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+      {sizes.map((size) => (
+        <Tag key={size} size={size} color="purple">
+          {size} tag
+        </Tag>
+      ))}
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

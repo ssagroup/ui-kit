@@ -9,14 +9,6 @@ type Args = StoryObj<typeof AccordionGroup>;
 export default {
   title: 'Components/AccordionGroup',
   component: AccordionGroup,
-  parameters: {
-    docs: {
-      description: {
-        component:
-          'An AccordionGroup is a container that allows users to toggle the visibility of related content on a page',
-      },
-    },
-  },
   decorators: [AccordionGroupDecorator],
   argTypes: {},
 } as Meta<typeof AccordionGroup>;

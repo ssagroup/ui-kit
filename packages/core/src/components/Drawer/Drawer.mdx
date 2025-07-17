@@ -1,0 +1,253 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as DrawerStories from './Drawer.stories';
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+## Default Usage
+
+The Drawer component provides a slide-out panel that overlays or pushes content from any side of the screen. It's composed of multiple parts and uses a hook-based API for state management:
+
+```tsx
+import { Drawer, useDrawer, Button } from '@ssa-ui-kit/core';
+
+function BasicDrawer() {
+  const drawer = useDrawer({
+    title: 'Settings',
+    withCloseButton: true,
+  });
+
+  return (
+    <>
+      <Button {...drawer.interactions.getReferenceProps()}>
+        {drawer.opened ? 'Close' : 'Open'} Drawer
+      </Button>
+
+      <Drawer.Root store={drawer}>
+        <Drawer.Portal>
+          <Drawer.Overlay>
+            <Drawer.Content css={{ padding: '24px', maxWidth: '400px' }}>
+              <h3>Drawer Content</h3>
+              <p>
+                This is the drawer content area where you can place any
+                components.
+              </p>
+            </Drawer.Content>
+          </Drawer.Overlay>
+        </Drawer.Portal>
+      </Drawer.Root>
+    </>
+  );
+}
+```
+
+## Features
+
+### Positioning
+
+Control which side of the screen the drawer slides from:
+
+```tsx
+// Left side (default)
+const leftDrawer = useDrawer({ position: 'left' });
+
+// Right side
+const rightDrawer = useDrawer({ position: 'right' });
+
+// Top side
+const topDrawer = useDrawer({ position: 'top' });
+
+// Bottom side
+const bottomDrawer = useDrawer({ position: 'bottom' });
+```
+
+### Portal vs Container Rendering
+
+Render the drawer in a portal (for overlays) or within a container:
+
+```tsx
+// Portal rendering (overlay mode)
+<Drawer.Root store={drawer}>
+  <Drawer.Portal>
+    <Drawer.Overlay>
+      <Drawer.Content>
+        Content overlays the page
+      </Drawer.Content>
+    </Drawer.Overlay>
+  </Drawer.Portal>
+</Drawer.Root>
+
+// Container rendering (inline mode)
+<div style={{ position: 'relative', overflow: 'hidden' }}>
+  <Drawer.Root store={drawer}>
+    <Drawer.Content>
+      Content pushes other content
+    </Drawer.Content>
+  </Drawer.Root>
+</div>
+```
+
+### Header with Title and Close Button
+
+Add structured headers with optional close functionality:
+
+```tsx
+const drawer = useDrawer({
+  title: 'Drawer Title',
+  withCloseButton: true,
+});
+
+<Drawer.Content>
+  <Drawer.Header>
+    <Drawer.Title>Custom Title</Drawer.Title>
+    <Drawer.CloseButton />
+  </Drawer.Header>
+  <div css={{ padding: '16px' }}>Main content here</div>
+</Drawer.Content>;
+```
+
+### Controlled State
+
+Control the drawer state externally:
+
+```tsx
+import { useState } from 'react';
+
+function ControlledDrawer() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const drawer = useDrawer({
+    opened: isOpen,
+    onOpenChange: setIsOpen,
+  });
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Drawer</Button>
+
+      <Drawer.Root store={drawer}>
+        <Drawer.Portal>
+          <Drawer.Overlay>
+            <Drawer.Content>
+              <Button onClick={() => setIsOpen(false)}>Close Drawer</Button>
+            </Drawer.Content>
+          </Drawer.Overlay>
+        </Drawer.Portal>
+      </Drawer.Root>
+    </>
+  );
+}
+```
+
+### Default Open State
+
+Set the drawer to be open by default:
+
+```tsx
+const drawer = useDrawer({
+  defaultOpened: true,
+  title: 'Initially Open Drawer',
+});
+```
+
+### Dismissible Behavior
+
+Control whether the drawer can be dismissed by clicking outside or pressing Escape:
+
+```tsx
+const drawer = useDrawer({
+  dismissable: true, // Can be closed by clicking overlay or pressing Escape
+});
+```
+
+### Animation Duration
+
+Customize the slide-in/out animation duration:
+
+```tsx
+const drawer = useDrawer({
+  duration: 300, // Animation duration in milliseconds
+});
+```
+
+### Manual Toggle Control
+
+Programmatically control the drawer state:
+
+```tsx
+const drawer = useDrawer();
+
+// Toggle between open/closed
+const handleToggle = () => drawer.toggle();
+
+// Force open
+const handleOpen = () => drawer.toggle(true);
+
+// Force close
+const handleClose = () => drawer.toggle(false);
+```
+
+### Within Container with Overlap
+
+Create overlapping drawers within specific containers:
+
+```tsx
+<div
+  style={{
+    position: 'relative',
+    overflow: 'hidden',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+  }}>
+  <div>Main content</div>
+
+  <Drawer.Root store={drawer}>
+    <Drawer.Overlay>
+      <Drawer.Content
+        css={{
+          position: 'absolute',
+          backgroundColor: 'white',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        }}>
+        Overlapping drawer content
+      </Drawer.Content>
+    </Drawer.Overlay>
+  </Drawer.Root>
+</div>
+```
+
+### Event Handling
+
+Handle drawer state changes:
+
+```tsx
+const drawer = useDrawer({
+  onOpenChange: (open, event, reason) => {
+    console.log('Drawer state changed:', open);
+    console.log('Reason:', reason); // 'click', 'escape-key', 'outside-press', etc.
+  },
+});
+```
+
+### Custom Styling
+
+Apply custom styles to drawer components:
+
+```tsx
+<Drawer.Content
+  css={{
+    padding: '24px',
+    maxWidth: '500px',
+    backgroundColor: '#f8f9fa',
+    borderRadius: '8px 0 0 8px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+  }}>
+  Custom styled content
+</Drawer.Content>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

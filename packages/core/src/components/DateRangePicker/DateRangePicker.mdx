@@ -1,0 +1,244 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as DateRangePickerStories from './DateRangePicker.stories';
+
+<Meta of={DateRangePickerStories} />
+
+# DateRangePicker
+
+## Default Usage
+
+The DateRangePicker component allows users to select a range of dates using two connected input fields with masked entry and a shared calendar popup. Here's how to use it:
+
+```tsx
+import { DateRangePicker } from '@ssa-ui-kit/core';
+
+function BasicDateRangePicker() {
+  const handleDateRangeChange = (dates?: [Date | null, Date | null]) => {
+    console.log('Selected range:', dates);
+    if (dates && dates[0] && dates[1]) {
+      console.log('From:', dates[0]);
+      console.log('To:', dates[1]);
+    }
+  };
+
+  return (
+    <DateRangePicker
+      name="dateRange"
+      label="Date Range"
+      messages={{
+        description: 'Select your preferred date range',
+      }}
+      onChange={handleDateRangeChange}
+    />
+  );
+}
+```
+
+## Features
+
+### Date Formats
+
+Support for different date formats with automatic input masking for both fields:
+
+```tsx
+// US format (default)
+<DateRangePicker
+  name="range-us"
+  label="US Format Range"
+  format="mm/dd/yyyy"
+  onChange={handleDateRangeChange}
+/>
+
+// European format
+<DateRangePicker
+  name="range-eu"
+  label="European Format Range"
+  format="dd/mm/yyyy"
+  onChange={handleDateRangeChange}
+/>
+```
+
+### Calendar Opening Modes
+
+Control how users can access the calendar popup:
+
+```tsx
+// Icon only
+<DateRangePicker
+  name="range-icon"
+  label="Icon Only"
+  openCalendarMode="icon"
+  onChange={handleDateRangeChange}
+/>
+
+// Input field clicks
+<DateRangePicker
+  name="range-input"
+  label="Input Click"
+  openCalendarMode="input"
+  onChange={handleDateRangeChange}
+/>
+
+// Both icon and inputs (default)
+<DateRangePicker
+  name="range-both"
+  label="Icon and Inputs"
+  openCalendarMode="both"
+  onChange={handleDateRangeChange}
+/>
+```
+
+### Date Range Restrictions
+
+Set minimum and maximum date boundaries for the entire range:
+
+```tsx
+<DateRangePicker
+  name="restricted-range"
+  label="Restricted Range"
+  dateMin="01/01/2024"
+  dateMax="12/31/2025"
+  onChange={handleDateRangeChange}
+/>
+```
+
+### Default Values
+
+Set initial date ranges for the picker:
+
+```tsx
+<DateRangePicker
+  name="preset-range"
+  label="With Default Range"
+  defaultValue={['02/10/2025', '02/15/2025']}
+  onChange={handleDateRangeChange}
+/>
+```
+
+### External Value Control
+
+Control the date range externally for programmatic updates:
+
+```tsx
+import { useState, useEffect } from 'react';
+
+function ControlledDateRangePicker() {
+  const [selectedRange, setSelectedRange] = useState<[string, string]>([
+    '01/15/2025',
+    '01/25/2025',
+  ]);
+
+  useEffect(() => {
+    // Programmatically update range
+    const timer = setTimeout(() => {
+      setSelectedRange(['02/10/2025', '02/28/2025']);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <DateRangePicker
+      name="controlled-range"
+      label="Controlled Range"
+      value={selectedRange}
+      onChange={(dates) => {
+        if (dates && dates[0] && dates[1]) {
+          setSelectedRange([
+            dates[0].toLocaleDateString('en-US'),
+            dates[1].toLocaleDateString('en-US'),
+          ]);
+        }
+      }}
+    />
+  );
+}
+```
+
+### Status States
+
+Display different validation states with custom messages:
+
+```tsx
+// Success state
+<DateRangePicker
+  name="success-range"
+  label="Valid Range"
+  status="success"
+  messages={{
+    success: 'Date range is valid!'
+  }}
+  onChange={handleDateRangeChange}
+/>
+
+// Error state
+<DateRangePicker
+  name="error-range"
+  label="Invalid Range"
+  status="error"
+  messages={{
+    error: 'Please select a valid date range'
+  }}
+  onChange={handleDateRangeChange}
+/>
+```
+
+### Disabled State
+
+Disable the date range picker when needed:
+
+```tsx
+<DateRangePicker
+  name="disabled-range"
+  label="Disabled Range Picker"
+  disabled={true}
+  defaultValue={['02/10/2025', '02/15/2025']}
+  onChange={handleDateRangeChange}
+/>
+```
+
+### Event Handling
+
+Comprehensive event handling for different interactions:
+
+```tsx
+<DateRangePicker
+  name="event-range"
+  label="Event Handling"
+  onChange={(dates) => console.log('Range changed:', dates)}
+  onOpen={() => console.log('Calendar opened')}
+  onClose={() => console.log('Calendar closed')}
+  onError={(date, error) => console.log('Error:', error)}
+  onMonthChange={(date) => console.log('Month changed:', date)}
+  onYearChange={(date) => console.log('Year changed:', date)}
+  onBlur={(event) => console.log('Input blurred')}
+/>
+```
+
+### Custom Styling
+
+Apply custom CSS classes to different parts of the component:
+
+```tsx
+<DateRangePicker
+  name="styled-range"
+  label="Custom Styled"
+  onChange={handleDateRangeChange}
+  classNames={{
+    trigger: {
+      root: 'custom-trigger-root',
+      controlsWrapper: 'custom-controls',
+      inputFrom: 'custom-input-from',
+      inputTo: 'custom-input-to',
+      arrowIcon: 'custom-arrow',
+      calendarIcon: 'custom-calendar-icon',
+    },
+    calendar: 'custom-calendar',
+    label: 'custom-label',
+  }}
+/>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

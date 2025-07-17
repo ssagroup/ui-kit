@@ -1,0 +1,41 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as CardListStories from './CardList.stories';
+
+<Meta of={CardListStories} />
+
+# CardList
+
+## Default Usage
+
+CardList is a versatile component that renders a list of items with a customizable render function. It's perfect for displaying collections of cards, notifications, or any structured data with consistent formatting:
+
+```tsx
+import { CardList, Card, CardContent } from '@ssa-ui-kit/core';
+
+function BasicCardList() {
+  const trainingData = [
+    { id: 'cardio_training', title: 'HIIT Cardio Training' },
+    { id: 'strength_training', title: 'Strength Training Session' },
+    { id: 'yoga_training', title: 'Morning Yoga Flow' },
+  ];
+
+  return (
+    <CardList
+      title="Training Programs"
+      items={trainingData}
+      renderItem={(item) => (
+        <Card>
+          <CardContent>
+            <p>{item.title}</p>
+          </CardContent>
+        </Card>
+      )}
+    />
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,51 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as LinksTabBarStories from './LinksTabBar.stories';
+
+<Meta of={LinksTabBarStories} />
+
+# LinksTabBar
+
+## Default Usage
+
+LinksTabBar is a navigation component that renders a horizontal tab bar using React Router's NavLink components.
+
+```tsx
+import { LinksTabBar } from '@ssa-ui-kit/core';
+import { MemoryRouter } from 'react-router-dom';
+
+function BasicLinksTabBar() {
+  const links = [
+    {
+      id: 'dashboard',
+      to: '/dashboard',
+      children: 'Dashboard',
+    },
+    {
+      id: 'analytics',
+      to: '/analytics',
+      children: 'Analytics',
+    },
+    {
+      id: 'reports',
+      to: '/reports',
+      children: 'Reports',
+    },
+    {
+      id: 'settings',
+      to: '/settings',
+      children: 'Settings',
+    },
+  ];
+
+  return (
+    <MemoryRouter>
+      <LinksTabBar links={links} />
+    </MemoryRouter>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

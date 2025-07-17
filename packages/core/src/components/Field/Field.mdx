@@ -1,0 +1,273 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as FieldStories from './Field.stories';
+
+<Meta of={FieldStories} />
+
+# Field
+
+## Default Usage
+
+The Field component provides a comprehensive form field wrapper that handles layout, validation states, and accessibility for form controls. It's composed of multiple parts that work together:
+
+```tsx
+import { Field, Input } from '@ssa-ui-kit/core';
+
+function BasicField() {
+  return (
+    <Field.Root>
+      <Field.Label htmlFor="username">Username</Field.Label>
+      <Field.Control>
+        <Input
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          css={{ width: '100%', border: '0 !important' }}
+        />
+      </Field.Control>
+      <Field.Description>
+        Choose a unique username for your account
+      </Field.Description>
+      <Field.Error>Username is required</Field.Error>
+      <Field.Success>Username is available!</Field.Success>
+    </Field.Root>
+  );
+}
+```
+
+The component architecture includes:
+
+- **Field.Root**: Container that provides context and state
+- **Field.Label**: Accessible label for the form control
+- **Field.Control**: Wrapper for the actual input element
+- **Field.Description**: Helper text describing the field
+- **Field.Error**: Error message (shown only when status is 'error')
+- **Field.Success**: Success message (shown only when status is 'success')
+
+## Features
+
+### Status States
+
+Control the validation state of the field to show appropriate styling and messages:
+
+```tsx
+// Basic state (default)
+<Field.Root status="basic">
+  <Field.Label htmlFor="email">Email</Field.Label>
+  <Field.Control>
+    <Input id="email" placeholder="Enter email" />
+  </Field.Control>
+  <Field.Description>We'll never share your email</Field.Description>
+</Field.Root>
+
+// Error state
+<Field.Root status="error">
+  <Field.Label htmlFor="email">Email</Field.Label>
+  <Field.Control>
+    <Input id="email" placeholder="Enter email" />
+  </Field.Control>
+  <Field.Error>Please enter a valid email address</Field.Error>
+</Field.Root>
+
+// Success state
+<Field.Root status="success">
+  <Field.Label htmlFor="email">Email</Field.Label>
+  <Field.Control>
+    <Input id="email" placeholder="Enter email" />
+  </Field.Control>
+  <Field.Success>Email format is valid!</Field.Success>
+</Field.Root>
+```
+
+### Disabled State
+
+Disable the entire field, which affects styling and behavior of all child components:
+
+```tsx
+<Field.Root disabled>
+  <Field.Label htmlFor="disabled-input">Disabled Field</Field.Label>
+  <Field.Control>
+    <Input
+      id="disabled-input"
+      placeholder="This field is disabled"
+      css={{ width: '100%', border: '0 !important' }}
+    />
+  </Field.Control>
+  <Field.Description>This field cannot be edited</Field.Description>
+</Field.Root>
+```
+
+### Render Prop Pattern
+
+Use a render prop in Field.Control to access field context values:
+
+```tsx
+<Field.Root disabled>
+  <Field.Label htmlFor="render-prop">Field with Render Prop</Field.Label>
+  <Field.Control>
+    {({ disabled, status }) => (
+      <Input
+        id="render-prop"
+        disabled={disabled}
+        placeholder={disabled ? 'Disabled input' : 'Active input'}
+        css={{
+          width: '100%',
+          border: '0 !important',
+          opacity: disabled ? 0.6 : 1,
+        }}
+      />
+    )}
+  </Field.Control>
+</Field.Root>
+```
+
+### Multiple Error Messages
+
+Display multiple error messages with custom formatting:
+
+```tsx
+<Field.Root status="error">
+  <Field.Label htmlFor="password">Password</Field.Label>
+  <Field.Control>
+    <Input
+      id="password"
+      type="password"
+      placeholder="Enter password"
+      css={{ width: '100%', border: '0 !important' }}
+    />
+  </Field.Control>
+  <Field.Error>
+    {[
+      'Password must be at least 8 characters',
+      'Password must contain at least one number',
+      'Password must contain at least one special character',
+    ].map((message, index, array) => (
+      <span key={index}>
+        {message}
+        {index < array.length - 1 ? ', ' : ''}
+      </span>
+    ))}
+  </Field.Error>
+</Field.Root>
+```
+
+### Dynamic Status Changes
+
+Change field status dynamically based on user interaction:
+
+```tsx
+import { useState } from 'react';
+
+function DynamicField() {
+  const [status, setStatus] = useState('basic');
+  const [value, setValue] = useState('');
+
+  const validateEmail = (email) => {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return isValid ? 'success' : 'error';
+  };
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+
+    if (newValue) {
+      setStatus(validateEmail(newValue));
+    } else {
+      setStatus('basic');
+    }
+  };
+
+  return (
+    <Field.Root status={status}>
+      <Field.Label htmlFor="dynamic-email">Email</Field.Label>
+      <Field.Control>
+        <Input
+          id="dynamic-email"
+          value={value}
+          onChange={handleChange}
+          placeholder="Enter email address"
+          css={{ width: '100%', border: '0 !important' }}
+        />
+      </Field.Control>
+      <Field.Description>Enter a valid email address</Field.Description>
+      <Field.Error>Please enter a valid email format</Field.Error>
+      <Field.Success>Email format is correct!</Field.Success>
+    </Field.Root>
+  );
+}
+```
+
+### Focus Management
+
+Control focus behavior with the forwardFocus prop:
+
+```tsx
+// Default behavior - clicking control focuses the input
+<Field.Root forwardFocus={true}>
+  <Field.Label htmlFor="focus-input">Focusable Field</Field.Label>
+  <Field.Control>
+    <Input id="focus-input" placeholder="Click anywhere to focus" />
+  </Field.Control>
+</Field.Root>
+
+// Disable focus forwarding
+<Field.Root forwardFocus={false}>
+  <Field.Label htmlFor="no-focus">No Focus Forward</Field.Label>
+  <Field.Control>
+    <Input id="no-focus" placeholder="Only direct clicks focus" />
+  </Field.Control>
+</Field.Root>
+```
+
+### As Child Pattern
+
+Use the asChild prop to render Field.Root without a wrapper div:
+
+```tsx
+<form>
+  <Field.Root asChild status="error">
+    <fieldset style={{ border: '1px solid #ccc', padding: '16px' }}>
+      <Field.Label htmlFor="as-child">Custom Container</Field.Label>
+      <Field.Control>
+        <Input id="as-child" placeholder="Inside fieldset" />
+      </Field.Control>
+      <Field.Error>This field has an error</Field.Error>
+    </fieldset>
+  </Field.Root>
+</form>
+```
+
+### Complex Form Controls
+
+Use Field with other form components:
+
+```tsx
+import { Textarea, Select, Checkbox } from '@ssa-ui-kit/core';
+
+// With Textarea
+<Field.Root>
+  <Field.Label htmlFor="message">Message</Field.Label>
+  <Field.Control>
+    <Textarea
+      id="message"
+      placeholder="Enter your message"
+      css={{ width: '100%', border: '0 !important' }}
+    />
+  </Field.Control>
+  <Field.Description>Maximum 500 characters</Field.Description>
+</Field.Root>
+
+// With Checkbox
+<Field.Root>
+  <Field.Control>
+    <Checkbox id="terms" name="terms" />
+  </Field.Control>
+  <Field.Label htmlFor="terms">I agree to the terms and conditions</Field.Label>
+  <Field.Error>You must accept the terms to continue</Field.Error>
+</Field.Root>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

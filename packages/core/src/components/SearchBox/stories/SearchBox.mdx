@@ -1,0 +1,130 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as SearchBoxStories from './SearchBox.stories';
+
+<Meta of={SearchBoxStories} />
+
+# SearchBox
+
+## Default Usage
+
+The SearchBox component provides a search input with debounced callbacks, React Hook Form integration, and automatic clear functionality.
+
+```tsx
+import { SearchBox } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
+
+const App = () => {
+  const { register, control, resetField } = useForm();
+
+  const handleSearch = (searchTerm: string) => {
+    console.log('Searching for:', searchTerm);
+    // Perform search logic here
+  };
+
+  return (
+    <SearchBox
+      name="search"
+      register={register}
+      control={control}
+      resetField={resetField}
+      callback={handleSearch}
+      placeholder="Search by name"
+    />
+  );
+};
+```
+
+**Note:** The SearchBox component requires React Hook Form setup with `register`, `control`, and `resetField` from `useForm()`.
+
+## Features
+
+### Basic Search
+
+Simple search input with debounced callback and clear functionality.
+
+```tsx
+import { SearchBox } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
+
+const BasicSearch = () => {
+  const { register, control, resetField } = useForm();
+
+  const handleSearch = (searchTerm: string) => {
+    console.log('Search term:', searchTerm);
+  };
+
+  return (
+    <SearchBox
+      name="query"
+      register={register}
+      control={control}
+      resetField={resetField}
+      callback={handleSearch}
+      placeholder="Search..."
+    />
+  );
+};
+```
+
+### Custom Debounce Delay
+
+Adjust the debounce delay for search callbacks.
+
+```tsx
+import { SearchBox } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
+
+const CustomDebounce = () => {
+  const { register, control, resetField } = useForm();
+
+  const handleSearch = (searchTerm: string) => {
+    console.log('Debounced search:', searchTerm);
+  };
+
+  return (
+    <SearchBox
+      name="search"
+      register={register}
+      control={control}
+      resetField={resetField}
+      callback={handleSearch}
+      callbackDelay={1000} // 1 second delay
+      placeholder="Search with 1s delay"
+    />
+  );
+};
+```
+
+### Manual Search Trigger
+
+Disable automatic search and trigger only on Enter key.
+
+```tsx
+import { SearchBox } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
+
+const ManualSearch = () => {
+  const { register, control, resetField } = useForm();
+
+  const handleSearch = (searchTerm: string) => {
+    console.log('Manual search triggered:', searchTerm);
+  };
+
+  return (
+    <SearchBox
+      name="search"
+      register={register}
+      control={control}
+      resetField={resetField}
+      callback={handleSearch}
+      autoSearchTrigger={false} // Only search on Enter
+      placeholder="Press Enter to search"
+    />
+  );
+};
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

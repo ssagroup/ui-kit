@@ -1,0 +1,235 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as DatePickerStories from './DatePicker.stories';
+
+<Meta of={DatePickerStories} />
+
+# DatePicker
+
+## Default Usage
+
+The DatePicker component provides an intuitive interface for selecting dates with input masking and calendar popup. Here's how to use it:
+
+```tsx
+import { DatePicker } from '@ssa-ui-kit/core';
+
+function BasicDatePicker() {
+  const handleDateChange = (date?: Date) => {
+    console.log('Selected date:', date);
+  };
+
+  return (
+    <DatePicker
+      name="birthdate"
+      label="Birth Date"
+      helperText="Select your birth date"
+      onChange={handleDateChange}
+    />
+  );
+}
+```
+
+## Features
+
+### Date Formats
+
+Support for different date formats with automatic input masking:
+
+```tsx
+// US format (default)
+<DatePicker
+  name="date-us"
+  label="US Format"
+  format="mm/dd/yyyy"
+  onChange={handleDateChange}
+/>
+
+// European format
+<DatePicker
+  name="date-eu"
+  label="European Format"
+  format="dd/mm/yyyy"
+  onChange={handleDateChange}
+/>
+```
+
+### Calendar Opening Modes
+
+Control how users can access the calendar popup:
+
+```tsx
+// Icon only (default)
+<DatePicker
+  name="date-icon"
+  label="Icon Only"
+  openCalendarMode="icon"
+  onChange={handleDateChange}
+/>
+
+// Input field click
+<DatePicker
+  name="date-input"
+  label="Input Click"
+  openCalendarMode="input"
+  onChange={handleDateChange}
+/>
+
+// Both icon and input
+<DatePicker
+  name="date-both"
+  label="Icon and Input"
+  openCalendarMode="both"
+  onChange={handleDateChange}
+/>
+```
+
+### Date Range Restrictions
+
+Set minimum and maximum date boundaries:
+
+```tsx
+<DatePicker
+  name="restricted-date"
+  label="Date Range"
+  dateMin="01/01/2024"
+  dateMax="12/31/2025"
+  onChange={handleDateChange}
+/>
+```
+
+### Default Values
+
+Set initial dates for the picker:
+
+```tsx
+<DatePicker
+  name="preset-date"
+  label="With Default"
+  defaultValue="02/10/2025"
+  onChange={handleDateChange}
+/>
+```
+
+### External Value Control
+
+Control the date value externally for programmatic updates:
+
+```tsx
+import { useState, useEffect } from 'react';
+
+function ControlledDatePicker() {
+  const [selectedDate, setSelectedDate] = useState('01/15/2025');
+
+  useEffect(() => {
+    // Programmatically update date
+    const timer = setTimeout(() => {
+      setSelectedDate('02/10/2025');
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <DatePicker
+      name="controlled-date"
+      label="Controlled Date"
+      value={selectedDate}
+      onChange={(date) => {
+        if (date) {
+          setSelectedDate(date.toLocaleDateString('en-US'));
+        }
+      }}
+    />
+  );
+}
+```
+
+### Disabled State
+
+Disable the date picker when needed:
+
+```tsx
+<DatePicker
+  name="disabled-date"
+  label="Disabled Picker"
+  disabled={true}
+  defaultValue="02/10/2025"
+  onChange={handleDateChange}
+/>
+```
+
+### Event Handling
+
+Comprehensive event handling for different interactions:
+
+```tsx
+<DatePicker
+  name="event-date"
+  label="Event Handling"
+  onChange={(date) => console.log('Date changed:', date)}
+  onOpen={() => console.log('Calendar opened')}
+  onClose={() => console.log('Calendar closed')}
+  onError={(date, error) => console.log('Error:', error)}
+  onMonthChange={(date) => console.log('Month changed:', date)}
+  onYearChange={(date) => console.log('Year changed:', date)}
+  onBlur={(event) => console.log('Input blurred')}
+/>
+```
+
+### Input Reference
+
+Access the input element directly using refs:
+
+```tsx
+import { useRef } from 'react';
+
+function DatePickerWithRef() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  return (
+    <div>
+      <DatePicker
+        ref={inputRef}
+        name="ref-date"
+        label="Date with Ref"
+        defaultValue="02/10/2025"
+        onChange={handleDateChange}
+      />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+```
+
+### Custom Styling
+
+Apply custom CSS classes to different parts of the component:
+
+```tsx
+<DatePicker
+  name="styled-date"
+  label="Custom Styled"
+  onChange={handleDateChange}
+  classNames={{
+    header: 'custom-header',
+    trigger: {
+      input: 'custom-input',
+      calendarIcon: 'custom-icon',
+    },
+    monthsSwitch: {
+      wrapper: 'custom-month-wrapper',
+      previousMonth: 'custom-prev',
+      nextMonth: 'custom-next',
+    },
+    calendar: 'custom-calendar',
+    label: 'custom-label',
+  }}
+/>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

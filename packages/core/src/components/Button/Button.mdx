@@ -1,0 +1,172 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Button triggers an action or event.
+
+## Default Usage
+
+A button is used to trigger an action or event when clicked. Here's how to use it:
+
+```tsx
+import { Button } from '@ssa-ui-kit/core';
+
+function Demo() {
+  return (
+    <Button
+      variant="primary"
+      size="medium"
+      onClick={() => console.log('Clicked!')}>
+      Click me
+    </Button>
+  );
+}
+```
+
+## Variants
+
+Button supports multiple variants for different use cases and visual hierarchy:
+
+### Primary
+
+The primary variant is used for main actions and has high visual emphasis.
+
+```tsx
+<Button variant="primary">Primary Action</Button>
+```
+
+### Secondary
+
+The secondary variant is used for secondary actions with medium emphasis.
+
+```tsx
+<Button variant="secondary">Secondary Action</Button>
+```
+
+### Tertiary
+
+The tertiary variant is used for subtle actions with low emphasis. (Does not have a background color by default)
+
+```tsx
+<Button variant="tertiary">Tertiary Action</Button>
+```
+
+### Info
+
+The info variant is used for informational actions.
+
+```tsx
+<Button variant="info">Information</Button>
+```
+
+### Attention
+
+The attention variant is used for actions that require user attention or confirmation.
+
+```tsx
+<Button variant="attention">Delete</Button>
+```
+
+### Custom
+
+Use the custom variant when you need complete control over styling.
+
+```tsx
+<Button variant="custom" css={{ backgroundColor: 'purple' }}>
+  Custom Styled
+</Button>
+```
+
+## Sizes
+
+Buttons come in three sizes to fit different contexts:
+
+### Small
+
+Compact size perfect for tight layouts or secondary actions.
+
+```tsx
+<Button size="small">Small Button</Button>
+```
+
+### Medium (Default)
+
+Balanced size suitable for most use cases.
+
+```tsx
+<Button size="medium">Medium Button</Button>
+```
+
+### Large
+
+Larger size for prominent actions or when more visual weight is needed.
+
+```tsx
+<Button size="large">Large Button</Button>
+```
+
+## With Icons
+
+Buttons can include icons to enhance meaning and provide visual context:
+
+### Start Icon
+
+Icon positioned before the text.
+
+```tsx
+import { Icon } from '@ssa-ui-kit/core';
+
+<Button variant="primary" startIcon={<Icon name="plus" size={16} />}>
+  Add Item
+</Button>;
+```
+
+### End Icon
+
+Icon positioned after the text.
+
+```tsx
+<Button variant="secondary" endIcon={<Icon name="arrow-right" size={16} />}>
+  Continue
+</Button>
+```
+
+### Icon Only
+
+Button with only an icon, no text.
+
+```tsx
+<Button
+  variant="tertiary"
+  startIcon={<Icon name="settings" size={16} />}
+  aria-label="Settings"
+/>
+```
+
+## Block Button
+
+Use the `block` prop to make the button span the full width of its container:
+
+```tsx
+<Button variant="primary" size="large" block>
+  Full Width Button
+</Button>
+```
+
+## Disabled State
+
+Disable buttons to prevent user interaction:
+
+```tsx
+<Button variant="primary" isDisabled>
+  Disabled Button
+</Button>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

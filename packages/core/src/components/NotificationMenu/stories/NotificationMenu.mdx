@@ -1,0 +1,54 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as NotificationMenuStories from './NotificationMenu.stories';
+
+<Meta of={NotificationMenuStories} />
+
+# NotificationMenu
+
+## Default Usage
+
+The NotificationMenu component provides a popover-based notification dropdown with filtering capabilities, loading states, and action buttons.
+
+```tsx
+import { NotificationMenu, Icon, Indicator } from '@ssa-ui-kit/core';
+
+const App = () => {
+  const notifications = [
+    {
+      title: 'New Message',
+      text: 'You have received a new message from John Doe',
+      type: 'Informational' as const,
+      isRead: false,
+      time: Date.now() - 600000,
+    },
+    {
+      title: 'Price Alert',
+      text: 'BTC has reached your target price of $45,000',
+      type: 'Warning' as const,
+      isRead: false,
+      time: Date.now() - 1200000,
+    },
+  ];
+
+  const trigger = (
+    <Indicator isVisible text="2" position="right">
+      <Icon name="notification" size={20} />
+    </Indicator>
+  );
+
+  return (
+    <NotificationMenu
+      trigger={trigger}
+      notifications={notifications}
+      isLoading={false}
+      onClick={() => console.log('Menu clicked')}>
+      <div>Filter controls go here</div>
+    </NotificationMenu>
+  );
+};
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

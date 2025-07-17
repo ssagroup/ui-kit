@@ -18,13 +18,6 @@ import { useTheme } from '@emotion/react';
 export default {
   title: 'Components/Card',
   component: Card,
-  parameters: {
-    docs: {
-      description: {
-        component: 'A card is a container that holds information',
-      },
-    },
-  },
   argTypes: {
     noShadow: {
       control: 'boolean',

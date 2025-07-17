@@ -1,0 +1,91 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as CandlestickChartStories from './CandlestickChart.stories';
+
+<Meta of={CandlestickChartStories} />
+
+# CandlestickChart
+
+## Default Usage
+
+The CandlestickChart displays financial price data with open, high, low, and close values in the traditional candlestick format. It's essential for trading platforms, financial analysis, and market data visualization.
+
+```jsx
+import { CandlestickChart } from '@ssa-ui-kit/core';
+import { DateTime } from 'luxon';
+
+const priceData = {
+  x: [
+    DateTime.now().minus({ hours: 4 }).toISO(),
+    DateTime.now().minus({ hours: 3 }).toISO(),
+    DateTime.now().minus({ hours: 2 }).toISO(),
+    DateTime.now().minus({ hours: 1 }).toISO(),
+    DateTime.now().toISO(),
+  ],
+  open: [100.25, 101.5, 99.75, 102.3, 103.15],
+  high: [102.8, 103.2, 101.45, 104.6, 105.25],
+  low: [99.5, 99.1, 98.3, 101.85, 102.4],
+  close: [101.5, 99.75, 102.3, 103.15, 104.8],
+};
+
+export default function TradingDashboard() {
+  return (
+    <div style={{ height: '400px' }}>
+      <CandlestickChart
+        data={priceData}
+        title="AAPL Stock Price"
+        features={['header']}
+      />
+    </div>
+  );
+}
+```
+
+## Features
+
+### Candlestick Styles
+
+Choose between Japanese (traditional filled) and Hollow candlestick styles:
+
+```jsx
+// Japanese style (traditional)
+return (
+  <CandlestickChart
+    data={stockData}
+    title="Japanese Candlestick Chart"
+    style="japanese"
+    features={['header']}
+  />
+);
+
+// Hollow style (advanced trading view)
+return (
+  <CandlestickChart
+    data={stockData}
+    title="Hollow Candlestick Chart"
+    style="hollow"
+    features={['header']}
+  />
+);
+```
+
+### Fullscreen Mode
+
+Enable fullscreen viewing for detailed market analysis:
+
+```jsx
+const [chartData, setChartData] = useState(generatePriceData());
+
+return (
+  <CandlestickChart
+    data={chartData}
+    title="Real-time Market Data"
+    features={['header', 'fullscreenMode']}
+    style="hollow"
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

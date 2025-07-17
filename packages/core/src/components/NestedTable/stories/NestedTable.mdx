@@ -1,0 +1,270 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as NestedTableStories from './NestedTable.stories';
+
+<Meta of={NestedTableStories} />
+
+# NestedTable
+
+## Default Usage
+
+The NestedTable component provides a sophisticated table system with collapsible row groups, allowing you to organize hierarchical data with expand/collapse functionality. It consists of specialized components that work together to create grouped, interactive table structures:
+
+```tsx
+import {
+  NestedTable,
+  NestedTableRow,
+  NestedTableCell,
+  WithNestedTableRow,
+  TableHead,
+  TableBody,
+} from '@ssa-ui-kit/core';
+
+function BasicNestedTable() {
+  return (
+    <NestedTable>
+      <TableHead>
+        <NestedTableRow isHeader>
+          <NestedTableCell as="th">Name</NestedTableCell>
+          <NestedTableCell as="th">Type</NestedTableCell>
+          <NestedTableCell as="th">Status</NestedTableCell>
+          <NestedTableCell as="th">Actions</NestedTableCell>
+        </NestedTableRow>
+      </TableHead>
+      <TableBody>
+        {/* First group with multiple rows */}
+        <WithNestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>Group 1 Header</NestedTableCell>
+            <NestedTableCell>Folder</NestedTableCell>
+            <NestedTableCell>Active</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="tertiary">Edit</Button>
+            </NestedTableCell>
+          </NestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>Item 1.1</NestedTableCell>
+            <NestedTableCell>File</NestedTableCell>
+            <NestedTableCell>Active</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="tertiary">View</Button>
+            </NestedTableCell>
+          </NestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>Item 1.2</NestedTableCell>
+            <NestedTableCell>File</NestedTableCell>
+            <NestedTableCell>Inactive</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="tertiary">View</Button>
+            </NestedTableCell>
+          </NestedTableRow>
+        </WithNestedTableRow>
+        {/* Second group with single row */}
+        <WithNestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>Single Item</NestedTableCell>
+            <NestedTableCell>Document</NestedTableCell>
+            <NestedTableCell>Active</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="tertiary">Download</Button>
+            </NestedTableCell>
+          </NestedTableRow>
+        </WithNestedTableRow>
+      </TableBody>
+    </NestedTable>
+  );
+}
+```
+
+## Features
+
+### Basic Grouped Structure
+
+Create tables with collapsible row groups:
+
+```tsx
+function GroupedTable() {
+  return (
+    <NestedTable>
+      <TableHead>
+        <NestedTableRow isHeader>
+          <NestedTableCell as="th">Version</NestedTableCell>
+          <NestedTableCell as="th">Layer</NestedTableCell>
+          <NestedTableCell as="th">Type</NestedTableCell>
+          <NestedTableCell as="th">Action</NestedTableCell>
+        </NestedTableRow>
+      </TableHead>
+      <TableBody>
+        {/* Group 1: Multiple items (collapsible) */}
+        <WithNestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>v1.0.0</NestedTableCell>
+            <NestedTableCell>Production</NestedTableCell>
+            <NestedTableCell>Release</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="danger" size="small">
+                Delete
+              </Button>
+            </NestedTableCell>
+          </NestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>v1.0.1</NestedTableCell>
+            <NestedTableCell>Production</NestedTableCell>
+            <NestedTableCell>Patch</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="danger" size="small">
+                Delete
+              </Button>
+            </NestedTableCell>
+          </NestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>v1.0.2</NestedTableCell>
+            <NestedTableCell>Production</NestedTableCell>
+            <NestedTableCell>Patch</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="danger" size="small">
+                Delete
+              </Button>
+            </NestedTableCell>
+          </NestedTableRow>
+        </WithNestedTableRow>
+        {/* Group 2: Single item (not collapsible) */}
+        <WithNestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>v2.0.0-beta</NestedTableCell>
+            <NestedTableCell>Staging</NestedTableCell>
+            <NestedTableCell>Beta</NestedTableCell>
+            <NestedTableCell>
+              <Button variant="primary" size="small">
+                Promote
+              </Button>
+            </NestedTableCell>
+          </NestedTableRow>
+        </WithNestedTableRow>
+      </TableBody>
+    </NestedTable>
+  );
+}
+```
+
+### Custom Expand/Collapse Icons
+
+Configure custom icons for the expand/collapse functionality:
+
+```tsx
+// Default icons (carrot-up/carrot-down)
+<NestedTable>
+  {/* Table content */}
+</NestedTable>
+// Custom icons
+<NestedTable
+  collapsedIconName="plus"
+  expandedIconName="minus"
+>
+  <TableHead>
+    <NestedTableRow isHeader>
+      <NestedTableCell as="th">Name</NestedTableCell>
+      <NestedTableCell as="th">Status</NestedTableCell>
+    </NestedTableRow>
+  </TableHead>
+  <TableBody>
+    <WithNestedTableRow>
+      <NestedTableRow>
+        <NestedTableCell>Parent Item</NestedTableCell>
+        <NestedTableCell>Active</NestedTableCell>
+      </NestedTableRow>
+      <NestedTableRow>
+        <NestedTableCell>Child Item 1</NestedTableCell>
+        <NestedTableCell>Active</NestedTableCell>
+      </NestedTableRow>
+      <NestedTableRow>
+        <NestedTableCell>Child Item 2</NestedTableCell>
+        <NestedTableCell>Inactive</NestedTableCell>
+      </NestedTableRow>
+    </WithNestedTableRow>
+  </TableBody>
+</NestedTable>
+```
+
+### Custom Row Styling
+
+Apply custom styling to specific rows or groups:
+
+```tsx
+import styled from '@emotion/styled';
+
+const HighlightedRow = styled(NestedTableRow)`
+  background: #f0f8ff !important;
+
+  &:hover {
+    background: #e6f3ff !important;
+  }
+`;
+
+const WarningRow = styled(NestedTableRow)`
+  background: #fff3cd !important;
+
+  td {
+    color: #856404;
+  }
+`;
+
+function StyledNestedTable() {
+  return (
+    <NestedTable>
+      <TableHead>
+        <NestedTableRow isHeader>
+          <NestedTableCell as="th">Item</NestedTableCell>
+          <NestedTableCell as="th">Status</NestedTableCell>
+          <NestedTableCell as="th">Priority</NestedTableCell>
+        </NestedTableRow>
+      </TableHead>
+      <TableBody>
+        {/* Normal group */}
+        <WithNestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>Normal Group</NestedTableCell>
+            <NestedTableCell>Active</NestedTableCell>
+            <NestedTableCell>Medium</NestedTableCell>
+          </NestedTableRow>
+          <NestedTableRow>
+            <NestedTableCell>Sub-item 1</NestedTableCell>
+            <NestedTableCell>Active</NestedTableCell>
+            <NestedTableCell>Low</NestedTableCell>
+          </NestedTableRow>
+        </WithNestedTableRow>
+        {/* Highlighted group */}
+        <WithNestedTableRow>
+          <HighlightedRow>
+            <NestedTableCell>Important Group</NestedTableCell>
+            <NestedTableCell>Active</NestedTableCell>
+            <NestedTableCell>High</NestedTableCell>
+          </HighlightedRow>
+          <HighlightedRow>
+            <NestedTableCell>Critical Item</NestedTableCell>
+            <NestedTableCell>Needs Attention</NestedTableCell>
+            <NestedTableCell>Critical</NestedTableCell>
+          </HighlightedRow>
+        </WithNestedTableRow>
+        {/* Warning group */}
+        <WithNestedTableRow>
+          <WarningRow>
+            <NestedTableCell>Warning Group</NestedTableCell>
+            <NestedTableCell>Warning</NestedTableCell>
+            <NestedTableCell>High</NestedTableCell>
+          </WarningRow>
+          <WarningRow>
+            <NestedTableCell>Deprecated Item</NestedTableCell>
+            <NestedTableCell>Deprecated</NestedTableCell>
+            <NestedTableCell>Low</NestedTableCell>
+          </WarningRow>
+        </WithNestedTableRow>
+      </TableBody>
+    </NestedTable>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

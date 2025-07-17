@@ -1,0 +1,144 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as CardStories from './Card.stories';
+
+<Meta of={CardStories} />
+
+# Card
+
+Card is a flexible container component that holds and organizes related information in a visually distinct and accessible way.
+
+## Default Usage
+
+The basic Card component serves as a container for content with optional header and content sections:
+
+```tsx
+import { Card, CardHeader, CardContent } from '@ssa-ui-kit/core';
+
+function Demo() {
+  return (
+    <Card>
+      <CardHeader>Card Title</CardHeader>
+      <CardContent>
+        <p>
+          This is the card content area where you can place any React components
+          or content that you want to display within the card.
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+## Features
+
+### Shadow Control
+
+Cards have a shadow by default, but you can remove it using the `noShadow` prop:
+
+```tsx
+<Card noShadow>
+  <CardContent>
+    <p>Card without shadow</p>
+  </CardContent>
+</Card>
+```
+
+### Icon Headers
+
+Add visual impact to your cards by including icons in the header:
+
+```tsx
+<Card>
+  <CardHeader
+    icon={
+      <img src="/path/to/icon.png" alt="Feature icon" width={64} height={64} />
+    }>
+    <h2>Card with Icon</h2>
+  </CardHeader>
+  <CardContent>
+    <p>Content goes here</p>
+  </CardContent>
+</Card>
+```
+
+### Floating Headers
+
+Create cards with headers that appear to float above the card content:
+
+```tsx
+<div>
+  <CardHeader transparent>
+    <h2>Floating Header</h2>
+  </CardHeader>
+  <Card>
+    <CardContent>
+      <p>The header appears to float above this card content.</p>
+    </CardContent>
+  </Card>
+</div>
+```
+
+### Clickable Cards
+
+Make entire cards interactive by adding an `onClick` handler:
+
+```tsx
+<Card onClick={() => console.log('Card clicked!')}>
+  <CardHeader>
+    <h2>Clickable Card</h2>
+  </CardHeader>
+  <CardContent>
+    <p>Click anywhere on this card to trigger an action.</p>
+  </CardContent>
+</Card>
+```
+
+### Cards with Actions
+
+Add interactive elements like buttons and switches to your cards:
+
+```tsx
+import { Button, Switch, Icon } from '@ssa-ui-kit/core';
+
+<Card>
+  <Wrapper direction="row">
+    <Avatar size={42} image="/user-avatar.jpg" />
+    <CardContent style={{ width: 'calc(100% - 42px)' }}>
+      <Wrapper direction="column">
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            paddingLeft: 15,
+          }}>
+          <h6>User Name</h6>
+          <Button
+            variant="tertiary"
+            size="small"
+            onClick={() => console.log('Menu clicked')}
+            endIcon={<Icon name="more" />}
+          />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            paddingLeft: 15,
+          }}>
+          <p>Goal 25 km | 19.7 km</p>
+          <Switch label="Enable notifications" />
+        </div>
+      </Wrapper>
+    </CardContent>
+  </Wrapper>
+</Card>;
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

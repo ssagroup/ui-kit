@@ -1,0 +1,192 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as BigNumberChartStories from './BigNumberChart.stories';
+
+<Meta of={BigNumberChartStories} />
+
+# BigNumberChart
+
+## Default Usage
+
+The BigNumberChart displays a prominent metric value alongside a trend line visualization.
+
+```jsx
+import { BigNumberChart } from '@ssa-ui-kit/core';
+import { DateTime } from 'luxon';
+
+const revenueData = [
+  { x: DateTime.now().minus({ days: 7 }).toMillis(), y: 85 },
+  { x: DateTime.now().minus({ days: 6 }).toMillis(), y: 92 },
+  { x: DateTime.now().minus({ days: 5 }).toMillis(), y: 78 },
+  { x: DateTime.now().minus({ days: 4 }).toMillis(), y: 96 },
+  { x: DateTime.now().minus({ days: 3 }).toMillis(), y: 102 },
+  { x: DateTime.now().minus({ days: 2 }).toMillis(), y: 89 },
+  { x: DateTime.now().minus({ days: 1 }).toMillis(), y: 115 },
+];
+
+export default function RevenueDashboard() {
+  return (
+    <div style={{ height: '200px' }}>
+      <BigNumberChart
+        data={revenueData}
+        title="Monthly Revenue"
+        features={['header']}
+        valueFormat={(value) => (
+          <span>
+            ${value.y?.toString()}
+            <span style={{ fontWeight: '500', fontSize: '16px' }}>K</span>
+          </span>
+        )}
+      />
+    </div>
+  );
+}
+```
+
+## Features
+
+### Custom Value Formatting
+
+Format the displayed big number value with custom rendering and units:
+
+```jsx
+const salesData = [
+  { x: 1, y: 1250000 },
+  { x: 2, y: 1380000 },
+  { x: 3, y: 1420000 },
+  { x: 4, y: 1650000 },
+];
+
+return (
+  <BigNumberChart
+    data={salesData}
+    title="Total Sales"
+    valueFormat={(value) => (
+      <span>
+        {(Number(value.y) / 1000000).toFixed(1)}
+        <span style={{ fontWeight: '500', fontSize: '16px' }}>M</span>
+      </span>
+    )}
+  />
+);
+```
+
+### Interactive Trend Visualization
+
+Enable interactive hover effects to explore data points along the trend line:
+
+```jsx
+const performanceData = [
+  { x: DateTime.now().minus({ weeks: 4 }).toMillis(), y: 78 },
+  { x: DateTime.now().minus({ weeks: 3 }).toMillis(), y: 85 },
+  { x: DateTime.now().minus({ weeks: 2 }).toMillis(), y: 92 },
+  { x: DateTime.now().minus({ weeks: 1 }).toMillis(), y: 88 },
+  { x: DateTime.now().toMillis(), y: 95 },
+];
+
+return (
+  <BigNumberChart
+    data={performanceData}
+    title="Performance Score"
+    interactive={true}
+    features={['header']}
+    trendLineProps={{
+      color: '#28a745',
+      curve: 'monotoneX',
+      tooltipValueFormat: (value) => {
+        const date = DateTime.fromMillis(Number(value.x));
+        return `${date.toFormat('MMM dd')}: ${value.y}%`;
+      },
+    }}
+    valueFormat={(value) => (
+      <span>
+        {value.y?.toString()}
+        <span style={{ fontWeight: '500', fontSize: '16px' }}>%</span>
+      </span>
+    )}
+  />
+);
+```
+
+### Fullscreen Mode
+
+Enable fullscreen viewing for detailed analysis of trends:
+
+```jsx
+const [isFullscreen, setIsFullscreen] = useState(false);
+
+return (
+  <BigNumberChart
+    data={stockPriceData}
+    title="Stock Price"
+    features={['header', 'fullscreenMode']}
+    trendLineProps={{
+      color: '#007bff',
+      curve: 'linear',
+      lineWidth: 3,
+    }}
+    valueFormat={(value) => `$${Number(value.y).toFixed(2)}`}
+  />
+);
+```
+
+### Different Curve Types
+
+Customize the trend line appearance with various curve interpolations:
+
+```jsx
+const temperatureData = [
+  { x: 1, y: 22.5 },
+  { x: 2, y: 24.8 },
+  { x: 3, y: 26.2 },
+  { x: 4, y: 23.1 },
+  { x: 5, y: 21.9 },
+];
+
+return (
+  <BigNumberChart
+    data={temperatureData}
+    title="Average Temperature"
+    trendLineProps={{
+      curve: 'monotoneX', // smooth curve
+      color: '#ff6b35',
+      enableArea: true,
+    }}
+    valueFormat={(value) => (
+      <span>
+        {Number(value.y).toFixed(1)}
+        <span style={{ fontWeight: '500', fontSize: '16px' }}>°C</span>
+      </span>
+    )}
+  />
+);
+```
+
+### Non-Interactive Mode
+
+Disable interactions for static display purposes:
+
+```jsx
+return (
+  <BigNumberChart
+    data={kpiData}
+    title="Customer Satisfaction"
+    interactive={false}
+    features={['header']}
+    trendLineProps={{
+      curve: 'linear',
+      color: '#6f42c1',
+    }}
+    valueFormat={(value) => (
+      <span>
+        {Number(value.y).toFixed(1)}
+        <span style={{ fontWeight: '500', fontSize: '16px' }}>/10</span>
+      </span>
+    )}
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

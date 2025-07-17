@@ -1,0 +1,35 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as NavBarStories from './NavBar.stories';
+
+<Meta of={NavBarStories} />
+
+# NavBar
+
+## Default Usage
+
+The NavBar component provides a mobile-first navigation interface with icon-based navigation items and a hamburger toggle.
+
+```tsx
+import { NavBar } from '@ssa-ui-kit/core';
+
+const App = () => {
+  const navItems = [
+    { path: 'stats', iconName: 'stats' },
+    { path: 'calendar', iconName: 'calendar' },
+    { path: 'trainings', iconName: 'trainings' },
+    { path: 'measurements', iconName: 'measurements' },
+    { path: 'diet', iconName: 'diet' },
+    { path: 'notification', iconName: 'notification' },
+    { path: 'settings', iconName: 'settings' },
+  ];
+
+  return <NavBar items={navItems} />;
+};
+```
+
+**Note:** The NavBar component requires React Router to be configured in your application as it uses `NavBarLink` internally for navigation.
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,220 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as PieChartStories from './PieChart.stories';
+
+<Meta of={PieChartStories} />
+
+# PieChart
+
+## Default Usage
+
+The PieChart displays data as proportional segments in a circular visualization.
+
+```jsx
+import { PieChart, PieChartLegend, pieChartPalettes } from '@ssa-ui-kit/core';
+import { useTheme } from '@emotion/react';
+
+const budgetData = [
+  { id: 1, value: 5800, label: 'Marketing' },
+  { id: 2, value: 6243, label: 'Development' },
+  { id: 3, value: 3840, label: 'Operations' },
+  { id: 4, value: 2300, label: 'Other' },
+];
+
+export default function BudgetDashboard() {
+  const theme = useTheme();
+  const { legendColorNames, pieChartColors } =
+    pieChartPalettes.getBalancePalette(theme);
+
+  const totalBudget = budgetData.reduce((sum, item) => sum + item.value, 0);
+
+  return (
+    <div style={{ width: '400px', height: '300px' }}>
+      <PieChart
+        data={budgetData}
+        colors={pieChartColors}
+        animate={false}
+        title={
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '16px', color: '#666' }}>Total Budget</div>
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+              ${totalBudget.toLocaleString()}
+            </div>
+          </div>
+        }
+        features={['header']}>
+        <PieChartLegend
+          data={budgetData}
+          colors={legendColorNames}
+          renderValue={({ value, label }) => `$${value.toLocaleString()}`}
+        />
+      </PieChart>
+    </div>
+  );
+}
+```
+
+## Features
+
+### Interactive Legend with Highlighting
+
+Enable interactive legend with hover effects and active highlighting:
+
+```jsx
+const portfolioData = [
+  { id: 1, value: 45000, label: 'Stocks' },
+  { id: 2, value: 25000, label: 'Bonds' },
+  { id: 3, value: 15000, label: 'Real Estate' },
+  { id: 4, value: 10000, label: 'Cash' },
+  { id: 5, value: 5000, label: 'Crypto' },
+];
+
+return (
+  <PieChart
+    data={portfolioData}
+    colors={pieChartColors}
+    activeHighlight={true}
+    isInteractive={true}
+    activeInnerRadiusOffset={5}
+    activeOuterRadiusOffset={10}
+    title={
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: '14px', color: '#666' }}>Portfolio Value</div>
+        <div style={{ fontSize: '20px', fontWeight: 'bold' }}>$100,000</div>
+      </div>
+    }
+    features={['header']}>
+    <PieChartLegend
+      data={portfolioData}
+      colors={legendColorNames}
+      activeHighlight={true}
+      renderValue={({ value }) => `$${value.toLocaleString()}`}
+    />
+  </PieChart>
+);
+```
+
+### Fullscreen Mode
+
+Enable fullscreen viewing for detailed chart analysis:
+
+```jsx
+const [isFullscreen, setIsFullscreen] = useState(false);
+
+return (
+  <PieChart
+    data={marketShareData}
+    colors={pieChartColors}
+    features={['header', 'fullscreenMode']}
+    onFullscreenModeChange={setIsFullscreen}
+    title={
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: '16px', color: '#666' }}>Market Share</div>
+        <div style={{ fontSize: '24px', fontWeight: 'bold' }}>Q4 2024</div>
+      </div>
+    }>
+    <PieChartLegend
+      data={marketShareData}
+      colors={legendColorNames}
+      renderValue={({ value }) => `${value}%`}
+    />
+  </PieChart>
+);
+```
+
+### Custom Tooltips with Multiple Output Types
+
+Configure interactive tooltips with various display formats:
+
+```jsx
+const salesData = [
+  { id: 1, value: 2500, label: 'North America' },
+  { id: 2, value: 1800, label: 'Europe' },
+  { id: 3, value: 1200, label: 'Asia Pacific' },
+  { id: 4, value: 800, label: 'Latin America' },
+];
+
+return (
+  <PieChart
+    data={salesData}
+    colors={pieChartColors}
+    isInteractive={true}
+    tooltipProps={{
+      isEnabled: true,
+      isFullscreenEnabled: true,
+      outputType: 'value+percentage',
+      dimension: 'units',
+      valueRoundingDigits: 0,
+      percentageRoundingDigits: 1,
+    }}
+    title={
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: '16px', color: '#666' }}>Sales by Region</div>
+        <div style={{ fontSize: '20px', fontWeight: 'bold' }}>6,300 units</div>
+      </div>
+    }
+    features={['header']}>
+    <PieChartLegend
+      data={salesData}
+      colors={legendColorNames}
+      renderValue={({ value }) => `${value} units`}
+    />
+  </PieChart>
+);
+```
+
+### Custom Legend Rendering
+
+Create custom legend layouts and value formatting:
+
+```jsx
+const cryptoPortfolio = [
+  { id: 1, value: 5800, label: 'BTC' },
+  { id: 2, value: 6243, label: 'ETH' },
+  { id: 3, value: 3840, label: 'USDT' },
+  { id: 4, value: 2300, label: 'Other' },
+];
+
+return (
+  <PieChart
+    data={cryptoPortfolio}
+    colors={pieChartColors}
+    animate={true}
+    title={
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: '14px', color: '#666' }}>Total</div>
+        <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+          18,183
+          <span style={{ fontSize: '14px', fontWeight: 'normal' }}> USDT</span>
+        </div>
+      </div>
+    }
+    features={['header']}>
+    <PieChartLegend
+      data={cryptoPortfolio}
+      colors={legendColorNames}
+      renderValue={({ value, label }) =>
+        label === 'Other' ? `${value} USD` : `${value} ${label}`
+      }
+      markerStyles={css`
+        width: 10px;
+        height: 10px;
+      `}
+      labelListStyles={css`
+        h6 {
+          font-weight: 700;
+        }
+      `}
+      valueListStyles={css`
+        h6 {
+          color: #666;
+        }
+      `}
+    />
+  </PieChart>
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

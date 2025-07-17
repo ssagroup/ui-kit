@@ -1,0 +1,102 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as NotificationCardStories from './NotificationCard.stories';
+
+<Meta of={NotificationCardStories} />
+
+# NotificationCard
+
+## Default Usage
+
+The NotificationCard component displays notification messages with type-specific styling, read/unread indicators, and optional action buttons.
+
+```tsx
+import { NotificationCard } from '@ssa-ui-kit/core';
+
+const App = () => {
+  return (
+    <NotificationCard
+      title="CyberVeinToken is Now Available on Exchange"
+      text="You have an error with Bot name 1. Do you want to stop this bot?"
+      isRead={false}
+      type="Informational"
+      time={Date.now() - 1200000}
+      onClick={() => console.log('Notification clicked')}
+    />
+  );
+};
+```
+
+## Features
+
+### Notification Types
+
+Support for three notification types with distinct visual styling and icons.
+
+```tsx
+import { NotificationCard } from '@ssa-ui-kit/core';
+
+const NotificationTypes = () => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <NotificationCard
+        title="Information Update"
+        text="Your profile has been successfully updated."
+        isRead={false}
+        type="Informational"
+        time={Date.now() - 600000}
+      />
+
+      <NotificationCard
+        title="Warning Alert"
+        text="Your subscription expires in 3 days."
+        isRead={false}
+        type="Warning"
+        time={Date.now() - 1800000}
+      />
+
+      <NotificationCard
+        title="Error Occurred"
+        text="Failed to process your request. Please try again."
+        isRead={false}
+        type="Error"
+        time={Date.now() - 3600000}
+      />
+    </div>
+  );
+};
+```
+
+### Read/Unread Status
+
+Visual indicator shows whether the notification has been read.
+
+```tsx
+import { NotificationCard } from '@ssa-ui-kit/core';
+
+const ReadStatus = () => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <NotificationCard
+        title="Unread Notification"
+        text="This notification shows the unread indicator."
+        isRead={false}
+        type="Informational"
+        time={Date.now() - 900000}
+      />
+
+      <NotificationCard
+        title="Read Notification"
+        text="This notification has been marked as read."
+        isRead={true}
+        type="Informational"
+        time={Date.now() - 1800000}
+      />
+    </div>
+  );
+};
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

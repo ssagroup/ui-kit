@@ -1,0 +1,216 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as RadarChartStories from './RadarChart.stories';
+
+<Meta of={RadarChartStories} />
+
+# RadarChart
+
+## Default Usage
+
+The RadarChart displays multivariate data in a two-dimensional chart with multiple quantitative variables represented on axes starting from the same center point. It's perfect for comparing performance across multiple dimensions, skill assessments, or analyzing balanced scorecards.
+
+```jsx
+import { RadarChart } from '@ssa-ui-kit/core';
+
+const skillsData = [
+  {
+    skill: 'JavaScript',
+    Senior: 80,
+    Junior: 45,
+  },
+  {
+    skill: 'React',
+    Senior: 85,
+    Junior: 60,
+  },
+  {
+    skill: 'Node.js',
+    Senior: 75,
+    Junior: 30,
+  },
+  {
+    skill: 'CSS',
+    Senior: 70,
+    Junior: 65,
+  },
+  {
+    skill: 'Testing',
+    Senior: 90,
+    Junior: 25,
+  },
+];
+
+export default function SkillsAssessment() {
+  return (
+    <div style={{ height: '400px' }}>
+      <RadarChart
+        data={skillsData}
+        keys={['Senior', 'Junior']}
+        indexBy="skill"
+        colors={['#5B8DEC', '#2CBB97']}
+        title="Technical Skills Comparison"
+        features={['header']}
+        legends={[{ itemWidth: 100 }]}
+      />
+    </div>
+  );
+}
+```
+
+## Features
+
+### Multi-Category Performance Analysis
+
+Compare multiple entities across various performance dimensions:
+
+```jsx
+const performanceData = [
+  {
+    metric: 'Quality',
+    'Team A': 85,
+    'Team B': 72,
+    'Team C': 78,
+  },
+  {
+    metric: 'Speed',
+    'Team A': 90,
+    'Team B': 95,
+    'Team C': 82,
+  },
+  {
+    metric: 'Innovation',
+    'Team A': 70,
+    'Team B': 60,
+    'Team C': 88,
+  },
+  {
+    metric: 'Collaboration',
+    'Team A': 88,
+    'Team B': 85,
+    'Team C': 92,
+  },
+  {
+    metric: 'Customer Focus',
+    'Team A': 82,
+    'Team B': 78,
+    'Team C': 86,
+  },
+];
+
+return (
+  <RadarChart
+    data={performanceData}
+    keys={['Team A', 'Team B', 'Team C']}
+    indexBy="metric"
+    colors={['#FF6B6B', '#4ECDC4', '#45B7D1']}
+    title="Team Performance Metrics"
+    features={['header']}
+    maxValue={100}
+    margin={{ top: 20, right: 80, bottom: 50, left: 80 }}
+    legends={[
+      {
+        anchor: 'bottom',
+        direction: 'row',
+        itemWidth: 80,
+        itemHeight: 20,
+        symbolSize: 12,
+      },
+    ]}
+  />
+);
+```
+
+### Fullscreen Mode
+
+Enable fullscreen viewing for detailed radar analysis:
+
+```jsx
+const [analysisData, setAnalysisData] = useState(competitorData);
+
+return (
+  <RadarChart
+    data={analysisData}
+    keys={['Our Company', 'Competitor A', 'Competitor B']}
+    indexBy="category"
+    colors={['#2E86C1', '#E74C3C', '#F39C12']}
+    title="Competitive Analysis"
+    features={['header', 'fullscreenMode']}
+    gridShape="linear"
+    curve="linearClosed"
+    borderWidth={2}
+    borderColor="rgba(255, 255, 255, 0.5)"
+    gridLabelOffset={16}
+    enableDots={true}
+    dotSize={8}
+    dotColor="inherit"
+    dotBorderWidth={2}
+    dotBorderColor="white"
+    enableDotLabel={false}
+    fillOpacity={0.25}
+    blendMode="multiply"
+  />
+);
+```
+
+### Custom Colors and Styling
+
+Customize chart appearance with themes and brand colors:
+
+```jsx
+const brandData = [
+  {
+    attribute: 'Brand Awareness',
+    'Q1 2024': 65,
+    'Q2 2024': 72,
+    'Q3 2024': 78,
+  },
+  {
+    attribute: 'Customer Satisfaction',
+    'Q1 2024': 80,
+    'Q2 2024': 85,
+    'Q3 2024': 88,
+  },
+  {
+    attribute: 'Market Share',
+    'Q1 2024': 45,
+    'Q2 2024': 48,
+    'Q3 2024': 52,
+  },
+  {
+    attribute: 'Innovation Score',
+    'Q1 2024': 70,
+    'Q2 2024': 75,
+    'Q3 2024': 82,
+  },
+];
+
+return (
+  <RadarChart
+    data={brandData}
+    keys={['Q1 2024', 'Q2 2024', 'Q3 2024']}
+    indexBy="attribute"
+    colors={['#FF6B9D', '#45B7D1', '#96CEB4']}
+    title="Brand Performance Over Time"
+    features={['header']}
+    gridShape="circular"
+    gridLevels={5}
+    enableGridX={true}
+    enableGridY={true}
+    legends={[
+      {
+        anchor: 'bottom',
+        direction: 'row',
+        itemWidth: 100,
+        itemHeight: 20,
+        symbolSize: 10,
+        symbolShape: 'circle',
+      },
+    ]}
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
