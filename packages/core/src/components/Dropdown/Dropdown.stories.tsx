@@ -11,6 +11,7 @@ import { DropdownOptionProps } from '../..';
 type Args = DropdownProps<DropdownOptionProps>;
 
 const items = [
+  { id: 0, value: 'Zero lorem ipsum', subText: 'subtext' },
   { id: 1, value: 'One lorem ipsum', subText: 'subtext' },
   { id: 2, value: 'Two lorem ipsum', subText: 'subtext' },
   { id: 3, value: 'Three lorem ipsum', subText: 'subtext' },
