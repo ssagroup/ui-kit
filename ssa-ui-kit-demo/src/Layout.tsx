@@ -32,6 +32,12 @@ const NAV_ITEMS = [
     iconSize: 20, 
     title: 'AI Dashboard' 
   },
+  { 
+    path: 'barline-chart', 
+    iconName: 'minus' as const, 
+    iconSize: 20, 
+    title: 'BarLine Chart' 
+  },
 ];
 
 interface LayoutProps {

@@ -5,6 +5,7 @@ import { Layout } from './Layout';
 import { MainPage } from './MainPage';
 import { AnotherPage } from './AnotherPage';
 import AIDashboardGenerator from './AIDashboardGenerator';
+import BarLineComplexChartDemo from './BarLineComplexChartDemo';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         element: (
           <Layout>
             <AIDashboardGenerator />
+          </Layout>
+        ),
+      },
+      {
+        path: '/barline-chart',
+        element: (
+          <Layout>
+            <BarLineComplexChartDemo />
           </Layout>
         ),
       },
