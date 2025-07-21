@@ -1,0 +1,97 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as PaginationStories from './Pagination.stories';
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+## Default Usage
+
+The Pagination component provides navigation controls for paginated data with customizable options for page selection and rows per page.
+
+```tsx
+import { Pagination, PaginationContextProvider } from '@ssa-ui-kit/core';
+
+const App = () => {
+  return (
+    <PaginationContextProvider selectedPage={1}>
+      <Pagination pagesCount={10} />
+    </PaginationContextProvider>
+  );
+};
+```
+
+**Note:** The Pagination component requires the `PaginationContextProvider` to manage page state and navigation.
+
+## Features
+
+### Basic Pagination
+
+Simple pagination with previous/next arrows and numbered page buttons.
+
+```tsx
+import { Pagination, PaginationContextProvider } from '@ssa-ui-kit/core';
+
+const BasicPagination = () => {
+  return (
+    <PaginationContextProvider selectedPage={3}>
+      <Pagination pagesCount={15} />
+    </PaginationContextProvider>
+  );
+};
+```
+
+### With Rows Per Page
+
+Include a dropdown to control the number of rows displayed per page.
+
+```tsx
+import { Pagination, PaginationContextProvider } from '@ssa-ui-kit/core';
+
+const WithRowsPerPage = () => {
+  return (
+    <PaginationContextProvider selectedPage={1} defaultPerPage={25}>
+      <Pagination
+        pagesCount={20}
+        isRowPerPageVisible={true}
+        rowPerPageProps={{
+          rowsPerPageText: 'Items per page',
+          rowsPerPageList: [
+            { id: 1, value: 10 },
+            { id: 2, value: 25 },
+            { id: 3, value: 50 },
+            { id: 4, value: 100 },
+          ],
+        }}
+      />
+    </PaginationContextProvider>
+  );
+};
+```
+
+### Manual Page Input
+
+Allow users to jump directly to a specific page number.
+
+```tsx
+import { Pagination, PaginationContextProvider } from '@ssa-ui-kit/core';
+
+const ManualPageInput = () => {
+  return (
+    <PaginationContextProvider selectedPage={5}>
+      <Pagination
+        pagesCount={50}
+        isPageSettingVisible={true}
+        pageNumberPlaceholder="Go to page"
+        errorTooltip="Please enter a valid page number"
+        isPageFromCountVisible={true}
+      />
+    </PaginationContextProvider>
+  );
+};
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,209 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TableFiltersStories from './TableFilters.stories';
+
+<Meta of={TableFiltersStories} />
+
+# TableFilters
+
+## Default Usage
+
+The TableFilters component provides a comprehensive filtering system for tables with accordion-grouped checkboxes, notification badges, and action buttons.
+
+```tsx
+import { TableFilters } from '@ssa-ui-kit/core';
+
+const App = () => {
+  const filterConfig = {
+    status: {
+      id: 'status',
+      title: 'Status',
+      isOpened: true,
+      ariaControls: 'status-panel',
+      selectedItems: ['active'],
+      items: {
+        active: {
+          key: 'status-active',
+          name: 'active',
+          content: {
+            statePath: ['status', 'items', 'active'],
+            text: 'Active',
+          },
+        },
+        inactive: {
+          key: 'status-inactive',
+          name: 'inactive',
+          content: {
+            statePath: ['status', 'items', 'inactive'],
+            text: 'Inactive',
+          },
+        },
+      },
+    },
+  };
+
+  const handleSubmit = () => {
+    console.log('Filters applied');
+  };
+
+  const handleReset = () => {
+    console.log('Filters reset');
+  };
+
+  return (
+    <TableFilters
+      checkboxData={filterConfig}
+      onSubmit={handleSubmit}
+      onReset={handleReset}
+    />
+  );
+};
+```
+
+## Features
+
+### Basic Filter Groups
+
+Create filter groups with checkbox options organized in accordions.
+
+```tsx
+import { TableFilters } from '@ssa-ui-kit/core';
+
+const BasicFilters = () => {
+  const filterData = {
+    category: {
+      id: 'category',
+      title: 'Category',
+      isOpened: true,
+      ariaControls: 'category-panel',
+      selectedItems: [],
+      items: {
+        electronics: {
+          key: 'category-electronics',
+          name: 'electronics',
+          content: {
+            statePath: ['category', 'items', 'electronics'],
+            text: 'Electronics',
+          },
+        },
+        clothing: {
+          key: 'category-clothing',
+          name: 'clothing',
+          content: {
+            statePath: ['category', 'items', 'clothing'],
+            text: 'Clothing',
+          },
+        },
+        books: {
+          key: 'category-books',
+          name: 'books',
+          content: {
+            statePath: ['category', 'items', 'books'],
+            text: 'Books',
+          },
+        },
+      },
+    },
+  };
+
+  return (
+    <TableFilters
+      checkboxData={filterData}
+      onSubmit={() => console.log('Filters applied')}
+      onReset={() => console.log('Filters reset')}
+      onClear={() => console.log('Filters cleared')}
+    />
+  );
+};
+```
+
+### Multiple Filter Groups
+
+Organize filters into multiple expandable groups.
+
+```tsx
+import { TableFilters } from '@ssa-ui-kit/core';
+
+const MultipleFilterGroups = () => {
+  const filterConfig = {
+    status: {
+      id: 'status',
+      title: 'Status',
+      isOpened: true,
+      ariaControls: 'status-panel',
+      selectedItems: ['published'],
+      items: {
+        draft: {
+          key: 'status-draft',
+          name: 'draft',
+          content: {
+            statePath: ['status', 'items', 'draft'],
+            text: 'Draft',
+          },
+        },
+        published: {
+          key: 'status-published',
+          name: 'published',
+          content: {
+            statePath: ['status', 'items', 'published'],
+            text: 'Published',
+          },
+        },
+        archived: {
+          key: 'status-archived',
+          name: 'archived',
+          content: {
+            statePath: ['status', 'items', 'archived'],
+            text: 'Archived',
+          },
+        },
+      },
+    },
+    priority: {
+      id: 'priority',
+      title: 'Priority',
+      isOpened: false,
+      ariaControls: 'priority-panel',
+      selectedItems: [],
+      items: {
+        high: {
+          key: 'priority-high',
+          name: 'high',
+          content: {
+            statePath: ['priority', 'items', 'high'],
+            text: 'High Priority',
+          },
+        },
+        medium: {
+          key: 'priority-medium',
+          name: 'medium',
+          content: {
+            statePath: ['priority', 'items', 'medium'],
+            text: 'Medium Priority',
+          },
+        },
+        low: {
+          key: 'priority-low',
+          name: 'low',
+          content: {
+            statePath: ['priority', 'items', 'low'],
+            text: 'Low Priority',
+          },
+        },
+      },
+    },
+  };
+
+  return (
+    <TableFilters
+      checkboxData={filterConfig}
+      onSubmit={() => console.log('Multiple filters applied')}
+      onReset={() => console.log('All filters reset')}
+    />
+  );
+};
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,223 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as BarLineComplexChartStories from './BarLineComplexChart.stories';
+
+<Meta of={BarLineComplexChartStories} />
+
+# BarLineComplexChart
+
+## Default Usage
+
+The BarLineComplexChart is a sophisticated chart component that combines bar and line data series in a single visualization.
+
+```jsx
+import { BarLineComplexChart } from '@ssa-ui-kit/core';
+
+const chartData = [
+  {
+    x: [1388572800000, 1391260800000, 1393670400000, 1396348800000],
+    y: [10, 12, 8, 15],
+    name: 'Department Sales',
+    type: 'bar',
+    selected: true,
+    marker: { color: '#377eb8' },
+  },
+  {
+    x: [1388572800000, 1391260800000, 1393670400000, 1396348800000],
+    y: [7, 9, 6, 11],
+    name: 'Target Line',
+    type: 'scatter',
+    selected: true,
+    marker: { color: '#ff7f00' },
+  },
+];
+
+export default function TradingDashboard() {
+  return (
+    <BarLineComplexChart
+      data={chartData}
+      width="670px"
+      height="220px"
+      cardProps={{
+        title: 'Sales Performance',
+      }}
+    />
+  );
+}
+```
+
+## Features
+
+### Data Filtering and Selection
+
+Control which data series are visible with built-in filtering capabilities and maximum visible limits:
+
+```jsx
+const [chartData, setChartData] = useState([
+  // Multiple bar series
+  {
+    x: timestamps,
+    y: [10, 12, 8, 15, 20],
+    name: 'Department 1',
+    type: 'bar',
+    selected: true,
+    marker: { color: '#377eb8' },
+  },
+  {
+    x: timestamps,
+    y: [7, 5, 12, 11, 5],
+    name: 'Department 2',
+    type: 'bar',
+    selected: true,
+    marker: { color: '#4daf4a' },
+  },
+  // Line series for trends
+  {
+    x: timestamps,
+    y: [9, 11.5, 13, 13, 12],
+    name: 'Average',
+    type: 'scatter',
+    selected: true,
+    marker: { color: '#ff7f00' },
+  },
+]);
+
+return (
+  <BarLineComplexChart
+    data={chartData}
+    features={['filtering']}
+    maxVisibleBars={3}
+    maxVisibleLines={2}
+    onChange={(name, isSelected) => {
+      console.log(`${name} ${isSelected ? 'selected' : 'deselected'}`);
+    }}
+  />
+);
+```
+
+### Fullscreen Mode
+
+Enable fullscreen viewing for detailed chart analysis:
+
+```jsx
+const [isFullscreen, setIsFullscreen] = useState(false);
+
+return (
+  <BarLineComplexChart
+    data={tradingData}
+    features={['filtering', 'fullscreenMode']}
+    isFullscreenModeInitial={false}
+    onFullscreenModeChange={setIsFullscreen}
+    cardProps={{
+      title: 'Trading Volume & Price Trends',
+    }}
+  />
+);
+```
+
+### Line Shape Customization
+
+Configure different line shapes for various data visualization needs:
+
+```jsx
+const performanceData = [
+  // Bar data for volume
+  {
+    x: timestamps,
+    y: [1000, 1200, 800, 1500],
+    name: 'Trading Volume',
+    type: 'bar',
+    selected: true,
+  },
+  // Smooth line for price trend
+  {
+    x: timestamps,
+    y: [45.2, 47.8, 44.1, 49.3],
+    name: 'Price Trend',
+    type: 'scatter',
+    selected: true,
+    line: { shape: 'spline' },
+  },
+];
+
+return (
+  <BarLineComplexChart
+    data={performanceData}
+    lineShape="spline"
+    features={['filtering']}
+  />
+);
+```
+
+### Custom Dimensions and Tooltips
+
+Display data with custom dimensions and enhanced tooltip information:
+
+```jsx
+const metricsData = [
+  {
+    x: timestamps,
+    y: [50, 62, 48, 75],
+    name: 'Server Load',
+    type: 'bar',
+    selected: true,
+    valueDimension: '%',
+    showOnHover: true,
+  },
+  {
+    x: timestamps,
+    y: [30, 35, 28, 40],
+    name: 'Memory Usage',
+    type: 'bar',
+    selected: true,
+    valueDimension: 'GB',
+  },
+  {
+    x: timestamps,
+    y: [80, 85, 75, 90],
+    name: 'Threshold',
+    type: 'scatter',
+    selected: true,
+    valueDimension: '%',
+  },
+];
+
+return (
+  <BarLineComplexChart
+    data={metricsData}
+    features={['filtering', 'fullscreenMode']}
+    cardProps={{
+      title: 'System Performance Metrics',
+    }}
+  />
+);
+```
+
+### Advanced Plotly Configuration
+
+Customize chart behavior with Plotly configuration options:
+
+```jsx
+return (
+  <BarLineComplexChart
+    data={chartData}
+    features={['filtering', 'fullscreenMode']}
+    systemModeBarButtons={['zoom2d', 'pan2d', 'autoScale2d', 'resetScale2d']}
+    config={{
+      displayModeBar: true,
+      displaylogo: false,
+      modeBarButtonsToRemove: ['select2d', 'lasso2d'],
+    }}
+    layout={{
+      xaxis: { fixedrange: false },
+      yaxis: { fixedrange: false, title: 'Values' },
+      yaxis2: { fixedrange: false, title: 'Secondary Axis' },
+      legend: { orientation: 'h', y: -0.2 },
+    }}
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

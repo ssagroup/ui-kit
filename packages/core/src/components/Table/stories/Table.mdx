@@ -1,0 +1,493 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TableStories from './Table.stories';
+
+<Meta of={TableStories} />
+
+# Table
+
+## Default Usage
+
+The Table component provides a flexible and styled table foundation for displaying tabular data. It works in conjunction with related table components to create complete data tables with features like sorting, styling, and responsive behavior:
+
+```tsx
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableCellHeader,
+} from '@ssa-ui-kit/core';
+
+function BasicTable() {
+  const data = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Editor' },
+  ];
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader>Name</TableCellHeader>
+          <TableCellHeader>Email</TableCellHeader>
+          <TableCellHeader>Role</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {data.map((user) => (
+          <TableRow key={user.id}>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.role}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+## Features
+
+### Basic Table Structure
+
+Simple table with header and data rows:
+
+```tsx
+import { Badge } from '@ssa-ui-kit/core';
+
+function SimpleTable() {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader>Product</TableCellHeader>
+          <TableCellHeader>Status</TableCellHeader>
+          <TableCellHeader align="center">Price</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+          <TableCell>Product A</TableCell>
+          <TableCell>
+            <Badge color="green">Active</Badge>
+          </TableCell>
+          <TableCell align="center">$29.99</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Product B</TableCell>
+          <TableCell>
+            <Badge color="orange">Pending</Badge>
+          </TableCell>
+          <TableCell align="center">$19.99</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Table with Icons and Enhanced Headers
+
+Add visual elements to enhance table presentation:
+
+```tsx
+import { Icon, Wrapper } from '@ssa-ui-kit/core';
+import { css } from '@emotion/react';
+
+function EnhancedTable() {
+  const products = [
+    { name: 'MacBook Pro', category: 'Laptop', price: 2499, inStock: true },
+    { name: 'iPhone 15', category: 'Phone', price: 999, inStock: false },
+    { name: 'iPad Air', category: 'Tablet', price: 599, inStock: true },
+  ];
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader>
+            <Wrapper
+              css={css`
+                svg {
+                  margin-right: 10px;
+                }
+              `}>
+              <Icon name="package" size={16} />
+              Product
+            </Wrapper>
+          </TableCellHeader>
+          <TableCellHeader>
+            <Wrapper
+              css={css`
+                svg {
+                  margin-right: 10px;
+                }
+              `}>
+              <Icon name="tag" size={16} />
+              Category
+            </Wrapper>
+          </TableCellHeader>
+          <TableCellHeader align="center">Price</TableCellHeader>
+          <TableCellHeader align="center">Availability</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {products.map((product, index) => (
+          <TableRow key={index}>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{product.category}</TableCell>
+            <TableCell align="center">
+              ${product.price.toLocaleString()}
+            </TableCell>
+            <TableCell align="center">
+              <Badge color={product.inStock ? 'green' : 'red'}>
+                {product.inStock ? 'In Stock' : 'Out of Stock'}
+              </Badge>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Sortable Table
+
+Implement sorting functionality with visual indicators:
+
+```tsx
+import { useState } from 'react';
+
+interface SortInfo {
+  column: string;
+  order: 'asc' | 'desc';
+}
+
+function SortableTable() {
+  const [sortInfo, setSortInfo] = useState<SortInfo>({
+    column: 'name',
+    order: 'asc',
+  });
+
+  const data = [
+    { name: 'Apple', price: 1.99, category: 'Fruit' },
+    { name: 'Banana', price: 0.99, category: 'Fruit' },
+    { name: 'Carrot', price: 2.49, category: 'Vegetable' },
+  ];
+
+  const handleSort = (column: string) => {
+    const newOrder =
+      sortInfo.column === column && sortInfo.order === 'asc' ? 'desc' : 'asc';
+
+    setSortInfo({ column, order: newOrder });
+  };
+
+  const sortedData = [...data].sort((a, b) => {
+    const aValue = a[sortInfo.column as keyof typeof a];
+    const bValue = b[sortInfo.column as keyof typeof b];
+
+    if (sortInfo.order === 'asc') {
+      return aValue > bValue ? 1 : -1;
+    }
+    return aValue < bValue ? 1 : -1;
+  });
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader
+            css={{ cursor: 'pointer', gap: 6 }}
+            onClick={() => handleSort('name')}>
+            <Wrapper css={{ gap: 6 }}>
+              Name
+              {sortInfo.column === 'name' && (
+                <Icon
+                  name={sortInfo.order === 'asc' ? 'arrow-up' : 'arrow-down'}
+                  size={10}
+                />
+              )}
+            </Wrapper>
+          </TableCellHeader>
+          <TableCellHeader
+            css={{ cursor: 'pointer', gap: 6 }}
+            onClick={() => handleSort('price')}>
+            <Wrapper css={{ gap: 6 }}>
+              Price
+              {sortInfo.column === 'price' && (
+                <Icon
+                  name={sortInfo.order === 'asc' ? 'arrow-up' : 'arrow-down'}
+                  size={10}
+                />
+              )}
+            </Wrapper>
+          </TableCellHeader>
+          <TableCellHeader>Category</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {sortedData.map((item, index) => (
+          <TableRow key={index}>
+            <TableCell>{item.name}</TableCell>
+            <TableCell>${item.price}</TableCell>
+            <TableCell>{item.category}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Interactive Table with Row Actions
+
+Add clickable rows and action buttons:
+
+```tsx
+function InteractiveTable() {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      email: 'jane@example.com',
+      status: 'inactive',
+    },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'active' },
+  ];
+
+  const handleRowClick = (user: (typeof users)[0]) => {
+    console.log('Row clicked:', user);
+  };
+
+  const handleEdit = (id: number, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent row click
+    console.log('Edit user:', id);
+  };
+
+  const handleDelete = (id: number, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent row click
+    console.log('Delete user:', id);
+  };
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader>Name</TableCellHeader>
+          <TableCellHeader>Email</TableCellHeader>
+          <TableCellHeader>Status</TableCellHeader>
+          <TableCellHeader align="center">Actions</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {users.map((user) => (
+          <TableRow
+            key={user.id}
+            css={{ cursor: 'pointer' }}
+            onClick={() => handleRowClick(user)}>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>
+              <Badge color={user.status === 'active' ? 'green' : 'gray'}>
+                {user.status}
+              </Badge>
+            </TableCell>
+            <TableCell align="center">
+              <Wrapper css={{ gap: 8, justifyContent: 'center' }}>
+                <Icon
+                  name="edit"
+                  size={16}
+                  css={{ cursor: 'pointer' }}
+                  onClick={(e) => handleEdit(user.id, e)}
+                />
+                <Icon
+                  name="trash"
+                  size={16}
+                  css={{ cursor: 'pointer', color: '#d32f2f' }}
+                  onClick={(e) => handleDelete(user.id, e)}
+                />
+              </Wrapper>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Responsive Table with Scrolling
+
+Handle wide tables with horizontal scrolling:
+
+```tsx
+function ResponsiveTable() {
+  const transactions = [
+    {
+      id: 'TXN001',
+      date: '2024-01-15',
+      description: 'Payment to vendor',
+      amount: 1250.0,
+      type: 'Debit',
+      status: 'Completed',
+      reference: 'REF123456',
+    },
+    // ... more data
+  ];
+
+  return (
+    <Wrapper
+      css={{
+        width: '100%',
+        overflowX: 'auto',
+        whiteSpace: 'nowrap',
+      }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCellHeader>Transaction ID</TableCellHeader>
+            <TableCellHeader>Date</TableCellHeader>
+            <TableCellHeader>Description</TableCellHeader>
+            <TableCellHeader align="right">Amount</TableCellHeader>
+            <TableCellHeader>Type</TableCellHeader>
+            <TableCellHeader>Status</TableCellHeader>
+            <TableCellHeader>Reference</TableCellHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {transactions.map((transaction) => (
+            <TableRow key={transaction.id}>
+              <TableCell>{transaction.id}</TableCell>
+              <TableCell>{transaction.date}</TableCell>
+              <TableCell>{transaction.description}</TableCell>
+              <TableCell align="right">
+                ${transaction.amount.toFixed(2)}
+              </TableCell>
+              <TableCell>
+                <Badge
+                  color={transaction.type === 'Credit' ? 'green' : 'orange'}>
+                  {transaction.type}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Badge color="green">{transaction.status}</Badge>
+              </TableCell>
+              <TableCell>{transaction.reference}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Wrapper>
+  );
+}
+```
+
+### Table with Disabled Rows
+
+Handle disabled states and conditional styling:
+
+```tsx
+function TableWithDisabledRows() {
+  const accounts = [
+    { id: 1, name: 'Main Account', balance: 5000, isActive: true },
+    { id: 2, name: 'Savings Account', balance: 12000, isActive: true },
+    { id: 3, name: 'Closed Account', balance: 0, isActive: false },
+  ];
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader>Account Name</TableCellHeader>
+          <TableCellHeader align="right">Balance</TableCellHeader>
+          <TableCellHeader>Status</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {accounts.map((account) => (
+          <TableRow
+            key={account.id}
+            aria-disabled={!account.isActive}
+            css={{
+              opacity: account.isActive ? 1 : 0.6,
+              cursor: account.isActive ? 'pointer' : 'not-allowed',
+            }}>
+            <TableCell>{account.name}</TableCell>
+            <TableCell align="right">
+              ${account.balance.toLocaleString()}
+            </TableCell>
+            <TableCell>
+              <Badge color={account.isActive ? 'green' : 'gray'}>
+                {account.isActive ? 'Active' : 'Inactive'}
+              </Badge>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Empty State Table
+
+Handle cases when there's no data to display:
+
+```tsx
+function EmptyStateTable() {
+  const [data, setData] = useState([]);
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader>Name</TableCellHeader>
+          <TableCellHeader>Email</TableCellHeader>
+          <TableCellHeader>Role</TableCellHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {data.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={3} align="center">
+              <Wrapper
+                css={{
+                  padding: '40px 20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 16,
+                  color: '#666',
+                }}>
+                <Icon name="inbox" size={48} />
+                <div>
+                  <div css={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>
+                    No data available
+                  </div>
+                  <div css={{ fontSize: 14 }}>
+                    There are no records to display at this time.
+                  </div>
+                </div>
+              </Wrapper>
+            </TableCell>
+          </TableRow>
+        ) : (
+          data.map((item, index) => (
+            <TableRow key={index}>{/* Render data rows */}</TableRow>
+          ))
+        )}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

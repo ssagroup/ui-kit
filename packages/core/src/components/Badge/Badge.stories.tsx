@@ -15,13 +15,6 @@ import Badge from './index';
 export default {
   title: 'Components/Badge',
   component: Badge,
-  parameters: {
-    docs: {
-      description: {
-        component: 'Badge is for informing users about the status of an item.',
-      },
-    },
-  },
   argTypes: {
     color: {
       table: {

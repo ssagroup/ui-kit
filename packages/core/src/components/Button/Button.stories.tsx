@@ -14,13 +14,6 @@ import React from 'react';
 export default {
   title: 'Components/Button',
   component: Button,
-  parameters: {
-    docs: {
-      description: {
-        component: 'Button triggers an action or event.',
-      },
-    },
-  },
   argTypes: {
     size: {
       table: {

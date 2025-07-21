@@ -1,0 +1,340 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TextFieldStories from './TextField.stories';
+
+<Meta of={TextFieldStories} />
+
+# TextField
+
+## Default Usage
+
+The TextField component provides a complete form input solution that combines label, input/textarea, helper text, and validation feedback into a single, cohesive component. It is designed to work primarily with React Hook Form for optimal form management and validation:
+
+```tsx
+import { TextField } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
+
+function BasicTextField() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data: any) => {
+    console.log('Form data:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <TextField
+        name="username"
+        label="Username"
+        placeholder="Enter your username"
+        helperText="Choose a unique username"
+        register={register}
+        validationSchema={{
+          required: 'Username is required',
+          minLength: { value: 3, message: 'Minimum 3 characters' },
+        }}
+        errors={errors.username}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Features
+
+### Basic Text Input
+
+Simple text field with label and helper text using React Hook Form:
+
+```tsx
+function BasicTextInput() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <TextField
+        name="email"
+        label="Email Address"
+        type="email"
+        placeholder="Enter your email"
+        helperText="We'll never share your email with anyone else"
+        register={register}
+        validationSchema={{
+          required: 'Email is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Invalid email address',
+          },
+        }}
+        errors={errors.email}
+      />
+      <TextField
+        name="password"
+        label="Password"
+        type="password"
+        placeholder="Enter your password"
+        helperText="Must be at least 8 characters long"
+        register={register}
+        validationSchema={{
+          required: 'Password is required',
+          minLength: {
+            value: 8,
+            message: 'Password must be at least 8 characters',
+          },
+        }}
+        errors={errors.password}
+      />
+    </div>
+  );
+}
+```
+
+### Status States
+
+Display different validation states with visual feedback:
+
+```tsx
+function StatusStates() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      basic: '',
+      error: '',
+      success: 'valid@example.com',
+    },
+  });
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Basic state */}
+      <TextField
+        name="basic"
+        label="Basic Field"
+        placeholder="Enter text"
+        helperText="Enter any text here"
+        register={register}
+      />
+
+      {/* Error state - will show error when validation fails */}
+      <TextField
+        name="error"
+        label="Email with Error"
+        type="email"
+        placeholder="Enter email"
+        register={register}
+        validationSchema={{
+          required: 'Email is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Valid email address is required',
+          },
+        }}
+        errors={errors.error}
+      />
+
+      {/* Success state */}
+      <TextField
+        name="success"
+        label="Valid Email"
+        type="email"
+        placeholder="Enter email"
+        register={register}
+        success={true}
+        helperText="Great! Your email is valid."
+      />
+    </div>
+  );
+}
+```
+
+### Multiline Text Fields
+
+Use textarea for longer text input:
+
+```tsx
+function MultilineFields() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Simple multiline */}
+      <TextField
+        name="description"
+        label="Description"
+        placeholder="Enter a description"
+        multirow={true}
+        rows={4}
+        register={register}
+        validationSchema={{
+          required: 'Description is required',
+        }}
+        errors={errors.description}
+        helperText="Provide a detailed description"
+      />
+
+      {/* Multiline with character limit */}
+      <TextField
+        name="feedback"
+        label="Feedback"
+        placeholder="Share your feedback"
+        multirow={true}
+        rows={6}
+        maxLength={500}
+        register={register}
+        validationSchema={{
+          maxLength: {
+            value: 500,
+            message: 'Feedback cannot exceed 500 characters',
+          },
+        }}
+        errors={errors.feedback}
+        helperText="Let us know what you think"
+      />
+    </div>
+  );
+}
+```
+
+### Fields with Actions
+
+Add interactive elements to enhance functionality:
+
+```tsx
+import { Icon } from '@ssa-ui-kit/core';
+
+function FieldsWithActions() {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const [showPassword, setShowPassword] = useState(false);
+  const searchQuery = watch('search');
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSearch = () => {
+    console.log('Searching for:', searchQuery);
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Password field with visibility toggle */}
+      <TextField
+        name="password"
+        label="Password"
+        type={showPassword ? 'text' : 'password'}
+        placeholder="Enter your password"
+        register={register}
+        validationSchema={{
+          required: 'Password is required',
+          minLength: {
+            value: 8,
+            message: 'Password must be at least 8 characters',
+          },
+        }}
+        errors={errors.password}
+        endElement={
+          <Icon
+            name={showPassword ? 'invisible' : 'visible'}
+            size={16}
+            css={{ cursor: 'pointer' }}
+            onClick={togglePasswordVisibility}
+          />
+        }
+        helperText="Click the eye icon to toggle visibility"
+      />
+
+      {/* Search field with action button */}
+      <TextField
+        name="search"
+        label="Search"
+        type="search"
+        placeholder="Enter search terms"
+        register={register}
+        endElement={
+          <button
+            type="button"
+            onClick={handleSearch}
+            style={{
+              padding: '4px 8px',
+              border: 'none',
+              background: '#007bff',
+              color: 'white',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '12px',
+            }}>
+            Search
+          </button>
+        }
+        helperText="Enter keywords to search"
+      />
+    </div>
+  );
+}
+```
+
+### Disabled States
+
+Handle disabled form fields appropriately:
+
+```tsx
+function DisabledFields() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Disabled basic field */}
+      <TextField
+        name="disabled-basic"
+        label="Disabled Field"
+        placeholder="Cannot edit this field"
+        value="Read-only value"
+        disabled={true}
+        helperText="This field is currently disabled"
+      />
+
+      {/* Disabled field with success state */}
+      <TextField
+        name="disabled-success"
+        label="Disabled Success Field"
+        placeholder="Cannot edit"
+        value="Successfully completed"
+        disabled={true}
+        success={true}
+        helperText="This field was successfully validated"
+      />
+
+      {/* Disabled multiline field */}
+      <TextField
+        name="disabled-multiline"
+        label="Disabled Textarea"
+        placeholder="Cannot edit this textarea"
+        value="This is a disabled textarea with some content that cannot be modified."
+        multirow={true}
+        rows={4}
+        disabled={true}
+        helperText="This textarea is disabled"
+      />
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

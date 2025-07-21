@@ -1,0 +1,233 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as RadioStories from './Radio.stories';
+
+<Meta of={RadioStories} />
+
+# Radio
+
+## Default Usage
+
+The Radio component provides a single radio button that should typically be used within a RadioGroup for mutually exclusive selections. Here's how to use individual Radio buttons:
+
+```tsx
+import { Radio, RadioGroup } from '@ssa-ui-kit/core';
+
+// Single radio button (rarely used alone)
+function SingleRadio() {
+  const handleChange = (value: string) => {
+    console.log('Selected value:', value);
+  };
+
+  return (
+    <Radio
+      id="single-radio"
+      value="option1"
+      text="Single Option"
+      onChange={handleChange}
+    />
+  );
+}
+
+// Radio group (recommended usage)
+function RadioGroupExample() {
+  const [selectedValue, setSelectedValue] = useState('orange');
+
+  const handleChange = (value: string) => {
+    setSelectedValue(value);
+  };
+
+  return (
+    <RadioGroup
+      name="fruit"
+      externalState={selectedValue}
+      onChange={handleChange}>
+      <Radio id="radio1" value="apple" text="Apple" />
+      <Radio id="radio2" value="orange" text="Orange" />
+      <Radio id="radio3" value="banana" text="Banana" />
+    </RadioGroup>
+  );
+}
+```
+
+## Features
+
+### Checked State
+
+Control whether a radio button is selected:
+
+```tsx
+// Checked radio
+<Radio
+  id="checked-radio"
+  value="checked"
+  text="Checked Option"
+  isChecked={true}
+  onChange={handleChange}
+/>
+
+// Unchecked radio
+<Radio
+  id="unchecked-radio"
+  value="unchecked"
+  text="Unchecked Option"
+  isChecked={false}
+  onChange={handleChange}
+/>
+```
+
+### Disabled State
+
+Disable radio buttons when they shouldn't be selectable:
+
+```tsx
+<Radio
+  id="disabled-radio"
+  value="disabled"
+  text="Disabled Option"
+  isDisabled={true}
+  onChange={handleChange}
+/>
+```
+
+### Without Label Text
+
+Use radio buttons without text labels when the context is clear:
+
+```tsx
+<Radio id="no-text-radio" value="no-text" onChange={handleChange} />
+```
+
+### Custom Colors
+
+Customize the appearance with custom color schemes:
+
+```tsx
+<Radio
+  id="custom-colors"
+  value="custom"
+  text="Custom Colors"
+  colors={{
+    default: '#007bff',
+    hovered: '#0056b3',
+    disabled: '#6c757d',
+    focusShadow: 'rgba(0, 123, 255, 0.25)',
+  }}
+  onChange={handleChange}
+/>
+```
+
+### Form Integration
+
+Use radio buttons in forms with proper naming and validation:
+
+```tsx
+<form onSubmit={handleSubmit}>
+  <fieldset>
+    <legend>Select your preferred contact method:</legend>
+
+    <Radio
+      id="contact-email"
+      name="contact-method"
+      value="email"
+      text="Email"
+      isRequired={true}
+      onChange={handleChange}
+    />
+
+    <Radio
+      id="contact-phone"
+      name="contact-method"
+      value="phone"
+      text="Phone"
+      isRequired={true}
+      onChange={handleChange}
+    />
+
+    <Radio
+      id="contact-mail"
+      name="contact-method"
+      value="mail"
+      text="Mail"
+      isRequired={true}
+      onChange={handleChange}
+    />
+  </fieldset>
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+### Horizontal Radio Group
+
+Display radio buttons in a horizontal layout:
+
+```tsx
+<RadioGroup
+  name="fruit-horizontal"
+  externalState={selectedValue}
+  onChange={handleChange}
+  css={{
+    display: 'flex',
+    gap: '16px',
+    marginTop: '10px',
+  }}>
+  <Radio id="h-radio1" value="apple" text="Apple" />
+  <Radio id="h-radio2" value="orange" text="Orange" />
+  <Radio id="h-radio3" value="banana" text="Banana" />
+</RadioGroup>
+```
+
+### Vertical Radio Group
+
+Display radio buttons in a vertical layout:
+
+```tsx
+<RadioGroup
+  name="fruit-vertical"
+  externalState={selectedValue}
+  onChange={handleChange}
+  css={{
+    marginTop: '10px',
+    '> label': {
+      display: 'flex',
+      marginBottom: '8px',
+    },
+  }}>
+  <Radio id="v-radio1" value="apple" text="Apple" />
+  <Radio id="v-radio2" value="orange" text="Orange" />
+  <Radio id="v-radio3" value="banana" text="Banana" />
+</RadioGroup>
+```
+
+### Custom Styling
+
+Apply custom styles to radio buttons:
+
+```tsx
+<Radio
+  id="styled-radio"
+  value="styled"
+  text="Custom Styled Radio"
+  className="custom-radio"
+  css={{
+    padding: '12px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+
+    '&:hover': {
+      backgroundColor: '#f8f9fa',
+    },
+
+    'input:checked + span': {
+      fontWeight: 'bold',
+      color: '#007bff',
+    },
+  }}
+  onChange={handleChange}
+/>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

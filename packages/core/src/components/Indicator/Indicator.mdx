@@ -1,0 +1,238 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as IndicatorStories from './Indicator.stories';
+
+<Meta of={IndicatorStories} />
+
+# Indicator
+
+## Default Usage
+
+The Indicator component displays a small visual notification badge positioned relative to its child element. It's commonly used to show notifications, status updates, or additional information that requires user attention:
+
+```tsx
+import { Indicator, Badge, Icon } from '@ssa-ui-kit/core';
+
+function BasicIndicator() {
+  return (
+    <Indicator isVisible={true} position="right">
+      <Badge color="blueLight" size="small">
+        <Icon name="information" color="white" size={14} />
+      </Badge>
+    </Indicator>
+  );
+}
+```
+
+## Features
+
+### Positioning Options
+
+Control where the indicator appears relative to its child element:
+
+```tsx
+// Left side positioning (default)
+<Indicator isVisible={true} position="left">
+  <Button>Button with Left Indicator</Button>
+</Indicator>
+
+// Right side positioning
+<Indicator isVisible={true} position="right">
+  <Button>Button with Right Indicator</Button>
+</Indicator>
+```
+
+### Visibility Control
+
+Show or hide the indicator dynamically:
+
+```tsx
+import { useState } from 'react';
+
+function ToggleableIndicator() {
+  const [hasNotification, setHasNotification] = useState(true);
+
+  return (
+    <div>
+      <Indicator isVisible={hasNotification} position="right">
+        <Badge color="primary">
+          <Icon name="bell" size={16} />
+        </Badge>
+      </Indicator>
+
+      <button onClick={() => setHasNotification(!hasNotification)}>
+        {hasNotification ? 'Clear' : 'Add'} Notification
+      </button>
+    </div>
+  );
+}
+```
+
+### Custom Background
+
+Customize the indicator appearance with custom backgrounds:
+
+```tsx
+import { useTheme } from '@emotion/react';
+
+function CustomBackgroundIndicator() {
+  const theme = useTheme();
+
+  return (
+    <Indicator
+      isVisible={true}
+      position="right"
+      background={`linear-gradient(90deg, ${theme.colors.yellow} 0%, ${theme.colors.yellowLighter} 100%)`}>
+      <Button size="large">Custom Background</Button>
+    </Indicator>
+  );
+}
+```
+
+### Text and Number Content
+
+Display text or numeric content within the indicator:
+
+```tsx
+// Simple text
+<Indicator
+  isVisible={true}
+  position="right"
+  text="NEW"
+>
+  <Button>New Feature</Button>
+</Indicator>
+
+// Numeric content
+<Indicator
+  isVisible={true}
+  position="right"
+  text={42}
+>
+  <Button>Messages</Button>
+</Indicator>
+
+// JSX Element content
+<Indicator
+  isVisible={true}
+  position="right"
+  text={
+    <Typography variant="body2" weight="regular" color="white">
+      +2100
+    </Typography>
+  }
+>
+  <Button>Progress</Button>
+</Indicator>
+```
+
+### Notification Badges
+
+Create notification badges for various UI elements:
+
+```tsx
+function NotificationExamples() {
+  const [messageCount, setMessageCount] = useState(3);
+  const [hasAlert, setHasAlert] = useState(true);
+
+  return (
+    <div style={{ display: 'flex', gap: '20px' }}>
+      {/* Message count indicator */}
+      <Indicator
+        isVisible={messageCount > 0}
+        position="right"
+        text={messageCount}
+        background="linear-gradient(291.8deg, #ff4757, #ff3742)">
+        <Button variant="secondary">
+          <Icon name="message" size={16} />
+          Messages
+        </Button>
+      </Indicator>
+
+      {/* Alert indicator */}
+      <Indicator
+        isVisible={hasAlert}
+        position="right"
+        background="linear-gradient(291.8deg, #ffa502, #ff6348)">
+        <Button variant="tertiary">
+          <Icon name="warning" size={16} />
+          Alerts
+        </Button>
+      </Indicator>
+    </div>
+  );
+}
+```
+
+### Status Indicators
+
+Show status information for various components:
+
+```tsx
+function StatusIndicators() {
+  const [isOnline, setIsOnline] = useState(true);
+  const [hasUpdates, setHasUpdates] = useState(true);
+
+  return (
+    <div style={{ display: 'flex', gap: '20px' }}>
+      {/* Online status */}
+      <Indicator
+        isVisible={isOnline}
+        position="right"
+        background={isOnline ? '#2ed573' : '#ff4757'}>
+        <Badge>
+          <Icon name="user" size={20} />
+        </Badge>
+      </Indicator>
+
+      {/* Update available */}
+      <Indicator
+        isVisible={hasUpdates}
+        position="right"
+        text="!"
+        background="linear-gradient(291.8deg, #ffa502, #ff6348)">
+        <Button variant="primary">
+          <Icon name="download" size={16} />
+          App
+        </Button>
+      </Indicator>
+    </div>
+  );
+}
+```
+
+### Different Child Elements
+
+Use indicators with various child components:
+
+```tsx
+function VariousChildElements() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+      {/* With Avatar */}
+      <Indicator isVisible={true} position="right" text="3">
+        <Avatar src="/user-avatar.jpg" size={40} />
+      </Indicator>
+
+      {/* With Icon */}
+      <Indicator isVisible={true} position="right">
+        <Icon name="shopping-cart" size={24} />
+      </Indicator>
+
+      {/* With Badge */}
+      <Indicator isVisible={true} position="left" text="NEW">
+        <Badge color="secondary">Feature</Badge>
+      </Indicator>
+
+      {/* With Button */}
+      <Indicator isVisible={true} position="right" text={99}>
+        <Button variant="primary">Notifications</Button>
+      </Indicator>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

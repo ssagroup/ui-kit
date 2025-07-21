@@ -1,0 +1,140 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as ColorPickerStories from './ColorPicker.stories';
+
+<Meta of={ColorPickerStories} />
+
+# ColorPicker
+
+## Default Usage
+
+The ColorPicker component provides an intuitive interface for selecting colors through both predefined palettes and custom color picking. Here's how to use it:
+
+```tsx
+import { useState } from 'react';
+import { ColorPicker } from '@ssa-ui-kit/core';
+
+function BasicColorPicker() {
+  const [selectedColor, setSelectedColor] = useState('#F463EA');
+
+  return (
+    <ColorPicker
+      defaultColor={selectedColor}
+      onChange={setSelectedColor}
+      label="Choose Color"
+    />
+  );
+}
+```
+
+The component renders as a trigger button that opens a popover with two tabs:
+
+- **General**: Predefined color palette for quick selection
+- **Custom**: Advanced color picker with RGB, HSL, and HEX format support
+
+## Features
+
+### Predefined Color Palette
+
+The component comes with a carefully curated default palette of 15 colors optimized for UI design:
+
+```tsx
+<ColorPicker
+  defaultColor="#F463EA"
+  onChange={setSelectedColor}
+  label="Select from palette"
+/>
+```
+
+### Custom Color Palette
+
+Override the default palette with your own brand colors:
+
+```tsx
+<ColorPicker
+  defaultColor="#FF5E5B"
+  onChange={setSelectedColor}
+  label="Brand Colors"
+  colorsPalette={[
+    '#FF5E5B', // soft red
+    '#FF9966', // tangerine
+    '#FFCC66', // warm yellow
+    '#66FF66', // light green
+    '#66CCFF', // baby blue
+    '#9966CC', // lavender purple
+  ]}
+/>
+```
+
+### Multiple Color Formats
+
+Support for three standard color formats with easy switching:
+
+```tsx
+<ColorPicker
+  defaultColor="#F463EA"
+  defaultFormat="hex" // 'hex' | 'rgb' | 'hsl'
+  onChange={setSelectedColor}
+  label="Multi-format picker"
+/>
+```
+
+### Controlled vs Uncontrolled
+
+Use as a controlled component for external state management:
+
+```tsx
+// Controlled component
+function ControlledPicker() {
+  const [color, setColor] = useState('#F463EA');
+  const [format, setFormat] = useState('hex');
+
+  return (
+    <ColorPicker
+      color={color}
+      format={format}
+      onChange={setColor}
+      label="Controlled picker"
+    />
+  );
+}
+
+// Uncontrolled component (using defaultColor)
+<ColorPicker
+  defaultColor="#F463EA"
+  onChange={setSelectedColor}
+  label="Uncontrolled picker"
+/>;
+```
+
+### Disabled State
+
+Disable the color picker when needed:
+
+```tsx
+<ColorPicker defaultColor="#F463EA" disabled={true} label="Disabled picker" />
+```
+
+### Custom Styling
+
+Apply custom CSS classes to different parts of the component:
+
+```tsx
+<ColorPicker
+  defaultColor="#F463EA"
+  onChange={setSelectedColor}
+  label="Styled picker"
+  classnames={{
+    trigger: 'custom-trigger',
+    content: 'custom-popover',
+    button: 'custom-button',
+    colorPicker: 'custom-picker',
+    colorDropdown: 'custom-dropdown',
+    output: 'custom-output',
+  }}
+/>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

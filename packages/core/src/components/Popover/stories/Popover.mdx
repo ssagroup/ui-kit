@@ -1,0 +1,542 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as PopoverStories from './Popover.stories';
+
+<Meta of={PopoverStories} />
+
+# Popover
+
+## Default Usage
+
+The Popover component provides a floating content container that appears relative to a trigger element. Built on Floating UI, it offers precise positioning, multiple interaction modes, and comprehensive accessibility features through a compound component pattern:
+
+```tsx
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeading,
+  PopoverDescription,
+  PopoverClose,
+} from '@ssa-ui-kit/core';
+
+function BasicPopover() {
+  return (
+    <Popover>
+      <PopoverTrigger>Open Popover</PopoverTrigger>
+      <PopoverContent>
+        <PopoverHeading variant="h4">Popover Title</PopoverHeading>
+        <PopoverDescription variant="body1">
+          This is the popover content. You can include any React components
+          here.
+        </PopoverDescription>
+        <PopoverClose>Close</PopoverClose>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+## Features
+
+### Interaction Modes
+
+Configure how the popover is triggered:
+
+```tsx
+// Click to open (default)
+<Popover interactionsEnabled="click">
+  <PopoverTrigger>Click to Open</PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeading variant="h4">Click Triggered</PopoverHeading>
+    <PopoverDescription>
+      This popover opens when you click the trigger button.
+    </PopoverDescription>
+    <PopoverClose>Close</PopoverClose>
+  </PopoverContent>
+</Popover>
+
+// Hover to open
+<Popover interactionsEnabled="hover">
+  <PopoverTrigger>Hover to Open</PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeading variant="h4">Hover Triggered</PopoverHeading>
+    <PopoverDescription>
+      This popover opens when you hover over the trigger.
+    </PopoverDescription>
+  </PopoverContent>
+</Popover>
+
+// Both click and hover
+<Popover interactionsEnabled="both">
+  <PopoverTrigger>Click or Hover</PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeading variant="h4">Multi-trigger</PopoverHeading>
+    <PopoverDescription>
+      This popover responds to both click and hover interactions.
+    </PopoverDescription>
+    <PopoverClose>Close</PopoverClose>
+  </PopoverContent>
+</Popover>
+```
+
+### Positioning Options
+
+Control where the popover appears relative to the trigger:
+
+```tsx
+// Top placement
+<Popover placement="top">
+  <PopoverTrigger>Show Above</PopoverTrigger>
+  <PopoverContent>
+    <PopoverDescription>This popover appears above the trigger.</PopoverDescription>
+  </PopoverContent>
+</Popover>
+
+// Bottom placement (default)
+<Popover placement="bottom">
+  <PopoverTrigger>Show Below</PopoverTrigger>
+  <PopoverContent>
+    <PopoverDescription>This popover appears below the trigger.</PopoverDescription>
+  </PopoverContent>
+</Popover>
+
+// Left placement
+<Popover placement="left">
+  <PopoverTrigger>Show Left</PopoverTrigger>
+  <PopoverContent>
+    <PopoverDescription>This popover appears to the left of the trigger.</PopoverDescription>
+  </PopoverContent>
+</Popover>
+
+// Right placement
+<Popover placement="right">
+  <PopoverTrigger>Show Right</PopoverTrigger>
+  <PopoverContent>
+    <PopoverDescription>This popover appears to the right of the trigger.</PopoverDescription>
+  </PopoverContent>
+</Popover>
+```
+
+### Custom Trigger Elements
+
+Use any element as a trigger with the `asChild` prop:
+
+```tsx
+// Custom button as trigger
+<Popover>
+  <PopoverTrigger asChild>
+    <button className="custom-trigger">
+      <Icon name="info" size={16} />
+      Custom Trigger
+    </button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverDescription>Triggered by a custom button element.</PopoverDescription>
+  </PopoverContent>
+</Popover>
+
+// Icon as trigger
+<Popover interactionsEnabled="hover">
+  <PopoverTrigger asChild>
+    <Icon name="help-circle" size={20} style={{ cursor: 'pointer' }} />
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeading variant="h5">Help Information</PopoverHeading>
+    <PopoverDescription>
+      This is a help tooltip triggered by hovering over the icon.
+    </PopoverDescription>
+  </PopoverContent>
+</Popover>
+
+// Text as trigger
+<Popover>
+  <PopoverTrigger asChild>
+    <span style={{ textDecoration: 'underline', cursor: 'pointer' }}>
+      Click for more info
+    </span>
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverDescription>Additional information content.</PopoverDescription>
+  </PopoverContent>
+</Popover>
+```
+
+### Controlled State
+
+Control the popover's open state programmatically:
+
+```tsx
+import { useState } from 'react';
+
+function ControlledPopover() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div>
+      <button onClick={handleToggle}>
+        {isOpen ? 'Close' : 'Open'} Popover Externally
+      </button>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger>Controlled Trigger</PopoverTrigger>
+        <PopoverContent>
+          <PopoverHeading variant="h4">Controlled Popover</PopoverHeading>
+          <PopoverDescription>
+            This popover's state is controlled by external buttons.
+          </PopoverDescription>
+          <PopoverClose>Close from Inside</PopoverClose>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
+```
+
+### Rich Content Examples
+
+Create popovers with complex content structures:
+
+```tsx
+// User profile popover
+function UserProfilePopover({ user }) {
+  return (
+    <Popover interactionsEnabled="hover">
+      <PopoverTrigger asChild>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+            padding: '8px',
+          }}>
+          <Avatar src={user.avatar} size={32} />
+          <span style={{ marginLeft: '8px' }}>{user.name}</span>
+        </div>
+      </PopoverTrigger>
+      <PopoverContent style={{ minWidth: '280px' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '12px',
+          }}>
+          <Avatar src={user.avatar} size={48} />
+          <div style={{ marginLeft: '12px' }}>
+            <PopoverHeading variant="h5">{user.name}</PopoverHeading>
+            <Typography variant="body2" color="gray">
+              {user.title}
+            </Typography>
+          </div>
+        </div>
+        <PopoverDescription variant="body2">{user.bio}</PopoverDescription>
+        <div
+          style={{
+            display: 'flex',
+            gap: '8px',
+            marginTop: '12px',
+          }}>
+          <Button size="small" variant="primary">
+            Send Message
+          </Button>
+          <Button size="small" variant="secondary">
+            View Profile
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+// Feature tooltip popover
+function FeatureTooltip({ feature, children }) {
+  return (
+    <Popover interactionsEnabled="hover">
+      <PopoverTrigger asChild>
+        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+          {children}
+          <Icon
+            name="info"
+            size={16}
+            style={{ marginLeft: '4px', opacity: 0.6 }}
+          />
+        </div>
+      </PopoverTrigger>
+      <PopoverContent style={{ maxWidth: '300px' }}>
+        <PopoverHeading variant="h6">{feature.title}</PopoverHeading>
+        <PopoverDescription variant="body2">
+          {feature.description}
+        </PopoverDescription>
+        {feature.learnMoreUrl && (
+          <div style={{ marginTop: '8px' }}>
+            <Button
+              size="small"
+              variant="tertiary"
+              onClick={() => window.open(feature.learnMoreUrl, '_blank')}>
+              Learn More
+            </Button>
+          </div>
+        )}
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+### Form Integration
+
+Use popovers for additional form inputs or help:
+
+```tsx
+function FormWithPopovers() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    preferences: {},
+  });
+
+  return (
+    <form>
+      <div style={{ marginBottom: '16px' }}>
+        <label>
+          Email
+          <Popover interactionsEnabled="hover">
+            <PopoverTrigger asChild>
+              <Icon
+                name="help-circle"
+                size={16}
+                style={{ marginLeft: '4px' }}
+              />
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverDescription>
+                We'll use this email for account verification and notifications.
+              </PopoverDescription>
+            </PopoverContent>
+          </Popover>
+        </label>
+        <Input
+          type="email"
+          value={formData.email}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, email: e.target.value }))
+          }
+        />
+      </div>
+      <div style={{ marginBottom: '16px' }}>
+        <label>
+          Advanced Settings
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="tertiary"
+                size="small"
+                style={{ marginLeft: '8px' }}>
+                Configure
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent style={{ padding: '16px', minWidth: '250px' }}>
+              <PopoverHeading variant="h6">Advanced Settings</PopoverHeading>
+              <div style={{ marginTop: '12px' }}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={formData.preferences.notifications}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        preferences: {
+                          ...prev.preferences,
+                          notifications: e.target.checked,
+                        },
+                      }))
+                    }
+                  />
+                  Enable notifications
+                </label>
+              </div>
+              <div style={{ marginTop: '8px' }}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={formData.preferences.analytics}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        preferences: {
+                          ...prev.preferences,
+                          analytics: e.target.checked,
+                        },
+                      }))
+                    }
+                  />
+                  Share analytics
+                </label>
+              </div>
+              <PopoverClose style={{ marginTop: '12px' }}>Done</PopoverClose>
+            </PopoverContent>
+          </Popover>
+        </label>
+      </div>
+    </form>
+  );
+}
+```
+
+### Modal Behavior
+
+Enable modal mode for focused interactions:
+
+```tsx
+function ModalPopover() {
+  return (
+    <Popover modal={true}>
+      <PopoverTrigger>Open Modal Popover</PopoverTrigger>
+      <PopoverContent
+        style={{
+          padding: '24px',
+          minWidth: '400px',
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
+        }}>
+        <PopoverHeading variant="h4">Modal Popover</PopoverHeading>
+        <PopoverDescription variant="body1">
+          This popover behaves like a modal - it traps focus and prevents
+          interaction with the rest of the page until closed.
+        </PopoverDescription>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}>
+          <Button variant="primary">Confirm Action</Button>
+          <PopoverClose>Cancel</PopoverClose>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+### Custom Styling
+
+Apply custom styles to popover components:
+
+```tsx
+import { css } from '@emotion/react';
+
+function StyledPopover() {
+  return (
+    <Popover>
+      <PopoverTrigger
+        css={css`
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border: none;
+          color: white;
+          padding: 12px 24px;
+          border-radius: 8px;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          }
+        `}>
+        Styled Trigger
+      </PopoverTrigger>
+      <PopoverContent
+        css={css`
+          background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          backdrop-filter: blur(10px);
+        `}>
+        <PopoverHeading
+          variant="h4"
+          css={css`
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          `}>
+          Styled Popover
+        </PopoverHeading>
+        <PopoverDescription
+          variant="body1"
+          css={css`
+            color: rgba(255, 255, 255, 0.9);
+            margin: 12px 0;
+          `}>
+          This popover has custom gradient styling and backdrop effects.
+        </PopoverDescription>
+        <PopoverClose
+          css={css`
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.3);
+            }
+          `}>
+          Close
+        </PopoverClose>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+### Advanced Positioning
+
+Fine-tune positioning with additional options:
+
+```tsx
+function AdvancedPositioning() {
+  return (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      {/* Auto-flip on collision */}
+      <Popover
+        placement="top"
+        floatingOptions={{
+          middleware: [
+            // Add offset
+            { name: 'offset', options: 10 },
+            // Flip to opposite side on collision
+            { name: 'flip' },
+            // Shift within view
+            { name: 'shift', options: { padding: 8 } },
+          ],
+        }}>
+        <PopoverTrigger>Smart Positioning</PopoverTrigger>
+        <PopoverContent>
+          <PopoverDescription>
+            This popover automatically adjusts its position to stay in view.
+          </PopoverDescription>
+        </PopoverContent>
+      </Popover>
+      {/* Always stay in viewport */}
+      <Popover
+        placement="bottom-start"
+        floatingOptions={{
+          strategy: 'fixed',
+        }}>
+        <PopoverTrigger>Fixed Strategy</PopoverTrigger>
+        <PopoverContent>
+          <PopoverDescription>
+            This popover uses fixed positioning strategy.
+          </PopoverDescription>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

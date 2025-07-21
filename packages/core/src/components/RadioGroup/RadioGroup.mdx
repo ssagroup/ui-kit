@@ -1,0 +1,329 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as RadioGroupStories from './RadioGroup.stories';
+
+<Meta of={RadioGroupStories} />
+
+# RadioGroup
+
+## Default Usage
+
+The RadioGroup component manages a collection of Radio buttons, ensuring only one option can be selected at a time. It provides proper state management, accessibility, and event handling for mutually exclusive selections:
+
+```tsx
+import { useState } from 'react';
+import { RadioGroup, Radio } from '@ssa-ui-kit/core';
+
+function BasicRadioGroup() {
+  const [selectedValue, setSelectedValue] = useState('orange');
+
+  const handleChange = (value: string | number) => {
+    console.log('Selected value:', value);
+    setSelectedValue(value);
+  };
+
+  return (
+    <RadioGroup
+      name="fruit-selection"
+      externalState={selectedValue}
+      onChange={handleChange}>
+      <Radio id="radio1" value="apple" text="Apple" />
+      <Radio id="radio2" value="orange" text="Orange" />
+      <Radio id="radio3" value="banana" text="Banana" />
+    </RadioGroup>
+  );
+}
+```
+
+## Features
+
+### External State Control
+
+Control the selected value externally and the RadioGroup will sync:
+
+```tsx
+import { useState } from 'react';
+
+function ControlledRadioGroup() {
+  const [selectedValue, setSelectedValue] = useState('medium');
+
+  const resetToSmall = () => setSelectedValue('small');
+  const resetToLarge = () => setSelectedValue('large');
+
+  return (
+    <div>
+      <RadioGroup
+        name="size"
+        externalState={selectedValue}
+        onChange={setSelectedValue}>
+        <Radio id="size-small" value="small" text="Small" />
+        <Radio id="size-medium" value="medium" text="Medium" />
+        <Radio id="size-large" value="large" text="Large" />
+      </RadioGroup>
+
+      <div style={{ marginTop: '16px' }}>
+        <button onClick={resetToSmall}>Set to Small</button>
+        <button onClick={resetToLarge}>Set to Large</button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Horizontal Layout
+
+Display radio buttons in a horizontal row:
+
+```tsx
+<RadioGroup
+  name="horizontal-fruit"
+  externalState={selectedValue}
+  onChange={handleChange}
+  css={{
+    display: 'flex',
+    gap: '16px',
+    marginTop: '10px',
+  }}>
+  <Radio id="h-apple" value="apple" text="Apple" />
+  <Radio id="h-orange" value="orange" text="Orange" />
+  <Radio id="h-banana" value="banana" text="Banana" />
+</RadioGroup>
+```
+
+### Vertical Layout
+
+Display radio buttons in a vertical column:
+
+```tsx
+<RadioGroup
+  name="vertical-fruit"
+  externalState={selectedValue}
+  onChange={handleChange}
+  css={{
+    marginTop: '10px',
+    '> label': {
+      display: 'flex',
+      marginBottom: '12px',
+    },
+  }}>
+  <Radio id="v-apple" value="apple" text="Apple" />
+  <Radio id="v-orange" value="orange" text="Orange" />
+  <Radio id="v-banana" value="banana" text="Banana" />
+</RadioGroup>
+```
+
+### Required Validation
+
+Mark the radio group as required for form validation:
+
+```tsx
+<form onSubmit={handleSubmit}>
+  <fieldset>
+    <legend>Select your preferred payment method (required):</legend>
+
+    <RadioGroup
+      name="payment-method"
+      isRequired={true}
+      externalState={paymentMethod}
+      onChange={setPaymentMethod}>
+      <Radio id="credit-card" value="credit" text="Credit Card" />
+      <Radio id="debit-card" value="debit" text="Debit Card" />
+      <Radio id="paypal" value="paypal" text="PayPal" />
+      <Radio id="bank-transfer" value="bank" text="Bank Transfer" />
+    </RadioGroup>
+  </fieldset>
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+### Mixed States
+
+Include disabled options within the radio group:
+
+```tsx
+<RadioGroup
+  name="subscription-tier"
+  externalState={selectedTier}
+  onChange={setSelectedTier}>
+  <Radio id="basic" value="basic" text="Basic Plan - $9/month" />
+  <Radio id="pro" value="pro" text="Pro Plan - $19/month" />
+  <Radio
+    id="enterprise"
+    value="enterprise"
+    text="Enterprise Plan - Contact Sales"
+    isDisabled={true}
+  />
+</RadioGroup>
+```
+
+### Dynamic Options
+
+Generate radio options dynamically from data:
+
+```tsx
+function DynamicRadioGroup() {
+  const [selectedLanguage, setSelectedLanguage] = useState('javascript');
+
+  const languages = [
+    { id: 'js', value: 'javascript', label: 'JavaScript', disabled: false },
+    { id: 'ts', value: 'typescript', label: 'TypeScript', disabled: false },
+    { id: 'py', value: 'python', label: 'Python', disabled: false },
+    { id: 'go', value: 'golang', label: 'Go', disabled: true },
+    { id: 'rs', value: 'rust', label: 'Rust', disabled: false },
+  ];
+
+  return (
+    <RadioGroup
+      name="programming-language"
+      externalState={selectedLanguage}
+      onChange={setSelectedLanguage}>
+      {languages.map((lang) => (
+        <Radio
+          key={lang.id}
+          id={lang.id}
+          value={lang.value}
+          text={lang.label}
+          isDisabled={lang.disabled}
+        />
+      ))}
+    </RadioGroup>
+  );
+}
+```
+
+### Numeric Values
+
+Use numeric values instead of strings:
+
+```tsx
+function NumericRadioGroup() {
+  const [selectedRating, setSelectedRating] = useState<number>(3);
+
+  return (
+    <RadioGroup
+      name="rating"
+      externalState={selectedRating}
+      onChange={(value) => setSelectedRating(Number(value))}>
+      <Radio id="rating-1" value={1} text="1 Star" />
+      <Radio id="rating-2" value={2} text="2 Stars" />
+      <Radio id="rating-3" value={3} text="3 Stars" />
+      <Radio id="rating-4" value={4} text="4 Stars" />
+      <Radio id="rating-5" value={5} text="5 Stars" />
+    </RadioGroup>
+  );
+}
+```
+
+### Advanced Styling
+
+Apply custom styles to the radio group and individual radios:
+
+```tsx
+<RadioGroup
+  name="styled-options"
+  externalState={selectedValue}
+  onChange={handleChange}
+  css={{
+    padding: '20px',
+    backgroundColor: '#f8f9fa',
+    borderRadius: '8px',
+    border: '1px solid #dee2e6',
+
+    '> label': {
+      padding: '12px 16px',
+      margin: '4px 0',
+      backgroundColor: 'white',
+      borderRadius: '6px',
+      border: '1px solid #e9ecef',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+
+      '&:hover': {
+        backgroundColor: '#e9ecef',
+        borderColor: '#adb5bd',
+      },
+
+      'input:checked + span': {
+        fontWeight: 'bold',
+        color: '#0d6efd',
+      },
+    },
+  }}>
+  <Radio id="option-a" value="a" text="Option A" />
+  <Radio id="option-b" value="b" text="Option B" />
+  <Radio id="option-c" value="c" text="Option C" />
+</RadioGroup>
+```
+
+### Form Integration with Validation
+
+Integrate with form libraries and validation:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+function FormRadioGroup() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const selectedValue = watch('preference');
+
+  const onSubmit = (data) => {
+    console.log('Form data:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <fieldset>
+        <legend>Select your preference:</legend>
+
+        <RadioGroup
+          name="preference"
+          externalState={selectedValue}
+          onChange={() => {}} // Handled by react-hook-form
+          isRequired={true}>
+          <Radio
+            id="email-pref"
+            value="email"
+            text="Email notifications"
+            {...register('preference', {
+              required: 'Please select a preference',
+            })}
+          />
+          <Radio
+            id="sms-pref"
+            value="sms"
+            text="SMS notifications"
+            {...register('preference', {
+              required: 'Please select a preference',
+            })}
+          />
+          <Radio
+            id="none-pref"
+            value="none"
+            text="No notifications"
+            {...register('preference', {
+              required: 'Please select a preference',
+            })}
+          />
+        </RadioGroup>
+
+        {errors.preference && (
+          <p style={{ color: 'red' }}>{errors.preference.message}</p>
+        )}
+      </fieldset>
+
+      <button type="submit">Submit Preferences</button>
+    </form>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,127 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as FiltersMultiSelectStories from './FiltersMultiSelect.stories';
+
+<Meta of={FiltersMultiSelectStories} />
+
+# FiltersMultiSelect
+
+## Default Usage
+
+FiltersMultiSelect is a powerful filtering component that allows users to select multiple filters with include/exclude/group functionality. Perfect for data filtering interfaces where users need fine-grained control over their search criteria:
+
+```tsx
+import {
+  FiltersMultiSelect,
+  FiltersMultiSelectOptions,
+  FiltersMultiSelectOption,
+  useFilterMultiSelect,
+  Filter,
+} from '@ssa-ui-kit/core';
+
+function BasicFiltersExample() {
+  const filters: Filter[] = [
+    { id: '1', label: 'Active Users' },
+    { id: '2', label: 'Premium Accounts' },
+    { id: '3', label: 'Recent Signups' },
+    { id: '4', label: 'Marketing Segment', group: true },
+    { id: '5', label: 'Mobile Users' },
+    { id: '6', label: 'High Value Customers' },
+  ];
+
+  const store = useFilterMultiSelect({
+    defaultSelectedFilters: [
+      { id: '1', label: 'Active Users', type: 'include' },
+      { id: '2', label: 'Premium Accounts', type: 'exclude' },
+    ],
+    onChange: (selectedFilters) => {
+      console.log('Filters changed:', selectedFilters);
+    },
+  });
+
+  const filtersToShow = filters.filter((filter) =>
+    filter.label.toLowerCase().includes(store.search.toLowerCase()),
+  );
+
+  return (
+    <FiltersMultiSelect
+      store={store}
+      label="User Filters"
+      placeholder="Search filters..."
+      description="Select filters to refine your user search">
+      <FiltersMultiSelectOptions>
+        {filtersToShow.map((filter) => (
+          <FiltersMultiSelectOption key={filter.id} filter={filter}>
+            {filter.label}
+          </FiltersMultiSelectOption>
+        ))}
+      </FiltersMultiSelectOptions>
+    </FiltersMultiSelect>
+  );
+}
+```
+
+## Features
+
+### Include, Exclude, and Group Filters
+
+Create sophisticated filtering logic with three filter types:
+
+```tsx
+function AdvancedFiltersExample() {
+  const productFilters: Filter[] = [
+    { id: 'electronics', label: 'Electronics' },
+    { id: 'clothing', label: 'Clothing' },
+    { id: 'books', label: 'Books' },
+    { id: 'featured', label: 'Featured Products', group: true },
+    { id: 'on-sale', label: 'On Sale' },
+    { id: 'out-of-stock', label: 'Out of Stock' },
+    { id: 'new-arrivals', label: 'New Arrivals' },
+    { id: 'clearance', label: 'Clearance Items' },
+  ];
+
+  const store = useFilterMultiSelect({
+    defaultSelectedFilters: [
+      { id: 'electronics', label: 'Electronics', type: 'include' }, // Include electronics
+      { id: 'out-of-stock', label: 'Out of Stock', type: 'exclude' }, // Exclude out-of-stock
+      { id: 'featured', label: 'Featured Products', type: 'group' }, // Group featured
+    ],
+    onChange: (filters) => {
+      // Process filters for API call
+      const includeFilters = filters.filter((f) => f.type === 'include');
+      const excludeFilters = filters.filter((f) => f.type === 'exclude');
+      const groupFilters = filters.filter((f) => f.type === 'group');
+
+      console.log('Query logic:', {
+        includeFilters,
+        excludeFilters,
+        groupFilters,
+      });
+    },
+  });
+
+  return (
+    <FiltersMultiSelect
+      store={store}
+      label="Product Filters"
+      placeholder="Search categories and filters..."
+      description="Use + for include, - for exclude, and ✓ for grouped filters">
+      <FiltersMultiSelectOptions>
+        {productFilters
+          .filter((filter) =>
+            filter.label.toLowerCase().includes(store.search.toLowerCase()),
+          )
+          .map((filter) => (
+            <FiltersMultiSelectOption key={filter.id} filter={filter}>
+              {filter.label}
+            </FiltersMultiSelectOption>
+          ))}
+      </FiltersMultiSelectOptions>
+    </FiltersMultiSelect>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

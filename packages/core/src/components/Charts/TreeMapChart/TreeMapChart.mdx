@@ -1,0 +1,311 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TreeMapChartStories from './TreeMapChart.stories';
+
+<Meta of={TreeMapChartStories} />
+
+# TreeMapChart
+
+## Default Usage
+
+The TreeMapChart visualizes hierarchical data using nested rectangles, where the size of each rectangle represents a value, making it ideal for showing proportional relationships within datasets.
+
+```jsx
+import { TreeMapChart } from '@ssa-ui-kit/core';
+
+const portfolioData = {
+  name: 'Investment Portfolio',
+  children: [
+    {
+      name: 'Technology',
+      value: 45000,
+    },
+    {
+      name: 'Healthcare',
+      value: 32000,
+    },
+    {
+      name: 'Finance',
+      value: 28000,
+    },
+    {
+      name: 'Energy',
+      value: 18000,
+    },
+    {
+      name: 'Real Estate',
+      value: 15000,
+    },
+  ],
+};
+
+export default function InvestmentOverview() {
+  return (
+    <TreeMapChart
+      data={portfolioData}
+      title="Portfolio Distribution"
+      features={['header']}
+    />
+  );
+}
+```
+
+## Features
+
+### Hierarchical Data Visualization
+
+Display nested data structures with multiple levels of categorization:
+
+```jsx
+const departmentStructure = {
+  name: 'Company Organization',
+  children: [
+    {
+      name: 'Engineering',
+      children: [
+        { name: 'Frontend', value: 12 },
+        { name: 'Backend', value: 15 },
+        { name: 'DevOps', value: 8 },
+        { name: 'QA', value: 10 },
+      ],
+    },
+    {
+      name: 'Sales',
+      children: [
+        { name: 'Enterprise', value: 8 },
+        { name: 'SMB', value: 12 },
+        { name: 'Partnerships', value: 5 },
+      ],
+    },
+    {
+      name: 'Marketing',
+      children: [
+        { name: 'Digital', value: 6 },
+        { name: 'Content', value: 4 },
+        { name: 'Events', value: 3 },
+      ],
+    },
+    {
+      name: 'Operations',
+      value: 15,
+    },
+  ],
+};
+
+return (
+  <TreeMapChart
+    data={departmentStructure}
+    title="Team Structure"
+    features={['header']}
+    leavesOnly={true}
+    innerPadding={3}
+  />
+);
+```
+
+### Custom Colors and Styling
+
+Apply custom color schemes and control visual appearance:
+
+```jsx
+const marketShareData = {
+  name: 'Market Share',
+  children: [
+    { name: 'Company A', value: 35, color: '#2E8B57' },
+    { name: 'Company B', value: 28, color: '#4169E1' },
+    { name: 'Company C', value: 20, color: '#FF6347' },
+    { name: 'Company D', value: 12, color: '#FFD700' },
+    { name: 'Others', value: 5, color: '#9370DB' },
+  ],
+};
+
+// Using custom color array
+return (
+  <TreeMapChart
+    data={marketShareData}
+    title="Market Share Analysis"
+    features={['header']}
+    colors={['#2E8B57', '#4169E1', '#FF6347', '#FFD700', '#9370DB']}
+    borderWidth={2}
+    borderColor={{ from: 'color', modifiers: [['darker', 0.3]] }}
+  />
+);
+
+// Using color callback function
+return (
+  <TreeMapChart
+    data={marketShareData}
+    title="Dynamic Market Share"
+    features={['header']}
+    colors={({ treeDepth, data }) => {
+      const colorPalette = ['#E8F5E8', '#A8D5A8', '#4CAF50', '#2E7D32'];
+      return data.color ?? colorPalette[treeDepth % colorPalette.length];
+    }}
+  />
+);
+```
+
+### Fullscreen Mode and Widget Card Integration
+
+Enable fullscreen viewing and customize the card wrapper:
+
+```jsx
+const salesData = {
+  name: 'Q4 Sales Performance',
+  children: [
+    {
+      name: 'North America',
+      children: [
+        { name: 'USA', value: 125000 },
+        { name: 'Canada', value: 35000 },
+        { name: 'Mexico', value: 18000 },
+      ],
+    },
+    {
+      name: 'Europe',
+      children: [
+        { name: 'Germany', value: 95000 },
+        { name: 'UK', value: 78000 },
+        { name: 'France', value: 65000 },
+        { name: 'Others', value: 42000 },
+      ],
+    },
+    {
+      name: 'Asia Pacific',
+      children: [
+        { name: 'Japan', value: 88000 },
+        { name: 'Australia', value: 45000 },
+        { name: 'Singapore', value: 32000 },
+      ],
+    },
+  ],
+};
+
+return (
+  <TreeMapChart
+    data={salesData}
+    title="Global Sales Distribution"
+    features={['header', 'fullscreenMode']}
+    widgetCardProps={{
+      subtitle: 'Regional performance breakdown',
+      contentClassName: 'custom-treemap-container',
+    }}
+    innerPadding={4}
+    labelSkipSize={15}
+  />
+);
+```
+
+### Custom Tooltips and Labels
+
+Customize how data is displayed in tooltips and labels:
+
+```jsx
+import { TreeMapTooltipBase } from '@ssa-ui-kit/core';
+
+const budgetData = {
+  name: 'Annual Budget',
+  children: [
+    { name: 'Salaries', value: 2500000 },
+    { name: 'Operations', value: 850000 },
+    { name: 'Marketing', value: 420000 },
+    { name: 'R&D', value: 680000 },
+    { name: 'Infrastructure', value: 320000 },
+  ],
+};
+
+const formatCurrency = (value) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    notation: 'compact',
+  }).format(value);
+
+return (
+  <TreeMapChart
+    data={budgetData}
+    title="Budget Allocation"
+    features={['header']}
+    label={(node) => `${node.id}\n${formatCurrency(node.value)}`}
+    labelSkipSize={20}
+    tooltip={({ node }) => (
+      <TreeMapTooltipBase css={{ padding: '8px 12px' }}>
+        <div css={{ fontWeight: 'bold', marginBottom: '4px' }}>{node.id}</div>
+        <div css={{ color: '#666' }}>Amount: {formatCurrency(node.value)}</div>
+        <div css={{ color: '#666', fontSize: '11px' }}>
+          {((node.value / 4770000) * 100).toFixed(1)}% of total budget
+        </div>
+      </TreeMapTooltipBase>
+    )}
+  />
+);
+```
+
+### Responsive and Aspect Ratio Control
+
+Configure the chart for different container sizes and aspect ratios:
+
+```jsx
+const fileSystemData = {
+  name: 'Storage Usage',
+  children: [
+    {
+      name: 'Documents',
+      children: [
+        { name: 'PDFs', value: 2.5 },
+        { name: 'Spreadsheets', value: 1.8 },
+        { name: 'Presentations', value: 3.2 },
+      ],
+    },
+    {
+      name: 'Media',
+      children: [
+        { name: 'Photos', value: 15.6 },
+        { name: 'Videos', value: 45.3 },
+        { name: 'Audio', value: 8.9 },
+      ],
+    },
+    {
+      name: 'Applications',
+      value: 12.4,
+    },
+    {
+      name: 'System Files',
+      value: 8.7,
+    },
+  ],
+};
+
+// Square aspect ratio for dashboard widgets
+return (
+  <TreeMapChart
+    data={fileSystemData}
+    title="Disk Usage Analysis"
+    features={['header']}
+    widgetCardProps={{
+      contentClassName: css`
+        aspect-ratio: 1/1;
+        max-width: 400px;
+      `,
+    }}
+    label={(node) => `${node.id}\n${node.formattedValue}GB`}
+    labelSkipSize={12}
+    innerPadding={2}
+  />
+);
+
+// No widget card for embedded use
+return (
+  <TreeMapChart
+    data={fileSystemData}
+    features={[]}
+    colors={['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']}
+    labelTextColor="#333"
+    parentLabelTextColor="#666"
+  />
+);
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

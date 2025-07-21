@@ -1,0 +1,226 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as TooltipStories from './Tooltip.stories';
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+## Default Usage
+
+The Tooltip component provides contextual information that appears when users interact with trigger elements. Built on Floating UI, it offers flexible positioning, interaction modes, and customizable content. The tooltip system uses a compound component pattern with Tooltip, TooltipTrigger, and TooltipContent:
+
+```tsx
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  Button,
+} from '@ssa-ui-kit/core';
+
+function BasicTooltip() {
+  return (
+    <Tooltip enableHover>
+      <TooltipTrigger>
+        <Button text="Hover me" />
+      </TooltipTrigger>
+      <TooltipContent>This is a helpful tooltip message</TooltipContent>
+    </Tooltip>
+  );
+}
+```
+
+## Features
+
+### Hover Tooltips
+
+Display tooltips on hover for helpful hints and information:
+
+```tsx
+function HoverTooltips() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      {/* Simple hover tooltip */}
+      <Tooltip enableHover placement="top">
+        <TooltipTrigger>
+          <Button text="Top" />
+        </TooltipTrigger>
+        <TooltipContent>Tooltip appears on top</TooltipContent>
+      </Tooltip>
+
+      {/* Bottom placement */}
+      <Tooltip enableHover placement="bottom">
+        <TooltipTrigger>
+          <Button text="Bottom" />
+        </TooltipTrigger>
+        <TooltipContent>Tooltip appears at the bottom</TooltipContent>
+      </Tooltip>
+
+      {/* Left placement */}
+      <Tooltip enableHover placement="left">
+        <TooltipTrigger>
+          <Button text="Left" />
+        </TooltipTrigger>
+        <TooltipContent>Tooltip appears on the left</TooltipContent>
+      </Tooltip>
+
+      {/* Right placement */}
+      <Tooltip enableHover placement="right">
+        <TooltipTrigger>
+          <Button text="Right" />
+        </TooltipTrigger>
+        <TooltipContent>Tooltip appears on the right</TooltipContent>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+### Click Tooltips
+
+Create interactive tooltips that respond to clicks:
+
+```tsx
+function ClickTooltips() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      {/* Click to show tooltip */}
+      <Tooltip enableClick>
+        <TooltipTrigger>
+          <Button text="Click me" />
+        </TooltipTrigger>
+        <TooltipContent>
+          Click the button again or click outside to close
+        </TooltipContent>
+      </Tooltip>
+
+      {/* Icon button with click tooltip */}
+      <Tooltip enableClick placement="top">
+        <TooltipTrigger>
+          <Button
+            size="medium"
+            endIcon={<Icon name="information" size={16} />}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          This provides additional information about the feature
+        </TooltipContent>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+### Tooltip Sizes
+
+Control tooltip size with the size prop:
+
+```tsx
+function TooltipSizes() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+      {/* Small tooltip */}
+      <Tooltip enableHover size="small">
+        <TooltipTrigger>
+          <Button text="Small" size="small" />
+        </TooltipTrigger>
+        <TooltipContent>Small tooltip</TooltipContent>
+      </Tooltip>
+
+      {/* Medium tooltip (default) */}
+      <Tooltip enableHover size="medium">
+        <TooltipTrigger>
+          <Button text="Medium" size="medium" />
+        </TooltipTrigger>
+        <TooltipContent>Medium sized tooltip with more content</TooltipContent>
+      </Tooltip>
+
+      {/* Large tooltip */}
+      <Tooltip enableHover size="large">
+        <TooltipTrigger>
+          <Button text="Large" size="large" />
+        </TooltipTrigger>
+        <TooltipContent>
+          Large tooltip that can contain more detailed information and longer
+          text content
+        </TooltipContent>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+### Custom Content Tooltips
+
+Create rich tooltips with custom content including icons, progress indicators, and formatting:
+
+```tsx
+import { Typography, ProgressCircle, Icon } from '@ssa-ui-kit/core';
+
+function CustomContentTooltips() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      {/* Progress tooltip */}
+      <Tooltip enableHover size="large" placement="top">
+        <TooltipTrigger>
+          <Button text="Progress" endIcon={<Icon name="chart" size={16} />} />
+        </TooltipTrigger>
+        <TooltipContent css={{ textAlign: 'center' }}>
+          <Typography variant="h6">Your Progress</Typography>
+          <div css={{ margin: '8px auto', width: '60px' }}>
+            <ProgressCircle
+              max={100}
+              currentValue={75}
+              color="green"
+              infoContent="75%"
+              size={60}
+            />
+          </div>
+          <Typography variant="body2">Keep going!</Typography>
+        </TooltipContent>
+      </Tooltip>
+
+      {/* Status tooltip */}
+      <Tooltip enableHover size="medium">
+        <TooltipTrigger>
+          <Button text="Status" startIcon={<Icon name="check" size={16} />} />
+        </TooltipTrigger>
+        <TooltipContent>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Icon name="check" size={16} color="green" />
+            <div>
+              <Typography variant="body1" css={{ fontWeight: 600 }}>
+                All systems operational
+              </Typography>
+              <Typography variant="body2" css={{ color: '#666' }}>
+                Last updated: 2 minutes ago
+              </Typography>
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+
+      {/* Help tooltip */}
+      <Tooltip enableHover size="large" placement="bottom">
+        <TooltipTrigger>
+          <Button text="Help" endIcon={<Icon name="question" size={16} />} />
+        </TooltipTrigger>
+        <TooltipContent>
+          <Typography variant="h6" css={{ marginBottom: '8px' }}>
+            Quick Help
+          </Typography>
+          <ul style={{ margin: 0, paddingLeft: '16px', lineHeight: '1.5' }}>
+            <li>Click to select items</li>
+            <li>Hold Shift for multiple selection</li>
+            <li>Right-click for context menu</li>
+          </ul>
+        </TooltipContent>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

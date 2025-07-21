@@ -54,7 +54,7 @@ const Dropdown = <T extends DropdownOptionProps>({
 
     setIsOpen(false);
 
-    if (isDisabled || !item) {
+    if (isDisabled || !innerItem) {
       return;
     }
 

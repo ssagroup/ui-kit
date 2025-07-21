@@ -25,11 +25,6 @@ p {
   padding: 0;
 }
 
-.token.plain-text,
-.language-jsx span {
-  color: white;
-}
-
 #storybook-docs .sbdocs-preview,
 #storybook-docs .docs-story {
   overflow: visible;

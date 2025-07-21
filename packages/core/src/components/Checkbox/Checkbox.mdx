@@ -1,0 +1,164 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as CheckboxStories from './Checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+Checkbox is a form control that allows users to select one or more options from a set. It supports various states including checked, unchecked, indeterminate, and disabled.
+
+## Default Usage
+
+The basic Checkbox component can be used with or without a label:
+
+```tsx
+import { Checkbox } from '@ssa-ui-kit/core';
+
+function BasicCheckbox() {
+  const handleChange = (isChecked: boolean) => {
+    console.log('Checkbox state:', isChecked);
+  };
+
+  return (
+    <Checkbox
+      id="basic-checkbox"
+      text="Accept terms and conditions"
+      onChange={handleChange}
+    />
+  );
+}
+```
+
+## Features
+
+### Initial State
+
+Set the initial checked state of the checkbox:
+
+```tsx
+<Checkbox
+  id="checked-checkbox"
+  text="Pre-checked option"
+  initialState={true}
+  onChange={handleChange}
+/>
+```
+
+### External State Control
+
+Control the checkbox state externally using the `externalState` prop:
+
+```tsx
+import { useState } from 'react';
+
+function ControlledCheckbox() {
+  const [isChecked, setIsChecked] = useState(false);
+
+  return (
+    <Checkbox
+      id="controlled-checkbox"
+      text="Controlled checkbox"
+      externalState={isChecked}
+      onChange={setIsChecked}
+    />
+  );
+}
+```
+
+### Indeterminate State
+
+Use the indeterminate state to represent a partially selected state, commonly used in tree structures or when controlling multiple child checkboxes:
+
+```tsx
+<Checkbox
+  id="indeterminate-checkbox"
+  text="Select all items"
+  isIndeterminate={true}
+  onChange={handleChange}
+/>
+```
+
+### Disabled State
+
+Disable user interaction with the checkbox:
+
+```tsx
+// Disabled unchecked
+<Checkbox
+  id="disabled-unchecked"
+  text="Disabled option"
+  isDisabled={true}
+  onChange={handleChange}
+/>
+
+// Disabled checked
+<Checkbox
+  id="disabled-checked"
+  text="Disabled checked option"
+  initialState={true}
+  isDisabled={true}
+  onChange={handleChange}
+/>
+```
+
+### Without Label
+
+Checkboxes can be used without text labels when the context is clear:
+
+```tsx
+<Checkbox id="no-label-checkbox" onChange={handleChange} />
+```
+
+### Custom Colors
+
+Apply custom colors to match your design system:
+
+```tsx
+<Checkbox
+  id="green-checkbox"
+  text="Success option"
+  color="green"
+  onChange={handleChange}
+/>
+
+<Checkbox
+  id="blue-checkbox"
+  text="Info option"
+  color="blue"
+  onChange={handleChange}
+/>
+```
+
+### Form Integration
+
+Integrate with forms using React Hook Form:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+function FormCheckbox() {
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Checkbox
+        id="form-checkbox"
+        text="Subscribe to newsletter"
+        name="newsletter"
+        isRequired={true}
+        register={register('newsletter')}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

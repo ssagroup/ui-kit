@@ -1,0 +1,550 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as NumberFieldStories from './NumberField.stories';
+
+<Meta of={NumberFieldStories} />
+
+# NumberField
+
+## Default Usage
+
+The NumberField component provides a specialized input field for numeric values with built-in number formatting, validation, and locale support. It extends the standard Input component with advanced number handling capabilities and integrates seamlessly with the Field component system:
+
+```tsx
+import { NumberField } from '@ssa-ui-kit/core';
+
+function BasicNumberField() {
+  const [value, setValue] = useState<number>(0);
+
+  const handleChange = (newValue: number) => {
+    setValue(newValue);
+    console.log('New value:', newValue);
+  };
+
+  return (
+    <NumberField
+      name="amount"
+      label="Amount"
+      placeholder="Enter amount"
+      description="Enter a numeric value"
+      value={value}
+      onChange={handleChange}
+      numberFormat={{
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      }}
+    />
+  );
+}
+```
+
+## Features
+
+### Basic Number Input
+
+Simple number input with formatting:
+
+```tsx
+function SimpleNumberInput() {
+  const [value, setValue] = useState<number>();
+
+  return (
+    <NumberField
+      name="simple-number"
+      label="Simple Number"
+      placeholder="Enter a number"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+
+### Currency Input
+
+Format numbers as currency with locale support:
+
+```tsx
+function CurrencyInput() {
+  const [amount, setAmount] = useState<number>(0);
+
+  return (
+    <NumberField
+      name="currency"
+      label="Price"
+      placeholder="Enter price"
+      description="Enter the price in USD"
+      value={amount}
+      onChange={setAmount}
+      numberFormat={{
+        style: 'currency',
+        currency: 'USD',
+        locales: 'en-US',
+      }}
+    />
+  );
+}
+```
+
+### Percentage Input
+
+Handle percentage values with proper formatting:
+
+```tsx
+function PercentageInput() {
+  const [percentage, setPercentage] = useState<number>(0);
+
+  return (
+    <NumberField
+      name="percentage"
+      label="Discount Percentage"
+      placeholder="Enter percentage"
+      description="Enter a value between 0 and 100"
+      value={percentage}
+      onChange={setPercentage}
+      numberFormat={{
+        style: 'percent',
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 0,
+      }}
+    />
+  );
+}
+```
+
+### Precision Control
+
+Configure decimal places and digit limits:
+
+```tsx
+function PrecisionControlExample() {
+  const [value, setValue] = useState<number>(0);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Two decimal places */}
+      <NumberField
+        name="decimal-2"
+        label="Two Decimal Places"
+        placeholder="0.00"
+        value={value}
+        onChange={setValue}
+        numberFormat={{
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        }}
+      />
+      {/* Integer only */}
+      <NumberField
+        name="integer"
+        label="Integer Only"
+        placeholder="Enter whole number"
+        value={value}
+        onChange={setValue}
+        numberFormat={{
+          maximumFractionDigits: 0,
+        }}
+      />
+      {/* Limited integer digits */}
+      <NumberField
+        name="limited-digits"
+        label="Max 5 Digits"
+        placeholder="Enter up to 5 digits"
+        value={value}
+        onChange={setValue}
+        numberFormat={{
+          maximumIntegerDigits: 5,
+          maximumFractionDigits: 2,
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Status States
+
+Display different states with visual feedback:
+
+```tsx
+function StatusStatesExample() {
+  const [basicValue, setBasicValue] = useState<number>(0);
+  const [errorValue, setErrorValue] = useState<number>(0);
+  const [successValue, setSuccessValue] = useState<number>(100);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Basic state */}
+      <NumberField
+        name="basic"
+        label="Basic Input"
+        placeholder="Enter amount"
+        description="Enter any numeric value"
+        value={basicValue}
+        onChange={setBasicValue}
+        status="basic"
+      />
+      {/* Error state */}
+      <NumberField
+        name="error"
+        label="Amount with Error"
+        placeholder="Enter amount"
+        value={errorValue}
+        onChange={setErrorValue}
+        status="error"
+        error="Value must be greater than 0"
+      />
+      {/* Success state */}
+      <NumberField
+        name="success"
+        label="Valid Amount"
+        placeholder="Enter amount"
+        value={successValue}
+        onChange={setSuccessValue}
+        status="success"
+        success="Perfect! Valid amount entered."
+      />
+    </div>
+  );
+}
+```
+
+### Locale-Specific Formatting
+
+Format numbers according to different locales:
+
+```tsx
+function LocaleFormattingExample() {
+  const [value, setValue] = useState<number>(1234.56);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* US English */}
+      <NumberField
+        name="us-format"
+        label="US Format"
+        value={value}
+        onChange={setValue}
+        numberFormat={{
+          locales: 'en-US',
+          maximumFractionDigits: 2,
+        }}
+      />
+      {/* German */}
+      <NumberField
+        name="german-format"
+        label="German Format"
+        value={value}
+        onChange={setValue}
+        numberFormat={{
+          locales: 'de-DE',
+          maximumFractionDigits: 2,
+        }}
+      />
+      {/* French */}
+      <NumberField
+        name="french-format"
+        label="French Format"
+        value={value}
+        onChange={setValue}
+        numberFormat={{
+          locales: 'fr-FR',
+          maximumFractionDigits: 2,
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Form Integration
+
+Integrate with form validation systems:
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+
+interface FormData {
+  price: number;
+  quantity: number;
+  discount: number;
+}
+
+function FormIntegrationExample() {
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      price: 0,
+      quantity: 1,
+      discount: 0,
+    },
+  });
+
+  const watchedValues = watch();
+  const total =
+    watchedValues.price *
+    watchedValues.quantity *
+    (1 - watchedValues.discount / 100);
+
+  const onSubmit = (data: FormData) => {
+    console.log('Form submitted:', data);
+    console.log('Calculated total:', total);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <Controller
+          name="price"
+          control={control}
+          rules={{
+            required: 'Price is required',
+            min: { value: 0.01, message: 'Price must be greater than 0' },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <NumberField
+              name="price"
+              label="Price"
+              placeholder="Enter price"
+              value={value}
+              onChange={onChange}
+              status={error ? 'error' : 'basic'}
+              error={error?.message}
+              numberFormat={{
+                style: 'currency',
+                currency: 'USD',
+                locales: 'en-US',
+              }}
+            />
+          )}
+        />
+        <Controller
+          name="quantity"
+          control={control}
+          rules={{
+            required: 'Quantity is required',
+            min: { value: 1, message: 'Minimum quantity is 1' },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <NumberField
+              name="quantity"
+              label="Quantity"
+              placeholder="Enter quantity"
+              value={value}
+              onChange={onChange}
+              status={error ? 'error' : 'basic'}
+              error={error?.message}
+              numberFormat={{
+                maximumFractionDigits: 0,
+              }}
+            />
+          )}
+        />
+        <Controller
+          name="discount"
+          control={control}
+          rules={{
+            min: { value: 0, message: 'Discount cannot be negative' },
+            max: { value: 100, message: 'Discount cannot exceed 100%' },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <NumberField
+              name="discount"
+              label="Discount (%)"
+              placeholder="Enter discount percentage"
+              value={value}
+              onChange={onChange}
+              status={error ? 'error' : 'basic'}
+              error={error?.message}
+              numberFormat={{
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 0,
+              }}
+            />
+          )}
+        />
+        <div
+          style={{
+            padding: '16px',
+            background: '#f8f9fa',
+            borderRadius: '4px',
+            marginTop: '16px',
+          }}>
+          <strong>
+            Total:{' '}
+            {total.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </strong>
+        </div>
+        <button type="submit">Calculate Total</button>
+      </div>
+    </form>
+  );
+}
+```
+
+### Advanced Number Formatting
+
+Complex formatting scenarios:
+
+```tsx
+function AdvancedFormattingExample() {
+  const [scientificValue, setScientificValue] = useState<number>(123456);
+  const [compactValue, setCompactValue] = useState<number>(1234567890);
+  const [unitValue, setUnitValue] = useState<number>(25);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Scientific notation */}
+      <NumberField
+        name="scientific"
+        label="Scientific Notation"
+        placeholder="Enter large number"
+        description="Displayed in scientific notation"
+        value={scientificValue}
+        onChange={setScientificValue}
+        numberFormat={{
+          notation: 'scientific',
+          maximumFractionDigits: 2,
+        }}
+      />
+      {/* Compact notation */}
+      <NumberField
+        name="compact"
+        label="Compact Notation"
+        placeholder="Enter number"
+        description="Displayed in compact format (K, M, B)"
+        value={compactValue}
+        onChange={setCompactValue}
+        numberFormat={{
+          notation: 'compact',
+          compactDisplay: 'short',
+        }}
+      />
+      {/* With units */}
+      <NumberField
+        name="temperature"
+        label="Temperature"
+        placeholder="Enter temperature"
+        description="Temperature in Celsius"
+        value={unitValue}
+        onChange={setUnitValue}
+        numberFormat={{
+          style: 'unit',
+          unit: 'celsius',
+          maximumFractionDigits: 1,
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Disabled and Read-Only States
+
+Handle different interaction states:
+
+```tsx
+function DisabledAndReadOnlyExample() {
+  const [value] = useState<number>(42.5);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Disabled */}
+      <NumberField
+        name="disabled"
+        label="Disabled Field"
+        placeholder="Cannot edit"
+        description="This field is disabled"
+        value={value}
+        disabled={true}
+        numberFormat={{
+          style: 'currency',
+          currency: 'USD',
+        }}
+      />
+      {/* Read-only appearance with custom styling */}
+      <NumberField
+        name="readonly"
+        label="Read-Only Display"
+        description="Display only, no interaction"
+        value={value}
+        inputProps={{
+          readOnly: true,
+          style: {
+            backgroundColor: '#f8f9fa',
+            cursor: 'default',
+          },
+        }}
+        numberFormat={{
+          style: 'currency',
+          currency: 'USD',
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Custom Validation
+
+Implement custom validation logic:
+
+```tsx
+function CustomValidationExample() {
+  const [value, setValue] = useState<number>(0);
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
+
+  const validateValue = (newValue: number) => {
+    setError('');
+    setSuccess('');
+
+    if (newValue < 0) {
+      setError('Value cannot be negative');
+      return;
+    }
+
+    if (newValue > 1000) {
+      setError('Value cannot exceed 1,000');
+      return;
+    }
+
+    if (newValue >= 100 && newValue <= 500) {
+      setSuccess('Perfect! Value is in the optimal range.');
+    }
+  };
+
+  const handleChange = (newValue: number) => {
+    setValue(newValue);
+    validateValue(newValue);
+  };
+
+  return (
+    <NumberField
+      name="validated"
+      label="Custom Validation"
+      placeholder="Enter value between 0-1000"
+      description="Optimal range is 100-500"
+      value={value}
+      onChange={handleChange}
+      status={error ? 'error' : success ? 'success' : 'basic'}
+      error={error}
+      success={success}
+      numberFormat={{
+        maximumFractionDigits: 2,
+      }}
+    />
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

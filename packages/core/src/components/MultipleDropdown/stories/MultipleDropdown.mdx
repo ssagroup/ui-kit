@@ -1,0 +1,450 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as MultipleDropdownStories from './MultipleDropdown.stories';
+
+<Meta of={MultipleDropdownStories} />
+
+# MultipleDropdown
+
+## Default Usage
+
+The MultipleDropdown component provides a flexible dropdown interface that supports both single and multiple item selection. It displays selected items with optional counters and provides a clean, accessible interface for choosing from a list of options:
+
+```tsx
+import { MultipleDropdown, DropdownOption } from '@ssa-ui-kit/core';
+
+const items = [
+  { value: 1, label: 'Option 1', subText: 'Description 1' },
+  { value: 2, label: 'Option 2', subText: 'Description 2' },
+  { value: 3, label: 'Option 3', subText: 'Description 3' },
+];
+
+function BasicMultipleDropdown() {
+  const [selectedItems, setSelectedItems] = useState([items[0]]);
+
+  const handleChange = (value: string | number, isSelected: boolean) => {
+    if (isSelected) {
+      const item = items.find((item) => item.value === value);
+      if (item) {
+        setSelectedItems((prev) => [...prev, item]);
+      }
+    } else {
+      setSelectedItems((prev) => prev.filter((item) => item.value !== value));
+    }
+  };
+
+  return (
+    <MultipleDropdown
+      label="Categories"
+      selectedItems={selectedItems}
+      isMultiple={true}
+      onChange={handleChange}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+}
+```
+
+## Features
+
+### Multiple Selection Mode
+
+Select multiple items with visual feedback and counter display:
+
+```tsx
+function MultipleSelectionExample() {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const handleChange = (value, isSelected) => {
+    if (isSelected) {
+      const item = items.find((item) => item.value === value);
+      setSelectedItems((prev) => [...prev, item]);
+    } else {
+      setSelectedItems((prev) => prev.filter((item) => item.value !== value));
+    }
+  };
+
+  return (
+    <MultipleDropdown
+      label="Select Categories"
+      selectedItems={selectedItems}
+      isMultiple={true}
+      onChange={handleChange}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+}
+```
+
+### Single Selection Mode
+
+Use as a traditional single-select dropdown:
+
+```tsx
+function SingleSelectionExample() {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const handleChange = (value, isSelected) => {
+    if (isSelected) {
+      const item = items.find((item) => item.value === value);
+      setSelectedItems([item]); // Only one item for single selection
+    } else {
+      setSelectedItems([]);
+    }
+  };
+
+  return (
+    <MultipleDropdown
+      label="Choose One"
+      selectedItems={selectedItems}
+      isMultiple={false}
+      onChange={handleChange}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+}
+```
+
+### Placeholder Control
+
+Control placeholder visibility and behavior:
+
+```tsx
+// With placeholder shown
+<MultipleDropdown
+  label="With Placeholder"
+  selectedItems={[]}
+  showPlaceholder={true}
+  placeholder="Choose options..."
+>
+  {items.map((item) => (
+    <DropdownOption key={item.value} value={item.value}>
+      {item.label}
+    </DropdownOption>
+  ))}
+</MultipleDropdown>
+
+// Placeholder hidden when no items selected
+<MultipleDropdown
+  label="No Placeholder"
+  selectedItems={[]}
+  showPlaceholder={false}
+>
+  {items.map((item) => (
+    <DropdownOption key={item.value} value={item.value}>
+      {item.label}
+    </DropdownOption>
+  ))}
+</MultipleDropdown>
+```
+
+### Disabled State
+
+Disable the dropdown when interaction is not allowed:
+
+```tsx
+<MultipleDropdown
+  label="Disabled Dropdown"
+  selectedItems={[items[0]]}
+  isDisabled={true}
+  onChange={() => {}} // No-op when disabled
+>
+  {items.map((item) => (
+    <DropdownOption key={item.value} value={item.value}>
+      {item.label}
+    </DropdownOption>
+  ))}
+</MultipleDropdown>
+```
+
+### Controlled Open State
+
+Control when the dropdown is open programmatically:
+
+```tsx
+function ControlledOpenExample() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? 'Close' : 'Open'} Dropdown
+      </button>
+      <MultipleDropdown
+        label="Controlled Dropdown"
+        selectedItems={selectedItems}
+        isOpen={isOpen}
+        onChange={(value, isSelected) => {
+          // Handle selection
+          if (isSelected) {
+            const item = items.find((item) => item.value === value);
+            setSelectedItems((prev) => [...prev, item]);
+          } else {
+            setSelectedItems((prev) =>
+              prev.filter((item) => item.value !== value),
+            );
+          }
+        }}>
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+    </div>
+  );
+}
+```
+
+### Custom Option Content
+
+Create rich option content with custom styling:
+
+```tsx
+import styled from '@emotion/styled';
+
+const CustomOption = styled(DropdownOption)`
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  &:hover {
+    background: #f8f9fa;
+  }
+
+  .option-title {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .option-subtitle {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+  }
+`;
+
+function CustomOptionsExample() {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  return (
+    <MultipleDropdown
+      label="Rich Options"
+      selectedItems={selectedItems}
+      onChange={(value, isSelected) => {
+        // Handle selection logic
+      }}>
+      {items.map((item) => (
+        <CustomOption key={item.value} value={item.value}>
+          <div className="option-title">{item.label}</div>
+          <div className="option-subtitle">{item.subText}</div>
+        </CustomOption>
+      ))}
+    </MultipleDropdown>
+  );
+}
+```
+
+### Dynamic Item Updates
+
+Add or remove items dynamically:
+
+```tsx
+function DynamicItemsExample() {
+  const [items, setItems] = useState([
+    { value: 1, label: 'Item 1', subText: 'Description 1' },
+    { value: 2, label: 'Item 2', subText: 'Description 2' },
+  ]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const addItem = () => {
+    const newItem = {
+      value: items.length + 1,
+      label: `Item ${items.length + 1}`,
+      subText: `Description ${items.length + 1}`,
+    };
+    setItems((prev) => [...prev, newItem]);
+  };
+
+  const removeLastItem = () => {
+    setItems((prev) => prev.slice(0, -1));
+    // Also remove from selected if necessary
+    setSelectedItems((prev) =>
+      prev.filter((selected) =>
+        items.slice(0, -1).some((item) => item.value === selected.value),
+      ),
+    );
+  };
+
+  return (
+    <div>
+      <div style={{ marginBottom: '16px' }}>
+        <button onClick={addItem}>Add Item</button>
+        <button onClick={removeLastItem} style={{ marginLeft: '8px' }}>
+          Remove Last Item
+        </button>
+      </div>
+
+      <MultipleDropdown
+        label="Dynamic Items"
+        selectedItems={selectedItems}
+        onChange={(value, isSelected) => {
+          if (isSelected) {
+            const item = items.find((item) => item.value === value);
+            setSelectedItems((prev) => [...prev, item]);
+          } else {
+            setSelectedItems((prev) =>
+              prev.filter((item) => item.value !== value),
+            );
+          }
+        }}>
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+    </div>
+  );
+}
+```
+
+### Form Integration
+
+Integrate with forms and validation:
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+
+function FormIntegrationExample() {
+  const { control, handleSubmit, watch } = useForm({
+    defaultValues: {
+      categories: [],
+    },
+  });
+
+  const selectedCategories = watch('categories');
+
+  const onSubmit = (data) => {
+    console.log('Form data:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name="categories"
+        control={control}
+        rules={{ required: 'Please select at least one category' }}
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
+          <div>
+            <MultipleDropdown
+              label="Categories"
+              selectedItems={value || []}
+              onChange={(itemValue, isSelected) => {
+                if (isSelected) {
+                  const item = items.find((item) => item.value === itemValue);
+                  onChange([...(value || []), item]);
+                } else {
+                  onChange(
+                    (value || []).filter((item) => item.value !== itemValue),
+                  );
+                }
+              }}>
+              {items.map((item) => (
+                <DropdownOption key={item.value} value={item.value}>
+                  {item.label}
+                </DropdownOption>
+              ))}
+            </MultipleDropdown>
+            {error && (
+              <div style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                {error.message}
+              </div>
+            )}
+          </div>
+        )}
+      />
+      <button type="submit" style={{ marginTop: '16px' }}>
+        Submit
+      </button>
+    </form>
+  );
+}
+```
+
+### Custom Styling
+
+Apply custom styles to the dropdown and its options:
+
+```tsx
+import { css } from '@emotion/react';
+
+function StyledDropdownExample() {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  return (
+    <MultipleDropdown
+      label="Styled Dropdown"
+      selectedItems={selectedItems}
+      onChange={(value, isSelected) => {
+        // Handle selection
+      }}
+      css={css`
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 8px;
+
+        &:focus {
+          background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        &[aria-expanded='true'] {
+          color: white;
+
+          svg path {
+            stroke: white;
+          }
+        }
+      `}>
+      {items.map((item) => (
+        <DropdownOption
+          key={item.value}
+          value={item.value}
+          css={css`
+            background: white;
+            color: #333;
+
+            &:hover {
+              background: #f0f0f0;
+            }
+
+            &[aria-selected='true'] {
+              background: #667eea;
+              color: white;
+            }
+          `}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  );
+}
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

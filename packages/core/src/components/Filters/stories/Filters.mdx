@@ -1,0 +1,288 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import * as FiltersStories from './Filters.stories';
+
+<Meta of={FiltersStories} />
+
+# Filters
+
+## Default Usage
+
+The Filters component provides a comprehensive filtering interface with multiple dropdown filters that can be used to filter tables or data sets. It automatically handles overflow with a "More" button and includes apply/clear/reset functionality:
+
+```tsx
+import { Filters } from '@ssa-ui-kit/core';
+
+function BasicFilters() {
+  const filterData = {
+    strategy: {
+      id: 'strategy',
+      title: 'Strategy',
+      isOpened: true,
+      ariaControls: 'strategy-panel',
+      selectedItems: ['checkbox1', 'checkbox4'],
+      items: {
+        checkbox1: {
+          key: 'strategy-checkbox1',
+          name: 'checkbox1',
+          content: {
+            statePath: ['strategy', 'items', 'checkbox1'],
+            text: 'Growth Strategy',
+          },
+        },
+        checkbox2: {
+          key: 'strategy-checkbox2',
+          name: 'checkbox2',
+          content: {
+            statePath: ['strategy', 'items', 'checkbox2'],
+            text: 'Value Strategy',
+          },
+        },
+        checkbox3: {
+          key: 'strategy-checkbox3',
+          name: 'checkbox3',
+          content: {
+            statePath: ['strategy', 'items', 'checkbox3'],
+            text: 'Income Strategy',
+          },
+        },
+      },
+    },
+    region: {
+      id: 'region',
+      title: 'Region',
+      isOpened: false,
+      ariaControls: 'region-panel',
+      selectedItems: ['north'],
+      items: {
+        north: {
+          key: 'region-north',
+          name: 'north',
+          content: {
+            statePath: ['region', 'items', 'north'],
+            text: 'North America',
+          },
+        },
+        europe: {
+          key: 'region-europe',
+          name: 'europe',
+          content: {
+            statePath: ['region', 'items', 'europe'],
+            text: 'Europe',
+          },
+        },
+        asia: {
+          key: 'region-asia',
+          name: 'asia',
+          content: {
+            statePath: ['region', 'items', 'asia'],
+            text: 'Asia Pacific',
+          },
+        },
+      },
+    },
+  };
+
+  const handleSubmit = (submitData: Record<string, string[]>) => {
+    console.log('Applied filters:', submitData);
+    // Apply filters to your data
+  };
+
+  const handleClear = () => {
+    console.log('Filters cleared');
+    // Clear all filters
+  };
+
+  const handleCancel = () => {
+    console.log('Filter changes cancelled');
+    // Revert filter changes
+  };
+
+  return (
+    <Filters
+      checkboxData={filterData}
+      handleSubmit={handleSubmit}
+      handleClear={handleClear}
+      handleCancel={handleCancel}
+    />
+  );
+}
+```
+
+## Features
+
+### Filter Group Structure
+
+Each filter group contains multiple selectable items with full configuration:
+
+```tsx
+const singleFilterGroup = {
+  category: {
+    id: 'category',
+    title: 'Category',
+    isOpened: false, // Controls initial dropdown state
+    ariaControls: 'category-panel',
+    selectedItems: ['tech', 'finance'], // Pre-selected items
+    items: {
+      tech: {
+        key: 'category-tech',
+        name: 'tech',
+        content: {
+          statePath: ['category', 'items', 'tech'],
+          text: 'Technology',
+        },
+      },
+      finance: {
+        key: 'category-finance',
+        name: 'finance',
+        content: {
+          statePath: ['category', 'items', 'finance'],
+          text: 'Finance',
+        },
+      },
+      healthcare: {
+        key: 'category-healthcare',
+        name: 'healthcare',
+        isDisabled: true, // Disable specific items
+        content: {
+          statePath: ['category', 'items', 'healthcare'],
+          text: 'Healthcare',
+        },
+      },
+    },
+  },
+};
+```
+
+### External State Updates
+
+Update filter data externally and the component will reflect changes:
+
+```tsx
+import { useState } from 'react';
+
+function DynamicFilters() {
+  const [filterData, setFilterData] = useState(initialFilterData);
+
+  const updateFilters = () => {
+    setFilterData((prevData) => ({
+      ...prevData,
+      strategy: {
+        ...prevData.strategy,
+        selectedItems: ['newSelection'],
+      },
+    }));
+  };
+
+  return (
+    <div>
+      <button onClick={updateFilters}>Update Filters</button>
+      <Filters
+        checkboxData={filterData}
+        updatedCheckboxData={filterData} // External updates
+        handleSubmit={handleSubmit}
+      />
+    </div>
+  );
+}
+```
+
+### Filter Actions
+
+Handle different user actions with comprehensive callbacks:
+
+```tsx
+<Filters
+  checkboxData={filterData}
+  handleSubmit={(data) => {
+    // Called when user clicks Apply
+    console.log('Apply filters:', data);
+    // data format: { strategy: ['checkbox1', 'checkbox4'], region: ['north'] }
+  }}
+  handleClear={() => {
+    // Called when user clicks Clear All
+    console.log('Clear all filters');
+  }}
+  handleCancel={() => {
+    // Called when user clicks Cancel
+    console.log('Cancel filter changes');
+  }}
+  handleDropdownChange={(groupName, selectedItems) => {
+    // Called when individual dropdown selection changes
+    console.log(`${groupName} changed:`, selectedItems);
+  }}
+/>
+```
+
+### Disabled Filter Groups
+
+Disable entire filter groups when needed:
+
+```tsx
+const filterDataWithDisabled = {
+  strategy: {
+    id: 'strategy',
+    title: 'Strategy',
+    isDisabled: true, // Disable entire group
+    isOpened: false,
+    ariaControls: 'strategy-panel',
+    selectedItems: [],
+    items: {
+      // ... items
+    },
+  },
+  // ... other groups
+};
+```
+
+### Responsive Overflow Handling
+
+The component automatically handles overflow by moving filters to a "More" dropdown:
+
+```tsx
+// Many filter groups will automatically overflow
+const manyFilters = {
+  filter1: {
+    /* ... */
+  },
+  filter2: {
+    /* ... */
+  },
+  filter3: {
+    /* ... */
+  },
+  filter4: {
+    /* ... */
+  },
+  filter5: {
+    /* ... */
+  },
+  filter6: {
+    /* ... */
+  },
+  // Filters that don't fit will appear in "More" dropdown
+};
+
+<Filters checkboxData={manyFilters} handleSubmit={handleSubmit} />;
+```
+
+### Custom Styling
+
+The component provides responsive styling and can be customized:
+
+```tsx
+<div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+    backgroundColor: '#f8f9fa',
+  }}>
+  <Filters checkboxData={filterData} handleSubmit={handleSubmit} />
+</div>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
