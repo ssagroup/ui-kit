@@ -6,6 +6,7 @@ import { MainPage } from './MainPage';
 import { AnotherPage } from './AnotherPage';
 import AIDashboardGenerator from './AIDashboardGenerator';
 import BarLineComplexChartDemo from './BarLineComplexChartDemo';
+import OfficeManagement from './OfficeManagement';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
         element: (
           <Layout>
             <BarLineComplexChartDemo />
+          </Layout>
+        ),
+      },
+      {
+        path: '/office-management',
+        element: (
+          <Layout>
+            <OfficeManagement />
           </Layout>
         ),
       },

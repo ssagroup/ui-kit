@@ -38,6 +38,12 @@ const NAV_ITEMS = [
     iconSize: 20, 
     title: 'BarLine Chart' 
   },
+  { 
+    path: 'office-management', 
+    iconName: 'circle' as const, 
+    iconSize: 20, 
+    title: 'Office Management' 
+  },
 ];
 
 interface LayoutProps {
