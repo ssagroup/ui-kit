@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 // cspell:disable-next-line
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 require('dotenv').config();
@@ -149,6 +150,7 @@ const config = {
       ),
     },
   },
+  externals: [nodeExternals()],
 };
 
 module.exports = () => {
