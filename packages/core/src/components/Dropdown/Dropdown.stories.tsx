@@ -11,10 +11,10 @@ import { DropdownOptionProps } from '../..';
 type Args = DropdownProps<DropdownOptionProps>;
 
 const items = [
-  { id: 0, value: 'Zero lorem ipsum', subText: 'subtext' },
-  { id: 1, value: 'One lorem ipsum', subText: 'subtext' },
-  { id: 2, value: 'Two lorem ipsum', subText: 'subtext' },
-  { id: 3, value: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 0, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 1, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
 ];
 
 export default {
@@ -56,8 +56,8 @@ export const Basic: StoryObj = (args: Args) => {
   return (
     <Dropdown selectedItem={items[2]} isDisabled={args.isDisabled}>
       {items.map((item) => (
-        <DropdownOption key={item.id} value={item.id}>
-          {item.value}
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
         </DropdownOption>
       ))}
     </Dropdown>
@@ -70,8 +70,8 @@ export const Opened: StoryObj = (args: Args) => {
   return (
     <Dropdown selectedItem={items[2]} {...args}>
       {items.map((item) => (
-        <DropdownOption key={item.id} value={item.id}>
-          {item.value}
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
         </DropdownOption>
       ))}
     </Dropdown>
@@ -84,7 +84,11 @@ export const Simple: StoryObj = (args: Args) => {
   return (
     <Dropdown isDisabled={args.isDisabled}>
       {items.map((item) => (
-        <DropdownOption key={item.id} value={item.value} />
+        <DropdownOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
       ))}
     </Dropdown>
   );
@@ -141,8 +145,8 @@ export const Custom: StoryObj = (args: Args) => {
         }
       `}>
       {items.map((item) => (
-        <CustomOption key={item.id} value={item.id} label={item.value}>
-          {item.value}
+        <CustomOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
           &nbsp;|&nbsp;
           <b>{item.subText}</b>
         </CustomOption>
@@ -162,13 +166,22 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
     const newIndex = selectedIndex < items.length - 1 ? selectedIndex + 1 : 0;
     setSelectedIndex(newIndex);
   };
+  const handleChange = (item: (typeof items)[0]) => {
+    const newIndex = items.findIndex((i) => i.value === item.value);
+    setSelectedIndex(newIndex);
+  };
   return (
     <div>
       <Dropdown
         isDisabled={args.isDisabled}
-        selectedItem={items[selectedIndex]}>
+        selectedItem={items[selectedIndex]}
+        onChange={handleChange}>
         {items.map((item) => (
-          <DropdownOption key={item.id} value={item.value} />
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
         ))}
       </Dropdown>
       <Button variant="info" css={{ marginLeft: 10 }} onClick={handleUpdate}>

@@ -35,60 +35,53 @@ export const PeriodSelector = () => {
   };
 
   const items = [
-    { id: PANEL_DATA_PERIOD.LAST_HOUR, value: 'Last Hour' },
-    { id: PANEL_DATA_PERIOD.LAST_6_HOURS, value: 'Last 6 Hours' },
-    { id: PANEL_DATA_PERIOD.LAST_24_HOURS, value: 'Last 24 Hours' },
-    { id: PANEL_DATA_PERIOD.LAST_7_DAYS, value: 'Last 7 Days' },
-    { id: PANEL_DATA_PERIOD.LAST_30_DAYS, value: 'Last 30 Days' },
+    { value: PANEL_DATA_PERIOD.LAST_HOUR, label: 'Last Hour' },
+    { value: PANEL_DATA_PERIOD.LAST_6_HOURS, label: 'Last 6 Hours' },
+    { value: PANEL_DATA_PERIOD.LAST_24_HOURS, label: 'Last 24 Hours' },
+    { value: PANEL_DATA_PERIOD.LAST_7_DAYS, label: 'Last 7 Days' },
+    { value: PANEL_DATA_PERIOD.LAST_30_DAYS, label: 'Last 30 Days' },
   ];
 
   return (
     <Dropdown
-      selectedItem={items.find((item) => item.id === period)}
-      onChange={(item) => handlePeriodSelect(item.id)}
+      selectedItem={items.find((item) => item.value === period)}
+      onChange={(item) => handlePeriodSelect(item.value)}
       css={css`
-        min-width: 130px;
+        min-width: 135px;
         height: 44px;
         justify-content: space-between;
         white-space: nowrap;
         background: ${theme.colors.white};
         border: 1px solid ${theme.colors.grey};
+        &:hover {
+          border-color: ${theme.colors.greyDarker80};
+        }
         :focus {
           background: ${theme.colors.white};
           border-color: ${theme.colors.blueRoyal};
           box-shadow: none;
+          &:before {
+            border: none;
+          }
           svg path {
             stroke: ${theme.colors.greyDarker};
           }
         }
+        & svg path {
+          stroke: ${theme.colors.greyDarker};
+        }
         &[aria-expanded='true'] {
           box-shadow: none;
           background: ${theme.colors.white};
-          /* border-color: ${theme.colors.blueRoyal}; */
           border: 1px solid ${theme.colors.blueRoyal} !important;
           color: #000;
         }
       `}>
       {items.map((item) => (
-        <CustomOption key={item.id} value={item.id} label={item.value}>
-          {item.value}
+        <CustomOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
         </CustomOption>
       ))}
     </Dropdown>
   );
-
-  // return (
-  //   <Typeahead
-  //     filterOptions={false}
-  //     selectedItems={[period]}
-  //     onChange={(componentId) =>
-  //       handlePeriodSelect(componentId as PanelDataPeriod)
-  //     }>
-  //     {options.map(([value, label]) => (
-  //       <TypeaheadOption key={value} value={value} label={label}>
-  //         {label}
-  //       </TypeaheadOption>
-  //     ))}
-  //   </Typeahead>
-  // );
 };
