@@ -8,7 +8,6 @@ import { PANEL_DATA_PERIOD, PanelDataPeriod } from '@shared/panel';
 const CustomOption = styled(DropdownOption)`
   display: flex;
   align-items: center;
-  padding: 0 16px;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -53,22 +52,22 @@ export const PeriodSelector = () => {
         white-space: nowrap;
         background: ${theme.colors.white};
         border: 1px solid ${theme.colors.grey};
+        & svg path {
+          stroke: ${theme.colors.greyDarker};
+        }
         &:hover {
           border-color: ${theme.colors.greyDarker80};
         }
-        :focus {
+        &:focus {
           background: ${theme.colors.white};
           border-color: ${theme.colors.blueRoyal};
           box-shadow: none;
-          &:before {
+          &::before {
             border: none;
           }
           svg path {
             stroke: ${theme.colors.greyDarker};
           }
-        }
-        & svg path {
-          stroke: ${theme.colors.greyDarker};
         }
         &[aria-expanded='true'] {
           box-shadow: none;
