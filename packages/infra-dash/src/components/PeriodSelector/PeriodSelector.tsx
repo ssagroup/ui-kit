@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
+import { css, useTheme } from '@emotion/react';
 import { DropdownOption, Dropdown } from '@ssa-ui-kit/core';
 
 import { useInfraDashPanelDataPeriodContext } from '@shared/context';
 import { PANEL_DATA_PERIOD, PanelDataPeriod } from '@shared/panel';
-import { css, useTheme } from '@emotion/react';
 
 const CustomOption = styled(DropdownOption)`
   display: flex;
