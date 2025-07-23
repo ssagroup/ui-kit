@@ -1,3 +1,4 @@
+export type * from './types/emotion.d';
 export * from './widgets/DashboardViewer';
 export * from './widgets/DashboardEditor';
 export * from './entities/dashboard';
