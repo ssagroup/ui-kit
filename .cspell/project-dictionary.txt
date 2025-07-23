@@ -139,6 +139,7 @@ revparse
 rjsf
 ROI
 sbdocs
+sed
 sem
 SENDERID
 Serie
