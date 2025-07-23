@@ -80,7 +80,7 @@ jobs:
 
       - name: Install firebase tools
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | sed s/latest/v14.11.0/ | bash
 
       - name: Authenticate with Google Cloud
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -143,7 +143,7 @@ jobs:
         uses: ./.github/actions/pnpm-install
 
       - name: Install firebase tools
-        run: curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | sed s/latest/v14.11.0/ | bash
 
       - name: Build all packages
         run: pnpm build:all
