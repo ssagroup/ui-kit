@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { CommonProps } from '@global-types/emotion';
 
 export interface TabProps extends CommonProps {
@@ -12,21 +13,27 @@ export interface TabProps extends CommonProps {
     arg?: unknown,
   ) => React.ReactNode;
   isActive?: boolean;
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent<HTMLDivElement>) => void;
   ariaControls?: string;
   [prop: string | number | symbol]: unknown;
 }
 
-export interface SmallTabProps extends TabProps {
+export interface SmallTabProps
+  extends TabProps,
+    Omit<HTMLAttributes<HTMLButtonElement>, 'onClick'> {
   text: string;
 }
+
+export type TabBaseProps = Pick<SmallTabProps, 'isActive'> &
+  HTMLAttributes<HTMLButtonElement>;
 
 export interface LargeTabProps extends TabProps {
   topText: string;
   bottomText: string;
 }
 
-export interface TabBarProps {
+export interface TabBarProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'> {
   children: React.ReactElement<React.PropsWithChildren<TabProps>>[];
   className?: string;
 }

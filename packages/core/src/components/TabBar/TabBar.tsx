@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
 import { Children, cloneElement, isValidElement, useEffect } from 'react';
 import { useTabBarContext } from './TabBarContext';
@@ -12,7 +13,7 @@ const TabBarBase = styled.div``;
  * component to decide where to render the contents of the
  * selected tab.
  * */
-const TabBar = ({ children, className }: TabBarProps) => {
+const TabBar = ({ children, className, ...rest }: TabBarProps) => {
   const { activeTab, selectedTabId, setActiveTab, setActiveTabId } =
     useTabBarContext();
 
@@ -38,14 +39,24 @@ const TabBar = ({ children, className }: TabBarProps) => {
   }, [selectedTabId]);
 
   return (
-    <TabBarBase role="tablist" className={className}>
+    <TabBarBase role="tablist" className={className} {...rest}>
       {Children.map(children, (child) => {
         // istanbul ignore else
         if (isValidElement(child)) {
+          const {
+            tabId,
+            renderContent,
+            ariaControls,
+            as,
+            children,
+            isActive,
+            ...htmlProps
+          } = child.props;
           return cloneElement(child, {
-            key: child.props.tabId,
-            isActive: activeTab?.tabId === child.props.tabId,
-            onClick: () => setSelectedTabId(child.props.tabId),
+            key: tabId,
+            isActive: activeTab?.tabId === tabId,
+            onClick: () => setSelectedTabId(tabId),
+            ...htmlProps,
           });
         }
       })}
