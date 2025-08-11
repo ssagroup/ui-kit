@@ -50,6 +50,7 @@ const TabBar = ({ children, className, ...rest }: TabBarProps) => {
             as,
             children,
             isActive,
+            /* eslint-enable @typescript-eslint/no-unused-vars */
             ...htmlProps
           } = child.props;
           return cloneElement(child, {
