@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
 import { Children, cloneElement, isValidElement, useEffect } from 'react';
 import { useTabBarContext } from './TabBarContext';
@@ -45,6 +44,7 @@ const TabBar = ({ children, className, ...rest }: TabBarProps) => {
         if (isValidElement(child)) {
           const {
             tabId,
+            /* eslint-disable @typescript-eslint/no-unused-vars */
             renderContent,
             ariaControls,
             as,
