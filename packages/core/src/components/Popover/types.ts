@@ -7,6 +7,8 @@ import {
 
 export type InteractionsEnabled = 'click' | 'hover' | 'both';
 
+export type MountMode = 'unmount' | 'keep-mounted';
+
 export interface PopoverOptions {
   initialOpen?: boolean;
   placement?: Placement;

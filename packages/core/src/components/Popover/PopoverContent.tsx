@@ -6,20 +6,25 @@ import {
 } from '@floating-ui/react';
 import { usePopoverContext } from './hooks/usePopoverContext';
 import Wrapper from '@components/Wrapper';
+import { MountMode } from './types';
 
 export const PopoverContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLProps<HTMLDivElement> & {
     isFocusManagerDisabled?: boolean;
+    mountMode?: MountMode;
   }
 >(function PopoverContent(
-  { style, isFocusManagerDisabled = false, ...props },
+  { style, isFocusManagerDisabled = false, mountMode = 'unmount', ...props },
   propRef,
 ) {
   const { context: floatingContext, ...context } = usePopoverContext();
   const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
-  if (!floatingContext.open) return null;
+  const keepMounted = mountMode === 'keep-mounted';
+  if (!keepMounted && !floatingContext.open) return null;
+
+  const hidden = keepMounted && !floatingContext.open;
 
   return (
     <FloatingPortal>
@@ -32,7 +37,11 @@ export const PopoverContent = React.forwardRef<
           css={{
             width: 'auto',
           }}
-          style={{ ...context.floatingStyles, ...style }}
+          style={{
+            ...context.floatingStyles,
+            ...(hidden ? { display: 'none', pointerEvents: 'none' } : null),
+            ...style,
+          }}
           aria-labelledby={context.labelId}
           aria-describedby={context.descriptionId}
           direction="column"
