@@ -12,7 +12,7 @@ const TabBarBase = styled.div``;
  * component to decide where to render the contents of the
  * selected tab.
  * */
-const TabBar = ({ children, className }: TabBarProps) => {
+const TabBar = ({ children, className, ...rest }: TabBarProps) => {
   const { activeTab, selectedTabId, setActiveTab, setActiveTabId } =
     useTabBarContext();
 
@@ -38,14 +38,26 @@ const TabBar = ({ children, className }: TabBarProps) => {
   }, [selectedTabId]);
 
   return (
-    <TabBarBase role="tablist" className={className}>
+    <TabBarBase role="tablist" className={className} {...rest}>
       {Children.map(children, (child) => {
         // istanbul ignore else
         if (isValidElement(child)) {
+          const {
+            tabId,
+            /* eslint-disable @typescript-eslint/no-unused-vars */
+            renderContent,
+            ariaControls,
+            as,
+            children,
+            isActive,
+            /* eslint-enable @typescript-eslint/no-unused-vars */
+            ...htmlProps
+          } = child.props;
           return cloneElement(child, {
-            key: child.props.tabId,
-            isActive: activeTab?.tabId === child.props.tabId,
-            onClick: () => setSelectedTabId(child.props.tabId),
+            key: tabId,
+            isActive: activeTab?.tabId === tabId,
+            onClick: () => setSelectedTabId(tabId),
+            ...htmlProps,
           });
         }
       })}
