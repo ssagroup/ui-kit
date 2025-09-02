@@ -48,10 +48,6 @@ export const BigNumberChartComponent = ({
     setHoveredValueThrottled(data.data);
   };
 
-  const handleMouseLeave = () => {
-    setHoveredValueThrottled(null);
-  };
-
   const value = hoveredValue ?? lastValue;
 
   return (
@@ -80,7 +76,7 @@ export const BigNumberChartComponent = ({
               {...trendLineProps}
               data={[{ id: 'trend-line', data }]}
               onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
+              lastActivePoint={value}
             />
           </div>
         </div>
