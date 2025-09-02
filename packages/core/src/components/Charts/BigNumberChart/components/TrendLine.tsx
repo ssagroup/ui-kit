@@ -5,6 +5,7 @@ import {
   Layer,
   LineProps,
   Point,
+  Datum,
   ResponsiveLine,
 } from '@nivo/line';
 import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
@@ -12,32 +13,45 @@ import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
 export interface TrendLineProps extends LineProps {
   color?: string;
   tooltipValueFormat?: TrendLineTooltipProps['valueFormat'];
+  lastActivePoint?: Datum;
 }
 
-type CurrentPoint = {
+type ActivePointExtraProps = {
   currentPoint: Point;
+  lastActivePoint?: Datum;
 };
 
 const ActivePoint = ({
   currentPoint,
+  lastActivePoint,
+  points,
   ...props
-}: CustomLayerProps & CurrentPoint) => (
-  <g>
-    {currentPoint && (
-      <DotsItem
-        size={props.pointSize || 10}
-        borderWidth={props.pointBorderWidth || 10}
-        key={currentPoint.id}
-        x={currentPoint.x}
-        y={currentPoint.y}
-        datum={currentPoint.data}
-        color={currentPoint.color}
-        borderColor={currentPoint.borderColor}
-        labelYOffset={props.pointLabelYOffset}
-      />
-    )}
-  </g>
-);
+}: CustomLayerProps & ActivePointExtraProps) => {
+  const activePoint = lastActivePoint
+    ? points.find(
+        ({ data }) =>
+          data.x === lastActivePoint.x && data.y === lastActivePoint.y,
+      )
+    : currentPoint;
+
+  return (
+    <g>
+      {activePoint && (
+        <DotsItem
+          size={props.pointSize || 10}
+          borderWidth={props.pointBorderWidth || 10}
+          key={activePoint.id}
+          x={activePoint.x}
+          y={activePoint.y}
+          datum={activePoint.data}
+          color={activePoint.color}
+          borderColor={activePoint.borderColor}
+          labelYOffset={props.pointLabelYOffset}
+        />
+      )}
+    </g>
+  );
+};
 
 export const TrendLine = ({
   color,
