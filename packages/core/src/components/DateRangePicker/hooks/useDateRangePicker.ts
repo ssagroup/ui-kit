@@ -25,6 +25,7 @@ export const useDateRangePicker = ({
   maskOptions,
   isOpenState = false,
   defaultValue,
+  rangePickerType = 'days',
   onOpen,
   onClose,
   onError,
@@ -78,7 +79,8 @@ export const useDateRangePicker = ({
     month: splittedFormat.findIndex((item) => item === 'mm'),
     year: splittedFormat.findIndex((item) => item === 'yyyy'),
   });
-  const [calendarType, setCalendarType] = useState<CalendarType>('days');
+  const [calendarType, setCalendarType] =
+    useState<CalendarType>(rangePickerType);
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     [DateTime | undefined, DateTime | undefined]
   >([undefined, undefined]);
@@ -299,7 +301,7 @@ export const useDateRangePicker = ({
         onOpen?.();
       } else {
         onClose?.();
-        setCalendarType('days');
+        setCalendarType(rangePickerType);
         setCalendarViewDateTime([dateTime[0], dateTime[1]]);
       }
       previousOpenState.current = isOpen;

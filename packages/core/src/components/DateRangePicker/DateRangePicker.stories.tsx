@@ -17,11 +17,22 @@ export default {
     defaultValue: {
       type: 'string',
     },
+    // rangePickerType: {
+    //   options: ['days', 'months'],
+    //   control: { type: 'radio' },
+    //   defaultValue: 'days',
+    // },
   },
   // required due to https://github.com/storybookjs/storybook/issues/17025
   parameters: {
     controls: {
-      include: ['disabled', 'label', 'openCalendarMode', 'helperText'],
+      include: [
+        // 'rangePickerType',
+        'disabled',
+        'label',
+        'openCalendarMode',
+        'helperText',
+      ],
     },
   },
   decorators: [
@@ -58,6 +69,7 @@ export default {
 const commonArgs: Partial<DateRangePickerProps> = {
   label: 'Field',
   openCalendarMode: 'both',
+  // rangePickerType: 'days',
   onChange: (dates) => {
     console.log('event: onChange', dates);
   },

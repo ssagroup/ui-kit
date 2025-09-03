@@ -3,10 +3,20 @@ import * as DPC from '.';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
 export const Header = () => {
-  const { calendarType, currentCalendarViewDT, setCalendarType } =
-    useDateRangePickerContext();
+  const {
+    rangePickerType,
+    calendarType,
+    currentCalendarViewDT,
+    setCalendarType,
+  } = useDateRangePickerContext();
   const handleCalendarTypeChange = () => {
-    setCalendarType(calendarType === 'days' ? 'years' : 'days');
+    setCalendarType(
+      calendarType === 'days'
+        ? 'months'
+        : calendarType === 'months'
+          ? 'years'
+          : (rangePickerType ?? 'days'),
+    );
   };
   return (
     <C.PopoverHeading
@@ -21,7 +31,11 @@ export const Header = () => {
       <C.Button
         endIcon={
           <C.Icon
-            name={calendarType === 'days' ? 'carrot-down' : 'carrot-up'}
+            name={
+              calendarType === 'days' || calendarType === 'months'
+                ? 'carrot-down'
+                : 'carrot-up'
+            }
             size={14}
             tooltip=""
           />
@@ -40,7 +54,9 @@ export const Header = () => {
             display: 'none',
           },
         }}>
-        {currentCalendarViewDT.toFormat('LLLL yyyy')}
+        {currentCalendarViewDT.toFormat(
+          rangePickerType === 'days' ? 'LLLL yyyy' : 'yyyy',
+        )}
       </C.Button>
       <DPC.MonthsSwitch />
     </C.PopoverHeading>

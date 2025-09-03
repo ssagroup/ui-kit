@@ -5,6 +5,7 @@ import { FieldContextValue } from '@components/Field/FieldProvider';
 import { InputProps } from '@components/Input/types';
 
 export type LastFocusedElement = 'from' | 'to';
+export type RangePickerType = 'days' | 'months';
 
 export type DateRangePickerProps = {
   name: string;
@@ -22,6 +23,7 @@ export type DateRangePickerProps = {
   dateMax?: string; // depends on the format
   disabled?: boolean;
   showCalendarIcon?: boolean;
+  rangePickerType?: RangePickerType;
   messages?: {
     description?: string;
     success?: string;

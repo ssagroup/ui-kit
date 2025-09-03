@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { MouseEventHandler } from 'react';
 import { MONTHS } from '../constants';
 import { useRangeHighlighting } from '../hooks';
+import { DateTimeTuple } from '../types';
 import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { DatesListWrapper } from './DatesListWrapper';
@@ -14,9 +15,12 @@ export const MonthsView = () => {
     dateMaxDT,
     lastFocusedElement,
     currentCalendarViewDT,
+    rangePickerType,
     setCalendarType,
     setCalendarViewDateTime,
     onMonthChange,
+    setDateTime,
+    setIsOpen,
   } = useDateRangePickerContext();
 
   const { handleDateHover, getClassNames, isHighlightDate } =
@@ -31,23 +35,50 @@ export const MonthsView = () => {
     }
     const selectedMonth = (target as HTMLDivElement).innerHTML;
     const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
-    const newDate = currentCalendarViewDT?.set({ month: monthNumber + 1 });
-    setCalendarViewDateTime(
-      lastFocusedElement === 'from'
-        ? [newDate, calendarViewDateTime[1]]
-        : [calendarViewDateTime[0], newDate],
-    );
-    if (newDate) {
-      onMonthChange?.(newDate.toJSDate());
+
+    if (rangePickerType === 'days') {
+      const newDate = currentCalendarViewDT?.set({ month: monthNumber + 1 });
+      setCalendarViewDateTime(
+        lastFocusedElement === 'from'
+          ? [newDate, calendarViewDateTime[1]]
+          : [calendarViewDateTime[0], newDate],
+      );
+      if (newDate) {
+        onMonthChange?.(newDate.toJSDate());
+      }
+
+      setCalendarType('days');
+    } else {
+      const newMonth = currentCalendarViewDT?.set({
+        month: monthNumber + 1,
+      });
+      const newDate = newMonth?.set({
+        day: lastFocusedElement === 'from' ? 1 : newMonth.daysInMonth,
+      });
+
+      const newDateTuple: DateTimeTuple =
+        lastFocusedElement === 'from'
+          ? [newDate, dateTime[1]]
+          : [dateTime[0], newDate];
+
+      setCalendarViewDateTime(
+        lastFocusedElement === 'from'
+          ? [newDate, dateTime[1] ? calendarViewDateTime?.[1] : newDate]
+          : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
+      );
+      setDateTime(newDateTuple);
+      if (newDateTuple[0] && newDateTuple[1]) {
+        setIsOpen(false);
+      }
     }
-    setCalendarType('days');
   };
   return (
     <DatesListWrapper css={{ paddingTop: 10 }} onClick={handleMonthSelect}>
       {MONTHS.map((month, index) => {
-        const isCalendarMonth = currentCalendarViewDT
-          ? currentCalendarViewDT.month === index + 1
-          : false;
+        // const isCalendarMonth = currentCalendarViewDT
+        //   ? currentCalendarViewDT.month === index + 1
+        //   : false;
+        const isCalendarMonth = false; // why do we need to highlight each month in every year
         const currentMonthDT = DateTime.fromObject({
           year: currentCalendarViewDT?.year,
           month: index + 1,

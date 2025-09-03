@@ -250,4 +250,38 @@ describe('DateRangePicker', () => {
     expect(errorField).toBeInTheDocument();
     expect(errorField).toHaveTextContent(errorText);
   });
+
+  it('should not open the date range picker when disabled', async () => {
+    const { getByTestId } = setup({ disabled: true });
+    const input = getByTestId('daterangepicker-input-from');
+    await fireEvent.click(input);
+    expect(() => getByTestId('daterangepicker-calendar')).toThrow();
+    expect(input).toBeDisabled();
+  });
+
+  it('should call onError when an invalid date is entered', async () => {
+    const { getByTestId, mockOnError, user } = setup();
+    const startDate = getByTestId('daterangepicker-input-from');
+    await user.clear(startDate);
+    await user.type(startDate, '12/12/202');
+    await user.tab();
+    expect(mockOnError).toHaveBeenCalledTimes(1);
+  });
+
+  // it('should swap dates and focus endDate when startDate is set after the endDate', async () => {
+  //   const { getByTestId, user } = setup();
+  //   const startDate = getByTestId('daterangepicker-input-from');
+  //   const endDate = getByTestId('daterangepicker-input-to');
+
+  //   await user.clear(endDate);
+  //   await user.type(endDate, '11/12/2024');
+  //   await user.tab();
+
+  //   await user.clear(startDate);
+  //   await user.type(startDate, '12/12/2024');
+
+  //   expect(startDate).toHaveValue('11/12/2024');
+  //   // expect(endDate).toHaveValue('');
+  //   expect(endDate).toHaveFocus()
+  // });
 });
