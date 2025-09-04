@@ -104,8 +104,16 @@ export const YearsViewCell = styled.div<{
     isCalendarSecondDateSelected
       ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
       : 'none'};
-  background: ${({ theme, isHighlighted, isCalendarYear }) =>
-    isHighlighted && !isCalendarYear && theme.colors.blueRoyal16};
+  background: ${({
+    theme,
+    isHighlighted,
+    isCalendarYear,
+    isCalendarSecondDateSelected,
+  }) =>
+    isHighlighted &&
+    !isCalendarYear &&
+    !isCalendarSecondDateSelected &&
+    theme.colors.blueRoyal16};
   &:hover {
     background: ${({ theme }) => theme.colors.greyLighter};
     color: ${({ theme }) => theme.colors.greyDarker};

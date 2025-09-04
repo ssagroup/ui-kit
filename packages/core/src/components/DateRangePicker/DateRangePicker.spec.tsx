@@ -47,6 +47,7 @@ describe('DateRangePicker', () => {
               name="field1"
               label="Field"
               openCalendarMode="both"
+              rangePickerType="days"
               onChange={mockOnChange}
               onBlur={mockOnBlur}
               onClose={mockOnClose}

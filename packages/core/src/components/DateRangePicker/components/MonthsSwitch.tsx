@@ -14,7 +14,6 @@ export const MonthsSwitch = () => {
     onMonthChange,
   } = useDateRangePickerContext();
   const theme = useTheme();
-  const isYearsCalendarType = calendarType === 'years';
   const isDayCalendarType = calendarType === 'days';
   const currentIndex = lastFocusedElement === 'from' ? 0 : 1;
   const currentCalendarViewDT =
@@ -30,10 +29,7 @@ export const MonthsSwitch = () => {
     : false;
 
   const handlePreviousMonth = () => {
-    const newDate = currentCalendarViewDT?.minus(
-      isDayCalendarType ? { month: 1 } : { year: 1 },
-    );
-
+    const newDate = currentCalendarViewDT?.minus({ month: 1 });
     setCalendarViewDateTime(
       lastFocusedElement === 'from'
         ? [newDate, calendarViewDateTime[1]]
@@ -44,9 +40,7 @@ export const MonthsSwitch = () => {
     }
   };
   const handleNextMonth = () => {
-    const newDate = currentCalendarViewDT?.plus(
-      isDayCalendarType ? { month: 1 } : { year: 1 },
-    );
+    const newDate = currentCalendarViewDT?.plus({ month: 1 });
     setCalendarViewDateTime(
       lastFocusedElement === 'from'
         ? [newDate, calendarViewDateTime[1]]
@@ -57,7 +51,7 @@ export const MonthsSwitch = () => {
     }
   };
 
-  if (isYearsCalendarType) {
+  if (!isDayCalendarType) {
     return null;
   }
 

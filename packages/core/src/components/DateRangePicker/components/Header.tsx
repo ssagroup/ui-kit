@@ -11,11 +11,9 @@ export const Header = () => {
   } = useDateRangePickerContext();
   const handleCalendarTypeChange = () => {
     setCalendarType(
-      calendarType === 'days'
-        ? 'months'
-        : calendarType === 'months'
-          ? 'years'
-          : (rangePickerType ?? 'days'),
+      calendarType === 'days' || calendarType === 'months'
+        ? 'years'
+        : (rangePickerType ?? 'days'),
     );
   };
   return (

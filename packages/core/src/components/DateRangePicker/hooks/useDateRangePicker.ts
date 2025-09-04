@@ -243,6 +243,10 @@ export const useDateRangePicker = ({
   };
 
   useEffect(() => {
+    setCalendarType(rangePickerType);
+  }, [rangePickerType]);
+
+  useEffect(() => {
     processInputValue(
       lastFocusedElement === 'from' ? inputValueFrom : inputValueTo,
     );
@@ -278,20 +282,35 @@ export const useDateRangePicker = ({
 
   useEffect(() => {
     if (dateTime[0] && dateTime[1] && dateTime[0] > dateTime[1]) {
-      resetField(nameFrom);
-      resetField(nameTo);
-      setDateTime([dateTime[1], undefined]);
-      setLastChangedDate([dateTime[1].toJSDate(), undefined]);
-      setValue(nameFrom, dateTime[1].toFormat(luxonFormat));
-      setLastFocusedElement('to');
+      if (lastFocusedElement === 'from') {
+        resetField(nameTo);
+        setDateTime([dateTime[0], undefined]);
+        setLastChangedDate([dateTime[0].toJSDate(), undefined]);
+        setValue(nameTo, undefined);
+        setLastFocusedElement('to');
 
-      setTimeout(() => {
-        setFocus(nameTo, {
-          shouldSelect: true,
-        });
-      }, 50);
+        setTimeout(() => {
+          setFocus(nameTo, {
+            shouldSelect: true,
+          });
+        }, 50);
 
-      setIsOpen(true);
+        setIsOpen(true);
+      } else {
+        resetField(nameFrom);
+        setDateTime([undefined, dateTime[1]]);
+        setLastChangedDate([undefined, dateTime[1].toJSDate()]);
+        setValue(nameFrom, undefined);
+        setLastFocusedElement('from');
+
+        setTimeout(() => {
+          setFocus(nameFrom, {
+            shouldSelect: true,
+          });
+        }, 50);
+
+        setIsOpen(true);
+      }
     }
   }, [dateTime]);
 
