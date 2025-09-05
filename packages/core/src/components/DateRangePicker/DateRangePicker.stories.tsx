@@ -106,6 +106,21 @@ Default.args = {
   },
 };
 
+export const MonthlyView: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+MonthlyView.args = {
+  ...commonArgs,
+  name: 'field8',
+  rangePickerType: 'months',
+  defaultValue: ['04/10/2025', '06/15/2025'],
+  messages: {
+    description: 'custom description',
+  },
+};
+
 export const CustomError: StoryObj<typeof DateRangePicker> = (
   args: DateRangePickerProps,
 ) => {

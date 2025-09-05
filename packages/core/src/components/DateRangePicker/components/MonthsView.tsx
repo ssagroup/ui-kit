@@ -75,10 +75,10 @@ export const MonthsView = () => {
   return (
     <DatesListWrapper css={{ paddingTop: 10 }} onClick={handleMonthSelect}>
       {MONTHS.map((month, index) => {
-        // const isCalendarMonth = currentCalendarViewDT
+        // const isCalendarMonth = currentCalendarViewDT // ?? Why was this condition here?
         //   ? currentCalendarViewDT.month === index + 1
         //   : false;
-        const isCalendarMonth = false; // why do we need to highlight each month in every year
+        const isCalendarMonth = false;
         const currentMonthDT = DateTime.fromObject({
           year: currentCalendarViewDT?.year,
           month: index + 1,
