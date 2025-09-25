@@ -56,7 +56,7 @@ export const Header = () => {
           rangePickerType === 'days' ? 'LLLL yyyy' : 'yyyy',
         )}
       </C.Button>
-      <DPC.MonthsSwitch />
+      <DPC.YearsMonthsSwitch />
     </C.PopoverHeading>
   );
 };

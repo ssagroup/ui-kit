@@ -185,7 +185,9 @@ describe('DateRangePicker', () => {
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
-    const previousMonthButton = within(dialogEl).getByTestId('previous-month');
+    const previousMonthButton = within(dialogEl).getByTestId(
+      'previous-year-month',
+    );
     await user.click(previousMonthButton);
 
     const day15Element = within(dialogEl).getByText(15);
@@ -204,7 +206,7 @@ describe('DateRangePicker', () => {
       'calendar-type-change-button',
     );
 
-    const nextMonthButton = within(dialogEl).getByTestId('next-month');
+    const nextMonthButton = within(dialogEl).getByTestId('next-year-month');
     await user.click(nextMonthButton);
 
     await user.click(calendarTypeChangeButton);
