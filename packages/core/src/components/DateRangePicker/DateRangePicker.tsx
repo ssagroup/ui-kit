@@ -1,9 +1,5 @@
 import { DateRangePickerProps } from './types';
-import {
-  DEFAULT_MASK_FORMAT,
-  DEFAULT_MONTH_MASK_FORMAT,
-  DEFAULT_YEAR_MASK_FORMAT,
-} from './constants';
+import { getFormatForRangePickerType } from './utils';
 import { DatePickerContent } from './components';
 import { DateRangePickerProvider } from './DateRangePickerProvider';
 
@@ -15,18 +11,7 @@ export const DateRangePicker = ({
   rangePickerType = 'days',
   ...rest
 }: DateRangePickerProps) => {
-  const getDefaultFormat = () => {
-    switch (rangePickerType) {
-      case 'years':
-        return DEFAULT_YEAR_MASK_FORMAT;
-      case 'months':
-        return DEFAULT_MONTH_MASK_FORMAT;
-      default:
-        return DEFAULT_MASK_FORMAT;
-    }
-  };
-
-  const actualFormat = format || getDefaultFormat();
+  const actualFormat = format || getFormatForRangePickerType(rangePickerType);
 
   return (
     <DateRangePickerProvider

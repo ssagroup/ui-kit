@@ -11,9 +11,13 @@ import {
   FULL_DATE_LENGTH,
   FULL_MONTH_DATE_LENGTH,
   FULL_YEAR_DATE_LENGTH,
+  DEFAULT_MASK_FORMAT,
+  DEFAULT_MONTH_MASK_FORMAT,
+  DEFAULT_YEAR_MASK_FORMAT,
 } from '../constants';
+import { Format, RangePickerType } from '../types';
 
-export const isMonthOnlyFormat = (format?: string): boolean => {
+export const isMonthOnlyFormat = (format?: Format): boolean => {
   if (!format) return false;
 
   const lowerFormat = format.toLowerCase();
@@ -35,7 +39,7 @@ export const isYearOnlyFormat = (format?: string): boolean => {
   return hasYear && !hasMonth && !hasDay;
 };
 
-export const getExpectedDateLength = (format?: string): number => {
+export const getExpectedDateLength = (format?: Format): number => {
   if (!format) return FULL_DATE_LENGTH;
 
   if (isYearOnlyFormat(format)) {
@@ -49,7 +53,7 @@ export const getExpectedDateLength = (format?: string): number => {
   return FULL_DATE_LENGTH;
 };
 
-export const getMaskForFormat = (format?: string): string => {
+export const getMaskForFormat = (format?: Format): string => {
   if (isYearOnlyFormat(format)) {
     return DEFAULT_YEAR_MASK;
   }
@@ -62,7 +66,7 @@ export const getMaskForFormat = (format?: string): string => {
 };
 
 export const getDefaultDateRange = (
-  format?: string,
+  format?: Format,
 ): { defaultMin: string; defaultMax: string } => {
   if (isYearOnlyFormat(format)) {
     return {
@@ -82,4 +86,18 @@ export const getDefaultDateRange = (
     defaultMin: DATE_MIN,
     defaultMax: DATE_MAX,
   };
+};
+
+export const getFormatForRangePickerType = (
+  rangePickerType: RangePickerType,
+): Format => {
+  switch (rangePickerType) {
+    case 'years':
+      return DEFAULT_YEAR_MASK_FORMAT;
+    case 'months':
+      return DEFAULT_MONTH_MASK_FORMAT;
+    case 'days':
+    default:
+      return DEFAULT_MASK_FORMAT;
+  }
 };

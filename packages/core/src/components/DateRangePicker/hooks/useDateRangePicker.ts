@@ -3,11 +3,12 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
 import { useDatePickerMask } from './useDatePickerMask';
-import { INVALID_DATE, OUT_OF_RANGE, DEFAULT_MASK_FORMAT } from '../constants';
+import { INVALID_DATE, OUT_OF_RANGE } from '../constants';
 import {
   getExpectedDateLength,
   getMaskForFormat,
   getDefaultDateRange,
+  getFormatForRangePickerType,
 } from '../utils';
 import {
   CalendarType,
@@ -20,7 +21,7 @@ export const useDateRangePicker = ({
   dateMin,
   dateMax,
   name: _name,
-  format = DEFAULT_MASK_FORMAT,
+  format: propFormat,
   maskOptions,
   isOpenState = false,
   defaultValue,
@@ -31,11 +32,13 @@ export const useDateRangePicker = ({
   onChange,
   ...rest
 }: DateRangePickerProps & { isOpenState?: boolean }) => {
+  const format = propFormat || getFormatForRangePickerType(rangePickerType);
   const { defaultMin, defaultMax } = getDefaultDateRange(format);
   const finalDateMin = dateMin || defaultMin;
   const finalDateMax = dateMax || defaultMax;
   const inputFromRef = useRef<HTMLInputElement | null>(null);
   const inputToRef = useRef<HTMLInputElement | null>(null);
+  const previousRangePickerType = useRef(rangePickerType);
   const [isOpen, setIsOpen] = useState(isOpenState);
   const [status, setStatus] = useState(rest.status);
   const previousOpenState = useRef(isOpenState);
@@ -342,6 +345,22 @@ export const useDateRangePicker = ({
       year: splittedFormat.findIndex((item) => item === 'yyyy'),
     });
   }, [format]);
+
+  useEffect(() => {
+    if (previousRangePickerType.current !== rangePickerType) {
+      if (dateTime[0] || dateTime[1]) {
+        const newLuxonFormat = format.replace('mm', 'MM');
+
+        if (dateTime[0]) {
+          setValue(nameFrom, dateTime[0].toFormat(newLuxonFormat));
+        }
+        if (dateTime[1]) {
+          setValue(nameTo, dateTime[1].toFormat(newLuxonFormat));
+        }
+      }
+      previousRangePickerType.current = rangePickerType;
+    }
+  }, [rangePickerType, format, dateTime, nameFrom, nameTo, setValue]);
 
   useEffect(() => {
     if (Array.isArray(rest.value)) {
