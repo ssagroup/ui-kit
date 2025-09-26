@@ -3,13 +3,12 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
 import { useDatePickerMask } from './useDatePickerMask';
+import { INVALID_DATE, OUT_OF_RANGE, DEFAULT_MASK_FORMAT } from '../constants';
 import {
-  DATE_MAX,
-  DATE_MIN,
-  FULL_DATE_LENGTH,
-  INVALID_DATE,
-  OUT_OF_RANGE,
-} from '../constants';
+  getExpectedDateLength,
+  getMaskForFormat,
+  getDefaultDateRange,
+} from '../utils';
 import {
   CalendarType,
   DateRangePickerContextProps,
@@ -18,10 +17,10 @@ import {
 } from '../types';
 
 export const useDateRangePicker = ({
-  dateMin = DATE_MIN,
-  dateMax = DATE_MAX,
+  dateMin,
+  dateMax,
   name: _name,
-  format = 'mm/dd/yyyy',
+  format = DEFAULT_MASK_FORMAT,
   maskOptions,
   isOpenState = false,
   defaultValue,
@@ -32,6 +31,9 @@ export const useDateRangePicker = ({
   onChange,
   ...rest
 }: DateRangePickerProps & { isOpenState?: boolean }) => {
+  const { defaultMin, defaultMax } = getDefaultDateRange(format);
+  const finalDateMin = dateMin || defaultMin;
+  const finalDateMax = dateMax || defaultMax;
   const inputFromRef = useRef<HTMLInputElement | null>(null);
   const inputToRef = useRef<HTMLInputElement | null>(null);
   const [isOpen, setIsOpen] = useState(isOpenState);
@@ -87,11 +89,16 @@ export const useDateRangePicker = ({
   const currentCalendarViewDT =
     calendarViewDateTime[currentIndex] || DateTime.now().set({ day: 1 });
   const luxonFormat = format.replace('mm', 'MM');
-  const dateMinParts = dateMin.split('/').map(Number);
-  const dateMaxParts = dateMax.split('/').map(Number);
+  const expectedDateLength = getExpectedDateLength(format);
+  const dateMinParts = finalDateMin.split('/').map(Number);
+  const dateMaxParts = finalDateMax.split('/').map(Number);
 
+  const defaultMask = getMaskForFormat(format);
   const maskInputRef = useDatePickerMask({
-    maskOptions,
+    maskOptions: {
+      mask: defaultMask,
+      ...maskOptions,
+    },
     dateMaxParts,
     dateMinParts,
     formatIndexes,
@@ -100,12 +107,12 @@ export const useDateRangePicker = ({
   const dateMaxDT = DateTime.fromObject({
     year: dateMaxParts[formatIndexes['year']],
     month: dateMaxParts[formatIndexes['month']],
-    day: dateMaxParts[formatIndexes['day']],
+    day: formatIndexes['day'] !== -1 ? dateMaxParts[formatIndexes['day']] : 1,
   });
   const dateMinDT = DateTime.fromObject({
     year: dateMinParts[formatIndexes['year']],
     month: dateMinParts[formatIndexes['month']],
-    day: dateMinParts[formatIndexes['day']],
+    day: formatIndexes['day'] !== -1 ? dateMinParts[formatIndexes['day']] : 1,
   });
 
   const safeOnChange = (newDateTime?: DateTime) => {
@@ -147,7 +154,7 @@ export const useDateRangePicker = ({
     const currentElementType = elementName || lastFocusedElement;
     const currentName = currentElementType === 'from' ? nameFrom : nameTo;
     const newDateTime =
-      typeof newValue === 'string' && newValue.length === FULL_DATE_LENGTH
+      typeof newValue === 'string' && newValue.length === expectedDateLength
         ? DateTime.fromFormat(newValue, luxonFormat)
         : undefined;
 
@@ -203,7 +210,7 @@ export const useDateRangePicker = ({
     if (
       typeof inputValue === 'string' &&
       inputValue.length &&
-      inputValue.length < FULL_DATE_LENGTH
+      inputValue.length < expectedDateLength
     ) {
       setIsOpen(false);
       setTimeout(() => {
@@ -214,7 +221,7 @@ export const useDateRangePicker = ({
 
     if (
       typeof inputValue === 'string' &&
-      inputValue.length === FULL_DATE_LENGTH
+      inputValue.length === expectedDateLength
     ) {
       newDateTime = DateTime.fromFormat(inputValue, luxonFormat);
       setValue(currentName, inputValue);
@@ -253,7 +260,7 @@ export const useDateRangePicker = ({
   }, [lastFocusedElement]);
 
   useEffect(() => {
-    if (inputValueFrom && inputValueFrom.length === FULL_DATE_LENGTH) {
+    if (inputValueFrom && inputValueFrom.length === expectedDateLength) {
       processInputValue(
         lastFocusedElement === 'from' ? inputValueFrom : inputValueTo,
       );
@@ -261,7 +268,7 @@ export const useDateRangePicker = ({
   }, [inputValueFrom]);
 
   useEffect(() => {
-    if (inputValueTo && inputValueTo.length === FULL_DATE_LENGTH) {
+    if (inputValueTo && inputValueTo.length === expectedDateLength) {
       processInputValue(
         lastFocusedElement === 'from' ? inputValueFrom : inputValueTo,
       );
@@ -340,12 +347,12 @@ export const useDateRangePicker = ({
     if (Array.isArray(rest.value)) {
       const newDateTimeFrom =
         typeof rest.value[0] === 'string' &&
-        rest.value[0].length === FULL_DATE_LENGTH
+        rest.value[0].length === expectedDateLength
           ? DateTime.fromFormat(rest.value[0], luxonFormat)
           : undefined;
       const newDateTimeTo =
         typeof rest.value[1] === 'string' &&
-        rest.value[1].length === FULL_DATE_LENGTH
+        rest.value[1].length === expectedDateLength
           ? DateTime.fromFormat(rest.value[1], luxonFormat)
           : undefined;
 

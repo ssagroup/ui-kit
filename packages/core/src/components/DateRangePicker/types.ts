@@ -5,12 +5,12 @@ import { FieldContextValue } from '@components/Field/FieldProvider';
 import { InputProps } from '@components/Input/types';
 
 export type LastFocusedElement = 'from' | 'to';
-export type RangePickerType = 'days' | 'months';
+export type RangePickerType = 'days' | 'months' | 'years';
 
 export type DateRangePickerProps = {
   name: string;
   label?: string;
-  format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
+  format?: 'mm/dd/yyyy' | 'dd/mm/yyyy' | 'mm/yyyy' | 'yyyy';
   isOpenState?: boolean;
   value?: [string | undefined, string | undefined]; // depends on the format
   defaultValue?: [string, string]; // depends on the format

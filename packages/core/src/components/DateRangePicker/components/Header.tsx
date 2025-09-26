@@ -28,15 +28,17 @@ export const Header = () => {
       as={'div'}>
       <C.Button
         endIcon={
-          <C.Icon
-            name={
-              calendarType === 'days' || calendarType === 'months'
-                ? 'carrot-down'
-                : 'carrot-up'
-            }
-            size={14}
-            tooltip=""
-          />
+          rangePickerType !== 'years' ? (
+            <C.Icon
+              name={
+                calendarType === 'days' || calendarType === 'months'
+                  ? 'carrot-down'
+                  : 'carrot-up'
+              }
+              size={14}
+              tooltip=""
+            />
+          ) : null
         }
         variant="tertiary"
         onClick={handleCalendarTypeChange}

@@ -18,7 +18,7 @@ export default {
       type: 'string',
     },
     rangePickerType: {
-      options: ['days', 'months'],
+      options: ['days', 'months', 'years'],
       control: { type: 'radio' },
       defaultValue: 'days',
     },
@@ -115,7 +115,7 @@ MonthlyView.args = {
   ...commonArgs,
   name: 'field8',
   rangePickerType: 'months',
-  defaultValue: ['04/10/2025', '06/15/2025'],
+  defaultValue: ['04/2025', '06/2025'],
   messages: {
     description: 'custom description',
   },

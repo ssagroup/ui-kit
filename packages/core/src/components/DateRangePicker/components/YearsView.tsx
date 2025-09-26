@@ -5,9 +5,11 @@ import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { getYearsList } from '../utils';
 import { DatesListWrapper } from './DatesListWrapper';
+import { DateTimeTuple } from '../types';
 
 export const YearsView = () => {
   const {
+    rangePickerType,
     dateTime,
     calendarViewDateTime,
     currentCalendarViewDT,
@@ -18,6 +20,8 @@ export const YearsView = () => {
     setCalendarType,
     setCalendarViewDateTime,
     onYearChange,
+    setDateTime,
+    setIsOpen,
   } = useDateRangePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
   const yearsList = getYearsList({
@@ -43,17 +47,44 @@ export const YearsView = () => {
   const handleYearSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
     const selectedYear = Number((target as HTMLDivElement).innerHTML);
-    const newDate = currentCalendarViewDT.set({
-      year: selectedYear,
-    });
-    setCalendarType('months');
-    setCalendarViewDateTime(
-      lastFocusedElement === 'from'
-        ? [newDate, calendarViewDateTime[1]]
-        : [calendarViewDateTime[0], newDate],
-    );
-    if (newDate) {
-      onYearChange?.(newDate.toJSDate());
+
+    if (rangePickerType !== 'years') {
+      const newDate = currentCalendarViewDT.set({
+        year: selectedYear,
+      });
+      setCalendarType('months');
+      setCalendarViewDateTime(
+        lastFocusedElement === 'from'
+          ? [newDate, calendarViewDateTime[1]]
+          : [calendarViewDateTime[0], newDate],
+      );
+      if (newDate) {
+        onYearChange?.(newDate.toJSDate());
+      }
+    } else {
+      const newYear = currentCalendarViewDT?.set({
+        year: selectedYear,
+      });
+      const newDate = newYear?.set(
+        lastFocusedElement === 'from'
+          ? { day: 1, month: 1 }
+          : { day: 31, month: 12 },
+      );
+
+      const newDateTuple: DateTimeTuple =
+        lastFocusedElement === 'from'
+          ? [newDate, dateTime[1]]
+          : [dateTime[0], newDate];
+
+      setCalendarViewDateTime(
+        lastFocusedElement === 'from'
+          ? [newDate, dateTime[1] ? calendarViewDateTime?.[1] : newDate]
+          : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
+      );
+      setDateTime(newDateTuple);
+      if (newDateTuple[0] && newDateTuple[1]) {
+        setIsOpen(false);
+      }
     }
   };
 

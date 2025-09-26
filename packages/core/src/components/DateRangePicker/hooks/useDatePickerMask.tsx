@@ -1,6 +1,5 @@
 import { useMask, format as maskFormat } from '@react-input/mask';
 import { DateRangePickerProps } from '../types';
-import { DEFAULT_MASK } from '../constants';
 import { processDate } from '../utils';
 
 export const useDatePickerMask = ({
@@ -14,7 +13,7 @@ export const useDatePickerMask = ({
   dateMaxParts: number[];
 }) => {
   const {
-    mask = DEFAULT_MASK,
+    mask,
     replacement = { _: /\d/ },
     ...restMaskOptions
   } = maskOptions || {};
@@ -23,7 +22,8 @@ export const useDatePickerMask = ({
     mask,
     replacement,
     track: ({ data, selectionStart, selectionEnd, value: currentValue }) => {
-      if (mask === DEFAULT_MASK) {
+      const isDateMask = typeof mask === 'string' && /^[_/]+$/.test(mask);
+      if (isDateMask) {
         const newValue =
           currentValue.slice(0, selectionStart) +
           data +

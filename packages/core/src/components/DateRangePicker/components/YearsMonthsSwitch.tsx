@@ -58,7 +58,8 @@ export const YearsMonthsSwitch = () => {
 
   if (
     (rangePickerType === 'days' && calendarType !== 'days') ||
-    (rangePickerType === 'months' && calendarType !== 'months')
+    (rangePickerType === 'months' && calendarType !== 'months') ||
+    rangePickerType === 'years'
   ) {
     return null;
   }

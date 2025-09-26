@@ -4,7 +4,7 @@ import { fireEvent, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
 import { DateRangePicker } from './DateRangePicker';
-import { DEFAULT_MASK_FORMAT } from './constants';
+import { DEFAULT_MASK_FORMAT, DEFAULT_MONTH_MASK_FORMAT } from './constants';
 import { DateRangePickerProps } from './types';
 import { FormGroup, mainTheme } from '../..';
 
@@ -392,7 +392,7 @@ describe('DateRangePicker', () => {
     const march = within(dialogEl).getByText('Mar');
     await user.click(march);
     expect(startDate).toHaveValue(
-      dateFrom.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
+      dateFrom.toFormat(DEFAULT_MONTH_MASK_FORMAT.replace('mm', 'MM')),
     );
 
     await user.click(endDate);
@@ -401,7 +401,7 @@ describe('DateRangePicker', () => {
     await user.click(june);
 
     expect(endDate).toHaveValue(
-      dateTo.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
+      dateTo.toFormat(DEFAULT_MONTH_MASK_FORMAT.replace('mm', 'MM')),
     );
   });
 
