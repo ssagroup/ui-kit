@@ -17,11 +17,22 @@ export default {
     defaultValue: {
       type: 'string',
     },
+    rangePickerType: {
+      options: ['days', 'months', 'years'],
+      control: { type: 'radio' },
+      defaultValue: 'days',
+    },
   },
   // required due to https://github.com/storybookjs/storybook/issues/17025
   parameters: {
     controls: {
-      include: ['disabled', 'label', 'openCalendarMode', 'helperText'],
+      include: [
+        'rangePickerType',
+        'disabled',
+        'label',
+        'openCalendarMode',
+        'helperText',
+      ],
     },
   },
   decorators: [
@@ -58,6 +69,7 @@ export default {
 const commonArgs: Partial<DateRangePickerProps> = {
   label: 'Field',
   openCalendarMode: 'both',
+  rangePickerType: 'days',
   onChange: (dates) => {
     console.log('event: onChange', dates);
   },
@@ -89,6 +101,21 @@ export const Default: StoryObj<typeof DateRangePicker> = (
 Default.args = {
   ...commonArgs,
   name: 'field1',
+  messages: {
+    description: 'custom description',
+  },
+};
+
+export const MonthlyView: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+MonthlyView.args = {
+  ...commonArgs,
+  name: 'field8',
+  rangePickerType: 'months',
+  defaultValue: ['04/2025', '06/2025'],
   messages: {
     description: 'custom description',
   },

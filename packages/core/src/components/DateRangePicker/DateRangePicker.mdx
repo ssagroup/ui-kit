@@ -238,6 +238,20 @@ Apply custom CSS classes to different parts of the component:
 />
 ```
 
+### Monthly selection
+
+Allows users to select a range of months:
+
+```tsx
+<DateRangePicker
+  name="disabled-range"
+  label="Disabled Range Picker"
+  rangePickerType={'months'}
+  defaultValue={['04/2025', '06/2025']}
+  onChange={handleDateRangeChange}
+/>
+```
+
 <Canvas />
 <Controls />
 

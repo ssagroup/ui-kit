@@ -104,8 +104,16 @@ export const YearsViewCell = styled.div<{
     isCalendarSecondDateSelected
       ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
       : 'none'};
-  background: ${({ theme, isHighlighted, isCalendarYear }) =>
-    isHighlighted && !isCalendarYear && theme.colors.blueRoyal16};
+  background: ${({
+    theme,
+    isHighlighted,
+    isCalendarYear,
+    isCalendarSecondDateSelected,
+  }) =>
+    isHighlighted &&
+    !isCalendarYear &&
+    !isCalendarSecondDateSelected &&
+    theme.colors.blueRoyal16};
   &:hover {
     background: ${({ theme }) => theme.colors.greyLighter};
     color: ${({ theme }) => theme.colors.greyDarker};
@@ -133,7 +141,6 @@ export const YearsViewCell = styled.div<{
 `;
 
 export const MonthsViewCell = styled.div<{
-  isCalendarMonth: boolean;
   isCalendarFirstDateSelected?: boolean;
   isCalendarSecondDateSelected?: boolean;
   isHighlighted: boolean;
@@ -154,24 +161,18 @@ export const MonthsViewCell = styled.div<{
   cursor: pointer;
   color: ${({
     theme,
-    isCalendarMonth,
     isCalendarFirstDateSelected,
     isCalendarSecondDateSelected,
   }) =>
-    (isCalendarMonth ||
-      isCalendarFirstDateSelected ||
-      isCalendarSecondDateSelected) &&
+    (isCalendarFirstDateSelected || isCalendarSecondDateSelected) &&
     theme.colors.white};
   user-select: none;
   background: ${({
     theme,
-    isCalendarMonth,
     isCalendarFirstDateSelected,
     isCalendarSecondDateSelected,
   }) =>
-    isCalendarMonth ||
-    isCalendarFirstDateSelected ||
-    isCalendarSecondDateSelected
+    isCalendarFirstDateSelected || isCalendarSecondDateSelected
       ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
       : 'none'};
   &[aria-disabled='true'] {
@@ -181,14 +182,8 @@ export const MonthsViewCell = styled.div<{
     background: ${({ theme }) => theme.colors.grey};
   }
   &[aria-disabled='false'] {
-    background: ${({
-      theme,
-      isHighlighted,
-      isCalendarMonth,
-      isCalendarSecondDateSelected,
-    }) =>
+    background: ${({ theme, isHighlighted, isCalendarSecondDateSelected }) =>
       isHighlighted &&
-      !isCalendarMonth &&
       !isCalendarSecondDateSelected &&
       theme.colors.blueRoyal16};
     &:hover {

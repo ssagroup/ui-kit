@@ -1,21 +1,27 @@
 import { DateRangePickerProps } from './types';
-import { DEFAULT_MASK_FORMAT } from './constants';
+import { getFormatForRangePickerType } from './utils';
 import { DatePickerContent } from './components';
 import { DateRangePickerProvider } from './DateRangePickerProvider';
 
 export const DateRangePicker = ({
-  format = DEFAULT_MASK_FORMAT,
+  format,
   openCalendarMode = 'icon',
   showCalendarIcon = true,
   showStatusArea = true,
+  rangePickerType = 'days',
   ...rest
-}: DateRangePickerProps) => (
-  <DateRangePickerProvider
-    format={format}
-    openCalendarMode={openCalendarMode}
-    showCalendarIcon={showCalendarIcon}
-    showStatusArea={showStatusArea}
-    {...rest}>
-    <DatePickerContent />
-  </DateRangePickerProvider>
-);
+}: DateRangePickerProps) => {
+  const actualFormat = format || getFormatForRangePickerType(rangePickerType);
+
+  return (
+    <DateRangePickerProvider
+      format={actualFormat}
+      openCalendarMode={openCalendarMode}
+      showCalendarIcon={showCalendarIcon}
+      showStatusArea={showStatusArea}
+      rangePickerType={rangePickerType}
+      {...rest}>
+      <DatePickerContent />
+    </DateRangePickerProvider>
+  );
+};

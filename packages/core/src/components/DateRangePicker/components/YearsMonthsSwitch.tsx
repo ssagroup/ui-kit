@@ -3,8 +3,9 @@ import { useTheme } from '@emotion/react';
 import * as C from '../..';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
-export const MonthsSwitch = () => {
+export const YearsMonthsSwitch = () => {
   const {
+    rangePickerType = 'days',
     calendarType,
     calendarViewDateTime,
     dateMinDT,
@@ -28,10 +29,10 @@ export const MonthsSwitch = () => {
       currentCalendarViewDT.year === dateMaxDT.year
     : false;
 
-  const handlePreviousMonth = () => {
-    const newDate = currentCalendarViewDT?.minus({
-      month: 1,
-    });
+  const handlePrevious = () => {
+    const newDate = currentCalendarViewDT?.minus(
+      isDayCalendarType ? { month: 1 } : { year: 1 },
+    );
     setCalendarViewDateTime(
       lastFocusedElement === 'from'
         ? [newDate, calendarViewDateTime[1]]
@@ -41,10 +42,10 @@ export const MonthsSwitch = () => {
       onMonthChange?.(newDate.toJSDate());
     }
   };
-  const handleNextMonth = () => {
-    const newDate = currentCalendarViewDT?.plus({
-      month: 1,
-    });
+  const handleNext = () => {
+    const newDate = currentCalendarViewDT?.plus(
+      isDayCalendarType ? { month: 1 } : { year: 1 },
+    );
     setCalendarViewDateTime(
       lastFocusedElement === 'from'
         ? [newDate, calendarViewDateTime[1]]
@@ -55,7 +56,11 @@ export const MonthsSwitch = () => {
     }
   };
 
-  if (!isDayCalendarType) {
+  if (
+    (rangePickerType === 'days' && calendarType !== 'days') ||
+    (rangePickerType === 'months' && calendarType !== 'months') ||
+    rangePickerType === 'years'
+  ) {
     return null;
   }
 
@@ -66,16 +71,16 @@ export const MonthsSwitch = () => {
           <C.Icon
             name="carrot-left"
             size={14}
-            tooltip="Previous month"
+            tooltip={`Previous ${rangePickerType === 'days' ? 'month' : 'year'}`}
             color={
               isMinMonthReached ? theme.colors.grey : theme.colors.greyDarker
             }
           />
         }
         variant={'tertiary'}
-        aria-label="Previous month"
-        data-testid="previous-month"
-        onClick={handlePreviousMonth}
+        aria-label={`Previous ${rangePickerType === 'days' ? 'month' : 'year'}`}
+        data-testid="previous-year-month"
+        onClick={handlePrevious}
         isDisabled={isMinMonthReached}
         css={{
           padding: 4,
@@ -89,17 +94,17 @@ export const MonthsSwitch = () => {
           <C.Icon
             name="carrot-right"
             size={14}
-            tooltip="Next month"
+            tooltip={`Next ${rangePickerType === 'days' ? 'month' : 'year'}`}
             color={
               isMaxMonthReached ? theme.colors.grey : theme.colors.greyDarker
             }
           />
         }
         variant={'tertiary'}
-        onClick={handleNextMonth}
+        onClick={handleNext}
         isDisabled={isMaxMonthReached}
-        aria-label="Next month"
-        data-testid="next-month"
+        aria-label={`Next ${rangePickerType === 'days' ? 'month' : 'year'}`}
+        data-testid="next-year-month"
         css={{
           padding: 4,
           height: 32,

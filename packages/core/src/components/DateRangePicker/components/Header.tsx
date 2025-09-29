@@ -3,10 +3,18 @@ import * as DPC from '.';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
 export const Header = () => {
-  const { calendarType, currentCalendarViewDT, setCalendarType } =
-    useDateRangePickerContext();
+  const {
+    rangePickerType,
+    calendarType,
+    currentCalendarViewDT,
+    setCalendarType,
+  } = useDateRangePickerContext();
   const handleCalendarTypeChange = () => {
-    setCalendarType(calendarType === 'days' ? 'years' : 'days');
+    setCalendarType(
+      calendarType === 'days' || calendarType === 'months'
+        ? 'years'
+        : (rangePickerType ?? 'days'),
+    );
   };
   return (
     <C.PopoverHeading
@@ -20,11 +28,17 @@ export const Header = () => {
       as={'div'}>
       <C.Button
         endIcon={
-          <C.Icon
-            name={calendarType === 'days' ? 'carrot-down' : 'carrot-up'}
-            size={14}
-            tooltip=""
-          />
+          rangePickerType !== 'years' ? (
+            <C.Icon
+              name={
+                calendarType === 'days' || calendarType === 'months'
+                  ? 'carrot-down'
+                  : 'carrot-up'
+              }
+              size={14}
+              tooltip=""
+            />
+          ) : null
         }
         variant="tertiary"
         onClick={handleCalendarTypeChange}
@@ -40,9 +54,11 @@ export const Header = () => {
             display: 'none',
           },
         }}>
-        {currentCalendarViewDT.toFormat('LLLL yyyy')}
+        {currentCalendarViewDT.toFormat(
+          rangePickerType === 'days' ? 'LLLL yyyy' : 'yyyy',
+        )}
       </C.Button>
-      <DPC.MonthsSwitch />
+      <DPC.YearsMonthsSwitch />
     </C.PopoverHeading>
   );
 };
