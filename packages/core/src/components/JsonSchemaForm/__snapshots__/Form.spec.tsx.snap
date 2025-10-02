@@ -907,6 +907,164 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-69 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 6px;
+  background: rgba(238, 241, 247, 0.4);
+  border-radius: 24px;
+  border: 1px solid rgba(195, 197, 204, 1);
+  color: rgba(43, 45, 49, 1);
+  font-weight: 500;
+  font-size: 14px;
+  min-height: 20px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 6px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.emotion-70 {
+  color: rgba(43, 45, 49, 1);
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  gap: 6px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: default;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emotion-71 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  border: none;
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 12px;
+  height: 36px;
+  font-size: 13.33px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  padding: 0 16px;
+  color: rgba(255, 255, 255, 1);
+  background: linear-gradient(
+      108.3deg,
+      rgba(43, 45, 49, 1) -0.36%,
+      rgb(64, 72, 83) 100%
+    );
+  background: none;
+  padding: 0;
+  padding-right: 5;
+  height: auto;
+}
+
+.emotion-71:hover {
+  background: linear-gradient(
+        108.3deg,
+        rgba(77, 82, 87, 1) -0.36%,
+        rgba(94, 103, 114, 1) 100%
+      );
+  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+}
+
+.emotion-71:active {
+  background: rgba(43, 45, 49, 1);
+  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+}
+
+.emotion-71:disabled {
+  background: rgba(195, 197, 204, 1);
+}
+
+.emotion-71:focus {
+  background: linear-gradient(
+        108.3deg,
+        rgb(64, 68, 73) -0.36%,
+        rgb(76, 84, 93) 100%
+      );
+  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+}
+
+.emotion-71:active,
+.emotion-71:focus,
+.emotion-71:hover {
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+}
+
+.emotion-71:disabled {
+  background: none;
+}
+
+.emotion-73 path {
+  stroke-width: 1;
+}
+
+.emotion-86 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  border: none;
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 12px;
+  height: 36px;
+  font-size: 13.33px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  padding: 0 16px;
+  background: transparent;
+  padding: 0 10px;
+  margin-right: 4px;
+  position: absolute;
+  right: 0;
+  z-index: 10;
+}
+
+.emotion-86:focus::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(208,	210,	220, 1);
+  border-radius: 12px;
+}
+
+.emotion-91 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -927,50 +1085,50 @@ exports[`Form (rjsf) Render form 1`] = `
   border: 0!important;
 }
 
-.emotion-69::-webkit-input-placeholder {
+.emotion-91::-webkit-input-placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-69::-moz-placeholder {
+.emotion-91::-moz-placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-69:-ms-input-placeholder {
+.emotion-91:-ms-input-placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-69::placeholder {
+.emotion-91::placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-69:disabled {
+.emotion-91:disabled {
   color: rgba(195, 197, 204, 1);
   background: rgba(238, 241, 247, 1);
 }
 
-.emotion-69:disabled::-webkit-input-placeholder {
+.emotion-91:disabled::-webkit-input-placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-69:disabled::-moz-placeholder {
+.emotion-91:disabled::-moz-placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-69:disabled:-ms-input-placeholder {
+.emotion-91:disabled:-ms-input-placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-69:disabled::placeholder {
+.emotion-91:disabled::placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-69:disabled:disabled,
-.emotion-69:disabled:disabled:hover {
+.emotion-91:disabled:disabled,
+.emotion-91:disabled:disabled:hover {
   border: 1px solid rgba(195, 197, 204, 1);
   background-image: none;
 }
 
-.emotion-70 {
+.emotion-92 {
   position: absolute;
   top: 0;
   right: 14px;
@@ -991,7 +1149,7 @@ exports[`Form (rjsf) Render form 1`] = `
   border-radius: 10px;
 }
 
-.emotion-74 {
+.emotion-96 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -1020,7 +1178,7 @@ exports[`Form (rjsf) Render form 1`] = `
     );
 }
 
-.emotion-74:hover {
+.emotion-96:hover {
   background: linear-gradient(
         108.3deg,
         rgba(77, 82, 87, 1) -0.36%,
@@ -1029,16 +1187,16 @@ exports[`Form (rjsf) Render form 1`] = `
   box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
 }
 
-.emotion-74:active {
+.emotion-96:active {
   background: rgba(43, 45, 49, 1);
   box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
 }
 
-.emotion-74:disabled {
+.emotion-96:disabled {
   background: rgba(195, 197, 204, 1);
 }
 
-.emotion-74:focus {
+.emotion-96:focus {
   background: linear-gradient(
         108.3deg,
         rgb(64, 68, 73) -0.36%,
@@ -1857,6 +2015,190 @@ exports[`Form (rjsf) Render form 1`] = `
           </div>
         </div>
         <div
+          class="form-group field field-array"
+        >
+          <label
+            class="emotion-4"
+            for="root_selectMultipleField"
+          >
+            Select multiple fields title
+          </label>
+          <div
+            id="root_selectMultipleField"
+          >
+            <div
+              class="emotion-55"
+              data-testid="typeahead"
+            >
+              <div
+                aria-controls="typeahead-popup-:ra:"
+                aria-expanded="false"
+                aria-haspopup="dialog"
+                aria-labelledby="typeahead-label-:ra:"
+                class="emotion-56"
+                data-state="closed"
+                data-testid="trigger-button"
+                role="combobox"
+                type="button"
+              >
+                <div
+                  class="emotion-69"
+                >
+                  <div
+                    class="emotion-70"
+                  >
+                    Option 1
+                  </div>
+                  <button
+                    class="emotion-71"
+                    type="button"
+                  >
+                    <span
+                      class="emotion-65"
+                      style="margin: 0px;"
+                    >
+                      <svg
+                        class="emotion-73"
+                        fill="none"
+                        height="14px"
+                        viewBox="0 0 8 8"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          Remove
+                        </title>
+                        <path
+                          d="M1 6.66L6.66 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                        <path
+                          d="M6.66 6.66L1 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="emotion-69"
+                >
+                  <div
+                    class="emotion-70"
+                  >
+                    Option 3
+                  </div>
+                  <button
+                    class="emotion-71"
+                    type="button"
+                  >
+                    <span
+                      class="emotion-65"
+                      style="margin: 0px;"
+                    >
+                      <svg
+                        class="emotion-73"
+                        fill="none"
+                        height="14px"
+                        viewBox="0 0 8 8"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          Remove
+                        </title>
+                        <path
+                          d="M1 6.66L6.66 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                        <path
+                          d="M6.66 6.66L1 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="emotion-57"
+                >
+                  <div
+                    class="emotion-58 emotion-59"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="typeahead-input emotion-60 emotion-61"
+                      id="formElement-selectMultipleField-text"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <input
+                    aria-hidden="false"
+                    class="typeahead-input emotion-60 emotion-63"
+                    data-testid="typeahead-input"
+                    readonly=""
+                    tabindex="-1"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <button
+                  class="emotion-86"
+                  data-testid="remove-all-button"
+                  type="button"
+                >
+                  <span
+                    class="emotion-65"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="8px"
+                      viewBox="0 0 8 8"
+                      width="8px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        Remove all
+                      </title>
+                      <path
+                        d="M1 6.66L6.66 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M6.66 6.66L1 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
           class="form-group field field-string"
         >
           <label
@@ -1872,7 +2214,7 @@ exports[`Form (rjsf) Render form 1`] = `
               class="emotion-6"
             >
               <input
-                class="emotion-69"
+                class="emotion-91"
                 id="root_passwordField"
                 name="passwordField"
                 placeholder=""
@@ -1880,7 +2222,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 value="password"
               />
               <div
-                class="emotion-70"
+                class="emotion-92"
               >
                 <button
                   class="emotion-38"
@@ -1936,7 +2278,7 @@ exports[`Form (rjsf) Render form 1`] = `
       </div>
     </div>
     <button
-      class="emotion-74"
+      class="emotion-96"
       data-testid="rjsf-submit-button"
       type="submit"
     >

@@ -77,6 +77,16 @@ export const Default: Story = {
           default: 'Option 1',
           enum: ['Option 1', 'Option 2'],
         },
+        selectMultipleField: {
+          type: 'array',
+          title: 'Select multiple fields title',
+          default: ['Option 1', 'Option 3'],
+          items: {
+            type: 'string',
+            enum: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+          },
+          uniqueItems: true,
+        },
         passwordField: {
           type: 'string',
           title: 'Password field title',
