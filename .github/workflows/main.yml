@@ -129,7 +129,8 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_OCT2025 }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN_OCT2025: ${{ secrets.VERCEL_TOKEN_OCT2025 }}
         run: pnpm sb:deploy:root --yes --token=${{ env.VERCEL_TOKEN_OCT2025 }}
 
   deploy-fitness-dashboard:
