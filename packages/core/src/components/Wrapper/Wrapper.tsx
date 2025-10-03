@@ -7,6 +7,7 @@ const Wrapper = styled.div<
     direction?: string;
     alignItems?: string;
     fade?: boolean;
+    delay?: number;
   } & CommonProps
 >`
   display: flex;
@@ -16,11 +17,11 @@ const Wrapper = styled.div<
 
   flex-direction: ${({ direction }) => (direction ? direction : 'row')};
 
-  ${({ fade }) =>
+  ${({ fade, delay = 0.3 }) =>
     fade &&
     `
     opacity: 0;
-    animation: fadeInOut 0.3s ease-in-out forwards;
+    animation: fadeInOut ${delay}s ease-in-out forwards;
 
     @keyframes fadeInOut {
       0% {
