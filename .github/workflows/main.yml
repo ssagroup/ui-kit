@@ -125,13 +125,8 @@ jobs:
       - name: Install Vercel CLI
         run: pnpm i -g vercel@46
 
-      - name: Change Git author
-        env:
-          VERCEL_AUTHOR_NAME: ${{ secrets.VERCEL_AUTHOR_NAME }}
-          VERCEL_AUTHOR_EMAIL: ${{ secrets.VERCEL_AUTHOR_EMAIL }}
-        run: |
-          git config --global user.name "${{ env.VERCEL_AUTHOR_NAME }}"
-          git config --global user.email "${{ env.VERCEL_AUTHOR_EMAIL }}"
+      - name: Rename Git folder
+        run: mv .git .git2
 
       - name: Deploy Storybook (root)
         env:
@@ -139,8 +134,10 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_TOKEN_OCT2025: ${{ secrets.VERCEL_TOKEN_OCT2025 }}
-          VERCEL_SCOPE: ${{ secrets.VERCEL_SCOPE }}
-        run: pnpm sb:deploy:root --token=${{ env.VERCEL_TOKEN_OCT2025 }} --scope=${{ env.VERCEL_SCOPE }}
+        run: pnpm sb:deploy:root --token=${{ env.VERCEL_TOKEN_OCT2025 }}
+
+      - name: Rename Git folder back
+        run: mv .git2 .git
 
   deploy-fitness-dashboard:
     runs-on: ubuntu-latest
