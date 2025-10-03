@@ -24,21 +24,63 @@ export const SelectWidget = <
     onChange,
     onBlur,
     onFocus,
-    onChangeOverride,
     value,
+    onChangeOverride,
+    multiple,
   } = props;
   const { enumOptions = [], enumDisabled = [] } = options;
 
-  const selectedIndex = enumOptionsIndexForValue<S>(
-    value,
-    enumOptions,
-  ) as string;
+  const isMultiple = !!multiple || Array.isArray(value);
+  const items = Array.isArray(enumOptions) ? enumOptions : [];
 
   const handleChange = onChangeOverride
     ? onChangeOverride
-    : (value?: string) => {
+    : (value?: string | number | (string | number)[]) => {
         onChange(value);
       };
+
+  const getSelectedItems = (): (string | number)[] => {
+    if (isMultiple) {
+      if (Array.isArray(value)) return value;
+      if (value !== undefined) return [value];
+      return [];
+    }
+
+    if (value === undefined || value === null) return [];
+
+    const index = enumOptionsIndexForValue<S>(value, enumOptions);
+    return index !== undefined ? [value] : [];
+  };
+
+  const selectedItems = getSelectedItems();
+
+  const handleFormChange = (
+    newValue: string | number | (string | number)[],
+  ) => {
+    if (isMultiple) {
+      const arrayValue = Array.isArray(newValue) ? newValue : [newValue];
+      handleChange(arrayValue);
+    } else {
+      const singleValue = Array.isArray(newValue) ? newValue[0] : newValue;
+      handleChange(singleValue);
+    }
+  };
+
+  const handleTypeaheadChange = (
+    changedValue: string | number,
+    isAdded: boolean,
+  ) => {
+    if (isMultiple) {
+      const currentSelected = Array.isArray(selectedItems) ? selectedItems : [];
+      const newSelected = isAdded
+        ? [...currentSelected, changedValue]
+        : currentSelected.filter((item) => item !== changedValue);
+      handleFormChange(newSelected);
+    } else {
+      const newValue = isAdded ? changedValue : undefined;
+      handleFormChange(newValue as string | number);
+    }
+  };
 
   const handleBlur = ({ target }: React.FocusEvent<HTMLInputElement>) =>
     onBlur(id, target && target.value);
@@ -48,14 +90,25 @@ export const SelectWidget = <
 
   const onEmptyChange = (isEmpty?: boolean) => {
     if (isEmpty) {
-      handleChange();
+      handleChange(isMultiple ? [] : undefined);
     }
   };
 
-  const items = Array.isArray(enumOptions) ? enumOptions : [];
-  const selectedItems = selectedIndex
-    ? [items[Number(selectedIndex)].value]
-    : [];
+  const onClearAll = () => {
+    handleChange(isMultiple ? [] : undefined);
+  };
+
+  const onRemoveSelectedClick = (removedValue: string | number) => {
+    if (isMultiple) {
+      const currentSelected = Array.isArray(selectedItems) ? selectedItems : [];
+      const newSelected = currentSelected.filter(
+        (item) => item !== removedValue,
+      );
+      handleChange(newSelected);
+    } else {
+      handleChange(undefined);
+    }
+  };
 
   return (
     <div id={id} onBlur={handleBlur} onFocus={handleFocus}>
@@ -64,10 +117,12 @@ export const SelectWidget = <
         selectedItems={selectedItems}
         isDisabled={disabled}
         name={name}
-        // RJSF provides placeholder as empty string
+        isMultiple={isMultiple}
         placeholder={placeholder || undefined}
-        onChange={handleChange}
+        onChange={handleTypeaheadChange}
         onEmptyChange={onEmptyChange}
+        onClearAll={onClearAll}
+        onRemoveSelectedClick={onRemoveSelectedClick}
         renderOption={({ label, input }) => highlightInputMatch(label, input)}>
         {items.map(({ label, value }) => (
           <TypeaheadOption
