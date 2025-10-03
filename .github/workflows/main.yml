@@ -123,7 +123,7 @@ jobs:
         run: pnpm build:all
 
       - name: Install Vercel CLI
-        run: pnpm i -g vercel@canary
+        run: pnpm i -g vercel@47
 
       - name: Deploy Storybook (root)
         env:
