@@ -125,6 +125,14 @@ jobs:
       - name: Install Vercel CLI
         run: pnpm i -g vercel@46
 
+      - name: Change Git author
+        env:
+          VERCEL_AUTHOR_NAME: ${{ secrets.VERCEL_AUTHOR_NAME }}
+          VERCEL_AUTHOR_EMAIL: ${{ secrets.VERCEL_AUTHOR_EMAIL }}
+        run: |
+          git config --global user.name "${{ env.VERCEL_AUTHOR_NAME }}"
+          git config --global user.email "${{ env.VERCEL_AUTHOR_EMAIL }}"
+
       - name: Deploy Storybook (root)
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
