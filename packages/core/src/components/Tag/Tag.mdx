@@ -76,6 +76,125 @@ function SizeOptions() {
 }
 ```
 
+### Custom Styles
+
+The Tag component supports custom styling through the `customStyles` prop, allowing you to override default colors and apply custom designs. You can use either individual style properties or the CSS-in-JS approach:
+
+#### Individual Properties Approach
+
+Use individual style properties for simple customizations:
+
+```tsx
+import { Tag } from '@ssa-ui-kit/core';
+
+function CustomStyledTags() {
+  return (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Tag
+        key={'custom-small-tag'}
+        size="small"
+        customStyles={{
+          color: '#e74c3c',
+          background: '#fadbd8',
+          border: '1px solid #c0392b',
+          boxShadow: '0 4px 8px rgba(231, 76, 60, 0.3)',
+        }}>
+        tag
+      </Tag>
+
+      <Tag
+        key={'custom-medium-tag'}
+        size="medium"
+        customStyles={{
+          color: '#27ae60',
+          background: 'linear-gradient(135deg, #d5f4e6, #a9dfbf)',
+          border: '1px solid #2ecc71',
+          boxShadow: '0 4px 8px rgba(39, 174, 96, 0.3)',
+        }}>
+        tag
+      </Tag>
+
+      <Tag
+        key={'custom-large-tag'}
+        size="large"
+        customStyles={{
+          color: '#8e44ad',
+          background: '#f4ecf7',
+          border: '1px dashed #9b59b6',
+          boxShadow: '0 6px 12px rgba(142, 68, 173, 0.4)',
+        }}>
+        tag
+      </Tag>
+    </div>
+  );
+}
+```
+
+#### CSS Property Approach
+
+Use the `css` property for complex styling with pseudo-selectors and animations:
+
+```tsx
+import { Tag } from '@ssa-ui-kit/core';
+import { css } from '@emotion/react';
+
+function AdvancedCustomStyledTags() {
+  return (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Tag
+        key={'custom-small-tag-css'}
+        size="small"
+        customStyles={{
+          css: css`
+            color: #3498db;
+            background: linear-gradient(135deg, #ebf3fd, #d6eaf8);
+            border: 1px solid #2980b9;
+            box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+            font-weight: 600;
+            transition: all 0.3s ease;
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+            }
+          `,
+        }}>
+        tag
+      </Tag>
+
+      <Tag
+        key={'custom-medium-tag-css'}
+        size="medium"
+        customStyles={{
+          css: css`
+            color: #e67e22;
+            background: #fdebd0;
+            border: 1px solid #d35400;
+            box-shadow: 0 3px 6px rgba(211, 84, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+          `,
+        }}>
+        tag
+      </Tag>
+    </div>
+  );
+}
+```
+
+#### Available Custom Style Properties
+
+The `customStyles` prop accepts the following properties:
+
+- **`color`** - Text color
+- **`background`** - Background color or gradient
+- **`border`** - Border style
+- **`boxShadow`** - Custom shadow effects
+- **`css`** - Full CSS-in-JS styling with Emotion
+
+> **Note:** Custom styles will override the default color theme. When using `customStyles`, the default gradients and shadows from the `color` prop are disabled to prevent conflicts.
+
 <Canvas />
 <Controls />
 
