@@ -1,5 +1,6 @@
 import Badge from '@components/Badge';
 import { css } from '@emotion/react';
+import type { Interpolation, Theme } from '@emotion/react';
 import {
   blue,
   green,
@@ -37,7 +38,7 @@ const mapColors: MainColors = {
 const createCustomStyles = (customStyles?: CustomTagStyles) => {
   if (!customStyles) return null;
 
-  const styleProps = [];
+  const styleProps: Array<Interpolation<Theme>> = [];
 
   if (customStyles.color) {
     styleProps.push(css`
