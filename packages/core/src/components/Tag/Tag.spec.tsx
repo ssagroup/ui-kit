@@ -1,7 +1,9 @@
-import { screen } from '../../../customTest';
+import { css } from '@emotion/react';
+
 import Tag from '@components/Tag';
 import theme from '@themes/main';
-import { css } from '@emotion/react';
+
+import { screen } from '../../../customTest';
 
 describe('tag', () => {
   it('Render small size', () => {

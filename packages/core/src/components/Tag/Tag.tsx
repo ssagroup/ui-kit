@@ -1,28 +1,28 @@
-import Badge from '@components/Badge';
 import { css } from '@emotion/react';
-import type { Interpolation, Theme } from '@emotion/react';
+
+import Badge from '@components/Badge';
+
 import {
   blue,
-  green,
   blueLight,
+  green,
   pink,
   purple,
   turquoise,
   yellow,
   yellowWarm,
 } from './styles';
-
 import {
-  pinkBorder,
-  yellowBorder,
-  greenBorder,
-  turquoiseBorder,
-  purpleBorder,
-  blueLightBorder,
   blueBorder,
+  blueLightBorder,
+  greenBorder,
+  pinkBorder,
+  purpleBorder,
+  turquoiseBorder,
+  yellowBorder,
   yellowWarmBorder,
 } from './styles';
-import { TagsProps, CustomTagStyles } from './types';
+import { CustomTagStyles, TagsProps } from './types';
 
 const mapColors: MainColors = {
   pink: [pink, pinkBorder],
@@ -36,39 +36,18 @@ const mapColors: MainColors = {
 };
 
 const createCustomStyles = (customStyles?: CustomTagStyles) => {
-  if (!customStyles) return null;
+  if (!customStyles) return [];
 
-  const styleProps: Array<Interpolation<Theme>> = [];
+  const styles = [
+    css`
+      ${customStyles.color && `color: ${customStyles.color};`}
+      ${customStyles.background && `background: ${customStyles.background};`}
+      ${customStyles.border && `border: ${customStyles.border};`}
+      ${customStyles.boxShadow && `box-shadow: ${customStyles.boxShadow};`}
+    `,
+  ];
 
-  if (customStyles.color) {
-    styleProps.push(css`
-      color: ${customStyles.color};
-    `);
-  }
-
-  if (customStyles.background) {
-    styleProps.push(css`
-      background: ${customStyles.background};
-    `);
-  }
-
-  if (customStyles.border) {
-    styleProps.push(css`
-      border: ${customStyles.border};
-    `);
-  }
-
-  if (customStyles.boxShadow) {
-    styleProps.push(css`
-      box-shadow: ${customStyles.boxShadow};
-    `);
-  }
-
-  if (customStyles.css) {
-    styleProps.push(customStyles.css);
-  }
-
-  return styleProps;
+  return customStyles.css ? [styles, customStyles.css] : [styles];
 };
 
 const Tag = ({
