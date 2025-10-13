@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import {
   Children,
   cloneElement,
@@ -6,6 +5,9 @@ import {
   useEffect,
   useLayoutEffect,
 } from 'react';
+
+import styled from '@emotion/styled';
+
 import { useAccordionGroupContext } from './AccordionContext';
 import { AccordionGroupProps, AccordionProps } from './types';
 

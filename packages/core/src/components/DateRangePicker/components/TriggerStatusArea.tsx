@@ -1,5 +1,7 @@
 import { useFormContext } from 'react-hook-form';
+
 import * as C from '@components';
+
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
 export const TriggerStatusArea = () => {

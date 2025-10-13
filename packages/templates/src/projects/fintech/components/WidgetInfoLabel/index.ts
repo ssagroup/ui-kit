@@ -1,2 +1,2 @@
-export * from './WidgetInfoLabel';
 export * from './types';
+export * from './WidgetInfoLabel';

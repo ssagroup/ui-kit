@@ -1,4 +1,5 @@
 import * as C from '@hr/components';
+
 import * as S from '../styles';
 
 export const Widgets = () => (

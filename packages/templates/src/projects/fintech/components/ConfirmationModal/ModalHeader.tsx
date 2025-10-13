@@ -1,5 +1,7 @@
 import { useTheme } from '@emotion/react';
-import { ModalDismissButton, Typography, Button, Icon } from '@ssa-ui-kit/core';
+
+import { Button, Icon, ModalDismissButton, Typography } from '@ssa-ui-kit/core';
+
 import { ModalHeaderProps } from './types';
 
 export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {

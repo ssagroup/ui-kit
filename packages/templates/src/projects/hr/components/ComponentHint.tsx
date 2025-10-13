@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import {
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
   TooltipProps,
+  TooltipTrigger,
 } from '@ssa-ui-kit/core';
 
 interface ViewProps {

@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from '../../../customTest';
+
 import UpcomingWorkouts from './index';
 
 describe('UpcomingWorkouts', () => {

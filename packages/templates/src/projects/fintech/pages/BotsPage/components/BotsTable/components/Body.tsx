@@ -1,21 +1,26 @@
-import { TableBody, TableRow } from '@ssa-ui-kit/core';
-import { propOr } from '@ssa-ui-kit/utils';
-import { useTranslation } from '@contexts';
 import {
+  FundsInWorkCell,
+  InformationLinkCell,
+  PNLCell,
   ROICell,
   TradeCell,
-  PNLCell,
-  InformationLinkCell,
-  FundsInWorkCell,
 } from '@fintech/components';
 import { TableRowProvider, useCurrency } from '@fintech/contexts';
-import { getColorsByStatus, getStatusInfo } from '@fintech/utils';
 import {
   useBotsPageEnums,
   useBotStrategiesLocalizedName,
 } from '@fintech/pages/BotsPage/hooks/useBotsPageEnums';
-import { Actions, BotTableName, BotTooltip } from '.';
+import { getColorsByStatus, getStatusInfo } from '@fintech/utils';
+
+import { TableBody, TableRow } from '@ssa-ui-kit/core';
+
+import { propOr } from '@ssa-ui-kit/utils';
+
+import { useTranslation } from '@contexts';
+
 import { BotsTableProps } from '../types';
+
+import { Actions, BotTableName, BotTooltip } from '.';
 
 export const Body = ({
   response,

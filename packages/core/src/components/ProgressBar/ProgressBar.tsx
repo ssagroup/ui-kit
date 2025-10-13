@@ -1,17 +1,18 @@
 import { forwardRef } from 'react';
+
 import {
-  pink,
-  yellow,
-  green,
-  turquoise,
-  purple,
   blue,
   blueLight,
+  green,
+  pink,
+  purple,
+  turquoise,
+  yellow,
   yellowWarm,
 } from '@styles/global';
 
+import { bar, wrapper } from './styles';
 import { ProgressBarProps } from './types';
-import { wrapper, bar } from './styles';
 
 const mapColors: MainColors = {
   pink,

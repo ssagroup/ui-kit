@@ -1,9 +1,10 @@
 import { useTheme } from '@emotion/react';
+
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 
-import { ArrowButtonProps } from './types';
 import { arrowBtnStyles } from './styles';
+import { ArrowButtonProps } from './types';
 
 export const ArrowButton = ({
   direction,

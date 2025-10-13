@@ -1,4 +1,5 @@
 import { MutableRefObject } from 'react';
+
 import { GraphsListItem } from '@fintech/types';
 
 export interface GraphsContextValue {

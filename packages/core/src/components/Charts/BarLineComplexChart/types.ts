@@ -1,5 +1,6 @@
 import { MutableRefObject } from 'react';
 import { PlotParams } from 'react-plotly.js';
+
 import { PieChartProps } from '../PieChart';
 
 export type BarLineChartItem = Plotly.Data & {

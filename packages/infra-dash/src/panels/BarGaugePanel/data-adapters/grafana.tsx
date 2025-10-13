@@ -1,8 +1,8 @@
 import { getValueFormat } from '@grafana/data';
-import { GaugeBarValueFormatter } from '@ssa-ui-kit/core';
-
 import { DataAdapterOptions } from '@shared/dataAdapter';
 import { GrafanaPanelData } from '@shared/grafana';
+
+import { GaugeBarValueFormatter } from '@ssa-ui-kit/core';
 
 export const grafanaDataAdapter = ({
   panel,

@@ -1,7 +1,8 @@
 import { useTheme } from '@emotion/react';
 import { FloatingArrow } from '@floating-ui/react';
-import { useTooltipContext } from './useTooltipContext';
+
 import { TooltipArrowProps } from './types';
+import { useTooltipContext } from './useTooltipContext';
 
 export const TooltipArrow = ({
   width = 10,

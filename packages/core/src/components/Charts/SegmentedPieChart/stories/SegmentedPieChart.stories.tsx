@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
+import { SegmentedPieChart } from '../SegmentedPieChart';
+
 import {
   balanceData,
   balanceMissedPartsData,
   balanceMissedPartsDataTotalAmount,
   balanceTotalAmount,
 } from './fixtures';
-import { SegmentedPieChart } from '../SegmentedPieChart';
 
 const currency = 'USDT';
 

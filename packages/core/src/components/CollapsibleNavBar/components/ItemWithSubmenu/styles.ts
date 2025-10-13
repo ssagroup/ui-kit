@@ -1,4 +1,5 @@
-import { Theme, css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
+
 import { CollapsibleNavBarExtendedProps } from '@components/CollapsibleNavBar/types';
 
 export const AccordionTitleWrapper =

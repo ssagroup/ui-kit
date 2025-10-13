@@ -1,9 +1,10 @@
-import { screen, fireEvent, mockUseForm } from '../../../customTest';
 import { FieldError } from 'react-hook-form';
 
-import TextField from '@components/TextField';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
+import TextField from '@components/TextField';
+
+import { fireEvent, mockUseForm, screen } from '../../../customTest';
 
 const mockError: FieldError = {
   type: 'required',

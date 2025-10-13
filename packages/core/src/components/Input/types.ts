@@ -1,5 +1,6 @@
 import { BaseSyntheticEvent, KeyboardEventHandler } from 'react';
 import type { FieldError, UseFormReturn } from 'react-hook-form';
+
 import type { Interpolation, Theme } from '@emotion/react';
 
 interface ExtendedInputProps

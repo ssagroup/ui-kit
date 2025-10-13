@@ -1,8 +1,7 @@
 import type { Meta } from '@storybook/react-webpack5';
 
-import { mealPlannerData as data } from './mockMealPlannerRequest';
-
 import MealPlanner from './index';
+import { mealPlannerData as data } from './mockMealPlannerRequest';
 
 export default {
   title: 'Fitness/MealPlanner',

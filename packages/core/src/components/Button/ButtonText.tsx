@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 
-import { ColoredButtonTextProps, ButtonTextProps } from './types';
+import { ButtonTextProps, ColoredButtonTextProps } from './types';
 
 export const ButtonText = ({ text, className, testId }: ButtonTextProps) => {
   return (

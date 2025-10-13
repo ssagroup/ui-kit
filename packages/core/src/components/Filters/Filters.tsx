@@ -1,15 +1,17 @@
 import { useRef, useState } from 'react';
-import Wrapper from '@components/Wrapper';
+
 import { TableFilters } from '@components/TableFilters';
-import { TableFilterConfig } from '@components/TableFilters/types';
 import {
+  useTableData,
   UseTableDataParameters,
   UseTableDataResult,
-  useTableData,
 } from '@components/TableFilters/hooks/useTableData';
-import { FiltersContextProvider } from './FiltersContext';
-import { FiltersBlock } from './FiltersBlock';
+import { TableFilterConfig } from '@components/TableFilters/types';
+import Wrapper from '@components/Wrapper';
+
 import { FilterBlockWrapper } from './FilterBlockWrapper';
+import { FiltersBlock } from './FiltersBlock';
+import { FiltersContextProvider } from './FiltersContext';
 import { FiltersWrapper } from './FiltersWrapper';
 import { useVisibility } from './hooks/useVisibility';
 

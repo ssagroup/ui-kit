@@ -1,6 +1,7 @@
-import { createContext, useRef, createRef } from 'react';
+import { createContext, createRef, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { HeaderContextContent, HeaderContentRef } from './types';
+
+import { HeaderContentRef, HeaderContextContent } from './types';
 
 export const HeaderContext = createContext<HeaderContextContent>({
   headerContentRef: createRef(),

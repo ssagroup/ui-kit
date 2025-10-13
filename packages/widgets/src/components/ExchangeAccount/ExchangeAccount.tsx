@@ -1,16 +1,17 @@
 import React, { isValidElement } from 'react';
+
 import { CardBase, WithLink } from '@ssa-ui-kit/core';
 
-import * as S from './styles';
-import { ExchangeAccountProps } from './types';
 import {
-  ExchangeAccountProvider,
+  ExchangeAccountContent,
   ExchangeAccountHeader,
   ExchangeAccountPlatform,
-  ExchangeAccountTitle,
+  ExchangeAccountProvider,
   ExchangeAccountStatus,
-  ExchangeAccountContent,
+  ExchangeAccountTitle,
 } from './components';
+import * as S from './styles';
+import { ExchangeAccountProps } from './types';
 
 export const ExchangeAccount = ({
   platform,

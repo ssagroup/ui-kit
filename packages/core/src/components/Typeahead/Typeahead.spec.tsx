@@ -1,9 +1,11 @@
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormProvider, useForm } from 'react-hook-form';
-import { Typeahead } from './Typeahead';
+
 import { TypeaheadOption } from './components';
+import { Typeahead } from './Typeahead';
 import { highlightInputMatch } from './utils';
 
 type Item = { id: number; value: string; label?: string };

@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { css } from '@emotion/css';
+import validator from '@rjsf/validator-ajv8';
+import { useInfraDashContext } from '@shared/context';
+import { Panel } from '@shared/panel';
+
 import {
   Button,
   JsonSchema,
   Typeahead,
   TypeaheadOption,
 } from '@ssa-ui-kit/core';
-import validator from '@rjsf/validator-ajv8';
-
-import { useInfraDashContext } from '@shared/context';
-import { Panel } from '@shared/panel';
 
 export type PanelSettingsProps = {
   panel: Panel;

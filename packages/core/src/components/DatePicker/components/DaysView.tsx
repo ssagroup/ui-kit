@@ -1,9 +1,12 @@
 import React, { MouseEventHandler } from 'react';
+
 import { DateTime } from 'luxon';
+
 import Wrapper from '@components/Wrapper';
+
 import * as S from '../styles';
-import { getDaysForCalendarMonth, getWeekDays } from '../utils';
 import { useDatePickerContext } from '../useDatePickerContext';
+import { getDaysForCalendarMonth, getWeekDays } from '../utils';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();

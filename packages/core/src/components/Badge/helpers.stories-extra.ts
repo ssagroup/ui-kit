@@ -1,5 +1,6 @@
-import { MapIconsType } from '@components/Icon/types';
 import styled from '@emotion/styled';
+
+import { MapIconsType } from '@components/Icon/types';
 
 export const sizes: Array<keyof MainSizes> = ['small', 'medium', 'large'];
 export const colors: Array<keyof MainColors> = [

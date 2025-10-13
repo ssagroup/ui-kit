@@ -1,7 +1,8 @@
+import Button from '@components/Button';
 import Icon from '@components/Icon';
+
 import * as S from '../styles';
 import { TypeaheadItemProps } from '../types';
-import Button from '@components/Button';
 
 export const TypeaheadOption = ({ children, ...rest }: TypeaheadItemProps) => (
   <S.TypeaheadOption {...rest}>

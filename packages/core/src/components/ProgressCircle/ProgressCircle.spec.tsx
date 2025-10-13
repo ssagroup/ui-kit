@@ -1,6 +1,6 @@
-import { screen } from '../../../customTest';
-
 import theme from '@themes/main';
+
+import { screen } from '../../../customTest';
 
 import ProgressCircle from './index';
 

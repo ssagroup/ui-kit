@@ -1,9 +1,11 @@
 import { useTheme } from '@emotion/react';
 import { MayHaveLabel, PieTooltipProps } from '@nivo/pie';
+
 import { pathOr } from '@ssa-ui-kit/utils';
+
+import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
 import { BalanceDataForGraph } from '../types';
 import { getRoundedNumber } from '../utils';
-import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
 
 export const ChartTooltip = ({
   point,

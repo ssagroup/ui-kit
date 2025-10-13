@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useTooltip } from '@components/Tooltip/useTooltip';
-import { TooltipContext } from '@components/Tooltip/useTooltipContext';
+
 import {
   useFullscreenMode,
   WithFullscreenMode,
 } from '@components/FullscreenModeContext';
-import { BarLineChartItem, BarLineComplexChartProps } from './types';
-import { BarLineComplexChartInternal } from './BarLineComplexChartInternal';
+import { useTooltip } from '@components/Tooltip/useTooltip';
+import { TooltipContext } from '@components/Tooltip/useTooltipContext';
+
 import { BarLineComplexChartContextProvider } from './BarLIneComplexChart.context';
+import { BarLineComplexChartInternal } from './BarLineComplexChartInternal';
+import { BarLineChartItem, BarLineComplexChartProps } from './types';
 
 const BarLineComplexChartComponent = ({
   data,

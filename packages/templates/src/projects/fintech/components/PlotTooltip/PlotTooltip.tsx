@@ -1,8 +1,10 @@
 import { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
+
 import { Card } from '@ssa-ui-kit/core';
-import { PlotTooltipProps } from './types';
+
 import { PlotTooltipContentWrapper, PlotTooltipWrapper } from './styles';
+import { PlotTooltipProps } from './types';
 
 export const PlotTooltip = forwardRef<HTMLDivElement, PlotTooltipProps>(
   function PlotTooltipInner({ x, y, children, position }, ref) {

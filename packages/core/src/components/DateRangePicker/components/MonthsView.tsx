@@ -1,10 +1,13 @@
-import { DateTime } from 'luxon';
 import { MouseEventHandler } from 'react';
+
+import { DateTime } from 'luxon';
+
 import { MONTHS } from '../constants';
 import { useRangeHighlighting } from '../hooks';
-import { DateTimeTuple } from '../types';
 import * as S from '../styles';
+import { DateTimeTuple } from '../types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+
 import { DatesListWrapper } from './DatesListWrapper';
 
 export const MonthsView = () => {

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { SearchBox } from '..';
 import { StoryComponent } from './StoryComponent';
+
+import { SearchBox } from '..';
 
 type SearchBoxType = typeof SearchBox;
 

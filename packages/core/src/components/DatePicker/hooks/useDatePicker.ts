@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+
 import { DateTime } from 'luxon';
-import { useDatePickerMask } from './useDatePickerMask';
+
 import { DATE_MAX, DATE_MIN, INVALID_DATE, OUT_OF_RANGE } from '../constants';
 import { CalendarType, DatePickerProps } from '../types';
+
+import { useDatePickerMask } from './useDatePickerMask';
 
 export const useDatePicker = ({
   dateMin = DATE_MIN,

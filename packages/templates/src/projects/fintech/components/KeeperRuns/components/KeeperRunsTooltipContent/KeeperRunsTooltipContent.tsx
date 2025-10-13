@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { useTranslation } from '@contexts';
+
 import { getDateTime } from '@fintech/components/Rebalance/helpers';
+
+import { useTranslation } from '@contexts';
+
 import { KeeperRunsTooltipContentProps } from './types';
 
 export const KeeperRunsTooltipContent = ({

@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+
 import { focusOutline } from '@styles/safari-focus-outline';
+
 import { DropdownToggleProps, MultipleStylesProps } from './types';
 
 const multipleStyles = ({ theme, selectedCount = 0 }: MultipleStylesProps) => {

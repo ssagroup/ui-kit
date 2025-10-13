@@ -1,6 +1,6 @@
-import { InfraDashTransport } from './baseTransport';
-
 import { useInfraDashContext } from '../context';
+
+import { InfraDashTransport } from './baseTransport';
 
 export const useTransport = (transport?: InfraDashTransport) => {
   const { transport: contextTransport } = useInfraDashContext();

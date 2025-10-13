@@ -1,12 +1,15 @@
 import React, { forwardRef, useEffect } from 'react';
+
 import { useMergeRefs } from '@floating-ui/react';
+
 import FormHelperText from '@components/FormHelperText';
+
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
-import { InputProps, InputStatusColors } from './types';
 import { InputStatusError } from './InputStatusError';
 import { InputStatusSuccess } from './InputStatusSuccess';
 import * as S from './styles';
+import { InputProps, InputStatusColors } from './types';
 
 const mapColors: InputStatusColors = {
   basic: S.basic,

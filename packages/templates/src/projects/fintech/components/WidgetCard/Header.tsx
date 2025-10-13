@@ -1,5 +1,7 @@
-import { Interpolation, Theme, css } from '@emotion/react';
+import { css, Interpolation, Theme } from '@emotion/react';
+
 import { CardHeader } from '@ssa-ui-kit/core';
+
 import { Title } from './Title';
 import { WidgetCardProps } from './types';
 

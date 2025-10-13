@@ -1,4 +1,4 @@
-import { RequestPeriod, GraphsListItem } from '@fintech/types';
+import { GraphsListItem, RequestPeriod } from '@fintech/types';
 
 type CumulativePNLDataItem = {
   [key: string]: unknown;

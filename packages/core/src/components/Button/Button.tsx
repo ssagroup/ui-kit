@@ -1,29 +1,30 @@
-import { useState, forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
+
 import { useTheme } from '@emotion/react';
 
 import Wrapper from '@components/Wrapper/Wrapper';
 
 import { ButtonBase } from './ButtonBase';
 import {
-  WhiteButtonText,
+  DisabledButtonText,
   GreyButtonText,
   GreyLightButtonText,
-  DisabledButtonText,
+  WhiteButtonText,
 } from './ButtonText';
-import { ButtonProps, ButtonVariants } from './types';
 import {
-  large,
-  medium,
-  small,
-  primary,
-  info,
-  secondary,
-  tertiary,
   attention,
   buttonBlock,
   iconWrapperLeft,
   iconWrapperRight,
+  info,
+  large,
+  medium,
+  primary,
+  secondary,
+  small,
+  tertiary,
 } from './styles';
+import { ButtonProps, ButtonVariants } from './types';
 
 const mapSizes: MainSizes = {
   small,

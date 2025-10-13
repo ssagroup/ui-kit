@@ -1,5 +1,7 @@
-import { within, fireEvent } from '@testing-library/dom';
 import { mockIntersectionObserver } from 'jsdom-testing-mocks';
+
+import { fireEvent, within } from '@testing-library/dom';
+
 import { StoryComponent } from './stories/StoryComponent';
 
 describe('Filters', () => {

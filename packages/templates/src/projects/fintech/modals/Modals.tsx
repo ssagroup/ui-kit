@@ -1,5 +1,6 @@
-import { useModals } from '.';
 import { MODALS } from './constants';
+
+import { useModals } from '.';
 
 export const Modals = () => {
   const { isOpen, modalInfo } = useModals();

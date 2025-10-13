@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+
 import { useFiltersContext } from '../FiltersContext';
 
 export const useFiltersBlock = () => {

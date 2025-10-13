@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-import { Typography, ProgressBar, ProgressVertical } from '@ssa-ui-kit/core';
+import { ProgressBar, ProgressVertical, Typography } from '@ssa-ui-kit/core';
 
 import { dateFormatters } from '@ssa-ui-kit/utils';
 

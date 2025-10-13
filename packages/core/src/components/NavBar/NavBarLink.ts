@@ -1,5 +1,6 @@
-import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
+
+import styled from '@emotion/styled';
 
 const NavBarLink = styled(NavLink)`
   cursor: pointer;

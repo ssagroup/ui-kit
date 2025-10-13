@@ -1,6 +1,8 @@
-import { useRef, Fragment } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Fragment, useRef } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import type { Meta } from '@storybook/react-webpack5';
+
 import { TranslationProvider } from '@contexts';
 import { USDT } from '@/fintech/constants';
 import {
@@ -10,11 +12,12 @@ import {
   PeriodProvider,
 } from '@/fintech/contexts';
 import { translationConfig } from '@/fintech/translation';
+
+import { Header } from '../../AppLayout/components/Header';
 import { AppLayoutProvider } from '../../AppLayout/context';
 import { LayoutBase } from '../../AppLayout/LayoutBase';
 import { RightPaneBase } from '../../AppLayout/RightPaneBase';
 import { NotificationsPage } from '../NotificationsPage';
-import { Header } from '../../AppLayout/components/Header';
 
 export default {
   title: 'Templates/Notifications Page',

@@ -1,12 +1,13 @@
 import { propOr } from '@ssa-ui-kit/utils';
+
+import { useFullscreenMode } from '@components/FullscreenModeContext';
+
+import { defaultPieChartColors } from '../colorPalettes';
 import {
   BalanceDataForGraph,
   SegmentedDataItem,
   SegmentedPieChartProps,
 } from '../types';
-import { defaultPieChartColors } from '../colorPalettes';
-
-import { useFullscreenMode } from '@components/FullscreenModeContext';
 
 export const useData = ({
   data,

@@ -1,4 +1,3 @@
-import Wrapper from '@components/Wrapper';
 import {
   ArrayFieldTemplateItemType,
   ArrayFieldTemplateProps,
@@ -8,6 +7,8 @@ import {
   RJSFSchema,
   StrictRJSFSchema,
 } from '@rjsf/utils';
+
+import Wrapper from '@components/Wrapper';
 
 export const ArrayFieldTemplate = <
   T = unknown,

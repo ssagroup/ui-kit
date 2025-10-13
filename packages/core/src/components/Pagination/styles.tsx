@@ -1,6 +1,7 @@
-import Input from '@components/Input';
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
+
+import Input from '@components/Input';
 
 const baseBtnStyles = (theme: Theme) => css`
   height: 30px;

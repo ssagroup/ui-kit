@@ -1,6 +1,7 @@
-import { Point, LineSvgProps, CustomLayerProps } from '@nivo/line';
+import { CustomLayerProps, LineSvgProps, Point } from '@nivo/line';
 import { ScaleTimeSpec } from '@nivo/scales';
-import { MainColors, DropdownOptionProps } from '@ssa-ui-kit/core';
+
+import { DropdownOptionProps, MainColors } from '@ssa-ui-kit/core';
 
 export interface OptionType extends DropdownOptionProps {
   value: 'd' | 'w' | 'm';

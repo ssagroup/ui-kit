@@ -1,7 +1,10 @@
 import { PlotParams } from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
-import { useTranslation } from '@contexts';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+
+import { useTranslation } from '@contexts';
+
 import { useDeviceType } from './useDeviceType';
 
 interface UsePlotlyDefaultConfig {

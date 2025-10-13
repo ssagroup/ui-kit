@@ -6,17 +6,21 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { useTheme } from '@emotion/react';
+
 import { css } from '@emotion/css';
+import { useTheme } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
+import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { IconProps } from '@components/Icon/types';
-import Button from '@components/Button';
 import Wrapper from '@components/Wrapper';
-import { Typeahead } from '.';
+
+import { TypeaheadItemIcon, TypeaheadOption } from './components';
 import { TypeaheadProps, TypeaheadValue } from './types';
 import { highlightInputMatch } from './utils';
-import { TypeaheadItemIcon, TypeaheadOption } from './components';
+
+import { Typeahead } from '.';
 
 const items = [
   { id: 1, value: 'First' },

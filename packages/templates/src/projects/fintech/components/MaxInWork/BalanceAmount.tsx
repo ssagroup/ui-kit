@@ -1,5 +1,7 @@
 import { useTheme } from '@emotion/react';
+
 import { Typography } from '@ssa-ui-kit/core';
+
 import { MaxInWorkProps } from './types';
 
 type BalanceAmountProps = Pick<MaxInWorkProps, 'amount' | 'currency'>;

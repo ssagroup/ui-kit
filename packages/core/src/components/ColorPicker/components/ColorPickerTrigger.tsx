@@ -1,8 +1,10 @@
 import { useTheme } from '@emotion/react';
 import { Color } from '@rc-component/color-picker';
+
 import Button from '@components/Button';
 import { PopoverTrigger } from '@components/Popover';
 import Wrapper from '@components/Wrapper';
+
 import { useColorPickerContext } from '../ColorPickerContext';
 
 export const ColorPickerTrigger = () => {

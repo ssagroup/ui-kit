@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react';
+
 import { DEFAULT_SORT } from '@fintech/pages/BotsPage/components/BotsTable/consts';
 import { SortInfo } from '@fintech/pages/BotsPage/components/BotsTable/types';
+
 import { TableContextContent } from './types';
 
 export const TableContext = createContext<TableContextContent>({

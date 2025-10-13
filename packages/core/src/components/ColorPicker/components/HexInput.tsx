@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import { Color } from '@rc-component/color-picker';
+
 import { BaseInput } from './BaseInput';
 
 export interface HexInputProps {

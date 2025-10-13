@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
 import { css, Theme } from '@emotion/react';
+import styled from '@emotion/styled';
+
 import NavBarBase from '@components/NavBar/NavBarBase';
+
 import { CollapsibleNavBarExtendedProps } from '../types';
 
 // TODO: refactor this

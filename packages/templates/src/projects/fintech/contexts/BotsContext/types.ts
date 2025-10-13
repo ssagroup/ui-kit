@@ -1,4 +1,4 @@
-import { BOTS_RUNNING, BOTS_STOPPING, BOTS_STOPPED } from './constants';
+import { BOTS_RUNNING, BOTS_STOPPED, BOTS_STOPPING } from './constants';
 
 export type BotsStatus =
   | typeof BOTS_RUNNING

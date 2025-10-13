@@ -6,8 +6,9 @@ import {
   PERIOD_YEAR,
 } from '@fintech/constants';
 import { PeriodButtonGroup } from '@fintech/pages/Dashboard/components';
-import { PeriodFilterProps } from '@fintech/pages/Dashboard/components/PeriodFilter/types';
 import { usePeriodFilter } from '@fintech/pages/Dashboard/components/PeriodFilter/hooks';
+import { PeriodFilterProps } from '@fintech/pages/Dashboard/components/PeriodFilter/types';
+
 import { useTranslation } from '@contexts';
 
 export const BotPeriodFilter = ({

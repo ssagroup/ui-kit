@@ -1,6 +1,7 @@
 import * as C from '../..';
-import * as DPC from '.';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+
+import * as DPC from '.';
 
 export const Header = () => {
   const {

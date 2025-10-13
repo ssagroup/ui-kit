@@ -1,5 +1,6 @@
-import { screen, fireEvent, mockUseForm } from '../../../customTest';
 import Input from '@components/Input';
+
+import { fireEvent, mockUseForm, screen } from '../../../customTest';
 
 const { register } = mockUseForm();
 

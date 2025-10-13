@@ -1,7 +1,9 @@
-import { useEffect, createContext, useContext } from 'react';
-import { User } from '@ssa-ui-kit/widgets';
-import { useApi } from '@ssa-ui-kit/hooks';
+import { createContext, useContext, useEffect } from 'react';
+
 import API from '@fitness/apis/index';
+
+import { useApi } from '@ssa-ui-kit/hooks';
+import { User } from '@ssa-ui-kit/widgets';
 
 /**
  * Inspired by https://usehooks.com/useAuth/

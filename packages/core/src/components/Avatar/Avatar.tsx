@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { CommonProps } from '@global-types/emotion';
 
 const Avatar = styled.div<{ size: number; image: string } & CommonProps>`

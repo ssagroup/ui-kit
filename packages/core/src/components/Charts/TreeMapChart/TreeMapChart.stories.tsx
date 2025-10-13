@@ -1,5 +1,5 @@
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { css } from '@emotion/css';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
 
 import {
   TreeMapChart,

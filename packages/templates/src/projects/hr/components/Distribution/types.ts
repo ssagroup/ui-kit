@@ -1,4 +1,5 @@
 import { Interpolation, Theme } from '@emotion/react';
+
 import { WidgetCardProps } from '../WidgetCard';
 
 export type DistributionCardProps = {

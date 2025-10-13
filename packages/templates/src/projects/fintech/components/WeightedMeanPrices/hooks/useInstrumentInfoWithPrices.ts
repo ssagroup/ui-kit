@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { InstrumentSingle, WeightedMeanPrices } from '@fintech/types';
+
 import { MOCK_INSTRUMENTS } from './mock';
 
 export const useInstrumentInfoWithPrices = (props: WeightedMeanPrices) => {

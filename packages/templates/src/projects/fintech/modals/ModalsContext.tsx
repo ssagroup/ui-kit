@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+
 import { ModalInformation, ModalsContextType } from './types';
 
 export const ModalsContext = createContext<ModalsContextType>({

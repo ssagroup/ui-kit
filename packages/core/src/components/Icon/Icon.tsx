@@ -1,5 +1,5 @@
-import { IconProps } from './types';
 import IconsMap from './icons';
+import { IconProps } from './types';
 
 const Icon = ({ name, color = '#000', size, tooltip, ...props }: IconProps) => {
   return (

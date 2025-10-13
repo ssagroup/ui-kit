@@ -1,7 +1,8 @@
 import { fireEvent } from '@testing-library/dom';
+
 import { ITEMS } from './stories/consts';
-import { StoryComponent } from './stories/StoryComponent';
 import { Logo } from './stories/Logo';
+import { StoryComponent } from './stories/StoryComponent';
 
 describe('CollapsibleNavBar', () => {
   it('Should be correctly rendered', () => {

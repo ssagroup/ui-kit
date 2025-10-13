@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import { PathPattern } from 'react-router-dom';
+
 import {
   NavBarExtendedGroup,
   NavBarExtendedItem,

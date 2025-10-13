@@ -1,6 +1,9 @@
 import React from 'react';
+
 import styled from '@emotion/styled';
+
 import { ClassnameArray } from '@ssa-ui-kit/utils';
+
 import { useCollapsibleNavBarItemContext } from './CollapsibleNavBarItemContext';
 
 interface CustomIconSVGProps extends React.SVGProps<SVGSVGElement> {

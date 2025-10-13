@@ -1,12 +1,14 @@
 import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
-import { CardContent, PieChartProps } from '@ssa-ui-kit/core';
 
-import * as S from '../styles';
-import { useExchangeAccountContext } from './ExchangeAccountProvider';
+import { CardContent, PieChartProps } from '@ssa-ui-kit/core';
 
 import { BalancePieChart } from '@components/AccountBalance';
 import { AccountBalanceProvider } from '@components/AccountBalance/AccountBalanceContext';
+
+import * as S from '../styles';
+
+import { useExchangeAccountContext } from './ExchangeAccountProvider';
 
 export interface ExchangeAccountContentProps
   extends Omit<React.ComponentProps<typeof CardContent>, 'children'> {

@@ -1,8 +1,12 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import { ThemeProvider } from '@emotion/react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import type { Meta } from '@storybook/react-webpack5';
+
 import { mainTheme } from '@ssa-ui-kit/core';
+
 import { AuthProvider } from '../hooks/useAuth';
+
 import { FitnessDashboard } from '..';
 
 export default {

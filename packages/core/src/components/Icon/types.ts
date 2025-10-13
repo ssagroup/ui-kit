@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { iconsList } from './icons/iconsList';
 
 export interface SVGProps extends React.SVGProps<SVGSVGElement> {

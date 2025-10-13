@@ -1,4 +1,5 @@
 import type { MainColors } from '@ssa-ui-kit/core';
+
 import { screen } from '../../../customTest';
 
 import ListGoals from './index';

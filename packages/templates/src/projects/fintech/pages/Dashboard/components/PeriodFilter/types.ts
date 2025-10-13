@@ -1,5 +1,6 @@
-import type { ButtonGroupProps, ButtonGroupItem } from '@ssa-ui-kit/core';
 import { RequestPeriod, StatisticsPeriod } from '@fintech/types';
+
+import type { ButtonGroupItem, ButtonGroupProps } from '@ssa-ui-kit/core';
 
 export type PeriodFilterItem = { id: StatisticsPeriod } & Omit<
   ButtonGroupItem,

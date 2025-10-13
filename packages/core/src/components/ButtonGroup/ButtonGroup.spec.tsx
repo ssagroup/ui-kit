@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+
 import { ButtonGroup } from './ButtonGroup';
 import { items } from './helpers';
 

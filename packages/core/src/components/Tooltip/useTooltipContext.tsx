@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import { TooltipContextType, UseTooltipContext } from './types';
 
 export const TooltipContext = createContext<TooltipContextType>(null);

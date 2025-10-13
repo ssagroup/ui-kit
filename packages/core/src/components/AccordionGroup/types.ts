@@ -1,5 +1,6 @@
-import { SerializedStyles } from '@emotion/react';
 import { AriaAttributes } from 'react';
+
+import { SerializedStyles } from '@emotion/react';
 
 export type AccordionSize = 'empty' | 'small' | 'medium' | 'large';
 

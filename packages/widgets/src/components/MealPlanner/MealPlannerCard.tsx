@@ -1,11 +1,10 @@
 import { css } from '@emotion/react';
 
-import { ProgressBar, Typography, Avatar, Wrapper } from '@ssa-ui-kit/core';
+import { Avatar, ProgressBar, Typography, Wrapper } from '@ssa-ui-kit/core';
 
 import Marker from './MealPlannerBadge';
-import MealPlannerLegends from './MealPlannerLegends';
 import MealPlannerBars from './MealPlannerBars';
-
+import MealPlannerLegends from './MealPlannerLegends';
 import { MealPlannerCardProps } from './types';
 
 const markerColor = {

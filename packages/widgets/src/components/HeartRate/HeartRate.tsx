@@ -1,21 +1,22 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
 import { css, useTheme } from '@emotion/react';
 import { linearGradientDef } from '@nivo/core';
 import { Point } from '@nivo/line';
 
 import {
-  CardHeader,
-  CardContent,
   Card,
+  CardContent,
+  CardHeader,
   ResponsiveImage,
   Typography,
 } from '@ssa-ui-kit/core';
 
 import { throttle } from '@ssa-ui-kit/utils';
 
-import { HeartRateProps } from './types';
-import { HeartRateLineChart } from './HeartRateLineChart';
 import { BPM } from './BPM';
+import { HeartRateLineChart } from './HeartRateLineChart';
+import { HeartRateProps } from './types';
 
 const gradientId = 'HeartRateGradient';
 const chartFill = [{ match: '*' as const, id: gradientId }];

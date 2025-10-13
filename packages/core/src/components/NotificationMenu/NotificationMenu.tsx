@@ -1,5 +1,7 @@
 import { useTheme } from '@emotion/react';
+
 import Icon from '@components/Icon';
+import { NotificationCard } from '@components/NotificationCard';
 import {
   Popover,
   PopoverClose,
@@ -8,17 +10,17 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@components/Popover';
-import { NotificationCard } from '@components/NotificationCard';
-import { NotificationMenuProps } from './types';
+
 import {
-  ResetBtnStyles,
-  Close,
   ButtonsWrapper,
+  Close,
   List,
   Loading,
-  PopoverWrapper,
   PopoverContentWrapper,
+  PopoverWrapper,
+  ResetBtnStyles,
 } from './styles';
+import { NotificationMenuProps } from './types';
 
 export const NotificationMenu = ({
   trigger,

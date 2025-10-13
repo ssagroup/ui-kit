@@ -1,4 +1,5 @@
 import { PlotParams } from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
 
 interface UsePlotlyDefaultConfig {

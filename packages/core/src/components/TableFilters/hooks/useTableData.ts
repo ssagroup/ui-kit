@@ -1,5 +1,7 @@
-import { useState, BaseSyntheticEvent, useEffect, createRef } from 'react';
+import { BaseSyntheticEvent, createRef, useEffect, useState } from 'react';
+
 import { assocPath, propOr } from '@ssa-ui-kit/utils';
+
 import { TableFilterConfig } from '../types';
 import {
   getCheckboxChangedItems,

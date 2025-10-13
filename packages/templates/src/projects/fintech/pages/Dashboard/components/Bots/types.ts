@@ -1,4 +1,5 @@
 import { Theme } from '@emotion/react';
+
 import { ProgressCircle } from '@ssa-ui-kit/core';
 
 export type BotsProps = {

@@ -1,7 +1,10 @@
 import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
+
 import { useTheme } from '@emotion/react';
+
 import Wrapper from '@components/Wrapper';
+
 import { PieChartTooltipViewProps } from './types';
 
 export const PieChartTooltip = forwardRef<

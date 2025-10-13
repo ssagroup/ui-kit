@@ -1,6 +1,6 @@
-import { DistributionProps } from './types';
 import { DistributionCard } from './DistributionCard';
 import { DistributionContent } from './DistributionContent';
+import { DistributionProps } from './types';
 
 export const Distribution = ({
   leftPercent,

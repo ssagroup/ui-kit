@@ -1,8 +1,8 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { Icon, useFullscreenMode, Wrapper } from '@components';
 import Button from '@components/Button';
-import { useFullscreenMode, Icon, Wrapper } from '@components';
 
 import { TreeMapChartFeature } from './TreeMapChart';
 

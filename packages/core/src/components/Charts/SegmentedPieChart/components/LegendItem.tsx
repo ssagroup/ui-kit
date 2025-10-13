@@ -1,7 +1,8 @@
 import React from 'react';
+
+import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
 import { LegendItemProps } from '../types';
 import { getRoundedNumber } from '../utils';
-import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
 
 export const LegendItem = ({
   label,

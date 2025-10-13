@@ -5,8 +5,8 @@ import {
   CardContent,
   CardHeader,
   ProgressBar,
-  Typography,
   ResponsiveImage,
+  Typography,
 } from '@ssa-ui-kit/core';
 
 import { StepsCounterProps } from './types';

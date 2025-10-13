@@ -1,11 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Theme, useTheme } from '@emotion/react';
-import Typography from '@components/Typography';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Badge from '@components/Badge';
+import Button from '@components/Button';
 import Icon from '@components/Icon';
+import Typography from '@components/Typography';
+
 import Indicator from './Indicator';
 import { IndicatorProps } from './types';
-import Button from '@components/Button';
 
 const BadgeWrapper = (theme: Theme) => `
   display: flex;

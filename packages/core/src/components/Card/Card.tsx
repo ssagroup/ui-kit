@@ -1,5 +1,4 @@
 import CardBase from './CardBase';
-
 import { CardProps } from './types';
 
 const Card = ({ children, onClick, ...props }: CardProps) => {

@@ -1,4 +1,5 @@
 import type { ButtonGroupProps } from '@ssa-ui-kit/core';
+
 import { ALL_FILTER_ID, UNREAD_FILTER_ID } from './consts';
 
 export type FilterProps = {

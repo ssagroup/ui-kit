@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
+
 import { css, useTheme } from '@emotion/react';
+
+import Card from '@components/Card';
+import CardHeader from '@components/CardHeader';
+import { PieChart, PieChartLegend } from '@components/Charts/PieChart';
 import Dropdown from '@components/Dropdown';
 import DropdownOption from '@components/DropdownOption';
 import type { DropdownOptionProps } from '@components/DropdownOptions';
-import Card from '@components/Card';
-import CardHeader from '@components/CardHeader';
 import Typography from '@components/Typography';
 
-import { PieChart, PieChartLegend } from '@components/Charts/PieChart';
 import { ProgressInfoTotals } from './ProgressInfoTotals';
-
-import {
-  ProgressInfoItemProps,
-  Period,
-  ProgressInfoProps,
-  PeriodOption,
-} from './types';
-
 import { getPieChartStyles } from './styles';
+import {
+  Period,
+  PeriodOption,
+  ProgressInfoItemProps,
+  ProgressInfoProps,
+} from './types';
 
 export const ProgressInfo = ({ data, className }: ProgressInfoProps) => {
   const [options, setOptions] = useState<PeriodOption[]>([]);

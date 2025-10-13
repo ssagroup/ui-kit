@@ -1,3 +1,9 @@
+import type {
+  ChangeHandler,
+  FieldValues,
+  UseFormRegister,
+} from 'react-hook-form';
+
 import {
   BaseInputTemplateProps,
   FormContextType,
@@ -5,14 +11,9 @@ import {
   RJSFSchema,
   StrictRJSFSchema,
 } from '@rjsf/utils';
-import type {
-  ChangeHandler,
-  FieldValues,
-  UseFormRegister,
-} from 'react-hook-form';
 
-import Input from '@components/Input';
 import { Field } from '@components/Field';
+import Input from '@components/Input';
 
 export const BaseInputTemplate = <
   T = unknown,

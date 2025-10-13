@@ -1,8 +1,11 @@
 import { HTMLAttributes } from 'react';
+
 import { Interpolation, Theme } from '@emotion/react';
-import { CommonProps } from '@global-types/emotion';
+
 import TableCell from '@components/TableCell';
 import Wrapper from '@components/Wrapper';
+import { CommonProps } from '@global-types/emotion';
+
 import { useNestedTableRowContext } from '../hooks/useNestedTableRowContext';
 
 export const NestedTableCell = ({

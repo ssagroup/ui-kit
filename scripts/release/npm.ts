@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
-
 import { $, chalk } from 'zx';
 
 export async function setAccessToken(npmAccessToken?: string) {

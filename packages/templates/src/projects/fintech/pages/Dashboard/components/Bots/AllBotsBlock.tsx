@@ -1,7 +1,9 @@
 import { withTheme } from '@emotion/react';
+
 import { useTranslation } from '@contexts';
+
+import { LargeText, SmallText } from './BotsText';
 import { AllBotsBlockProps } from './types';
-import { SmallText, LargeText } from './BotsText';
 
 export const AllBotsBlock = withTheme(({ theme, all }: AllBotsBlockProps) => {
   const { t } = useTranslation();

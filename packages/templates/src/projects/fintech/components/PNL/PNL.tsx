@@ -1,5 +1,5 @@
 import Plot from 'react-plotly.js';
-import { useTranslation } from '@contexts';
+
 import {
   useBarGroupGap,
   usePlotlyDefaultConfig,
@@ -7,12 +7,17 @@ import {
 } from '@fintech/hooks';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
 import { isShortPeriod } from '@fintech/utils';
-import { PNLProps } from './types';
-import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
+
+import { useTranslation } from '@contexts';
+
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '../DoublePriceChart/constants';
+
+import { PNLProps } from './types';
+
+import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
 
 export const PNL = ({
   data: originalData,

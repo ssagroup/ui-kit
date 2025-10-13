@@ -1,8 +1,9 @@
-import { Typography } from '@ssa-ui-kit/core';
 import { useTheme } from '@emotion/react';
 
-import { ProgressPointProps } from './types';
+import { Typography } from '@ssa-ui-kit/core';
+
 import * as S from './styles';
+import { ProgressPointProps } from './types';
 
 export const ProgressPoint = ({
   title,

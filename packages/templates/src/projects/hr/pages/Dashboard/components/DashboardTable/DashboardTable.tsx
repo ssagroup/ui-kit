@@ -1,8 +1,12 @@
 import { useTranslation } from '@ssa-ui-kit/core';
-import { TradingInfoCard } from '@ssa-ui-kit/widgets';
+
 import { pathOr } from '@ssa-ui-kit/utils';
+
+import { TradingInfoCard } from '@ssa-ui-kit/widgets';
+
 import { useDashboardIndicators } from '@/hr/hooks/dashboard';
 import { DashboardIndicators } from '@/hr/types';
+
 import { ITEMS_PER_ROW } from './constant';
 import * as S from './styled';
 

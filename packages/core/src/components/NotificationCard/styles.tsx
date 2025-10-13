@@ -1,4 +1,4 @@
-import { Theme, css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
 export const childrenWrapper = (theme: Theme) => `
   grid-column: 2 / span 2;

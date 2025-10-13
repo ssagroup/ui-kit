@@ -1,19 +1,24 @@
 import Plot from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
-import { useTranslation } from '@contexts';
 import {
   useBarGroupGap,
   usePlotlyDefaultConfig,
   useTimestamp,
 } from '@fintech/hooks';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
-import { OrderProps } from './types';
-import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
+import { isShortPeriod } from '@fintech/utils';
+
+import { useTranslation } from '@contexts';
+
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '../DoublePriceChart/constants';
-import { isShortPeriod } from '@fintech/utils';
+
+import { OrderProps } from './types';
+
+import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
 
 export const Orders = ({ data: originalData, period, onClick }: OrderProps) => {
   const theme = useTheme();

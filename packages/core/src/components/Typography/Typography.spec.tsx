@@ -1,5 +1,7 @@
 import { createRef } from 'react';
+
 import { screen } from '../../../customTest';
+
 import Typography from './index';
 
 describe('Typography', () => {

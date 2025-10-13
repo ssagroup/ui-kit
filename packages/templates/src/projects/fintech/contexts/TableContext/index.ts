@@ -1,4 +1,4 @@
-export * from './TableContext';
-export * from './useTable';
-export * from './types';
 export * from './constants';
+export * from './TableContext';
+export * from './types';
+export * from './useTable';

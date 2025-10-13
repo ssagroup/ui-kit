@@ -1,8 +1,10 @@
-import { GraphStatistics, Statistics, RequestPeriod } from '@fintech/types';
-import { useScoreboardItems } from './useScoreboardItems';
-import * as mockStatistics from './__mocks__/statistics';
-import * as mockGraphStatistics from './__mocks__/graphStatistics';
+import { GraphStatistics, RequestPeriod, Statistics } from '@fintech/types';
+
 import { pathOr } from '@ssa-ui-kit/utils';
+
+import * as mockGraphStatistics from './__mocks__/graphStatistics';
+import * as mockStatistics from './__mocks__/statistics';
+import { useScoreboardItems } from './useScoreboardItems';
 
 type UseStatisticsProps = {
   period: RequestPeriod;

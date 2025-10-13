@@ -1,7 +1,10 @@
 import React from 'react';
 import { Fragment, useLayoutEffect } from 'react';
+
 import { Decorator } from '@storybook/react-webpack5';
-import { useTabBarContext, TabBarContextProvider } from '@components/TabBar';
+
+import { TabBarContextProvider, useTabBarContext } from '@components/TabBar';
+
 import { TabProps } from '../types';
 
 export const TabBarWrapper = ({

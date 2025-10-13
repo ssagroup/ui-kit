@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { progressInfoData as data } from './mockProgressInfoRequest';
-
 import { default as ProgressInfo, ProgressInfoProps } from './index';
+import { progressInfoData as data } from './mockProgressInfoRequest';
 
 export default {
   title: 'Charts/ProgressInfo',

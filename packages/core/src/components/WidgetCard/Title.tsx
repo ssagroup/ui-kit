@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import Typography from '@components/Typography';
 
 export const WidgetCardTitle = styled(Typography)`

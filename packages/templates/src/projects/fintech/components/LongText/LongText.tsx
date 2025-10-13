@@ -1,6 +1,9 @@
 import DomPurify from 'dompurify';
+
 import { useTheme } from '@emotion/react';
+
 import { Tooltip, TooltipContent, TooltipTrigger } from '@ssa-ui-kit/core';
+
 import { ALLOWED_TAGS } from './constants';
 import * as S from './styled';
 import { LongTextProps } from './types';

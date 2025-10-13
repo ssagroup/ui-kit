@@ -1,7 +1,9 @@
 import { useTheme } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { UserProfile } from './UserProfile';
+
 import Icon from '@components/Icon';
+
+import { UserProfile } from './UserProfile';
 
 export default {
   title: 'Widgets/UserProfile',

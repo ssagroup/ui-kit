@@ -1,5 +1,7 @@
 import { useState } from 'react';
+
 import { fireEvent } from '@testing-library/dom';
+
 import { StoryComponent } from './stories/StoryComponent';
 
 describe('SearchBox', () => {

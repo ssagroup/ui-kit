@@ -1,9 +1,12 @@
 import { createContext } from 'react';
+
 import { DateTime } from 'luxon';
+
 import { useMergeRefs } from '@floating-ui/react';
-import { DatePickerContextProps, DatePickerProps } from './types';
+
 import { DATE_MAX, DATE_MIN, DEFAULT_MASK_FORMAT } from './constants';
 import { useDatePicker } from './hooks';
+import { DatePickerContextProps, DatePickerProps } from './types';
 
 export const DatePickerContext = createContext<DatePickerContextProps>({
   format: DEFAULT_MASK_FORMAT,

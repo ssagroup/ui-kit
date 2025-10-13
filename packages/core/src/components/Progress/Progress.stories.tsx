@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import ProgressBar from '@components/ProgressBar';
-import ProgressVertical from '@components/ProgressVertical';
-import ProgressLegendItem from '@components/ProgressLegendItem';
 import ProgressLegend from '@components/ProgressLegend';
+import ProgressLegendItem from '@components/ProgressLegendItem';
+import ProgressVertical from '@components/ProgressVertical';
+import Tooltip from '@components/Tooltip';
+import TooltipContent from '@components/TooltipContent';
+import TooltipTrigger from '@components/TooltipTrigger';
 
 import Progress from './index';
-import Tooltip from '@components/Tooltip';
-import TooltipTrigger from '@components/TooltipTrigger';
-import TooltipContent from '@components/TooltipContent';
 
 type Args = Parameters<typeof ProgressBar>[0];
 

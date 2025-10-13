@@ -1,39 +1,43 @@
 import { useEffect, useState } from 'react';
-import { css } from '@emotion/react';
-import { useTranslation } from '@contexts';
-import { TradingInfoCard, TradingScoreboard } from '@ssa-ui-kit/widgets';
-import { propOr } from '@ssa-ui-kit/utils';
 
-import { PERIOD_DAY } from '@fintech/constants';
-import { Bot, BotStatistics, Statistics, RequestPeriod } from '@fintech/types';
+import { css } from '@emotion/react';
 import {
   BalanceWithLoader,
-  MaxInWorkWithLoader,
-  PositionsWithLoader,
-  ProfitabilityWithLoader,
+  CumulativePNLWithLoader,
+  CurrentFundsWithLoader,
   HourlyPNLWithLoader,
+  KeeperRunsWithLoader,
   MarketRolesWithLoader,
+  MaxInWorkWithLoader,
   OrdersWithLoader,
   PNLWithLoader,
-  TurnoverWithLoader,
-  CumulativePNLWithLoader,
+  PositionsWithLoader,
+  ProfitabilityWithLoader,
   RebalanceWithLoader,
+  TurnoverWithLoader,
   WeightedMeanPricesWithLoader,
-  CurrentFundsWithLoader,
-  KeeperRunsWithLoader,
 } from '@fintech/components';
+import { PERIOD_DAY } from '@fintech/constants';
 import { useGraphs } from '@fintech/contexts';
 import {
   PNL,
   ROI,
 } from '@fintech/pages/BotPage/components/InformationTab/components';
+import { Bot, BotStatistics, RequestPeriod, Statistics } from '@fintech/types';
+
+import { propOr } from '@ssa-ui-kit/utils';
+
+import { TradingInfoCard, TradingScoreboard } from '@ssa-ui-kit/widgets';
+
+import { useTranslation } from '@contexts';
+
 import {
+  BotsWithLoader,
+  DashboardLayout,
   PeriodFilter,
   TopMenuWrapper,
-  DashboardLayout,
-  BotsWithLoader,
 } from './components';
-import { useStatistics, useGraphStatistic } from './hooks';
+import { useGraphStatistic, useStatistics } from './hooks';
 import * as S from './styles';
 
 export const FinTechDashboard = () => {

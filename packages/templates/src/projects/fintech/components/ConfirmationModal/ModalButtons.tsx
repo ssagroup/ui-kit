@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
-import { ModalDismissButton, Button } from '@ssa-ui-kit/core';
+
+import { Button, ModalDismissButton } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
+
 import { ModalButtonsProps } from './types';
 
 const CancelButton = styled(Button)`

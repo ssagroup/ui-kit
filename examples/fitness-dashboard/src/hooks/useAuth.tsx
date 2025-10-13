@@ -1,6 +1,8 @@
-import { useEffect, createContext, useContext } from 'react';
-import { User } from '@ssa-ui-kit/widgets';
+import { createContext, useContext, useEffect } from 'react';
+
 import { useApi } from '@ssa-ui-kit/hooks';
+import { User } from '@ssa-ui-kit/widgets';
+
 import API from '@apis/index';
 
 /**

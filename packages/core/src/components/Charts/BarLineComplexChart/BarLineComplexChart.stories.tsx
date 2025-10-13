@@ -1,14 +1,17 @@
 import { useState } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { TranslationProvider } from '@contexts';
-import { BarLineComplexChart } from './BarLineComplexChart';
+
 import {
   mockBigData,
-  mockDataHorizontal,
   mockData,
+  mockDataHorizontal,
   mockDataWithDifferentLineType,
   mockWithDimensions,
 } from './__mock__/data';
+import { BarLineComplexChart } from './BarLineComplexChart';
 import { BarLineChartItem, BarLineComplexChartProps } from './types';
 
 export default {

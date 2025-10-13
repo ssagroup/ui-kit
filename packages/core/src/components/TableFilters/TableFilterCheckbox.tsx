@@ -1,6 +1,7 @@
+import { css, Theme, useTheme } from '@emotion/react';
+
 import Checkbox from '@components/Checkbox';
 import { CheckboxProps, checkboxStyles } from '@components/Checkbox';
-import { Theme, css, useTheme } from '@emotion/react';
 
 const getStyles = (theme: Theme) => css`
   margin: 0 0 14px;

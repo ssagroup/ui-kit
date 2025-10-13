@@ -1,4 +1,4 @@
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
 
 import { RadarChart } from './';
 

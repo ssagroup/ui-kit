@@ -1,6 +1,8 @@
 import { useTheme } from '@emotion/react';
+
 import Avatar from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
+
 import { ImageItemProps } from './types';
 
 export const ImageItem = ({

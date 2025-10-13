@@ -1,8 +1,9 @@
 import React from 'react';
+
 import {
   blue,
-  green,
   blueLight,
+  green,
   pink,
   purple,
   turquoise,
@@ -11,8 +12,8 @@ import {
 } from '@styles/global';
 
 import BadgeBase from './BadgeBase';
-import { BadgeProps } from './types';
 import { large, medium, small } from './styles';
+import { BadgeProps } from './types';
 
 const mapSizes: MainSizes = {
   small,

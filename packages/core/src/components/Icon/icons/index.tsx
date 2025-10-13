@@ -1,5 +1,7 @@
 import { path } from '@ssa-ui-kit/utils';
+
 import { IconProps, MapIconsType, SVGProps } from '../types';
+
 import * as Icons from './all';
 import { iconsList } from './iconsList';
 

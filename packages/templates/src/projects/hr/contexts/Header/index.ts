@@ -1,3 +1,3 @@
 export * from './HeaderContext';
-export * from './useHeader';
 export * from './types';
+export * from './useHeader';

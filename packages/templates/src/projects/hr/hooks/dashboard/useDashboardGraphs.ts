@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
+
 import * as API from '@/hr/types';
+
 import { dashboardGraphsMock } from './__mocks__/dashboardGraphs';
 
 export const useDashboardGraphs =

@@ -1,7 +1,6 @@
 import { CardList } from '@ssa-ui-kit/core';
 
 import { ListGoalsCard } from './ListGoalsCard';
-
 import { ListGoalsProps } from './types';
 
 /**

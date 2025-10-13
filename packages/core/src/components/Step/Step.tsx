@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
+
 import { css } from '@emotion/react';
 
-import { useStepperContext } from '@components/Stepper';
 import StepConnector from '@components/StepConnector';
+import { useStepperContext } from '@components/Stepper';
 
 import StepContext from './Step.context';
 

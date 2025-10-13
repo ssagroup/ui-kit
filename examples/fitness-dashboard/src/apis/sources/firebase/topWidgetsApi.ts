@@ -1,5 +1,6 @@
-import getFirebase from './initFirebase';
 import { TopWidgetsResp } from '../../types';
+
+import getFirebase from './initFirebase';
 
 export const topWidgets = {
   async get(): Promise<TopWidgetsResp> {

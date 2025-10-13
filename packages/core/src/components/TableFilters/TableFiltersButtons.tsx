@@ -1,8 +1,9 @@
 import Button from '@components/Button';
 import Wrapper from '@components/Wrapper';
+
+import { baseButtonStyle } from './styles';
 import { TableFiltersCancelButton } from './TableFilterCancelButton';
 import { TableFiltersClearButton } from './TableFilterClearButton';
-import { baseButtonStyle } from './styles';
 
 export const TableFiltersButtons = ({
   onClear,

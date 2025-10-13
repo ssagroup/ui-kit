@@ -1,4 +1,4 @@
-import { Theme, css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
 export const Card = (theme: Theme) => css`
   box-shadow: 0 10px 40px 0 ${theme.colors.greyShadow};

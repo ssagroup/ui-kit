@@ -1,8 +1,11 @@
 import { ComponentProps } from 'react';
+
 import { useTheme } from '@emotion/react';
 import { ResponsiveRadar } from '@nivo/radar';
-import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
+
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
+import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
+
 import { RadarChartHeader, RadarChartTooltip } from './components';
 
 export type RadarChartFeatures = 'header' | 'fullscreenMode';

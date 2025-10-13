@@ -1,5 +1,6 @@
-import { usePopoverContext } from '@components/Popover';
 import { FloatingFocusManager } from '@floating-ui/react';
+
+import { usePopoverContext } from '@components/Popover';
 
 export const TypeaheadFocusTrap = ({
   children,

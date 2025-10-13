@@ -1,5 +1,6 @@
-import { propOr } from '@ssa-ui-kit/utils';
 import { Enum } from '@fintech/types';
+
+import { propOr } from '@ssa-ui-kit/utils';
 
 export const getColorsByStatus = (data?: Enum[]) => {
   const result: Record<string, Enum> = {};

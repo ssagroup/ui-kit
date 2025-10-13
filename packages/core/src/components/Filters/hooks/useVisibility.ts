@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+
 import { useWindowSize } from '@ssa-ui-kit/hooks';
+
 import { TableFilterConfig } from '@components/TableFilters/types';
+
 import { ElementInfo } from '../types';
 
 export type RefsByKey = Record<string, ElementInfo>;

@@ -1,5 +1,6 @@
-import { Wrapper, WithWidgetCard } from '@components';
+import { WithWidgetCard, Wrapper } from '@components';
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
+
 import { BarGaugeChartHeader, GaugeBar } from './components';
 import { BarGaugeChartProps } from './types';
 

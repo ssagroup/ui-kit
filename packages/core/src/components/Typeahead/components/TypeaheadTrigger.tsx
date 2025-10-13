@@ -1,7 +1,8 @@
+import * as S from '../styles';
+import { useTypeaheadContext } from '../Typeahead.context';
+
 import { MultipleTrigger } from './MultipleTrigger';
 import { SingleTrigger } from './SingleTrigger';
-import { useTypeaheadContext } from '../Typeahead.context';
-import * as S from '../styles';
 
 export const TypeaheadTrigger = () => {
   const context = useTypeaheadContext();

@@ -1,5 +1,5 @@
-import { FormHelperTextProps } from './types';
 import { FormHelperTextBase } from './FormHelperTextBase';
+import { FormHelperTextProps } from './types';
 
 const FormHelperText = ({
   role,

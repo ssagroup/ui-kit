@@ -1,8 +1,11 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+
 import userEvent from '@testing-library/user-event';
-import { screen, waitFor } from '../../../customTest';
 
 import { Icon } from '@ssa-ui-kit/core';
+
+import { screen, waitFor } from '../../../customTest';
+
 import TradingInfoCard from './TradingInfoCard';
 
 describe('TradingInfoCard', () => {

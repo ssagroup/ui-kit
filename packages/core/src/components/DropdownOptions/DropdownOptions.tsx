@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from '@emotion/styled';
+
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import { useDropdownContext } from '@components/Dropdown/Dropdown.context';
 import DropdownOption from '@components/DropdownOption';

@@ -1,6 +1,8 @@
 import { PropsWithChildren, TableHTMLAttributes } from 'react';
-import { CommonProps } from '@global-types/emotion';
+
 import Table from '@components/Table';
+import { CommonProps } from '@global-types/emotion';
+
 import { NestedTableProvider } from '../NestedTableContext';
 import { NestedTableContextType } from '../types';
 

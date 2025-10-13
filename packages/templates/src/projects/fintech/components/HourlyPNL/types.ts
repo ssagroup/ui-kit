@@ -1,4 +1,5 @@
 import { ColorsKeys } from '@ssa-ui-kit/core';
+
 import { WidgetInfoLabelProps } from '../WidgetInfoLabel';
 
 export type HourlyPNLProps = {

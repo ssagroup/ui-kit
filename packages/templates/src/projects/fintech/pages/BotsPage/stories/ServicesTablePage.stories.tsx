@@ -1,7 +1,10 @@
-import { useRef, Fragment } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Fragment, useRef } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import type { Meta } from '@storybook/react-webpack5';
+
 import { TranslationProvider } from '@contexts';
+import { Toastify } from '@/fintech/components';
 import { USDT } from '@/fintech/constants';
 import {
   CurrencyProvider,
@@ -11,13 +14,13 @@ import {
   TableProvider,
 } from '@/fintech/contexts';
 import { translationConfig } from '@/fintech/translation';
-import { Toastify } from '@/fintech/components';
+
+import { TOASTIFY_OPTIONS } from '../../../../../consts';
+import { Header } from '../../AppLayout/components/Header';
 import { AppLayoutProvider } from '../../AppLayout/context';
 import { LayoutBase } from '../../AppLayout/LayoutBase';
 import { RightPaneBase } from '../../AppLayout/RightPaneBase';
 import { BotsPage } from '../BotsPage';
-import { Header } from '../../AppLayout/components/Header';
-import { TOASTIFY_OPTIONS } from '../../../../../consts';
 
 export default {
   title: 'Templates/Services Table Page',

@@ -1,11 +1,12 @@
-import { UseTableDataResult } from '@components/TableFilters/hooks/useTableData';
-import { mockData } from '@components/TableFilters/stories/mockData';
 import {
   BaseSyntheticEvent,
   createContext,
   createRef,
   useContext,
 } from 'react';
+
+import { UseTableDataResult } from '@components/TableFilters/hooks/useTableData';
+import { mockData } from '@components/TableFilters/stories/mockData';
 
 export const FiltersContext = createContext<UseTableDataResult>({
   checkboxData: mockData,

@@ -1,4 +1,5 @@
 import { Wrapper } from '@ssa-ui-kit/core';
+
 import { platformIcons } from './consts';
 import { PlatformViewProps } from './types';
 

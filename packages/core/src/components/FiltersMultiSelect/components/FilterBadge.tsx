@@ -1,7 +1,7 @@
 import { css, useTheme } from '@emotion/react';
 
-import Button from '@components/Button';
 import Badge from '@components/Badge';
+import Button from '@components/Button';
 import Icon from '@components/Icon';
 
 import { SelectedFilter } from '../useFiltersMultiSelect';

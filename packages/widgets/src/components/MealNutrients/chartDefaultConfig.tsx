@@ -1,5 +1,5 @@
-import { LineProps } from '@nivo/line';
 import { DotsItem, useTheme as useNivoTheme } from '@nivo/core';
+import { LineProps } from '@nivo/line';
 
 import { dateFormatters } from '@ssa-ui-kit/utils';
 

@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 
-import UserCardItem from './UserCardItem';
-
 import { User } from './types';
+import UserCardItem from './UserCardItem';
 
 const listCards = css`
   display: flex;

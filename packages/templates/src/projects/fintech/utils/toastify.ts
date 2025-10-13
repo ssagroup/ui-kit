@@ -1,8 +1,8 @@
 import {
+  toast,
   ToastContent,
   ToastOptions,
   ToastPromiseParams,
-  toast,
 } from 'react-toastify';
 
 export const showToast = <T>(

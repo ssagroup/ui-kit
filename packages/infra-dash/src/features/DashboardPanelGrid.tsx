@@ -1,17 +1,19 @@
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+
 import { forwardRef, useEffect } from 'react';
-import { css } from '@emotion/react';
-import { useElementSize, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
-import GridLayout from 'react-grid-layout';
 import { ErrorBoundary } from 'react-error-boundary';
+import GridLayout from 'react-grid-layout';
+
+import { css } from '@emotion/react';
+import { useInfraDashContext } from '@shared/context';
+import { Dashboard } from '@shared/dashboard';
+import { Panel } from '@shared/panel';
+
+import { useElementSize, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
 
 import { BasePanel } from '@components/BasePanel';
 import { ErrorPanel } from '@components/ErrorPanel';
-import { Dashboard } from '@shared/dashboard';
-import { Panel } from '@shared/panel';
-import { useInfraDashContext } from '@shared/context';
-
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
 
 export type DashboardPanelGridProps = {
   dashboard: Dashboard;

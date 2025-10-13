@@ -1,6 +1,4 @@
 import { css } from '@emotion/css';
-import { BarGaugeChart } from '@ssa-ui-kit/core';
-
 import { withPanelData } from '@entities/panel';
 import {
   matchPanelDataSource,
@@ -8,6 +6,8 @@ import {
   PanelConfig,
   PanelData,
 } from '@shared/panel';
+
+import { BarGaugeChart } from '@ssa-ui-kit/core';
 
 import { grafanaDataAdapter } from './data-adapters/grafana';
 

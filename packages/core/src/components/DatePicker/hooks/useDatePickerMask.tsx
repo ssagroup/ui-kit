@@ -1,6 +1,7 @@
-import { useMask, format as maskFormat } from '@react-input/mask';
-import { DatePickerProps } from '../types';
+import { format as maskFormat, useMask } from '@react-input/mask';
+
 import { DEFAULT_MASK } from '../constants';
+import { DatePickerProps } from '../types';
 import { processDate } from '../utils';
 
 export const useDatePickerMask = ({

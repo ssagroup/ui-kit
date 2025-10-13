@@ -1,4 +1,5 @@
 import { defineConfig } from '@playwright/test';
+
 import { createConfig } from '../../playwright.base.config';
 
 /**

@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import Button from '@components/Button';
 
 import { pageBtnStyles, selectedPageBtnStyles } from './styles';
-import { PaginationButtonsProps, PageButtonProps } from './types';
+import { PageButtonProps, PaginationButtonsProps } from './types';
 
 const Break = () => <span css={{ cursor: 'default' }}>...</span>;
 

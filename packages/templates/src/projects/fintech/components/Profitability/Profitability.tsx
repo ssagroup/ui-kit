@@ -1,6 +1,9 @@
 import { useTranslation } from '@contexts';
-import { ProfitabilityProps } from './types';
+
 import { Distribution } from '../Distribution';
+
+import { ProfitabilityProps } from './types';
+
 import { WithWidgetLoader } from '..';
 
 export const Profitability = ({

@@ -1,13 +1,16 @@
 import { KeyboardEvent, useState } from 'react';
+
 import { usePaginationRange } from '@ssa-ui-kit/hooks';
+
 import { InputProps } from '@components/Input/types';
 import Wrapper from '@components/Wrapper';
+
 import { ArrowButton } from './ArrowButton';
-import { PaginationButtons } from './PaginationButtons';
-import { PaginationProps } from './types';
-import { usePaginationContext } from './PaginationContext';
 import { RowsPerPageDropdown } from './components';
+import { PaginationButtons } from './PaginationButtons';
+import { usePaginationContext } from './PaginationContext';
 import * as S from './styles';
+import { PaginationProps } from './types';
 
 const Pagination = ({
   pagesCount,

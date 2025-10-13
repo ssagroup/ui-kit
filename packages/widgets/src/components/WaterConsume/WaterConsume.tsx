@@ -4,15 +4,15 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Stepper,
-  Step,
-  StepLabel,
-  Typography,
-  ResponsiveImage,
   ProgressBar,
   ProgressLegend,
   ProgressLegendItem,
   ProgressVertical,
+  ResponsiveImage,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
 } from '@ssa-ui-kit/core';
 
 import { WaterConsumeProps } from './types';

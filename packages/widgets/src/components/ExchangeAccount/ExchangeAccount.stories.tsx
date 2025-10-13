@@ -1,8 +1,10 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { css, useTheme } from '@emotion/react';
+
 import { css as cssClassname } from '@emotion/css';
-import { Icon, AddNewAccountCard } from '@ssa-ui-kit/core';
+import { css, useTheme } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
+import { AddNewAccountCard, Icon } from '@ssa-ui-kit/core';
 
 import { ExchangeAccount } from './ExchangeAccount';
 import { dataValues } from './helpers';
