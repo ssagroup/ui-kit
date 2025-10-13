@@ -1,16 +1,18 @@
 import { useState } from 'react';
+
 import Icon from '@components/Icon';
-import Wrapper from '@components/Wrapper';
 import Table from '@components/Table';
+import TableBody from '@components/TableBody';
+import TableCell from '@components/TableCell';
+import TableCellHeader from '@components/TableCellHeader';
 import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
-import TableCell from '@components/TableCell';
-import TableBody from '@components/TableBody';
-import TableCellHeader from '@components/TableCellHeader';
-import { RowKeys, headers, dataForTableSorting } from './mock';
-import { capitalizeFirstLetter } from './utils';
-import { SortInfo } from './types';
+import Wrapper from '@components/Wrapper';
+
 import { DEFAULT_SORT } from './consts';
+import { dataForTableSorting, headers, RowKeys } from './mock';
+import { SortInfo } from './types';
+import { capitalizeFirstLetter } from './utils';
 
 export const SortableTable = ({
   onSortingChange,

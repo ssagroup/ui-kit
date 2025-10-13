@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import {
   Card,
   CardContent,
   CardHeader,
-  Typography,
   Dropdown,
   DropdownOption,
   DropdownOptionProps,
+  Typography,
 } from '@ssa-ui-kit/core';
 
 import { MealPlannerCard } from './MealPlannerCard';
-
-import { MealPlannerProps, MealPlannerData } from './types';
-import styled from '@emotion/styled';
+import { MealPlannerData, MealPlannerProps } from './types';
 
 const CustomOption = styled(DropdownOption)`
   text-align: left;

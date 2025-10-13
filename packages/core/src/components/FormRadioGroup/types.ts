@@ -1,4 +1,4 @@
-import { FieldPath, Control, FieldValues } from 'react-hook-form';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 import { RadioGroupProps } from '@components/RadioGroup/types';
 import { CommonProps } from '@global-types/emotion';

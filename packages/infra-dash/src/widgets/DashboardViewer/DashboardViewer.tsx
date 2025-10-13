@@ -1,14 +1,15 @@
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { DashboardError } from '@components/DashboardError';
-import { LoadingDashboard } from '@components/LoadingDashboard';
 import { useDashboard } from '@entities/dashboard';
-import { Dashboard } from '@shared/dashboard';
 import {
   InfraDashPanelDataPeriodProvider,
   useInfraDashPanelDataPeriod,
   UseInfraDashPanelDataPeriodOptions,
 } from '@shared/context';
+import { Dashboard } from '@shared/dashboard';
+
+import { DashboardError } from '@components/DashboardError';
+import { LoadingDashboard } from '@components/LoadingDashboard';
 
 import {
   DashboardPanelGrid,

@@ -1,4 +1,4 @@
-import { Children, isValidElement, cloneElement } from 'react';
+import { Children, cloneElement, isValidElement } from 'react';
 
 import { ProgressVerticalProps } from './types';
 

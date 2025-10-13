@@ -7,8 +7,11 @@ import {
   useRef,
   useState,
 } from 'react';
-import { EventItemInfo } from '@/hr/types';
+
 import { DEFAULT_DATE_FORMAT } from '@hr/utils';
+
+import { EventItemInfo } from '@/hr/types';
+
 import { getDateColumnWidth } from '../utils';
 
 export type EventInfoContextType = {

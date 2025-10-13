@@ -1,6 +1,8 @@
-import theme from '@themes/main';
-import { outlineStyles } from './safari-focus-outline';
 import styled from '@emotion/styled';
+
+import theme from '@themes/main';
+
+import { outlineStyles } from './safari-focus-outline';
 
 describe('Styles', () => {
   describe('Outline', () => {

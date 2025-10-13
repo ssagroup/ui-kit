@@ -1,8 +1,11 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+
 import { pathOr } from '@ssa-ui-kit/utils';
+
+import { JSONObject } from '../../types';
+
 import { config as translationConfig } from './config';
 import { TranslationContextContent } from './types';
-import { JSONObject } from '../../types';
 
 export const TranslationContext = createContext<TranslationContextContent>({
   language: translationConfig.defaultLanguage,

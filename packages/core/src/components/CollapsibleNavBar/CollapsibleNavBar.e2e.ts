@@ -1,4 +1,5 @@
-import { test, Page, expect } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
+
 import { SCREEN_SIZES } from '../../consts';
 
 test.describe.configure({ mode: 'serial' });

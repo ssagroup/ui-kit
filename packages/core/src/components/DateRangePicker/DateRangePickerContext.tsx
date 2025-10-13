@@ -1,7 +1,9 @@
 import { createContext } from 'react';
+
 import { DateTime } from 'luxon';
-import { DateRangePickerContextProps } from './types';
+
 import { DATE_MAX, DATE_MIN, DEFAULT_MASK_FORMAT } from './constants';
+import { DateRangePickerContextProps } from './types';
 
 export const DateRangePickerContext =
   createContext<DateRangePickerContextProps>({

@@ -1,9 +1,12 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
+
 import { css, useTheme } from '@emotion/react';
+
+import { useWindowSize } from '@ssa-ui-kit/hooks';
+
 import IndicatorBase from './IndicatorBase';
 import { ChildrenDataProps, IndicatorProps } from './types';
-import { useWindowSize } from '@ssa-ui-kit/hooks';
 
 const Indicator = ({
   isVisible = true,

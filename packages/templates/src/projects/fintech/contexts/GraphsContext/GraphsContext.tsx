@@ -1,6 +1,8 @@
 import { createContext, useRef, useState } from 'react';
-import { GraphsContextValue, GraphsProviderProps } from './types';
+
 import { GraphsListItem } from '@fintech/types';
+
+import { GraphsContextValue, GraphsProviderProps } from './types';
 import { calculateRightLeftMargins } from './utils';
 
 export const GraphsContext = createContext<GraphsContextValue>({

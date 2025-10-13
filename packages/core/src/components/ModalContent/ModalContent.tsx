@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 
-import ModalDialog from '@components/ModalDialog';
 import { ModalProps } from '@components/Modal/types';
+import ModalDialog from '@components/ModalDialog';
+
 import { ModalContext } from '../Modal/Modal.context';
 
 function ModalContent({

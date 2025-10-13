@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
+
 import { css } from '@emotion/react';
 
 import {
   Card,
   CardContent,
   CardHeader,
+  DropdownOptionProps,
   Typography,
   Wrapper,
-  DropdownOptionProps,
 } from '@ssa-ui-kit/core';
-
-import { ActivityResp } from './types';
-import { contentWrapper } from './styles';
-
-import ActivityItem from './ActivityItem';
 import { DropdownOption } from '@ssa-ui-kit/core';
 import { Dropdown } from '@ssa-ui-kit/core';
+
+import ActivityItem from './ActivityItem';
+import { contentWrapper } from './styles';
+import { ActivityResp } from './types';
 
 export const Activity = ({ data }: { data: ActivityResp }) => {
   const [selected, setSelected] = useState<string>('');

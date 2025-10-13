@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { pathOr, propOr } from '@ssa-ui-kit/utils';
-import { GraphsListItem, RebalancingItemKeys } from '@fintech/types';
-import { useBarGroupGap } from '@fintech/hooks';
-import { useCurrency, useGraphs } from '@fintech/contexts';
+
 import { DECIMAL_PLACES_BY_CURRENCY_LONG } from '@fintech/constants';
+import { useCurrency, useGraphs } from '@fintech/contexts';
+import { useBarGroupGap } from '@fintech/hooks';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+import { GraphsListItem, RebalancingItemKeys } from '@fintech/types';
 import { getExtendedInfo } from '@fintech/utils/charts';
+
+import { pathOr, propOr } from '@ssa-ui-kit/utils';
+
 import { ExtendedInfoData } from '../types';
 
 export const useChartInfo = ({

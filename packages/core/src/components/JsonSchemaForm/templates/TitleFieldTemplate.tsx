@@ -1,8 +1,8 @@
 import {
   FormContextType,
-  TitleFieldProps,
   RJSFSchema,
   StrictRJSFSchema,
+  TitleFieldProps,
 } from '@rjsf/utils';
 
 export const TitleFieldTemplate = <

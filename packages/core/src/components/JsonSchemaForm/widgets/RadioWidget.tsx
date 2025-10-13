@@ -1,3 +1,4 @@
+import { css } from '@emotion/css';
 import {
   enumOptionsIndexForValue,
   enumOptionsValueForIndex,
@@ -8,9 +9,8 @@ import {
   WidgetProps,
 } from '@rjsf/utils';
 
-import RadioGroup from '@components/RadioGroup';
 import Radio from '@components/Radio';
-import { css } from '@emotion/css';
+import RadioGroup from '@components/RadioGroup';
 
 export const RadioWidget = <
   T = unknown,

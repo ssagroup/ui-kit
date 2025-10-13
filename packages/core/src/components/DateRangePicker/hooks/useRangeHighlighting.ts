@@ -1,6 +1,9 @@
 import { useState } from 'react';
+
 import { DateTime } from 'luxon';
+
 import { ClassnameArray } from '@ssa-ui-kit/utils';
+
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
 export const useRangeHighlighting = () => {

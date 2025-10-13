@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { TabBaseProps } from '@components/TabBar/types';
 
 export const TabBase = styled.button<TabBaseProps>`

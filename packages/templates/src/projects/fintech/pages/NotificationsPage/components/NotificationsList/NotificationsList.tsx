@@ -1,8 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
 import { useDebounceValue } from 'usehooks-ts';
+
 import { Notification } from '@fintech/types';
+
+import { ReadCard, UnreadCard } from './NotificationListCards';
 import { NotificationsListWrapper } from './NotificationsListWrapper';
-import { UnreadCard, ReadCard } from './NotificationListCards';
 import { NotificationsListProps } from './types';
 
 const DELAY_MS = 2000;

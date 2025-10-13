@@ -2,8 +2,8 @@ import userEvent from '@testing-library/user-event';
 
 import { screen, within } from '../../../customTest';
 
-import { MealPlannerItem } from './types';
 import MealPlanner from './index';
+import { MealPlannerItem } from './types';
 
 const data: { [key: string]: MealPlannerItem } = {
   breakfast: {

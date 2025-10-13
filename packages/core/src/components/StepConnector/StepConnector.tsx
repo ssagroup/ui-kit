@@ -1,12 +1,12 @@
 import { css, useTheme } from '@emotion/react';
 
-import { useStepperContext } from '@components/Stepper';
 import { useStepContext } from '@components/Step';
+import { useStepperContext } from '@components/Stepper';
 
 import {
+  StepConnectorLine,
   StepConnectorLineVertical,
   StepConnectorWrapper,
-  StepConnectorLine,
 } from './style';
 
 const StepConnector = () => {

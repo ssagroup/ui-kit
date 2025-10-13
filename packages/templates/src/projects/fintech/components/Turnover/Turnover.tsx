@@ -1,16 +1,20 @@
 import Plot from 'react-plotly.js';
+
 import {
   useBarGroupGap,
   usePlotlyDefaultConfig,
   useTimestamp,
 } from '@fintech/hooks';
-import { isShortPeriod } from '@fintech/utils';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
-import { TurnoverProps } from './types';
+import { isShortPeriod } from '@fintech/utils';
+
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '../DoublePriceChart/constants';
+
+import { TurnoverProps } from './types';
+
 import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
 
 export const Turnover = ({

@@ -1,6 +1,9 @@
 import { useRef } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import { FinTechDashboard } from '@fintech/pages/Dashboard';
 import type { Meta } from '@storybook/react-webpack5';
+
 import { TranslationProvider } from '@contexts';
 import { USDT } from '@/fintech/constants';
 import {
@@ -9,8 +12,8 @@ import {
   HeaderProvider,
   PeriodProvider,
 } from '@/fintech/contexts';
-import { FinTechDashboard } from '@fintech/pages/Dashboard';
 import { translationConfig } from '@/fintech/translation';
+
 import { AppLayoutProvider } from '../../AppLayout/context';
 import { LayoutBase } from '../../AppLayout/LayoutBase';
 import { RightPaneBase } from '../../AppLayout/RightPaneBase';

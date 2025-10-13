@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import { CollapsibleNavBarExtendedProps } from './types';
 
 type ContextType = Pick<

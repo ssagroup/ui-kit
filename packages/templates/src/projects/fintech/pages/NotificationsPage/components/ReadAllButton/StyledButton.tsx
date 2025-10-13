@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { Button } from '@ssa-ui-kit/core';
 
 export const StyledButton = styled(Button)`

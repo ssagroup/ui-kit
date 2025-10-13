@@ -1,8 +1,9 @@
 import { useTheme } from '@emotion/react';
+
 import { Icon } from '@ssa-ui-kit/core';
 
-import { ReadAllButtonProps } from './types';
 import { StyledButton } from './StyledButton';
+import { ReadAllButtonProps } from './types';
 
 export const ReadAllButton = (props: ReadAllButtonProps) => {
   const theme = useTheme();

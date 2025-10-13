@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+
 import { propOr } from '@ssa-ui-kit/utils';
 
 export const getNumberSuffix = (date: number) => {

@@ -1,4 +1,4 @@
-import { Theme, SerializedStyles, Interpolation } from '@emotion/react';
+import { Interpolation, SerializedStyles, Theme } from '@emotion/react';
 
 export interface MainSizes {
   small: SerializedStyles;

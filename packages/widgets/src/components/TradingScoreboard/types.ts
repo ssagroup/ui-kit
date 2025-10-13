@@ -1,5 +1,6 @@
-import { TradingInfoCardProps } from '@components/TradingInfoCard/types';
 import { SerializedStyles } from '@emotion/react';
+
+import { TradingInfoCardProps } from '@components/TradingInfoCard/types';
 
 type TradingScoreboardItem = Pick<
   TradingInfoCardProps,

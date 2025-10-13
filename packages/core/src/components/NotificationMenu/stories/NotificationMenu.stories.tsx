@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { NotificationMenu } from '../NotificationMenu';
+
 import { StoryComponent } from './StoryComponent';
 
 export default {

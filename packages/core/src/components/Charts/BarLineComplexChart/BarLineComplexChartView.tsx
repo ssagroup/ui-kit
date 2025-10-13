@@ -1,10 +1,18 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import Plot from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
+
 import { debounce, pathOr, propOr } from '@ssa-ui-kit/utils';
+
 import { useDeviceType } from '@ssa-ui-kit/hooks';
-import Wrapper from '@components/Wrapper';
+
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
+import Wrapper from '@components/Wrapper';
+
+import { usePlotlyDefaultConfig } from '../hooks';
+
+import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import { BarLineComplexChartTooltip } from './BarLineComplexChartTooltip';
 import {
   FONT_FAMILY,
@@ -12,8 +20,6 @@ import {
   TITLE_PADDING_LEFT,
   TITLE_PADDING_TOP,
 } from './constants';
-import { usePlotlyDefaultConfig } from '../hooks';
-import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import { BarLineChartItem, BarLineComplexInternalProps } from './types';
 
 export const BarLineComplexChartView = ({

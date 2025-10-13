@@ -1,5 +1,6 @@
 import { useTranslation } from '@contexts';
-import { SmallText, LargeText } from './BotsText';
+
+import { LargeText, SmallText } from './BotsText';
 import { BotsCountContentProps } from './types';
 
 export const BotsCountContent = ({ running = 0 }: BotsCountContentProps) => {

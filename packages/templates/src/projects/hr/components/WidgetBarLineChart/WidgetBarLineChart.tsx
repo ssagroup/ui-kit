@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+
 import {
   BarLineComplexChart,
   BarLineComplexChartProps,
   Wrapper,
 } from '@ssa-ui-kit/core';
+
 import { useXSMediaQuery } from '@ssa-ui-kit/hooks';
-import { WidgetBarLineChartProps } from './types';
+
 import { useAppLayout } from '../AppLayout';
+
 import { TWO_WEEKS_MS } from './constants';
+import { WidgetBarLineChartProps } from './types';
 
 export const WidgetBarLineChart = ({
   gridArea,

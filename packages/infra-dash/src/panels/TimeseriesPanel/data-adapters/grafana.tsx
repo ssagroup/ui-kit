@@ -1,5 +1,4 @@
 import { getValueFormat } from '@grafana/data';
-
 import { DataAdapterOptions } from '@shared/dataAdapter';
 import { GrafanaPanelData } from '@shared/grafana';
 

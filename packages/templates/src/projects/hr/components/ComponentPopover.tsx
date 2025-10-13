@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import { Popover, PopoverContent, PopoverTrigger } from '@ssa-ui-kit/core';
 
 export interface ComponentPopoverProps {

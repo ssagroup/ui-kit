@@ -1,10 +1,10 @@
 import { InfraDashInternalProvider } from '@shared/context';
 import { PanelRegistry } from '@shared/panelRegistry';
 import {
-  mutationClient,
   MutationClient,
-  queryClient,
+  mutationClient,
   QueryClient,
+  queryClient,
 } from '@shared/query';
 import { InfraDashTransport } from '@shared/transport';
 

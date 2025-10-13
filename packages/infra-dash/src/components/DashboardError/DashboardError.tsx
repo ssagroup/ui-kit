@@ -1,6 +1,6 @@
-import { Wrapper } from '@ssa-ui-kit/core';
-
 import { ErrorIcon } from '@shared/icons';
+
+import { Wrapper } from '@ssa-ui-kit/core';
 
 export type DashboardErrorProps = {
   children?: React.ReactNode;

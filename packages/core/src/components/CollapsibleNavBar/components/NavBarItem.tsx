@@ -1,5 +1,6 @@
-import { ItemWithSubMenu, ItemWithoutSubmenu } from '.';
 import { CollapsibleNavBarExtendedProps } from '../types';
+
+import { ItemWithoutSubmenu, ItemWithSubMenu } from '.';
 
 type NavBarItemProps = {
   item: CollapsibleNavBarExtendedProps['items'][0];

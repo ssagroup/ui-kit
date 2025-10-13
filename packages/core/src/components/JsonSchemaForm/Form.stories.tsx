@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
-import validator from '@rjsf/validator-ajv8';
 
-import TextField from '@components/TextField';
-import Icon from '@components/Icon';
-import Button from '@components/Button';
-import { applyHiddenWidget, getFieldsToHide } from './utils';
-import { Form } from './';
+import validator from '@rjsf/validator-ajv8';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
+
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
+import TextField from '@components/TextField';
+
+import { Form } from './';
+import { applyHiddenWidget, getFieldsToHide } from './utils';
 
 type FormProps = Omit<React.ComponentProps<typeof Form>, 'validator'>;
 

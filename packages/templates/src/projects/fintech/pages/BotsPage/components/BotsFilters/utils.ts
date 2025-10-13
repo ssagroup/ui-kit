@@ -1,6 +1,8 @@
-import { EnumsList, EnumsApiListResponse } from '@fintech/types';
-import { FiltersData } from './types';
+import { EnumsApiListResponse, EnumsList } from '@fintech/types';
+
 import { SearchType } from '../../types';
+
+import { FiltersData } from './types';
 
 export type ApiKeyToTitle = Array<{
   title: string;

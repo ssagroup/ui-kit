@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+
 import { useWindowSize } from '@hooks/useWindowResize';
 
 const FONT_SIZE_REG_EXP = /(\d+\.?\d+)(\S+)/;

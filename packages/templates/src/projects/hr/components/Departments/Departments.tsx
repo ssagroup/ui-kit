@@ -1,10 +1,15 @@
 import { useState } from 'react';
+
 import { css } from '@emotion/css';
 import { css as cssReact } from '@emotion/react';
-import { pathOr } from '@ssa-ui-kit/utils';
-import { useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
-import { DashboardCharts } from '@/hr/types';
 import * as hooks from '@hr/hooks';
+
+import { pathOr } from '@ssa-ui-kit/utils';
+
+import { useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
+
+import { DashboardCharts } from '@/hr/types';
+
 import { WidgetPieChart, WithWidgetLoader } from '..';
 
 export const Departments = ({

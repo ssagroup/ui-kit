@@ -1,5 +1,6 @@
-import { Typography } from '@ssa-ui-kit/core';
 import { useTheme } from '@emotion/react';
+
+import { Typography } from '@ssa-ui-kit/core';
 
 import { useExchangeAccountContext } from './ExchangeAccountProvider';
 

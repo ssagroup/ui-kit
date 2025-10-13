@@ -1,12 +1,15 @@
 import { Fragment } from 'react';
-import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import { Meta, StoryObj, type Decorator } from '@storybook/react-webpack5';
-import { Title, Description, Subtitle, Stories } from '@storybook/addon-docs';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+
+import { Description, Stories, Subtitle, Title } from '@storybook/addon-docs';
+import { type Decorator, Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { CollapsibleNavBar } from '../CollapsibleNavBar';
+
 import { ITEMS } from './consts';
-import { DarkLogo, Logo } from './Logo';
-import { Layout } from './Layout';
 import { CustomIcon, CustomIconWithOwnLogic } from './CustomIcon';
+import { Layout } from './Layout';
+import { DarkLogo, Logo } from './Logo';
 
 const reactRouterDecorator: Decorator = (Story) => {
   return (

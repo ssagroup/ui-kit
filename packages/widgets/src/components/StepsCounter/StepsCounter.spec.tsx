@@ -1,4 +1,5 @@
 import { screen } from '../../../customTest';
+
 import StepsCounter from './index';
 
 describe('StepsCounter', () => {

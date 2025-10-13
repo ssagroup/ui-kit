@@ -1,12 +1,17 @@
 import { ClassNames, useTheme } from '@emotion/react';
+
 import { Typography } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
-import { HourlyPNLProps, ProgressPointProps } from './types';
-import { ProgressPoint } from './ProgressPoint';
-import * as S from './styles';
-import { WithWidgetLoader } from '..';
+
 import { WidgetCard } from '../WidgetCard';
 import { WidgetInfoLabel } from '../WidgetInfoLabel';
+
+import { ProgressPoint } from './ProgressPoint';
+import * as S from './styles';
+import { HourlyPNLProps, ProgressPointProps } from './types';
+
+import { WithWidgetLoader } from '..';
 
 export const HourlyPNL = ({
   isIncreasing,

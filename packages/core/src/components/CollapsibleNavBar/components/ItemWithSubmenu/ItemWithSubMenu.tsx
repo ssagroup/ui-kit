@@ -1,15 +1,18 @@
 import { useId } from 'react';
 import { PathPattern } from 'react-router-dom';
+
 import {
-  AccordionGroupContextProvider,
-  AccordionGroup,
   Accordion,
+  AccordionGroup,
+  AccordionGroupContextProvider,
 } from '@components/AccordionGroup';
-import { CollapsibleNavBarItem } from './CollapsibleNavBarItem';
-import { NavBarAccordionContent } from './AccordionContent';
-import { ItemAccordionTitle } from './ItemAccordionTitle';
+
 import { useCollapsibleNavBarContext } from '../../CollapsibleNavBarContext';
 import { CollapsibleNavBarGroup } from '../../types';
+
+import { NavBarAccordionContent } from './AccordionContent';
+import { CollapsibleNavBarItem } from './CollapsibleNavBarItem';
+import { ItemAccordionTitle } from './ItemAccordionTitle';
 
 export const Item = ({
   item,

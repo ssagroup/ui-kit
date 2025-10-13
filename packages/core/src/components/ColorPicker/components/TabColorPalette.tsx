@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+
 import Wrapper from '@components/Wrapper';
+
 import { useColorPickerContext } from '../ColorPickerContext';
 
 const TabColorPaletteItem = styled(Wrapper)`

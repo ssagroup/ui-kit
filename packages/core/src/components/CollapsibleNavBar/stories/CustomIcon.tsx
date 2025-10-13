@@ -1,6 +1,8 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+
 import { ClassnameArray } from '@ssa-ui-kit/utils';
+
 import { CollapsibleNavBarCustomIconSVG } from '../CollapsibleNavBarCustomIconSVG';
 import { useCollapsibleNavBarItemContext } from '../CollapsibleNavBarItemContext';
 

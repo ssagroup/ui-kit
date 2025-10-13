@@ -1,4 +1,5 @@
 import { TradingInfoCard } from '@components/TradingInfoCard';
+
 import TradingScoreboardBase from './TradingScoreboardBase';
 import { TradingScoreboardProps } from './types';
 

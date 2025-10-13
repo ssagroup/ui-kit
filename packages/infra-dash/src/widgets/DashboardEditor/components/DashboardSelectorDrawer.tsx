@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
-import { Button, Drawer, Theme, useDrawer, Wrapper } from '@ssa-ui-kit/core';
-
 import { DashboardIcon } from '@shared/icons';
+
+import { Button, Drawer, Theme, useDrawer, Wrapper } from '@ssa-ui-kit/core';
 
 export type DashboardSelectorDrawerProps = {
   drawer: ReturnType<typeof useDrawer>;

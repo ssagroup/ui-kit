@@ -1,8 +1,9 @@
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
-import RadioGroup from './RadioGroup';
 import Radio from '@components/Radio';
+
+import RadioGroup from './RadioGroup';
 
 interface RadioType {
   value: string;

@@ -1,14 +1,14 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
+import { useInfraDashContext } from '../context';
+
+import { hashKey, MutationKey } from './key';
 import {
   MutationEntry,
   MutationFn,
   MutationOptions,
   MutationState,
 } from './mutation';
-import { hashKey, MutationKey } from './key';
-
-import { useInfraDashContext } from '../context';
 
 export const useMutationClient = () => {
   const { mutationClient } = useInfraDashContext();

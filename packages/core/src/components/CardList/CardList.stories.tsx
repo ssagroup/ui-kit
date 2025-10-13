@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import Typography from '@components/Typography';
+
 import Card from '@components/Card';
 import CardContent from '@components/CardContent';
+import Typography from '@components/Typography';
+
 import { CardList } from './CardList';
 
 export default {

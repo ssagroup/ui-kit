@@ -1,6 +1,8 @@
 import { MealPlannerItem } from '@ssa-ui-kit/widgets';
-import getFirebase from './initFirebase';
+
 import { MealPlannerResp } from '../../types';
+
+import getFirebase from './initFirebase';
 
 export const mealPlanner = {
   async get() {

@@ -1,10 +1,13 @@
 import { InputHTMLAttributes } from 'react';
+
 import { useTheme } from '@emotion/react';
-import Input from '@components/Input';
+
 import Button from '@components/Button';
 import Icon from '@components/Icon';
-import { useTypeaheadContext } from '../Typeahead.context';
+import Input from '@components/Input';
+
 import * as S from '../styles';
+import { useTypeaheadContext } from '../Typeahead.context';
 
 export const SingleTrigger = () => {
   const context = useTypeaheadContext();

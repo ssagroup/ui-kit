@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import NavBarItem from '@components/NavBar/NavBarItem';
 
 export const CollapsibleNavBarItem = styled(NavBarItem)`

@@ -1,6 +1,13 @@
 import { useState } from 'react';
+
 import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
+import { useGrafanaDashboards } from '@entities/grafana-dashboard';
+import { useGrafanaPanels } from '@entities/grafana-panel';
+import { useInfraDashContext } from '@shared/context';
+import { GrafanaDashboard, GrafanaPanel } from '@shared/grafana';
+import { ErrorIcon } from '@shared/icons';
+
 import {
   Accordion,
   AccordionGroup,
@@ -13,12 +20,6 @@ import {
   Theme,
   Wrapper,
 } from '@ssa-ui-kit/core';
-
-import { useGrafanaDashboards } from '@entities/grafana-dashboard';
-import { useGrafanaPanels } from '@entities/grafana-panel';
-import { ErrorIcon } from '@shared/icons';
-import { GrafanaDashboard, GrafanaPanel } from '@shared/grafana';
-import { useInfraDashContext } from '@shared/context';
 
 type ExternalPanelListProps = {
   dashboard: GrafanaDashboard;

@@ -1,16 +1,18 @@
+import { ChangeHandler, FieldValues, UseFormRegister } from 'react-hook-form';
+
 import {
   FormContextType,
   RJSFSchema,
   StrictRJSFSchema,
   WidgetProps,
 } from '@rjsf/utils';
-import { ChangeHandler, FieldValues, UseFormRegister } from 'react-hook-form';
+
 import { useToggle } from '@ssa-ui-kit/hooks';
 
-import { Field } from '@components/Field';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import { Field } from '@components/Field';
 import Icon from '@components/Icon';
+import Input from '@components/Input';
 
 export const PasswordWidget = <
   T = unknown,

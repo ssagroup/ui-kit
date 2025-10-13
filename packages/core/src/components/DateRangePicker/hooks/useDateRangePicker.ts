@@ -1,21 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+
 import { DateTime } from 'luxon';
+
 import { useMergeRefs } from '@floating-ui/react';
-import { useDatePickerMask } from './useDatePickerMask';
+
 import { INVALID_DATE, OUT_OF_RANGE } from '../constants';
-import {
-  getExpectedDateLength,
-  getMaskForFormat,
-  getDefaultDateRange,
-  getFormatForRangePickerType,
-} from '../utils';
 import {
   CalendarType,
   DateRangePickerContextProps,
   DateRangePickerProps,
   DateTimeTuple,
 } from '../types';
+import {
+  getDefaultDateRange,
+  getExpectedDateLength,
+  getFormatForRangePickerType,
+  getMaskForFormat,
+} from '../utils';
+
+import { useDatePickerMask } from './useDatePickerMask';
 
 export const useDateRangePicker = ({
   dateMin,

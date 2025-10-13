@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { outlineStyles } from '@styles/safari-focus-outline';
 
 const SwitchBase = styled.button`

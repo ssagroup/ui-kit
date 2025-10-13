@@ -1,6 +1,8 @@
 import { useTheme } from '@emotion/react';
-import Wrapper from '@components/Wrapper';
+
 import Icon from '@components/Icon';
+import Wrapper from '@components/Wrapper';
+
 import * as Types from '../types';
 
 export const ROI = ({ amount, isIncreasing }: Types.ROI) => {

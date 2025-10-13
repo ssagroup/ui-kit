@@ -1,13 +1,16 @@
 import { Fragment } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import {
-  Title,
-  Subtitle,
   Description,
   Primary,
   Stories,
+  Subtitle,
+  Title,
 } from '@storybook/addon-docs';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Table from '@components/Table';
+
 import { NestedTableDefaultStory, NestedTableStory } from './NestedTableStory';
 
 export default {

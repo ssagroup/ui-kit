@@ -1,4 +1,5 @@
 import Wrapper from '@components/Wrapper';
+
 import { exchangeIcons } from './consts';
 import { ExchangeProps } from './types';
 

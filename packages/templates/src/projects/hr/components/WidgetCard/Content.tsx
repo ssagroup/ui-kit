@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { CardContent } from '@ssa-ui-kit/core';
 
 export const Content = styled(CardContent)`

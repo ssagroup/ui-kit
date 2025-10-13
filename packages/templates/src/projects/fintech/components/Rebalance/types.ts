@@ -1,8 +1,8 @@
 import {
-  RequestPeriod,
   GraphsListItem,
   RebalancingItem,
   RebalancingItemKeys,
+  RequestPeriod,
 } from '@fintech/types';
 import { getExtendedInfo } from '@fintech/utils/charts';
 

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css, useTheme } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { ButtonGroup } from './ButtonGroup';
 import { items } from './helpers';
 import { ExternalStateStory } from './stories/ExternalState';

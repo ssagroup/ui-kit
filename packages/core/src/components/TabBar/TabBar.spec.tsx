@@ -1,14 +1,15 @@
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { getByRole } from '@testing-library/dom';
-
-import Tab from '@components/Tab';
-import LargeTab from '@components/LargeTab';
-
-import { TabBarWrapper, TabContents } from './stories/helpers';
-import TabBar, { TabBarContextProvider } from './index';
-import { SmallTabProps, TabProps } from './types';
 import { ReactNode } from 'react';
+
+import { within } from '@testing-library/dom';
+import { getByRole } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+
+import LargeTab from '@components/LargeTab';
+import Tab from '@components/Tab';
+
+import TabBar, { TabBarContextProvider } from './index';
+import { TabBarWrapper, TabContents } from './stories/helpers';
+import { SmallTabProps, TabProps } from './types';
 
 interface TabTest extends Pick<SmallTabProps, 'tabId'> {
   controls: string;

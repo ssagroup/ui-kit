@@ -1,2 +1,2 @@
-export { default } from './UserCard';
 export * from './types';
+export { default } from './UserCard';

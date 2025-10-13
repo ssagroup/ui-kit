@@ -5,13 +5,13 @@ import {
   StrictRJSFSchema,
 } from '@rjsf/utils';
 
-import { CheckboxWidget } from './CheckboxWidget';
 import { CheckboxesWidget } from './CheckboxesWidget';
-import { RadioWidget } from './RadioWidget';
-import { SelectWidget } from './SelectWidget';
-import { PasswordWidget } from './PasswordWidget';
-import { RangeWidget } from './RangeWidget';
+import { CheckboxWidget } from './CheckboxWidget';
 import { DateWidget } from './DateWidget';
+import { PasswordWidget } from './PasswordWidget';
+import { RadioWidget } from './RadioWidget';
+import { RangeWidget } from './RangeWidget';
+import { SelectWidget } from './SelectWidget';
 
 export function generateWidgets<
   T = unknown,

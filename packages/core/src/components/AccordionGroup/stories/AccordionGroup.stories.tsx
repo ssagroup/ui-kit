@@ -1,6 +1,8 @@
 import { css, useTheme } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { AccordionGroup } from '../index';
+
 import { AccordionGroupDecorator } from './helpers';
 import { AccordionTemplate } from './helpers';
 

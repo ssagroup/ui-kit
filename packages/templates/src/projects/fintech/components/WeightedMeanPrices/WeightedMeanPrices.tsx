@@ -1,15 +1,22 @@
 import { Fragment } from 'react';
+
 import { ClassNames, useTheme } from '@emotion/react';
-import { Wrapper } from '@ssa-ui-kit/core';
-import { propOr } from '@ssa-ui-kit/utils';
-import { useTranslation } from '@contexts';
-import { PLATFORM_ICONS } from '@fintech/icons';
 import { CURRENCY_ICONS } from '@fintech/components/CryptocurrencyPrices/constants';
 import * as S from '@fintech/components/CryptocurrencyPrices/styles';
+import { PLATFORM_ICONS } from '@fintech/icons';
+
+import { Wrapper } from '@ssa-ui-kit/core';
+
+import { propOr } from '@ssa-ui-kit/utils';
+
+import { useTranslation } from '@contexts';
+
+import { Content } from '../WidgetCard/Content';
+import { Header } from '../WidgetCard/Header';
+
 import { useInstrumentInfoWithPrices } from './hooks';
 import { WeightedMeanPricesProps } from './types';
-import { Header } from '../WidgetCard/Header';
-import { Content } from '../WidgetCard/Content';
+
 import { WidgetCard, WithWidgetLoader } from '..';
 
 export const WeightedMeanPrices = ({

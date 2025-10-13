@@ -2,9 +2,8 @@ import { Fragment } from 'react';
 
 import { CardList } from '@ssa-ui-kit/core';
 
-import { UpcomingWorkoutCard } from './UpcomingWorkoutCard';
-
 import { UpcomingWorkoutsProps } from './types';
+import { UpcomingWorkoutCard } from './UpcomingWorkoutCard';
 
 export const UpcomingWorkouts = ({ workouts }: UpcomingWorkoutsProps) => (
   <CardList

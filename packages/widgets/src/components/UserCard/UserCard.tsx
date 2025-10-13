@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
+
 import { css, Theme } from '@emotion/react';
 
 import { Icon } from '@ssa-ui-kit/core';
 
 import { User } from './types';
-
 import UserCardBMI from './UserCardBMI';
 import UserCardCredentials from './UserCardCredentials';
 

@@ -1,10 +1,10 @@
-import { useController } from 'react-hook-form';
+import { ChangeEvent } from 'react';
 import type { FieldValues } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 import RadioGroup from '@components/RadioGroup';
 
 import { FormRadioGroupProps } from './types';
-import { ChangeEvent } from 'react';
 
 const FormRadioGroup = <T extends FieldValues>({
   name,

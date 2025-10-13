@@ -1,9 +1,12 @@
 import { MouseEventHandler } from 'react';
+
 import { DateTime } from 'luxon';
+
 import Wrapper from '@components/Wrapper';
+
+import { MONTHS } from '../constants';
 import * as S from '../styles';
 import { useDatePickerContext } from '../useDatePickerContext';
-import { MONTHS } from '../constants';
 
 export const MonthsView = () => {
   const {

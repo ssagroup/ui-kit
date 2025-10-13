@@ -5,12 +5,12 @@ import {
   CardContent,
   CardHeader,
   ProgressCircle,
-  Typography,
   ResponsiveImage,
+  Typography,
 } from '@ssa-ui-kit/core';
 
-import { CaloriesProps } from './types';
 import { InnerContent } from './innerContent';
+import { CaloriesProps } from './types';
 
 /**
  *

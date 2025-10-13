@@ -1,10 +1,11 @@
-import userEvent from '@testing-library/user-event';
-import { fireEvent, screen, waitFor, within } from '../../../customTest';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import { progressInfoData as data } from './mockProgressInfoRequest';
+import userEvent from '@testing-library/user-event';
+
+import { fireEvent, screen, waitFor, within } from '../../../customTest';
 
 import ProgressInfo from './index';
+import { progressInfoData as data } from './mockProgressInfoRequest';
 
 const ResponsivePieMock = ({
   colors,

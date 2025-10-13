@@ -1,5 +1,11 @@
 import { FormEvent, MouseEventHandler, useEffect, useState } from 'react';
-import { useForm, FieldValues } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
+
+import {
+  useBotStartMutation,
+  useBotStopMutation,
+} from '@fintech/pages/BotsPage/mutations';
+
 import {
   Button,
   Input,
@@ -10,11 +16,9 @@ import {
   Typography,
   Wrapper,
 } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
-import {
-  useBotStopMutation,
-  useBotStartMutation,
-} from '@fintech/pages/BotsPage/mutations';
+
 import { ActionsProps } from './types';
 
 export const ActionRun = ({

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import TabBar from '@components/TabBar';
+
 import LargeTab from '@components/LargeTab';
+import TabBar from '@components/TabBar';
 
 import { TabBarDecorator, TabContents } from './helpers';
 

@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
-import { DatePickerProps } from './types';
-import { DEFAULT_MASK_FORMAT } from './constants';
+
 import { DatePickerContent } from './components';
+import { DEFAULT_MASK_FORMAT } from './constants';
 import { DatePickerProvider } from './DatePickerContext';
+import { DatePickerProps } from './types';
 
 const DatePickerInner = (
   {

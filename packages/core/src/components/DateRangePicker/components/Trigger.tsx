@@ -1,11 +1,16 @@
 import { useRef } from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import { useClickOutside } from '@ssa-ui-kit/hooks';
+
 import * as C from '@components';
+
+import * as S from '../styles';
+import { useDateRangePickerContext } from '../useDateRangePickerContext';
+
 import { TriggerInput } from './TriggerInput';
 import { TriggerStatusArea } from './TriggerStatusArea';
-import { useDateRangePickerContext } from '../useDateRangePickerContext';
-import * as S from '../styles';
 
 export const Trigger = () => {
   const {

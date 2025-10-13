@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useTheme } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import Button from '@components/Button';
-import ProgressCircle from '@components/ProgressCircle';
-import Typography from '@components/Typography';
 import Icon from '@components/Icon';
-import TooltipTrigger from '@components/TooltipTrigger';
+import ProgressCircle from '@components/ProgressCircle';
 import TooltipContent from '@components/TooltipContent';
+import TooltipTrigger from '@components/TooltipTrigger';
+import Typography from '@components/Typography';
 
 import Tooltip from './index';
 

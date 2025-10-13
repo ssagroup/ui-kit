@@ -1,7 +1,8 @@
-import userEvent from '@testing-library/user-event';
 import { within } from '@testing-library/dom';
-import { StoryComponent } from './stories/StoryComponent';
+import userEvent from '@testing-library/user-event';
+
 import { notificationData } from './helpers';
+import { StoryComponent } from './stories/StoryComponent';
 
 describe('NotificationMenu', () => {
   it('Renders with button group', async () => {

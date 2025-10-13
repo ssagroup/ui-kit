@@ -1,6 +1,7 @@
 import { ClassNames, useTheme } from '@emotion/react';
-import { WidgetCard } from './WidgetCard';
+
 import { WidgetCardProps } from './types';
+import { WidgetCard } from './WidgetCard';
 
 type CardProps = Pick<
   WidgetCardProps,

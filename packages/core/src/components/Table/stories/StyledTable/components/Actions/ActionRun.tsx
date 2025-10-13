@@ -1,17 +1,20 @@
 import { MouseEventHandler, useEffect, useState } from 'react';
-import { useForm, FieldValues } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
+
 import Button from '@components/Button';
 import Input from '@components/Input';
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
   PopoverDescription,
+  PopoverTrigger,
 } from '@components/Popover';
 import Typography from '@components/Typography';
 import Wrapper from '@components/Wrapper';
-import { actionsIcons } from './consts';
+
 import { StyledTableItem } from '../../types';
+
+import { actionsIcons } from './consts';
 
 export const ActionRun = ({ row }: { row: StyledTableItem }) => {
   const { status, isDisabled } = row;

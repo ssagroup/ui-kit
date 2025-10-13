@@ -1,4 +1,5 @@
 import { RJSFSchema, UiSchema } from '@rjsf/utils';
+
 import { GrafanaPanelData, GrafanaPanelSchema } from './grafana';
 
 /**

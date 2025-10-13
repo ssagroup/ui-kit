@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import Input from '@components/Input';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Icon from '@components/Icon';
+import Input from '@components/Input';
+
 import { InputProps } from './types';
 
 export default {

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { CommonProps } from '@global-types/emotion';
 
 const TableCell = styled.td<{ align?: string } & CommonProps>`

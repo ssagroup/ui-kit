@@ -1,8 +1,9 @@
-import type { Preview } from '@storybook/react-webpack5';
-import { ThemeProvider } from '@emotion/react';
-import { mainTheme } from '@ssa-ui-kit/core';
-
 import './style.css';
+
+import { ThemeProvider } from '@emotion/react';
+import type { Preview } from '@storybook/react-webpack5';
+
+import { mainTheme } from '@ssa-ui-kit/core';
 
 const preview: Preview = {
   parameters: {

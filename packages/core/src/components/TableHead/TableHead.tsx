@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { CommonProps } from '@global-types/emotion';
 
 const TableHead = styled.thead<CommonProps>`

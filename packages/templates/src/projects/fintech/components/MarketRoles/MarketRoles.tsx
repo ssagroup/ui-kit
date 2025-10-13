@@ -1,9 +1,14 @@
 import { useTheme } from '@emotion/react';
-import { Wrapper } from '@ssa-ui-kit/core';
-import { useTranslation } from '@contexts';
 import { useCurrency } from '@fintech/contexts';
-import { MarketRolesProps } from './types';
+
+import { Wrapper } from '@ssa-ui-kit/core';
+
+import { useTranslation } from '@contexts';
+
 import { DistributionMultiline } from '../Distribution';
+
+import { MarketRolesProps } from './types';
+
 import { WithWidgetLoader } from '..';
 
 export const MarketRoles = ({

@@ -1,4 +1,5 @@
 import { mockData } from './mockData';
+
 import { Filters } from '..';
 
 export const StoryComponent = ({ data = mockData }) => {

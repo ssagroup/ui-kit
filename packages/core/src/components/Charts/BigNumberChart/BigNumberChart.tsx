@@ -1,8 +1,12 @@
 import { useState } from 'react';
+
 import { Datum, PointMouseHandler } from '@nivo/line';
+
 import { useThrottledCallback } from '@ssa-ui-kit/hooks';
+
+import { WidgetCardProps, WithWidgetCard, Wrapper } from '@components';
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
-import { Wrapper, WidgetCardProps, WithWidgetCard } from '@components';
+
 import { BigNumberChartHeader, TrendLine, TrendLineProps } from './components';
 
 export type BigNumberChartFeatures = 'header' | 'fullscreenMode';

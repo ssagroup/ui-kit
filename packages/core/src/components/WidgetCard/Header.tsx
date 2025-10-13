@@ -1,6 +1,9 @@
 import { Fragment } from 'react';
-import { Interpolation, Theme, css, useTheme } from '@emotion/react';
+
+import { css, Interpolation, Theme, useTheme } from '@emotion/react';
+
 import CardHeader from '@components/CardHeader';
+
 import { WidgetCardTitle } from './Title';
 import { WidgetCardProps } from './types';
 

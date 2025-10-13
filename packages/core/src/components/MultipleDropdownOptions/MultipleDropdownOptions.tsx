@@ -1,11 +1,12 @@
 import React, { BaseSyntheticEvent } from 'react';
+
 import styled from '@emotion/styled';
 
 import Checkbox from '@components/Checkbox';
-import { useMultipleDropdownContext } from '@components/MultipleDropdown/MultipleDropdown.context';
-import DropdownOption from '@components/DropdownOption';
-
 import { checkboxStyles } from '@components/Checkbox/styles';
+import DropdownOption from '@components/DropdownOption';
+import { useMultipleDropdownContext } from '@components/MultipleDropdown/MultipleDropdown.context';
+
 import { DropdownItemsListProps } from './types';
 
 const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`

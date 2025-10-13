@@ -1,4 +1,5 @@
 import { mergeLeft } from 'ramda';
+
 import { devices, type PlaywrightTestConfig } from '@playwright/test';
 
 /**

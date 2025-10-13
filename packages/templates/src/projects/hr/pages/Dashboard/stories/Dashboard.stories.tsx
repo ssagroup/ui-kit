@@ -1,11 +1,14 @@
 import { useRef } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { TranslationProvider } from '@ssa-ui-kit/core';
-import type { Meta } from '@storybook/react-webpack5';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import { AppLayoutProvider } from '@hr/components/AppLayout/context';
 import { HeaderProvider } from '@hr/contexts';
 import { Dashboard } from '@hr/pages/Dashboard';
 import { translationConfig } from '@hr/translation';
-import { AppLayoutProvider } from '@hr/components/AppLayout/context';
+import type { Meta } from '@storybook/react-webpack5';
+
+import { TranslationProvider } from '@ssa-ui-kit/core';
+
 import { RightPaneBase } from '@/hr/components/AppLayout/RightPaneBase';
 
 export default {

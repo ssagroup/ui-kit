@@ -1,17 +1,19 @@
 import * as React from 'react';
+
 import {
-  useFloating,
   autoUpdate,
-  offset,
   flip,
+  offset,
+  safePolygon,
   shift,
   useClick,
   useDismiss,
-  useRole,
-  useInteractions,
+  useFloating,
   useHover,
-  safePolygon,
+  useInteractions,
+  useRole,
 } from '@floating-ui/react';
+
 import { PopoverOptions, UsePopover } from '../types';
 
 export const usePopover: UsePopover = ({

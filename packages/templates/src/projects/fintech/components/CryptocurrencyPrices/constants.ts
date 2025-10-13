@@ -1,4 +1,4 @@
-import { BTC, FDUSD, USDT, ETH } from '@icons';
+import { BTC, ETH, FDUSD, USDT } from '@icons';
 
 export const CURRENCY_ICONS = {
   btc: BTC,

@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
+
 import { SerializedStyles } from '@emotion/react';
+
 import {
   ButtonGroup,
   ButtonGroupItem,
   Dropdown,
   DropdownOption,
   DropdownOptionProps,
-  Wrapper,
   useTranslation,
+  Wrapper,
 } from '@ssa-ui-kit/core';
+
 import { prop } from '@ssa-ui-kit/utils';
+
 import { useMinLGMediaQuery } from '@ssa-ui-kit/hooks';
+
 import { ITEMS } from '../constants';
 
 const isButtonGroupItem = (

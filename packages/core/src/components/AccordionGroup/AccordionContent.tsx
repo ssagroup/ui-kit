@@ -1,7 +1,9 @@
-import CardContent from '@components/CardContent';
-import { RenderContentProps } from './types';
-import { createContentStyles } from './styles';
 import { useTheme } from '@emotion/react';
+
+import CardContent from '@components/CardContent';
+
+import { createContentStyles } from './styles';
+import { RenderContentProps } from './types';
 
 export const AccordionContent = ({
   isOpened,

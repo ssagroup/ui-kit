@@ -1,8 +1,8 @@
-export { mealNutrients } from './mealNutrientsApi';
-export { topWidgets } from './topWidgetsApi';
-export { mealPlanner } from './mealPlannerApi';
-export { goals } from './goalsApi';
-export { workouts } from './workoutsApi';
-export { user } from './userApi';
 export { activity } from './activityApi';
+export { goals } from './goalsApi';
+export { mealNutrients } from './mealNutrientsApi';
+export { mealPlanner } from './mealPlannerApi';
 export { progress } from './progressApi';
+export { topWidgets } from './topWidgetsApi';
+export { user } from './userApi';
+export { workouts } from './workoutsApi';

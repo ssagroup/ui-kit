@@ -1,6 +1,9 @@
-import { pathOr } from '@ssa-ui-kit/utils';
-import { DashboardCharts } from '@/hr/types';
 import { useDashboardCharts } from '@hr/hooks/dashboard';
+
+import { pathOr } from '@ssa-ui-kit/utils';
+
+import { DashboardCharts } from '@/hr/types';
+
 import { WidgetPieChart, WithWidgetLoader } from '..';
 
 export const AgeChart = ({

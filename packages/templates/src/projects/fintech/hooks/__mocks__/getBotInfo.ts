@@ -1,5 +1,7 @@
 import { propOr } from '@ssa-ui-kit/utils';
+
 import { Bot, RequestPeriod } from '@/fintech/types';
+
 import * as mockResponse from './botInfoMock';
 
 export const getBotInfoResponseMock = ({

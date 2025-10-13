@@ -1,10 +1,12 @@
-import { useTheme, css } from '@emotion/react';
-import Typography from '@components/Typography';
+import { css, useTheme } from '@emotion/react';
+
 import Tooltip from '@components/Tooltip';
-import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
-import { getRoundedNumber } from '../utils';
+import TooltipTrigger from '@components/TooltipTrigger';
+import Typography from '@components/Typography';
+
 import { useSegmentedPieChartContext } from '../SegmentedPieChartContext';
+import { getRoundedNumber } from '../utils';
 
 export const ChartTitle = () => {
   const {

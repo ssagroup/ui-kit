@@ -1,6 +1,7 @@
-import { screen } from '../../../customTest';
 import Tag from '@components/Tag';
 import theme from '@themes/main';
+
+import { screen } from '../../../customTest';
 
 describe('tag', () => {
   it('Render small size', () => {

@@ -1,9 +1,11 @@
 import { css } from '@emotion/react';
+import { TableFooter } from '@fintech/components';
+import { useHeader } from '@fintech/contexts';
+
 import { WithVisibleMD, WithVisibleSM } from '@ssa-ui-kit/core';
 import { WithPagination } from '@ssa-ui-kit/core';
-import { useHeader } from '@fintech/contexts';
-import { TableFooter } from '@fintech/components';
-import { BotsNavigation, BotsFilters, BotsTable } from './components';
+
+import { BotsFilters, BotsNavigation, BotsTable } from './components';
 import { useBotsPage } from './hooks';
 
 const BotsNavigationSM = WithVisibleSM(

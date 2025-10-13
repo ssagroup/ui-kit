@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+
 import { Typography } from '@ssa-ui-kit/core';
+
 import { InfoBlockProps } from './types';
 
 const PercentsText = styled(Typography)`

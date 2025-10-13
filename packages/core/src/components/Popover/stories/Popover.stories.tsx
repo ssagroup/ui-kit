@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { Popover } from '..';
-import { StoryComponent } from './StoryComponent';
+
 import { PopoverOptions } from '../types';
+
+import { StoryComponent } from './StoryComponent';
+
+import { Popover } from '..';
 
 type PopoverType = typeof Popover;
 export type Args = Parameters<PopoverType>[0];

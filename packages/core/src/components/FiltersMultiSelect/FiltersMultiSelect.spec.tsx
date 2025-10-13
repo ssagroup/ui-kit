@@ -1,13 +1,13 @@
-import userEvent from '@testing-library/user-event';
 import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 
 import {
-  FiltersMultiSelect,
-  FiltersMultiSelectOptions,
-  FiltersMultiSelectOption,
-  FiltersMultiSelectProps,
-  FiltersMultiSelectEmpty,
   Filter,
+  FiltersMultiSelect,
+  FiltersMultiSelectEmpty,
+  FiltersMultiSelectOption,
+  FiltersMultiSelectOptions,
+  FiltersMultiSelectProps,
   useFilterMultiSelect,
 } from './';
 

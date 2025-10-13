@@ -1,11 +1,11 @@
 import { Card } from '@ssa-ui-kit/core';
 
-import * as S from './styles';
 import {
   AccountKeysContent,
   AccountKeysHeader,
   AccountKeysProvider,
 } from './components';
+import * as S from './styles';
 import {
   useAccountKeys,
   UseAccountKeysOptions,

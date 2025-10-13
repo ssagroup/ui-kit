@@ -1,5 +1,5 @@
-import { TooltipProps } from '@nivo/treemap';
 import styled from '@emotion/styled';
+import { TooltipProps } from '@nivo/treemap';
 
 export const TreeMapTooltipBase = styled.div`
   background-color: ${({ theme }) => theme.colors.white};

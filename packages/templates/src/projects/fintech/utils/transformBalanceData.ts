@@ -1,5 +1,6 @@
-import { propOr } from '@ssa-ui-kit/utils';
 import { Balance } from '@fintech/types';
+
+import { propOr } from '@ssa-ui-kit/utils';
 
 type BalanceData = {
   id: string;

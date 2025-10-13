@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+
 import { AppLayoutContextType } from './types';
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({

@@ -1,7 +1,7 @@
-import { DateRangePickerProps } from './types';
-import { getFormatForRangePickerType } from './utils';
 import { DatePickerContent } from './components';
 import { DateRangePickerProvider } from './DateRangePickerProvider';
+import { DateRangePickerProps } from './types';
+import { getFormatForRangePickerType } from './utils';
 
 export const DateRangePicker = ({
   format,

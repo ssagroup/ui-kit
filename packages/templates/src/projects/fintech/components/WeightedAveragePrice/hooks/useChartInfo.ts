@@ -1,6 +1,7 @@
-import { pathOr } from '@ssa-ui-kit/utils';
-import { getExtendedInfo } from '@fintech/utils/charts';
 import { GraphStatisticsWeighted, WeightedPriceItem } from '@fintech/types';
+import { getExtendedInfo } from '@fintech/utils/charts';
+
+import { pathOr } from '@ssa-ui-kit/utils';
 
 export const useChartInfo = ({
   dataOriginal,

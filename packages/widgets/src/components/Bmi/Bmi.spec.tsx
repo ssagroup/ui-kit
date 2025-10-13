@@ -1,4 +1,5 @@
 import { screen } from '../../../customTest';
+
 import Bmi from './index';
 
 describe('BMI', () => {

@@ -1,6 +1,8 @@
 import { CustomProjectConfig } from 'lost-pixel';
-import { SCREEN_SIZES } from './src/consts';
+
 import { baseConfig } from '../../lostpixel.base.config';
+
+import { SCREEN_SIZES } from './src/consts';
 
 const breakpoints = Object.keys(SCREEN_SIZES).map(Number);
 

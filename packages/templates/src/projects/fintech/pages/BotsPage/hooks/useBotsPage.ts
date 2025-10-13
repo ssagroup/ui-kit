@@ -1,23 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { ButtonGroupItem, usePaginationContext } from '@ssa-ui-kit/core';
-import { propOr, pathOr } from '@ssa-ui-kit/utils';
-import { useCookie } from '@/fintech/hooks';
-import { SORT_ORDER_DESC, usePeriod } from '@/fintech/contexts';
-import { Enum, EnumsList } from '@/fintech/types';
+
+import { pathOr, propOr } from '@ssa-ui-kit/utils';
+
 import { ROWS_PER_PAGE_LIST, TableFooterProps } from '@/fintech/components';
-import { useBotsPageEnums, useQueryParams } from '.';
-import { DEFAULT_SORT } from '../components/BotsTable/consts';
-import { API_KEY_TO_TITLE, makeFilters } from '../components/BotsFilters/utils';
-import { FiltersData } from '../components/BotsFilters/types';
-import { BotsTableProps } from '../components/BotsTable/types';
+import { SORT_ORDER_DESC, usePeriod } from '@/fintech/contexts';
+import { useCookie } from '@/fintech/hooks';
+import { Enum, EnumsList } from '@/fintech/types';
+
 import {
   AllBots,
   allBotsMock,
   botInformationByIdMock,
   SingleBot,
 } from '../__mock__/allBots';
+import { FiltersData } from '../components/BotsFilters/types';
+import { API_KEY_TO_TITLE, makeFilters } from '../components/BotsFilters/utils';
 import { buttonGroupItems } from '../components/BotsNavigation/consts';
+import { DEFAULT_SORT } from '../components/BotsTable/consts';
+import { BotsTableProps } from '../components/BotsTable/types';
 import { SearchType } from '../types';
+
+import { useBotsPageEnums, useQueryParams } from '.';
 
 const DEFAULT_SELECTED_INDEX = 0;
 const DEFAULT_PER_PAGE = ROWS_PER_PAGE_LIST[DEFAULT_SELECTED_INDEX].value;

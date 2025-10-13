@@ -1,8 +1,10 @@
 import { Fragment } from 'react';
+
 import { Meta } from '@storybook/react-webpack5';
 
-import Switch, { SwitchContextProvider } from './index';
 import Typography from '@components/Typography';
+
+import Switch, { SwitchContextProvider } from './index';
 
 export default {
   title: 'Components/Switch',

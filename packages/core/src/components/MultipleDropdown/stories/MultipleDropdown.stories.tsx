@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
-import DropdownOption from '@components/DropdownOption';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Button from '@components/Button';
+import DropdownOption from '@components/DropdownOption';
 
 import MultipleDropdown from '../MultipleDropdown';
+
 import { items } from './consts';
 
 type Args = Parameters<typeof MultipleDropdown>[0];

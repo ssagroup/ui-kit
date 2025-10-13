@@ -1,26 +1,28 @@
 import { Fragment } from 'react';
+
 import { css } from '@emotion/react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {
-  Title,
-  Subtitle,
   Description,
   Primary,
   Stories,
+  Subtitle,
+  Title,
 } from '@storybook/addon-docs';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import Badge from '@components/Badge';
 import Icon from '@components/Icon';
-import Wrapper from '@components/Wrapper';
 import Table from '@components/Table';
+import TableBody from '@components/TableBody';
+import TableCell from '@components/TableCell';
+import TableCellHeader from '@components/TableCellHeader';
 import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
-import TableCell from '@components/TableCell';
-import TableBody from '@components/TableBody';
-import TableCellHeader from '@components/TableCellHeader';
+import Wrapper from '@components/Wrapper';
+
 import { SortableTable } from './SortableTable';
-import { SortInfo } from './types';
 import { StyledTableStory } from './StyledTable/StoryComponent';
+import { SortInfo } from './types';
 
 export default {
   title: 'Components/Table',

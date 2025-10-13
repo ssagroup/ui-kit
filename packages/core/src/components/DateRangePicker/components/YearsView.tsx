@@ -1,11 +1,14 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
+
 import { DateTime } from 'luxon';
+
 import { useRangeHighlighting } from '../hooks';
 import * as S from '../styles';
+import { DateTimeTuple } from '../types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { getYearsList } from '../utils';
+
 import { DatesListWrapper } from './DatesListWrapper';
-import { DateTimeTuple } from '../types';
 
 export const YearsView = () => {
   const {

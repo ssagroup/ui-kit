@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import styled from '@emotion/styled';
 import {
   FieldProps,
@@ -12,7 +14,6 @@ import {
   AccordionTitle,
   useAccordionGroupContext,
 } from '@components/AccordionGroup';
-import { useEffect } from 'react';
 
 export type AccordionOptions = {
   targetField: string;

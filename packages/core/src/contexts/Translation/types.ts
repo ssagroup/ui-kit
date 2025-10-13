@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+
 import { JSONObject } from '@global-types/json';
 
 export type TranslationContextContent = {

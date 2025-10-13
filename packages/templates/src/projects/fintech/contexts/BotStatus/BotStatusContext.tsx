@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+
 import { BOT_STATUS, BotStatusContextContent } from './types';
 
 export const BotStatusContext = createContext<BotStatusContextContent>({

@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Typography from '@components/Typography/Typography';
+
 import Icon, { iconsList } from './index';
 
 export default {

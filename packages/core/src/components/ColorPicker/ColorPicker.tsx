@@ -1,13 +1,16 @@
+import '@rc-component/color-picker/assets/index.css';
+
 import { useTheme } from '@emotion/react';
+
 import { Popover, PopoverContent } from '@components/Popover';
-import TabBar, { TabBarContextProvider } from '@components/TabBar';
 import Tab from '@components/Tab';
-import { ColorPickerProps } from './types';
-import { TabColorPalette, TabColorPicker, TabContent } from './components';
+import TabBar, { TabBarContextProvider } from '@components/TabBar';
+
 import { ColorPickerProvider } from './ColorPickerContext';
+import { TabColorPalette, TabColorPicker, TabContent } from './components';
 import { ColorPickerTrigger } from './components/ColorPickerTrigger';
 import { COLORS_PALETTE } from './constants';
-import '@rc-component/color-picker/assets/index.css';
+import { ColorPickerProps } from './types';
 
 export const ColorPicker = ({
   color: providedColor,

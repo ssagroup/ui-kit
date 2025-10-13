@@ -1,28 +1,32 @@
 import { useId, useRef } from 'react';
-import { css } from '@emotion/css';
 import { UseFormReturn } from 'react-hook-form';
+
+import { css } from '@emotion/css';
+
 import { useResizeObserver } from '@ssa-ui-kit/hooks';
+
 import {
-  Input,
+  Button,
   Field,
   FieldProps,
-  Button,
   Icon,
-  Wrapper,
+  Input,
   Popover,
   PopoverContent,
   PopoverDescription,
   PopoverTrigger,
+  Wrapper,
 } from '@components';
 import { InputProps } from '@components/Input/types';
+
+import { FilterBadge } from './components/FilterBadge';
+import { FiltersMultiSelectEmpty } from './components/FiltersMultiSelectEmpty';
+import { FiltersMultiSelectProvider } from './FiltersMultiSelectProvider';
 import {
   SelectedFilter,
   useFilterMultiSelect,
   UseFiltersMultiSelectStore,
 } from './useFiltersMultiSelect';
-import { FiltersMultiSelectProvider } from './FiltersMultiSelectProvider';
-import { FilterBadge } from './components/FilterBadge';
-import { FiltersMultiSelectEmpty } from './components/FiltersMultiSelectEmpty';
 
 export interface FiltersMultiSelectProps
   extends Pick<FieldProps, 'status' | 'disabled'> {

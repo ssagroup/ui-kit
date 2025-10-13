@@ -1,8 +1,11 @@
 import { useTheme } from '@emotion/react';
-import { Wrapper, ButtonGroup } from '@ssa-ui-kit/core';
+
+import { ButtonGroup, Wrapper } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
-import { BotsNavigationProps } from './types';
+
 import { buttonGroupItems } from './consts';
+import { BotsNavigationProps } from './types';
 
 export const BotsNavigation = ({
   handleRunStateClick,

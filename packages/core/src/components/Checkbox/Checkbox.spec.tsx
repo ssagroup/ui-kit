@@ -1,13 +1,14 @@
-import userEvent from '@testing-library/user-event';
-import { ThemeProvider } from '@emotion/react';
-import colors from '@themes/main';
 import { useForm } from 'react-hook-form';
+
+import { ThemeProvider } from '@emotion/react';
+import { getByRole } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 
 import Checkbox from '@components/Checkbox';
 import FormCheckbox from '@components/FormCheckbox';
+import colors from '@themes/main';
 
 import { CheckboxProps } from './types';
-import { getByRole } from '@testing-library/dom';
 
 const checkLabel = () => {
   const labelEl = document.getElementsByTagName('label')[0];

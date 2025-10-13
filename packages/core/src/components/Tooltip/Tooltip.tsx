@@ -1,6 +1,6 @@
+import { TooltipProps } from './types';
 import { useTooltip } from './useTooltip';
 import { TooltipContext } from './useTooltipContext';
-import { TooltipProps } from './types';
 
 /*
  * <Tooltip>

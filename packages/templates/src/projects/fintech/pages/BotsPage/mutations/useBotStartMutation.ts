@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+
+import { useBots, useBotStatus } from '@fintech/contexts';
 import {
   BOT_STARTED,
   BOT_STARTING,
 } from '@fintech/contexts/BotStatus/constants';
-import { useBotStatus, useBots } from '@fintech/contexts';
 import { showSimpleToast } from '@fintech/utils';
+
 import { useTranslation } from '@contexts';
 
 export const useBotStartMutation = (id: number) => {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
+
 import { UseTypeaheadResult } from './useTypeahead';
 
 export const TypeaheadContext = React.createContext<UseTypeaheadResult>({

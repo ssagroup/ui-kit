@@ -1,4 +1,5 @@
 import * as API from '@/hr/types';
+
 import { dashboardIndicatorsMock } from './__mocks__/dashboardIndicators';
 
 export const useDashboardIndicators =

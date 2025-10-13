@@ -1,23 +1,23 @@
 import Badge from '@components/Badge';
+
 import {
   blue,
-  green,
   blueLight,
+  green,
   pink,
   purple,
   turquoise,
   yellow,
   yellowWarm,
 } from './styles';
-
 import {
-  pinkBorder,
-  yellowBorder,
-  greenBorder,
-  turquoiseBorder,
-  purpleBorder,
-  blueLightBorder,
   blueBorder,
+  blueLightBorder,
+  greenBorder,
+  pinkBorder,
+  purpleBorder,
+  turquoiseBorder,
+  yellowBorder,
   yellowWarmBorder,
 } from './styles';
 import { TagsProps } from './types';

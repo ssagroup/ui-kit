@@ -1,7 +1,9 @@
 import { useTheme } from '@emotion/react';
+
 import { Typography } from '@ssa-ui-kit/core';
 
 import * as S from '../styles';
+
 import { useExchangeAccountContext } from './ExchangeAccountProvider';
 
 export interface ExchangeAccountPlatformProps

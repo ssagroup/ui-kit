@@ -1,13 +1,15 @@
+import { CurrentFundsProps } from '@fintech/components';
+import { MarketRolesProps } from '@fintech/components/MarketRoles/types';
+
 import {
-  PERIOD_DAY,
-  PERIOD_WEEK,
-  PERIOD_MONTH,
-  PERIOD_YEAR,
   PERIOD_CURRENT,
   PERIOD_CUSTOM,
+  PERIOD_DAY,
+  PERIOD_MONTH,
+  PERIOD_WEEK,
+  PERIOD_YEAR,
 } from '../constants';
-import { MarketRolesProps } from '@fintech/components/MarketRoles/types';
-import { CurrentFundsProps } from '@fintech/components';
+
 import { Balance } from './account';
 
 export type StatisticsPeriod =
