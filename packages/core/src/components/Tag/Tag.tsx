@@ -1,26 +1,28 @@
+import { css } from '@emotion/react';
+
 import Badge from '@components/Badge';
+
 import {
   blue,
-  green,
   blueLight,
+  green,
   pink,
   purple,
   turquoise,
   yellow,
   yellowWarm,
 } from './styles';
-
 import {
-  pinkBorder,
-  yellowBorder,
-  greenBorder,
-  turquoiseBorder,
-  purpleBorder,
-  blueLightBorder,
   blueBorder,
+  blueLightBorder,
+  greenBorder,
+  pinkBorder,
+  purpleBorder,
+  turquoiseBorder,
+  yellowBorder,
   yellowWarmBorder,
 } from './styles';
-import { TagsProps } from './types';
+import { CustomTagStyles, TagsProps } from './types';
 
 const mapColors: MainColors = {
   pink: [pink, pinkBorder],
@@ -33,15 +35,41 @@ const mapColors: MainColors = {
   yellowWarm: [yellowWarm, yellowWarmBorder],
 };
 
+const createCustomStyles = (customStyles?: CustomTagStyles) => {
+  if (!customStyles) return [];
+
+  const styles = [
+    css`
+      ${customStyles.color && `color: ${customStyles.color};`}
+      ${customStyles.background && `background: ${customStyles.background};`}
+      ${customStyles.border && `border: ${customStyles.border};`}
+      ${customStyles.boxShadow && `box-shadow: ${customStyles.boxShadow};`}
+    `,
+  ];
+
+  return customStyles.css ? [styles, customStyles.css] : [styles];
+};
+
 const Tag = ({
   color = 'purple',
   size = 'medium',
   className,
   children,
-}: TagsProps) => (
-  <Badge color={color} size={size} css={mapColors[color]} className={className}>
-    {children}
-  </Badge>
-);
+  customStyles,
+}: TagsProps) => {
+  const hasCustomStyles = customStyles && Object.keys(customStyles).length > 0;
+  const defaultStyles = hasCustomStyles ? null : mapColors[color];
+  const customStylesArray = createCustomStyles(customStyles);
+
+  return (
+    <Badge
+      color={hasCustomStyles ? 'transparent' : color}
+      size={size}
+      css={[defaultStyles, ...(customStylesArray || [])]}
+      className={className}>
+      {children}
+    </Badge>
+  );
+};
 
 export default Tag;
