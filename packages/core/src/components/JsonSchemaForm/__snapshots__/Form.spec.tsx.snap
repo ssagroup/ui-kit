@@ -22,6 +22,8 @@ exports[`Form (rjsf) Render form 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .emotion-2 {
@@ -185,6 +187,8 @@ exports[`Form (rjsf) Render form 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  opacity: 1;
+  pointer-events: auto;
   gap: 8px;
   width: 100%;
 }
@@ -202,6 +206,8 @@ exports[`Form (rjsf) Render form 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .emotion-13 {
@@ -622,6 +628,8 @@ exports[`Form (rjsf) Render form 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  opacity: 1;
+  pointer-events: auto;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -733,6 +741,8 @@ exports[`Form (rjsf) Render form 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  opacity: 1;
+  pointer-events: auto;
   position: relative;
   -webkit-flex: 1 1 0%;
   -ms-flex: 1 1 0%;
