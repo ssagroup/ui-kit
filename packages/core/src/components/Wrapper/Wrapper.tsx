@@ -17,18 +17,24 @@ const Wrapper = styled.div<
   width: 100%;
 
   flex-direction: ${({ direction }) => (direction ? direction : 'row')};
-  ${({ isVisible = true }) => {
-    return `
+
+  ${({ isVisible = true, fade, fadeDelay = 0.3 }) => {
+    const baseStyles = `
       opacity: ${isVisible ? 1 : 0};
-      pointer-events: ${isVisible ? 'auto' : 'none'};
     `;
-  }}
 
-  ${({ fade, fadeDelay = 0.3 }) => {
-    if (!fade) return '';
+    if (fade) {
+      return `
+        ${baseStyles}
+        transition: opacity ${fadeDelay}s ease-in-out, visibility ${fadeDelay}s ease-in-out;
+        visibility: ${isVisible ? 'visible' : 'hidden'};
+        ${!isVisible ? `transition-delay: 0s, ${fadeDelay}s;` : ''}
+      `;
+    }
 
     return `
-      transition: opacity ${fadeDelay}s ease-in-out;
+      ${baseStyles}
+      visibility: ${isVisible ? 'visible' : 'hidden'};
     `;
   }}
 `;
