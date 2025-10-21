@@ -1,11 +1,10 @@
-import { screen, within } from '../../../customTest';
-
-import theme from '@themes/main';
-
 import ProgressBar from '@components/ProgressBar';
-import ProgressVertical from '@components/ProgressVertical';
 import ProgressLegend from '@components/ProgressLegend';
 import ProgressLegendItem from '@components/ProgressLegendItem';
+import ProgressVertical from '@components/ProgressVertical';
+import theme from '@themes/main';
+
+import { screen, within } from '../../../customTest';
 
 import Progress from './index';
 

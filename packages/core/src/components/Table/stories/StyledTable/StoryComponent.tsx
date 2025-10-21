@@ -1,10 +1,11 @@
-import Wrapper from '@components/Wrapper';
-import TableRow from '@components/TableRow';
-import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
-import TableHead from '@components/TableHead';
+import TableCell from '@components/TableCell';
 import TableCellHeader from '@components/TableCellHeader';
-import { Exchange, PNL, ROI, Trade, Actions, TableList } from './components';
+import TableHead from '@components/TableHead';
+import TableRow from '@components/TableRow';
+import Wrapper from '@components/Wrapper';
+
+import { Actions, Exchange, PNL, ROI, TableList, Trade } from './components';
 import { botsTableData } from './mockData';
 import { StyledTableItem } from './types';
 

@@ -1,11 +1,14 @@
 import * as React from 'react';
+
 import {
-  useMergeRefs,
-  FloatingPortal,
   FloatingFocusManager,
+  FloatingPortal,
+  useMergeRefs,
 } from '@floating-ui/react';
-import { usePopoverContext } from './hooks/usePopoverContext';
+
 import Wrapper from '@components/Wrapper';
+
+import { usePopoverContext } from './hooks/usePopoverContext';
 import { MountMode } from './types';
 
 export const PopoverContent = React.forwardRef<

@@ -1,4 +1,6 @@
 import { useTheme } from '@emotion/react';
+import { Panel } from '@shared/panel';
+
 import {
   Button,
   Icon,
@@ -8,8 +10,6 @@ import {
   Theme,
   usePopoverContext,
 } from '@ssa-ui-kit/core';
-
-import { Panel } from '@shared/panel';
 
 export type PanelControlProps = {
   panel: Panel;

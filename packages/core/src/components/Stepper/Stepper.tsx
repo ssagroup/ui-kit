@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { css } from '@emotion/react';
 
 import { StepperContextType, StepperProps } from './types';
+
 import { StepperContext } from '.';
 
 const Stepper = ({

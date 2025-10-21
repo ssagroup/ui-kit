@@ -1,2 +1,2 @@
-export * from './NotificationFilters';
 export * from './consts';
+export * from './NotificationFilters';

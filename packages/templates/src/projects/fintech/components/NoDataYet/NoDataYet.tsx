@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { Typography, Wrapper } from '@ssa-ui-kit/core';
-import { useTranslation } from '@contexts';
 import { NoDataYet as NoDataIcon } from '@icons';
+
+import { Typography, Wrapper } from '@ssa-ui-kit/core';
+
+import { useTranslation } from '@contexts';
 
 const Text = styled(Typography)`
   font-size: 14px;

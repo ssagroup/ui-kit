@@ -1,14 +1,18 @@
 import { act } from 'react';
+
 import { fireEvent, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+
 import Table from '@components/Table';
+import TableBody from '@components/TableBody';
+import TableCell from '@components/TableCell';
 import TableHead from '@components/TableHead';
 import TableRow from '@components/TableRow';
-import TableCell from '@components/TableCell';
-import TableBody from '@components/TableBody';
+
+import { screen } from '../../../customTest';
+
 import { SortableTable } from './stories/SortableTable';
 import { StyledTableStory } from './stories/StyledTable/StoryComponent';
-import { screen } from '../../../customTest';
 
 describe('Table', () => {
   it('Render table', () => {

@@ -1,12 +1,14 @@
 import { Decorator } from '@storybook/react-webpack5';
-import { AccordionGroupContextProvider } from '../AccordionContext';
-import Typography from '@components/Typography';
+
 import {
   Accordion,
-  AccordionTitle,
-  AccordionGroup,
   AccordionContent,
+  AccordionGroup,
+  AccordionTitle,
 } from '@components/AccordionGroup';
+import Typography from '@components/Typography';
+
+import { AccordionGroupContextProvider } from '../AccordionContext';
 import { AccordionGroupProps } from '../types';
 
 export const AccordionGroupDecorator: Decorator = (Story, { args }) => {

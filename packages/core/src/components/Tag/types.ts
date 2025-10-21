@@ -1,5 +1,6 @@
-import { CommonProps } from '@global-types/emotion';
 import { Interpolation, Theme } from '@emotion/react';
+
+import { CommonProps } from '@global-types/emotion';
 
 export interface CustomTagStyles {
   color?: string;

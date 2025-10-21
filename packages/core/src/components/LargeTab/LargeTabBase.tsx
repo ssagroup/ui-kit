@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { LargeTabProps } from '@components/TabBar/types';
 
 export const LargeTabBase = styled.button<Pick<LargeTabProps, 'isActive'>>`

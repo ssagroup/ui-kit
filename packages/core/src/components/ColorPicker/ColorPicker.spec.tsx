@@ -1,4 +1,5 @@
 import { ColorPicker } from '@components/ColorPicker';
+
 import { fireEvent, screen } from '../../../customTest';
 
 describe('ColorPicker', () => {

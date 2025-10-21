@@ -1,12 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { css as cssReact } from '@emotion/react';
+
 import { css } from '@emotion/css';
+import { css as cssReact } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { mainTheme } from '@ssa-ui-kit/core';
 
-import { data } from './stories/fixtures';
-
 import { AccountBalance, AccountBalanceProps } from './index';
+import { data } from './stories/fixtures';
 
 export default {
   title: 'Trading/AccountBalance',

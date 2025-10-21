@@ -1,5 +1,5 @@
-import type { Panel as PanelSchema } from '@grafana/schema';
 import type { DataFrameJSON } from '@grafana/data';
+import type { Panel as PanelSchema } from '@grafana/schema';
 
 /**
  * Represents a Grafana dashboard with its basic metadata.

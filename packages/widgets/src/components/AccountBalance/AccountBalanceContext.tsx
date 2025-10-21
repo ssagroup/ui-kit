@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import { AccountBalanceProps } from './types';
 
 type ContextType = Pick<

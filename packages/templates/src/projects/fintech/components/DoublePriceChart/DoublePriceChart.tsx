@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useTheme } from '@emotion/react';
 import Plot from 'react-plotly.js';
-import { useTranslation } from '@contexts';
+
+import { useTheme } from '@emotion/react';
+import { useCurrency } from '@fintech/contexts';
 import {
   useBarGroupGap,
   usePlotlyDefaultConfig,
   useTimestamp,
 } from '@fintech/hooks';
-import { useCurrency } from '@fintech/contexts';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
 import { useBotInfo } from '@fintech/pages/BotPage/hooks';
 import { isShortPeriod } from '@fintech/utils';
+
+import { useTranslation } from '@contexts';
+
+import { COMMON_ANNOTATION } from '../WeightedAveragePrice/constants';
+
 import { SHORT_DATE_FORMAT, SHORT_TIME_FORMAT } from './constants';
 import { useChartInfo } from './hooks';
 import { DoublePriceChartProps } from './types';
-import { COMMON_ANNOTATION } from '../WeightedAveragePrice/constants';
+
 import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
 
 export const DoublePriceChart = ({

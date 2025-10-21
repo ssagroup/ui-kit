@@ -1,7 +1,9 @@
-import { screen } from '../../../customTest';
+import React from 'react';
+
 import Badge from '@components/Badge';
 import theme from '@themes/main';
-import React from 'react';
+
+import { screen } from '../../../customTest';
 
 describe('Badge', () => {
   it('Render purple if no color set', () => {

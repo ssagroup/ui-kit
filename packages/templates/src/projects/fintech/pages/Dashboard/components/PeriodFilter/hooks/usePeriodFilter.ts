@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { ButtonGroupItem } from '@ssa-ui-kit/core';
+
 import { PERIOD_CUSTOM } from '@fintech/constants';
 import { PeriodRange, RequestPeriod, StatisticsPeriod } from '@fintech/types';
+
+import { ButtonGroupItem } from '@ssa-ui-kit/core';
+
 import { PeriodFilterItem } from '../types';
 
 export const usePeriodFilter = (

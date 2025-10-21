@@ -1,5 +1,7 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
 import { dateFormatters, throttle } from '@ssa-ui-kit/utils';
+
 import { UseChartConfig } from './types';
 
 const { formatTime, formatDayOfWeek, formatDate } = dateFormatters;

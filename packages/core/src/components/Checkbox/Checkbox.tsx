@@ -1,8 +1,10 @@
-import { useState, useId, useEffect, useRef } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+
 import { useTheme } from '@emotion/react';
-import { CheckboxBase } from './CheckboxBase';
+
 import Icon from '@components/Icon';
 
+import { CheckboxBase } from './CheckboxBase';
 import { CheckboxProps } from './types';
 
 const Checkbox = ({

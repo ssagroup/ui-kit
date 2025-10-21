@@ -1,4 +1,5 @@
 import { test } from '@playwright/test';
+
 import { SCREEN_SIZES } from '../../consts';
 
 const WIDGETS_CUSTOM_SHOTS_PATH = './custom-shots/';

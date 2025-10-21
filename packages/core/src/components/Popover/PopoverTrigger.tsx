@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { useMergeRefs } from '@floating-ui/react';
+
 import Button from '@components/Button';
 import { ButtonProps } from '@components/Button/types';
+
 import { usePopoverContext } from './hooks/usePopoverContext';
 import { PopoverTriggerProps } from './types';
 

@@ -1,5 +1,7 @@
 import { useTheme } from '@emotion/react';
+
 import { Icon } from '@ssa-ui-kit/core';
+
 import { GrowthIndexIconProps } from './types';
 
 export const GrowthIndexIcon = ({

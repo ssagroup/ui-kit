@@ -3,8 +3,9 @@ import userEvent from '@testing-library/user-event';
 
 import DropdownOption from '@components/DropdownOption';
 
-import MultipleDropdown from '.';
 import { DynamicallyChangedItems } from './stories/MultipleDropdown.stories';
+
+import MultipleDropdown from '.';
 
 interface Item {
   value: number;

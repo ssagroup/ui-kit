@@ -1,4 +1,4 @@
-export * from './useDashboardIndicators';
 export * from './useDashboardCharts';
-export * from './useDashboardGraphs';
 export * from './useDashboardEvents';
+export * from './useDashboardGraphs';
+export * from './useDashboardIndicators';

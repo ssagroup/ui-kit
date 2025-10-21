@@ -1,24 +1,26 @@
 import { useCallback, useState } from 'react';
 import Plot from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
-import { usePlotlyDefaultConfig, useTimestamp } from '@fintech/hooks';
-import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
-import { isShortPeriod } from '@fintech/utils';
 import {
   PlotlyGraphWrapper,
   PlotTooltip,
   WithWidgetLoader,
 } from '@fintech/components';
-import { usePlotTooltip } from '@fintech/components/PlotTooltip/hooks';
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '@fintech/components/DoublePriceChart/constants';
+import { usePlotTooltip } from '@fintech/components/PlotTooltip/hooks';
+import { usePlotlyDefaultConfig, useTimestamp } from '@fintech/hooks';
+import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+import { isShortPeriod } from '@fintech/utils';
+
 import { RebalanceTooltipContent } from './components';
-import { RebalanceProps } from './types';
-import { useChartInfo } from './hooks';
-import { getRebalancingInfo } from './helpers';
 import { RebalanceTooltipContentProps } from './components/RebalanceTooltipContent/types';
+import { getRebalancingInfo } from './helpers';
+import { useChartInfo } from './hooks';
+import { RebalanceProps } from './types';
 
 export const Rebalance = ({
   data,

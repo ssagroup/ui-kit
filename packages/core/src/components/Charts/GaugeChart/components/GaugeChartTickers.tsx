@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+
 import { normalizeToRange } from '../utils';
 
 export interface GaugeChartTickersProps {

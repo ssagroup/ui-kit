@@ -1,4 +1,4 @@
-import { css, Theme, SerializedStyles } from '@emotion/react';
+import { css, SerializedStyles, Theme } from '@emotion/react';
 
 type OutlineFn = (
   theme: Theme,

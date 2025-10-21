@@ -1,2 +1,2 @@
-export { UserProfile } from './UserProfile';
 export * from './types';
+export { UserProfile } from './UserProfile';

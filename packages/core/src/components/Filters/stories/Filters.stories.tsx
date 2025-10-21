@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { StoryComponent } from './StoryComponent';
-import { Filters } from '..';
+
 import { mockDataEnabled } from './mockData';
+import { StoryComponent } from './StoryComponent';
+
+import { Filters } from '..';
 
 type FiltersType = typeof Filters;
 

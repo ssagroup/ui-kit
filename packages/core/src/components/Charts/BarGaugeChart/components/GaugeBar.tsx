@@ -1,7 +1,11 @@
 import { useTheme } from '@emotion/react';
+
 import { useElementSize } from '@ssa-ui-kit/hooks';
+
 import Wrapper from '@components/Wrapper';
+
 import { GaugeBarProps } from '../types';
+
 import { Brick } from './';
 
 export const GaugeBar = ({

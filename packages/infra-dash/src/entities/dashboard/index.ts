@@ -1,8 +1,8 @@
 import {
-  useQuery,
-  useMutation,
-  QueryOptions,
   MutationOptions,
+  QueryOptions,
+  useMutation,
+  useQuery,
 } from '@shared/query';
 import {
   CreateDashboardPayload,

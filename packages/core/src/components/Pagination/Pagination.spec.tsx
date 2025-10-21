@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+
 import { screen, within } from '../../../customTest';
 
 import { Pagination, PaginationContextProvider } from './index';

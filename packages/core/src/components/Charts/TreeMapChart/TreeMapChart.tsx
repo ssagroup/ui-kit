@@ -1,8 +1,8 @@
-import { ResponsiveTreeMap } from '@nivo/treemap';
 import { useTheme } from '@emotion/react';
+import { ResponsiveTreeMap } from '@nivo/treemap';
 
-import { WithWidgetCard, WidgetCardProps } from '@components/WidgetCard';
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
+import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
 
 import { TreeMapChartHeader } from './TreeMapChartHeader';
 import { TreeMapChartTooltip } from './TreeMapChartTooltip';

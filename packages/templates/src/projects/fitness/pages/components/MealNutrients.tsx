@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { MealNutrientsProps, MealNutrients } from '@ssa-ui-kit/widgets';
-import { useApi } from '@ssa-ui-kit/hooks';
+import { useEffect, useState } from 'react';
 
 import API from '@fitness/apis/index';
+
+import { useApi } from '@ssa-ui-kit/hooks';
+import { MealNutrients, MealNutrientsProps } from '@ssa-ui-kit/widgets';
 
 const MealNutrientsWithData = () => {
   const [options, setOptions] = useState<MealNutrientsProps['options']>([]);

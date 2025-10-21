@@ -1,11 +1,15 @@
 import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useWatch } from 'react-hook-form';
+
 import { useDebouncedCallback } from '@ssa-ui-kit/hooks';
+
 import Icon from '@components/Icon';
-import { SearchBoxWrapper } from './SearchBoxWrapper';
+
 import { SearchBoxInput } from './SearchBoxInput';
-import { SearchBoxCrossIcon } from '.';
+import { SearchBoxWrapper } from './SearchBoxWrapper';
 import { SearchBoxProps } from './types';
+
+import { SearchBoxCrossIcon } from '.';
 
 export const SearchBox = ({
   name,

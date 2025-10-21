@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
-import { AccountCard } from './styles';
+
 import Card from '@components/Card';
+
+import { AccountCard } from './styles';
+
 import { AddNewAccountCardProps } from '.';
 
 export const AddNewAccountCard = ({

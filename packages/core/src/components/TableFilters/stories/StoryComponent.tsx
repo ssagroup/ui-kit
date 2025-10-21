@@ -1,8 +1,11 @@
 import { useRef } from 'react';
-import Wrapper from '@components/Wrapper';
+
 import { FiltersContextProvider } from '@components/Filters/FiltersContext';
-import { mockData } from './mockData';
+import Wrapper from '@components/Wrapper';
+
 import { useTableData } from '../hooks/useTableData';
+
+import { mockData } from './mockData';
 import { TableFiltersWrapper } from './TableFiltersWrapper';
 
 export const StoryComponent = () => {

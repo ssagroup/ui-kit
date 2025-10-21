@@ -1,4 +1,5 @@
 import { CommonProps } from '@global-types/emotion';
+
 import CardContentBase from './CardContentBase';
 
 export interface CardProps extends CommonProps {

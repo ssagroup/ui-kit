@@ -1,6 +1,5 @@
 import { DataFrameType, FieldType, ThresholdsMode } from '@grafana/data';
 import { FieldColorModeId } from '@grafana/schema';
-
 import { Dashboard } from '@shared/dashboard';
 import { GrafanaPanelData } from '@shared/grafana';
 import { RestInfraDashTransport } from '@shared/transport';

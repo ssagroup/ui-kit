@@ -1,5 +1,5 @@
 import { DrawerProvider } from './DrawerProvider';
-import { useDrawer, UseDrawerStore, UseDrawerOptions } from './useDrawer';
+import { useDrawer, UseDrawerOptions, UseDrawerStore } from './useDrawer';
 
 export interface DrawerProps extends UseDrawerOptions {
   children?: React.ReactElement;

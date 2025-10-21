@@ -1,8 +1,7 @@
 import type { Meta } from '@storybook/react-webpack5';
 
-import { mealActivityData as data } from './mockActivityRequest';
-
 import { Activity } from './Activity';
+import { mealActivityData as data } from './mockActivityRequest';
 
 export default {
   title: 'Fitness/Activity',

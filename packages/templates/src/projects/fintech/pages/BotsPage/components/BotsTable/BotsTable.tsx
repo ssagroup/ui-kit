@@ -1,8 +1,10 @@
-import { Wrapper, Table } from '@ssa-ui-kit/core';
 import { TableLoader } from '@fintech/components';
-import { BotsTableProps } from './types';
+
+import { Table, Wrapper } from '@ssa-ui-kit/core';
+
 import { Body, Header } from './components';
-import { COLUMNS, COLUMN_API_NAMES } from './consts';
+import { COLUMN_API_NAMES, COLUMNS } from './consts';
+import { BotsTableProps } from './types';
 
 export const BotsTable = ({
   response,

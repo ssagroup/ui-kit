@@ -1,7 +1,10 @@
 import { HTMLAttributes } from 'react';
+
 import Icon from '@components/Icon';
-import { NestedTableCell } from './NestedTableCell';
+
 import { useNestedTableContext, useNestedTableRowContext } from '../hooks';
+
+import { NestedTableCell } from './NestedTableCell';
 
 export const NestedTableCellSubHeader = ({
   isHeader,

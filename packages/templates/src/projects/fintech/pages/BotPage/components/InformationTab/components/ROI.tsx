@@ -1,8 +1,12 @@
 import { useTheme } from '@emotion/react';
-import { CardBase, CardContent, Typography, Icon } from '@ssa-ui-kit/core';
-import type { TradingScoreboardProps } from '@ssa-ui-kit/widgets';
-import { propOr } from '@ssa-ui-kit/utils';
 import { Bot } from '@fintech/types';
+
+import { CardBase, CardContent, Icon, Typography } from '@ssa-ui-kit/core';
+
+import { propOr } from '@ssa-ui-kit/utils';
+
+import type { TradingScoreboardProps } from '@ssa-ui-kit/widgets';
+
 import * as S from '../styles';
 
 export const ROI = ({

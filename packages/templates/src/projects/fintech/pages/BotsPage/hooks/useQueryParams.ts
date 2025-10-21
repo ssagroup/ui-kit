@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { usePaginationContext } from '@ssa-ui-kit/core';
+
 import { SORT_ORDER_ASC, SORT_ORDER_DESC, useTable } from '@fintech/contexts';
-import { SearchType } from '../types';
+
+import { usePaginationContext } from '@ssa-ui-kit/core';
+
 import { DEFAULT_SORT } from '../components/BotsTable/consts';
+import { SearchType } from '../types';
+
 import { UseQueryParams } from '.';
 
 const getNonNullableParams = (params: SearchType) => {

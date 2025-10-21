@@ -1,6 +1,8 @@
 import React from 'react';
-import { Theme, css } from '@emotion/react';
+
+import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
+
 import { CommonProps } from '@global-types/emotion';
 
 interface DropdownItemProps extends CommonProps {

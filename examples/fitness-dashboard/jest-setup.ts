@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
+
 import { createSerializer, matchers } from '@emotion/jest';
 
 import { mainTheme } from '@ssa-ui-kit/core';
+
 import { initRender } from './customTest';
 
 const customRender = initRender(mainTheme);

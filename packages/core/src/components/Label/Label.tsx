@@ -1,5 +1,5 @@
-import { LabelProps } from './types';
 import { LabelBase } from './LabelBase';
+import { LabelProps } from './types';
 
 const Label = ({
   children,

@@ -1,10 +1,13 @@
 import { createContext, useContext } from 'react';
+
 import { Color } from '@rc-component/color-picker';
+
 import { useClipboard, useUncontrolled } from '@ssa-ui-kit/hooks';
+
 import {
   ColorFormat,
-  ColorPickerProviderOutputProps,
   ColorPickerProviderInputProps,
+  ColorPickerProviderOutputProps,
 } from './types';
 import { colorFormatter } from './utils';
 

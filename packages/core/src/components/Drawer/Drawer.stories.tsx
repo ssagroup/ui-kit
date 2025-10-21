@@ -1,13 +1,13 @@
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
 
-import { Drawer } from '@components/Drawer';
 import Button from '@components/Button';
-import Wrapper from '@components/Wrapper';
+import { Drawer } from '@components/Drawer';
 import {
   FiltersMultiSelect,
   FiltersMultiSelectOptions,
   useFilterMultiSelect,
 } from '@components/FiltersMultiSelect';
+import Wrapper from '@components/Wrapper';
 
 import { useDrawer } from './useDrawer';
 

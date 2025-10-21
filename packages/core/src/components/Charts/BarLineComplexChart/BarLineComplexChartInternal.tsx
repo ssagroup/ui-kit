@@ -1,11 +1,14 @@
 import { Fragment } from 'react';
 import { createPortal } from 'react-dom';
+
 import { useFullscreenMode } from '@components/FullscreenModeContext';
-import { BarLineComplexInternalProps } from './types';
-import { useChartInfo } from './useChartInfo';
+
+import { ChartBackground } from '../common';
+
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import { BarLineComplexChartView } from './BarLineComplexChartView';
-import { ChartBackground } from '../common';
+import { BarLineComplexInternalProps } from './types';
+import { useChartInfo } from './useChartInfo';
 
 export const BarLineComplexChartInternal = ({
   width = '670px',

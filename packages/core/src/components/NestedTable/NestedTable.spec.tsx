@@ -1,7 +1,10 @@
 import { act } from 'react';
+
 import { fireEvent } from 'storybook/test';
-import { NestedTableStory } from './stories/NestedTableStory';
+
 import { screen } from '../../../customTest';
+
+import { NestedTableStory } from './stories/NestedTableStory';
 
 describe('NestedTable', () => {
   it('Render NestedTable', () => {

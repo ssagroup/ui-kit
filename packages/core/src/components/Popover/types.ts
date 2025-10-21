@@ -1,8 +1,8 @@
 import {
   Placement,
-  useInteractions,
-  UseFloatingReturn,
   UseFloatingOptions,
+  UseFloatingReturn,
+  useInteractions,
 } from '@floating-ui/react';
 
 export type InteractionsEnabled = 'click' | 'hover' | 'both';

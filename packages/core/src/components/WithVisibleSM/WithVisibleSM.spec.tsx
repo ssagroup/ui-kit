@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
 import { ThemeProvider } from '@emotion/react';
-import { WithVisibleSM } from '.';
+import { render, screen } from '@testing-library/react';
+
 import { mainTheme } from '../..';
+
+import { WithVisibleSM } from '.';
 
 const TestComponent = () => {
   return <p>Test</p>;

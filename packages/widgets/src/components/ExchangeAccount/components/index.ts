@@ -1,6 +1,6 @@
-export { ExchangeAccountProvider } from './ExchangeAccountProvider';
+export { ExchangeAccountContent } from './ExchangeAccountContent';
 export { ExchangeAccountHeader } from './ExchangeAccountHeader';
 export { ExchangeAccountPlatform } from './ExchangeAccountPlatform';
-export { ExchangeAccountTitle } from './ExchangeAccountTitle';
+export { ExchangeAccountProvider } from './ExchangeAccountProvider';
 export { ExchangeAccountStatus } from './ExchangeAccountStatus';
-export { ExchangeAccountContent } from './ExchangeAccountContent';
+export { ExchangeAccountTitle } from './ExchangeAccountTitle';

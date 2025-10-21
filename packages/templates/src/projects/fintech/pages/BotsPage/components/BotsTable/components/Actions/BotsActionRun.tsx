@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
-import { useForm, FieldValues } from 'react-hook-form';
-import { Liquidation, Trade } from '@icons';
+import { FieldValues, useForm } from 'react-hook-form';
+
 import { ActionRun } from '@fintech/components';
+import { Liquidation, Trade } from '@icons';
+
 import { ActionsProps } from './types';
 
 export const BotsActionRun = ({

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import CardContent from '@components/CardContent';
 
 export const Content = styled(CardContent)<{ isFullscreenMode?: boolean }>`

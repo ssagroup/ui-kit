@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import { TableCell } from '@ssa-ui-kit/core';
+
 import { useTableRow } from '@fintech/contexts';
+
+import { TableCell } from '@ssa-ui-kit/core';
 
 interface TableCellWithLinkProps
   extends React.PropsWithChildren<Parameters<typeof TableCell>[0]> {

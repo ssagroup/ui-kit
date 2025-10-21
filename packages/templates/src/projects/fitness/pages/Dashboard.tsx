@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
-import { css, Theme } from '@emotion/react';
 
-import { Typography, ResponsiveImage, ProgressInfo } from '@ssa-ui-kit/core';
+import { css, Theme } from '@emotion/react';
+import API from '@fitness/apis/index';
+import { useAuth } from '@fitness/hooks/useAuth';
+
+import { ProgressInfo, ResponsiveImage, Typography } from '@ssa-ui-kit/core';
+
 import { useApi } from '@ssa-ui-kit/hooks';
 import {
-  HeartRate,
   Activity,
   Calories,
+  HeartRate,
   MealPlanner,
   StepsCounter,
   WaterConsume,
 } from '@ssa-ui-kit/widgets';
-import API from '@fitness/apis/index';
-import { useAuth } from '@fitness/hooks/useAuth';
+
 import { default as MealNutrients } from './components/MealNutrients';
 import DefaultTemplate from './Template/Default';
 

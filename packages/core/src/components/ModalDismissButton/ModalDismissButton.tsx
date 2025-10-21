@@ -1,4 +1,4 @@
-import { useContext, cloneElement } from 'react';
+import { cloneElement, useContext } from 'react';
 
 import { callAll } from '@ssa-ui-kit/utils';
 

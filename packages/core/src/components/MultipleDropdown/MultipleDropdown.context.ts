@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { DropdownContextType } from './types';
 import { DropdownOptionType } from '@components/MultipleDropdownOptions';
+
+import { DropdownContextType } from './types';
 
 const MultipleDropdownContext = React.createContext<
   DropdownContextType<DropdownOptionType>

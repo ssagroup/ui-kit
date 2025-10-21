@@ -1,4 +1,5 @@
-import { ResponsiveLine, LineSvgProps, LineProps } from '@nivo/line';
+import { LineProps, LineSvgProps, ResponsiveLine } from '@nivo/line';
+
 import { SimpleChartTooltip } from '@ssa-ui-kit/core';
 
 import { getTime } from './utils';

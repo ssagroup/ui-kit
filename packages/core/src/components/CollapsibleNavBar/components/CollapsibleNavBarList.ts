@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+
 import NavBarList from '@components/NavBar/NavBarList';
+
 import { CollapsibleNavBarExtendedProps } from '../types';
 
 export const CollapsibleNavBarList = styled(NavBarList)<{

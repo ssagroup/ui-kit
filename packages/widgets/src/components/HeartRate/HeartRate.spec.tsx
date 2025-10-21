@@ -1,9 +1,8 @@
-import userEvent from '@testing-library/user-event';
 import { waitFor } from '@testing-library/react';
-
-import { heartRateData as data } from './mockHeartRateRequest';
+import userEvent from '@testing-library/user-event';
 
 import { HeartRate } from './index';
+import { heartRateData as data } from './mockHeartRateRequest';
 
 /**
  * The Line charts have trouble rendering in the test suite (some issues with

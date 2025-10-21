@@ -1,12 +1,18 @@
 import { useState } from 'react';
+
 import { css } from '@emotion/css';
-import { ButtonGroupItem, Table } from '@ssa-ui-kit/core';
-import { pathOr, propOr } from '@ssa-ui-kit/utils';
-import { DashboardEvents } from '@/hr/types';
 import * as hooks from '@hr/hooks';
-import { EventInfoRow, EventInfoTitle } from './components';
-import { WithWidgetLoader } from '../WithWidgetLoader';
+
+import { ButtonGroupItem, Table } from '@ssa-ui-kit/core';
+
+import { pathOr, propOr } from '@ssa-ui-kit/utils';
+
+import { DashboardEvents } from '@/hr/types';
+
 import { Card } from '../WidgetCard';
+import { WithWidgetLoader } from '../WithWidgetLoader';
+
+import { EventInfoRow, EventInfoTitle } from './components';
 import { Period } from './types';
 
 export const Events = ({

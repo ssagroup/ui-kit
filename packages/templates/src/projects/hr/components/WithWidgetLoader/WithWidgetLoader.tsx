@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import { useTranslation } from '@ssa-ui-kit/core';
+
 import { Card, NoDataYet } from '..';
 
 export const WithWidgetLoader = ({

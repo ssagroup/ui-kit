@@ -1,6 +1,7 @@
 import { useTabBarContext } from '@components/TabBar';
-import { TabColorPicker } from './TabColorPicker';
+
 import { TabColorPalette } from './TabColorPalette';
+import { TabColorPicker } from './TabColorPicker';
 
 export const TabContent = () => {
   const { activeTab } = useTabBarContext();

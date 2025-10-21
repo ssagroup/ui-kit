@@ -1,4 +1,5 @@
 import Table from '@components/Table/Table';
+
 import { StyledTableProps } from '../types';
 
 export const TableList = ({ children, ...rest }: StyledTableProps) => (

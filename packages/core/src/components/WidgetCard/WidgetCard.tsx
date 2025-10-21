@@ -1,8 +1,9 @@
 import { useFullscreenMode, WithLink } from '@components';
-import { WidgetCardBase } from './WidgetCardBase';
-import { Header } from './Header';
+
 import { Content } from './Content';
+import { Header } from './Header';
 import { WidgetCardProps } from './types';
+import { WidgetCardBase } from './WidgetCardBase';
 
 export const WidgetCard = ({
   title,

@@ -1,5 +1,6 @@
-import { createContext, useState, useContext } from 'react';
-import { TabProps, TabBarContextProps } from './types';
+import { createContext, useContext, useState } from 'react';
+
+import { TabBarContextProps, TabProps } from './types';
 
 const defaultTab: TabProps = {
   tabId: Number.NaN,

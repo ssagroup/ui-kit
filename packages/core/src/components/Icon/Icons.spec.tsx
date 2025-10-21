@@ -1,8 +1,11 @@
 import { css, SerializedStyles } from '@emotion/react';
+
 import Icon from '@components/Icon';
 import { iconsList } from '@components/Icon';
-import { MapIconsType } from './types';
+
 import { screen } from '../../../customTest';
+
+import { MapIconsType } from './types';
 
 const renderIcon = async (
   icon: keyof MapIconsType,

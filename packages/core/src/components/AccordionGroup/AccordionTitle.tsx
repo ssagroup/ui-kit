@@ -1,9 +1,12 @@
 import { Fragment } from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import CardHeaderBase from '@components/CardHeader/CardHeaderBase';
 import Icon from '@components/Icon';
-import { AccordionProps } from './types';
+
 import { createTitleStyles } from './styles';
+import { AccordionProps } from './types';
 
 const CardHeaderBaseButton = CardHeaderBase.withComponent('button');
 

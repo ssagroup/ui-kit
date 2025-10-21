@@ -1,7 +1,10 @@
 import { useTheme } from '@emotion/react';
+
 import { Typography } from '@ssa-ui-kit/core';
-import { WidgetInfoLabelProps } from './types';
+
 import { GrowthIndexIcon } from '../GrowthIndexIcon';
+
+import { WidgetInfoLabelProps } from './types';
 import { WidgetInfoLabelBase } from './WidgetInfoLabelBase';
 
 export const WidgetInfoLabel = ({

@@ -1,7 +1,8 @@
 import { css, useTheme } from '@emotion/react';
-import { PopoverTrigger } from '@components/Popover';
-import Icon from '@components/Icon';
 import { Theme } from '@emotion/react';
+
+import Icon from '@components/Icon';
+import { PopoverTrigger } from '@components/Popover';
 
 export const filterButtonStyles = (count?: number) => (theme: Theme) => css`
   height: 40px;

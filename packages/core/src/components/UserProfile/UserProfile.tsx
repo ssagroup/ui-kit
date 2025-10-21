@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import {
@@ -8,14 +9,15 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@components/Popover';
-import { UserProfileProps } from './types';
+
 import {
-  UserInfo,
   ContentWrapper,
+  CustomButton,
   LogoutWrapper,
   ResetBtnStyles,
-  CustomButton,
+  UserInfo,
 } from './styles';
+import { UserProfileProps } from './types';
 
 export const UserProfile = ({
   name,

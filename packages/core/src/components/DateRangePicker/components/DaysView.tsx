@@ -1,12 +1,16 @@
 import React, { MouseEventHandler } from 'react';
+
 import { DateTime } from 'luxon';
+
 import Wrapper from '@components/Wrapper';
-import { DatesListWrapper } from './DatesListWrapper';
-import * as S from '../styles';
-import { getDaysForCalendarMonth, getWeekDays } from '../utils';
-import { useDateRangePickerContext } from '../useDateRangePickerContext';
-import { DateTimeTuple } from '../types';
+
 import { useRangeHighlighting } from '../hooks';
+import * as S from '../styles';
+import { DateTimeTuple } from '../types';
+import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { getDaysForCalendarMonth, getWeekDays } from '../utils';
+
+import { DatesListWrapper } from './DatesListWrapper';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();

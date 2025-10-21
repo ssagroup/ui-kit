@@ -1,14 +1,14 @@
 import {
   FormContextType,
+  IconButtonProps,
   RJSFSchema,
   StrictRJSFSchema,
-  IconButtonProps,
   TranslatableString,
 } from '@rjsf/utils';
 
 import Button from '@components/Button';
-import Icon from '@components/Icon';
 import { ButtonProps } from '@components/Button/types';
+import Icon from '@components/Icon';
 
 export const IconButton = <
   T = unknown,

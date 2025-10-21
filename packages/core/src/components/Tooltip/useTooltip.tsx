@@ -1,18 +1,20 @@
-import { useState, useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
+
 import {
-  useFloating,
-  offset,
-  flip,
-  shift,
   arrow,
   autoUpdate,
-  useHover,
+  flip,
+  offset,
+  shift,
   useClick,
-  useDismiss,
-  useRole,
   useClientPoint,
+  useDismiss,
+  useFloating,
+  useHover,
   useInteractions,
+  useRole,
 } from '@floating-ui/react';
+
 import { UseTooltip } from './types';
 
 export const useTooltip: UseTooltip = (props) => {

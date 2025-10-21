@@ -2,6 +2,7 @@ import { Typography } from '@ssa-ui-kit/core';
 
 import * as S from '../styles';
 import { ExchangeAccountProps } from '../types';
+
 import { useExchangeAccountContext } from './ExchangeAccountProvider';
 
 export interface ExchangeAccountStatusProps {

@@ -1,4 +1,5 @@
 import { assocPath, pathOr } from '@ssa-ui-kit/utils';
+
 import { TableFilterConfig } from '../types';
 
 export const getSubmitData = (checkboxData: TableFilterConfig) => {

@@ -1,9 +1,14 @@
-import { useTranslation } from '@ssa-ui-kit/core';
 import { css } from '@emotion/css';
-import { pathOr } from '@ssa-ui-kit/utils';
-import { DashboardIndicators } from '@/hr/types';
 import { useDashboardIndicators } from '@hr/hooks/dashboard';
+
+import { useTranslation } from '@ssa-ui-kit/core';
+
+import { pathOr } from '@ssa-ui-kit/utils';
+
+import { DashboardIndicators } from '@/hr/types';
+
 import { Distribution, DistributionContentSingle } from '../Distribution';
+
 import { WithWidgetLoader } from '..';
 
 export const EmploymentType = ({

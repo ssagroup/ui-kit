@@ -1,5 +1,6 @@
-import { CommonProps } from '@global-types/emotion';
 import { InputProps } from '@components/Input/types';
+import { CommonProps } from '@global-types/emotion';
+
 import { RowsPerPageDropdownProps } from './components/RowsPerPageDropdown/types';
 
 export interface PaginationProps extends CommonProps {

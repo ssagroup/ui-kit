@@ -1,8 +1,9 @@
-import userEvent from '@testing-library/user-event';
 import styled from '@emotion/styled';
-import { screen } from '../../../customTest';
+import userEvent from '@testing-library/user-event';
 
 import Label from '@components/Label';
+
+import { screen } from '../../../customTest';
 
 describe('Label', () => {
   it('Render input with label and helper text', () => {

@@ -1,5 +1,7 @@
-import { propOr } from '@ssa-ui-kit/utils';
 import { useEnumsResponse } from '@fintech/hooks';
+
+import { propOr } from '@ssa-ui-kit/utils';
+
 import { EnumsApiListResponse } from '@/fintech/types';
 
 export const useBotsPageEnums = () => {

@@ -1,4 +1,4 @@
-import { simpleGit, ResetMode } from 'simple-git';
+import { ResetMode, simpleGit } from 'simple-git';
 import { chalk } from 'zx';
 
 const git = simpleGit();

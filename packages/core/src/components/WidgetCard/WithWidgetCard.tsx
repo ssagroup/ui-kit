@@ -1,6 +1,7 @@
 import React from 'react';
-import { WidgetCard } from './WidgetCard';
+
 import { WidgetCardProps } from './types';
+import { WidgetCard } from './WidgetCard';
 
 // `Has<T, U>` = `true` if every string in `U` also appears in `T`.
 type Has<T extends string, U extends string> =

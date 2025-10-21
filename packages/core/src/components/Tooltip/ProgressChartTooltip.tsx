@@ -1,5 +1,5 @@
-import ProgressBar from '@components/ProgressBar';
 import Icon from '@components/Icon';
+import ProgressBar from '@components/ProgressBar';
 import Typography from '@components/Typography';
 
 import { TooltipContentBase } from './TooltipContentBase';

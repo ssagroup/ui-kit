@@ -1,8 +1,8 @@
-import { useContext, cloneElement } from 'react';
-
-import { ModalContext } from '@components/Modal';
+import { cloneElement, useContext } from 'react';
 
 import { callAll } from '@ssa-ui-kit/utils';
+
+import { ModalContext } from '@components/Modal';
 
 function ModalOpenButton({ children: child }: { children: JSX.Element }) {
   const [, setIsOpen] = useContext(ModalContext);

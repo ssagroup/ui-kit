@@ -1,25 +1,30 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import Plot from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
-import { useTranslation } from '@contexts';
-import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
-import { useBotInfo } from '@fintech/pages/BotPage/hooks';
+import { useCurrency } from '@fintech/contexts';
 import {
   useBarGroupGap,
   useDeviceType,
   usePlotlyDefaultConfig,
   useTimestamp,
 } from '@fintech/hooks';
+import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+import { useBotInfo } from '@fintech/pages/BotPage/hooks';
 import { isShortPeriod } from '@fintech/utils';
-import { useCurrency } from '@fintech/contexts';
-import { WeightedAveragePriceProps } from './types';
-import { useChartInfo } from './hooks';
-import { COLORS, GRID_AREA_NAME, COMMON_ANNOTATION } from './constants';
-import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
+
+import { useTranslation } from '@contexts';
+
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '../DoublePriceChart/constants';
+
+import { COLORS, COMMON_ANNOTATION, GRID_AREA_NAME } from './constants';
+import { useChartInfo } from './hooks';
+import { WeightedAveragePriceProps } from './types';
+
+import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
 
 export const WeightedAveragePrice = ({
   data: dataOriginal,

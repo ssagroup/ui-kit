@@ -1,8 +1,10 @@
 import React from 'react';
-import { NoOptions } from './NoOptions';
-import { TypeaheadItemsListProps } from '../types';
-import { useTypeaheadContext } from '../Typeahead.context';
+
 import * as S from '../styles';
+import { useTypeaheadContext } from '../Typeahead.context';
+import { TypeaheadItemsListProps } from '../types';
+
+import { NoOptions } from './NoOptions';
 
 export const TypeaheadOptions = ({
   noItemsMessage = 'No matches found',

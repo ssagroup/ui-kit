@@ -3,8 +3,7 @@ import { useTheme } from '@emotion/react';
 import { LargeTabProps } from '@components/TabBar/types';
 
 import { LargeTabBase } from './LargeTabBase';
-
-import { topTextStyle, bottomTextStyle } from './styles';
+import { bottomTextStyle, topTextStyle } from './styles';
 
 const LargeTab = ({
   topText,

@@ -1,4 +1,5 @@
 import { OptionType } from '@ssa-ui-kit/widgets';
+
 import getFirebase from './initFirebase';
 
 interface RespOption extends OptionType {

@@ -1,4 +1,5 @@
-import { renderHook, act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, renderHook } from '@testing-library/react';
+
 import { useWindowSize } from './useWindowResize';
 
 describe('Hook: useWindowResize', () => {

@@ -1,11 +1,16 @@
 import { useTheme } from '@emotion/react';
-import { Wrapper } from '@ssa-ui-kit/core';
-import { useTranslation } from '@contexts';
 import { useCurrency } from '@fintech/contexts';
-import { TitleBarProps, CurrentFundsProps } from './types';
-import * as S from './styles';
-import { WithWidgetLoader } from '..';
+
+import { Wrapper } from '@ssa-ui-kit/core';
+
+import { useTranslation } from '@contexts';
+
 import { DistributionMultiline } from '../Distribution';
+
+import * as S from './styles';
+import { CurrentFundsProps, TitleBarProps } from './types';
+
+import { WithWidgetLoader } from '..';
 
 export const CurrentFunds = ({
   longFunds = 0,

@@ -1,11 +1,13 @@
-import { Theme } from '@emotion/react';
 import { css } from '@emotion/css';
+import { Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import Wrapper from '@components/Wrapper';
+
 import Button from '@components/Button';
 import { PopoverTrigger } from '@components/Popover';
-import { useTypeahead } from './useTypeahead';
+import Wrapper from '@components/Wrapper';
+
 import { TypeaheadItemProps } from './types';
+import { useTypeahead } from './useTypeahead';
 
 // TODO: automatically calculate max-height
 // https://github.com/ssagroup/ui-kit/issues/385

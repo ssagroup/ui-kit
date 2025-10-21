@@ -1,15 +1,16 @@
+import React from 'react';
+
 import type { Meta } from '@storybook/react-webpack5';
 
 import Icon from '@components/Icon';
 
-import Button from './index';
 import {
   GridWrapper,
   HeaderTitle,
   sizes,
   variants,
 } from './helpers.stories-extra';
-import React from 'react';
+import Button from './index';
 
 export default {
   title: 'Components/Button',

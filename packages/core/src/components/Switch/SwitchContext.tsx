@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback, useContext } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 export interface SwitchContext {
   isOn: boolean;

@@ -15,8 +15,9 @@ HTMLCanvasElement.prototype.getContext = jest.fn();
 
 import { createSerializer, matchers } from '@emotion/jest';
 
-import { initRender } from './customTest';
 import theme from '@themes/main';
+
+import { initRender } from './customTest';
 
 const customRender = initRender(theme);
 

@@ -1,5 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+
 import { ColorsKeys } from '../..';
 
 const generateGradient = (svgOffset: number) => keyframes`

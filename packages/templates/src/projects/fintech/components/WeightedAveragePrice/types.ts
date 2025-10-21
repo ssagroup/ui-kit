@@ -1,4 +1,4 @@
-import { RequestPeriod, GraphStatisticsWeighted } from '@fintech/types';
+import { GraphStatisticsWeighted, RequestPeriod } from '@fintech/types';
 
 export type WeightedAveragePriceProps = {
   id?: string;

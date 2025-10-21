@@ -1,10 +1,11 @@
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
+
 import { useToggle } from '@ssa-ui-kit/hooks';
 
 import Button from '@components/Button';
-import Wrapper from '@components/Wrapper';
-import Input from '@components/Input';
 import { Field } from '@components/Field';
+import Input from '@components/Input';
+import Wrapper from '@components/Wrapper';
 
 const meta = {
   title: 'Components/Field',

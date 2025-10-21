@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Button from '@components/Button';
+
 import { mainTheme } from '../..';
+
 import { NotificationCard } from './NotificationCard';
-import { NotificationCardProps } from './types';
 import { childrenWrapper } from './styles';
+import { NotificationCardProps } from './types';
 
 const notifyValues: Array<Pick<NotificationCardProps, 'type' | 'time'>> = [
   {

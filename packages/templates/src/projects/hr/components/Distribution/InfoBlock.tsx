@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
+
 import { Typography } from '@ssa-ui-kit/core';
+
 import { InfoBlockProps } from './types';
 
 const TopText = styled(Typography)`

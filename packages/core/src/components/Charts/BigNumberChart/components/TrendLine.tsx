@@ -2,12 +2,13 @@ import { useTheme } from '@emotion/react';
 import { DotsItem } from '@nivo/core';
 import {
   CustomLayerProps,
+  Datum,
   Layer,
   LineProps,
   Point,
-  Datum,
   ResponsiveLine,
 } from '@nivo/line';
+
 import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
 
 export interface TrendLineProps extends LineProps {

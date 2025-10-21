@@ -2,16 +2,16 @@ import userEvent from '@testing-library/user-event';
 
 import Icon from '@components/Icon';
 
-import Button from './index';
-import { ButtonProps } from './types';
 import {
+  attentionBtnSpecs,
+  infoBtnSpecs,
   primaryBtnSpecs,
   secondaryBtnSpecs,
   tertiaryBtnSpecs,
-  infoBtnSpecs,
-  attentionBtnSpecs,
   TestPropsType,
 } from './fixtures';
+import Button from './index';
+import { ButtonProps } from './types';
 
 function setup(component: JSX.Element) {
   return {

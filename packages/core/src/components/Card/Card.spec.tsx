@@ -1,9 +1,10 @@
 import { userEvent } from 'storybook/test';
-import { screen } from '../../../customTest';
 
-import Icon from '@components/Icon';
 import CardContent from '@components/CardContent';
 import CardHeader from '@components/CardHeader';
+import Icon from '@components/Icon';
+
+import { screen } from '../../../customTest';
 
 import Card from './index';
 

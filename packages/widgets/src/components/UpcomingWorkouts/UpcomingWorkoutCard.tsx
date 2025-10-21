@@ -1,17 +1,17 @@
-import { useTheme, css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 
 import {
   Avatar,
   Button,
   Card,
   CardContent,
-  Wrapper,
-  Typography,
   Icon,
+  Typography,
+  Wrapper,
 } from '@ssa-ui-kit/core';
 
-import { UpcomingWorkoutCardProps } from './types';
 import { contentWrapper } from './style';
+import { UpcomingWorkoutCardProps } from './types';
 
 /**
  *

@@ -1,6 +1,6 @@
-import { screen, fireEvent, mockUseForm } from '../../../customTest';
-
 import Textarea from '@components/Textarea';
+
+import { fireEvent, mockUseForm, screen } from '../../../customTest';
 
 const { register } = mockUseForm();
 

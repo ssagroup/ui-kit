@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+
 import theme from '@themes/main';
 
 import Switch from './index';

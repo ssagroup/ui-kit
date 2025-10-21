@@ -1,9 +1,13 @@
-import { DateTime } from 'luxon';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
-import userEvent from '@testing-library/user-event';
+
+import { DateTime } from 'luxon';
+
 import { within } from '@testing-library/dom';
-import { DatePicker } from '.';
+import userEvent from '@testing-library/user-event';
+
 import { DatePickerProps } from './types';
+
+import { DatePicker } from '.';
 
 const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
 

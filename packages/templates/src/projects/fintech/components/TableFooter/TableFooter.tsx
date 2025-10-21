@@ -1,10 +1,12 @@
 import { useTheme } from '@emotion/react';
-import { Wrapper } from '@ssa-ui-kit/core';
-import { Pagination } from '@ssa-ui-kit/core';
 import {
   ROWS_PER_PAGE_LIST,
   RowsPerPageDropdown,
 } from '@fintech/components/RowsPerPageDropdown';
+
+import { Wrapper } from '@ssa-ui-kit/core';
+import { Pagination } from '@ssa-ui-kit/core';
+
 import { TableFooterProps } from './types';
 
 export const TableFooter = ({

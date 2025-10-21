@@ -1,9 +1,11 @@
 import { useTheme } from '@emotion/react';
-import { Icon } from '@ssa-ui-kit/core';
-import { useTranslation } from '@contexts';
 import { GrowthIndexIcon } from '@fintech/components';
-import { Statistics } from '@fintech/types';
 import { USDT } from '@fintech/constants';
+import { Statistics } from '@fintech/types';
+
+import { Icon } from '@ssa-ui-kit/core';
+
+import { useTranslation } from '@contexts';
 
 const T_PREFIX = 'pages.dashboard.scoreboard.';
 const STATISTICS_DEFAULTS = {

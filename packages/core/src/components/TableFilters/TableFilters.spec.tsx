@@ -1,10 +1,14 @@
-import { fireEvent } from '@testing-library/dom';
+import { createRef } from 'react';
+
 import { mockIntersectionObserver } from 'jsdom-testing-mocks';
-import { StoryComponent } from './stories/StoryComponent';
-import { TableFilters } from '.';
+
+import { fireEvent } from '@testing-library/dom';
+
 import { UseTableDataResult } from './hooks/useTableData';
 import { mockData } from './stories/mockData';
-import { createRef } from 'react';
+import { StoryComponent } from './stories/StoryComponent';
+
+import { TableFilters } from '.';
 
 const mockTableFiltersProps: UseTableDataResult = {
   checkboxData: mockData,

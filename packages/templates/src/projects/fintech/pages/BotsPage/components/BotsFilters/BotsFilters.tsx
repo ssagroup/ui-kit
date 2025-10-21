@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+
+import { BotPeriodFilter } from '@fintech/components';
+import { usePeriod } from '@fintech/contexts';
+
 import { Wrapper } from '@ssa-ui-kit/core';
 import { Filters, SearchBox } from '@ssa-ui-kit/core';
-import { usePeriod } from '@fintech/contexts';
-import { BotPeriodFilter } from '@fintech/components';
-import { BotsFiltersProps } from './types';
+
 import * as S from './styles';
+import { BotsFiltersProps } from './types';
 
 export const BotsFilters = ({
   handleFiltersSubmit,

@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
+
 import { css } from '@emotion/react';
 
-import { TypographyProps } from './types';
 import * as style from './styles';
+import { TypographyProps } from './types';
 
 const variantsMapping = {
   h1: 'h1',

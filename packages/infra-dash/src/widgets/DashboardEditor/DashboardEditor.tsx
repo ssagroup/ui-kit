@@ -1,44 +1,46 @@
 import { useEffect, useState } from 'react';
-
-import ReactGridLayout from 'react-grid-layout';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Button, Checkbox, Input, useDrawer, Wrapper } from '@ssa-ui-kit/core';
-import { useUncontrolled } from '@ssa-ui-kit/hooks';
+import ReactGridLayout from 'react-grid-layout';
 
-import {
-  DashboardPanelGrid,
-  DashboardPanelGridProps,
-} from '@features/DashboardPanelGrid';
 import {
   useCreateDashboard,
   useDashboard,
   useUpdateDashboard,
 } from '@entities/dashboard';
-import { PeriodSelector } from '@components/PeriodSelector';
-import { DashboardError } from '@components/DashboardError';
-import { LoadingDashboard } from '@components/LoadingDashboard';
-import { GrafanaDashboard, GrafanaPanel } from '@shared/grafana';
-import { Dashboard } from '@shared/dashboard';
-import { DashboardIcon } from '@shared/icons';
-import { Panel, PANEL_DATA_SOURCE } from '@shared/panel';
+import {
+  DashboardPanelGrid,
+  DashboardPanelGridProps,
+} from '@features/DashboardPanelGrid';
 import {
   InfraDashPanelDataPeriodProvider,
   useInfraDashContext,
   useInfraDashPanelDataPeriod,
   UseInfraDashPanelDataPeriodOptions,
 } from '@shared/context';
+import { Dashboard } from '@shared/dashboard';
+import { GrafanaDashboard, GrafanaPanel } from '@shared/grafana';
+import { DashboardIcon } from '@shared/icons';
+import { Panel, PANEL_DATA_SOURCE } from '@shared/panel';
+
+import { Button, Checkbox, Input, useDrawer, Wrapper } from '@ssa-ui-kit/core';
+
+import { useUncontrolled } from '@ssa-ui-kit/hooks';
+
+import { DashboardError } from '@components/DashboardError';
+import { LoadingDashboard } from '@components/LoadingDashboard';
+import { PeriodSelector } from '@components/PeriodSelector';
 
 import { DashboardSelectorDrawer } from './components/DashboardSelectorDrawer';
-import { PanelSettingsDrawer } from './components/PanelSettingsDrawer';
 import { ExternalDashboardsList } from './components/ExternalDashboardsList';
+import { PanelControl } from './components/PanelControl';
+import { PanelSettings } from './components/PanelSettings';
+import { PanelSettingsDrawer } from './components/PanelSettingsDrawer';
 import {
   appendPanel,
   applyNewLayout,
   removePanel,
   updatePanel,
 } from './helpers';
-import { PanelControl } from './components/PanelControl';
-import { PanelSettings } from './components/PanelSettings';
 
 export type DashboardEditorProps = {
   dashboard?: Dashboard;

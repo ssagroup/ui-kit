@@ -1,10 +1,10 @@
-import { useController } from 'react-hook-form';
+import { ChangeEvent } from 'react';
 import type { FieldValues } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 import Checkbox from '@components/Checkbox';
 
 import { FormCheckboxProps } from './types';
-import { ChangeEvent } from 'react';
 
 const FormCheckbox = <T extends FieldValues>({
   control,

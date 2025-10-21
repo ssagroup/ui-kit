@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
-import { Fetcher, QueryEntry, QueryOptions, QueryState } from './query';
-import { hashKey, QueryKey } from './key';
-
 import { useInfraDashContext } from '../context';
+
+import { hashKey, QueryKey } from './key';
+import { Fetcher, QueryEntry, QueryOptions, QueryState } from './query';
 
 export const useQueryClient = () => {
   const { queryClient } = useInfraDashContext();

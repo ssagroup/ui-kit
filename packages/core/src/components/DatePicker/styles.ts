@@ -1,5 +1,6 @@
-import Wrapper from '@components/Wrapper';
 import styled from '@emotion/styled';
+
+import Wrapper from '@components/Wrapper';
 
 export const DaysViewCell = styled(Wrapper)<{
   isCalendarDateNow: boolean;

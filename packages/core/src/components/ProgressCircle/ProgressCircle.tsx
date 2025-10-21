@@ -1,10 +1,12 @@
 import { useId } from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import { ColorsKeys } from '@global-types/emotion';
 
 import { ProgressCircleBase } from './ProgressCircleBase';
-import { ProgressCircleOuter } from './ProgressCircleOuter';
 import { ProgressCircleInner } from './ProgressCircleInner';
+import { ProgressCircleOuter } from './ProgressCircleOuter';
 import { ProgressCircleProps } from './types';
 
 const ProgressCircle = ({

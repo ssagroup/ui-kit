@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+
 import { CardContent, Typography } from '@ssa-ui-kit/core';
 
 import { TradingInfoContent } from './types';

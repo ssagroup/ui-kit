@@ -1,4 +1,4 @@
-import { Theme, css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
 export const tableFilterPopoverContentStyles = (theme: Theme) => css`
   border: 1px solid ${theme.colors.greyDropdownMain};

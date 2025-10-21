@@ -1,6 +1,7 @@
 import * as C from '../..';
-import * as DPC from '.';
 import { useDatePickerContext } from '../useDatePickerContext';
+
+import * as DPC from '.';
 
 export const DatePickerHeader = () => {
   const { calendarType, setCalendarType, calendarViewDateTime, classNames } =

@@ -1,6 +1,6 @@
-import { createSafeContext, useUncontrolled } from '@ssa-ui-kit/hooks';
-
 import { PANEL_DATA_PERIOD, PanelDataPeriod } from '@shared/panel';
+
+import { createSafeContext, useUncontrolled } from '@ssa-ui-kit/hooks';
 
 export interface UseInfraDashPanelDataPeriodOptions {
   defaultPeriod?: PanelDataPeriod;

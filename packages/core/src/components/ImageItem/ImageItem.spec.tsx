@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/dom';
+
 import { ImageItem } from '@components/ImageItem';
 
 const image =

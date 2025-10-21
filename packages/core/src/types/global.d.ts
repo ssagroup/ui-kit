@@ -1,6 +1,6 @@
 /// <reference types="@emotion/react/types/css-prop" />
 
-import { MainSizes as MS, MainColors as MC } from './global';
+import { MainColors as MC, MainSizes as MS } from './global';
 
 declare global {
   export type MainSizes = MS;

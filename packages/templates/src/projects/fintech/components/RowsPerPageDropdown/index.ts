@@ -1,2 +1,2 @@
-export * from './RowsPerPageDropdown';
 export * from './constants';
+export * from './RowsPerPageDropdown';

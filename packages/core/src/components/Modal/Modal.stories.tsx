@@ -1,16 +1,15 @@
 import { useState } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import Button from '@components/Button';
 import Icon from '@components/Icon';
-import mainTheme from '@themes/main';
-
 import Modal from '@components/Modal';
 import ModalContent from '@components/ModalContent';
-import ModalOpenButton from '@components/ModalOpenButton';
 import ModalDismissButton from '@components/ModalDismissButton';
-
+import ModalOpenButton from '@components/ModalOpenButton';
 import Typography from '@components/Typography';
+import mainTheme from '@themes/main';
 
 export default {
   title: 'Components/Modal',

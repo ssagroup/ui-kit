@@ -1,4 +1,4 @@
-import { Theme, css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
 export const getPeriodButtonStyles = (theme: Theme) => css`
   height: 100%;

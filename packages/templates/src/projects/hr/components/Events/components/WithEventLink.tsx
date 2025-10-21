@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+
 import { css, useTheme } from '@emotion/react';
+
 import { WithLink } from '@ssa-ui-kit/core';
 
 export const WithEventLink = ({

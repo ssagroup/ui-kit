@@ -1,29 +1,28 @@
 /* eslint-disable react/display-name */
 import { useEffect } from 'react';
+
 import { css, Theme, useTheme } from '@emotion/react';
 
 import {
-  Typography,
-  ResponsiveImage,
   Avatar,
   Button,
   Icon,
   MapIconsType,
   NavBar,
+  ResponsiveImage,
+  Typography,
 } from '@ssa-ui-kit/core';
 
 import { useApi } from '@ssa-ui-kit/hooks';
-
 import {
-  UpcomingWorkouts,
-  ListGoals,
   Bmi,
+  ListGoals,
+  UpcomingWorkouts,
   UserCard,
 } from '@ssa-ui-kit/widgets';
 
-import { useAuth } from '@hooks/useAuth';
-
 import API from '@apis/index';
+import { useAuth } from '@hooks/useAuth';
 
 import { Layout, Nav, Sidebar } from './layout/NavTwoColumns';
 

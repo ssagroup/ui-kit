@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import { useTranslation } from '@contexts';
+
 import { Card } from '../MaxInWork/Card';
+
 import { NoDataYet } from '..';
 
 export const WithWidgetLoader = ({

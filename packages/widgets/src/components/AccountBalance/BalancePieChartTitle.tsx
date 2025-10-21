@@ -1,4 +1,5 @@
 import { css, useTheme } from '@emotion/react';
+
 import {
   Tooltip,
   TooltipContent,
@@ -6,6 +7,7 @@ import {
   Typography,
   useFullscreenMode,
 } from '@ssa-ui-kit/core';
+
 import { useAccountBalanceContext } from './AccountBalanceContext';
 
 export const BalancePieChartTitle = () => {

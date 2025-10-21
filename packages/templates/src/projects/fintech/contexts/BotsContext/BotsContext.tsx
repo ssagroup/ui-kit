@@ -1,7 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
+
 import { useBotMutationCompleted } from '@fintech/hooks';
-import { BotsContextContent, ReloadReason } from './types';
+
 import { BOTS_STOPPED } from './constants';
+import { BotsContextContent, ReloadReason } from './types';
 
 export const BotsContext = createContext<BotsContextContent>({
   status: BOTS_STOPPED,

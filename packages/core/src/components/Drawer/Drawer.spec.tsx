@@ -1,10 +1,10 @@
-import userEvent from '@testing-library/user-event';
 import { waitFor } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 
 import { screen } from '../../../customTest';
 
 import * as Drawer from './index.parts';
-import { useDrawer, Position } from './useDrawer';
+import { Position, useDrawer } from './useDrawer';
 
 describe('useDrawer', () => {
   const DrawerTestComponent = ({

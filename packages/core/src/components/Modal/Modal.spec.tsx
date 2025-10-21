@@ -1,11 +1,10 @@
-import { fireEvent, screen } from '../../../customTest';
-
+import Button from '@components/Button';
 import Modal from '@components/Modal';
 import ModalContent from '@components/ModalContent';
-import ModalOpenButton from '@components/ModalOpenButton';
 import ModalDismissButton from '@components/ModalDismissButton';
+import ModalOpenButton from '@components/ModalOpenButton';
 
-import Button from '@components/Button';
+import { fireEvent, screen } from '../../../customTest';
 
 describe('Modal', () => {
   describe('rendering', () => {

@@ -1,4 +1,5 @@
 import { ProgressChartTooltip } from '@ssa-ui-kit/core';
+
 import type { MapIconsType } from '@ssa-ui-kit/core';
 
 import { MealNutrientsTooltipProps } from './types';

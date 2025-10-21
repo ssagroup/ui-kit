@@ -1,6 +1,9 @@
 import { useTranslation } from '@contexts';
+
 import { Distribution } from '../Distribution';
+
 import { PositionsProps } from './types';
+
 import { WithWidgetLoader } from '..';
 
 export const Positions = ({

@@ -1,25 +1,28 @@
 import { useCallback, useState } from 'react';
 import Plot from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
-import { useTranslation } from '@contexts';
-import { usePlotlyDefaultConfig, useTimestamp } from '@fintech/hooks';
-import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
-import { isShortPeriod } from '@fintech/utils';
 import {
   PlotlyGraphWrapper,
   PlotTooltip,
   WithWidgetLoader,
 } from '@fintech/components';
-import { usePlotTooltip } from '@fintech/components/PlotTooltip/hooks';
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '@fintech/components/DoublePriceChart/constants';
+import { usePlotTooltip } from '@fintech/components/PlotTooltip/hooks';
+import { usePlotlyDefaultConfig, useTimestamp } from '@fintech/hooks';
+import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+import { isShortPeriod } from '@fintech/utils';
+
+import { useTranslation } from '@contexts';
+
+import { KeeperRunsTooltipContent } from './components';
 import { KeeperRunsTooltipContentProps } from './components/KeeperRunsTooltipContent/types';
 import { getKeeperRunsInfo } from './helpers';
-import { KeeperRunsProps } from './types';
 import { useChartInfo } from './hooks';
-import { KeeperRunsTooltipContent } from './components';
+import { KeeperRunsProps } from './types';
 
 export const KeeperRuns = ({ data, period, onClick }: KeeperRunsProps) => {
   const theme = useTheme();

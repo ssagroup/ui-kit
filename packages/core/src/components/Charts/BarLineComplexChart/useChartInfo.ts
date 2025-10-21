@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
+
 import { pathOr } from '@ssa-ui-kit/utils';
-import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
+
 import { useFullscreenMode } from '@components/FullscreenModeContext';
-import { colorPalette } from './colorPalette';
+import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
+
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
+import { colorPalette } from './colorPalette';
 import { UseChartInfo } from './types';
 
 export const useChartInfo: UseChartInfo = () => {

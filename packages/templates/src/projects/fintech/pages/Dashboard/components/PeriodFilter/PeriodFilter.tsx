@@ -1,14 +1,16 @@
-import { useTranslation } from '@contexts';
-import { useHeader } from '@fintech/contexts';
 import {
   PERIOD_DAY,
-  PERIOD_WEEK,
   PERIOD_MONTH,
+  PERIOD_WEEK,
   PERIOD_YEAR,
 } from '@fintech/constants';
-import { ButtonGroupSM, ButtonGroupMD } from './PeriodButtonGroup';
-import { PeriodFilterProps, PeriodFilterItem } from './types';
+import { useHeader } from '@fintech/contexts';
+
+import { useTranslation } from '@contexts';
+
 import { usePeriodFilter } from './hooks';
+import { ButtonGroupMD, ButtonGroupSM } from './PeriodButtonGroup';
+import { PeriodFilterItem, PeriodFilterProps } from './types';
 
 // TODO: remove extra components due to design from the task
 export const PeriodFilter = ({

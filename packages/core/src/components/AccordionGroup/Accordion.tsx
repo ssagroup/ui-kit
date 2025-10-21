@@ -1,6 +1,7 @@
 import CardBase from '@components/Card/CardBase';
-import { AccordionViewProps } from './types';
+
 import { wrapperStyles } from './styles';
+import { AccordionViewProps } from './types';
 
 export const Accordion = ({
   title,

@@ -1,15 +1,17 @@
 import { renderToString } from 'react-dom/server';
 import Plot, { PlotParams } from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
 
-import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
 import {
   useFullscreenMode,
   WithFullscreenMode,
 } from '@components/FullscreenModeContext';
 import Icon from '@components/Icon';
+import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
 
 import { usePlotlyDefaultConfig } from '../hooks';
+
 import {
   CandlestickChartData,
   CandlestickStyle,

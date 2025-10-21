@@ -1,17 +1,17 @@
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
+
 import { useToggle } from '@ssa-ui-kit/hooks';
 
 import Button from '@components/Button';
-import Icon from '@components/Icon';
-
 import {
-  FiltersMultiSelect,
-  FiltersMultiSelectOptions,
-  FiltersMultiSelectOption,
-  FiltersMultiSelectEmpty,
   Filter,
+  FiltersMultiSelect,
+  FiltersMultiSelectEmpty,
+  FiltersMultiSelectOption,
+  FiltersMultiSelectOptions,
   useFilterMultiSelect,
 } from '@components/FiltersMultiSelect';
+import Icon from '@components/Icon';
 
 const meta = {
   title: 'Widgets/FiltersMultiSelect',

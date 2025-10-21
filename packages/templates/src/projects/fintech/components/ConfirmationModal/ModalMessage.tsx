@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+
 import { Typography } from '@ssa-ui-kit/core';
+
 import { ModalMessageProps } from './types';
 
 const TextWrapper = styled(Typography)`

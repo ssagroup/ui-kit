@@ -1,9 +1,11 @@
 import { useTranslation } from '@contexts';
-import { Card } from './Card';
-import { BalanceInfo } from './BalanceInfo';
-import { Progress } from './Progress';
+
 import { BalanceAmount } from './BalanceAmount';
+import { BalanceInfo } from './BalanceInfo';
+import { Card } from './Card';
+import { Progress } from './Progress';
 import { MaxInWorkProps } from './types';
+
 import { WithWidgetLoader } from '..';
 
 export const MaxInWork = ({

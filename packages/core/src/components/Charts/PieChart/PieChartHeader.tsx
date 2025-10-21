@@ -1,10 +1,13 @@
 import { Fragment } from 'react';
+
 import { useTheme } from '@emotion/react';
+
+import { useFullscreenMode } from '@components/FullscreenModeContext';
 import Icon from '@components/Icon';
 import Wrapper from '@components/Wrapper';
-import { useFullscreenMode } from '@components/FullscreenModeContext';
-import { PieChartProps } from './types';
+
 import { PieChartButton } from './styles';
+import { PieChartProps } from './types';
 
 export const PieChartHeader = ({
   features = [],

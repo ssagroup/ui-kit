@@ -1,18 +1,22 @@
-import { useState, useId, useEffect } from 'react';
+import { useEffect, useId, useState } from 'react';
+
 import { useWindowSize } from '@ssa-ui-kit/hooks';
+
 import Wrapper from '@components/Wrapper';
-import * as S from './styles';
+
+import { SCREEN_SIZES } from '../../consts';
+
+import { CollapsibleNavBarProvider } from './CollapsibleNavBarContext';
 import {
   CollapsibleNavBarBase,
-  CollapsibleNavBarWrapper,
   CollapsibleNavBarList,
+  CollapsibleNavBarWrapper,
   CollapsibleNavToggle,
-  NavContentToggle,
   NavBarItem,
+  NavContentToggle,
 } from './components';
-import { CollapsibleNavBarProvider } from './CollapsibleNavBarContext';
+import * as S from './styles';
 import { CollapsibleNavBarExtendedProps } from './types';
-import { SCREEN_SIZES } from '../../consts';
 /**
  * UI Component that shows the collapsible navigation bar
  */

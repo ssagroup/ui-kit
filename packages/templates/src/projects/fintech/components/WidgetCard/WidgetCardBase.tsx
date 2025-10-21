@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { Card } from '@ssa-ui-kit/core';
 
 export const WidgetCardBase = styled(Card)`

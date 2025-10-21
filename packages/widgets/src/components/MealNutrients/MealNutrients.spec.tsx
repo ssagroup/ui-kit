@@ -1,7 +1,8 @@
+import ResizeObserver from 'resize-observer-polyfill';
+
 import { within } from '@testing-library/dom';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ResizeObserver from 'resize-observer-polyfill';
 
 import mockApi from './mockMealNutrientsRequest';
 const { getData, getOptions } = mockApi;

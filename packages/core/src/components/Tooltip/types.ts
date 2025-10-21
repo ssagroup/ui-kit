@@ -1,14 +1,15 @@
+import { SerializedStyles } from '@emotion/react';
 import {
-  useInteractions,
   FloatingArrow,
+  OffsetOptions,
   Placement,
   UseFloatingReturn,
-  OffsetOptions,
+  useInteractions,
 } from '@floating-ui/react';
-import { PointTooltipProps, Point } from '@nivo/line';
+import { Point, PointTooltipProps } from '@nivo/line';
+
 import { MapIconsType } from '@components/Icon/types';
 import { ProgressBarProps } from '@components/ProgressBar/types';
-import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 
 export type TooltipSize = 'small' | 'medium' | 'large';

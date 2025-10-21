@@ -1,14 +1,15 @@
 import {
+  format,
   NumberFormatOptions,
   unformat,
-  format,
   useNumberFormat,
 } from '@react-input/number-format';
+
 import { useUncontrolled } from '@ssa-ui-kit/hooks';
 
 import { Field, Input } from '@components';
-import { InputProps } from '@components/Input/types';
 import { FieldRootProps } from '@components/Field/FieldRoot';
+import { InputProps } from '@components/Input/types';
 
 export interface NumberFieldProps extends InputProps {
   id?: string;

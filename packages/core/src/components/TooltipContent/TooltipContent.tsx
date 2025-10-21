@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
+
 import {
-  FloatingPortal,
   FloatingFocusManager,
+  FloatingPortal,
   useMergeRefs,
 } from '@floating-ui/react';
 

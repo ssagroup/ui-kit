@@ -1,15 +1,19 @@
 import { MouseEventHandler, useState } from 'react';
+
 import { useTheme } from '@emotion/react';
-import { ActionItem } from './ActionItem';
-import { ActionsWrapper } from './ActionsWrapper';
+
 import Icon from '@components/Icon';
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
   PopoverDescription,
+  PopoverTrigger,
 } from '@components/Popover';
+
 import { StyledTableItem } from '../../types';
+
+import { ActionItem } from './ActionItem';
+import { ActionsWrapper } from './ActionsWrapper';
 
 export const ActionMore = ({
   row: { isDisabled },

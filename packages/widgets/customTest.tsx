@@ -1,8 +1,11 @@
-import React, { ReactElement } from 'react';
-import { Theme } from '@ssa-ui-kit/core';
-import { ThemeProvider } from '@emotion/react';
 import '@testing-library/dom';
+
+import React, { ReactElement } from 'react';
+
+import { ThemeProvider } from '@emotion/react';
 import { render, RenderOptions } from '@testing-library/react';
+
+import { Theme } from '@ssa-ui-kit/core';
 
 const AllTheProviders = ({
   children,

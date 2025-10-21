@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
+import Icons from '@components/Icon/icons';
 import Step from '@components/Step';
 import StepLabel from '@components/StepLabel';
-import Icons from '@components/Icon/icons';
 
-import { StepperProps } from './types';
 import Stepper from './index';
+import { StepperProps } from './types';
 
 export default {
   title: 'Components/Stepper',
