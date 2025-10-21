@@ -8,6 +8,7 @@ const Wrapper = styled.div<
     alignItems?: string;
     fade?: boolean;
     fadeDelay?: number;
+    isVisible?: boolean;
   } & CommonProps
 >`
   display: flex;
@@ -16,22 +17,20 @@ const Wrapper = styled.div<
   width: 100%;
 
   flex-direction: ${({ direction }) => (direction ? direction : 'row')};
+  ${({ isVisible = true }) => {
+    return `
+      opacity: ${isVisible ? 1 : 0};
+      pointer-events: ${isVisible ? 'auto' : 'none'};
+    `;
+  }}
 
-  ${({ fade, fadeDelay = 0.3 }) =>
-    fade &&
-    `
-    opacity: 0;
-    animation: fadeInOut ${fadeDelay}s ease-in-out forwards;
+  ${({ fade, fadeDelay = 0.3 }) => {
+    if (!fade) return '';
 
-    @keyframes fadeInOut {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-  `}
+    return `
+      transition: opacity ${fadeDelay}s ease-in-out;
+    `;
+  }}
 `;
 
 export default Wrapper;
