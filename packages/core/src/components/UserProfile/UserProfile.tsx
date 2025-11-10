@@ -15,6 +15,8 @@ import {
   LogoutWrapper,
   ResetBtnStyles,
   CustomButton,
+  CustomContentWrapper,
+  AdditionalInfo,
 } from './styles';
 
 export const UserProfile = ({
@@ -24,6 +26,8 @@ export const UserProfile = ({
   onClick,
   logOutText = 'Log Out',
   className,
+  additionalInfo,
+  customContent,
 }: UserProfileProps) => {
   const theme = useTheme();
   return (
@@ -40,7 +44,15 @@ export const UserProfile = ({
             color={theme.colors.greyDropdownFocused}>
             {email}
           </PopoverDescription>
+          {additionalInfo && additionalInfo.length > 0 && (
+            <div css={AdditionalInfo}>
+              {additionalInfo.map((item, index) => (
+                <div key={index}>{item}</div>
+              ))}
+            </div>
+          )}
         </div>
+        {customContent && <div css={CustomContentWrapper}>{customContent}</div>}
         <div css={LogoutWrapper}>
           <Button variant="info" css={CustomButton} onClick={onClick}>
             <Icon name="log-out" size={15} color={theme.colors.white} />

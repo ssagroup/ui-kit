@@ -45,3 +45,17 @@ export const CustomButton = css`
   line-height: 19px;
   font-weight: 500;
 `;
+
+export const AdditionalInfo = (theme: Theme) => css`
+  font-size: 14px;
+  margin-top: 4px;
+  color: ${theme.colors.greyDropdownFocused};
+  font-weight: 400;
+`;
+
+export const CustomContentWrapper = (theme: Theme) => css`
+  width: 100%;
+  padding: 10px;
+  border-top: 0.4px solid ${theme.colors.greyGraphite70};
+  border-bottom: 0.4px solid ${theme.colors.greyGraphite70};
+`;
