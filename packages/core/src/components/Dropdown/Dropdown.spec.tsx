@@ -392,19 +392,45 @@ describe('Dropdown', () => {
     expect(getByRole('combobox')).toHaveAttribute('type', 'button');
   });
 
-  it('renders name attribute when provided', () => {
-    const { getByTestId } = setup({ name: 'testDropdown' });
+  it('renders name attribute on toggle when provided via props.toggle', () => {
+    const { getByTestId } = setup({
+      props: {
+        toggle: {
+          name: 'testDropdown',
+        },
+      },
+    });
     const dropdownEl = getByTestId('dropdown');
     const dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
     expect(dropdownToggleEl).toHaveAttribute('name', 'testDropdown');
   });
 
-  it('does not render name attribute when not provided', () => {
-    const { getByTestId } = setup();
+  it('renders name attribute on base when provided via props.base', () => {
+    const { getByTestId } = setup({
+      props: {
+        base: {
+          name: 'testBase',
+        },
+      },
+    });
     const dropdownEl = getByTestId('dropdown');
-    const dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
-    expect(dropdownToggleEl).not.toHaveAttribute('name');
+    expect(dropdownEl).toHaveAttribute('name', 'testBase');
+  });
+
+  it('renders data-testid attribute on arrow when provided via props.arrow', () => {
+    const { getByTestId } = setup({
+      props: {
+        arrow: {
+          'data-testid': 'testArrow',
+        },
+      },
+    });
+    const dropdownEl = getByTestId('dropdown');
+    const arrowIcon = within(dropdownEl).getByTestId('testArrow');
+
+    expect(arrowIcon).toBeInTheDocument();
+    expect(arrowIcon).toHaveAttribute('data-testid', 'testArrow');
   });
 });

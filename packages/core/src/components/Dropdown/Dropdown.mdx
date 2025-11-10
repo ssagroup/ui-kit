@@ -40,13 +40,27 @@ function BasicDropdown() {
 
 ## Features
 
-### Addressing in Forms
+### Component-Specific Props
 
-Use the `name` prop to assign a name to the underlying button element. This helps address the component on a web form (e.g., for automated testing or form libraries that read DOM attributes).
+You can pass props to different parts of the Dropdown component using the `props` object:
+
+- `props.base` - Props for the wrapper div element
+- `props.toggle` - Props for the button element (e.g., `name`, `id`, `data-*` attributes)
+- `props.arrow` - Props for the arrow icon SVG element
 
 ```tsx
 <Dropdown
-  name="dropdownName"
+  props={{
+    base: {
+      id: 'my-dropdown-base',
+    },
+    toggle: {
+      name: 'my-toggle',
+    },
+    arrow: {
+      'data-custom-attribute': 'my-attribute'
+    },
+  }}
   selectedItem={items[0]}
   onChange={handleChange}
   placeholder="Select an option">

@@ -121,10 +121,10 @@ const DropdownToggle = ({
   ariaControls,
   colors,
   className,
-  name,
+  ...restProps
 }: DropdownToggleProps) => (
   <DropdownToggleBase
-    name={name}
+    {...restProps}
     className={className}
     colors={colors}
     isOpen={isOpen}

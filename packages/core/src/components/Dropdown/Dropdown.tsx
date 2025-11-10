@@ -30,7 +30,6 @@ const DropdownBase = styled.div`
 
 // TODO: allow React.ReactNode for selectedItem as well as DropdownOptionProps
 const Dropdown = <T extends DropdownOptionProps>({
-  name,
   selectedItem,
   isDisabled,
   isOpen: isInitOpen,
@@ -38,6 +37,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   onChange: handleChange,
   className,
   placeholder = 'Select something',
+  props: componentProps,
 }: DropdownProps<T>) => {
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -120,9 +120,12 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   return (
     <DropdownContext.Provider value={contextValue}>
-      <DropdownBase ref={dropdownRef} data-testid="dropdown">
+      <DropdownBase
+        {...componentProps?.base}
+        ref={dropdownRef}
+        data-testid="dropdown">
         <DropdownToggle
-          name={name}
+          {...componentProps?.toggle}
           className={className}
           isOpen={isOpen}
           disabled={isDisabled}
@@ -132,7 +135,7 @@ const Dropdown = <T extends DropdownOptionProps>({
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}>
           {value}
-          <DropdownArrow isUp={isOpen} />
+          <DropdownArrow {...componentProps?.arrow} isUp={isOpen} />
         </DropdownToggle>
 
         {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}

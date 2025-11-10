@@ -1,5 +1,19 @@
+import React from 'react';
 import { DropdownOptionProps } from '@components/DropdownOptions';
 import { CommonProps } from '@global-types/emotion';
+import { IconProps } from '@components/Icon/types';
+
+export type ControlledButtonProps =
+  | 'onClick'
+  | 'onFocus'
+  | 'disabled'
+  | 'type'
+  | 'role'
+  | 'aria-expanded'
+  | 'aria-haspopup'
+  | 'aria-labelledby'
+  | 'aria-controls'
+  | 'children';
 
 export interface DropdownProps<P extends DropdownOptionProps>
   extends CommonProps {
@@ -10,7 +24,14 @@ export interface DropdownProps<P extends DropdownOptionProps>
   children?: React.ReactNode;
   className?: string;
   isOpen?: boolean;
-  name?: string;
+  props?: {
+    base?: React.HTMLAttributes<HTMLDivElement>;
+    toggle?: Omit<
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+      ControlledButtonProps
+    >;
+    arrow?: Omit<IconProps, 'name' | 'size'>;
+  };
 }
 
 export interface DropdownContextType {

@@ -8,9 +8,13 @@ export const DropdownArrowBase = styled.div<CommonProps>`
   align-items: center;
 `;
 
-const DropdownArrow = ({ isUp }: { isUp: boolean }) => (
+interface DropdownArrowProps extends CommonProps {
+  isUp: boolean;
+}
+
+const DropdownArrow = ({ isUp, ...restProps }: DropdownArrowProps) => (
   <DropdownArrowBase>
-    <Icon name={`carrot-${isUp ? 'up' : 'down'}`} size={12} />
+    <Icon {...restProps} name={`carrot-${isUp ? 'up' : 'down'}`} size={12} />
   </DropdownArrowBase>
 );
 
