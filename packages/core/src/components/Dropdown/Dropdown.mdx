@@ -40,6 +40,25 @@ function BasicDropdown() {
 
 ## Features
 
+### Addressing in Forms
+
+Use the `name` prop to assign a name to the underlying button element. This helps address the component on a web form (e.g., for automated testing or form libraries that read DOM attributes).
+
+```tsx
+<Dropdown
+  name="dropdownName"
+  selectedItem={items[0]}
+  onChange={handleChange}
+  placeholder="Select an option">
+  {items.map((item) => (
+    <DropdownOption key={item.id} value={item.id}>
+      {item.value}
+    </DropdownOption>
+  ))}
+</Dropdown>
+```
+
+
 ### Simple Value Options
 
 Use simple string or number values for basic dropdowns:

@@ -14,6 +14,7 @@ export interface DropdownToggleProps extends CommonProps {
   colors?: Array<string | undefined>;
   className?: string;
   selectedCount?: number;
+  name?: string;
 }
 
 export interface MultipleStylesProps {

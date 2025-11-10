@@ -391,4 +391,20 @@ describe('Dropdown', () => {
 
     expect(getByRole('combobox')).toHaveAttribute('type', 'button');
   });
+
+  it('renders name attribute when provided', () => {
+    const { getByTestId } = setup({ name: 'testDropdown' });
+    const dropdownEl = getByTestId('dropdown');
+    const dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    expect(dropdownToggleEl).toHaveAttribute('name', 'testDropdown');
+  });
+
+  it('does not render name attribute when not provided', () => {
+    const { getByTestId } = setup();
+    const dropdownEl = getByTestId('dropdown');
+    const dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    expect(dropdownToggleEl).not.toHaveAttribute('name');
+  });
 });

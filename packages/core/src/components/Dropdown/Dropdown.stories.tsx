@@ -21,6 +21,13 @@ export default {
   title: 'Components/Dropdown',
   component: Dropdown,
   argTypes: {
+    name: {
+      description: 'Name attribute for the underlying button.',
+      control: { type: 'text' },
+      table: {
+        type: { summary: 'string' },
+      },
+    },
     onChange: {
       control: {
         disable: true,
@@ -54,7 +61,10 @@ export default {
 
 export const Basic: StoryObj = (args: Args) => {
   return (
-    <Dropdown selectedItem={items[2]} isDisabled={args.isDisabled}>
+    <Dropdown
+      name={args.name}
+      selectedItem={items[2]}
+      isDisabled={args.isDisabled}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -64,7 +74,7 @@ export const Basic: StoryObj = (args: Args) => {
   );
 };
 
-Basic.args = { isDisabled: false };
+Basic.args = { isDisabled: false, name: 'exampleDropdown' };
 
 export const Opened: StoryObj = (args: Args) => {
   return (

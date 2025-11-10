@@ -10,6 +10,7 @@ export interface DropdownProps<P extends DropdownOptionProps>
   children?: React.ReactNode;
   className?: string;
   isOpen?: boolean;
+  name?: string;
 }
 
 export interface DropdownContextType {

@@ -30,6 +30,7 @@ const DropdownBase = styled.div`
 
 // TODO: allow React.ReactNode for selectedItem as well as DropdownOptionProps
 const Dropdown = <T extends DropdownOptionProps>({
+  name,
   selectedItem,
   isDisabled,
   isOpen: isInitOpen,
@@ -121,6 +122,7 @@ const Dropdown = <T extends DropdownOptionProps>({
     <DropdownContext.Provider value={contextValue}>
       <DropdownBase ref={dropdownRef} data-testid="dropdown">
         <DropdownToggle
+          name={name}
           className={className}
           isOpen={isOpen}
           disabled={isDisabled}
