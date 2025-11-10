@@ -2,8 +2,9 @@ import {
   AccordionContent,
   RenderContentProps,
 } from '@components/AccordionGroup';
-import * as S from './styles';
+
 import { NavBarAccordionContentItem } from './AccordionContentItem';
+import * as S from './styles';
 
 export const NavBarAccordionContent = ({
   items,

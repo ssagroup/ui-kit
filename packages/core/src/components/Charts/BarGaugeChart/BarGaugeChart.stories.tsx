@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+
 import { useTheme } from '@emotion/react';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
 
 import { BarGaugeChart } from './BarGaugeChart';
 import {

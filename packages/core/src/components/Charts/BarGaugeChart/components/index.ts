@@ -1,3 +1,3 @@
 export * from './BarGaugeChartHeader';
-export * from './GaugeBar';
 export * from './Brick';
+export * from './GaugeBar';

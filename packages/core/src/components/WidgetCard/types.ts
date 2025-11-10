@@ -1,5 +1,6 @@
-import { Interpolation, Theme } from '@emotion/react';
 import type { To } from 'react-router-dom';
+
+import { Interpolation, Theme } from '@emotion/react';
 
 export type WidgetCardProps = {
   title?: React.ReactNode;

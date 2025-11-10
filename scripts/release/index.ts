@@ -1,23 +1,25 @@
-import { Command, Option } from '@commander-js/extra-typings';
 import { $, chalk } from 'zx';
 
+import { Command, Option } from '@commander-js/extra-typings';
+
+import packageJson from '../../package.json';
+import { publishPackage } from '../publish/publishPackage';
+
+import {
+  commitRelease,
+  ensureCleanWorkingDirectory,
+  resetWorkingDirectory,
+} from './git';
+import { promptForOTP, setAccessToken } from './npm';
+import {
+  CORE_PACKAGES_TO_RELEASE,
+  INDIVIDUAL_PACKAGES_TO_RELEASE,
+} from './packages';
 import {
   getCurrentVersion,
   getNextVersion,
   setPackagesVersion,
 } from './version';
-import {
-  ensureCleanWorkingDirectory,
-  commitRelease,
-  resetWorkingDirectory,
-} from './git';
-import { setAccessToken, promptForOTP } from './npm';
-import {
-  CORE_PACKAGES_TO_RELEASE,
-  INDIVIDUAL_PACKAGES_TO_RELEASE,
-} from './packages';
-import { publishPackage } from '../publish/publishPackage';
-import packageJson from '../../package.json';
 
 const $$ = $({ stdio: 'inherit' });
 

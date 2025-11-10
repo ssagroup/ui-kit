@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
-import { ProgressCircle, Wrapper, Theme } from '@ssa-ui-kit/core';
+
+import { ProgressCircle, Theme, Wrapper } from '@ssa-ui-kit/core';
 
 export type LoadingDashboardProps = {
   children?: React.ReactNode;

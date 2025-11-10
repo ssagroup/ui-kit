@@ -1,14 +1,14 @@
 import {
-  ObjectFieldTemplateProps,
+  canExpand,
+  descriptionId,
   FormContextType,
   getTemplate,
   getUiOptions,
+  ObjectFieldTemplatePropertyType,
+  ObjectFieldTemplateProps,
   RJSFSchema,
   StrictRJSFSchema,
   titleId,
-  descriptionId,
-  ObjectFieldTemplatePropertyType,
-  canExpand,
 } from '@rjsf/utils';
 
 import Wrapper from '@components/Wrapper';

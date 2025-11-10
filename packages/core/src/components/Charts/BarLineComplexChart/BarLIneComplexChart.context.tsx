@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+
 import {
+  BarLineChartItem,
   BarLineComplexChartContextProps,
   BarLineComplexChartContextProviderProps,
-  BarLineChartItem,
 } from './types';
 
 const BarLineComplexChartContext =

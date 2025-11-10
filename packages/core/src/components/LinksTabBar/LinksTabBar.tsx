@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
-import { LinksTabBarProps } from './types';
 import { LinksTabBarBase } from './LinksTabBarBase';
+import { LinksTabBarProps } from './types';
 
 export const LinksTabBar = ({ as, className, links }: LinksTabBarProps) => {
   return (

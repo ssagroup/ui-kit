@@ -1,8 +1,11 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+
 import userEvent from '@testing-library/user-event';
+
 import { Button } from '@ssa-ui-kit/core';
-import TradingScoreboard from './TradingScoreboard';
+
 import { defaultBoardArr, linkBoardArr } from './helpers';
+import TradingScoreboard from './TradingScoreboard';
 
 describe('TradingScoreboard', () => {
   it('Renders all items', () => {

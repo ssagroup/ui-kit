@@ -1,7 +1,7 @@
-import { DistributionMultilineProps } from './types';
 import { DistributionCard } from './DistributionCard';
 import { DistributionContent } from './DistributionContent';
 import * as S from './styles';
+import { DistributionMultilineProps } from './types';
 
 export const DistributionMultiline = ({
   rows,

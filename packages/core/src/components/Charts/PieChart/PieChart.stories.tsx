@@ -1,12 +1,15 @@
 import { Fragment, useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { css, useTheme } from '@emotion/react';
+
 import { css as cssString } from '@emotion/css';
-import Typography from '@components/Typography';
+import { css, useTheme } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import Tooltip from '@components/Tooltip';
-import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
+import TooltipTrigger from '@components/TooltipTrigger';
+import Typography from '@components/Typography';
 import Wrapper from '@components/Wrapper';
+
 import {
   PieChart,
   PieChartLegend,
@@ -16,8 +19,8 @@ import {
   PieChartTooltipProps,
 } from './index';
 import {
-  fitnessData,
   accountData,
+  fitnessData,
   optionsDataBig,
   optionsDataBigDecimal,
 } from './stories/fixtures';

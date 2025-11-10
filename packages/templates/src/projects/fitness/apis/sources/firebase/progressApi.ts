@@ -1,8 +1,9 @@
 import {
-  ProgressInfoResp,
-  ProgressInfoItemProps,
   Period,
+  ProgressInfoItemProps,
+  ProgressInfoResp,
 } from '@ssa-ui-kit/core';
+
 import getFirebase from './initFirebase';
 
 type DatePeriod = Record<Period, Array<ProgressInfoItemProps>>;

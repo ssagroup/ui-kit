@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { PlotTooltipPosition, PlotTooltipState } from '../types';
 
 export const usePlotTooltip = () => {

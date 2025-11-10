@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+
 import Label from '@components/Label';
+
 import { checkboxStyles } from './styles';
 import { CheckboxProps } from './types';
 

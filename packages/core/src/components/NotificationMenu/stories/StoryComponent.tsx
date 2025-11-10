@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
+
 import { useTheme } from '@emotion/react';
+
 import Button from '@components/Button';
 import { ButtonGroup, ButtonGroupItem } from '@components/ButtonGroup';
 import { NotificationCardProps } from '@components/NotificationCard';
-import { NotificationMenu } from '../NotificationMenu';
-import { MarkAllReadButton, Trigger } from './StoryContent';
+
 import {
   disableButton,
   divideOnSubArr,
@@ -13,7 +14,10 @@ import {
   notificationData,
   readAll,
 } from '../helpers';
+import { NotificationMenu } from '../NotificationMenu';
 import { ButtonGroupCustom } from '../styles';
+
+import { MarkAllReadButton, Trigger } from './StoryContent';
 
 export const StoryComponent = () => {
   const [notifications, setNotifications] = useState<NotificationCardProps[]>(

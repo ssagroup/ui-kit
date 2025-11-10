@@ -1,8 +1,10 @@
 import { useRef } from 'react';
+
 import { NotificationCard } from '@ssa-ui-kit/core';
+
 import {
-  UnreadNotificationCardProps,
   ReadNotificationCardProps,
+  UnreadNotificationCardProps,
 } from './types';
 
 const TYPE_INFO = 'Informational';

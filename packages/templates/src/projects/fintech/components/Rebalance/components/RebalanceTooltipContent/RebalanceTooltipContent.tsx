@@ -1,9 +1,14 @@
 import { useParams } from 'react-router-dom';
-import { propOr } from '@ssa-ui-kit/utils';
-import { useTranslation } from '@contexts';
+
 import { useCurrency } from '@fintech/contexts';
-import { RebalanceTooltipContentProps } from './types';
+
+import { propOr } from '@ssa-ui-kit/utils';
+
+import { useTranslation } from '@contexts';
+
 import { getDateTime } from '../../helpers';
+
+import { RebalanceTooltipContentProps } from './types';
 
 export const RebalanceTooltipContent = ({
   event,

@@ -1,4 +1,5 @@
 import Icon from '@components/Icon';
+
 import { ButtonProps } from './types';
 
 export type TestPropsType = Omit<

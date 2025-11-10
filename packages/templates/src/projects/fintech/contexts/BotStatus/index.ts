@@ -1,3 +1,3 @@
 export * from './BotStatusContext';
-export * from './useBotStatus';
 export * from './types';
+export * from './useBotStatus';

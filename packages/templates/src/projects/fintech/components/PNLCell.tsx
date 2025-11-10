@@ -1,6 +1,8 @@
 import { useTheme } from '@emotion/react';
-import { Wrapper } from '@ssa-ui-kit/core';
 import { GrowthIndexIcon } from '@fintech/components';
+
+import { Wrapper } from '@ssa-ui-kit/core';
+
 import * as Types from '../pages/BotsPage/types';
 
 export const PNLCell = ({

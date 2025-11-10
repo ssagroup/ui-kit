@@ -1,8 +1,11 @@
 import React, { InputHTMLAttributes } from 'react';
+
 import { useTheme } from '@emotion/react';
+
+import Button from '@components/Button';
 import Icon from '@components/Icon';
 import Input from '@components/Input';
-import Button from '@components/Button';
+
 import * as S from '../styles';
 import { useTypeaheadContext } from '../Typeahead.context';
 

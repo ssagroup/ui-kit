@@ -1,8 +1,9 @@
 import { Matcher, screen, waitFor, within } from '@testing-library/dom';
 
-import Stepper from './index';
 import Step from '@components/Step';
 import StepLabel from '@components/StepLabel';
+
+import Stepper from './index';
 
 const getCheckIcon = async (query: Matcher) => {
   const item = await screen.findByText(query);

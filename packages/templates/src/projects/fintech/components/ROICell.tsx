@@ -1,5 +1,6 @@
-import { Wrapper } from '@ssa-ui-kit/core';
 import * as Types from '@fintech/pages/BotsPage/types';
+
+import { Wrapper } from '@ssa-ui-kit/core';
 
 export const ROICell = ({ amount }: Types.ROI) => {
   const amountNumber = Number.parseFloat(amount.toFixed(2));

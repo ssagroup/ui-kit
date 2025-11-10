@@ -1,8 +1,9 @@
 import { WithLink } from '@ssa-ui-kit/core';
-import { WidgetCardBase } from './WidgetCardBase';
-import { Header } from './Header';
+
 import { Content } from './Content';
+import { Header } from './Header';
 import { WidgetCardProps } from './types';
+import { WidgetCardBase } from './WidgetCardBase';
 
 export const WidgetCard = ({
   title,

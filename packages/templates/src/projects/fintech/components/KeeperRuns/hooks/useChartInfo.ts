@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { GraphsListItem } from '@fintech/types';
-import { useBarGroupGap } from '@fintech/hooks';
+
 import { useGraphs } from '@fintech/contexts';
+import { useBarGroupGap } from '@fintech/hooks';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+import { GraphsListItem } from '@fintech/types';
+
 import { getKeeperRuns } from '../helpers';
 
 export const useChartInfo = ({

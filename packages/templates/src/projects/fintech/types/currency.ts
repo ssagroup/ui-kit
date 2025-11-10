@@ -1,3 +1,3 @@
-import { USDT, BTC } from '@fintech/constants';
+import { BTC, USDT } from '@fintech/constants';
 
 export type BalanceCoin = typeof USDT | typeof BTC;

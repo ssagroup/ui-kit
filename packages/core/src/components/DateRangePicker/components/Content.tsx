@@ -1,7 +1,9 @@
 import { Popover } from '@components/Popover';
+
+import { useDateRangePickerContext } from '../useDateRangePickerContext';
+
 import { DatePickerCalendar } from './Calendar';
 import { Trigger } from './Trigger';
-import { useDateRangePickerContext } from '../useDateRangePickerContext';
 
 export const DatePickerContent = () => {
   const { isOpen } = useDateRangePickerContext();

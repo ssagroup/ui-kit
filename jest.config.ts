@@ -1,8 +1,7 @@
-import { resolve } from 'node:path';
 import { existsSync } from 'node:fs';
-
-import type { JestConfigWithTsJest } from 'ts-jest';
+import { resolve } from 'node:path';
 import { mergeLeft } from 'ramda';
+import type { JestConfigWithTsJest } from 'ts-jest';
 
 // NOTE: we didn't manage to configure Jest-projects setup for UI Kit Core and
 // an example Dashboard. Thus, the have Jest configured locally (in the

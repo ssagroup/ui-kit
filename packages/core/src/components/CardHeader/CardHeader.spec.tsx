@@ -1,5 +1,6 @@
-import CardHeader from './index';
 import { screen } from '../../../customTest';
+
+import CardHeader from './index';
 
 describe('CardHeader', () => {
   it('Renders with initial background', () => {

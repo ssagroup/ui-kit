@@ -1,14 +1,19 @@
 import Plot from 'react-plotly.js';
+
 import { useTheme } from '@emotion/react';
-import { useTranslation } from '@contexts';
 import { usePlotlyDefaultConfig, useTimestamp } from '@fintech/hooks';
-import { isShortPeriod } from '@fintech/utils';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
-import { CumulativePNLProps } from './types';
+import { isShortPeriod } from '@fintech/utils';
+
+import { useTranslation } from '@contexts';
+
 import {
   SHORT_DATE_FORMAT,
   SHORT_TIME_FORMAT,
 } from '../DoublePriceChart/constants';
+
+import { CumulativePNLProps } from './types';
+
 import { PlotlyGraphWrapper, WithWidgetLoader } from '..';
 
 export const CumulativePNL = ({

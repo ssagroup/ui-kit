@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { PathPattern, useLocation, useMatch } from 'react-router-dom';
-import Wrapper from '@components/Wrapper';
+
 import { AccordionProps, AccordionTitle } from '@components/AccordionGroup';
 import {
-  useCollapsibleNavBarContext,
   CollapsibleNavBarItemProvider,
+  useCollapsibleNavBarContext,
 } from '@components/CollapsibleNavBar';
 import { CollapsibleNavBarGroup } from '@components/CollapsibleNavBar/types';
-import * as S from './styles';
-import { NavBarAccordionContent } from './AccordionContent';
+import Wrapper from '@components/Wrapper';
+
 import { CollapsibleNavBarLink } from '../CollapsibleNavBarLink';
 import { CollapsibleNavBarPopover } from '../NavBarPopover';
 import { TriggerIcon } from '../TriggerIcon';
+
+import { NavBarAccordionContent } from './AccordionContent';
+import * as S from './styles';
 
 const Link = CollapsibleNavBarLink.withComponent('div');
 

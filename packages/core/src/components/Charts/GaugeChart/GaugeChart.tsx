@@ -1,6 +1,10 @@
+import { useTheme } from '@emotion/react';
+
+import { useElementSize } from '@ssa-ui-kit/hooks';
+
+import { WithFullscreenMode } from '@components/FullscreenModeContext';
 import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
 import Wrapper from '@components/Wrapper';
-import { useTheme } from '@emotion/react';
 
 import {
   GaugeChartBase,
@@ -15,8 +19,6 @@ import {
   GaugeChartTickersProps,
 } from './components';
 import { calculateFittedSize, centeredOffset, normalizeToRange } from './utils';
-import { useElementSize } from '@ssa-ui-kit/hooks';
-import { WithFullscreenMode } from '@components/FullscreenModeContext';
 
 export type GaugeChartFeature = 'header' | 'fullscreenMode';
 

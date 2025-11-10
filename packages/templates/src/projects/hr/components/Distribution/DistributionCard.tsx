@@ -1,5 +1,7 @@
 import { ClassNames, useTheme } from '@emotion/react';
+
 import { WidgetCard } from '../WidgetCard';
+
 import { DistributionCardProps } from './types';
 
 export const DistributionCard = ({

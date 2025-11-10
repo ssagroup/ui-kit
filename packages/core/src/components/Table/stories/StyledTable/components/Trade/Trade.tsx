@@ -1,6 +1,7 @@
-import { TradeProps } from './types';
-import { tradeStatuses } from './consts';
 import { TableTag } from '../TableTag';
+
+import { tradeStatuses } from './consts';
+import { TradeProps } from './types';
 
 export const Trade = ({ tradeType }: TradeProps) => {
   const { color, title } = tradeStatuses[tradeType];

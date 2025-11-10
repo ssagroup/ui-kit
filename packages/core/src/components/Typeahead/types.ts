@@ -1,5 +1,6 @@
-import { CommonProps } from '@global-types/emotion';
 import { FieldError } from 'react-hook-form';
+
+import { CommonProps } from '@global-types/emotion';
 
 export type TypeaheadValue = string | number;
 

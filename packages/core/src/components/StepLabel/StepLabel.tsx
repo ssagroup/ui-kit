@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { useTheme } from '@emotion/react';
+
 import Icon from '@components/Icon';
-import { useStepperContext } from '@components/Stepper';
 import { useStepContext } from '@components/Step';
+import { useStepperContext } from '@components/Stepper';
 
 import {
   label,
@@ -11,7 +13,6 @@ import {
   labelText,
   labelTitle,
 } from './styles';
-import { useTheme } from '@emotion/react';
 
 const StepLabel = ({
   children,

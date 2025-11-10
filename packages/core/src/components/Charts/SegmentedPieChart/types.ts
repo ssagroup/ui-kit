@@ -1,6 +1,6 @@
-import { CommonProps } from '@global-types/emotion';
 import { PieChartLegend, PieChartLegendItem, PieChartProps } from '@components';
 import { TooltipProps } from '@components/Tooltip/types';
+import { CommonProps } from '@global-types/emotion';
 
 type SegmentedDataMainInfo = {
   label: string;

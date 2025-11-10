@@ -1,4 +1,5 @@
-import { useMask, format as maskFormat } from '@react-input/mask';
+import { format as maskFormat, useMask } from '@react-input/mask';
+
 import { DateRangePickerProps } from '../types';
 import { processDate } from '../utils';
 

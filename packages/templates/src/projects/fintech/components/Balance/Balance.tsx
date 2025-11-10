@@ -1,7 +1,11 @@
-import { AccountBalance } from '@ssa-ui-kit/widgets';
 import { transformBalanceData as transform } from '@fintech/utils';
+
+import { AccountBalance } from '@ssa-ui-kit/widgets';
+
 import { useTranslation } from '@contexts';
+
 import { BalanceProps } from './types';
+
 import { WithWidgetLoader } from '..';
 
 export const Balance = ({ balance }: BalanceProps) => {

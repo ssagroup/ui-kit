@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef, useId, ReactNode } from 'react';
-import styled from '@emotion/styled';
+import React, { ReactNode, useEffect, useId, useRef, useState } from 'react';
+
 import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
+
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 
-import DropdownToggle from '@components/DropdownToggle';
+import DropdownContext from '@components/Dropdown/Dropdown.context';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
-import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
+import DropdownToggle from '@components/DropdownToggle';
 
 import { DropdownContextType, DropdownProps } from './types';
 

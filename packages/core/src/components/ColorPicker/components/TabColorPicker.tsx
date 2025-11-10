@@ -1,20 +1,22 @@
 import { css } from '@emotion/css';
-import ColorPickerBase, { Color } from '@rc-component/color-picker';
 import { useTheme } from '@emotion/react';
-import Wrapper from '@components/Wrapper';
-import Icon from '@components/Icon';
+import ColorPickerBase, { Color } from '@rc-component/color-picker';
+
 import DropdownOption from '@components/DropdownOption';
+import Icon from '@components/Icon';
+import Wrapper from '@components/Wrapper';
+
+import { useColorPickerContext } from '../ColorPickerContext';
 import {
   ColorDropdown,
+  CopyButton,
   HexInput,
   HlsInput,
   RgbInput,
-  CopyButton,
 } from '../components';
+import { COLOR_FORMAT } from '../constants';
 import { ColorFormat } from '../types';
 import { colorFormatter } from '../utils';
-import { COLOR_FORMAT } from '../constants';
-import { useColorPickerContext } from '../ColorPickerContext';
 
 export const TabColorPicker = () => {
   const theme = useTheme();

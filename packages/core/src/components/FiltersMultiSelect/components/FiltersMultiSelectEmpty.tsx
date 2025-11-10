@@ -1,4 +1,5 @@
 import { type HTMLAttributes } from 'react';
+
 import styled from '@emotion/styled';
 
 const FiltersMultiSelectEmptyBase = styled.div`

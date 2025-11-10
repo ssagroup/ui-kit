@@ -1,6 +1,9 @@
-import { useTranslation } from '@ssa-ui-kit/core';
-import { DashboardGraphs } from '@/hr/types';
 import { useDashboardGraphsData } from '@hr/hooks/dashboard';
+
+import { useTranslation } from '@ssa-ui-kit/core';
+
+import { DashboardGraphs } from '@/hr/types';
+
 import { WidgetBarLineChart, WithWidgetLoader } from '..';
 
 export const SeniorityProductionEmployees = ({

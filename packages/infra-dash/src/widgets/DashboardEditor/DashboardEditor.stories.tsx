@@ -1,11 +1,10 @@
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
-
 import { QueryClient } from '@shared/query';
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
 
 import { InfraDashProvider } from '../../provider';
 
+import { dashboard, MockTransport } from './__mock__';
 import { DashboardEditor } from './DashboardEditor';
-import { MockTransport, dashboard } from './__mock__';
 
 const meta: Meta<typeof DashboardEditor> = {
   title: 'DashboardEditor',

@@ -1,18 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { useDebounceCallback } from 'usehooks-ts';
-import { categoricalColorSchemes } from '@nivo/colors';
-import { useTheme, css as cssReact } from '@emotion/react';
+
 import { css } from '@emotion/css';
+import { css as cssReact, useTheme } from '@emotion/react';
+import { categoricalColorSchemes } from '@nivo/colors';
+
 import {
-  useTranslation,
   PieChart,
   PieChartLegend,
+  useTranslation,
   Wrapper,
 } from '@ssa-ui-kit/core';
+
 import { useMinLGMediaQuery, useXSMediaQuery } from '@ssa-ui-kit/hooks';
-import { WidgetPieChartProps } from './types';
-import * as S from './styles';
+
 import { SMALL_PIE_CHART_SIZE } from './constants';
+import * as S from './styles';
+import { WidgetPieChartProps } from './types';
+
 import { ComponentHint, useAppLayout } from '..';
 
 export const WidgetPieChart = ({

@@ -1,10 +1,10 @@
 import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 
 import { AccordionGroupContextProvider } from './AccordionContext';
-import { AccordionSize } from './types';
 import { AccordionTemplate } from './stories/helpers';
+import { AccordionSize } from './types';
 
 interface AccordionTest {
   id: string;

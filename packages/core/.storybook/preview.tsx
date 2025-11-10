@@ -1,9 +1,9 @@
-import type { Preview } from '@storybook/react-webpack5';
+import './style.css';
 
 import { ThemeProvider } from '@emotion/react';
-import theme from '../src/themes/main';
+import type { Preview } from '@storybook/react-webpack5';
 
-import './style.css';
+import theme from '../src/themes/main';
 
 const preview: Preview = {
   parameters: {

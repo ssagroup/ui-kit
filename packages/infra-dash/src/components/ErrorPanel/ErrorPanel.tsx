@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
-import { WidgetCard } from '@ssa-ui-kit/core';
-
 import { ErrorIcon } from '@shared/icons';
+
+import { WidgetCard } from '@ssa-ui-kit/core';
 
 export type ErrorPanelProps = {
   title?: string;

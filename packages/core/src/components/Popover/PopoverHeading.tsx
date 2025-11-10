@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { useId } from '@floating-ui/react';
-import { usePopoverContext } from './hooks/usePopoverContext';
+
 import Typography from '@components/Typography';
+
+import { usePopoverContext } from './hooks/usePopoverContext';
 
 export const PopoverHeading = React.forwardRef<
   HTMLHeadingElement,

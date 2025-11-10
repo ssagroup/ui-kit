@@ -1,17 +1,24 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { ClassNames, useTheme } from '@emotion/react';
-import { Wrapper } from '@ssa-ui-kit/core';
-import { pathOr, propOr } from '@ssa-ui-kit/utils';
-import { useTranslation } from '@contexts';
-import { InstrumentsList } from '@fintech/types';
 import { PLATFORM_ICONS } from '@fintech/icons';
 import { useBotInfo } from '@fintech/pages/BotPage/hooks';
+import { InstrumentsList } from '@fintech/types';
+
+import { Wrapper } from '@ssa-ui-kit/core';
+
+import { pathOr, propOr } from '@ssa-ui-kit/utils';
+
+import { useTranslation } from '@contexts';
+
+import { Content } from '../WidgetCard/Content';
+import { Header } from '../WidgetCard/Header';
+
 import { CURRENCY_ICONS } from './constants';
 import * as S from './styles';
+
 import { WidgetCard } from '..';
-import { Header } from '../WidgetCard/Header';
-import { Content } from '../WidgetCard/Content';
 
 export const CryptocurrencyPrices = ({
   instrumentsList,

@@ -10,10 +10,10 @@ import {
   defaultLegendBackgrounds,
   defaultPieChartColors,
 } from './colorPalettes';
-import { SegmentedPieChartProps } from './types';
 import { ChartTitle, ChartTooltip, LegendItem } from './components';
 import { useData } from './hooks';
 import { SegmentedPieChartProvider } from './SegmentedPieChartContext';
+import { SegmentedPieChartProps } from './types';
 
 export const SegmentedPieChartComponent = ({
   data,

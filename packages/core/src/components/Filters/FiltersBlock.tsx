@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import DropdownOption from '@components/DropdownOption';
 import MultipleDropdown from '@components/MultipleDropdown';
+
 import { useFiltersContext } from './FiltersContext';
 import { useFiltersBlock } from './hooks/useFiltersBlock';
 

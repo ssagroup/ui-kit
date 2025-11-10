@@ -1,5 +1,6 @@
-import { pathOr } from '@ssa-ui-kit/utils';
 import { GraphsListItem } from '@fintech/types';
+
+import { pathOr } from '@ssa-ui-kit/utils';
 
 export const calculateRightLeftMargins = ({
   font,

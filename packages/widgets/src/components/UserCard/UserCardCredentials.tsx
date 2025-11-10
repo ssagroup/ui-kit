@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react';
 
-import { Avatar, Button, Typography, Icon } from '@ssa-ui-kit/core';
+import { Avatar, Button, Icon, Typography } from '@ssa-ui-kit/core';
 
 import { User } from './types';
 

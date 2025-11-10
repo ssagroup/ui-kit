@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
+
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useClickOutside } from '@ssa-ui-kit/hooks';
-import { mapObjIndexed } from '@ssa-ui-kit/utils';
 import { useMergeRefs } from '@floating-ui/react';
 
-import DropdownBase from '@components/DropdownBase';
-import DropdownToggle from '@components/DropdownToggle';
-import DropdownArrow from '@components/DropdownArrow';
-import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
-import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
-import { DropdownOptionProps } from '@components/DropdownOptions/types';
+import { mapObjIndexed } from '@ssa-ui-kit/utils';
 
-import { DropdownContextType, DropdownProps } from './types';
+import { useClickOutside } from '@ssa-ui-kit/hooks';
+
+import DropdownArrow from '@components/DropdownArrow';
+import DropdownBase from '@components/DropdownBase';
+import { DropdownOptionProps } from '@components/DropdownOptions/types';
+import DropdownToggle from '@components/DropdownToggle';
+import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
 import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
+import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
+
+import { DropdownContextType, DropdownProps } from './types';
 
 const DropdownPlaceholderLabel = styled.div`
   white-space: nowrap;

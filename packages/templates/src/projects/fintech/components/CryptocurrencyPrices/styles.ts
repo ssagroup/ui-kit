@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+
 import { Wrapper } from '@ssa-ui-kit/core';
 
 export const IconWrapper = styled(Wrapper)`

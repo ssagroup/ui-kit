@@ -1,10 +1,13 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { css } from '@emotion/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { Button } from '@ssa-ui-kit/core';
+
+import { defaultBoardArr, linkBoardArr, oneLineBoardArr } from './helpers';
 import TradingScoreboard from './TradingScoreboard';
 import { TradingScoreboardProps } from './types';
-import { defaultBoardArr, linkBoardArr, oneLineBoardArr } from './helpers';
 
 export default {
   title: 'Trading/TradingScoreboard',

@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { withTheme, css } from '@emotion/react';
+
+import { css, withTheme } from '@emotion/react';
+
 import {
+  mainTheme,
   PieChart,
   PieChartFeatures,
   PieChartLegend,
   pieChartPalettes,
-  mainTheme,
 } from '@ssa-ui-kit/core';
-import { BalancePieChartTitle } from './BalancePieChartTitle';
 
-import { BalancePieChartProps } from './types';
 import { useAccountBalanceContext } from './AccountBalanceContext';
+import { BalancePieChartTitle } from './BalancePieChartTitle';
+import { BalancePieChartProps } from './types';
 
 export const BalancePieChart = withTheme(
   ({

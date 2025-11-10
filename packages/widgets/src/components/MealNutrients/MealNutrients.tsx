@@ -1,17 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   Card,
   CardContent,
   CardHeader,
-  Typography,
   Dropdown,
   DropdownOption,
+  Typography,
 } from '@ssa-ui-kit/core';
 
 import { MealNutrientsLineChart } from './MealNutrientsLineChart';
+import { MealNutrientsProps, OptionType, UseChartConfig } from './types';
 import useChartConfig from './useChartConfig';
-import { MealNutrientsProps, UseChartConfig, OptionType } from './types';
 
 /**
  *

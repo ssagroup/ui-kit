@@ -1,14 +1,16 @@
-import { waitFor } from '../../../customTest';
+import ResizeObserver from 'resize-observer-polyfill';
+
 import type { Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
-import ResizeObserver from 'resize-observer-polyfill';
-import theme from '@themes/main';
 
 import Button from '@components/Button';
-import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
+import TooltipTrigger from '@components/TooltipTrigger';
+import theme from '@themes/main';
 
-import Tooltip, { SimpleChartTooltip, ProgressChartTooltip } from './index';
+import { waitFor } from '../../../customTest';
+
+import Tooltip, { ProgressChartTooltip, SimpleChartTooltip } from './index';
 
 function setup(component: React.ReactElement) {
   const user = userEvent.setup();

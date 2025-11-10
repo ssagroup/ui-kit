@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
+
 import { ClassNames, useTheme } from '@emotion/react';
-import { useTranslation } from '@contexts';
 import { WidgetCard, WithWidgetLoader } from '@fintech/components';
-import { BotsCount } from './BotsCount';
+
+import { useTranslation } from '@contexts';
+
 import { AllBotsBlock } from './AllBotsBlock';
+import { BotsCount } from './BotsCount';
 import { BotsCountContent } from './BotsCountContent';
 import { BotsProps } from './types';
 

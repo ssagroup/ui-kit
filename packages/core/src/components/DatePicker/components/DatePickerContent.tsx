@@ -1,7 +1,9 @@
 import { Popover } from '@components/Popover';
+
+import { useDatePickerContext } from '../useDatePickerContext';
+
 import { DatePickerCalendar } from './DatePickerCalendar';
 import { DatePickerTrigger } from './DatePickerTrigger';
-import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DatePickerContent = () => {
   const { isOpen, setIsOpen } = useDatePickerContext();

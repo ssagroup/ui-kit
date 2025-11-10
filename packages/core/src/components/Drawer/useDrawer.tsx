@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   OpenChangeReason,
   useClick,
@@ -6,8 +8,8 @@ import {
   useInteractions,
   useTransitionStatus,
 } from '@floating-ui/react';
+
 import { useUncontrolled } from '@ssa-ui-kit/hooks';
-import { useState } from 'react';
 
 export type Position = 'left' | 'right' | 'top' | 'bottom';
 

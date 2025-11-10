@@ -1,5 +1,7 @@
 import { Platform } from '@fintech/components';
+
 import { SingleBot } from '@/fintech/pages/BotsPage/__mock__/allBots';
+
 import * as S from './styles';
 
 export const BotTableName = ({ bot }: { bot: SingleBot }) => {

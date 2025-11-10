@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import { pathOr } from '@ssa-ui-kit/utils';
-import { GraphsListItem } from '@fintech/types';
+
 import { useGraphs } from '@fintech/contexts';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
+import { GraphsListItem } from '@fintech/types';
 import { getExtendedInfo } from '@fintech/utils/charts';
+
+import { pathOr } from '@ssa-ui-kit/utils';
 
 export const useChartInfo = ({
   dataOriginal,

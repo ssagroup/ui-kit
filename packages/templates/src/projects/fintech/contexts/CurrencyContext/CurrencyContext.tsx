@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
+
 import { USDT } from '@fintech/constants';
 import { BalanceCoin } from '@fintech/types';
 

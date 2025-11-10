@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { useMergeRefs } from '@floating-ui/react';
+
 import { callAll } from '@ssa-ui-kit/utils';
-import { TextareaProps } from './types';
+
 import { TextareaBase } from './TextareaBase';
+import { TextareaProps } from './types';
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   function TextareaInner(

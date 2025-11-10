@@ -1,6 +1,7 @@
-import { propOr } from '@ssa-ui-kit/utils';
 import { useBotInfoResponse } from '@fintech/hooks';
 import { Bot } from '@fintech/types';
+
+import { propOr } from '@ssa-ui-kit/utils';
 
 export const useBotInfo = () => {
   const data = useBotInfoResponse();

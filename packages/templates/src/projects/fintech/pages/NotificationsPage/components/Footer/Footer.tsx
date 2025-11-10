@@ -1,10 +1,14 @@
-import { Pagination } from '@ssa-ui-kit/core';
 import { RowsPerPageDropdown } from '@fintech/components';
+
+import { Pagination } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
-import { FooterProps } from './types';
-import { PaginationWrapper } from './PaginationWrapper';
-import { ControlsWrapper } from './ControlsWrapper';
+
 import { ReadAllButton } from '../';
+
+import { ControlsWrapper } from './ControlsWrapper';
+import { PaginationWrapper } from './PaginationWrapper';
+import { FooterProps } from './types';
 
 export const Footer = ({
   isHidden,

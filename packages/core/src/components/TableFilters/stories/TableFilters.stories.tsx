@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import { StoryComponent } from './StoryComponent';
+
 import { TableFilters } from '..';
 
 type TableFiltersType = typeof TableFilters;

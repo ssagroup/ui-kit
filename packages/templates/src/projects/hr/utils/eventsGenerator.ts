@@ -1,6 +1,9 @@
 import { DateTime, Interval } from 'luxon';
-import * as API from '@/hr/types';
+
 import { DashboardEventsMock as template } from '@hr/hooks/dashboard/__mocks__/dashboardEvents';
+
+import * as API from '@/hr/types';
+
 import { Period } from '../components/Events/types';
 
 const DATE_FORMAT = 'dd-MM-yyyy';

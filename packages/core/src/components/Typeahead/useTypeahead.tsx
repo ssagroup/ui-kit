@@ -1,7 +1,10 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useController, useForm, useFormContext } from 'react-hook-form';
+
 import { OpenChangeReason } from '@floating-ui/react';
+
 import { useElementSize, useUncontrolled } from '@ssa-ui-kit/hooks';
+
 import {
   TypeaheadOptionProps,
   TypeaheadValue,

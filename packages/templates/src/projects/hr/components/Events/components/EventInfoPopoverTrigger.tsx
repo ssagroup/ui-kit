@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { useTheme } from '@emotion/react';
 import { useMergeRefs } from '@floating-ui/react';
-import { PopoverTrigger, usePopoverContext, TableRow } from '@ssa-ui-kit/core';
+
+import { PopoverTrigger, TableRow, usePopoverContext } from '@ssa-ui-kit/core';
 
 export const EventInfoPopoverTrigger = React.forwardRef<
   HTMLElement,

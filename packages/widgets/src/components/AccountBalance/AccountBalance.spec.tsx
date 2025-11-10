@@ -1,7 +1,9 @@
-import { fireEvent } from '@testing-library/dom';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { data } from './stories/fixtures';
+
+import { fireEvent } from '@testing-library/dom';
+
 import { AccountBalance } from './index';
+import { data } from './stories/fixtures';
 
 describe('AccountBalance', () => {
   it('Renders', () => {

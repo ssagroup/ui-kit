@@ -1,7 +1,10 @@
 import { useTheme } from '@emotion/react';
-import { Typography } from '@ssa-ui-kit/core';
-import { useTranslation } from '@contexts';
 import { LongText } from '@fintech/components';
+
+import { Typography } from '@ssa-ui-kit/core';
+
+import { useTranslation } from '@contexts';
+
 import { transformBotTooltipDate } from './helpers';
 import * as S from './styles';
 

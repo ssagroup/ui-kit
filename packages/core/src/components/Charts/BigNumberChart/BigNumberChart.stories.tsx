@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+
 import { DateTime } from 'luxon';
+
+import { type Meta, type StoryObj } from '@storybook/react-webpack5';
+
 import { seededRandom } from '@ssa-ui-kit/utils';
 
 import { BigNumberChart } from './';

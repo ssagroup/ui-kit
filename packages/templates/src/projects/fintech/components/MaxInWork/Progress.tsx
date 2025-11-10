@@ -1,5 +1,7 @@
 import { useTheme } from '@emotion/react';
+
 import { ProgressBar } from '@ssa-ui-kit/core';
+
 import { MaxInWorkProps } from './types';
 
 type ProgressProps = Pick<MaxInWorkProps, 'percent'>;

@@ -1,6 +1,3 @@
-import { BarLineComplexChart } from '@ssa-ui-kit/core';
-import { useElementSize } from '@ssa-ui-kit/hooks';
-
 import { withPanelData } from '@entities/panel';
 import {
   matchPanelDataSource,
@@ -8,6 +5,10 @@ import {
   PanelConfig,
   PanelData,
 } from '@shared/panel';
+
+import { BarLineComplexChart } from '@ssa-ui-kit/core';
+
+import { useElementSize } from '@ssa-ui-kit/hooks';
 
 import { grafanaDataAdapter } from './data-adapters/grafana';
 

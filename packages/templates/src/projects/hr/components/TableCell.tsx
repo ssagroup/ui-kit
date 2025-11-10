@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { TableCell } from '@ssa-ui-kit/core';
 
 export const HRTableCell = styled(TableCell)`

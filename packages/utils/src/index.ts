@@ -1,10 +1,10 @@
 export { callAll } from './utils/CallAll';
-export { throttle } from './utils/throttle';
-export * from './utils/debounce';
+export * from './utils/ClassnameArray/ClassnameArray';
 export * as dateFormatters from './utils/dates/dateFormatters';
+export * from './utils/debounce';
+export * from './utils/objects';
 export { mapObjIndexed } from './utils/objects/mapObjIndexed';
 export { generateRange } from './utils/pagination';
-export * from './utils/objects';
-export * from './utils/types';
 export * from './utils/story';
-export * from './utils/ClassnameArray/ClassnameArray';
+export { throttle } from './utils/throttle';
+export * from './utils/types';

@@ -1,11 +1,14 @@
 import { useTheme } from '@emotion/react';
+
 import {
+  Dropdown,
   DropdownOption,
   Typography,
   Wrapper,
-  Dropdown,
 } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
+
 import { ROWS_PER_PAGE_LIST } from './constants';
 import { RowsPerPageDropdownProps } from './types';
 

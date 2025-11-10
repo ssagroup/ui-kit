@@ -1,11 +1,12 @@
 import { ComponentType } from 'react';
-import { FormContextType, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
-import { FormProps, ThemeProps, withTheme } from '@rjsf/core';
-import styled from '@emotion/styled';
 
+import styled from '@emotion/styled';
+import { FormProps, ThemeProps, withTheme } from '@rjsf/core';
+import { FormContextType, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
+
+import Fields, { generateFields } from './fields';
 import Templates, { generateTemplates } from './templates';
 import Widgets, { generateWidgets } from './widgets';
-import Fields, { generateFields } from './fields';
 
 export function generateTheme<
   T = unknown,
@@ -40,12 +41,12 @@ const Form = styled(UnstyledForm)`
 `;
 
 export {
+  Fields,
   Form,
+  generateFields,
+  generateTemplates,
+  generateWidgets,
   Templates,
   Theme,
   Widgets,
-  Fields,
-  generateTemplates,
-  generateWidgets,
-  generateFields,
 };

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import { Notification } from '@/fintech/types';
+
 import { notificationsQueryMock } from './__mocks__/useNotifications';
 
 type UseNotificationsProps = {

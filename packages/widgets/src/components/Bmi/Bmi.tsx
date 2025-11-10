@@ -1,13 +1,13 @@
 import { Fragment, useEffect, useState } from 'react';
+
 import { css } from '@emotion/react';
 
 import { Card, CardContent, CardHeader, Typography } from '@ssa-ui-kit/core';
 
 import { BmiHeatbar } from './BmiHeatbar';
-import { BmiPointer } from './BmiPointer';
 import { BmiInfo } from './BmiInfo';
 import { BmiLabels } from './BmiLabels';
-
+import { BmiPointer } from './BmiPointer';
 import { ContentWrapper, TitleWrapper } from './styles';
 import { BmiProps } from './types';
 

@@ -1,13 +1,15 @@
 import { useTheme } from '@emotion/react';
+
+import { PopoverOptions } from '../types';
+
 import {
   Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeading,
-  PopoverDescription,
   PopoverClose,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeading,
+  PopoverTrigger,
 } from '..';
-import { PopoverOptions } from '../types';
 
 export const StoryComponent = ({
   interactionsEnabled = 'click',

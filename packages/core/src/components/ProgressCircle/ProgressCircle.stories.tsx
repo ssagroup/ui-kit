@@ -1,9 +1,11 @@
 import React from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+
 import {
-  HeaderTitle,
-  GridWrapper,
   colors,
+  GridWrapper,
+  HeaderTitle,
 } from '@components/Badge/helpers.stories-extra';
 
 import ProgressCircle from './index';

@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+
 import { ProgressCircle, WidgetCard } from '@ssa-ui-kit/core';
 
 export type LoadingPanelProps = {

@@ -1,9 +1,10 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
+
+import { DEFAULT_PER_PAGE_VALUE } from './constants';
 import {
   PaginationContextProps,
   PaginationContextProviderProps,
 } from './types';
-import { DEFAULT_PER_PAGE_VALUE } from './constants';
 
 export const PaginationContext = createContext<PaginationContextProps>(
   {} as PaginationContextProps,

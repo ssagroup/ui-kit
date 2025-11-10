@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
-import { Button, Drawer, Theme, useDrawer } from '@ssa-ui-kit/core';
-
 import { SidebarIcon } from '@shared/icons';
+
+import { Button, Drawer, Theme, useDrawer } from '@ssa-ui-kit/core';
 
 export type PanelSettingsDrawerProps = {
   drawer: ReturnType<typeof useDrawer>;

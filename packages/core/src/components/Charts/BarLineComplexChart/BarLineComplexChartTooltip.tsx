@@ -1,13 +1,17 @@
 import React, { forwardRef } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+
 import { useTheme } from '@emotion/react';
+
 import { path } from '@ssa-ui-kit/utils';
-import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
-import TooltipContent from '@components/TooltipContent';
-import { TooltipContentProps } from '@components/Tooltip/types';
-import Wrapper from '@components/Wrapper';
+
 import Checkbox from '@components/Checkbox';
 import { useFullscreenMode } from '@components/FullscreenModeContext';
+import { TooltipContentProps } from '@components/Tooltip/types';
+import TooltipContent from '@components/TooltipContent';
+import Wrapper from '@components/Wrapper';
+
+import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 
 export const BarLineComplexChartTooltip = forwardRef<
   HTMLDivElement,

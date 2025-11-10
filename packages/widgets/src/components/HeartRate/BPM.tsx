@@ -1,6 +1,7 @@
-import styled from '@emotion/styled';
 import { Theme, useTheme } from '@emotion/react';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+
 import { BMPProps } from './types';
 
 const BPMBase = styled.div`

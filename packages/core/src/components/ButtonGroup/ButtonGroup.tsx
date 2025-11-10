@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+
 import Button from '@components/Button';
 import Typography from '@components/Typography';
-import { ButtonGroupProps, ButtonGroupItem } from './types';
+
 import { ButtonItem } from './styles';
+import { ButtonGroupItem, ButtonGroupProps } from './types';
 
 export const ButtonGroup = ({
   items,

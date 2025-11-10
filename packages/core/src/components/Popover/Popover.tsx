@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { PopoverOptions } from './types';
+
 import { usePopover } from './hooks/usePopover';
 import { PopoverContext } from './hooks/usePopoverContext';
+import { PopoverOptions } from './types';
 
 export const Popover = ({
   children,

@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useMediaQuery } from 'usehooks-ts';
+
 import { ProgressCircle } from '@ssa-ui-kit/core';
+
 import { BotsCountProps } from './types';
 
 const SM_SIZE = 100;

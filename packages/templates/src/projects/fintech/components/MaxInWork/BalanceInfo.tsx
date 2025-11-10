@@ -1,8 +1,12 @@
 import React from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import { Typography } from '@ssa-ui-kit/core';
-import { MaxInWorkProps } from './types';
+
 import { WidgetCardTitle } from '../WidgetCard';
+
+import { MaxInWorkProps } from './types';
 
 type BalanceInfoProps = { text: string } & Pick<MaxInWorkProps, 'percent'>;
 

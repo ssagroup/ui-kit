@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+
 import { Typography, Wrapper } from '@ssa-ui-kit/core';
 
 import { CaloriesProps } from './types';

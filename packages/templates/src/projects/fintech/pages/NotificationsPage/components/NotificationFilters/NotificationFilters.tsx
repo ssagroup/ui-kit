@@ -1,15 +1,16 @@
 import { css } from '@emotion/react';
-import {
-  ButtonGroupItem,
-  ButtonGroup,
-  WithVisibleMD,
-  WithVisibleSM,
-} from '@ssa-ui-kit/core';
 import { useHeader } from '@fintech/contexts';
 import { isTruthy } from '@fintech/utils';
 
-import { NotificationFiltersProps } from './types';
+import {
+  ButtonGroup,
+  ButtonGroupItem,
+  WithVisibleMD,
+  WithVisibleSM,
+} from '@ssa-ui-kit/core';
+
 import { ALL_FILTER_ID, UNREAD_FILTER_ID } from './consts';
+import { NotificationFiltersProps } from './types';
 
 const buttonStyles = css`
   &:disabled {

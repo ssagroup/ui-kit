@@ -1,9 +1,12 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
+
 import { DateTime } from 'luxon';
+
 import Wrapper from '@components/Wrapper';
+
+import * as S from '../styles';
 import { useDatePickerContext } from '../useDatePickerContext';
 import { getYearsList } from '../utils';
-import * as S from '../styles';
 
 export const YearsView = () => {
   const {

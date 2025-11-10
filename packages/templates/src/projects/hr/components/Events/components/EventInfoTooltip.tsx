@@ -1,11 +1,14 @@
 import { useTheme } from '@emotion/react';
-import { Card } from '@ssa-ui-kit/core';
-import { useDeviceType } from '@ssa-ui-kit/hooks';
 import { formatDate } from '@hr/utils';
 import { UserPlaceholder } from '@icons';
+
+import { Card } from '@ssa-ui-kit/core';
+
+import { useDeviceType } from '@ssa-ui-kit/hooks';
+
 import { EventInfoAvatar } from './EventInfoAvatar';
-import { WithEventLink } from './WithEventLink';
 import { useEventInfoContext } from './EventInfoContext';
+import { WithEventLink } from './WithEventLink';
 
 export const EventInfoTooltip = () => {
   const theme = useTheme();

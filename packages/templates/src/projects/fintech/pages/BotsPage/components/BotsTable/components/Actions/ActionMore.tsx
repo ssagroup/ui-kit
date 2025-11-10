@@ -1,5 +1,7 @@
 import { MouseEvent, MouseEventHandler, useState } from 'react';
+
 import { useTheme } from '@emotion/react';
+
 import {
   Icon,
   Popover,
@@ -7,8 +9,10 @@ import {
   PopoverDescription,
   PopoverTrigger,
 } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
 import { showSimpleToast } from '@/fintech/utils';
+
 import { ActionItem } from './ActionItem';
 import { ActionsWrapper } from './ActionsWrapper';
 

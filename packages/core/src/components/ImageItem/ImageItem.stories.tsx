@@ -1,4 +1,5 @@
 import type { Meta } from '@storybook/react-webpack5';
+
 import { ImageItem } from './ImageItem';
 
 export default {

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import type { Meta } from '@storybook/react-webpack5';
 
 import { MealNutrients } from './index';
-import { MealNutrientsProps } from './types';
-
 import { mockStaticApi } from './mockMealNutrientsRequest';
+import { MealNutrientsProps } from './types';
 const { getData, getOptions } = mockStaticApi;
 
 export default {

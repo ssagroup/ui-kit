@@ -1,4 +1,4 @@
-import { useQuery, QueryOptions } from '@shared/query';
+import { QueryOptions, useQuery } from '@shared/query';
 import { InfraDashTransport, useTransport } from '@shared/transport';
 
 type Options = QueryOptions & {

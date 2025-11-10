@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
+
 import {
   Typography,
   usePaginationContext,
   WithPagination,
 } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
 import { ROWS_PER_PAGE_LIST } from '@/fintech/components';
+
 import {
+  ALL_FILTER_ID,
+  Footer,
+  NoNotifications,
   NotificationFilters,
   NotificationsList,
-  NoNotifications,
-  Footer,
-  ALL_FILTER_ID,
   UNREAD_FILTER_ID,
 } from './components';
 import { useNotifications, useReadManyMutation } from './hooks';

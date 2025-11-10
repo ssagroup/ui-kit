@@ -1,15 +1,17 @@
 import React from 'react';
-import type { Meta } from '@storybook/react-webpack5';
-import { useTheme } from '@emotion/react';
-import Icon from '@components/Icon';
-import {
-  HeaderTitle,
-  GridWrapper,
-  colors,
-  sizes,
-  icons,
-} from './helpers.stories-extra';
 
+import { useTheme } from '@emotion/react';
+import type { Meta } from '@storybook/react-webpack5';
+
+import Icon from '@components/Icon';
+
+import {
+  colors,
+  GridWrapper,
+  HeaderTitle,
+  icons,
+  sizes,
+} from './helpers.stories-extra';
 import Badge from './index';
 
 export default {

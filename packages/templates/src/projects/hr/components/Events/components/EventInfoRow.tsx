@@ -1,20 +1,24 @@
 import { useTheme } from '@emotion/react';
 import { offset } from '@floating-ui/react';
-import { Wrapper, useTranslation, TableRow } from '@ssa-ui-kit/core';
-import { useMinLGMediaQuery, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
 import { ComponentPopover, ComponentPopoverProps } from '@hr/components';
 import { formatDate } from '@hr/utils';
 import { UserPlaceholder } from '@icons';
-import { EventInfoCell } from './EventInfoCell';
-import { EventInfoTooltip } from './EventInfoTooltip';
+
+import { TableRow, useTranslation, Wrapper } from '@ssa-ui-kit/core';
+
+import { useMinLGMediaQuery, useMinMDMediaQuery } from '@ssa-ui-kit/hooks';
+
+import { EventInfoRowProps } from '../types';
+
 import { EventInfoAvatar } from './EventInfoAvatar';
-import { WithEventLink } from './WithEventLink';
+import { EventInfoCell } from './EventInfoCell';
 import {
   EventInfoContextType,
   EventInfoProvider,
   useEventInfoContext,
 } from './EventInfoContext';
-import { EventInfoRowProps } from '../types';
+import { EventInfoTooltip } from './EventInfoTooltip';
+import { WithEventLink } from './WithEventLink';
 
 const EventInfoRowComponent = ({
   itemLabel,

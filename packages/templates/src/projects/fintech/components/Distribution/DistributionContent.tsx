@@ -1,9 +1,11 @@
 import { useTheme } from '@emotion/react';
+
 import { ProgressBar } from '@ssa-ui-kit/core';
-import { DistributionContentProps } from './types';
+
 import { ContentWrapper } from './ContentWrapper';
 import { InfoBlock } from './InfoBlock';
 import * as S from './styles';
+import { DistributionContentProps } from './types';
 
 export const DistributionContent = ({
   leftPercent,

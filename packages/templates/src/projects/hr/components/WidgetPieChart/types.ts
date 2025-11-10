@@ -1,5 +1,6 @@
 import { SerializedStyles } from '@emotion/react';
 import { CategoricalColorSchemeId } from '@nivo/colors';
+
 import { PieChartFeatures } from '@ssa-ui-kit/core';
 
 export interface WidgetPieChartProps {

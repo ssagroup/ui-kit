@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 import userEvent from '@testing-library/user-event';
-import { links } from './stories/mockData';
-import { MemoryRouterDecorator } from './stories/decorators';
+
 import { LinksTabBar } from './index';
+import { MemoryRouterDecorator } from './stories/decorators';
+import { links } from './stories/mockData';
 
 function setup(Component: React.ElementType) {
   return {

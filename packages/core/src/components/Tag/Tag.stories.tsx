@@ -1,12 +1,15 @@
 import React from 'react';
-import type { Meta } from '@storybook/react-webpack5';
+
 import { css } from '@emotion/react';
+import type { Meta } from '@storybook/react-webpack5';
+
 import {
-  sizes,
   colors,
-  HeaderTitle,
   GridWrapper,
+  HeaderTitle,
+  sizes,
 } from '@components/Badge/helpers.stories-extra';
+
 import Tag from './index';
 
 export default {

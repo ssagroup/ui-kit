@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { useTheme } from '@emotion/react';
+
 import { css } from '@emotion/css';
+import { useTheme } from '@emotion/react';
+
 import { WithLink } from '@ssa-ui-kit/core';
+
+import { AccountBalanceProvider } from './AccountBalanceContext';
 import { BalancePieChart } from './BalancePieChart';
 import { AccountBalanceProps } from './types';
-import { AccountBalanceProvider } from './AccountBalanceContext';
 
 export const AccountBalance = ({
   title = 'Balance',

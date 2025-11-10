@@ -1,7 +1,9 @@
 import { css, useTheme } from '@emotion/react';
-import Wrapper from '@components/Wrapper';
+
 import Icon from '@components/Icon';
 import type { MapIconsType, SVGProps } from '@components/Icon/types';
+import Wrapper from '@components/Wrapper';
+
 import { useCollapsibleNavBarContext } from '../CollapsibleNavBarContext';
 
 export const TriggerIcon = ({

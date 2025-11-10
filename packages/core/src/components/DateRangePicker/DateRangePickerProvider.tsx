@@ -1,6 +1,6 @@
-import { DateRangePickerContextProps, DateRangePickerProps } from './types';
-import { useDateRangePicker } from './hooks';
 import { DateRangePickerContext } from './DateRangePickerContext';
+import { useDateRangePicker } from './hooks';
+import { DateRangePickerContextProps, DateRangePickerProps } from './types';
 
 export const DateRangePickerProvider = ({
   children,

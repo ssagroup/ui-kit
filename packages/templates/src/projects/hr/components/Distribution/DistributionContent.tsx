@@ -1,10 +1,12 @@
 import { CSSProperties } from 'react';
+
 import { css } from '@emotion/css';
 import { useTheme } from '@emotion/react';
-import { DistributionContentProps, DistributionContentSingle } from './types';
+
 import { ContentWrapper } from './ContentWrapper';
 import { InfoBlock } from './InfoBlock';
 import * as S from './styles';
+import { DistributionContentProps, DistributionContentSingle } from './types';
 
 export const DistributionContent = ({
   data,

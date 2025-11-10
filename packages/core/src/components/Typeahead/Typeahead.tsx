@@ -1,20 +1,22 @@
 import { useTheme } from '@emotion/react';
+
+import FormHelperText from '@components/FormHelperText';
+import Label from '@components/Label';
 import {
   Popover,
   PopoverContent,
   PopoverDescription,
 } from '@components/Popover';
-import FormHelperText from '@components/FormHelperText';
 import Wrapper from '@components/Wrapper';
-import Label from '@components/Label';
-import { TypeaheadContext } from './Typeahead.context';
-import { useTypeahead } from './useTypeahead';
+
 import {
+  TypeaheadFocusTrap,
   TypeaheadOptions,
   TypeaheadTrigger,
-  TypeaheadFocusTrap,
 } from './components';
+import { TypeaheadContext } from './Typeahead.context';
 import { TypeaheadProps } from './types';
+import { useTypeahead } from './useTypeahead';
 
 /**
  * The structure of the component:

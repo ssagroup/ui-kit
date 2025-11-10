@@ -1,5 +1,6 @@
-import BadgeBase from '@components/Badge/BadgeBase';
 import styled from '@emotion/styled';
+
+import BadgeBase from '@components/Badge/BadgeBase';
 
 const MultipleDropdownNotification = styled(BadgeBase)`
   min-width: 18px;

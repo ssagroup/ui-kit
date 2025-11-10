@@ -1,4 +1,5 @@
-import type { UseFormReturn, FieldError } from 'react-hook-form';
+import type { FieldError, UseFormReturn } from 'react-hook-form';
+
 import { InputProps } from '@components/Input/types';
 
 export interface TextFieldProps

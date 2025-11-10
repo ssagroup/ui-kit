@@ -1,12 +1,14 @@
+import React from 'react';
+
 import {
-  renderHook,
-  screen,
   act,
   fireEvent,
   render,
+  renderHook,
+  screen,
 } from '@testing-library/react';
+
 import { useClickOutside } from './useClickOutside';
-import React from 'react';
 
 describe('Hook: useClickOutside', () => {
   it('useClickOutside Hook works correctly', () => {

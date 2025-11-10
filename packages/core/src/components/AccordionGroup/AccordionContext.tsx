@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
+
 import { AccordionGroupContextProps, OpenedAccordion } from './types';
 
 export const AccordionGroupContext = createContext<AccordionGroupContextProps>(

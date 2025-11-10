@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { MealNutrientsProps, MealNutrients } from '@ssa-ui-kit/widgets';
+import { useEffect, useState } from 'react';
+
 import { useApi } from '@ssa-ui-kit/hooks';
+import { MealNutrients, MealNutrientsProps } from '@ssa-ui-kit/widgets';
 
 import API from '@apis/index';
 

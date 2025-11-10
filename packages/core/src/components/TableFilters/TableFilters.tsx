@@ -4,29 +4,25 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
+
 import { assocPath } from '@ssa-ui-kit/utils';
+
 import {
-  AccordionTitle,
   AccordionGroup,
   AccordionGroupContextProvider,
+  AccordionTitle,
 } from '@components/AccordionGroup';
+import { CheckboxProps } from '@components/Checkbox';
 import {
   Popover,
   PopoverContent,
   PopoverDescription,
 } from '@components/Popover';
-import { CheckboxProps } from '@components/Checkbox';
+
 import {
   tableFilterDividerStyles,
   tableFilterPopoverContentStyles,
 } from './styles';
-import {
-  TableFilterCheckbox,
-  TableFilterTriggerWithNotification,
-  TableFiltersAccordion,
-  TableFiltersAccordionContent,
-  TableFiltersButtons,
-} from '.';
 import { TableFilterConfig, TableFiltersView } from './types';
 import {
   getCheckboxChangedItems,
@@ -34,6 +30,14 @@ import {
   getResetData,
   getSubmitData,
 } from './utils/handlers';
+
+import {
+  TableFilterCheckbox,
+  TableFiltersAccordion,
+  TableFiltersAccordionContent,
+  TableFiltersButtons,
+  TableFilterTriggerWithNotification,
+} from '.';
 
 export const TableFilters = ({
   checkboxData = {} as TableFilterConfig,

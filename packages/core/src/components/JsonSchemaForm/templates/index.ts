@@ -5,20 +5,20 @@ import {
   TemplatesType,
 } from '@rjsf/utils';
 
-import { SubmitButton } from './SubmitButton';
+import { ArrayFieldItemTemplate } from './ArrayFieldItemTemplate';
+import { ArrayFieldTemplate } from './ArrayFieldTemplate';
+import { BaseInputTemplate } from './BaseInputTemplate';
+import { FieldTemplate } from './FieldTemplate';
 import {
   AddButton,
-  RemoveButton,
   CopyButton,
   MoveDownButton,
   MoveUpButton,
+  RemoveButton,
 } from './IconButton';
-import { BaseInputTemplate } from './BaseInputTemplate';
-import { ArrayFieldItemTemplate } from './ArrayFieldItemTemplate';
-import { ArrayFieldTemplate } from './ArrayFieldTemplate';
-import { TitleFieldTemplate } from './TitleFieldTemplate';
 import { ObjectFieldTemplate } from './ObjectFieldTemplate';
-import { FieldTemplate } from './FieldTemplate';
+import { SubmitButton } from './SubmitButton';
+import { TitleFieldTemplate } from './TitleFieldTemplate';
 
 export function generateTemplates<
   T = unknown,

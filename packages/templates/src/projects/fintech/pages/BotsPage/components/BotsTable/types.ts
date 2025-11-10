@@ -1,5 +1,6 @@
-import { COLUMN_API_NAMES } from './consts';
 import { AllBots } from '../../__mock__/allBots';
+
+import { COLUMN_API_NAMES } from './consts';
 
 export type BotsTableProps = {
   response: AllBots;

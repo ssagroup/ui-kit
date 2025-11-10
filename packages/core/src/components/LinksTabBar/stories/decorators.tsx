@@ -1,4 +1,5 @@
-import { MemoryRouter, Route, Routes, Outlet } from 'react-router-dom';
+import { MemoryRouter, Outlet, Route, Routes } from 'react-router-dom';
+
 import { links } from './mockData';
 
 export const RoutePlaceholder = ({

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { LoadingPanel } from '@components/LoadingPanel';
-import { ErrorPanel } from '@components/ErrorPanel';
 import { Panel, PanelData } from '@shared/panel';
+
+import { ErrorPanel } from '@components/ErrorPanel';
+import { LoadingPanel } from '@components/LoadingPanel';
 
 import { usePanelData } from './usePanelData';
 

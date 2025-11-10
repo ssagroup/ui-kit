@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+
 import { UserProfile } from './UserProfile';
 
 describe('UserProfile', () => {

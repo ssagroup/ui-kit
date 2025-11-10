@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import {
-  Wrapper,
-  Icon,
-  TableRow,
-  TableHead,
-  TableCellHeader,
-} from '@ssa-ui-kit/core';
-import { useTranslation } from '@contexts';
+
 import { useTable } from '@fintech/contexts';
+
+import {
+  Icon,
+  TableCellHeader,
+  TableHead,
+  TableRow,
+  Wrapper,
+} from '@ssa-ui-kit/core';
+
+import { useTranslation } from '@contexts';
+
 import { HeaderProps, SortInfo } from '../types';
 
 export const Header = ({

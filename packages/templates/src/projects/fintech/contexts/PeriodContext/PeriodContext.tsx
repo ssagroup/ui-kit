@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
+
 import { PERIOD_DAY } from '@fintech/constants';
 import { RequestPeriod } from '@fintech/types';
+
 import { PeriodContextContent } from './types';
 
 export const PeriodContext = createContext<PeriodContextContent>({

@@ -1,6 +1,8 @@
 import { useTheme } from '@emotion/react';
-import { Typography, Wrapper } from '@ssa-ui-kit/core';
 import { Bot } from '@fintech/types';
+
+import { Typography, Wrapper } from '@ssa-ui-kit/core';
+
 import { useTranslation } from '@contexts';
 
 export const BotVersionConfirmationContent = ({

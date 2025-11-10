@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+
 import { Tag } from '@ssa-ui-kit/core';
 
 export const TableTag = ({

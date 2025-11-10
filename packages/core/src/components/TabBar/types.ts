@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+
 import { CommonProps } from '@global-types/emotion';
 
 export interface TabProps extends CommonProps {

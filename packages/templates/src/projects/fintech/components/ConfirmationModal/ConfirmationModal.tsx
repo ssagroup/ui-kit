@@ -1,7 +1,9 @@
-import { Modal, ModalOpenButton, ModalContent } from '@ssa-ui-kit/core';
 import { useModals } from '@fintech/modals';
-import { ModalHeader } from './ModalHeader';
+
+import { Modal, ModalContent, ModalOpenButton } from '@ssa-ui-kit/core';
+
 import { ModalButtons } from './ModalButtons';
+import { ModalHeader } from './ModalHeader';
 import { ModalMessage } from './ModalMessage';
 import { ConfirmationModalProps } from './types';
 

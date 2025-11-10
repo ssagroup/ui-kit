@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import styled from '@emotion/styled';
+
 import { CardBase } from '@ssa-ui-kit/core';
+
 import { TradingInfoCardWrapperProps } from './types';
 
 const InfoCardWrapper = styled.div<{ onClick?: () => void; to?: string }>`

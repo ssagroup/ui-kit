@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import { Color } from '@rc-component/color-picker';
+
 import Wrapper from '@components/Wrapper';
+
 import { BaseInput } from './BaseInput';
 
 export interface RgbInputProps {

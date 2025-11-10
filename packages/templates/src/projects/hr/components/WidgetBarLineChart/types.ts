@@ -1,4 +1,5 @@
 import { BarLineComplexChart } from '@ssa-ui-kit/core';
+
 import { DashboardGraphsItem } from '@/hr/types';
 
 type BarLineComplexChartProps = Parameters<typeof BarLineComplexChart>[0];

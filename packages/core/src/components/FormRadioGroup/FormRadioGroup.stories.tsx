@@ -1,13 +1,14 @@
 import { Fragment } from 'react';
-import { Meta } from '@storybook/react-webpack5';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import Typography from '@components/Typography';
+import { Meta } from '@storybook/react-webpack5';
+
 import Button from '@components/Button';
 import Radio from '@components/Radio';
+import Typography from '@components/Typography';
 
-import { FormRadioGroupProps } from './types';
 import FormRadioGroup from './FormRadioGroup';
+import { FormRadioGroupProps } from './types';
 
 export default {
   title: 'Components/Radio Buttons/FormRadioGroup',

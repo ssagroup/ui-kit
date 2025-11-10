@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useBotStatus, useBots } from '@fintech/contexts';
-import { showSimpleToast } from '@fintech/utils';
+
+import { useBots, useBotStatus } from '@fintech/contexts';
 import {
   BOT_STOPPED,
   BOT_STOPPING,
 } from '@fintech/contexts/BotStatus/constants';
+import { showSimpleToast } from '@fintech/utils';
+
 import { useTranslation } from '@contexts';
 
 export const useBotStopMutation = (id: number) => {

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { NotificationCard } from '@components/NotificationCard';
 
 const Main = styled.main`
