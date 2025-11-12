@@ -21,7 +21,7 @@ export const ContentWrapper = (theme: Theme) => css`
   width: 224px;
   background: ${theme.colors.greyPopoverLight};
   border-radius: 20px;
-  box-shadow: 0px 4px 15px 0px ${theme.colors.black25};
+  box-shadow: 0 4px 15px 0 ${theme.colors.black25};
 `;
 
 export const UserInfo = css`
@@ -33,7 +33,7 @@ export const UserInfo = css`
 export const LogoutWrapper = (theme: Theme) => css`
   width: 100%;
   padding: 10px 10px 18px 10px;
-  border-top: 0.4px solid ${theme.colors.greyGraphite70};
+  border-top: 0.5px solid ${theme.colors.greyGraphite70};
 `;
 
 export const CustomButton = css`
@@ -56,6 +56,6 @@ export const AdditionalInfo = (theme: Theme) => css`
 export const CustomContentWrapper = (theme: Theme) => css`
   width: 100%;
   padding: 10px;
-  border-top: 0.4px solid ${theme.colors.greyGraphite70};
-  border-bottom: 0.4px solid ${theme.colors.greyGraphite70};
+  border-top: 0.5px solid ${theme.colors.greyGraphite70};
+  border-bottom: 0.5px solid ${theme.colors.greyGraphite70};
 `;
