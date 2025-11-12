@@ -74,12 +74,6 @@ export const Cell = styled.div`
   text-align: left;
 `;
 
-export const Value = styled.span`
-  font-size: 13px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.greyDarker};
-`;
-
 export const ButtonsWrapper = styled(Wrapper)`
   display: flex;
   flex-direction: row;
@@ -104,14 +98,15 @@ const baseButtonStyles = (theme: Theme) => css`
     background: ${theme.colors.grey};
     cursor: not-allowed;
   }
+
+  & > span,
+  & > * {
+    color: inherit;
+  }
 `;
 
 export const BorrowButton = (theme: Theme) => css`
   ${baseButtonStyles(theme)};
-
-  & > * {
-    color: inherit;
-  }
 
   background: linear-gradient(
     247deg,
@@ -135,10 +130,6 @@ export const BorrowButton = (theme: Theme) => css`
 
 export const RepayButton = (theme: Theme) => css`
   ${baseButtonStyles(theme)};
-
-  & > * {
-    color: inherit;
-  }
 
   background: linear-gradient(
     99.26deg,

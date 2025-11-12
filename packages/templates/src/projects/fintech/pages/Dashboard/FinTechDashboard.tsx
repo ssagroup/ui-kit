@@ -383,14 +383,30 @@ export const FinTechDashboard = () => {
         />
         <MarginInfoWithLoader
           multiplier={3}
-          stableCoin="USDT"
-          cryptoCoin="BTC"
-          stableCoinBorrowed="1,250.50"
-          stableCoinInterestRate="5.2%"
-          stableCoinTotalInterest="65.03"
-          cryptoCoinBorrowed="0.05"
-          cryptoCoinInterestRate="4.8%"
-          cryptoCoinTotalInterest="0.0024"
+          base="USDT"
+          quote="BTC"
+          baseBorrowed={
+            <>
+              100 <strong>USD</strong> ≈0.000000001 <strong>BTC</strong> (x2)
+            </>
+          }
+          baseInterestRate="5.2%"
+          baseTotalInterest={
+            <>
+              25 <strong>USDT</strong> (x1.5)
+            </>
+          }
+          quoteBorrowed={
+            <>
+              ≈0.000000001 <strong>BTC</strong>
+            </>
+          }
+          quoteInterestRate="4.8%"
+          quoteTotalInterest={
+            <>
+              0.0024 <strong>BTC</strong>
+            </>
+          }
           disableBorrow={false}
           disableRepay={false}
           onBorrow={() => {

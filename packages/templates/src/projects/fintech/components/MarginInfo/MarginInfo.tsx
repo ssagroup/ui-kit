@@ -3,18 +3,32 @@ import { useTranslation } from '@contexts';
 import { Button } from '@ssa-ui-kit/core';
 import { WidgetCard, WithWidgetLoader } from '..';
 import { MarginInfoProps } from './types';
-import * as S from './styles';
+import {
+  Table,
+  TableHeader,
+  HeaderRow,
+  HeaderLabel,
+  HeaderCell,
+  TableBody,
+  TableRow,
+  RowLabel,
+  RowCells,
+  Cell,
+  ButtonsWrapper,
+  BorrowButton,
+  RepayButton,
+} from './styles';
 
 export const MarginInfo = ({
   multiplier,
-  stableCoin,
-  cryptoCoin,
-  stableCoinBorrowed,
-  stableCoinInterestRate,
-  stableCoinTotalInterest,
-  cryptoCoinBorrowed,
-  cryptoCoinInterestRate,
-  cryptoCoinTotalInterest,
+  base,
+  quote,
+  baseBorrowed,
+  baseInterestRate,
+  baseTotalInterest,
+  quoteBorrowed,
+  quoteInterestRate,
+  quoteTotalInterest,
   hideInterestRate = false,
   disableBorrow = false,
   disableRepay = false,
@@ -41,6 +55,7 @@ export const MarginInfo = ({
           })}
           headerClassName={css({
             marginBottom: 0,
+            // it does work differently for 'balance' component and this one (h3), thus i override styles
             '& h3': {
               [theme.mediaQueries.md]: {
                 fontSize: '20px',
@@ -53,60 +68,60 @@ export const MarginInfo = ({
             maxWidth: 'initial',
             height: '100%',
           })}>
-          <S.Table>
-            <S.TableHeader>
-              <S.HeaderRow>
-                <S.HeaderLabel></S.HeaderLabel>
-                <S.HeaderCell>{stableCoin}</S.HeaderCell>
-                <S.HeaderCell>{cryptoCoin}</S.HeaderCell>
-              </S.HeaderRow>
-            </S.TableHeader>
+          <Table>
+            <TableHeader>
+              <HeaderRow>
+                <HeaderLabel></HeaderLabel>
+                <HeaderCell>{base}</HeaderCell>
+                <HeaderCell>{quote}</HeaderCell>
+              </HeaderRow>
+            </TableHeader>
 
-            <S.TableBody>
-              <S.TableRow>
-                <S.RowLabel>Borrowed</S.RowLabel>
-                <S.RowCells>
-                  <S.Cell>{stableCoinBorrowed}</S.Cell>
-                  <S.Cell>{cryptoCoinBorrowed}</S.Cell>
-                </S.RowCells>
-              </S.TableRow>
+            <TableBody>
+              <TableRow>
+                <RowLabel>Borrowed</RowLabel>
+                <RowCells>
+                  <Cell>{baseBorrowed}</Cell>
+                  <Cell>{quoteBorrowed}</Cell>
+                </RowCells>
+              </TableRow>
 
               {!hideInterestRate && (
-                <S.TableRow>
-                  <S.RowLabel>Interest Rate</S.RowLabel>
-                  <S.RowCells>
-                    <S.Cell>{stableCoinInterestRate}</S.Cell>
-                    <S.Cell>{cryptoCoinInterestRate}</S.Cell>
-                  </S.RowCells>
-                </S.TableRow>
+                <TableRow>
+                  <RowLabel>Interest Rate</RowLabel>
+                  <RowCells>
+                    <Cell>{baseInterestRate}</Cell>
+                    <Cell>{quoteInterestRate}</Cell>
+                  </RowCells>
+                </TableRow>
               )}
 
-              <S.TableRow>
-                <S.RowLabel>Total Interest</S.RowLabel>
-                <S.RowCells>
-                  <S.Cell>{stableCoinTotalInterest}</S.Cell>
-                  <S.Cell>{cryptoCoinTotalInterest}</S.Cell>
-                </S.RowCells>
-              </S.TableRow>
-            </S.TableBody>
-          </S.Table>
+              <TableRow>
+                <RowLabel>Total Interest</RowLabel>
+                <RowCells>
+                  <Cell>{baseTotalInterest}</Cell>
+                  <Cell>{quoteTotalInterest}</Cell>
+                </RowCells>
+              </TableRow>
+            </TableBody>
+          </Table>
 
-          <S.ButtonsWrapper>
+          <ButtonsWrapper>
             <Button
               variant="custom"
-              css={S.BorrowButton(theme)}
+              css={BorrowButton(theme)}
               onClick={onBorrow}
               isDisabled={disableBorrow || !onBorrow}
               text="Borrow"
             />
             <Button
               variant="custom"
-              css={S.RepayButton(theme)}
+              css={RepayButton(theme)}
               onClick={onRepay}
               isDisabled={disableRepay || !onRepay}
               text="Repay"
             />
-          </S.ButtonsWrapper>
+          </ButtonsWrapper>
         </WidgetCard>
       )}
     </ClassNames>

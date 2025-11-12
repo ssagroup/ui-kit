@@ -1,13 +1,13 @@
 export interface MarginInfoProps {
   multiplier?: number;
-  stableCoin: React.ReactNode;
-  cryptoCoin: React.ReactNode;
-  stableCoinBorrowed: React.ReactNode;
-  stableCoinInterestRate: React.ReactNode;
-  stableCoinTotalInterest: React.ReactNode;
-  cryptoCoinBorrowed: React.ReactNode;
-  cryptoCoinInterestRate: React.ReactNode;
-  cryptoCoinTotalInterest: React.ReactNode;
+  base: React.ReactNode;
+  quote: React.ReactNode;
+  baseBorrowed: React.ReactNode;
+  baseInterestRate: React.ReactNode;
+  baseTotalInterest: React.ReactNode;
+  quoteBorrowed: React.ReactNode;
+  quoteInterestRate: React.ReactNode;
+  quoteTotalInterest: React.ReactNode;
   hideInterestRate?: boolean;
   disableBorrow?: boolean;
   disableRepay?: boolean;
