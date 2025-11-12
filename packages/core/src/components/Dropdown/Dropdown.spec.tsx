@@ -392,10 +392,10 @@ describe('Dropdown', () => {
     expect(getByRole('combobox')).toHaveAttribute('type', 'button');
   });
 
-  it('renders name attribute on toggle when provided via props.toggle', () => {
+  it('renders name attribute on toggle when provided via dropdownProps.toggleButtonProps', () => {
     const { getByTestId } = setup({
-      props: {
-        toggle: {
+      dropdownProps: {
+        toggleButtonProps: {
           name: 'testDropdown',
         },
       },
@@ -406,10 +406,10 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('name', 'testDropdown');
   });
 
-  it('renders name attribute on base when provided via props.base', () => {
+  it('renders name attribute on base when provided via dropdownProps.baseProps', () => {
     const { getByTestId } = setup({
-      props: {
-        base: {
+      dropdownProps: {
+        baseProps: {
           name: 'testBase',
         },
       },
@@ -419,10 +419,10 @@ describe('Dropdown', () => {
     expect(dropdownEl).toHaveAttribute('name', 'testBase');
   });
 
-  it('renders data-testid attribute on arrow when provided via props.arrow', () => {
+  it('renders data-testid attribute on arrow when provided via dropdownProps.toggleButtonArrowProps', () => {
     const { getByTestId } = setup({
-      props: {
-        arrow: {
+      dropdownProps: {
+        toggleButtonArrowProps: {
           'data-testid': 'testArrow',
         },
       },

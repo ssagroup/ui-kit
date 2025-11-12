@@ -21,28 +21,28 @@ export default {
   title: 'Components/Dropdown',
   component: Dropdown,
   argTypes: {
-    'props.toggle.name': {
+    'dropdownProps.toggleButtonProps.name': {
       description: 'Custom name attribute for dropdown div.',
       control: { type: 'text' },
       table: {
         type: { summary: 'string' },
-        category: 'props',
+        category: 'dropdownProps',
       },
     },
-    'props.base.name': {
+    'dropdownProps.baseProps.name': {
       description: 'Custom name attribute for the underlying button.',
       control: { type: 'text' },
       table: {
         type: { summary: 'string' },
-        category: 'props',
+        category: 'dropdownProps',
       },
     },
-    'props.arrow.data-testId': {
+    'dropdownProps.toggleButtonArrowProps.data-testId': {
       description: 'Custom name attribute for the arrow icon.',
       control: { type: 'text' },
       table: {
         type: { summary: 'string' },
-        category: 'props',
+        category: 'dropdownProps',
       },
     },
     onChange: {
@@ -79,7 +79,7 @@ export default {
 export const Basic: StoryObj = (args: Args) => {
   return (
     <Dropdown
-      props={args.props}
+      dropdownProps={args.dropdownProps}
       selectedItem={items[2]}
       isDisabled={args.isDisabled}>
       {items.map((item) => (
@@ -93,14 +93,14 @@ export const Basic: StoryObj = (args: Args) => {
 
 Basic.args = {
   isDisabled: false,
-  props: {
-    base: {
+  dropdownProps: {
+    baseProps: {
       name: 'dropdown',
     },
-    toggle: {
+    toggleButtonProps: {
       name: 'dropdownToggleName',
     },
-    arrow: {
+    toggleButtonArrowProps: {
       'data-testId': 'test-attr',
     },
   },

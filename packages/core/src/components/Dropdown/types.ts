@@ -24,13 +24,13 @@ export interface DropdownProps<P extends DropdownOptionProps>
   children?: React.ReactNode;
   className?: string;
   isOpen?: boolean;
-  props?: {
-    base?: React.HTMLAttributes<HTMLDivElement>;
-    toggle?: Omit<
+  dropdownProps?: {
+    baseProps?: React.HTMLAttributes<HTMLDivElement>;
+    toggleButtonProps?: Omit<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
       ControlledButtonProps
     >;
-    arrow?: Omit<IconProps, 'name' | 'size'>;
+    toggleButtonArrowProps?: Omit<IconProps, 'name' | 'size'>;
   };
 }
 
