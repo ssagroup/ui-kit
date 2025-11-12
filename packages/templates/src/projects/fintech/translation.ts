@@ -250,5 +250,8 @@ export const translationConfig: JSONObject = {
         },
       },
     },
+    marginInfo: {
+      title: 'Margin Info',
+    },
   },
 };

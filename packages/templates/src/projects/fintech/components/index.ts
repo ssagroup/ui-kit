@@ -13,6 +13,7 @@ export * from './GrowthIndexIcon';
 export * from './HourlyPNL';
 export * from './KeeperRuns';
 export * from './LongText';
+export * from './MarginInfo';
 export * from './MarketRoles';
 export * from './MaxInWork';
 export * from './NoDataYet';
