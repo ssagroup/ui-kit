@@ -10,7 +10,7 @@ export interface MarginInfoProps {
   quoteBorrowed: ReactNode;
   quoteInterestRate: ReactNode;
   quoteTotalInterest: ReactNode;
-  hideInterestRate?: boolean;
+  showInterestRate?: boolean;
   disableBorrow?: boolean;
   disableRepay?: boolean;
   onBorrow?: () => void;

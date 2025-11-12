@@ -17,6 +17,10 @@ import {
   ButtonsWrapper,
   BorrowButton,
   RepayButton,
+  widgetCardStyles,
+  wrapperStyles,
+  headerStyles,
+  contentStyles,
 } from './styles';
 
 export const MarginInfo = ({
@@ -29,7 +33,7 @@ export const MarginInfo = ({
   quoteBorrowed,
   quoteInterestRate,
   quoteTotalInterest,
-  hideInterestRate = false,
+  showInterestRate = false,
   disableBorrow = false,
   disableRepay = false,
   onBorrow,
@@ -47,27 +51,10 @@ export const MarginInfo = ({
       {({ css }) => (
         <WidgetCard
           title={title}
-          css={{
-            gridArea: 'margin-info',
-          }}
-          wrapperClassName={css({
-            gridArea: 'margin-info',
-          })}
-          headerClassName={css({
-            marginBottom: 0,
-            // it does work differently for 'balance' component and this one (h3), thus I override styles
-            '& h3': {
-              [theme.mediaQueries.md]: {
-                fontSize: '20px',
-              },
-            },
-          })}
-          contentClassName={css({
-            display: 'flex',
-            flexDirection: 'column',
-            maxWidth: 'initial',
-            height: '100%',
-          })}>
+          css={widgetCardStyles}
+          wrapperClassName={css(wrapperStyles)}
+          headerClassName={css(headerStyles)}
+          contentClassName={css(contentStyles)}>
           <Table>
             <TableHeader>
               <HeaderRow>
@@ -86,7 +73,7 @@ export const MarginInfo = ({
                 </RowCells>
               </TableRow>
 
-              {!hideInterestRate && (
+              {showInterestRate && (
                 <TableRow>
                   <RowLabel>Interest Rate</RowLabel>
                   <RowCells>

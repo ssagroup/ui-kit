@@ -156,3 +156,22 @@ export const RepayButton = (theme: Theme) => css`
     background: ${theme.colors.greenDark};
   }
 `;
+
+export const widgetCardStyles = css({
+  gridArea: 'margin-info',
+});
+
+export const wrapperStyles = css({
+  gridArea: 'margin-info',
+});
+
+export const headerStyles = css({
+  marginBottom: 0,
+});
+
+export const contentStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  maxWidth: 'initial',
+  height: '100%',
+});
