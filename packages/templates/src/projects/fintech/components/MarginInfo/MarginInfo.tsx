@@ -1,6 +1,11 @@
-import { ClassNames, useTheme } from '@emotion/react';
+import { ClassNames, css, useTheme } from '@emotion/react';
 import { useTranslation } from '@contexts';
-import { Button } from '@ssa-ui-kit/core';
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@ssa-ui-kit/core';
 import { WidgetCard, WithWidgetLoader } from '..';
 import { MarginInfoProps } from './types';
 import {
@@ -18,6 +23,34 @@ import {
   BorrowButton,
   RepayButton,
 } from './styles';
+
+interface CellWithTooltipProps {
+  children: React.ReactNode;
+}
+
+const CellWithTooltip = ({ children }: CellWithTooltipProps) => {
+  const theme = useTheme();
+
+  return (
+    <Tooltip
+      enableClick={false}
+      enableHover
+      size="medium"
+      offsetOptions={8}
+      placement="top"
+      hasArrow={false}>
+      <TooltipTrigger>
+        <Cell>{children}</Cell>
+      </TooltipTrigger>
+      <TooltipContent
+        css={css`
+          box-shadow: 0 10px 40px 0 ${theme.colors.black25};
+        `}>
+        {children}
+      </TooltipContent>
+    </Tooltip>
+  );
+};
 
 export const MarginInfo = ({
   multiplier,
@@ -55,7 +88,7 @@ export const MarginInfo = ({
           })}
           headerClassName={css({
             marginBottom: 0,
-            // it does work differently for 'balance' component and this one (h3), thus i override styles
+            // it does work differently for 'balance' component and this one (h3), thus I override styles
             '& h3': {
               [theme.mediaQueries.md]: {
                 fontSize: '20px',
@@ -81,8 +114,8 @@ export const MarginInfo = ({
               <TableRow>
                 <RowLabel>Borrowed</RowLabel>
                 <RowCells>
-                  <Cell>{baseBorrowed}</Cell>
-                  <Cell>{quoteBorrowed}</Cell>
+                  <CellWithTooltip>{baseBorrowed}</CellWithTooltip>
+                  <CellWithTooltip>{quoteBorrowed}</CellWithTooltip>
                 </RowCells>
               </TableRow>
 
@@ -90,8 +123,8 @@ export const MarginInfo = ({
                 <TableRow>
                   <RowLabel>Interest Rate</RowLabel>
                   <RowCells>
-                    <Cell>{baseInterestRate}</Cell>
-                    <Cell>{quoteInterestRate}</Cell>
+                    <CellWithTooltip>{baseInterestRate}</CellWithTooltip>
+                    <CellWithTooltip>{quoteInterestRate}</CellWithTooltip>
                   </RowCells>
                 </TableRow>
               )}
@@ -99,8 +132,8 @@ export const MarginInfo = ({
               <TableRow>
                 <RowLabel>Total Interest</RowLabel>
                 <RowCells>
-                  <Cell>{baseTotalInterest}</Cell>
-                  <Cell>{quoteTotalInterest}</Cell>
+                  <CellWithTooltip>{baseTotalInterest}</CellWithTooltip>
+                  <CellWithTooltip>{quoteTotalInterest}</CellWithTooltip>
                 </RowCells>
               </TableRow>
             </TableBody>
