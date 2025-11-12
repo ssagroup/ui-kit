@@ -34,6 +34,9 @@ export const HeaderCell = styled.div`
   flex: 1;
   text-align: left;
   margin-right: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const TableBody = styled.div`
@@ -72,6 +75,9 @@ export const Cell = styled.div`
   color: ${({ theme }) => theme.colors.greyDarker};
   flex: 1;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const ButtonsWrapper = styled(Wrapper)`
