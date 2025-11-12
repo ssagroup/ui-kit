@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 export interface UserProfileProps {
   name: string;
@@ -7,6 +7,6 @@ export interface UserProfileProps {
   onClick: () => void;
   logOutText?: string;
   className?: string;
-  additionalInfo?: React.ReactNode[];
-  customContent?: React.ReactNode;
+  additionalInfo?: ReactNode[];
+  customContent?: ReactNode;
 }
