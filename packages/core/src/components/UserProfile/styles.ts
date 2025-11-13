@@ -1,4 +1,6 @@
 import { Theme, css } from '@emotion/react';
+import styled from '@emotion/styled';
+import Wrapper from '@components/Wrapper';
 
 export const ResetBtnStyles = css`
   padding: 0;
@@ -46,16 +48,18 @@ export const CustomButton = css`
   font-weight: 500;
 `;
 
-export const AdditionalInfo = (theme: Theme) => css`
-  font-size: 14px;
+export const AdditionalInfoWrapper = styled(Wrapper)`
+  flex-direction: column;
+  align-items: flex-start;
   margin-top: 4px;
-  color: ${theme.colors.greyDropdownFocused};
+  font-size: 14px;
   font-weight: 400;
+  color: ${({ theme }) => theme.colors.greyDropdownFocused};
 `;
 
-export const CustomContentWrapper = (theme: Theme) => css`
+export const CustomContentWrapper = styled(Wrapper)`
   width: 100%;
   padding: 10px;
-  border-top: 0.5px solid ${theme.colors.greyGraphite70};
-  border-bottom: 0.5px solid ${theme.colors.greyGraphite70};
+  border-top: 0.5px solid ${({ theme }) => theme.colors.greyGraphite70};
+  border-bottom: 0.5px solid ${({ theme }) => theme.colors.greyGraphite70};
 `;
