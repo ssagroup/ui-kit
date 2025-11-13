@@ -15,7 +15,7 @@ export const WidgetLayoutDashboard = styled(WidgetsLayoutTemplate)`
     'cumulative cumulative'
     'rebalancing rebalancing'
     'positions profitability'
-    'keeper-runs keeper-runs';
+    'keeper-runs margin-info';
 
   ${({ theme }) => theme.mediaQueries.md} {
     grid-template-columns:
@@ -30,7 +30,7 @@ export const WidgetLayoutDashboard = styled(WidgetsLayoutTemplate)`
       'orders orders pnl pnl'
       'turnover turnover cumulative cumulative'
       'rebalancing rebalancing positions profitability'
-      'keeper-runs keeper-runs . .';
+      'keeper-runs keeper-runs margin-info margin-info';
     margin-bottom: 20px;
   }
 `;

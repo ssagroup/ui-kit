@@ -21,6 +21,7 @@ import {
   WeightedMeanPricesWithLoader,
   CurrentFundsWithLoader,
   KeeperRunsWithLoader,
+  MarginInfoWithLoader,
 } from '@fintech/components';
 import { useGraphs } from '@fintech/contexts';
 import {
@@ -379,6 +380,42 @@ export const FinTechDashboard = () => {
           period={period}
           key="keeperRuns"
           isFetching={isGraphStatLoading}
+        />
+        <MarginInfoWithLoader
+          multiplier={3}
+          base="USDT"
+          quote="BTC"
+          baseBorrowed={
+            <>
+              100 <strong>USD</strong> ≈0.000000001 <strong>BTC</strong> (x2)
+            </>
+          }
+          baseInterestRate="5.2%"
+          baseTotalInterest={
+            <>
+              25 <strong>USDT</strong> (x1.5)
+            </>
+          }
+          quoteBorrowed={
+            <>
+              ≈0.000000001 <strong>BTC</strong>
+            </>
+          }
+          quoteInterestRate="4.8%"
+          quoteTotalInterest={
+            <>
+              0.0024 <strong>BTC</strong>
+            </>
+          }
+          disableBorrow={false}
+          disableRepay={false}
+          onBorrow={() => {
+            alert('Borrow action triggered');
+          }}
+          onRepay={() => {
+            alert('Repay action triggered');
+          }}
+          isFetching={isStatLoading}
         />
       </S.WidgetLayoutDashboard>
     </DashboardLayout>
