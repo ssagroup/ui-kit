@@ -1,5 +1,6 @@
 import userEvent from '@testing-library/user-event';
-import { UserProfile } from './UserProfile';
+import Icon from '@components/Icon';
+import { UserProfile } from '@components';
 
 describe('UserProfile', () => {
   it('Renders with a user name and email values via mouse click', async () => {
@@ -103,5 +104,68 @@ describe('UserProfile', () => {
 
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toHaveStyle(`background-color: pink`);
+  });
+
+  it('renders with additionalInfo as strings', async () => {
+    const user = userEvent.setup();
+    const { getByText, getByTestId } = render(
+      <UserProfile
+        name="Josh Li"
+        email="Josh@gmail.com"
+        trigger="Trigger"
+        additionalInfo={['Active', 'Administrator']}
+        onClick={jest.fn()}
+      />,
+    );
+
+    await user.click(getByTestId('trigger-button'));
+
+    getByText('Active');
+    getByText('Administrator');
+  });
+
+  it('renders with additionalInfo as React components', async () => {
+    const user = userEvent.setup();
+    const { getByText, getByTestId } = render(
+      <UserProfile
+        name="Josh Li"
+        email="Josh@gmail.com"
+        trigger="Trigger"
+        additionalInfo={[
+          <span key="status">Status: Active</span>,
+          <span key="role">Role: Admin</span>,
+        ]}
+        onClick={jest.fn()}
+      />,
+    );
+
+    await user.click(getByTestId('trigger-button'));
+
+    getByText('Status: Active');
+    getByText('Role: Admin');
+  });
+
+  it('renders customContent with React components', async () => {
+    const user = userEvent.setup();
+    const { getByText, getByTestId } = render(
+      <UserProfile
+        name="Josh Li"
+        email="Josh@gmail.com"
+        trigger="Trigger"
+        customContent={
+          <div>
+            <div style={{ fontWeight: 'bold' }}>Settings</div>
+            <button type="button">Profile Settings</button>
+            <Icon name="user" size={16} />
+          </div>
+        }
+        onClick={jest.fn()}
+      />,
+    );
+
+    await user.click(getByTestId('trigger-button'));
+
+    getByText('Settings');
+    getByText('Profile Settings');
   });
 });

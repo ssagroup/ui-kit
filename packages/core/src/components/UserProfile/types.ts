@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface UserProfileProps {
   name: string;
   email: string;
@@ -5,4 +7,6 @@ export interface UserProfileProps {
   onClick: () => void;
   logOutText?: string;
   className?: string;
+  additionalInfo?: ReactNode[];
+  customContent?: ReactNode;
 }
