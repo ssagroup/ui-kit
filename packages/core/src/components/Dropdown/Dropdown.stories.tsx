@@ -21,7 +21,7 @@ export default {
   title: 'Components/Dropdown',
   component: Dropdown,
   argTypes: {
-    'dropdownProps.toggleButtonProps.name': {
+    'dropdownProps.toggleButton.name': {
       description: 'Custom name attribute for dropdown div.',
       control: { type: 'text' },
       table: {
@@ -29,7 +29,7 @@ export default {
         category: 'dropdownProps',
       },
     },
-    'dropdownProps.baseProps.name': {
+    'dropdownProps.base.name': {
       description: 'Custom name attribute for the underlying button.',
       control: { type: 'text' },
       table: {
@@ -37,7 +37,7 @@ export default {
         category: 'dropdownProps',
       },
     },
-    'dropdownProps.toggleButtonArrowProps.data-testId': {
+    'dropdownProps.toggleButtonArrow.data-testId': {
       description: 'Custom name attribute for the arrow icon.',
       control: { type: 'text' },
       table: {
@@ -94,13 +94,13 @@ export const Basic: StoryObj = (args: Args) => {
 Basic.args = {
   isDisabled: false,
   dropdownProps: {
-    baseProps: {
+    base: {
       name: 'dropdown',
     },
-    toggleButtonProps: {
+    toggleButton: {
       name: 'dropdownToggleName',
     },
-    toggleButtonArrowProps: {
+    toggleButtonArrow: {
       'data-testId': 'test-attr',
     },
   },

@@ -25,12 +25,12 @@ export interface DropdownProps<P extends DropdownOptionProps>
   className?: string;
   isOpen?: boolean;
   dropdownProps?: {
-    baseProps?: React.HTMLAttributes<HTMLDivElement>;
-    toggleButtonProps?: Omit<
+    base?: React.HTMLAttributes<HTMLDivElement>;
+    toggleButton?: Omit<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
       ControlledButtonProps
     >;
-    toggleButtonArrowProps?: Omit<IconProps, 'name' | 'size'>;
+    toggleButtonArrow?: Omit<IconProps, 'name' | 'size'>;
   };
 }
 

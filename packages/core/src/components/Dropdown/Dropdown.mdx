@@ -44,20 +44,20 @@ function BasicDropdown() {
 
 You can pass props to different parts of the Dropdown component using the `dropdownProps` object:
 
-- `dropdownProps.baseProps` - Props for the wrapper div element
-- `dropdownProps.toggleButtonProps` - Props for the button element (e.g., `name`, `id`, `data-*` attributes)
-- `dropdownProps.toggleButtonArrowProps` - Props for the arrow icon SVG element
+- `dropdownProps.base` - Props for the wrapper div element
+- `dropdownProps.toggleButton` - Props for the button element (e.g., `name`, `id`, `data-*` attributes)
+- `dropdownProps.toggleButtonArrow` - Props for the arrow icon SVG element
 
 ```tsx
 <Dropdown
   dropdownProps={{
-    baseProps: {
+    base: {
       id: 'my-dropdown-base',
     },
-    toggleButtonProps: {
+    toggleButton: {
       name: 'my-toggle',
     },
-    toggleButtonArrowProps: {
+    toggleButtonArrow: {
       'data-custom-attribute': 'my-attribute'
     },
   }}

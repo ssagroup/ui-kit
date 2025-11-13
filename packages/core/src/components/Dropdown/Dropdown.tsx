@@ -121,11 +121,11 @@ const Dropdown = <T extends DropdownOptionProps>({
   return (
     <DropdownContext.Provider value={contextValue}>
       <DropdownBase
-        {...componentProps?.baseProps}
+        {...componentProps?.base}
         ref={dropdownRef}
         data-testid="dropdown">
         <DropdownToggle
-          {...componentProps?.toggleButtonProps}
+          {...componentProps?.toggleButton}
           className={className}
           isOpen={isOpen}
           disabled={isDisabled}
@@ -135,10 +135,7 @@ const Dropdown = <T extends DropdownOptionProps>({
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}>
           {value}
-          <DropdownArrow
-            {...componentProps?.toggleButtonArrowProps}
-            isUp={isOpen}
-          />
+          <DropdownArrow {...componentProps?.toggleButtonArrow} isUp={isOpen} />
         </DropdownToggle>
 
         {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}
