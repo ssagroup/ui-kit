@@ -21,6 +21,30 @@ export default {
   title: 'Components/Dropdown',
   component: Dropdown,
   argTypes: {
+    'dropdownProps.toggleButton.name': {
+      description: 'Custom name attribute for dropdown div.',
+      control: { type: 'text' },
+      table: {
+        type: { summary: 'string' },
+        category: 'dropdownProps',
+      },
+    },
+    'dropdownProps.base.name': {
+      description: 'Custom name attribute for the underlying button.',
+      control: { type: 'text' },
+      table: {
+        type: { summary: 'string' },
+        category: 'dropdownProps',
+      },
+    },
+    'dropdownProps.toggleButtonArrow.data-testId': {
+      description: 'Custom name attribute for the arrow icon.',
+      control: { type: 'text' },
+      table: {
+        type: { summary: 'string' },
+        category: 'dropdownProps',
+      },
+    },
     onChange: {
       control: {
         disable: true,
@@ -54,7 +78,10 @@ export default {
 
 export const Basic: StoryObj = (args: Args) => {
   return (
-    <Dropdown selectedItem={items[2]} isDisabled={args.isDisabled}>
+    <Dropdown
+      dropdownProps={args.dropdownProps}
+      selectedItem={items[2]}
+      isDisabled={args.isDisabled}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -64,7 +91,20 @@ export const Basic: StoryObj = (args: Args) => {
   );
 };
 
-Basic.args = { isDisabled: false };
+Basic.args = {
+  isDisabled: false,
+  dropdownProps: {
+    base: {
+      name: 'dropdown',
+    },
+    toggleButton: {
+      name: 'dropdownToggleName',
+    },
+    toggleButtonArrow: {
+      'data-testId': 'test-attr',
+    },
+  },
+};
 
 export const Opened: StoryObj = (args: Args) => {
   return (

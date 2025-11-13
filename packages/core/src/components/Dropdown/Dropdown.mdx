@@ -40,6 +40,39 @@ function BasicDropdown() {
 
 ## Features
 
+### Component-Specific Props
+
+You can pass props to different parts of the Dropdown component using the `dropdownProps` object:
+
+- `dropdownProps.base` - Props for the wrapper div element
+- `dropdownProps.toggleButton` - Props for the button element (e.g., `name`, `id`, `data-*` attributes)
+- `dropdownProps.toggleButtonArrow` - Props for the arrow icon SVG element
+
+```tsx
+<Dropdown
+  dropdownProps={{
+    base: {
+      id: 'my-dropdown-base',
+    },
+    toggleButton: {
+      name: 'my-toggle',
+    },
+    toggleButtonArrow: {
+      'data-custom-attribute': 'my-attribute'
+    },
+  }}
+  selectedItem={items[0]}
+  onChange={handleChange}
+  placeholder="Select an option">
+  {items.map((item) => (
+    <DropdownOption key={item.id} value={item.id}>
+      {item.value}
+    </DropdownOption>
+  ))}
+</Dropdown>
+```
+
+
 ### Simple Value Options
 
 Use simple string or number values for basic dropdowns:

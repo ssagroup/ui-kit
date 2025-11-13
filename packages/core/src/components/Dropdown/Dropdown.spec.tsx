@@ -391,4 +391,46 @@ describe('Dropdown', () => {
 
     expect(getByRole('combobox')).toHaveAttribute('type', 'button');
   });
+
+  it('renders name attribute on toggle when provided via dropdownProps.toggleButton', () => {
+    const { getByTestId } = setup({
+      dropdownProps: {
+        toggleButton: {
+          name: 'testDropdown',
+        },
+      },
+    });
+    const dropdownEl = getByTestId('dropdown');
+    const dropdownToggleEl = within(dropdownEl).getByRole('combobox');
+
+    expect(dropdownToggleEl).toHaveAttribute('name', 'testDropdown');
+  });
+
+  it('renders name attribute on base when provided via dropdownProps.base', () => {
+    const { getByTestId } = setup({
+      dropdownProps: {
+        base: {
+          name: 'testBase',
+        },
+      },
+    });
+    const dropdownEl = getByTestId('dropdown');
+
+    expect(dropdownEl).toHaveAttribute('name', 'testBase');
+  });
+
+  it('renders data-testid attribute on arrow when provided via dropdownProps.toggleButtonArrow', () => {
+    const { getByTestId } = setup({
+      dropdownProps: {
+        toggleButtonArrow: {
+          'data-testid': 'testArrow',
+        },
+      },
+    });
+    const dropdownEl = getByTestId('dropdown');
+    const arrowIcon = within(dropdownEl).getByTestId('testArrow');
+
+    expect(arrowIcon).toBeInTheDocument();
+    expect(arrowIcon).toHaveAttribute('data-testid', 'testArrow');
+  });
 });

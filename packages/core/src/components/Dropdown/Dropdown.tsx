@@ -37,6 +37,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   onChange: handleChange,
   className,
   placeholder = 'Select something',
+  dropdownProps: componentProps,
 }: DropdownProps<T>) => {
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -119,8 +120,12 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   return (
     <DropdownContext.Provider value={contextValue}>
-      <DropdownBase ref={dropdownRef} data-testid="dropdown">
+      <DropdownBase
+        {...componentProps?.base}
+        ref={dropdownRef}
+        data-testid="dropdown">
         <DropdownToggle
+          {...componentProps?.toggleButton}
           className={className}
           isOpen={isOpen}
           disabled={isDisabled}
@@ -130,7 +135,7 @@ const Dropdown = <T extends DropdownOptionProps>({
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}>
           {value}
-          <DropdownArrow isUp={isOpen} />
+          <DropdownArrow {...componentProps?.toggleButtonArrow} isUp={isOpen} />
         </DropdownToggle>
 
         {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}
