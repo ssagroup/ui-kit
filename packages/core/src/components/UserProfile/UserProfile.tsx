@@ -8,6 +8,7 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from '@components/Popover';
+import Wrapper from '@components/Wrapper';
 import { UserProfileProps } from './types';
 import {
   UserInfo,
@@ -30,10 +31,11 @@ export const UserProfile = ({
   customContent,
 }: UserProfileProps) => {
   const theme = useTheme();
+
   return (
     <Popover placement="bottom-end" interactionsEnabled="both">
       <PopoverTrigger css={ResetBtnStyles}>{trigger}</PopoverTrigger>
-      <PopoverContent css={ContentWrapper} className={className}>
+      <PopoverContent css={ContentWrapper(theme)} className={className}>
         <div css={UserInfo}>
           <PopoverHeading variant="h5" weight="bold">
             {name}
@@ -45,15 +47,20 @@ export const UserProfile = ({
             {email}
           </PopoverDescription>
           {additionalInfo && additionalInfo.length > 0 && (
-            <div css={AdditionalInfo}>
+            <Wrapper
+              direction="column"
+              alignItems="flex-start"
+              css={AdditionalInfo(theme)}>
               {additionalInfo.map((item, index) => (
                 <div key={index}>{item}</div>
               ))}
-            </div>
+            </Wrapper>
           )}
         </div>
-        {customContent && <div css={CustomContentWrapper}>{customContent}</div>}
-        <div css={LogoutWrapper}>
+        {customContent && (
+          <Wrapper css={CustomContentWrapper(theme)}>{customContent}</Wrapper>
+        )}
+        <div css={LogoutWrapper(theme)}>
           <Button variant="info" css={CustomButton} onClick={onClick}>
             <Icon name="log-out" size={15} color={theme.colors.white} />
             {logOutText}
