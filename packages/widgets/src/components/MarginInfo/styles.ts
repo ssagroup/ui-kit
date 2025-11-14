@@ -22,21 +22,6 @@ export const TableHeader = styled.div`
   margin-bottom: 5px;
 `;
 
-export const HeaderCell = styled.div`
-  flex: 1;
-  overflow: hidden;
-  color: ${({ theme }) => theme.colors.greyDarker};
-  font-size: 14px;
-  font-weight: 600;
-  text-align: left;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-export const HeaderLabel = styled.div`
-  flex: 1;
-`;
-
 export const HeaderRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -64,6 +49,11 @@ export const RowCells = styled.div`
   flex-basis: 0;
   min-width: 0;
   justify-content: flex-start;
+`;
+
+export const HeaderCell = styled(RowCells)`
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 export const RowLabel = styled.div`

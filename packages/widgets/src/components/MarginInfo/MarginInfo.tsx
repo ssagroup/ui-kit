@@ -1,10 +1,10 @@
+import { ReactNode } from 'react';
 import { Button, WidgetCard } from '@ssa-ui-kit/core';
 import { MarginInfoProps } from './types';
 import {
   Table,
   TableHeader,
   HeaderRow,
-  HeaderLabel,
   HeaderCell,
   TableBody,
   TableRow,
@@ -15,6 +15,22 @@ import {
   BorrowButton,
   RepayButton,
 } from './styles';
+
+interface TableDataRowProps {
+  label: string;
+  baseValue: ReactNode;
+  quoteValue: ReactNode;
+}
+
+const TableDataRow = ({ label, baseValue, quoteValue }: TableDataRowProps) => (
+  <TableRow>
+    <RowLabel>{label}</RowLabel>
+    <RowCells>
+      <Cell>{baseValue}</Cell>
+      <Cell>{quoteValue}</Cell>
+    </RowCells>
+  </TableRow>
+);
 
 export const MarginInfo = ({
   title = 'Margin Info',
@@ -46,38 +62,33 @@ export const MarginInfo = ({
       <Table>
         <TableHeader>
           <HeaderRow>
-            <HeaderLabel></HeaderLabel>
-            <HeaderCell>{base}</HeaderCell>
-            <HeaderCell>{quote}</HeaderCell>
+            <RowLabel></RowLabel>
+            <RowCells>
+              <HeaderCell>{base}</HeaderCell>
+              <HeaderCell>{quote}</HeaderCell>
+            </RowCells>
           </HeaderRow>
         </TableHeader>
 
         <TableBody>
-          <TableRow>
-            <RowLabel>Borrowed</RowLabel>
-            <RowCells>
-              <Cell>{baseBorrowed}</Cell>
-              <Cell>{quoteBorrowed}</Cell>
-            </RowCells>
-          </TableRow>
+          <TableDataRow
+            label="Borrowed"
+            baseValue={baseBorrowed}
+            quoteValue={quoteBorrowed}
+          />
 
           {showInterestRate && (
-            <TableRow>
-              <RowLabel>Interest Rate</RowLabel>
-              <RowCells>
-                <Cell>{baseInterestRate}</Cell>
-                <Cell>{quoteInterestRate}</Cell>
-              </RowCells>
-            </TableRow>
+            <TableDataRow
+              label="Interest Rate"
+              baseValue={baseInterestRate}
+              quoteValue={quoteInterestRate}
+            />
           )}
-
-          <TableRow>
-            <RowLabel>Total Interest</RowLabel>
-            <RowCells>
-              <Cell>{baseTotalInterest}</Cell>
-              <Cell>{quoteTotalInterest}</Cell>
-            </RowCells>
-          </TableRow>
+          <TableDataRow
+            label="Total Interest"
+            baseValue={baseTotalInterest}
+            quoteValue={quoteTotalInterest}
+          />
         </TableBody>
       </Table>
 
