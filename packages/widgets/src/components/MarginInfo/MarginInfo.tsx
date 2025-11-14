@@ -1,36 +1,18 @@
-import { ReactNode } from 'react';
 import { Button, WidgetCard } from '@ssa-ui-kit/core';
 import { MarginInfoProps } from './types';
+import { MarginInfoTableRow } from './MarginInfoTableRow';
 import {
   Table,
   TableHeader,
   HeaderRow,
   HeaderCell,
   TableBody,
-  TableRow,
   RowLabel,
   RowCells,
-  Cell,
   ButtonsWrapper,
   BorrowButton,
   RepayButton,
 } from './styles';
-
-interface TableDataRowProps {
-  label: string;
-  baseValue: ReactNode;
-  quoteValue: ReactNode;
-}
-
-const TableDataRow = ({ label, baseValue, quoteValue }: TableDataRowProps) => (
-  <TableRow>
-    <RowLabel>{label}</RowLabel>
-    <RowCells>
-      <Cell>{baseValue}</Cell>
-      <Cell>{quoteValue}</Cell>
-    </RowCells>
-  </TableRow>
-);
 
 export const MarginInfo = ({
   title = 'Margin Info',
@@ -71,20 +53,20 @@ export const MarginInfo = ({
         </TableHeader>
 
         <TableBody>
-          <TableDataRow
+          <MarginInfoTableRow
             label="Borrowed"
             baseValue={baseBorrowed}
             quoteValue={quoteBorrowed}
           />
 
           {showInterestRate && (
-            <TableDataRow
+            <MarginInfoTableRow
               label="Interest Rate"
               baseValue={baseInterestRate}
               quoteValue={quoteInterestRate}
             />
           )}
-          <TableDataRow
+          <MarginInfoTableRow
             label="Total Interest"
             baseValue={baseTotalInterest}
             quoteValue={quoteTotalInterest}

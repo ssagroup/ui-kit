@@ -20,3 +20,9 @@ export interface MarginInfoProps {
   headerClassName?: string;
   contentClassName?: string;
 }
+
+export interface MarginInfoTableRowProps {
+  label: string;
+  baseValue: ReactNode;
+  quoteValue: ReactNode;
+}
