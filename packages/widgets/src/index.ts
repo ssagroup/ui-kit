@@ -33,3 +33,4 @@ export * from './components/TradingScoreboard';
 export * from './components/AccountBalance';
 export * from './components/ExchangeAccount';
 export * from './components/AccountKeys';
+export * from './components/MarginInfo';
