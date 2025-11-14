@@ -6,6 +6,13 @@ export const Table = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 5px;
+`;
+
+export const TableBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
 export const TableHeader = styled.div`
@@ -18,86 +25,73 @@ export const TableHeader = styled.div`
 export const HeaderRow = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 16px;
   flex: 1;
+  padding: 0 7px;
   justify-content: flex-start;
 `;
 
-export const HeaderLabel = styled.div`
+export const Cell = styled.div`
   flex: 1;
-`;
-
-export const HeaderCell = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.greyDarker};
-  flex: 1;
-  text-align: left;
-  margin-right: 6px;
-  white-space: nowrap;
+  padding-right: 5px;
   overflow: hidden;
+  color: ${({ theme }) => theme.colors.greyDarker};
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
-export const TableBody = styled.div`
+export const RowCells = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  flex: 2;
+  flex-basis: 0;
+  min-width: 0;
+  justify-content: flex-start;
+`;
+
+export const HeaderCell = styled(RowCells)`
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+export const RowLabel = styled.div`
+  flex: 1;
+  flex-basis: 0;
+  min-width: 0;
+  color: ${({ theme }) => theme.colors.greyDarker};
+  font-size: 13px;
+  font-weight: 600;
 `;
 
 export const TableRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 5px 7px;
   background: ${({ theme }) => theme.colors.greyLighter};
   border-radius: 8px;
-  padding: 5px 7px;
-`;
-
-export const RowLabel = styled.div`
-  font-size: 13px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.greyDarker};
-  flex: 1;
-`;
-
-export const RowCells = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  flex: 2;
-  justify-content: flex-start;
-`;
-
-export const Cell = styled.div`
-  font-size: 13px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.greyDarker};
-  flex: 1;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 export const ButtonsWrapper = styled(Wrapper)`
   display: flex;
   flex-direction: row;
-  gap: 12px;
   width: 100%;
+  gap: 5px;
   margin-top: auto;
 `;
 
 const baseButtonStyles = (theme: Theme) => css`
-  flex: 1;
   display: flex;
+  flex: 1;
   justify-content: center;
   height: 34px;
-  font-size: 14px;
-  font-weight: 500;
-  color: ${theme.colors.white};
   border: none;
   border-radius: 8px;
+  color: ${theme.colors.white};
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
 
   &:disabled {
@@ -156,22 +150,3 @@ export const RepayButton = (theme: Theme) => css`
     background: ${theme.colors.greenDark};
   }
 `;
-
-export const widgetCardStyles = css({
-  gridArea: 'margin-info',
-});
-
-export const wrapperStyles = css({
-  gridArea: 'margin-info',
-});
-
-export const headerStyles = css({
-  marginBottom: 0,
-});
-
-export const contentStyles = css({
-  display: 'flex',
-  flexDirection: 'column',
-  maxWidth: 'initial',
-  height: '100%',
-});
