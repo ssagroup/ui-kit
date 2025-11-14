@@ -53,7 +53,7 @@ export const RowCells = styled.div`
 
 export const HeaderCell = styled(RowCells)`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 export const RowLabel = styled.div`
