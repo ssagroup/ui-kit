@@ -84,16 +84,20 @@ export const clickableDisabled = css`
   cursor: not-allowed;
 `;
 
-export const iconWrapper = css`
+export const IconWrapper = styled.span`
   display: flex;
   align-items: center;
   margin-right: 7px;
 `;
 
-export const avatarWrapper = css`
+export const AvatarWrapper = styled.span`
   display: flex;
   align-items: center;
   margin-right: 7px;
+`;
+
+export const LabelWrapper = styled.span`
+  color: inherit;
 `;
 
 export const deleteIconWrapper = css`

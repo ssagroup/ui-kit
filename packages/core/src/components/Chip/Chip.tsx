@@ -8,8 +8,9 @@ import {
   ChipBase,
   clickable,
   clickableDisabled,
-  iconWrapper,
-  avatarWrapper,
+  IconWrapper,
+  AvatarWrapper,
+  LabelWrapper,
   deleteIconWrapper,
 } from './styles';
 import { VARIANTS, COLORS, mapSizes } from './constants';
@@ -90,13 +91,13 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
       ]}
       onClick={disabled ? undefined : onClick}
       onKeyDown={handleKeyDown}>
-      {avatar && <span css={avatarWrapper}>{avatar}</span>}
-      {icon && !avatar && <span css={iconWrapper}>{icon}</span>}
-      <span>{label}</span>
+      {avatar && <AvatarWrapper>{avatar}</AvatarWrapper>}
+      {icon && !avatar && <IconWrapper>{icon}</IconWrapper>}
+      <LabelWrapper>{label}</LabelWrapper>
       {hasDelete && (
         <button
           type="button"
-          css={deleteIconWrapper}
+          css={[deleteIconWrapper, { color: 'inherit' }]}
           onClick={handleDeleteClick}
           aria-label="Delete"
           disabled={disabled}>
