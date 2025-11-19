@@ -11,7 +11,7 @@ import {
   IconWrapper,
   AvatarWrapper,
   LabelWrapper,
-  deleteIconWrapper,
+  DeleteIconButton,
 } from './styles';
 import { VARIANTS, COLORS, mapSizes } from './constants';
 import { getVariantStyles } from './helpers';
@@ -95,9 +95,8 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
       {icon && !avatar && <IconWrapper>{icon}</IconWrapper>}
       <LabelWrapper>{label}</LabelWrapper>
       {hasDelete && (
-        <button
+        <DeleteIconButton
           type="button"
-          css={[deleteIconWrapper, { color: 'inherit' }]}
           onClick={handleDeleteClick}
           aria-label="Delete"
           disabled={disabled}>
@@ -108,7 +107,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
               color="currentColor"
             />
           )}
-        </button>
+        </DeleteIconButton>
       )}
     </ChipBase>
   );

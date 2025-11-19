@@ -100,7 +100,7 @@ export const LabelWrapper = styled.span`
   color: inherit;
 `;
 
-export const deleteIconWrapper = css`
+export const DeleteIconButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +111,7 @@ export const deleteIconWrapper = css`
   padding: 0;
   width: 16px;
   height: 16px;
+  color: inherit;
   transition: opacity 0.2s ease;
 
   &:hover {
