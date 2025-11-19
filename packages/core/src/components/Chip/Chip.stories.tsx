@@ -62,6 +62,12 @@ const meta = {
         type: { summary: 'function' },
       },
     },
+    deleteIconSize: {
+      control: 'number',
+      table: {
+        type: { summary: 'number' },
+      },
+    },
   },
   args: {
     label: 'Chip',
@@ -502,9 +508,6 @@ export const FullyCustomized = () => {
               background-color: #48bb78;
               border: 1px solid #38a169;
               color: #fff;
-              button[aria-label='Delete'] svg path {
-                stroke: #ff6b6b;
-              }
             `}
           />
           <Chip
@@ -516,9 +519,6 @@ export const FullyCustomized = () => {
               background-color: #48bb78;
               border: 1px solid #38a169;
               color: #fff;
-              button[aria-label='Delete'] svg path {
-                stroke: #ff6b6b;
-              }
             `}
           />
         </Wrapper>

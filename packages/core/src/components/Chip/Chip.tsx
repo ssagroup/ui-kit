@@ -13,7 +13,7 @@ import {
   LabelWrapper,
   DeleteIconButton,
 } from './styles';
-import { VARIANTS, COLORS, mapSizes } from './constants';
+import { VARIANTS, COLORS, mapSizes, DELETE_ICON_SIZES } from './constants';
 import { getVariantStyles } from './helpers';
 
 const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
@@ -27,6 +27,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
     avatar,
     onDelete,
     deleteIcon,
+    deleteIconSize,
     onClick,
     clickable: clickableProp,
     className,
@@ -103,8 +104,8 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
           {deleteIcon || (
             <Icon
               name="cross"
-              size={size === 'small' ? 10 : size === 'medium' ? 12 : 16}
               color="currentColor"
+              size={deleteIconSize ?? DELETE_ICON_SIZES[size]}
             />
           )}
         </DeleteIconButton>

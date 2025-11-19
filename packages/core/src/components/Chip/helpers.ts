@@ -5,7 +5,7 @@ import { VARIANTS, COLORS } from './constants';
 
 export const colorMap = (theme: Theme) => ({
   primary: theme.colors.blueRoyal,
-  success: theme.colors.green,
+  success: theme.colors.greenLighter,
   error: theme.colors.red,
   info: theme.colors.blueLight,
   warning: theme.colors.yellow,

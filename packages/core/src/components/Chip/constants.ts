@@ -19,3 +19,9 @@ export const mapSizes = {
   medium,
   large,
 };
+
+export const DELETE_ICON_SIZES = {
+  small: 10,
+  medium: 12,
+  large: 16,
+} as const;

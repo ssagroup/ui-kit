@@ -105,14 +105,17 @@ export const DeleteIconButton = styled.button`
   align-items: center;
   justify-content: center;
   margin-left: 7px;
+  padding: 0;
+  padding-top: 1px;
   cursor: pointer;
   border: none;
   background: none;
-  padding: 0;
-  width: 16px;
-  height: 16px;
   color: inherit;
   transition: opacity 0.2s ease;
+
+  & svg path {
+    stroke-width: 1;
+  }
 
   &:hover {
     opacity: 0.7;
