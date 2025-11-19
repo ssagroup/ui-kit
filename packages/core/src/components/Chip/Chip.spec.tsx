@@ -29,7 +29,7 @@ describe('Chip', () => {
       render(<Chip label="Small" size="small" />);
 
       const chip = screen.getByText('Small');
-      expect(chip).toHaveStyle('height: 20px');
+      expect(chip).toHaveStyle('height: 24px');
       expect(chip).toHaveStyle('font-size: 12px');
     });
 
@@ -37,7 +37,7 @@ describe('Chip', () => {
       render(<Chip label="Large" size="large" />);
 
       const chip = screen.getByText('Large');
-      expect(chip).toHaveStyle('height: 36px');
+      expect(chip).toHaveStyle('height: 40px');
       expect(chip).toHaveStyle('font-size: 16px');
     });
   });
@@ -208,7 +208,7 @@ describe('Chip', () => {
       const deleteButton = screen.getByLabelText('Delete');
       expect(deleteButton).toBeInTheDocument();
 
-      const customIcon = screen.getByTitle(/trash/i);
+      const customIcon = screen.getByTitle(/bin/i);
       expect(customIcon).toBeInTheDocument();
     });
   });

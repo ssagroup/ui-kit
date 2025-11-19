@@ -8,28 +8,28 @@ export const ChipBase = styled.div<CommonProps>`
   justify-content: center;
   font-family: Manrope, sans-serif;
   font-weight: 500;
-  border-radius: 16px;
+  border-radius: 24px;
   white-space: nowrap;
   user-select: none;
   outline: none;
 `;
 
 export const small = css`
-  height: 20px;
+  height: 24px;
   padding: 2px 8px;
   font-size: 12px;
   line-height: 16px;
 `;
 
 export const medium = css`
-  height: 28px;
+  height: 32px;
   padding: 4px 12px;
   font-size: 14px;
   line-height: 20px;
 `;
 
 export const large = css`
-  height: 36px;
+  height: 40px;
   padding: 6px 16px;
   font-size: 16px;
   line-height: 24px;
@@ -87,22 +87,20 @@ export const clickableDisabled = css`
 export const iconWrapper = css`
   display: flex;
   align-items: center;
-  margin-right: 4px;
+  margin-right: 7px;
 `;
 
 export const avatarWrapper = css`
   display: flex;
   align-items: center;
-  margin-right: 6px;
-  margin-left: -4px;
+  margin-right: 7px;
 `;
 
 export const deleteIconWrapper = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 4px;
-  margin-right: -4px;
+  margin-left: 7px;
   cursor: pointer;
   border: none;
   background: none;

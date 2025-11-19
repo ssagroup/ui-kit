@@ -103,7 +103,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
           {deleteIcon || (
             <Icon
               name="cross"
-              size={size === 'small' ? 12 : size === 'medium' ? 14 : 16}
+              size={size === 'small' ? 10 : size === 'medium' ? 12 : 16}
               color="currentColor"
             />
           )}

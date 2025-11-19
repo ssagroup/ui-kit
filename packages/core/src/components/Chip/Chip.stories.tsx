@@ -137,12 +137,12 @@ export const WithIcon = () => {
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
       <Chip
         label="With Icon"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon={<Icon name="plus" size={10} color="currentColor" />}
       />
       <Chip
         label="With Icon"
         variant="outlined"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon={<Icon name="plus" size={12} color="currentColor" />}
       />
       <Chip
         label="Primary with Icon"
@@ -153,7 +153,7 @@ export const WithIcon = () => {
         label="Success with Icon"
         color="success"
         variant="outlined"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon={<Icon name="plus" size={20} color="currentColor" />}
       />
     </Wrapper>
   );
@@ -173,7 +173,8 @@ export const WithAvatar = () => {
       />
       <Chip
         label="Name Surname"
-        avatar={<Avatar size={20} image="https://i.pravatar.cc/150?img=3" />}
+        size="large"
+        avatar={<Avatar size={25} image="https://i.pravatar.cc/150?img=3" />}
         onDelete={() => {}}
       />
     </Wrapper>
