@@ -68,6 +68,7 @@ export * from './AccordionGroup';
 export * from './AddNewAccountCard';
 export * from './ButtonGroup';
 export * from './CardList';
+export * from './Chip';
 export * from './Charts';
 export * from './Checkbox';
 export * from './CollapsibleNavBar';
