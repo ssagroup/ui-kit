@@ -6,7 +6,6 @@ export { default as CardBase } from './Card/CardBase';
 export { default as CardContent } from './CardContent';
 export { default as CardHeader } from './CardHeader';
 export { default as Checkbox } from './Checkbox';
-export { default as Chip } from './Chip';
 export { default as Dropdown } from './Dropdown';
 export { default as DropdownArrow } from './DropdownArrow';
 export { default as DropdownBase } from './DropdownBase';

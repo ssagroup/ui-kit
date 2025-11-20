@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css } from '@emotion/react';
 
-import Chip from './Chip';
+import { Chip } from './Chip';
 import Icon from '@components/Icon';
 import Avatar from '@components/Avatar';
 import Wrapper from '@components/Wrapper';

@@ -16,7 +16,7 @@ import {
 import { VARIANTS, COLORS, mapSizes, DELETE_ICON_SIZES } from './constants';
 import { getVariantStyles } from './helpers';
 
-const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
+export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   {
     label,
     variant = VARIANTS.FILLED,
@@ -81,7 +81,7 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
       ref={ref}
       role={isClickable ? 'button' : undefined}
       tabIndex={isClickable || hasDelete ? 0 : undefined}
-      aria-disabled={disabled}
+      aria-disabled={disabled ? 'true' : 'false'}
       className={className}
       css={[
         sizeStyles,
@@ -113,5 +113,3 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
     </ChipBase>
   );
 });
-
-export default Chip;

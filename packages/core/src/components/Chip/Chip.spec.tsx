@@ -3,7 +3,7 @@ import React from 'react';
 
 import Icon from '@components/Icon';
 
-import Chip from './index';
+import { Chip } from './index';
 import theme from '@themes/main';
 import { screen } from '../../../customTest';
 
@@ -104,7 +104,7 @@ describe('Chip', () => {
     it('Renders disabled chip', () => {
       render(<Chip label="Disabled" disabled />);
 
-      const chip = screen.getByText('Disabled');
+      const chip = screen.getByText('Disabled').closest('[aria-disabled]');
       expect(chip).toHaveAttribute('aria-disabled', 'true');
       expect(chip).toHaveStyleRule('opacity', '0.6');
     });
@@ -262,7 +262,9 @@ describe('Chip', () => {
         />,
       );
 
-      const chip = screen.getByText('Disabled Custom');
+      const chip = screen
+        .getByText('Disabled Custom')
+        .closest('[aria-disabled]');
       expect(chip).toHaveAttribute('aria-disabled', 'true');
       expect(chip).toHaveStyleRule('background-color', 'blue');
     });
