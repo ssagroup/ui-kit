@@ -295,6 +295,7 @@ export const BarLineComplexChartView = ({
               family: FONT_FAMILY,
               size: isFullscreenMode ? 16 : 12,
             },
+            traceorder: orientation === 'h' ? 'reversed' : 'normal',
             ...legend,
           },
           ...layoutRest,
