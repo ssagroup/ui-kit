@@ -74,6 +74,7 @@ export * from './Checkbox';
 export * from './CollapsibleNavBar';
 export * from './ColorPicker';
 export * from './DatePicker';
+export * from './PersonInfo';
 export * from './DateRangePicker';
 export * from './Drawer';
 export * from './Field';
