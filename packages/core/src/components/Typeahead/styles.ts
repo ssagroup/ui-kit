@@ -125,7 +125,6 @@ export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
   cursor: default;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
 export const TypeaheadItemCross = styled(Button)`
@@ -152,7 +151,6 @@ export const TypeaheadInputsGroupWrapper = styled(Wrapper)<{
   flex: 1 1 0%;
   min-width: ${({ isOpen }) => (isOpen ? '50px' : 'auto')};
   flex-direction: column !important;
-  overflow: visible;
 `;
 
 export const TypeaheadTrigger = styled(PopoverTrigger)<{

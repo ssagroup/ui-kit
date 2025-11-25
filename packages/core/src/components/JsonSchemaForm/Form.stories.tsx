@@ -35,7 +35,7 @@ export const Default: Story = {
       checkboxField: true,
       radioField: 'Option 1',
       checkboxesField: ['foo', 'bar'],
-      // selectField and selectMultipleField are intentionally empty to show placeholder
+      selectField: 'Option 2',
       passwordField: 'password',
     },
     schema: {
@@ -76,11 +76,13 @@ export const Default: Story = {
         selectField: {
           type: 'string',
           title: 'Select field title',
+          default: 'Option 1',
           enum: ['Option 1', 'Option 2'],
         },
         selectMultipleField: {
           type: 'array',
           title: 'Select multiple fields title',
+          default: ['Option 1', 'Option 3'],
           items: {
             type: 'string',
             enum: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
