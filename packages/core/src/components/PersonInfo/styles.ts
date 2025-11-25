@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { CommonProps } from '@global-types/emotion';
 import Badge from '@components/Badge';
+import { BADGE_COLORS } from './constants';
 
 export const PersonInfoBase = styled.div<CommonProps>`
   display: flex;
@@ -93,4 +94,22 @@ export const BadgeWrapper = styled.div`
 export const StyledBadge = styled(Badge)`
   padding: 4px 8px;
   border-radius: 20px;
+`;
+
+export const CustomBadge = styled.div<{ colorName: keyof MainColors }>`
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 24px;
+  font-weight: 500;
+  font-size: 14px;
+
+  color: ${({ theme, colorName }) => {
+    const { text } = BADGE_COLORS(theme)[colorName];
+    return text;
+  }};
+
+  background-color: ${({ theme, colorName }) => {
+    const { bg } = BADGE_COLORS(theme)[colorName];
+    return bg;
+  }};
 `;

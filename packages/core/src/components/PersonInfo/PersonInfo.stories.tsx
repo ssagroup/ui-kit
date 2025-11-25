@@ -99,17 +99,17 @@ export const WithIcon: Story = {
   },
 };
 
-export const WithBadgeReactNode: Story = {
-  args: {
-    title: 'Title',
-    badges: <Badge size="small">badge</Badge>,
-  },
-};
-
 export const WithBadgesArrayString: Story = {
   args: {
     title: 'Title',
     badges: ['badge 1', 'badge 2', 'badge 3'],
+  },
+};
+
+export const WithBadgeReactNode: Story = {
+  args: {
+    title: 'Title',
+    badges: <Badge size="small">badge</Badge>,
   },
 };
 
@@ -135,11 +135,9 @@ export const WithMixedBadges: Story = {
     title: 'Title',
     badges: [
       'Auto Badge 1',
-      'Auto Badge 2',
       <Badge key="custom" color="#FF6B35" size="small">
-        Custom Badge
+        React Node
       </Badge>,
-      'Auto Badge 3',
     ],
   },
 };
@@ -167,33 +165,14 @@ export const WithMultipleAttributes: Story = {
     attributes: ['Attribute', 'Attribute'],
   },
 };
-
-export const WithAttributesAsReactNodes: Story = {
-  args: {
-    title: 'Title',
-    attributes: [
-      <span key="1" style={{ color: '#4CAF50', fontWeight: 600 }}>
-        Custom Attribute 1
-      </span>,
-      <span key="2" style={{ color: '#2196F3', fontStyle: 'italic' }}>
-        Custom Attribute 2
-      </span>,
-      <Badge key="3" color="purple" size="small">
-        Badge Attribute
-      </Badge>,
-    ],
-  },
-};
-
 export const WithMixedAttributes: Story = {
   args: {
     title: 'Title',
     attributes: [
       'String Attribute 1',
       <span key="custom" style={{ color: '#FF6B35', fontWeight: 600 }}>
-        Custom ReactNode
+        React Node
       </span>,
-      'String Attribute 2',
     ],
   },
 };
@@ -206,143 +185,143 @@ export const WithDescription: Story = {
   },
 };
 
-export const WithCustomStyles: Story = {
-  args: {
-    title: 'Custom Title',
-    value: 'John Doe',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-    counter: '+5',
-    attributes: ['Attribute 1', 'Attribute 2'],
-    badges: (
-      <Badge color="#FF6B35" size="small">
-        badge
-      </Badge>
-    ),
-    styles: {
-      title: css`
-        color: #ff6b35;
-        font-size: 18px;
-        font-weight: 700;
-      `,
-      avatarName: css`
-        color: #2196f3;
-        font-size: 16px;
-        font-weight: 600;
-      `,
-      counter: css`
-        color: #4caf50;
-        font-size: 16px;
-        font-weight: 600;
-      `,
-      attributes: css`
-        color: #9c27b0;
-        font-size: 13px;
-        font-style: italic;
-      `,
-      badge: css`
-        background-color: #fff3e0;
-        padding: 4px 8px;
-        border-radius: 8px;
-      `,
-      badgeItem: css`
-        color: #e65100;
-      `,
-      value: css`
-        color: #ff9800;
-        font-weight: 500;
-      `,
-    },
-  },
-};
-
-export const WithCustomStylesAdvanced: Story = {
-  args: {
-    title: 'Advanced Custom Title',
-    value: 'John Doe',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-    counter: '+5',
-    attributes: ['Custom Attribute 1', 'Custom Attribute 2'],
-    description: 'This is a custom description with advanced styling',
-    badges: (
-      <Badge color="purple" size="small">
-        badge
-      </Badge>
-    ),
-    styles: {
-      title: css`
-        color: #e91e63;
-        font-size: 20px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.3);
-      `,
-      avatarName: css`
-        color: #00bcd4;
-        font-size: 16px;
-        font-weight: 600;
-        text-decoration: underline;
-        text-decoration-color: #00bcd4;
-      `,
-      counter: css`
-        color: #ff9800;
-        font-size: 14px;
-        font-weight: 600;
-        background: linear-gradient(135deg, #ff9800, #f57c00);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      `,
-      attributes: css`
-        color: #673ab7;
-        font-size: 12px;
-        font-style: italic;
-        border-left: 3px solid #673ab7;
-        padding-left: 8px;
-        margin-left: 4px;
-      `,
-      badge: css`
-        background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-        padding: 6px 12px;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(123, 31, 162, 0.2);
-        transition: transform 0.2s ease;
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(123, 31, 162, 0.3);
-        }
-      `,
-      badgeItem: css`
-        color: #7b1fa2;
-      `,
-      value: css`
-        color: #009688;
-        font-weight: 600;
-        font-size: 15px;
-      `,
-      description: css`
-        color: #607d8b;
-        font-size: 13px;
-        line-height: 1.6;
-        font-style: italic;
-      `,
-    },
-  },
-};
-
-export const WithBadgeBackgroundAndTextColor: Story = {
-  args: {
-    title: 'Title',
-    badges: ['badge 1', 'badge 2'],
-    styles: {
-      badgeItem: css`
-        color: #e65100;
-        font-weight: 500;
-      `,
-    },
-  },
-};
+// export const WithCustomStyles: Story = {
+//   args: {
+//     title: 'Custom Title',
+//     value: 'John Doe',
+//     avatar: 'https://i.pravatar.cc/150?img=12',
+//     counter: '+5',
+//     attributes: ['Attribute 1', 'Attribute 2'],
+//     badges: (
+//       <Badge color="#FF6B35" size="small">
+//         badge
+//       </Badge>
+//     ),
+//     styles: {
+//       title: css`
+//         color: #ff6b35;
+//         font-size: 18px;
+//         font-weight: 700;
+//       `,
+//       avatarName: css`
+//         color: #2196f3;
+//         font-size: 16px;
+//         font-weight: 600;
+//       `,
+//       counter: css`
+//         color: #4caf50;
+//         font-size: 16px;
+//         font-weight: 600;
+//       `,
+//       attributes: css`
+//         color: #9c27b0;
+//         font-size: 13px;
+//         font-style: italic;
+//       `,
+//       badge: css`
+//         background-color: #fff3e0;
+//         padding: 4px 8px;
+//         border-radius: 8px;
+//       `,
+//       badgeItem: css`
+//         color: #e65100;
+//       `,
+//       value: css`
+//         color: #ff9800;
+//         font-weight: 500;
+//       `,
+//     },
+//   },
+// };
+//
+// export const WithCustomStylesAdvanced: Story = {
+//   args: {
+//     title: 'Advanced Custom Title',
+//     value: 'John Doe',
+//     avatar: 'https://i.pravatar.cc/150?img=12',
+//     counter: '+5',
+//     attributes: ['Custom Attribute 1', 'Custom Attribute 2'],
+//     description: 'This is a custom description with advanced styling',
+//     badges: (
+//       <Badge color="purple" size="small">
+//         badge
+//       </Badge>
+//     ),
+//     styles: {
+//       title: css`
+//         color: #e91e63;
+//         font-size: 20px;
+//         font-weight: 700;
+//         text-transform: uppercase;
+//         letter-spacing: 1px;
+//         text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.3);
+//       `,
+//       avatarName: css`
+//         color: #00bcd4;
+//         font-size: 16px;
+//         font-weight: 600;
+//         text-decoration: underline;
+//         text-decoration-color: #00bcd4;
+//       `,
+//       counter: css`
+//         color: #ff9800;
+//         font-size: 14px;
+//         font-weight: 600;
+//         background: linear-gradient(135deg, #ff9800, #f57c00);
+//         -webkit-background-clip: text;
+//         -webkit-text-fill-color: transparent;
+//         background-clip: text;
+//       `,
+//       attributes: css`
+//         color: #673ab7;
+//         font-size: 12px;
+//         font-style: italic;
+//         border-left: 3px solid #673ab7;
+//         padding-left: 8px;
+//         margin-left: 4px;
+//       `,
+//       badge: css`
+//         background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+//         padding: 6px 12px;
+//         border-radius: 12px;
+//         box-shadow: 0 2px 4px rgba(123, 31, 162, 0.2);
+//         transition: transform 0.2s ease;
+//
+//         &:hover {
+//           transform: translateY(-2px);
+//           box-shadow: 0 4px 8px rgba(123, 31, 162, 0.3);
+//         }
+//       `,
+//       badgeItem: css`
+//         color: #7b1fa2;
+//       `,
+//       value: css`
+//         color: #009688;
+//         font-weight: 600;
+//         font-size: 15px;
+//       `,
+//       description: css`
+//         color: #607d8b;
+//         font-size: 13px;
+//         line-height: 1.6;
+//         font-style: italic;
+//       `,
+//     },
+//   },
+// };
+//
+// export const WithBadgeBackgroundAndTextColor: Story = {
+//   args: {
+//     title: 'Title',
+//     badges: ['badge 1', 'badge 2'],
+//     styles: {
+//       badgeItem: css`
+//         color: #e65100;
+//         font-weight: 500;
+//       `,
+//     },
+//   },
+// };
 
 export const MultiplePersonInfo: Story = {
   render: () => (

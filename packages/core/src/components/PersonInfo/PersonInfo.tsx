@@ -48,14 +48,14 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
           {badges.map((badgeItem, index) => {
             if (typeof badgeItem === 'string') {
               const colorIndex = index % DEFAULT_BADGE_COLORS.length;
+              const colorName = DEFAULT_BADGE_COLORS[colorIndex];
               return (
-                <S.StyledBadge
+                <S.CustomBadge
                   key={index}
-                  color={DEFAULT_BADGE_COLORS[colorIndex]}
-                  size="medium"
+                  colorName={colorName}
                   css={styles?.badgeItem}>
                   {badgeItem}
-                </S.StyledBadge>
+                </S.CustomBadge>
               );
             }
 
