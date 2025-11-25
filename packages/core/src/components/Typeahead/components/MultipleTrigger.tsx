@@ -36,7 +36,9 @@ export const MultipleTrigger = () => {
               onClick={(e) => e.stopPropagation()}
               isDisabled={context.isDisabled}>
               {avatar && (
-                <S.TypeaheadItemAvatar>{avatar}</S.TypeaheadItemAvatar>
+                <S.TypeaheadItemAvatar data-testid="typeahead-item-avatar">
+                  {avatar}
+                </S.TypeaheadItemAvatar>
               )}
               <S.TypeaheadItemLabel isDisabled={context.isDisabled}>
                 {optionText}

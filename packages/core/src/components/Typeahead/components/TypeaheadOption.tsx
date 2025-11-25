@@ -9,7 +9,11 @@ export const TypeaheadOption = ({
   ...rest
 }: TypeaheadItemProps) => (
   <S.TypeaheadOption {...rest}>
-    {avatar && <S.TypeaheadItemAvatar>{avatar}</S.TypeaheadItemAvatar>}
+    {avatar && (
+      <S.TypeaheadItemAvatar data-testid="typeahead-option-avatar">
+        {avatar}
+      </S.TypeaheadItemAvatar>
+    )}
     <div
       css={{
         overflow: 'hidden',

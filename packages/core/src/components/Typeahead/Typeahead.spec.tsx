@@ -2,8 +2,9 @@ import React from 'react';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
+import Avatar from '@components/Avatar';
 import { Typeahead } from './Typeahead';
-import { TypeaheadOption } from './components';
+import { TypeaheadOption } from '@components';
 import { highlightInputMatch } from './utils';
 
 type Item = { id: number; value: string; label?: string };
@@ -46,11 +47,12 @@ describe('Typeahead Component', () => {
         onRemoveSelectedClick={mockOnRemoveSelectedClick}
         renderOption={({ label, input }) => highlightInputMatch(label, input)}
         {...props}>
-        {items.map(({ id, value, label }) => (
-          <TypeaheadOption key={id} value={id} label={label ?? value}>
-            {value}
-          </TypeaheadOption>
-        ))}
+        {props.children ||
+          items.map(({ id, value, label }) => (
+            <TypeaheadOption key={id} value={id} label={label ?? value}>
+              {value}
+            </TypeaheadOption>
+          ))}
       </Typeahead>
     );
     const user = userEvent.setup();
@@ -241,5 +243,52 @@ describe('Typeahead Component', () => {
     await user.click(options[1]);
 
     expect(setValueSpy).toHaveBeenCalledWith('test-typeahead', 2);
+  });
+
+  describe('Avatar', () => {
+    it('renders avatar in dropdown option when provided', async () => {
+      const { user } = setup({
+        children: (
+          <TypeaheadOption
+            value={1}
+            label="Test"
+            avatar={<Avatar size={20} image="test.jpg" />}>
+            Test
+          </TypeaheadOption>
+        ),
+      });
+      const combobox = screen.getByRole('combobox');
+      await user.click(combobox);
+
+      const listbox = screen.getByRole('listbox');
+      const options = within(listbox).getAllByRole('option');
+      const option = options.find((opt) => opt.textContent?.includes('Test'));
+      expect(option).toBeDefined();
+      expect(option).toHaveTextContent('Test');
+
+      const avatar = within(option!).queryByTestId('typeahead-option-avatar');
+      expect(avatar).toBeInTheDocument();
+    });
+
+    it('renders avatar in selected chip in multiple mode', () => {
+      setup({
+        isMultiple: true,
+        defaultSelectedItems: [1],
+        children: (
+          <TypeaheadOption
+            value={1}
+            label="Test"
+            avatar={<Avatar size={20} image="test.jpg" />}>
+            Test
+          </TypeaheadOption>
+        ),
+      });
+
+      const combobox = screen.getByRole('combobox');
+      expect(combobox).toHaveTextContent('Test');
+
+      const avatar = within(combobox).queryByTestId('typeahead-item-avatar');
+      expect(avatar).toBeInTheDocument();
+    });
   });
 });
