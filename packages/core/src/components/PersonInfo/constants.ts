@@ -2,6 +2,17 @@ import type { Theme } from '@emotion/react';
 
 type BadgeColorName = keyof MainColors;
 
+export const DEFAULT_BADGE_COLORS: Array<keyof MainColors> = [
+  'purple',
+  'blueLight',
+  'green',
+  'blue',
+  'pink',
+  'turquoise',
+  'yellow',
+  'yellowWarm',
+];
+
 interface BadgeColorConfig {
   text: string;
   bg: string;

@@ -1,21 +1,10 @@
 import React from 'react';
-import { useTheme } from '@emotion/react';
-import Icon from '@components/Icon';
-import type { IconProps } from '@components/Icon/types';
-import Avatar from '@components/Avatar';
 import { PersonInfoProps } from './types';
 import * as S from './styles';
-
-const DEFAULT_BADGE_COLORS: Array<keyof MainColors> = [
-  'purple',
-  'blueLight',
-  'green',
-  'blue',
-  'pink',
-  'turquoise',
-  'yellow',
-  'yellowWarm',
-];
+import { PersonInfoIcon } from './PersonInfoIcon';
+import { PersonInfoAvatar } from './PersonInfoAvatar';
+import { PersonInfoValue } from './PersonInfoValue';
+import { PersonInfoBadges } from './PersonInfoBadges';
 
 export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
   function PersonInfo(
@@ -34,77 +23,29 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
     },
     ref,
   ) {
-    const theme = useTheme();
-
-    const renderBadges = () => {
-      if (!badges) return null;
-
-      if (!Array.isArray(badges)) {
-        return <S.BadgeWrapper css={styles?.badge}>{badges}</S.BadgeWrapper>;
-      }
-
-      return (
-        <S.BadgeWrapper css={styles?.badge}>
-          {badges.map((badgeItem, index) => {
-            if (typeof badgeItem === 'string') {
-              const colorIndex = index % DEFAULT_BADGE_COLORS.length;
-              const colorName = DEFAULT_BADGE_COLORS[colorIndex];
-              return (
-                <S.CustomBadge
-                  key={index}
-                  colorName={colorName}
-                  css={styles?.badgeItem}>
-                  {badgeItem}
-                </S.CustomBadge>
-              );
-            }
-
-            return <React.Fragment key={index}>{badgeItem}</React.Fragment>;
-          })}
-        </S.BadgeWrapper>
-      );
-    };
-
     return (
       <S.PersonInfoBase ref={ref} className={className} {...props}>
         <S.PersonInfoHeader>
-          {icon && (
-            <S.IconWrapper>
-              {typeof icon === 'string' ? (
-                <Icon
-                  name={icon as IconProps['name']}
-                  size={16}
-                  color={theme.colors.greyDarker}
-                />
-              ) : (
-                icon
-              )}
-            </S.IconWrapper>
-          )}
+          {icon && <PersonInfoIcon icon={icon} />}
           <S.TitleWrapper>
             <S.Title css={styles?.title}>{title}</S.Title>
             {avatar && (
-              <S.AvatarWrapper>
-                <Avatar size={24} image={avatar} />
-                {value && (
-                  <S.TextBase css={styles?.avatarName}>
-                    {value}
-                    {counter !== undefined && (
-                      <S.Counter css={styles?.counter}> {counter}</S.Counter>
-                    )}
-                  </S.TextBase>
-                )}
-              </S.AvatarWrapper>
+              <PersonInfoAvatar
+                avatar={avatar}
+                value={value}
+                counter={counter}
+                styles={styles}
+              />
             )}
             {!avatar && value && (
-              <S.TextBase css={styles?.value}>
-                {value}
-                {counter !== undefined && (
-                  <S.Counter css={styles?.counter}> {counter}</S.Counter>
-                )}
-              </S.TextBase>
+              <PersonInfoValue
+                value={value}
+                counter={counter}
+                css={styles?.value}
+                counterCss={styles?.counter}
+              />
             )}
-            {badges && renderBadges()}
+            {badges && <PersonInfoBadges badges={badges} styles={styles} />}
             {attributes && attributes.length > 0 && (
               <S.AttributesList>
                 {attributes.map((attr, index) => {
