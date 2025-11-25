@@ -34,7 +34,7 @@ export const Title = styled.div`
   line-height: 19px;
 `;
 
-export const Value = styled.div`
+export const TextBase = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 19px;
@@ -46,10 +46,7 @@ export const ValueWithCounter = styled.div`
   gap: 4px;
 `;
 
-export const Counter = styled.span`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
+export const Counter = styled(TextBase.withComponent('span'))`
   color: ${({ theme }) => theme.colors.greyDropdownFocused};
   margin-left: 5px;
 `;
@@ -60,28 +57,10 @@ export const AttributesList = styled.div`
   gap: 4px;
 `;
 
-export const AttributeItem = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
-`;
-
-export const Description = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
-`;
-
 export const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-`;
-
-export const AvatarName = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
 `;
 
 export const BadgeWrapper = styled.div`

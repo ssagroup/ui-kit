@@ -87,22 +87,22 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
               <S.AvatarWrapper>
                 <Avatar size={24} image={avatar} />
                 {value && (
-                  <S.AvatarName css={styles?.avatarName}>
+                  <S.TextBase css={styles?.avatarName}>
                     {value}
                     {counter !== undefined && (
                       <S.Counter css={styles?.counter}> {counter}</S.Counter>
                     )}
-                  </S.AvatarName>
+                  </S.TextBase>
                 )}
               </S.AvatarWrapper>
             )}
             {!avatar && value && (
-              <S.Value css={styles?.value}>
+              <S.TextBase css={styles?.value}>
                 {value}
                 {counter !== undefined && (
                   <S.Counter css={styles?.counter}> {counter}</S.Counter>
                 )}
-              </S.Value>
+              </S.TextBase>
             )}
             {badges && renderBadges()}
             {attributes && attributes.length > 0 && (
@@ -110,9 +110,9 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
                 {attributes.map((attr, index) => {
                   if (typeof attr === 'string') {
                     return (
-                      <S.AttributeItem key={index} css={styles?.attributes}>
+                      <S.TextBase key={index} css={styles?.attributes}>
                         {attr}
-                      </S.AttributeItem>
+                      </S.TextBase>
                     );
                   }
                   return <React.Fragment key={index}>{attr}</React.Fragment>;
@@ -120,9 +120,7 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
               </S.AttributesList>
             )}
             {description && (
-              <S.Description css={styles?.description}>
-                {description}
-              </S.Description>
+              <S.TextBase css={styles?.description}>{description}</S.TextBase>
             )}
           </S.TitleWrapper>
         </S.PersonInfoHeader>
