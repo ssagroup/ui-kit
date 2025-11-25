@@ -63,3 +63,16 @@ DisabledButtons.args = {
   disableBorrow: true,
   disableRepay: true,
 };
+
+export const CustomLabels: StoryObj<typeof MarginInfo> = (
+  args: MarginInfoProps,
+) => {
+  return <MarginInfo {...args} />;
+};
+
+CustomLabels.args = {
+  ...Default.args,
+  borrowedLabel: 'Total Borrowed',
+  interestRateLabel: 'APR',
+  totalInterestLabel: 'Accumulated Interest',
+};

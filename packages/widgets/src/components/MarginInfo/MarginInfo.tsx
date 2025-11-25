@@ -24,6 +24,9 @@ export const MarginInfo = ({
   quoteBorrowed,
   quoteInterestRate,
   quoteTotalInterest,
+  borrowedLabel = 'Borrowed',
+  interestRateLabel = 'Interest Rate',
+  totalInterestLabel = 'Total Interest',
   showInterestRate = true,
   disableBorrow = false,
   disableRepay = false,
@@ -54,20 +57,20 @@ export const MarginInfo = ({
 
         <TableBody>
           <MarginInfoTableRow
-            label="Borrowed"
+            label={borrowedLabel}
             baseValue={baseBorrowed}
             quoteValue={quoteBorrowed}
           />
 
           {showInterestRate && (
             <MarginInfoTableRow
-              label="Interest Rate"
+              label={interestRateLabel}
               baseValue={baseInterestRate}
               quoteValue={quoteInterestRate}
             />
           )}
           <MarginInfoTableRow
-            label="Total Interest"
+            label={totalInterestLabel}
             baseValue={baseTotalInterest}
             quoteValue={quoteTotalInterest}
           />
