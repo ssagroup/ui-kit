@@ -4,29 +4,17 @@ import Icon from '@components/Icon';
 import type { IconProps } from '@components/Icon/types';
 import Avatar from '@components/Avatar';
 import { PersonInfoProps } from './types';
-import {
-  PersonInfoBase,
-  PersonInfoHeader,
-  IconWrapper,
-  TitleWrapper,
-  Title,
-  Value,
-  Counter,
-  AttributesList,
-  AttributeItem,
-  Description,
-  AvatarWrapper,
-  AvatarName,
-  BadgeWrapper,
-  StyledBadge,
-} from './styles';
+import * as S from './styles';
 
 const DEFAULT_BADGE_COLORS: Array<keyof MainColors> = [
   'purple',
   'blueLight',
   'green',
+  'blue',
   'pink',
   'turquoise',
+  'yellow',
+  'yellowWarm',
 ];
 
 export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
@@ -35,7 +23,7 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
       title,
       icon,
       value,
-      badge,
+      badges,
       avatar,
       counter,
       attributes,
@@ -49,39 +37,39 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
     const theme = useTheme();
 
     const renderBadges = () => {
-      if (!badge) return null;
+      if (!badges) return null;
 
-      if (!Array.isArray(badge)) {
-        return <BadgeWrapper css={styles?.badge}>{badge}</BadgeWrapper>;
+      if (!Array.isArray(badges)) {
+        return <S.BadgeWrapper css={styles?.badge}>{badges}</S.BadgeWrapper>;
       }
 
       return (
-        <BadgeWrapper css={styles?.badge}>
-          {badge.map((badgeItem, index) => {
+        <S.BadgeWrapper css={styles?.badge}>
+          {badges.map((badgeItem, index) => {
             if (typeof badgeItem === 'string') {
               const colorIndex = index % DEFAULT_BADGE_COLORS.length;
               return (
-                <StyledBadge
+                <S.StyledBadge
                   key={index}
                   color={DEFAULT_BADGE_COLORS[colorIndex]}
                   size="medium"
                   css={styles?.badgeItem}>
                   {badgeItem}
-                </StyledBadge>
+                </S.StyledBadge>
               );
             }
 
             return <React.Fragment key={index}>{badgeItem}</React.Fragment>;
           })}
-        </BadgeWrapper>
+        </S.BadgeWrapper>
       );
     };
 
     return (
-      <PersonInfoBase ref={ref} className={className} {...props}>
-        <PersonInfoHeader>
+      <S.PersonInfoBase ref={ref} className={className} {...props}>
+        <S.PersonInfoHeader>
           {icon && (
-            <IconWrapper>
+            <S.IconWrapper>
               {typeof icon === 'string' ? (
                 <Icon
                   name={icon as IconProps['name']}
@@ -91,56 +79,54 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
               ) : (
                 icon
               )}
-            </IconWrapper>
+            </S.IconWrapper>
           )}
-          <TitleWrapper>
-            <Title css={styles?.title}>{title}</Title>
-            {(value || avatar) && (
-              <>
-                {avatar && (
-                  <AvatarWrapper>
-                    <Avatar size={24} image={avatar} />
-                    {value && (
-                      <AvatarName css={styles?.avatarName}>
-                        {value}
-                        {counter !== undefined && (
-                          <Counter css={styles?.counter}> {counter}</Counter>
-                        )}
-                      </AvatarName>
-                    )}
-                  </AvatarWrapper>
-                )}
-                {!avatar && value && (
-                  <Value css={styles?.value}>
+          <S.TitleWrapper>
+            <S.Title css={styles?.title}>{title}</S.Title>
+            {avatar && (
+              <S.AvatarWrapper>
+                <Avatar size={24} image={avatar} />
+                {value && (
+                  <S.AvatarName css={styles?.avatarName}>
                     {value}
                     {counter !== undefined && (
-                      <Counter css={styles?.counter}> {counter}</Counter>
+                      <S.Counter css={styles?.counter}> {counter}</S.Counter>
                     )}
-                  </Value>
+                  </S.AvatarName>
                 )}
-              </>
+              </S.AvatarWrapper>
             )}
-            {badge && renderBadges()}
+            {!avatar && value && (
+              <S.Value css={styles?.value}>
+                {value}
+                {counter !== undefined && (
+                  <S.Counter css={styles?.counter}> {counter}</S.Counter>
+                )}
+              </S.Value>
+            )}
+            {badges && renderBadges()}
             {attributes && attributes.length > 0 && (
-              <AttributesList>
+              <S.AttributesList>
                 {attributes.map((attr, index) => {
                   if (typeof attr === 'string') {
                     return (
-                      <AttributeItem key={index} css={styles?.attributes}>
+                      <S.AttributeItem key={index} css={styles?.attributes}>
                         {attr}
-                      </AttributeItem>
+                      </S.AttributeItem>
                     );
                   }
                   return <React.Fragment key={index}>{attr}</React.Fragment>;
                 })}
-              </AttributesList>
+              </S.AttributesList>
             )}
             {description && (
-              <Description css={styles?.description}>{description}</Description>
+              <S.Description css={styles?.description}>
+                {description}
+              </S.Description>
             )}
-          </TitleWrapper>
-        </PersonInfoHeader>
-      </PersonInfoBase>
+          </S.TitleWrapper>
+        </S.PersonInfoHeader>
+      </S.PersonInfoBase>
     );
   },
 );

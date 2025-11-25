@@ -46,7 +46,7 @@ export default {
         type: { summary: 'string' },
       },
     },
-    badge: {
+    badges: {
       control: false,
       table: {
         type: { summary: 'ReactNode' },
@@ -94,7 +94,7 @@ export const Default: Story = {
 export const WithIcon: Story = {
   args: {
     title: 'Title',
-    icon: 'user',
+    icon: 'employee',
     value: 'Attribute',
   },
 };
@@ -102,21 +102,21 @@ export const WithIcon: Story = {
 export const WithBadgeReactNode: Story = {
   args: {
     title: 'Title',
-    badge: <Badge size="small">badge</Badge>,
+    badges: <Badge size="small">badge</Badge>,
   },
 };
 
 export const WithBadgesArrayString: Story = {
   args: {
     title: 'Title',
-    badge: ['badge 1', 'badge 2', 'badge 3'],
+    badges: ['badge 1', 'badge 2', 'badge 3'],
   },
 };
 
 export const WithMultipleBadgesReactNodes: Story = {
   args: {
     title: 'Title',
-    badge: [
+    badges: [
       <Badge key="1" color="#FF6B35" size="small">
         Custom
       </Badge>,
@@ -133,7 +133,7 @@ export const WithMultipleBadgesReactNodes: Story = {
 export const WithMixedBadges: Story = {
   args: {
     title: 'Title',
-    badge: [
+    badges: [
       'Auto Badge 1',
       'Auto Badge 2',
       <Badge key="custom" color="#FF6B35" size="small">
@@ -213,7 +213,7 @@ export const WithCustomStyles: Story = {
     avatar: 'https://i.pravatar.cc/150?img=12',
     counter: '+5',
     attributes: ['Attribute 1', 'Attribute 2'],
-    badge: (
+    badges: (
       <Badge color="#FF6B35" size="small">
         badge
       </Badge>
@@ -263,7 +263,7 @@ export const WithCustomStylesAdvanced: Story = {
     counter: '+5',
     attributes: ['Custom Attribute 1', 'Custom Attribute 2'],
     description: 'This is a custom description with advanced styling',
-    badge: (
+    badges: (
       <Badge color="purple" size="small">
         badge
       </Badge>
@@ -334,7 +334,7 @@ export const WithCustomStylesAdvanced: Story = {
 export const WithBadgeBackgroundAndTextColor: Story = {
   args: {
     title: 'Title',
-    badge: ['badge 1', 'badge 2'],
+    badges: ['badge 1', 'badge 2'],
     styles: {
       badgeItem: css`
         color: #e65100;
@@ -362,17 +362,17 @@ export const MultiplePersonInfo: Story = {
         `}>
         <PersonInfo
           title="Title 1"
-          icon="user"
+          icon="employee"
           value="John Doe"
           avatar="https://i.pravatar.cc/150?img=12"
           counter="+5"
         />
         <PersonInfo
           title="Title 2"
-          icon="user"
+          icon="employee"
           value="Jane Smith"
           avatar="https://i.pravatar.cc/150?img=13"
-          badge={['badge 1', 'badge 2']}
+          badges={['badge 1', 'badge 2']}
         />
       </Wrapper>
 
@@ -385,20 +385,20 @@ export const MultiplePersonInfo: Story = {
         `}>
         <PersonInfo
           title="Title 3"
-          icon="user"
+          icon="employee"
           value="Bob Johnson"
           avatar="https://i.pravatar.cc/150?img=14"
         />
         <PersonInfo
           title="Title 4"
-          icon="user"
+          icon="employee"
           value="Alice Williams"
           avatar="https://i.pravatar.cc/150?img=15"
           counter="+3"
         />
         <PersonInfo
           title="Title 5"
-          icon="user"
+          icon="employee"
           value="Charlie Brown"
           avatar="https://i.pravatar.cc/150?img=16"
           attributes={['Attribute 1', 'Attribute 2']}
@@ -414,14 +414,14 @@ export const MultiplePersonInfo: Story = {
         `}>
         <PersonInfo
           title="Title 6"
-          icon="user"
+          icon="employee"
           value="Diana Prince"
           avatar="https://i.pravatar.cc/150?img=17"
-          badge={['badge']}
+          badges={['badge']}
         />
         <PersonInfo
           title="Title 7"
-          icon="user"
+          icon="employee"
           value="Edward Norton"
           avatar="https://i.pravatar.cc/150?img=18"
           counter="+10"
@@ -436,7 +436,7 @@ MultiplePersonInfo.argTypes = {
   title: { control: false },
   icon: { control: false },
   value: { control: false },
-  badge: { control: false },
+  badges: { control: false },
   avatar: { control: false },
   counter: { control: false },
   attributes: { control: false },

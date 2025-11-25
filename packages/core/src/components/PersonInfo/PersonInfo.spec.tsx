@@ -64,26 +64,26 @@ describe('PersonInfo', () => {
     expect(screen.getByText('+5')).toBeInTheDocument();
   });
 
-  it('Renders with badge as ReactNode', () => {
+  it('Renders with badges as ReactNode', () => {
     render(
-      <PersonInfo title="Title" badge={<Badge size="small">Badge</Badge>} />,
+      <PersonInfo title="Title" badges={<Badge size="small">Badge</Badge>} />,
     );
 
     expect(screen.getByText('Badge')).toBeInTheDocument();
   });
 
-  it('Renders with badge as string array', () => {
-    render(<PersonInfo title="Title" badge={['badge 1', 'badge 2']} />);
+  it('Renders with badges as string array', () => {
+    render(<PersonInfo title="Title" badges={['badge 1', 'badge 2']} />);
 
     expect(screen.getByText('badge 1')).toBeInTheDocument();
     expect(screen.getByText('badge 2')).toBeInTheDocument();
   });
 
-  it('Renders with badge as ReactNode array', () => {
+  it('Renders with badges as ReactNode array', () => {
     render(
       <PersonInfo
         title="Title"
-        badge={[
+        badges={[
           <Badge key="1" size="small">
             Badge 1
           </Badge>,
@@ -145,7 +145,7 @@ describe('PersonInfo', () => {
         value="John Doe"
         avatar="https://i.pravatar.cc/150?img=12"
         counter="+5"
-        badge={['badge 1', 'badge 2']}
+        badges={['badge 1', 'badge 2']}
         attributes={['Attribute 1', 'Attribute 2']}
         description="Full description"
       />,
@@ -179,7 +179,7 @@ describe('PersonInfo', () => {
 
   it('Applies default badge colors to string badges', () => {
     render(
-      <PersonInfo title="Title" badge={['badge 1', 'badge 2', 'badge 3']} />,
+      <PersonInfo title="Title" badges={['badge 1', 'badge 2', 'badge 3']} />,
     );
 
     const badge1 = screen.getByText('badge 1');
