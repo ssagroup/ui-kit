@@ -4,11 +4,12 @@ import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { useFullscreenMode } from '@components/FullscreenModeContext';
 import { colorPalette } from './colorPalette';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
-import { UseChartInfo } from './types';
+import { UseChartInfo, BarLineChartItem } from './types';
 
 export const useChartInfo: UseChartInfo = () => {
   const { setIsOpen, isOpen, context } = useTooltipContext();
-  const { filteredData, selected, lineShape } = useBarLineComplexChartContext();
+  const { filteredData, selected, lineShape, data } =
+    useBarLineComplexChartContext();
   const { isFullscreenMode, setFullscreenMode } = useFullscreenMode();
   const tooltipContentRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,11 +20,28 @@ export const useChartInfo: UseChartInfo = () => {
     };
   }, []);
 
-  const transformedChartData = filteredData.map((item, index) => {
-    const markerColor = pathOr<typeof item, string[]>(colorPalette[index], [
-      'marker',
-      'color',
-    ])(item);
+  // Get orientation from data to determine if we need to reverse the order
+  const orientation = pathOr<BarLineChartItem[], 'h' | 'v'>('v', [
+    0,
+    'orientation',
+  ])(data);
+
+  // For horizontal charts, reverse the data order so lines render in the correct direction
+  // Plotly renders horizontal charts from bottom to top, so we reverse to match legend order
+  // The legend will be reversed back using traceorder: 'reversed' in the layout
+  const orderedData =
+    orientation === 'h' ? [...filteredData].reverse() : filteredData;
+
+  const transformedChartData = orderedData.map((item, index) => {
+    // Calculate the original index in filteredData for color assignment
+    // When reversed, the item at position 'index' was originally at position 'filteredData.length - 1 - index'
+    const originalIndex =
+      orientation === 'h' ? filteredData.length - 1 - index : index;
+
+    const markerColor = pathOr<typeof item, string[]>(
+      colorPalette[originalIndex],
+      ['marker', 'color'],
+    )(item);
     const valueDimension =
       item.valueDimension === null || item.valueDimension === undefined
         ? ''
