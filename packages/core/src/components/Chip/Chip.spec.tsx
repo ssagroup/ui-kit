@@ -1,8 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import Icon from '@components/Icon';
-
 import { Chip } from './index';
 import theme from '@themes/main';
 import { screen } from '../../../customTest';
@@ -133,7 +131,7 @@ describe('Chip', () => {
 
   describe('Icons and Avatars', () => {
     it('Renders with icon', () => {
-      render(<Chip label="With Icon" icon={<Icon name="calendar" />} />);
+      render(<Chip label="With Icon" icon="calendar" />);
 
       const chip = screen.getByText('With Icon');
       expect(chip).toBeInTheDocument();
@@ -198,17 +196,13 @@ describe('Chip', () => {
       const mockOnDelete = jest.fn();
 
       render(
-        <Chip
-          label="Custom Delete"
-          onDelete={mockOnDelete}
-          deleteIcon={<Icon name="bin" />}
-        />,
+        <Chip label="Custom Delete" onDelete={mockOnDelete} deleteIcon="bin" />,
       );
 
       const deleteButton = screen.getByLabelText('Delete');
       expect(deleteButton).toBeInTheDocument();
 
-      const customIcon = screen.getByTitle(/bin/i);
+      const customIcon = deleteButton?.querySelector('svg');
       expect(customIcon).toBeInTheDocument();
     });
   });

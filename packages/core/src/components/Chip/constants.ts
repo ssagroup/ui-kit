@@ -20,8 +20,17 @@ export const mapSizes = {
   large,
 };
 
-export const DELETE_ICON_SIZES = {
-  small: 10,
-  medium: 12,
-  large: 16,
+export const ICON_SIZES = {
+  small: {
+    leading: 12,
+    delete: 10,
+  },
+  medium: {
+    leading: 14,
+    delete: 12,
+  },
+  large: {
+    leading: 16,
+    delete: 16,
+  },
 } as const;

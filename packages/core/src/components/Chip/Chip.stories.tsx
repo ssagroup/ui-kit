@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css } from '@emotion/react';
 
 import { Chip } from './Chip';
-import Icon from '@components/Icon';
 import Avatar from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
 
@@ -60,12 +59,6 @@ const meta = {
       action: 'deleted',
       table: {
         type: { summary: 'function' },
-      },
-    },
-    deleteIconSize: {
-      control: 'number',
-      table: {
-        type: { summary: 'number' },
       },
     },
   },
@@ -140,25 +133,14 @@ export const Sizes = () => (
 export const WithIcon = () => {
   return (
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-      <Chip
-        label="With Icon"
-        icon={<Icon name="plus" size={10} color="currentColor" />}
-      />
-      <Chip
-        label="With Icon"
-        variant="outlined"
-        icon={<Icon name="plus" size={12} color="currentColor" />}
-      />
-      <Chip
-        label="Primary with Icon"
-        color="primary"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
-      />
+      <Chip label="With Icon" icon="plus" />
+      <Chip label="With Icon" variant="outlined" icon="plus" />
+      <Chip label="Primary with Icon" color="primary" icon="plus" />
       <Chip
         label="Success with Icon"
         color="success"
         variant="outlined"
-        icon={<Icon name="plus" size={20} color="currentColor" />}
+        icon="plus"
       />
     </Wrapper>
   );
@@ -203,46 +185,42 @@ export const Deletable = () => (
 export const WithIconAndDelete = () => {
   return (
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-      <Chip
-        label="Icon + Delete"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
-        onDelete={() => {}}
-      />
+      <Chip label="Icon + Delete" icon="plus" onDelete={() => {}} />
       <Chip
         label="Icon + Delete"
         variant="outlined"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon="plus"
         onDelete={() => {}}
       />
       <Chip
         label="Primary Icon + Delete"
         color="primary"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon="plus"
         onDelete={() => {}}
       />
       <Chip
         label="Success Icon + Delete"
         color="success"
         variant="outlined"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon="plus"
         onDelete={() => {}}
       />
       <Chip
         label="Clickable Icon + Delete"
-        icon={<Icon name="plus" size={16} color="currentColor" />}
+        icon="plus"
         onDelete={() => {}}
         onClick={() => alert('Clicked!')}
       />
       <Chip
         label="Small Icon + Delete"
         size="small"
-        icon={<Icon name="plus" size={14} color="currentColor" />}
+        icon="plus"
         onDelete={() => {}}
       />
       <Chip
         label="Large Icon + Delete"
         size="large"
-        icon={<Icon name="plus" size={18} color="currentColor" />}
+        icon="plus"
         onDelete={() => {}}
       />
     </Wrapper>
@@ -274,16 +252,12 @@ export const Clickable = () => (
 export const CustomDeleteIcon = () => {
   return (
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-      <Chip
-        label="Custom delete icon"
-        onDelete={() => {}}
-        deleteIcon={<Icon name="cross" size={14} color="currentColor" />}
-      />
+      <Chip label="Custom delete icon" onDelete={() => {}} deleteIcon="cross" />
       <Chip
         label="Custom delete icon"
         variant="outlined"
         onDelete={() => {}}
-        deleteIcon={<Icon name="cross" size={14} color="currentColor" />}
+        deleteIcon="cross"
       />
     </Wrapper>
   );
@@ -423,12 +397,12 @@ export const FullyCustomized = () => {
         <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
           <Chip
             label="Fully Customized"
-            icon={<Icon name="calendar" color="#ffd700" />}
+            color="success"
+            icon="calendar"
             onDelete={() => {}}
             css={css`
               background-color: #667eea;
               border: 2px solid #5568d3;
-              color: #f0f4ff;
 
               button[aria-label='Delete'] svg path {
                 stroke: #ff6b6b;
@@ -438,7 +412,7 @@ export const FullyCustomized = () => {
           <Chip
             label="Gradient Background"
             variant="outlined"
-            icon={<Icon name="check" color="#ffd700" />}
+            icon="check"
             onDelete={() => {}}
             css={css`
               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -451,7 +425,7 @@ export const FullyCustomized = () => {
           />
           <Chip
             label="Dark Theme Style"
-            icon={<Icon name="plus" color="#63b3ed" />}
+            icon="plus"
             onDelete={() => {}}
             css={css`
               background-color: #2d3748;
@@ -466,7 +440,7 @@ export const FullyCustomized = () => {
           <Chip
             label="Pastel Colors"
             variant="outlined"
-            icon={<Icon name="attention" color="#e74c3c" />}
+            icon="attention"
             onDelete={() => {}}
             css={css`
               background-color: #fef5e7;
@@ -488,7 +462,7 @@ export const FullyCustomized = () => {
           <Chip
             label="Small"
             size="small"
-            icon={<Icon name="plus" color="#ffd700" />}
+            icon="plus"
             onDelete={() => {}}
             css={css`
               background-color: #48bb78;
@@ -502,7 +476,7 @@ export const FullyCustomized = () => {
           <Chip
             label="Medium"
             size="medium"
-            icon={<Icon name="plus" color="#ffd700" />}
+            icon="plus"
             onDelete={() => {}}
             css={css`
               background-color: #48bb78;
@@ -513,7 +487,7 @@ export const FullyCustomized = () => {
           <Chip
             label="Large"
             size="large"
-            icon={<Icon name="plus" color="#ffd700" />}
+            icon="plus"
             onDelete={() => {}}
             css={css`
               background-color: #48bb78;
@@ -528,7 +502,7 @@ export const FullyCustomized = () => {
         <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
           <Chip
             label="Hover Me"
-            icon={<Icon name="check" color="#ffd700" />}
+            icon="check"
             onDelete={() => {}}
             onClick={() => {}}
             css={css`

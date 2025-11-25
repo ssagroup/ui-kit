@@ -1,6 +1,7 @@
 import { CommonProps } from '@global-types/emotion';
 import { Interpolation, Theme } from '@emotion/react';
 import { ReactNode, MouseEventHandler } from 'react';
+import { IconProps } from '@components/Icon/types';
 
 export type ChipVariant = 'filled' | 'outlined';
 
@@ -20,11 +21,10 @@ export interface ChipProps extends CommonProps {
   color?: ChipColor;
   size?: ChipSize;
   disabled?: boolean;
-  icon?: ReactNode;
+  icon?: IconProps['name'];
   avatar?: ReactNode;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
-  deleteIcon?: ReactNode;
-  deleteIconSize?: number;
+  deleteIcon?: IconProps['name'];
   onClick?: MouseEventHandler<HTMLDivElement>;
   clickable?: boolean;
   css?: Interpolation<Theme>;

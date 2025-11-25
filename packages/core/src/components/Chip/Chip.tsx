@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 
 import Icon from '@components/Icon';
+import { IconProps } from '@components/Icon/types';
 
 import { ChipProps } from './types';
 import {
@@ -13,8 +14,8 @@ import {
   LabelWrapper,
   DeleteIconButton,
 } from './styles';
-import { VARIANTS, COLORS, mapSizes, DELETE_ICON_SIZES } from './constants';
-import { getVariantStyles } from './helpers';
+import { VARIANTS, COLORS, mapSizes, ICON_SIZES } from './constants';
+import { colorMap, getVariantStyles } from './helpers';
 
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   {
@@ -27,7 +28,6 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
     avatar,
     onDelete,
     deleteIcon,
-    deleteIconSize,
     onClick,
     clickable: clickableProp,
     className,
@@ -43,6 +43,27 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
 
   const variantStyles = getVariantStyles(variant, color, disabled, theme);
   const sizeStyles = mapSizes[size];
+
+  const variantKey = variant ?? VARIANTS.FILLED;
+  const colorKey = color ?? COLORS.DEFAULT;
+  const colors = colorMap(theme);
+
+  const iconColor = disabled
+    ? theme.colors.greyDisabled
+    : variantKey === VARIANTS.OUTLINED
+      ? colorKey === COLORS.DEFAULT
+        ? theme.colors.greyDarker
+        : colors[colorKey as keyof typeof colors]
+      : colorKey === COLORS.DEFAULT
+        ? theme.colors.greyDarker
+        : theme.colors.white;
+
+  const iconName: IconProps['name'] = icon ?? 'plus';
+  const deleteIconName: IconProps['name'] = deleteIcon ?? 'cross';
+
+  const leadingIcon = (
+    <Icon name={iconName} color={iconColor} size={ICON_SIZES[size].leading} />
+  );
 
   const handleDeleteClick: React.MouseEventHandler<HTMLButtonElement> = (
     event,
@@ -93,7 +114,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
       onClick={disabled ? undefined : onClick}
       onKeyDown={handleKeyDown}>
       {avatar && <AvatarWrapper>{avatar}</AvatarWrapper>}
-      {icon && !avatar && <IconWrapper>{icon}</IconWrapper>}
+      {leadingIcon && !avatar && <IconWrapper>{leadingIcon}</IconWrapper>}
       <LabelWrapper>{label}</LabelWrapper>
       {hasDelete && (
         <DeleteIconButton
@@ -101,13 +122,11 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
           onClick={handleDeleteClick}
           aria-label="Delete"
           disabled={disabled}>
-          {deleteIcon || (
-            <Icon
-              name="cross"
-              color="currentColor"
-              size={deleteIconSize ?? DELETE_ICON_SIZES[size]}
-            />
-          )}
+          <Icon
+            name={deleteIconName}
+            color={iconColor}
+            size={ICON_SIZES[size].delete}
+          />
         </DeleteIconButton>
       )}
     </ChipBase>
