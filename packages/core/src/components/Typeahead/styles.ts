@@ -109,17 +109,23 @@ export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
   overflow: hidden;
 `;
 
+export const TypeaheadItemAvatar = styled.span`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+`;
+
 export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
   color: ${({ theme, isDisabled }) =>
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-size: 14px;
   font-weight: 500;
-  display: block;
-  gap: 6px;
+  display: flex;
   align-items: center;
   cursor: default;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const TypeaheadItemCross = styled(Button)`

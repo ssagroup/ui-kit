@@ -5,6 +5,8 @@ import validator from '@rjsf/validator-ajv8';
 import TextField from '@components/TextField';
 import Icon from '@components/Icon';
 import Button from '@components/Button';
+import Avatar from '@components/Avatar';
+import { Typeahead, TypeaheadOption } from '@components';
 import { applyHiddenWidget, getFieldsToHide } from './utils';
 import { Form } from './';
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
@@ -256,5 +258,72 @@ export const Accordion: Story = {
         },
       },
     },
+  },
+};
+
+export const WithAvatars: Story = {
+  args: {
+    schema: {
+      type: 'object',
+      properties: {},
+    },
+  },
+  render: () => {
+    const [selectedManagers, setSelectedManagers] = useState<
+      (string | number)[]
+    >([]);
+
+    const managers = [
+      {
+        id: '1',
+        name: 'John Doe',
+        avatar: 'https://i.pravatar.cc/150?img=1',
+      },
+      {
+        id: '2',
+        name: 'Jane Smith',
+        avatar: 'https://i.pravatar.cc/150?img=2',
+      },
+      {
+        id: '3',
+        name: 'Bob Johnson',
+        avatar: 'https://i.pravatar.cc/150?img=3',
+      },
+      {
+        id: '4',
+        name: 'Alice Williams',
+        avatar: 'https://i.pravatar.cc/150?img=4',
+      },
+    ];
+
+    return (
+      <div css={{ width: '100%' }}>
+        <Typeahead
+          label="Select Managers"
+          isMultiple
+          width="100%"
+          selectedItems={selectedManagers}
+          onChange={(value, isSelected) => {
+            if (isSelected) {
+              setSelectedManagers([...selectedManagers, value]);
+            } else {
+              setSelectedManagers(
+                selectedManagers.filter((item) => item !== value),
+              );
+            }
+          }}
+          placeholder="Select managers...">
+          {managers.map((manager) => (
+            <TypeaheadOption
+              key={manager.id}
+              value={manager.id}
+              label={manager.name}
+              avatar={<Avatar size={20} image={manager.avatar} />}>
+              {manager.name}
+            </TypeaheadOption>
+          ))}
+        </Typeahead>
+      </div>
+    );
   },
 };
