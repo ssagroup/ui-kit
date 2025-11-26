@@ -64,7 +64,11 @@ describe('Chip', () => {
 
       const chip = screen.getByText('Outlined').closest('div');
       expect(chip).toHaveStyleRule('background-color', theme.colors.white);
-      expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.grey}`);
+      expect(chip).toHaveStyleRule('border', 'none');
+      expect(chip).toHaveStyleRule(
+        'box-shadow',
+        `inset 0 0 0 1px ${theme.colors.grey}`,
+      );
     });
   });
 
@@ -89,7 +93,11 @@ describe('Chip', () => {
 
       const chip = screen.getByText('Primary').closest('div');
       expect(chip).toHaveStyleRule('background-color', theme.colors.blue20);
-      expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
+      expect(chip).toHaveStyleRule('border', 'none');
+      expect(chip).toHaveStyleRule(
+        'box-shadow',
+        `inset 0 0 0 1px ${theme.colors.blue}`,
+      );
       expect(chip).toHaveStyleRule('color', theme.colors.blue);
     });
 
