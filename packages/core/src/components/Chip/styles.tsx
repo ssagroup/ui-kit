@@ -88,6 +88,9 @@ export const IconWrapper = styled.span`
   display: flex;
   align-items: center;
   margin-right: 7px;
+  & svg path {
+    stroke-width: 1;
+  }
 `;
 
 export const AvatarWrapper = styled.span`

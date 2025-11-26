@@ -21,16 +21,7 @@ export const mapSizes = {
 };
 
 export const ICON_SIZES = {
-  small: {
-    leading: 12,
-    delete: 10,
-  },
-  medium: {
-    leading: 14,
-    delete: 12,
-  },
-  large: {
-    leading: 16,
-    delete: 16,
-  },
+  small: 12,
+  medium: 14,
+  large: 16,
 } as const;

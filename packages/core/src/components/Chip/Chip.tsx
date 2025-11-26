@@ -62,7 +62,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   const deleteIconName: IconProps['name'] = deleteIcon ?? 'cross';
 
   const leadingIcon = (
-    <Icon name={iconName} color={iconColor} size={ICON_SIZES[size].leading} />
+    <Icon name={iconName} color={iconColor} size={ICON_SIZES[size]} />
   );
 
   const handleDeleteClick: React.MouseEventHandler<HTMLButtonElement> = (
@@ -125,7 +125,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
           <Icon
             name={deleteIconName}
             color={iconColor}
-            size={ICON_SIZES[size].delete}
+            size={ICON_SIZES[size]}
           />
         </DeleteIconButton>
       )}
