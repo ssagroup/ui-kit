@@ -79,5 +79,6 @@ export interface TypeaheadItemProps extends CommonProps {
   value?: string | number;
   label?: string | number;
   children?: React.ReactNode;
+  avatar?: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }

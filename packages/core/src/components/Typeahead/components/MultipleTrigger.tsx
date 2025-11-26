@@ -28,12 +28,18 @@ export const MultipleTrigger = () => {
               currentOption.label ||
               currentOption.value
             : '';
+          const avatar = currentOption?.avatar;
 
           return (
             <S.TypeaheadItem
               key={`typeahead-selected-selectedItem-${index}`}
               onClick={(e) => e.stopPropagation()}
               isDisabled={context.isDisabled}>
+              {avatar && (
+                <S.TypeaheadItemAvatar data-testid="typeahead-item-avatar">
+                  {avatar}
+                </S.TypeaheadItemAvatar>
+              )}
               <S.TypeaheadItemLabel isDisabled={context.isDisabled}>
                 {optionText}
               </S.TypeaheadItemLabel>

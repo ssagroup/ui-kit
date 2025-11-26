@@ -3,12 +3,23 @@ import * as S from '../styles';
 import { TypeaheadItemProps } from '../types';
 import Button from '@components/Button';
 
-export const TypeaheadOption = ({ children, ...rest }: TypeaheadItemProps) => (
+export const TypeaheadOption = ({
+  children,
+  avatar,
+  ...rest
+}: TypeaheadItemProps) => (
   <S.TypeaheadOption {...rest}>
+    {avatar && (
+      <S.TypeaheadItemAvatar data-testid="typeahead-option-avatar">
+        {avatar}
+      </S.TypeaheadItemAvatar>
+    )}
     <div
       css={{
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        flex: 1,
       }}>
       {children}{' '}
     </div>

@@ -27,8 +27,10 @@ export const SelectWidget = <
     value,
     onChangeOverride,
     multiple,
+    uiSchema,
   } = props;
   const { enumOptions = [], enumDisabled = [] } = options;
+  const customPlaceholder = placeholder || uiSchema?.['ui:placeholder'];
 
   const isMultiple = !!multiple || Array.isArray(value);
   const items = Array.isArray(enumOptions) ? enumOptions : [];
@@ -118,7 +120,7 @@ export const SelectWidget = <
         isDisabled={disabled}
         name={name}
         isMultiple={isMultiple}
-        placeholder={placeholder || undefined}
+        placeholder={customPlaceholder || undefined}
         onChange={handleTypeaheadChange}
         onEmptyChange={onEmptyChange}
         onClearAll={onClearAll}

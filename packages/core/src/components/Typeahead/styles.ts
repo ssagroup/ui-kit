@@ -46,6 +46,8 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
 
 export const TypeaheadInput = (theme: Theme) => css`
   &.typeahead-input {
+    flex: 1;
+    width: 100%;
     color: ${theme.colors.greyDarker};
     border: none;
     border-radius: 0;
@@ -75,6 +77,8 @@ export const TypeaheadInputPlaceholder = css`
 `;
 
 export const TypeaheadInputWrapper = css`
+  flex: 1;
+  width: 100%;
   height: 32px;
   z-index: 5;
   background: transparent;
@@ -105,13 +109,18 @@ export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
   overflow: hidden;
 `;
 
+export const TypeaheadItemAvatar = styled.span`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+`;
+
 export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
   color: ${({ theme, isDisabled }) =>
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-size: 14px;
   font-weight: 500;
-  display: block;
-  gap: 6px;
+  display: flex;
   align-items: center;
   cursor: default;
   overflow: hidden;
@@ -121,7 +130,7 @@ export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
 export const TypeaheadItemCross = styled(Button)`
   background: none;
   padding: 0;
-  padding-right: 5;
+  padding-right: 5px;
   height: auto;
   &:active,
   &:focus,
