@@ -38,8 +38,7 @@ const getVariantColorBlock = (
   if (variant === 'outlined') {
     return css`
       background-color: ${colorConfig.bg};
-      border: none;
-      box-shadow: inset 0 0 0 1px ${colorConfig.main};
+      border: 1px solid ${colorConfig.main};
       color: ${colorConfig.main};
       ${disabled ? 'opacity: 0.5;' : ''}
     `;
@@ -47,7 +46,7 @@ const getVariantColorBlock = (
 
   return css`
     background-color: ${colorConfig.main};
-    border: none;
+    border: 1px solid ${colorConfig.bg};
     color: ${theme.colors.white};
     ${disabled ? 'opacity: 0.5;' : ''}
   `;

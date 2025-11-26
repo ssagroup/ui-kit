@@ -42,8 +42,7 @@ const baseFilled = (theme: Theme) => css`
 
 const baseOutlined = (theme: Theme) => css`
   background-color: ${theme.colors.white};
-  border: none;
-  box-shadow: inset 0 0 0 1px ${theme.colors.grey};
+  border: 1px solid ${theme.colors.grey};
 `;
 
 export const filled = (theme: Theme) => css`
