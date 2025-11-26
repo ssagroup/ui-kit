@@ -14,6 +14,12 @@ const meta = {
         type: { summary: 'string | ReactNode' },
       },
     },
+    title: {
+      control: 'text',
+      table: {
+        type: { summary: 'string | ReactNode' },
+      },
+    },
     variant: {
       control: 'inline-radio',
       options: ['filled', 'outlined'],
@@ -161,53 +167,14 @@ export const Deletable = () => (
       variant="outlined"
       onDelete={() => {}}
     />
+    <Chip
+      title="Title"
+      label="Deletable"
+      onDelete={() => {}}
+      showIcon={false}
+    />
   </Wrapper>
 );
-
-export const WithIconAndDelete = () => {
-  return (
-    <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-      <Chip label="Icon + Delete" icon="plus" onDelete={() => {}} />
-      <Chip
-        label="Icon + Delete"
-        variant="outlined"
-        icon="plus"
-        onDelete={() => {}}
-      />
-      <Chip
-        label="Primary Icon + Delete"
-        color="primary"
-        icon="plus"
-        onDelete={() => {}}
-      />
-      <Chip
-        label="Success Icon + Delete"
-        color="success"
-        variant="outlined"
-        icon="plus"
-        onDelete={() => {}}
-      />
-      <Chip
-        label="Clickable Icon + Delete"
-        icon="plus"
-        onDelete={() => {}}
-        onClick={() => alert('Clicked!')}
-      />
-      <Chip
-        label="Small Icon + Delete"
-        size="small"
-        icon="plus"
-        onDelete={() => {}}
-      />
-      <Chip
-        label="Large Icon + Delete"
-        size="large"
-        icon="plus"
-        onDelete={() => {}}
-      />
-    </Wrapper>
-  );
-};
 
 export const Clickable = () => (
   <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
@@ -295,6 +262,33 @@ export const ChipArray = () => {
     </Wrapper>
   );
 };
+
+export const WithTitle = () => (
+  <div css={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div>
+      <h3 css={{ marginBottom: '12px' }}>Basic Title</h3>
+      <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
+        <Chip title="Title" label="Label" />
+        <Chip title="Title" label="Label" variant="outlined" />
+      </Wrapper>
+    </div>
+    <div>
+      <h3 css={{ marginBottom: '12px' }}>Title with Colors</h3>
+      <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
+        <Chip title="New" label="Feature" color="primary" showIcon={false} />
+        <Chip
+          title="New"
+          label="Feature"
+          color="primary"
+          variant="outlined"
+          showIcon={false}
+        />
+        <Chip title="Success" label="Status" color="success" showIcon={false} />
+        <Chip title="Info" label="Message" color="info" />
+      </Wrapper>
+    </div>
+  </div>
+);
 
 // temporary hidden
 // export const FullyCustomized = () => {

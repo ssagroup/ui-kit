@@ -9,6 +9,7 @@ import {
   clickableDisabled,
   IconWrapper,
   AvatarWrapper,
+  TitleWrapper,
   LabelWrapper,
   DeleteIconButton,
 } from './styles';
@@ -18,6 +19,7 @@ import { getVariantColors } from './helpers';
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   {
     label,
+    title,
     variant = VARIANTS.FILLED,
     color = COLORS.DEFAULT,
     size = 'medium',
@@ -105,6 +107,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
       onKeyDown={handleKeyDown}>
       {avatar && <AvatarWrapper>{avatar}</AvatarWrapper>}
       {leadingIcon && !avatar && <IconWrapper>{leadingIcon}</IconWrapper>}
+      {title && <TitleWrapper>{title}</TitleWrapper>}
       <LabelWrapper>{label}</LabelWrapper>
       {hasDeleteIcon && (
         <DeleteIconButton

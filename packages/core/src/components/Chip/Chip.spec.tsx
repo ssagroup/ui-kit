@@ -20,6 +20,13 @@ describe('Chip', () => {
 
       expect(ref.current?.textContent).toContain('Test Chip');
     });
+
+    it('Renders with title', () => {
+      render(<Chip title="Title" label="Label" />);
+
+      const title = screen.getByText('Title');
+      expect(title).toBeInTheDocument();
+    });
   });
 
   describe('Sizes', () => {
@@ -84,6 +91,26 @@ describe('Chip', () => {
       expect(chip).toHaveStyleRule('background-color', theme.colors.blue20);
       expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
       expect(chip).toHaveStyleRule('color', theme.colors.blue);
+    });
+
+    it('Renders title with primary color', () => {
+      render(<Chip title="Title" label="Label" color="primary" />);
+
+      const title = screen.getByText('Title');
+      const label = screen.getByText('Label');
+      expect(title).toBeInTheDocument();
+      expect(label).toBeInTheDocument();
+    });
+
+    it('Renders title with outlined variant and color', () => {
+      render(
+        <Chip title="Title" label="Label" color="success" variant="outlined" />,
+      );
+
+      const title = screen.getByText('Title');
+      const label = screen.getByText('Label');
+      expect(title).toBeInTheDocument();
+      expect(label).toBeInTheDocument();
     });
 
     it('Renders with warning color', () => {

@@ -17,6 +17,7 @@ export type ChipSize = 'small' | 'medium' | 'large';
 
 export interface ChipProps extends CommonProps {
   label: ReactNode;
+  title?: ReactNode;
   variant?: ChipVariant;
   color?: ChipColor;
   size?: ChipSize;

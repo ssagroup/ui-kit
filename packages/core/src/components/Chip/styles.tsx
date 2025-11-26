@@ -100,6 +100,12 @@ export const AvatarWrapper = styled.span`
   margin-right: 7px;
 `;
 
+export const TitleWrapper = styled.span`
+  color: inherit;
+  font-weight: 700;
+  margin-right: 4px;
+`;
+
 export const LabelWrapper = styled.span`
   color: inherit;
 `;
