@@ -1,67 +1,96 @@
-import { css, Theme, useTheme } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { ChipProps } from './types';
 import { filled, outlined, filledDisabled, outlinedDisabled } from './styles';
 import { VARIANTS, COLORS } from './constants';
 
-export const colorMap = (theme: Theme) => ({
-  primary: theme.colors.blueRoyal,
-  success: theme.colors.greenLighter,
-  error: theme.colors.red,
-  info: theme.colors.blueLight,
-  warning: theme.colors.yellow,
+type SemanticColor = Exclude<ChipProps['color'], 'default' | undefined>;
+type ColorConfig = { main: string; bg: string };
+
+export const colorMap = (theme: Theme): Record<SemanticColor, ColorConfig> => ({
+  primary: {
+    main: theme.colors.blue as string,
+    bg: theme.colors.blue20 as string,
+  },
+  success: {
+    main: theme.colors.green as string,
+    bg: theme.colors.green20 as string,
+  },
+  error: {
+    main: theme.colors.red as string,
+    bg: theme.colors.red40 as string,
+  },
+  info: {
+    main: theme.colors.blueLight as string,
+    bg: theme.colors.blueLight20 as string,
+  },
+  warning: {
+    main: theme.colors.yellow as string,
+    bg: theme.colors.yellow20 as string,
+  },
 });
 
-export const makeFilled = (theme: Theme, color: string) => css`
-  background-color: ${color};
-  color: ${theme.colors.white};
-  border: none;
-`;
-
-export const makeOutlined = (theme: Theme, color: string) => css`
-  background-color: ${theme.colors.white};
-  border: 1px solid ${color};
-  color: ${color};
-`;
-
-export const getVariantColorStyles = (
+const getVariantColorBlock = (
   theme: Theme,
   variant: 'filled' | 'outlined',
-  colorName: 'primary' | 'success' | 'error' | 'info' | 'warning',
+  colorConfig: ColorConfig,
+  disabled: boolean,
 ) => {
-  const colors = colorMap(theme);
-  const color = colors[colorName];
-
-  if (!color) {
-    return variant === 'outlined' ? outlined(theme) : filled(theme);
+  if (variant === 'outlined') {
+    return css`
+      background-color: ${colorConfig.bg};
+      border: 1px solid ${colorConfig.main};
+      color: ${colorConfig.main};
+      ${disabled ? 'opacity: 0.5;' : ''}
+    `;
   }
 
-  return variant === 'outlined'
-    ? makeOutlined(theme, color)
-    : makeFilled(theme, color);
+  return css`
+    background-color: ${colorConfig.main};
+    border: 1px solid ${colorConfig.bg};
+    color: ${theme.colors.white};
+    ${disabled ? 'opacity: 0.5;' : ''}
+  `;
 };
 
-export const getVariantStyles = (
+export const getVariantColors = (
+  theme: Theme,
   variant: ChipProps['variant'],
   color: ChipProps['color'],
   disabled: boolean,
-  theme: ReturnType<typeof useTheme>,
 ) => {
-  if (disabled) {
-    return variant === VARIANTS.OUTLINED
-      ? outlinedDisabled(theme)
-      : filledDisabled(theme);
-  }
-
   const variantKey = variant ?? VARIANTS.FILLED;
   const colorKey = color ?? COLORS.DEFAULT;
 
-  if (colorKey === COLORS.DEFAULT) {
-    return variantKey === VARIANTS.OUTLINED ? outlined(theme) : filled(theme);
-  }
+  const paletteMap = colorMap(theme);
+  const palette =
+    colorKey === COLORS.DEFAULT ? null : paletteMap[colorKey as SemanticColor];
 
-  return getVariantColorStyles(
-    theme,
-    variantKey,
-    colorKey as 'primary' | 'success' | 'error' | 'info' | 'warning',
-  );
+  const chipStyles =
+    colorKey === COLORS.DEFAULT
+      ? variantKey === VARIANTS.OUTLINED
+        ? disabled
+          ? outlinedDisabled(theme)
+          : outlined(theme)
+        : disabled
+          ? filledDisabled(theme)
+          : filled(theme)
+      : palette
+        ? getVariantColorBlock(theme, variantKey, palette, disabled)
+        : variantKey === VARIANTS.OUTLINED
+          ? outlined(theme)
+          : filled(theme);
+
+  const iconColor = (() => {
+    if (!palette) {
+      return disabled ? theme.colors.greyDisabled : theme.colors.greyDarker;
+    }
+
+    if (variantKey === VARIANTS.OUTLINED) {
+      return palette.main;
+    }
+
+    return theme.colors.white;
+  })();
+
+  return { chipStyles, iconColor };
 };

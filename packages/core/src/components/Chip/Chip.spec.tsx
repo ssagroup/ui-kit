@@ -1,8 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import Icon from '@components/Icon';
-
 import { Chip } from './index';
 import theme from '@themes/main';
 import { screen } from '../../../customTest';
@@ -18,9 +16,16 @@ describe('Chip', () => {
 
     it('Renders with ref', () => {
       const ref = React.createRef<HTMLDivElement>();
-      render(<Chip label="Test Chip" ref={ref} />);
+      render(<Chip label="Test Chip" ref={ref} icon={undefined} />);
 
-      expect(ref.current?.textContent).toBe('Test Chip');
+      expect(ref.current?.textContent).toContain('Test Chip');
+    });
+
+    it('Renders with title', () => {
+      render(<Chip title="Title" label="Label" />);
+
+      const title = screen.getByText('Title');
+      expect(title).toBeInTheDocument();
     });
   });
 
@@ -75,7 +80,11 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" />);
 
       const chip = screen.getByText('Primary').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.blueRoyal);
+      expect(chip).toHaveStyleRule('background-color', theme.colors.blue);
+      expect(chip).toHaveStyleRule(
+        'border',
+        `1px solid ${theme.colors.blue20}`,
+      );
       expect(chip).toHaveStyleRule('color', theme.colors.white);
     });
 
@@ -83,12 +92,29 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" variant="outlined" />);
 
       const chip = screen.getByText('Primary').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.white);
-      expect(chip).toHaveStyleRule(
-        'border',
-        `1px solid ${theme.colors.blueRoyal}`,
+      expect(chip).toHaveStyleRule('background-color', theme.colors.blue20);
+      expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
+      expect(chip).toHaveStyleRule('color', theme.colors.blue);
+    });
+
+    it('Renders title with primary color', () => {
+      render(<Chip title="Title" label="Label" color="primary" />);
+
+      const title = screen.getByText('Title');
+      const label = screen.getByText('Label');
+      expect(title).toBeInTheDocument();
+      expect(label).toBeInTheDocument();
+    });
+
+    it('Renders title with outlined variant and color', () => {
+      render(
+        <Chip title="Title" label="Label" color="success" variant="outlined" />,
       );
-      expect(chip).toHaveStyleRule('color', theme.colors.blueRoyal);
+
+      const title = screen.getByText('Title');
+      const label = screen.getByText('Label');
+      expect(title).toBeInTheDocument();
+      expect(label).toBeInTheDocument();
     });
 
     it('Renders with warning color', () => {
@@ -96,6 +122,10 @@ describe('Chip', () => {
 
       const chip = screen.getByText('Warning').closest('div');
       expect(chip).toHaveStyleRule('background-color', theme.colors.yellow);
+      expect(chip).toHaveStyleRule(
+        'border',
+        `1px solid ${theme.colors.yellow20}`,
+      );
       expect(chip).toHaveStyleRule('color', theme.colors.white);
     });
   });
@@ -121,19 +151,20 @@ describe('Chip', () => {
       expect(mockOnClick).not.toHaveBeenCalled();
     });
 
-    it('Disabled chip does not show delete button', () => {
+    it('Disabled chip shows delete button but keeps it disabled', () => {
       const mockOnDelete = jest.fn();
 
       render(<Chip label="Disabled" disabled onDelete={mockOnDelete} />);
 
-      const deleteButton = screen.queryByLabelText('Delete');
-      expect(deleteButton).not.toBeInTheDocument();
+      const deleteButton = screen.getByLabelText('Delete');
+      expect(deleteButton).toBeInTheDocument();
+      expect(deleteButton).toBeDisabled();
     });
   });
 
   describe('Icons and Avatars', () => {
     it('Renders with icon', () => {
-      render(<Chip label="With Icon" icon={<Icon name="calendar" />} />);
+      render(<Chip label="With Icon" icon="calendar" />);
 
       const chip = screen.getByText('With Icon');
       expect(chip).toBeInTheDocument();
@@ -152,6 +183,13 @@ describe('Chip', () => {
 
       const avatar = screen.getByTestId('avatar');
       expect(avatar).toBeInTheDocument();
+    });
+
+    it('Does not render icon when showIcon is false', () => {
+      render(<Chip label="No Icon" showIcon={false} />);
+
+      const icon = screen.queryByTitle(/plus/i);
+      expect(icon).not.toBeInTheDocument();
     });
   });
 
@@ -184,9 +222,6 @@ describe('Chip', () => {
 
       render(<Chip label="Disabled" disabled onDelete={mockOnDelete} />);
 
-      const deleteButton = screen.queryByLabelText('Delete');
-      expect(deleteButton).not.toBeInTheDocument();
-
       const chip = screen.getByText('Disabled').closest('div');
       chip?.focus();
       await user.keyboard('{Backspace}');
@@ -198,17 +233,13 @@ describe('Chip', () => {
       const mockOnDelete = jest.fn();
 
       render(
-        <Chip
-          label="Custom Delete"
-          onDelete={mockOnDelete}
-          deleteIcon={<Icon name="bin" />}
-        />,
+        <Chip label="Custom Delete" onDelete={mockOnDelete} deleteIcon="bin" />,
       );
 
       const deleteButton = screen.getByLabelText('Delete');
       expect(deleteButton).toBeInTheDocument();
 
-      const customIcon = screen.getByTitle(/bin/i);
+      const customIcon = deleteButton?.querySelector('svg');
       expect(customIcon).toBeInTheDocument();
     });
   });

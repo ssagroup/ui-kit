@@ -88,12 +88,21 @@ export const IconWrapper = styled.span`
   display: flex;
   align-items: center;
   margin-right: 7px;
+  & svg path {
+    stroke-width: 1;
+  }
 `;
 
 export const AvatarWrapper = styled.span`
   display: flex;
   align-items: center;
   margin-right: 7px;
+`;
+
+export const TitleWrapper = styled.span`
+  color: inherit;
+  font-weight: 700;
+  margin-right: 4px;
 `;
 
 export const LabelWrapper = styled.span`
@@ -127,6 +136,6 @@ export const DeleteIconButton = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    pointer-events: none;
   }
 `;
