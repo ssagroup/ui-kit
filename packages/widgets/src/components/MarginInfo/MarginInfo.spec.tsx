@@ -54,6 +54,23 @@ describe('MarginInfo', () => {
     expect(screen.getByText('0.0024 BTC')).toBeInTheDocument();
   });
 
+  it('Renders custom row labels when provided', () => {
+    render(
+      <MarginInfo
+        {...defaultProps}
+        borrowedLabel="Total Borrowed"
+        interestRateLabel="APR"
+        totalInterestLabel="Accumulated Interest"
+        baseInterestRate="5.2%"
+        quoteInterestRate="4.8%"
+      />,
+    );
+
+    expect(screen.getByText('Total Borrowed')).toBeInTheDocument();
+    expect(screen.getByText('APR')).toBeInTheDocument();
+    expect(screen.getByText('Accumulated Interest')).toBeInTheDocument();
+  });
+
   it('Does not render interest rate row when showInterestRate is false', () => {
     render(
       <MarginInfo

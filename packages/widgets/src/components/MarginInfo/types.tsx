@@ -8,6 +8,9 @@ export interface MarginInfoProps {
   quoteBorrowed: ReactNode;
   baseTotalInterest: ReactNode;
   quoteTotalInterest: ReactNode;
+  borrowedLabel?: string;
+  interestRateLabel?: string;
+  totalInterestLabel?: string;
   showInterestRate?: boolean;
   baseInterestRate?: ReactNode;
   quoteInterestRate?: ReactNode;
