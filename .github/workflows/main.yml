@@ -14,6 +14,8 @@ concurrency:
 jobs:
   lint-build-test:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: '--max_old_space_size=8192'
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -31,8 +33,6 @@ jobs:
         run: pnpm build:all
 
       - name: Run unit tests (coverage)
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
         run: pnpm test:coverage
 
   storybook:
