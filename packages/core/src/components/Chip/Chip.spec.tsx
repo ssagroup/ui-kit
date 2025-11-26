@@ -149,6 +149,13 @@ describe('Chip', () => {
       const avatar = screen.getByTestId('avatar');
       expect(avatar).toBeInTheDocument();
     });
+
+    it('Does not render icon when showIcon is false', () => {
+      render(<Chip label="No Icon" showIcon={false} />);
+
+      const icon = screen.queryByTitle(/plus/i);
+      expect(icon).not.toBeInTheDocument();
+    });
   });
 
   describe('Delete Functionality', () => {

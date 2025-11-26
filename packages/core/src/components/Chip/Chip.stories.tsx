@@ -128,22 +128,6 @@ export const Sizes = () => (
   </Wrapper>
 );
 
-export const WithIcon = () => {
-  return (
-    <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-      <Chip label="With Icon" icon="plus" />
-      <Chip label="With Icon" variant="outlined" icon="plus" />
-      <Chip label="Primary with Icon" color="primary" icon="plus" />
-      <Chip
-        label="Success with Icon"
-        color="success"
-        variant="outlined"
-        icon="plus"
-      />
-    </Wrapper>
-  );
-};
-
 export const WithAvatar = () => {
   return (
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>

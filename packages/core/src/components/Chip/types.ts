@@ -25,6 +25,7 @@ export interface ChipProps extends CommonProps {
   avatar?: ReactNode;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
   deleteIcon?: IconProps['name'];
+  showIcon?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
   clickable?: boolean;
   css?: Interpolation<Theme>;
