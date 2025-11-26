@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { css } from '@emotion/react';
-
 import { Chip } from './Chip';
 import Avatar from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
@@ -249,52 +247,37 @@ export const Clickable = () => (
   </Wrapper>
 );
 
-export const CustomDeleteIcon = () => {
-  return (
-    <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-      <Chip label="Custom delete icon" onDelete={() => {}} deleteIcon="cross" />
-      <Chip
-        label="Custom delete icon"
-        variant="outlined"
-        onDelete={() => {}}
-        deleteIcon="cross"
-      />
-    </Wrapper>
-  );
-};
-
 export const Disabled = () => (
   <div css={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
     <div>
       <h3 css={{ marginBottom: '12px' }}>Filled</h3>
       <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-        <Chip label="Disabled" disabled />
-        <Chip label="Disabled" color="primary" disabled />
-        <Chip label="Disabled" color="success" disabled />
-        <Chip label="Disabled" color="error" disabled />
-        <Chip label="Disabled" color="info" disabled />
-        <Chip label="Disabled" color="warning" disabled />
+        <Chip label="Disabled" disabled icon="plus" onDelete={() => {}} />
+        <Chip
+          label="Disabled"
+          color="primary"
+          disabled
+          icon="plus"
+          onDelete={() => {}}
+        />
       </Wrapper>
     </div>
     <div>
       <h3 css={{ marginBottom: '12px' }}>Outlined</h3>
       <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-        <Chip label="Disabled" variant="outlined" disabled />
-        <Chip label="Disabled" variant="outlined" color="primary" disabled />
-        <Chip label="Disabled" variant="outlined" color="success" disabled />
-        <Chip label="Disabled" variant="outlined" color="error" disabled />
-        <Chip label="Disabled" variant="outlined" color="info" disabled />
-        <Chip label="Disabled" variant="outlined" color="warning" disabled />
-      </Wrapper>
-    </div>
-    <div>
-      <h3 css={{ marginBottom: '12px' }}>With Delete Icon</h3>
-      <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-        <Chip label="Disabled Deletable" disabled onDelete={() => {}} />
         <Chip
-          label="Disabled Deletable"
+          label="Disabled"
           variant="outlined"
           disabled
+          icon="plus"
+          onDelete={() => {}}
+        />
+        <Chip
+          label="Disabled"
+          variant="outlined"
+          color="primary"
+          disabled
+          icon="plus"
           onDelete={() => {}}
         />
       </Wrapper>
@@ -329,211 +312,154 @@ export const ChipArray = () => {
   );
 };
 
-export const AllStates = () => {
-  const variants: Array<'filled' | 'outlined'> = ['filled', 'outlined'];
-  const colors: Array<
-    'default' | 'primary' | 'success' | 'error' | 'info' | 'warning'
-  > = ['default', 'primary', 'success', 'error', 'info', 'warning'];
-  const sizes: Array<'small' | 'medium' | 'large'> = [
-    'small',
-    'medium',
-    'large',
-  ];
-
-  return (
-    <div css={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {variants.map((variant) => (
-        <div key={variant}>
-          <h2 css={{ marginBottom: '16px', textTransform: 'capitalize' }}>
-            {variant}
-          </h2>
-          {colors.map((color) => (
-            <div key={color} css={{ marginBottom: '16px' }}>
-              <h3 css={{ marginBottom: '12px', textTransform: 'capitalize' }}>
-                {color}
-              </h3>
-              <Wrapper
-                css={{ gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-                {sizes.map((size) => (
-                  <React.Fragment key={size}>
-                    <Chip
-                      label={`Chip ${size}`}
-                      variant={variant}
-                      color={color}
-                      size={size}
-                    />
-                    <Chip
-                      label={`Chip ${size}`}
-                      variant={variant}
-                      color={color}
-                      size={size}
-                      disabled
-                    />
-                  </React.Fragment>
-                ))}
-              </Wrapper>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-AllStates.argTypes = {
-  variant: { control: false },
-  color: { control: false },
-  size: { control: false },
-  disabled: { control: false },
-  label: { control: false },
-};
-export const FullyCustomized = () => {
-  return (
-    <div css={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div>
-        <h3 css={{ marginBottom: '12px' }}>
-          Custom Background, Border, Text, Icon, and Delete Icon Colors
-        </h3>
-        <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-          <Chip
-            label="Fully Customized"
-            color="success"
-            icon="calendar"
-            onDelete={() => {}}
-            css={css`
-              background-color: #667eea;
-              border: 2px solid #5568d3;
-
-              button[aria-label='Delete'] svg path {
-                stroke: #ff6b6b;
-              }
-            `}
-          />
-          <Chip
-            label="Gradient Background"
-            variant="outlined"
-            icon="check"
-            onDelete={() => {}}
-            css={css`
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              border: 2px solid #764ba2;
-              color: #e8e0ff;
-              button[aria-label='Delete'] svg path {
-                stroke: #ff6b6b;
-              }
-            `}
-          />
-          <Chip
-            label="Dark Theme Style"
-            icon="plus"
-            onDelete={() => {}}
-            css={css`
-              background-color: #2d3748;
-              border: 1px solid #4a5568;
-              color: #cbd5e0;
-
-              button[aria-label='Delete'] svg path {
-                stroke: #fc8181;
-              }
-            `}
-          />
-          <Chip
-            label="Pastel Colors"
-            variant="outlined"
-            icon="attention"
-            onDelete={() => {}}
-            css={css`
-              background-color: #fef5e7;
-              border: 2px solid #f4d03f;
-              color: #5a4a08;
-
-              button[aria-label='Delete'] svg path {
-                stroke: #c0392b;
-              }
-            `}
-          />
-        </Wrapper>
-      </div>
-      <div>
-        <h3 css={{ marginBottom: '12px' }}>
-          Different Sizes with Custom Colors
-        </h3>
-        <Wrapper css={{ gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <Chip
-            label="Small"
-            size="small"
-            icon="plus"
-            onDelete={() => {}}
-            css={css`
-              background-color: #48bb78;
-              border: 1px solid #38a169;
-              color: #fff;
-              button[aria-label='Delete'] svg path {
-                stroke: #ff6b6b;
-              }
-            `}
-          />
-          <Chip
-            label="Medium"
-            size="medium"
-            icon="plus"
-            onDelete={() => {}}
-            css={css`
-              background-color: #48bb78;
-              border: 1px solid #38a169;
-              color: #fff;
-            `}
-          />
-          <Chip
-            label="Large"
-            size="large"
-            icon="plus"
-            onDelete={() => {}}
-            css={css`
-              background-color: #48bb78;
-              border: 1px solid #38a169;
-              color: #fff;
-            `}
-          />
-        </Wrapper>
-      </div>
-      <div>
-        <h3 css={{ marginBottom: '12px' }}>With Hover Effects</h3>
-        <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
-          <Chip
-            label="Hover Me"
-            icon="check"
-            onDelete={() => {}}
-            onClick={() => {}}
-            css={css`
-              background-color: #ed8936;
-              border: 2px solid #dd6b20;
-              color: #fff;
-              transition: all 0.3s ease;
-
-              button[aria-label='Delete'] svg path {
-                stroke: #ff6b6b;
-                transition: stroke 0.3s ease;
-              }
-
-              &:hover {
-                background-color: #dd6b20;
-                border-color: #c05621;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(237, 137, 54, 0.4);
-
-                button[aria-label='Delete'] svg path {
-                  stroke: #ff5252;
-                }
-              }
-
-              &:active {
-                transform: translateY(0);
-              }
-            `}
-          />
-        </Wrapper>
-      </div>
-    </div>
-  );
-};
+// temporary hidden
+// export const FullyCustomized = () => {
+//   return (
+//     <div css={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+//       <div>
+//         <h3 css={{ marginBottom: '12px' }}>
+//           Custom Background, Border, Text, Icon, and Delete Icon Colors
+//         </h3>
+//         <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
+//           <Chip
+//             label="Fully Customized"
+//             color="success"
+//             icon="calendar"
+//             onDelete={() => {}}
+//             css={css`
+//               background-color: #667eea;
+//               border: 2px solid #5568d3;
+//
+//               button[aria-label='Delete'] svg path {
+//                 stroke: #ff6b6b;
+//               }
+//             `}
+//           />
+//           <Chip
+//             label="Gradient Background"
+//             variant="outlined"
+//             icon="check"
+//             onDelete={() => {}}
+//             css={css`
+//               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+//               border: 2px solid #764ba2;
+//               color: #e8e0ff;
+//               button[aria-label='Delete'] svg path {
+//                 stroke: #ff6b6b;
+//               }
+//             `}
+//           />
+//           <Chip
+//             label="Dark Theme Style"
+//             icon="plus"
+//             onDelete={() => {}}
+//             css={css`
+//               background-color: #2d3748;
+//               border: 1px solid #4a5568;
+//               color: #cbd5e0;
+//
+//               button[aria-label='Delete'] svg path {
+//                 stroke: #fc8181;
+//               }
+//             `}
+//           />
+//           <Chip
+//             label="Pastel Colors"
+//             variant="outlined"
+//             icon="attention"
+//             onDelete={() => {}}
+//             css={css`
+//               background-color: #fef5e7;
+//               border: 2px solid #f4d03f;
+//               color: #5a4a08;
+//
+//               button[aria-label='Delete'] svg path {
+//                 stroke: #c0392b;
+//               }
+//             `}
+//           />
+//         </Wrapper>
+//       </div>
+//       <div>
+//         <h3 css={{ marginBottom: '12px' }}>
+//           Different Sizes with Custom Colors
+//         </h3>
+//         <Wrapper css={{ gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+//           <Chip
+//             label="Small"
+//             size="small"
+//             icon="plus"
+//             onDelete={() => {}}
+//             css={css`
+//               background-color: #48bb78;
+//               border: 1px solid #38a169;
+//               color: #fff;
+//               button[aria-label='Delete'] svg path {
+//                 stroke: #ff6b6b;
+//               }
+//             `}
+//           />
+//           <Chip
+//             label="Medium"
+//             size="medium"
+//             icon="plus"
+//             onDelete={() => {}}
+//             css={css`
+//               background-color: #48bb78;
+//               border: 1px solid #38a169;
+//               color: #fff;
+//             `}
+//           />
+//           <Chip
+//             label="Large"
+//             size="large"
+//             icon="plus"
+//             onDelete={() => {}}
+//             css={css`
+//               background-color: #48bb78;
+//               border: 1px solid #38a169;
+//               color: #fff;
+//             `}
+//           />
+//         </Wrapper>
+//       </div>
+//       <div>
+//         <h3 css={{ marginBottom: '12px' }}>With Hover Effects</h3>
+//         <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
+//           <Chip
+//             label="Hover Me"
+//             icon="check"
+//             onDelete={() => {}}
+//             onClick={() => {}}
+//             css={css`
+//               background-color: #ed8936;
+//               border: 2px solid #dd6b20;
+//               color: #fff;
+//               transition: all 0.3s ease;
+//
+//               button[aria-label='Delete'] svg path {
+//                 stroke: #ff6b6b;
+//                 transition: stroke 0.3s ease;
+//               }
+//
+//               &:hover {
+//                 background-color: #dd6b20;
+//                 border-color: #c05621;
+//                 transform: translateY(-2px);
+//                 box-shadow: 0 4px 12px rgba(237, 137, 54, 0.4);
+//
+//                 button[aria-label='Delete'] svg path {
+//                   stroke: #ff5252;
+//                 }
+//               }
+//
+//               &:active {
+//                 transform: translateY(0);
+//               }
+//             `}
+//           />
+//         </Wrapper>
+//       </div>
+//     </div>
+//   );
+// };

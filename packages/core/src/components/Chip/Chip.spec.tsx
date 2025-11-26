@@ -16,9 +16,9 @@ describe('Chip', () => {
 
     it('Renders with ref', () => {
       const ref = React.createRef<HTMLDivElement>();
-      render(<Chip label="Test Chip" ref={ref} />);
+      render(<Chip label="Test Chip" ref={ref} icon={undefined} />);
 
-      expect(ref.current?.textContent).toBe('Test Chip');
+      expect(ref.current?.textContent).toContain('Test Chip');
     });
   });
 
@@ -73,7 +73,7 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" />);
 
       const chip = screen.getByText('Primary').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.blueRoyal);
+      expect(chip).toHaveStyleRule('background-color', theme.colors.blue);
       expect(chip).toHaveStyleRule('color', theme.colors.white);
     });
 
@@ -81,12 +81,9 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" variant="outlined" />);
 
       const chip = screen.getByText('Primary').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.white);
-      expect(chip).toHaveStyleRule(
-        'border',
-        `1px solid ${theme.colors.blueRoyal}`,
-      );
-      expect(chip).toHaveStyleRule('color', theme.colors.blueRoyal);
+      expect(chip).toHaveStyleRule('background-color', theme.colors.blue20);
+      expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
+      expect(chip).toHaveStyleRule('color', theme.colors.blue);
     });
 
     it('Renders with warning color', () => {
@@ -119,13 +116,14 @@ describe('Chip', () => {
       expect(mockOnClick).not.toHaveBeenCalled();
     });
 
-    it('Disabled chip does not show delete button', () => {
+    it('Disabled chip shows delete button but keeps it disabled', () => {
       const mockOnDelete = jest.fn();
 
       render(<Chip label="Disabled" disabled onDelete={mockOnDelete} />);
 
-      const deleteButton = screen.queryByLabelText('Delete');
-      expect(deleteButton).not.toBeInTheDocument();
+      const deleteButton = screen.getByLabelText('Delete');
+      expect(deleteButton).toBeInTheDocument();
+      expect(deleteButton).toBeDisabled();
     });
   });
 
@@ -181,9 +179,6 @@ describe('Chip', () => {
       const mockOnDelete = jest.fn();
 
       render(<Chip label="Disabled" disabled onDelete={mockOnDelete} />);
-
-      const deleteButton = screen.queryByLabelText('Delete');
-      expect(deleteButton).not.toBeInTheDocument();
 
       const chip = screen.getByText('Disabled').closest('div');
       chip?.focus();
