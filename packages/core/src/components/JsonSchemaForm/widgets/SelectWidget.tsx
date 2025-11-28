@@ -14,12 +14,10 @@ import {
   Avatar,
 } from '@components';
 
-const DEFAULT_AVATAR_SIZE = 20;
-
-type AvatarOption = string | { image: string; size?: number };
+const DEFAULT_AVATAR_SIZE = 24;
 
 type SelectOptionSchemaExtension = {
-  avatar?: AvatarOption;
+  avatar?: string;
 };
 
 type SelectWidgetUiOptions = {
@@ -35,15 +33,9 @@ const getAvatarNode = <S extends StrictRJSFSchema>(
 
   if (!avatar) return;
 
-  const { image, size } =
-    typeof avatar === 'string' ? { image: avatar, size: undefined } : avatar;
+  const avatarSize = uiOptions.typeaheadAvatarSize ?? DEFAULT_AVATAR_SIZE;
 
-  if (!image) return;
-
-  const avatarSize =
-    size ?? uiOptions.typeaheadAvatarSize ?? DEFAULT_AVATAR_SIZE;
-
-  return <Avatar size={avatarSize} image={image} />;
+  return <Avatar size={avatarSize} image={avatar} />;
 };
 
 export const SelectWidget = <

@@ -171,7 +171,7 @@ export const Default: Story = {
         'ui:widget': 'select',
         'ui:placeholder': 'Select managers',
         'ui:options': {
-          typeaheadAvatarSize: 20,
+          typeaheadAvatarSize: 24,
         },
       },
     },
