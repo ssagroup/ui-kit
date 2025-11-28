@@ -1,6 +1,25 @@
+import { render } from '@testing-library/react';
 import validator from '@rjsf/validator-ajv8';
 
 import { Form } from '.';
+
+const managers = [
+  {
+    id: '1',
+    name: 'John Doe',
+    avatar: 'https://i.pravatar.cc/150?img=1',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    avatar: 'https://i.pravatar.cc/150?img=2',
+  },
+  {
+    id: '3',
+    name: 'Bob Johnson',
+    avatar: 'https://i.pravatar.cc/150?img=3',
+  },
+] as const;
 
 describe('Form (rjsf)', () => {
   it('Render form', () => {
@@ -58,6 +77,19 @@ describe('Form (rjsf)', () => {
               },
               uniqueItems: true,
             },
+            managers: {
+              type: 'array',
+              title: 'Select managers',
+              uniqueItems: true,
+              items: {
+                type: 'string',
+                oneOf: managers.map((manager) => ({
+                  const: manager.id,
+                  title: manager.name,
+                  avatar: manager.avatar,
+                })),
+              },
+            },
             passwordField: {
               type: 'string',
               title: 'Password field title',
@@ -87,6 +119,13 @@ describe('Form (rjsf)', () => {
             'ui:widget': 'password',
             'ui:help': 'Password field help',
           },
+          managers: {
+            'ui:widget': 'select',
+            'ui:placeholder': 'Select managers...',
+            'ui:options': {
+              typeaheadAvatarSize: 24,
+            },
+          },
         }}
         formData={{
           stringField: 'String field value',
@@ -96,6 +135,7 @@ describe('Form (rjsf)', () => {
           checkboxesField: ['foo', 'bar'],
           selectField: 'Option 2',
           selectMultipleField: ['Option 1', 'Option 3'],
+          managers: [managers[0].id, managers[2].id],
           passwordField: 'password',
         }}
       />,

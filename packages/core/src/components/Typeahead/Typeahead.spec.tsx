@@ -16,6 +16,29 @@ const items: Item[] = [
   { id: 4, value: 'Fourth', label: 'Fourth Label' },
 ];
 
+const managerOptions = [
+  {
+    id: '1',
+    name: 'John Doe',
+    avatar: 'https://i.pravatar.cc/150?img=1',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    avatar: 'https://i.pravatar.cc/150?img=2',
+  },
+  {
+    id: '3',
+    name: 'Bob Johnson',
+    avatar: 'https://i.pravatar.cc/150?img=3',
+  },
+  {
+    id: '4',
+    name: 'Alice Williams',
+    avatar: 'https://i.pravatar.cc/150?img=4',
+  },
+] as const;
+
 describe('Typeahead Component', () => {
   let registerSpy: jest.SpyInstance;
   let setValueSpy: jest.SpyInstance;
@@ -289,6 +312,31 @@ describe('Typeahead Component', () => {
 
       const avatar = within(combobox).queryByTestId('typeahead-item-avatar');
       expect(avatar).toBeInTheDocument();
+    });
+
+    it('renders avatars for every provided option', async () => {
+      const { user } = setup({
+        isMultiple: true,
+        children: (
+          <>
+            {managerOptions.map(({ id, name, avatar }) => (
+              <TypeaheadOption
+                key={id}
+                value={id}
+                label={name}
+                avatar={<Avatar size={20} image={avatar} />}>
+                {name}
+              </TypeaheadOption>
+            ))}
+          </>
+        ),
+      });
+
+      const combobox = screen.getByRole('combobox');
+      await user.click(combobox);
+
+      const avatars = screen.getAllByTestId('typeahead-option-avatar');
+      expect(avatars).toHaveLength(managerOptions.length);
     });
   });
 });
