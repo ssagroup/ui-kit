@@ -52,6 +52,22 @@ export const Counter = styled(TextBase.withComponent('span'))`
   margin-left: 5px;
 `;
 
+export const CounterTooltipContent = styled.div`
+  min-width: 220px;
+  padding: 12px;
+`;
+
+export const CounterTooltipList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: auto;
+  max-height: 220px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 4px;
+`;
+
 export const AttributesList = styled.div`
   display: flex;
   flex-direction: column;

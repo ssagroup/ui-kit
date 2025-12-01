@@ -13,7 +13,7 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
       value,
       badges,
       avatar,
-      counter,
+      counterTooltip,
       attributes,
       description,
       styles,
@@ -33,7 +33,7 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
             <PersonInfoAvatar
               avatar={avatar}
               value={value}
-              counter={counter}
+              counterTooltip={counterTooltip}
               styles={styles}
               link={link}
               openLinkInNewTab={openLinkInNewTab}

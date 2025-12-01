@@ -1,48 +1,38 @@
 import React from 'react';
 import Avatar from '@components/Avatar';
 import * as S from './styles';
-import { PersonInfoStyles } from './types';
-import { PersonInfoValue, getLinkAttributes } from './PersonInfoValue';
-
-interface PersonInfoAvatarProps {
-  avatar?: string;
-  value?: string;
-  counter?: string | number;
-  styles?: PersonInfoStyles;
-  link?: string;
-  openLinkInNewTab?: boolean;
-}
+import { PersonInfoAvatarProps } from './types';
+import { PersonInfoValue } from './PersonInfoValue';
+import { getLinkAttributes } from './helpers';
 
 export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
   avatar,
   value,
-  counter,
+  counterTooltip,
   styles,
   link,
   openLinkInNewTab,
 }) => {
   const hasAvatar = Boolean(avatar);
   const hasValue = Boolean(value);
+  const isLink = Boolean(link);
+  const linkAttributes = getLinkAttributes(link, openLinkInNewTab);
 
   if (!hasAvatar && !hasValue) return null;
 
   const valueNode = hasValue ? (
     <PersonInfoValue
       value={value as string}
-      counter={counter}
+      counterTooltip={counterTooltip}
       css={hasAvatar ? styles?.avatarName : styles?.value}
       counterCss={styles?.counter}
-      link={!hasAvatar ? link : undefined}
-      openLinkInNewTab={!hasAvatar ? openLinkInNewTab : undefined}
+      linkAttributes={!hasAvatar ? linkAttributes : undefined}
     />
   ) : null;
 
   if (!hasAvatar) {
     return valueNode;
   }
-
-  const isLink = Boolean(link);
-  const linkAttributes = getLinkAttributes(link, openLinkInNewTab);
 
   return (
     <S.AvatarWrapper

@@ -1,48 +1,70 @@
 import React from 'react';
-import { Interpolation, Theme } from '@emotion/react';
+import Tooltip from '@components/Tooltip';
+import TooltipTrigger from '@components/TooltipTrigger';
+import TooltipContent from '@components/TooltipContent';
+import { ImageItem } from '@components/ImageItem';
 import * as S from './styles';
-
-interface PersonInfoValueProps {
-  value: string;
-  counter?: string | number;
-  css?: Interpolation<Theme>;
-  counterCss?: Interpolation<Theme>;
-  link?: string;
-  openLinkInNewTab?: boolean;
-}
-
-export const getLinkAttributes = (
-  link?: string,
-  openLinkInNewTab?: boolean,
-) => {
-  const isLink = Boolean(link);
-  return isLink
-    ? {
-        as: 'a' as const,
-        href: link,
-        target: openLinkInNewTab ? '_blank' : undefined,
-        rel: openLinkInNewTab ? 'noreferrer' : undefined,
-      }
-    : {};
-};
+import { PersonInfoValueProps } from './types';
 
 export const PersonInfoValue: React.FC<PersonInfoValueProps> = ({
   value,
-  counter,
+  counterTooltip,
   css,
   counterCss,
-  link,
-  openLinkInNewTab,
+  linkAttributes,
 }) => {
-  const isLink = Boolean(link);
-  const linkAttributes = getLinkAttributes(link, openLinkInNewTab);
+  const isLink = Boolean(linkAttributes?.href);
+  const tooltipUsers = counterTooltip?.users ?? [];
+  const hasTooltipUsers = tooltipUsers.length > 0;
+  const counterValue = hasTooltipUsers ? `+${tooltipUsers.length}` : null;
+
+  const tooltipBody = hasTooltipUsers ? (
+    <S.CounterTooltipList data-testid="person-info-counter-tooltip-list">
+      {tooltipUsers.map((user, index) => (
+        <ImageItem
+          key={user.id ?? `${user.name}-${index}`}
+          image={user.avatar}
+          link={user.link}
+          openLinkInNewTab={user.openLinkInNewTab}>
+          {user.name}
+        </ImageItem>
+      ))}
+    </S.CounterTooltipList>
+  ) : null;
+
+  const renderCounter = () => {
+    if (!counterValue || !tooltipBody) {
+      return null;
+    }
+
+    const counterNode = (
+      <S.Counter css={counterCss} data-testid="person-info-counter">
+        {counterValue}
+      </S.Counter>
+    );
+
+    return (
+      <Tooltip
+        enableHover
+        enableClick={false}
+        allowHoverContent
+        placement="top"
+        size="medium"
+        hasArrow>
+        <TooltipTrigger>{counterNode}</TooltipTrigger>
+        <TooltipContent>
+          <S.CounterTooltipContent>{tooltipBody}</S.CounterTooltipContent>
+        </TooltipContent>
+      </Tooltip>
+    );
+  };
 
   return (
     <S.TextBase
       css={[isLink ? S.personInfoValueLinkStyles : undefined, css]}
-      {...linkAttributes}>
+      {...(linkAttributes ?? {})}>
       {value}
-      {counter && <S.Counter css={counterCss}> {counter}</S.Counter>}
+      {renderCounter()}
     </S.TextBase>
   );
 };
