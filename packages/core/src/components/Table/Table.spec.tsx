@@ -1,5 +1,5 @@
 import { act } from 'react';
-import { fireEvent, waitFor } from '@testing-library/dom';
+import { fireEvent, waitFor, queryAllByText } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import Table from '@components/Table';
 import TableHead from '@components/TableHead';
@@ -164,18 +164,36 @@ describe('StyledTable', () => {
 
   it('Should have the three dots button clicked', async () => {
     const user = userEvent.setup();
-    const alertMock = jest.spyOn(window, 'alert');
+    const alertMock = jest.spyOn(window, 'alert').mockImplementation();
+
+    alertMock.mockClear();
+
     const { container } = render(<StyledTableStory />);
     const threeDotsButton = container.querySelector(
       'tbody > tr:nth-child(6) > td:last-child button:last-child',
     );
-    fireEvent.click(threeDotsButton as Node);
-    fireEvent.keyDown(threeDotsButton as Node, {
-      key: 'ArrowDown',
-      code: 'ArrowDown',
+
+    await user.click(threeDotsButton as HTMLElement);
+
+    const copyItem = await waitFor(
+      () => {
+        const copyItems = queryAllByText(document.body, 'Copy');
+        const copyButton = copyItems.find(
+          (el) => el.tagName === 'BUTTON' || el.closest('button'),
+        );
+        if (!copyButton) {
+          throw new Error('Copy button not found');
+        }
+        return copyButton as HTMLElement;
+      },
+      { timeout: 3000 },
+    );
+
+    await user.click(copyItem);
+    await waitFor(() => {
+      expect(alertMock).toHaveBeenCalledWith('action copy');
     });
-    await user.keyboard('{ArrowDown}');
-    await user.keyboard('{Enter}');
-    expect(alertMock).toHaveBeenCalledWith('action copy');
+
+    alertMock.mockRestore();
   });
 });

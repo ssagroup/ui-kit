@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import validator from '@rjsf/validator-ajv8';
 
 import { Form } from '.';
