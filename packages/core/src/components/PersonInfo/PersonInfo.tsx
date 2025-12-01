@@ -1,9 +1,11 @@
 import React from 'react';
 import { PersonInfoProps } from './types';
-import * as S from './styles';
 import { PersonInfoIcon } from './PersonInfoIcon';
 import { PersonInfoAvatar } from './PersonInfoAvatar';
 import { PersonInfoBadges } from './PersonInfoBadges';
+import { PersonInfoCounter } from './PersonInfoCounter';
+
+import * as S from './styles';
 
 export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
   function PersonInfo(
@@ -30,14 +32,21 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
           {icon && <PersonInfoIcon icon={icon} />}
           <S.TitleWrapper>
             <S.Title css={styles?.title}>{title}</S.Title>
-            <PersonInfoAvatar
-              avatar={avatar}
-              value={value}
-              counterTooltip={counterTooltip}
-              styles={styles}
-              link={link}
-              openLinkInNewTab={openLinkInNewTab}
-            />
+            <S.Row>
+              <PersonInfoAvatar
+                avatar={avatar}
+                value={value}
+                styles={styles}
+                link={link}
+                openLinkInNewTab={openLinkInNewTab}
+              />
+              {counterTooltip && (
+                <PersonInfoCounter
+                  counterTooltip={counterTooltip}
+                  css={styles?.counter}
+                />
+              )}
+            </S.Row>
             {badges && <PersonInfoBadges badges={badges} styles={styles} />}
             {attributes && attributes.length > 0 && (
               <S.AttributesList>

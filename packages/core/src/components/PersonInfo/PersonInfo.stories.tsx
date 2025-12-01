@@ -165,30 +165,6 @@ export const WithAvatar: Story = {
   },
 };
 
-export const WithAvatarAndCounter: Story = {
-  args: {
-    title: 'Title',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-    value: 'John Doe',
-    counterTooltip: {
-      users: [
-        {
-          id: 'avatar-counter-1',
-          name: 'John Doe',
-          avatar: 'https://i.pravatar.cc/150?img=20',
-          link: 'https://uikit.ssa.group/managers/john',
-        },
-        {
-          id: 'avatar-counter-2',
-          name: 'Jane Smith',
-          avatar: 'https://i.pravatar.cc/150?img=21',
-          link: 'https://uikit.ssa.group/managers/jane',
-        },
-      ],
-    },
-  },
-};
-
 export const WithCounterTooltip: Story = {
   args: {
     title: 'Project Manager',
@@ -215,6 +191,24 @@ export const WithCounterTooltip: Story = {
           name: 'Bob Johnson',
           avatar: 'https://i.pravatar.cc/150?img=22',
           link: 'https://uikit.ssa.group/managers/bob',
+        },
+        {
+          id: 'manager-4',
+          name: 'Alice Williams',
+          avatar: 'https://i.pravatar.cc/150?img=23',
+          link: 'https://uikit.ssa.group/managers/alice',
+        },
+        {
+          id: 'manager-5',
+          name: 'Charlie Brown',
+          avatar: 'https://i.pravatar.cc/150?img=24',
+          link: 'https://uikit.ssa.group/managers/charlie',
+        },
+        {
+          id: 'manager-6',
+          name: 'Diana Prince',
+          avatar: 'https://i.pravatar.cc/150?img=25',
+          link: 'https://uikit.ssa.group/managers/diana',
         },
       ],
     },

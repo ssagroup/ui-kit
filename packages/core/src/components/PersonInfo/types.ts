@@ -34,9 +34,7 @@ export type PersonInfoLinkAttributes = ReturnType<typeof getLinkAttributes>;
 
 export interface PersonInfoValueProps {
   value: string;
-  counterTooltip?: PersonInfoCounterTooltip;
   css?: Interpolation<Theme>;
-  counterCss?: Interpolation<Theme>;
   linkAttributes?: PersonInfoLinkAttributes;
 }
 
@@ -57,8 +55,12 @@ export interface PersonInfoProps extends CommonProps {
 export interface PersonInfoAvatarProps {
   avatar?: string;
   value?: string;
-  counterTooltip?: PersonInfoCounterTooltip;
   styles?: PersonInfoStyles;
   link?: string;
   openLinkInNewTab?: boolean;
+}
+
+export interface PersonInfoCounterProps {
+  counterTooltip?: PersonInfoCounterTooltip;
+  css?: PersonInfoStyles['counter'];
 }

@@ -8,7 +8,6 @@ import { getLinkAttributes } from './helpers';
 export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
   avatar,
   value,
-  counterTooltip,
   styles,
   link,
   openLinkInNewTab,
@@ -23,9 +22,7 @@ export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
   const valueNode = hasValue ? (
     <PersonInfoValue
       value={value as string}
-      counterTooltip={counterTooltip}
       css={hasAvatar ? styles?.avatarName : styles?.value}
-      counterCss={styles?.counter}
       linkAttributes={!hasAvatar ? linkAttributes : undefined}
     />
   ) : null;

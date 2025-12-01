@@ -35,6 +35,12 @@ export const Title = styled.div`
   line-height: 19px;
 `;
 
+export const Row = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
 export const TextBase = styled.div`
   font-size: 14px;
   font-weight: 400;
@@ -50,6 +56,7 @@ export const ValueWithCounter = styled.div`
 export const Counter = styled(TextBase.withComponent('span'))`
   color: ${({ theme }) => theme.colors.greyDropdownFocused};
   margin-left: 5px;
+  cursor: pointer;
 `;
 
 export const CounterTooltipContent = styled.div`
@@ -131,7 +138,6 @@ export const avatarWrapperLinkStyles: Interpolation<Theme> = (theme) => ({
   '&:hover': {
     color: theme.colors.blue,
 
-    // Target the value text div (last child div, which is PersonInfoValue/TextBase)
     '& > div:last-child': {
       color: theme.colors.blue,
     },
