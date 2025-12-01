@@ -12,6 +12,7 @@ import {
   useRole,
   useClientPoint,
   useInteractions,
+  safePolygon,
 } from '@floating-ui/react';
 import { UseTooltip } from './types';
 
@@ -26,6 +27,7 @@ export const useTooltip: UseTooltip = (props) => {
     hasArrow = true,
     arrowProps = {},
     isOpen: isInitOpen = false,
+    allowHoverContent = false,
   } = props || {};
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const arrowRef = useRef(null);
@@ -47,7 +49,11 @@ export const useTooltip: UseTooltip = (props) => {
 
   const { context } = floatingData;
 
-  const hover = useHover(context, { enabled: enableHover, move: true });
+  const hover = useHover(context, {
+    enabled: enableHover,
+    move: true,
+    handleClose: allowHoverContent ? safePolygon() : undefined,
+  });
   const click = useClick(context, { enabled: enableClick });
   const dismiss = useDismiss(context);
   const role = useRole(context);

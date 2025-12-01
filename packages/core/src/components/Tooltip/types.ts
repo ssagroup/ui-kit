@@ -20,6 +20,7 @@ export interface TooltipProps extends CommonProps {
   enableClick?: boolean;
   enableClientPoint?: boolean;
   offsetOptions?: OffsetOptions;
+  allowHoverContent?: boolean;
   // TooltipContent-related props
   size?: TooltipSize;
   hasArrow?: boolean;
