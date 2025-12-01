@@ -27,4 +27,6 @@ export interface PersonInfoProps extends CommonProps {
   attributes?: (string | ReactNode)[];
   description?: string;
   styles?: PersonInfoStyles;
+  link?: string;
+  openLinkInNewTab?: boolean;
 }

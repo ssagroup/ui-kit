@@ -3,7 +3,6 @@ import { PersonInfoProps } from './types';
 import * as S from './styles';
 import { PersonInfoIcon } from './PersonInfoIcon';
 import { PersonInfoAvatar } from './PersonInfoAvatar';
-import { PersonInfoValue } from './PersonInfoValue';
 import { PersonInfoBadges } from './PersonInfoBadges';
 
 export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
@@ -19,6 +18,8 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
       description,
       styles,
       className,
+      link,
+      openLinkInNewTab,
       ...props
     },
     ref,
@@ -29,22 +30,14 @@ export const PersonInfo = React.forwardRef<HTMLDivElement, PersonInfoProps>(
           {icon && <PersonInfoIcon icon={icon} />}
           <S.TitleWrapper>
             <S.Title css={styles?.title}>{title}</S.Title>
-            {avatar && (
-              <PersonInfoAvatar
-                avatar={avatar}
-                value={value}
-                counter={counter}
-                styles={styles}
-              />
-            )}
-            {!avatar && value && (
-              <PersonInfoValue
-                value={value}
-                counter={counter}
-                css={styles?.value}
-                counterCss={styles?.counter}
-              />
-            )}
+            <PersonInfoAvatar
+              avatar={avatar}
+              value={value}
+              counter={counter}
+              styles={styles}
+              link={link}
+              openLinkInNewTab={openLinkInNewTab}
+            />
             {badges && <PersonInfoBadges badges={badges} styles={styles} />}
             {attributes && attributes.length > 0 && (
               <S.AttributesList>

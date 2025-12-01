@@ -76,6 +76,18 @@ export default {
         type: { summary: 'string' },
       },
     },
+    link: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+    openLinkInNewTab: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+      },
+    },
   },
   args: {
     title: 'Title',
@@ -156,6 +168,16 @@ export const WithAvatarAndCounter: Story = {
     avatar: 'https://i.pravatar.cc/150?img=12',
     value: 'John Doe',
     counter: '+5',
+  },
+};
+
+export const WithLink: Story = {
+  args: {
+    title: 'Title',
+    value: 'John Doe',
+    avatar: 'https://i.pravatar.cc/150?img=12',
+    link: 'https://uikit.ssa.group',
+    openLinkInNewTab: true,
   },
 };
 

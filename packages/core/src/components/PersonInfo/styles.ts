@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Interpolation, Theme } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 import Badge from '@components/Badge';
 import { BADGE_COLORS } from './constants';
@@ -92,3 +93,31 @@ export const CustomBadge = styled.div<{ colorName: keyof MainColors }>`
     return bg;
   }};
 `;
+
+export const personInfoValueLinkStyles: Interpolation<Theme> = (theme) => ({
+  textDecoration: 'none',
+  color: theme.colors.greyDarker,
+  cursor: 'pointer',
+  transition: 'color 0.2s ease',
+  display: 'inline-flex',
+  alignItems: 'center',
+  '&:hover': {
+    color: theme.colors.blue,
+  },
+});
+
+export const avatarWrapperLinkStyles: Interpolation<Theme> = (theme) => ({
+  textDecoration: 'none',
+  color: theme.colors.greyDarker,
+  cursor: 'pointer',
+  transition: 'color 0.2s ease',
+
+  '&:hover': {
+    color: theme.colors.blue,
+
+    // Target the value text div (last child div, which is PersonInfoValue/TextBase)
+    '& > div:last-child': {
+      color: theme.colors.blue,
+    },
+  },
+});

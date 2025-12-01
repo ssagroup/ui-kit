@@ -64,6 +64,35 @@ describe('PersonInfo', () => {
     expect(screen.getByText('+5')).toBeInTheDocument();
   });
 
+  it('renders value as link when link is provided', () => {
+    render(
+      <PersonInfo
+        title="Title"
+        value="John Doe"
+        link="https://example.com"
+        openLinkInNewTab
+      />,
+    );
+
+    const linkElement = screen.getByRole('link', { name: 'John Doe' });
+    expect(linkElement).toHaveAttribute('href', 'https://example.com');
+    expect(linkElement).toHaveAttribute('target', '_blank');
+  });
+
+  it('renders avatar block as link when avatar and link are provided', () => {
+    render(
+      <PersonInfo
+        title="Title"
+        avatar="https://i.pravatar.cc/150?img=12"
+        value="John Doe"
+        link="https://example.com"
+      />,
+    );
+
+    const linkElement = screen.getByRole('link', { name: 'John Doe' });
+    expect(linkElement).toHaveAttribute('href', 'https://example.com');
+  });
+
   it('Renders with badges as ReactNode', () => {
     render(
       <PersonInfo title="Title" badges={<Badge size="small">Badge</Badge>} />,
