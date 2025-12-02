@@ -139,12 +139,12 @@ describe('Tooltip', () => {
     const link = getByText(interactiveText);
     expect(link).toBeInTheDocument();
 
-    await user.unhover(trigger);
-    await user.hover(link);
+    fireEvent.pointerLeave(trigger, { relatedTarget: link });
+    fireEvent.pointerEnter(link, { relatedTarget: trigger });
 
     expect(queryByText(interactiveText)).toBeInTheDocument();
 
-    fireEvent.click(link);
+    await user.click(link);
   });
 
   it("Doesn't show arrow", async () => {

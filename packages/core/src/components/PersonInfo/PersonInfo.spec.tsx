@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, screen, waitFor } from '../../../customTest';
+import userEvent from '@testing-library/user-event';
+import { screen, waitFor } from '../../../customTest';
 import { PersonInfo } from '@components';
 import Badge from '@components/Badge';
 
@@ -79,6 +80,8 @@ describe('PersonInfo', () => {
   });
 
   it('shows tooltip with other users when hovering counter', async () => {
+    const user = userEvent.setup();
+
     render(
       <PersonInfo
         title="Title"
@@ -102,7 +105,7 @@ describe('PersonInfo', () => {
     );
 
     const counter = screen.getByText('+2');
-    fireEvent.pointerEnter(counter);
+    await user.hover(counter);
 
     const managerAlphaLink = await waitFor(() =>
       screen.getByRole('link', { name: 'Manager Alpha' }),
