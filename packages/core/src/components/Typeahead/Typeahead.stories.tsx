@@ -9,6 +9,7 @@ import {
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/css';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import Avatar from '@components/Avatar';
 import Icon from '@components/Icon';
 import { IconProps } from '@components/Icon/types';
 import Button from '@components/Button';
@@ -171,6 +172,29 @@ const getIconNameByValue = (value: number) =>
   (imageItems.find((item) => item.value === value)?.iconName ||
     'user') as IconProps['name'];
 
+const managerOptions = [
+  {
+    id: '1',
+    name: 'John Doe',
+    avatar: 'https://i.pravatar.cc/150?img=1',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    avatar: 'https://i.pravatar.cc/150?img=2',
+  },
+  {
+    id: '3',
+    name: 'Bob Johnson',
+    avatar: 'https://i.pravatar.cc/150?img=3',
+  },
+  {
+    id: '4',
+    name: 'Alice Williams',
+    avatar: 'https://i.pravatar.cc/150?img=4',
+  },
+] as const;
+
 export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
   return (
@@ -211,6 +235,36 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
 };
 
 WithImageAndStartIcon.args = { isDisabled: false };
+
+export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  return (
+    <FormProvider {...useFormResult}>
+      <Typeahead
+        css={{ width: 420 }}
+        defaultSelectedItems={[managerOptions[0].id, managerOptions[2].id]}
+        isMultiple
+        isDisabled={args.isDisabled}
+        name="typeahead-managers"
+        label="Select managers"
+        placeholder="Select managers..."
+        renderOption={({ label, input }) => highlightInputMatch(label, input)}
+        {...args}>
+        {managerOptions.map(({ id, name, avatar }) => (
+          <TypeaheadOption
+            key={id}
+            value={id}
+            label={name}
+            avatar={<Avatar size={20} image={avatar} />}>
+            {name}
+          </TypeaheadOption>
+        ))}
+      </Typeahead>
+    </FormProvider>
+  );
+};
+
+WithAvatars.args = { isDisabled: false };
 
 const mockError: FieldError = {
   type: 'required',

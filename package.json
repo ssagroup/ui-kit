@@ -20,6 +20,8 @@
     "spellcheck": "cspell \"**/*.{tsx,ts,md}\" --show-suggestions --no-progress",
     "test": "jest -i --no-cache",
     "test:coverage": "jest -i --no-cache --coverage",
+    "test:update-snapshots": "jest -i --no-cache -u",
+    "test:update-snapshots:parallel": "jest --no-cache -u --maxWorkers=50%",
     "test:e2e": "pnpm test:core:e2e && pnpm test:widgets:e2e",
     "test:core": "jest -i --no-cache --selectProjects \"UI Kit Core\"",
     "test:utils": "jest -i --no-cache --selectProjects \"UI Kit Utils\"",

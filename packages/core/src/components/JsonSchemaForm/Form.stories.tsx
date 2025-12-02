@@ -1,17 +1,37 @@
 import { useState } from 'react';
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import validator from '@rjsf/validator-ajv8';
-
 import TextField from '@components/TextField';
 import Icon from '@components/Icon';
 import Button from '@components/Button';
-import Avatar from '@components/Avatar';
-import { Typeahead, TypeaheadOption } from '@components';
 import { applyHiddenWidget, getFieldsToHide } from './utils';
 import { Form } from './';
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
 
 type FormProps = Omit<React.ComponentProps<typeof Form>, 'validator'>;
+
+const managerOptions = [
+  {
+    id: '1',
+    name: 'John Doe',
+    avatar: 'https://i.pravatar.cc/150?img=1',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    avatar: 'https://i.pravatar.cc/150?img=2',
+  },
+  {
+    id: '3',
+    name: 'Bob Johnson',
+    avatar: 'https://i.pravatar.cc/150?img=3',
+  },
+  {
+    id: '4',
+    name: 'Alice Williams',
+    avatar: 'https://i.pravatar.cc/150?img=4',
+  },
+];
 
 const meta = {
   title: 'Forms/FormBuilder',
@@ -36,6 +56,8 @@ export const Default: Story = {
       radioField: 'Option 1',
       checkboxesField: ['foo', 'bar'],
       selectField: 'Option 2',
+      selectMultipleField: ['Option 1', 'Option 2', 'Option 3'],
+      managerSelectField: [managerOptions[1].id],
       passwordField: 'password',
     },
     schema: {
@@ -82,12 +104,25 @@ export const Default: Story = {
         selectMultipleField: {
           type: 'array',
           title: 'Select multiple fields title',
-          default: ['Option 1', 'Option 3'],
+          default: ['Option 1', 'Option 2', 'Option 3'],
           items: {
             type: 'string',
             enum: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
           },
           uniqueItems: true,
+        },
+        managerSelectField: {
+          type: 'array',
+          title: 'Select managers',
+          uniqueItems: true,
+          items: {
+            type: 'string',
+            oneOf: managerOptions.map((manager) => ({
+              const: manager.id,
+              title: manager.name,
+              avatar: manager.avatar,
+            })),
+          },
         },
         passwordField: {
           type: 'string',
@@ -131,6 +166,13 @@ export const Default: Story = {
       },
       selectMultipleField: {
         'ui:placeholder': 'Please select multiple options',
+      },
+      managerSelectField: {
+        'ui:widget': 'select',
+        'ui:placeholder': 'Select managers',
+        'ui:options': {
+          typeaheadAvatarSize: 24,
+        },
       },
     },
   },
@@ -260,72 +302,5 @@ export const Accordion: Story = {
         },
       },
     },
-  },
-};
-
-export const WithAvatars: Story = {
-  args: {
-    schema: {
-      type: 'object',
-      properties: {},
-    },
-  },
-  render: () => {
-    const [selectedManagers, setSelectedManagers] = useState<
-      (string | number)[]
-    >([]);
-
-    const managers = [
-      {
-        id: '1',
-        name: 'John Doe',
-        avatar: 'https://i.pravatar.cc/150?img=1',
-      },
-      {
-        id: '2',
-        name: 'Jane Smith',
-        avatar: 'https://i.pravatar.cc/150?img=2',
-      },
-      {
-        id: '3',
-        name: 'Bob Johnson',
-        avatar: 'https://i.pravatar.cc/150?img=3',
-      },
-      {
-        id: '4',
-        name: 'Alice Williams',
-        avatar: 'https://i.pravatar.cc/150?img=4',
-      },
-    ];
-
-    return (
-      <div css={{ width: '100%' }}>
-        <Typeahead
-          label="Select Managers"
-          isMultiple
-          width="100%"
-          selectedItems={selectedManagers}
-          onChange={(value, isSelected) => {
-            if (isSelected) {
-              setSelectedManagers([...selectedManagers, value]);
-            } else {
-              setSelectedManagers(
-                selectedManagers.filter((item) => item !== value),
-              );
-            }
-          }}
-          placeholder="Select managers...">
-          {managers.map((manager) => (
-            <TypeaheadOption
-              key={manager.id}
-              value={manager.id}
-              label={manager.name}
-              avatar={<Avatar size={20} image={manager.avatar} />}>
-              {manager.name}
-            </TypeaheadOption>
-          ))}
-        </Typeahead>
-      </div>
-    );
   },
 };

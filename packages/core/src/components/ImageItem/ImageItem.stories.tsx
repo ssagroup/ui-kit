@@ -2,7 +2,7 @@ import type { Meta } from '@storybook/react-webpack5';
 import { ImageItem } from './ImageItem';
 
 export default {
-  title: 'Widgets/ImageItem',
+  title: 'Components/ImageItem',
   component: ImageItem,
 } as Meta<typeof ImageItem>;
 

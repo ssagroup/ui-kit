@@ -1084,7 +1084,37 @@ exports[`Form (rjsf) Render form 1`] = `
   border-radius: 12px;
 }
 
-.emotion-91 {
+.emotion-92 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.emotion-93 {
+  border-radius: 100px;
+  overflow: hidden;
+  width: 24px;
+  height: 24px;
+  background: url(https://i.pravatar.cc/150?img=1) center/contain no-repeat;
+}
+
+.emotion-100 {
+  border-radius: 100px;
+  overflow: hidden;
+  width: 24px;
+  height: 24px;
+  background: url(https://i.pravatar.cc/150?img=3) center/contain no-repeat;
+}
+
+.emotion-117 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1105,50 +1135,50 @@ exports[`Form (rjsf) Render form 1`] = `
   border: 0!important;
 }
 
-.emotion-91::-webkit-input-placeholder {
+.emotion-117::-webkit-input-placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-91::-moz-placeholder {
+.emotion-117::-moz-placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-91:-ms-input-placeholder {
+.emotion-117:-ms-input-placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-91::placeholder {
+.emotion-117::placeholder {
   color: rgba(43, 45, 49, 0.6);
 }
 
-.emotion-91:disabled {
+.emotion-117:disabled {
   color: rgba(195, 197, 204, 1);
   background: rgba(238, 241, 247, 1);
 }
 
-.emotion-91:disabled::-webkit-input-placeholder {
+.emotion-117:disabled::-webkit-input-placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-91:disabled::-moz-placeholder {
+.emotion-117:disabled::-moz-placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-91:disabled:-ms-input-placeholder {
+.emotion-117:disabled:-ms-input-placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-91:disabled::placeholder {
+.emotion-117:disabled::placeholder {
   color: rgba(195, 197, 204, 1);
 }
 
-.emotion-91:disabled:disabled,
-.emotion-91:disabled:disabled:hover {
+.emotion-117:disabled:disabled,
+.emotion-117:disabled:disabled:hover {
   border: 1px solid rgba(195, 197, 204, 1);
   background-image: none;
 }
 
-.emotion-92 {
+.emotion-118 {
   position: absolute;
   top: 0;
   right: 14px;
@@ -1169,7 +1199,7 @@ exports[`Form (rjsf) Render form 1`] = `
   border-radius: 10px;
 }
 
-.emotion-96 {
+.emotion-122 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -1198,7 +1228,7 @@ exports[`Form (rjsf) Render form 1`] = `
     );
 }
 
-.emotion-96:hover {
+.emotion-122:hover {
   background: linear-gradient(
         108.3deg,
         rgba(77, 82, 87, 1) -0.36%,
@@ -1207,16 +1237,16 @@ exports[`Form (rjsf) Render form 1`] = `
   box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
 }
 
-.emotion-96:active {
+.emotion-122:active {
   background: rgba(43, 45, 49, 1);
   box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
 }
 
-.emotion-96:disabled {
+.emotion-122:disabled {
   background: rgba(195, 197, 204, 1);
 }
 
-.emotion-96:focus {
+.emotion-122:focus {
   background: linear-gradient(
         108.3deg,
         rgb(64, 68, 73) -0.36%,
@@ -2219,6 +2249,208 @@ exports[`Form (rjsf) Render form 1`] = `
           </div>
         </div>
         <div
+          class="form-group field field-array"
+        >
+          <label
+            class="emotion-4"
+            for="root_managers"
+          >
+            Select managers
+          </label>
+          <div
+            id="root_managers"
+          >
+            <div
+              class="emotion-55"
+              data-testid="typeahead"
+            >
+              <div
+                aria-controls="typeahead-popup-:rd:"
+                aria-expanded="false"
+                aria-haspopup="dialog"
+                aria-labelledby="typeahead-label-:rd:"
+                class="emotion-56"
+                data-state="closed"
+                data-testid="trigger-button"
+                role="combobox"
+                type="button"
+              >
+                <div
+                  class="emotion-69"
+                >
+                  <span
+                    class="emotion-92"
+                    data-testid="typeahead-item-avatar"
+                  >
+                    <div
+                      class="emotion-93"
+                      size="24"
+                    />
+                  </span>
+                  <div
+                    class="emotion-70"
+                  >
+                    John Doe
+                  </div>
+                  <button
+                    class="emotion-71"
+                    type="button"
+                  >
+                    <span
+                      class="emotion-65"
+                      style="margin: 0px;"
+                    >
+                      <svg
+                        class="emotion-73"
+                        fill="none"
+                        height="14px"
+                        viewBox="0 0 8 8"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          Remove
+                        </title>
+                        <path
+                          d="M1 6.66L6.66 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                        <path
+                          d="M6.66 6.66L1 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="emotion-69"
+                >
+                  <span
+                    class="emotion-92"
+                    data-testid="typeahead-item-avatar"
+                  >
+                    <div
+                      class="emotion-100"
+                      size="24"
+                    />
+                  </span>
+                  <div
+                    class="emotion-70"
+                  >
+                    Bob Johnson
+                  </div>
+                  <button
+                    class="emotion-71"
+                    type="button"
+                  >
+                    <span
+                      class="emotion-65"
+                      style="margin: 0px;"
+                    >
+                      <svg
+                        class="emotion-73"
+                        fill="none"
+                        height="14px"
+                        viewBox="0 0 8 8"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          Remove
+                        </title>
+                        <path
+                          d="M1 6.66L6.66 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                        <path
+                          d="M6.66 6.66L1 1"
+                          stroke="rgba(43, 45, 49, 1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="emotion-57"
+                >
+                  <div
+                    class="emotion-58 emotion-59"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="typeahead-input emotion-60 emotion-61"
+                      id="formElement-managers-text"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <input
+                    aria-hidden="false"
+                    class="typeahead-input emotion-60 emotion-63"
+                    data-testid="typeahead-input"
+                    readonly=""
+                    tabindex="-1"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <button
+                  class="emotion-86"
+                  data-testid="remove-all-button"
+                  type="button"
+                >
+                  <span
+                    class="emotion-65"
+                    style="margin: 0px;"
+                  >
+                    <svg
+                      fill="none"
+                      height="8px"
+                      viewBox="0 0 8 8"
+                      width="8px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        Remove all
+                      </title>
+                      <path
+                        d="M1 6.66L6.66 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M6.66 6.66L1 1"
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.4"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
           class="form-group field field-string"
         >
           <label
@@ -2234,7 +2466,7 @@ exports[`Form (rjsf) Render form 1`] = `
               class="emotion-6"
             >
               <input
-                class="emotion-91"
+                class="emotion-117"
                 id="root_passwordField"
                 name="passwordField"
                 placeholder=""
@@ -2242,7 +2474,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 value="password"
               />
               <div
-                class="emotion-92"
+                class="emotion-118"
               >
                 <button
                   class="emotion-38"
@@ -2298,7 +2530,7 @@ exports[`Form (rjsf) Render form 1`] = `
       </div>
     </div>
     <button
-      class="emotion-96"
+      class="emotion-122"
       data-testid="rjsf-submit-button"
       type="submit"
     >

@@ -1,12 +1,34 @@
+import type { ReactNode } from 'react';
 import {
   enumOptionsIndexForValue,
   FormContextType,
   RJSFSchema,
   StrictRJSFSchema,
   WidgetProps,
+  EnumOptionsType,
 } from '@rjsf/utils';
+import {
+  highlightInputMatch,
+  Typeahead,
+  TypeaheadOption,
+  Avatar,
+} from '@components';
+import { DEFAULT_AVATAR_SIZE } from '../constants';
+import { SelectOptionSchemaExtension, SelectWidgetUiOptions } from '../types';
 
-import { highlightInputMatch, Typeahead, TypeaheadOption } from '@components';
+const getAvatarNode = <S extends StrictRJSFSchema>(
+  option: EnumOptionsType<S>,
+  uiOptions: SelectWidgetUiOptions,
+): ReactNode => {
+  const avatar = (option.schema as SelectOptionSchemaExtension | undefined)
+    ?.avatar;
+
+  if (!avatar) return;
+
+  const avatarSize = uiOptions.typeaheadAvatarSize ?? DEFAULT_AVATAR_SIZE;
+
+  return <Avatar size={avatarSize} image={avatar} />;
+};
 
 export const SelectWidget = <
   T = unknown,
@@ -31,9 +53,13 @@ export const SelectWidget = <
   } = props;
   const { enumOptions = [], enumDisabled = [] } = options;
   const customPlaceholder = placeholder || uiSchema?.['ui:placeholder'];
+  const selectUiOptions =
+    (uiSchema?.['ui:options'] as SelectWidgetUiOptions) || {};
 
   const isMultiple = !!multiple || Array.isArray(value);
-  const items = Array.isArray(enumOptions) ? enumOptions : [];
+  const items = Array.isArray(enumOptions)
+    ? (enumOptions as EnumOptionsType<S>[])
+    : [];
 
   const handleChange = onChangeOverride
     ? onChangeOverride
@@ -73,10 +99,9 @@ export const SelectWidget = <
     isAdded: boolean,
   ) => {
     if (isMultiple) {
-      const currentSelected = Array.isArray(selectedItems) ? selectedItems : [];
       const newSelected = isAdded
-        ? [...currentSelected, changedValue]
-        : currentSelected.filter((item) => item !== changedValue);
+        ? [...selectedItems, changedValue]
+        : selectedItems.filter((item) => item !== changedValue);
       handleFormChange(newSelected);
     } else {
       const newValue = isAdded ? changedValue : undefined;
@@ -102,10 +127,7 @@ export const SelectWidget = <
 
   const onRemoveSelectedClick = (removedValue: string | number) => {
     if (isMultiple) {
-      const currentSelected = Array.isArray(selectedItems) ? selectedItems : [];
-      const newSelected = currentSelected.filter(
-        (item) => item !== removedValue,
-      );
+      const newSelected = selectedItems.filter((item) => item !== removedValue);
       handleChange(newSelected);
     } else {
       handleChange(undefined);
@@ -126,17 +148,18 @@ export const SelectWidget = <
         onClearAll={onClearAll}
         onRemoveSelectedClick={onRemoveSelectedClick}
         renderOption={({ label, input }) => highlightInputMatch(label, input)}>
-        {items.map(({ label, value }) => (
+        {items.map((item) => (
           <TypeaheadOption
-            key={value}
-            value={value}
-            label={label || value}
+            key={item.value}
+            value={item.value}
+            label={item.label || item.value}
+            avatar={getAvatarNode(item, selectUiOptions)}
             isDisabled={
               disabled ||
               (Array.isArray(enumDisabled) &&
-                enumDisabled.includes(value as string))
+                enumDisabled.includes(item.value as string))
             }>
-            {label || value}
+            {item.label || item.value}
           </TypeaheadOption>
         ))}
       </Typeahead>
