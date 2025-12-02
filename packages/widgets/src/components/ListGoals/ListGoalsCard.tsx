@@ -28,7 +28,7 @@ export const ListGoalsCard = ({
 
   return (
     <Card noShadow>
-      <Wrapper direction="row" avatarSize={42}>
+      <Wrapper direction="row">
         <Avatar size={42} image={image} css={{ borderRadius: 0 }} />
 
         <CardContent

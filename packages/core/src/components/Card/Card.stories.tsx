@@ -114,7 +114,7 @@ export const ItemCard: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
 
   return (
     <Card noShadow={noShadow}>
-      <Wrapper direction="row" avatarSize={42}>
+      <Wrapper direction="row">
         <Avatar size={42} image={image} className="lostpixel-ignore" />
 
         <CardContent
