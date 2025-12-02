@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Chip } from './Chip';
 import Avatar from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 
 const meta = {
   title: 'Components/Chip',
@@ -139,17 +140,17 @@ export const WithAvatar = () => {
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
       <Chip
         label="Avatar"
-        avatar={<Avatar size={20} image="https://i.pravatar.cc/150?img=1" />}
+        avatar={<Avatar size={20} image={getStorybookAvatar(0)} />}
       />
       <Chip
         label="Avatar"
         variant="outlined"
-        avatar={<Avatar size={20} image="https://i.pravatar.cc/150?img=2" />}
+        avatar={<Avatar size={20} image={getStorybookAvatar(1)} />}
       />
       <Chip
         label="Name Surname"
         size="large"
-        avatar={<Avatar size={25} image="https://i.pravatar.cc/150?img=3" />}
+        avatar={<Avatar size={25} image={getStorybookAvatar(2)} />}
         onDelete={() => {}}
       />
     </Wrapper>

@@ -1,22 +1,23 @@
 import validator from '@rjsf/validator-ajv8';
 
 import { Form } from '.';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 
 const managers = [
   {
     id: '1',
     name: 'John Doe',
-    avatar: 'https://i.pravatar.cc/150?img=1',
+    avatar: getStorybookAvatar(0),
   },
   {
     id: '2',
     name: 'Jane Smith',
-    avatar: 'https://i.pravatar.cc/150?img=2',
+    avatar: getStorybookAvatar(1),
   },
   {
     id: '3',
     name: 'Bob Johnson',
-    avatar: 'https://i.pravatar.cc/150?img=3',
+    avatar: getStorybookAvatar(2),
   },
 ] as const;
 

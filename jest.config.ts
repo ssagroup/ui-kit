@@ -104,6 +104,9 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/core/src/$1/$2.ts',
           '<rootDir>/packages/core/src/$1/$2.tsx',
         ],
+        '^@storybook-assets/(.*)$': [
+          '<rootDir>/packages/core/.storybook/assets/$1',
+        ],
         '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),

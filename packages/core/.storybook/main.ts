@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
@@ -28,7 +29,7 @@ const config: StorybookConfig = {
       },
     },
   },
-  babel: (options) => ({
+  babel: (options: Record<string, unknown>) => ({
     ...options,
     ...initBabelConfig,
   }),
@@ -40,6 +41,7 @@ const config: StorybookConfig = {
         alias: {
           ...config.resolve?.alias,
           ...appWebpackConfig.resolve?.alias,
+          '@storybook-assets': path.resolve(__dirname, './assets'),
         },
       },
       module: {
