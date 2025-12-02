@@ -51,4 +51,4 @@ export {
 };
 
 export * from './constants';
-export * from './types';
+export type * from './types';
