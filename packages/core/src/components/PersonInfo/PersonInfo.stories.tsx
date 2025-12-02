@@ -63,7 +63,7 @@ export default {
       table: {
         type: {
           summary:
-            '{ users: { name: string; avatar: string; link: string; openLinkInNewTab?: boolean }[] }',
+            '{ users: { id: string | number; name: string; avatar: string; link: string; openLinkInNewTab?: boolean }[] }',
         },
       },
     },

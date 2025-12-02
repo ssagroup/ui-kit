@@ -21,9 +21,9 @@ export const PersonInfoCounter: React.FC<PersonInfoCounterProps> = ({
 
   const tooltipBody = (
     <S.CounterTooltipList data-testid="person-info-counter-tooltip-list">
-      {tooltipUsers.map((user, index) => (
+      {tooltipUsers.map((user) => (
         <ImageItem
-          key={user.id ?? `${user.name}-${index}`}
+          key={user.id}
           image={user.avatar}
           link={user.link}
           openLinkInNewTab={user.openLinkInNewTab}>

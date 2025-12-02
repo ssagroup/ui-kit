@@ -19,7 +19,7 @@ export type PersonInfoStyles = Partial<
 >;
 
 export interface PersonInfoCounterTooltipUser {
-  id?: string | number;
+  id: string | number;
   name: string;
   avatar: string;
   link?: string;
