@@ -13,16 +13,8 @@ import {
   TypeaheadOption,
   Avatar,
 } from '@components';
-
-const DEFAULT_AVATAR_SIZE = 24;
-
-type SelectOptionSchemaExtension = {
-  avatar?: string;
-};
-
-type SelectWidgetUiOptions = {
-  typeaheadAvatarSize?: number;
-};
+import { DEFAULT_AVATAR_SIZE } from '../constants';
+import { SelectOptionSchemaExtension, SelectWidgetUiOptions } from '../types';
 
 const getAvatarNode = <S extends StrictRJSFSchema>(
   option: EnumOptionsType<S>,
