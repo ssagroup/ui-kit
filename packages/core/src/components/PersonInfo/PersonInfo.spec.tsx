@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen } from '../../../customTest';
+import userEvent from '@testing-library/user-event';
+import { screen, waitFor } from '../../../customTest';
 import { PersonInfo } from '@components';
 import Badge from '@components/Badge';
 
@@ -45,23 +46,106 @@ describe('PersonInfo', () => {
     expect(avatar).toBeInTheDocument();
   });
 
-  it('Renders with counter', () => {
-    render(<PersonInfo title="Title" value="Value" counter="+5" />);
+  it('Renders counter based on tooltip users length', () => {
+    render(
+      <PersonInfo
+        title="Title"
+        value="Value"
+        counterTooltip={{
+          users: [
+            {
+              id: 'manager-1',
+              name: 'Manager Alpha',
+              avatar: 'https://i.pravatar.cc/150?img=5',
+              link: 'https://example.com/managers/alpha',
+            },
+            {
+              id: 'manager-2',
+              name: 'Manager Beta',
+              avatar: 'https://i.pravatar.cc/150?img=6',
+              link: 'https://example.com/managers/beta',
+            },
+          ],
+        }}
+      />,
+    );
 
-    expect(screen.getByText('+5')).toBeInTheDocument();
+    expect(screen.getByText('+2')).toBeInTheDocument();
   });
 
-  it('Renders with counter when avatar is present', () => {
+  it('does not render counter without tooltip users', () => {
+    render(<PersonInfo title="Title" value="Value" />);
+
+    expect(screen.queryByTestId('person-info-counter')).not.toBeInTheDocument();
+  });
+
+  it('shows tooltip with other users when hovering counter', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <PersonInfo
+        title="Title"
+        value="John Doe"
+        counterTooltip={{
+          users: [
+            {
+              id: 'manager-1',
+              name: 'Manager Alpha',
+              avatar: 'https://i.pravatar.cc/150?img=5',
+              link: 'https://example.com/managers/alpha',
+            },
+            {
+              id: 'manager-2',
+              name: 'Manager Beta',
+              avatar: 'https://i.pravatar.cc/150?img=6',
+            },
+          ],
+        }}
+      />,
+    );
+
+    const counter = screen.getByText('+2');
+    await user.hover(counter);
+
+    const managerAlphaLink = await waitFor(() =>
+      screen.getByRole('link', { name: 'Manager Alpha' }),
+    );
+
+    expect(managerAlphaLink).toHaveAttribute(
+      'href',
+      'https://example.com/managers/alpha',
+    );
+    const managerBeta = screen.getByText('Manager Beta');
+    expect(managerBeta.closest('a')).toBeNull();
+  });
+
+  it('renders value as link when link is provided', () => {
+    render(
+      <PersonInfo
+        title="Title"
+        value="John Doe"
+        link="https://example.com"
+        openLinkInNewTab
+      />,
+    );
+
+    const linkElement = screen.getByRole('link', { name: 'John Doe' });
+    expect(linkElement).toHaveAttribute('href', 'https://example.com');
+    expect(linkElement).toHaveAttribute('target', '_blank');
+  });
+
+  it('renders avatar block as link when avatar and link are provided', () => {
     render(
       <PersonInfo
         title="Title"
         avatar="https://i.pravatar.cc/150?img=12"
         value="John Doe"
-        counter="+5"
+        link="https://example.com"
       />,
     );
 
-    expect(screen.getByText('+5')).toBeInTheDocument();
+    const linkElement = screen.getByRole('link', { name: 'John Doe' });
+    expect(linkElement).toHaveAttribute('href', 'https://example.com');
   });
 
   it('Renders with badges as ReactNode', () => {
@@ -144,7 +228,16 @@ describe('PersonInfo', () => {
         icon="user"
         value="John Doe"
         avatar="https://i.pravatar.cc/150?img=12"
-        counter="+5"
+        counterTooltip={{
+          users: [
+            {
+              id: 'manager-1',
+              name: 'Manager Alpha',
+              avatar: 'https://i.pravatar.cc/150?img=5',
+              link: 'https://example.com/managers/alpha',
+            },
+          ],
+        }}
         badges={['badge 1', 'badge 2']}
         attributes={['Attribute 1', 'Attribute 2']}
         description="Full description"
@@ -153,7 +246,7 @@ describe('PersonInfo', () => {
 
     expect(screen.getByText('Full Title')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('+5')).toBeInTheDocument();
+    expect(screen.getByText('+1')).toBeInTheDocument();
     expect(screen.getByText('badge 1')).toBeInTheDocument();
     expect(screen.getByText('badge 2')).toBeInTheDocument();
     expect(screen.getByText('Attribute 1')).toBeInTheDocument();

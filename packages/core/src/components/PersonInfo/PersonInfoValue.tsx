@@ -1,24 +1,19 @@
 import React from 'react';
-import { Interpolation, Theme } from '@emotion/react';
 import * as S from './styles';
-
-interface PersonInfoValueProps {
-  value: string;
-  counter?: string | number;
-  css?: Interpolation<Theme>;
-  counterCss?: Interpolation<Theme>;
-}
+import { PersonInfoValueProps } from './types';
 
 export const PersonInfoValue: React.FC<PersonInfoValueProps> = ({
   value,
-  counter,
   css,
-  counterCss,
+  linkAttributes,
 }) => {
+  const isLink = Boolean(linkAttributes?.href);
+
   return (
-    <S.TextBase css={css}>
+    <S.TextBase
+      css={[isLink ? S.personInfoValueLinkStyles : undefined, css]}
+      {...(linkAttributes ?? {})}>
       {value}
-      {counter && <S.Counter css={counterCss}> {counter}</S.Counter>}
     </S.TextBase>
   );
 };

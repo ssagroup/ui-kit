@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Interpolation, Theme } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 import Badge from '@components/Badge';
 import { BADGE_COLORS } from './constants';
@@ -34,6 +35,12 @@ export const Title = styled.div`
   line-height: 19px;
 `;
 
+export const Row = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
 export const TextBase = styled.div`
   font-size: 14px;
   font-weight: 400;
@@ -49,6 +56,23 @@ export const ValueWithCounter = styled.div`
 export const Counter = styled(TextBase.withComponent('span'))`
   color: ${({ theme }) => theme.colors.greyDropdownFocused};
   margin-left: 5px;
+  cursor: pointer;
+`;
+
+export const CounterTooltipContent = styled.div`
+  min-width: 220px;
+  padding: 12px;
+`;
+
+export const CounterTooltipList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: auto;
+  max-height: 220px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 4px;
 `;
 
 export const AttributesList = styled.div`
@@ -92,3 +116,30 @@ export const CustomBadge = styled.div<{ colorName: keyof MainColors }>`
     return bg;
   }};
 `;
+
+export const personInfoValueLinkStyles: Interpolation<Theme> = (theme) => ({
+  textDecoration: 'none',
+  color: theme.colors.greyDarker,
+  cursor: 'pointer',
+  transition: 'color 0.2s ease',
+  display: 'inline-flex',
+  alignItems: 'center',
+  '&:hover': {
+    color: theme.colors.blue,
+  },
+});
+
+export const avatarWrapperLinkStyles: Interpolation<Theme> = (theme) => ({
+  textDecoration: 'none',
+  color: theme.colors.greyDarker,
+  cursor: 'pointer',
+  transition: 'color 0.2s ease',
+
+  '&:hover': {
+    color: theme.colors.blue,
+
+    '& > div:last-child': {
+      color: theme.colors.blue,
+    },
+  },
+});

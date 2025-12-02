@@ -58,10 +58,13 @@ export default {
         type: { summary: 'string' },
       },
     },
-    counter: {
-      control: 'text',
+    counterTooltip: {
+      control: false,
       table: {
-        type: { summary: 'string | number' },
+        type: {
+          summary:
+            '{ users: { id: string | number; name: string; avatar: string; link: string; openLinkInNewTab?: boolean }[] }',
+        },
       },
     },
     attributes: {
@@ -74,6 +77,18 @@ export default {
       control: 'text',
       table: {
         type: { summary: 'string' },
+      },
+    },
+    link: {
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+    openLinkInNewTab: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
       },
     },
   },
@@ -150,12 +165,53 @@ export const WithAvatar: Story = {
   },
 };
 
-export const WithAvatarAndCounter: Story = {
+export const WithCounterTooltip: Story = {
   args: {
-    title: 'Title',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-    value: 'John Doe',
-    counter: '+5',
+    title: 'Project Manager',
+    avatar: 'https://i.pravatar.cc/150?img=19',
+    value: 'Sarah Parker',
+    link: 'https://uikit.ssa.group',
+    openLinkInNewTab: true,
+    counterTooltip: {
+      users: [
+        {
+          id: 'manager-1',
+          name: 'John Doe',
+          avatar: 'https://i.pravatar.cc/150?img=20',
+          link: 'https://uikit.ssa.group/managers/john',
+        },
+        {
+          id: 'manager-2',
+          name: 'Jane Smith',
+          avatar: 'https://i.pravatar.cc/150?img=21',
+          link: 'https://uikit.ssa.group/managers/jane',
+        },
+        {
+          id: 'manager-3',
+          name: 'Bob Johnson',
+          avatar: 'https://i.pravatar.cc/150?img=22',
+          link: 'https://uikit.ssa.group/managers/bob',
+        },
+        {
+          id: 'manager-4',
+          name: 'Alice Williams',
+          avatar: 'https://i.pravatar.cc/150?img=23',
+          link: 'https://uikit.ssa.group/managers/alice',
+        },
+        {
+          id: 'manager-5',
+          name: 'Charlie Brown',
+          avatar: 'https://i.pravatar.cc/150?img=24',
+          link: 'https://uikit.ssa.group/managers/charlie',
+        },
+        {
+          id: 'manager-6',
+          name: 'Diana Prince',
+          avatar: 'https://i.pravatar.cc/150?img=25',
+          link: 'https://uikit.ssa.group/managers/diana',
+        },
+      ],
+    },
   },
 };
 
@@ -344,7 +400,22 @@ export const MultiplePersonInfo: Story = {
           icon="employee"
           value="John Doe"
           avatar="https://i.pravatar.cc/150?img=12"
-          counter="+5"
+          counterTooltip={{
+            users: [
+              {
+                id: 'title-1-1',
+                name: 'Olivia Taylor',
+                avatar: 'https://i.pravatar.cc/150?img=30',
+                link: 'https://uikit.ssa.group/managers/olivia',
+              },
+              {
+                id: 'title-1-2',
+                name: 'Noah Brown',
+                avatar: 'https://i.pravatar.cc/150?img=31',
+                link: 'https://uikit.ssa.group/managers/noah',
+              },
+            ],
+          }}
         />
         <PersonInfo
           title="Title 2"
@@ -373,7 +444,34 @@ export const MultiplePersonInfo: Story = {
           icon="employee"
           value="Alice Williams"
           avatar="https://i.pravatar.cc/150?img=15"
-          counter="+3"
+          counterTooltip={{
+            users: [
+              {
+                id: 'alice-1',
+                name: 'Emma Davis',
+                avatar: 'https://i.pravatar.cc/150?img=23',
+                link: 'https://uikit.ssa.group/managers/emma',
+              },
+              {
+                id: 'alice-2',
+                name: 'Liam Wilson',
+                avatar: 'https://i.pravatar.cc/150?img=24',
+                link: 'https://uikit.ssa.group/managers/liam',
+              },
+              {
+                id: 'alice-3',
+                name: 'Olivia Taylor',
+                avatar: 'https://i.pravatar.cc/150?img=25',
+                link: 'https://uikit.ssa.group/managers/olivia',
+              },
+              {
+                id: 'alice-4',
+                name: 'Noah Brown',
+                avatar: 'https://i.pravatar.cc/150?img=26',
+                link: 'https://uikit.ssa.group/managers/noah',
+              },
+            ],
+          }}
         />
         <PersonInfo
           title="Title 5"
@@ -403,7 +501,28 @@ export const MultiplePersonInfo: Story = {
           icon="employee"
           value="Edward Norton"
           avatar="https://i.pravatar.cc/150?img=18"
-          counter="+10"
+          counterTooltip={{
+            users: [
+              {
+                id: 'title-7-1',
+                name: 'Sophia Miller',
+                avatar: 'https://i.pravatar.cc/150?img=32',
+                link: 'https://uikit.ssa.group/managers/sophia',
+              },
+              {
+                id: 'title-7-2',
+                name: 'Logan Anderson',
+                avatar: 'https://i.pravatar.cc/150?img=33',
+                link: 'https://uikit.ssa.group/managers/logan',
+              },
+              {
+                id: 'title-7-3',
+                name: 'Mia Thompson',
+                avatar: 'https://i.pravatar.cc/150?img=34',
+                link: 'https://uikit.ssa.group/managers/mia',
+              },
+            ],
+          }}
           attributes={['Attribute']}
         />
       </Wrapper>
@@ -417,7 +536,6 @@ MultiplePersonInfo.argTypes = {
   value: { control: false },
   badges: { control: false },
   avatar: { control: false },
-  counter: { control: false },
   attributes: { control: false },
   description: { control: false },
 };

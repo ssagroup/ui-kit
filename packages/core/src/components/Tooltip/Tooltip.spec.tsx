@@ -1,4 +1,4 @@
-import { waitFor } from '../../../customTest';
+import { waitFor, fireEvent } from '../../../customTest';
 import type { Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -118,6 +118,33 @@ describe('Tooltip', () => {
     await user.hover(buttonEl);
     getByText(tooltipText);
     getByTestId('floating-arrow');
+  });
+
+  it('allows interacting with content when allowHoverContent is set', async () => {
+    const interactiveText = 'Tooltip Link';
+    const { user, getByRole, getByText, queryByText } = setup(
+      <Tooltip enableClick={false} enableHover allowHoverContent>
+        <TooltipTrigger>
+          <Button size="medium" text="Hover for actions" />
+        </TooltipTrigger>
+        <TooltipContent>
+          <a href="https://example.com">{interactiveText}</a>
+        </TooltipContent>
+      </Tooltip>,
+    );
+
+    const trigger = getByRole('button');
+    await user.hover(trigger);
+
+    const link = getByText(interactiveText);
+    expect(link).toBeInTheDocument();
+
+    fireEvent.pointerLeave(trigger, { relatedTarget: link });
+    fireEvent.pointerEnter(link, { relatedTarget: trigger });
+
+    expect(queryByText(interactiveText)).toBeInTheDocument();
+
+    await user.click(link);
   });
 
   it("Doesn't show arrow", async () => {
