@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '../../../customTest';
 import { PersonInfo } from '@components';
 import Badge from '@components/Badge';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 
 describe('PersonInfo', () => {
   it('Renders with title', () => {
@@ -35,7 +36,7 @@ describe('PersonInfo', () => {
     const { container } = render(
       <PersonInfo
         title="Title"
-        avatar="https://i.pravatar.cc/150?img=12"
+        avatar={getStorybookAvatar(0)}
         value="John Doe"
       />,
     );
@@ -56,13 +57,13 @@ describe('PersonInfo', () => {
             {
               id: 'manager-1',
               name: 'Manager Alpha',
-              avatar: 'https://i.pravatar.cc/150?img=5',
+              avatar: getStorybookAvatar(1),
               link: 'https://example.com/managers/alpha',
             },
             {
               id: 'manager-2',
               name: 'Manager Beta',
-              avatar: 'https://i.pravatar.cc/150?img=6',
+              avatar: getStorybookAvatar(2),
               link: 'https://example.com/managers/beta',
             },
           ],
@@ -91,13 +92,13 @@ describe('PersonInfo', () => {
             {
               id: 'manager-1',
               name: 'Manager Alpha',
-              avatar: 'https://i.pravatar.cc/150?img=5',
+              avatar: getStorybookAvatar(1),
               link: 'https://example.com/managers/alpha',
             },
             {
               id: 'manager-2',
               name: 'Manager Beta',
-              avatar: 'https://i.pravatar.cc/150?img=6',
+              avatar: getStorybookAvatar(2),
             },
           ],
         }}
@@ -138,7 +139,7 @@ describe('PersonInfo', () => {
     render(
       <PersonInfo
         title="Title"
-        avatar="https://i.pravatar.cc/150?img=12"
+        avatar={getStorybookAvatar(0)}
         value="John Doe"
         link="https://example.com"
       />,
@@ -227,13 +228,13 @@ describe('PersonInfo', () => {
         title="Full Title"
         icon="user"
         value="John Doe"
-        avatar="https://i.pravatar.cc/150?img=12"
+        avatar={getStorybookAvatar(0)}
         counterTooltip={{
           users: [
             {
               id: 'manager-1',
               name: 'Manager Alpha',
-              avatar: 'https://i.pravatar.cc/150?img=5',
+              avatar: getStorybookAvatar(1),
               link: 'https://example.com/managers/alpha',
             },
           ],

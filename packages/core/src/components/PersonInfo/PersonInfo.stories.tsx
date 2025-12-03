@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { PersonInfo } from '@components';
 import Badge from '@components/Badge';
 import Wrapper from '@components/Wrapper';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 
 export default {
   title: 'Components/PersonInfo',
@@ -160,7 +161,7 @@ export const WithMixedBadges: Story = {
 export const WithAvatar: Story = {
   args: {
     title: 'Title',
-    avatar: 'https://i.pravatar.cc/150?img=12',
+    avatar: getStorybookAvatar(0),
     value: 'John Doe',
   },
 };
@@ -168,7 +169,7 @@ export const WithAvatar: Story = {
 export const WithCounterTooltip: Story = {
   args: {
     title: 'Project Manager',
-    avatar: 'https://i.pravatar.cc/150?img=19',
+    avatar: getStorybookAvatar(1),
     value: 'Sarah Parker',
     link: 'https://uikit.ssa.group',
     openLinkInNewTab: true,
@@ -177,37 +178,37 @@ export const WithCounterTooltip: Story = {
         {
           id: 'manager-1',
           name: 'John Doe',
-          avatar: 'https://i.pravatar.cc/150?img=20',
+          avatar: getStorybookAvatar(2),
           link: 'https://uikit.ssa.group/managers/john',
         },
         {
           id: 'manager-2',
           name: 'Jane Smith',
-          avatar: 'https://i.pravatar.cc/150?img=21',
+          avatar: getStorybookAvatar(3),
           link: 'https://uikit.ssa.group/managers/jane',
         },
         {
           id: 'manager-3',
           name: 'Bob Johnson',
-          avatar: 'https://i.pravatar.cc/150?img=22',
+          avatar: getStorybookAvatar(4),
           link: 'https://uikit.ssa.group/managers/bob',
         },
         {
           id: 'manager-4',
           name: 'Alice Williams',
-          avatar: 'https://i.pravatar.cc/150?img=23',
+          avatar: getStorybookAvatar(5),
           link: 'https://uikit.ssa.group/managers/alice',
         },
         {
           id: 'manager-5',
           name: 'Charlie Brown',
-          avatar: 'https://i.pravatar.cc/150?img=24',
+          avatar: getStorybookAvatar(6),
           link: 'https://uikit.ssa.group/managers/charlie',
         },
         {
           id: 'manager-6',
           name: 'Diana Prince',
-          avatar: 'https://i.pravatar.cc/150?img=25',
+          avatar: getStorybookAvatar(7),
           link: 'https://uikit.ssa.group/managers/diana',
         },
       ],
@@ -245,7 +246,7 @@ export const WithDescription: Story = {
 //   args: {
 //     title: 'Custom Title',
 //     value: 'John Doe',
-//     avatar: 'https://i.pravatar.cc/150?img=12',
+//     avatar: getStorybookAvatar(0),
 //     counter: '+5',
 //     attributes: ['Attribute 1', 'Attribute 2'],
 //     badges: (
@@ -294,7 +295,7 @@ export const WithDescription: Story = {
 //   args: {
 //     title: 'Advanced Custom Title',
 //     value: 'John Doe',
-//     avatar: 'https://i.pravatar.cc/150?img=12',
+//     avatar: getStorybookAvatar(0),
 //     counter: '+5',
 //     attributes: ['Custom Attribute 1', 'Custom Attribute 2'],
 //     description: 'This is a custom description with advanced styling',
@@ -399,19 +400,19 @@ export const MultiplePersonInfo: Story = {
           title="Title 1"
           icon="employee"
           value="John Doe"
-          avatar="https://i.pravatar.cc/150?img=12"
+          avatar={getStorybookAvatar(8)}
           counterTooltip={{
             users: [
               {
                 id: 'title-1-1',
                 name: 'Olivia Taylor',
-                avatar: 'https://i.pravatar.cc/150?img=30',
+                avatar: getStorybookAvatar(9),
                 link: 'https://uikit.ssa.group/managers/olivia',
               },
               {
                 id: 'title-1-2',
                 name: 'Noah Brown',
-                avatar: 'https://i.pravatar.cc/150?img=31',
+                avatar: getStorybookAvatar(10),
                 link: 'https://uikit.ssa.group/managers/noah',
               },
             ],
@@ -421,7 +422,7 @@ export const MultiplePersonInfo: Story = {
           title="Title 2"
           icon="employee"
           value="Jane Smith"
-          avatar="https://i.pravatar.cc/150?img=13"
+          avatar={getStorybookAvatar(11)}
           badges={['badge 1', 'badge 2']}
         />
       </Wrapper>
@@ -437,37 +438,37 @@ export const MultiplePersonInfo: Story = {
           title="Title 3"
           icon="employee"
           value="Bob Johnson"
-          avatar="https://i.pravatar.cc/150?img=14"
+          avatar={getStorybookAvatar(12)}
         />
         <PersonInfo
           title="Title 4"
           icon="employee"
           value="Alice Williams"
-          avatar="https://i.pravatar.cc/150?img=15"
+          avatar={getStorybookAvatar(13)}
           counterTooltip={{
             users: [
               {
                 id: 'alice-1',
                 name: 'Emma Davis',
-                avatar: 'https://i.pravatar.cc/150?img=23',
+                avatar: getStorybookAvatar(14),
                 link: 'https://uikit.ssa.group/managers/emma',
               },
               {
                 id: 'alice-2',
                 name: 'Liam Wilson',
-                avatar: 'https://i.pravatar.cc/150?img=24',
+                avatar: getStorybookAvatar(15),
                 link: 'https://uikit.ssa.group/managers/liam',
               },
               {
                 id: 'alice-3',
                 name: 'Olivia Taylor',
-                avatar: 'https://i.pravatar.cc/150?img=25',
+                avatar: getStorybookAvatar(16),
                 link: 'https://uikit.ssa.group/managers/olivia',
               },
               {
                 id: 'alice-4',
                 name: 'Noah Brown',
-                avatar: 'https://i.pravatar.cc/150?img=26',
+                avatar: getStorybookAvatar(17),
                 link: 'https://uikit.ssa.group/managers/noah',
               },
             ],
@@ -477,7 +478,7 @@ export const MultiplePersonInfo: Story = {
           title="Title 5"
           icon="employee"
           value="Charlie Brown"
-          avatar="https://i.pravatar.cc/150?img=16"
+          avatar={getStorybookAvatar(18)}
           attributes={['Attribute 1', 'Attribute 2']}
         />
       </Wrapper>
@@ -493,32 +494,32 @@ export const MultiplePersonInfo: Story = {
           title="Title 6"
           icon="employee"
           value="Diana Prince"
-          avatar="https://i.pravatar.cc/150?img=17"
+          avatar={getStorybookAvatar(19)}
           badges={['badge']}
         />
         <PersonInfo
           title="Title 7"
           icon="employee"
           value="Edward Norton"
-          avatar="https://i.pravatar.cc/150?img=18"
+          avatar={getStorybookAvatar(20)}
           counterTooltip={{
             users: [
               {
                 id: 'title-7-1',
                 name: 'Sophia Miller',
-                avatar: 'https://i.pravatar.cc/150?img=32',
+                avatar: getStorybookAvatar(21),
                 link: 'https://uikit.ssa.group/managers/sophia',
               },
               {
                 id: 'title-7-2',
                 name: 'Logan Anderson',
-                avatar: 'https://i.pravatar.cc/150?img=33',
+                avatar: getStorybookAvatar(22),
                 link: 'https://uikit.ssa.group/managers/logan',
               },
               {
                 id: 'title-7-3',
                 name: 'Mia Thompson',
-                avatar: 'https://i.pravatar.cc/150?img=34',
+                avatar: getStorybookAvatar(23),
                 link: 'https://uikit.ssa.group/managers/mia',
               },
             ],

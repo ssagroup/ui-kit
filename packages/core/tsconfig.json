@@ -15,9 +15,16 @@
       "@contexts/*": ["./src/contexts/*"],
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
-      "@global-types/*": ["./src/types/*"]
+      "@global-types/*": ["./src/types/*"],
+      "@storybook-assets/*": ["./.storybook/assets/*"]
     }
   },
-  "include": ["src/**/*", "./jest-setup.ts", "./customTest.tsx", ".storybook/*.tsx"],
+  "include": [
+    "src/**/*",
+    "./jest-setup.ts",
+    "./customTest.tsx",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
+  ],
   "exclude": ["dist/**/*"]
 }

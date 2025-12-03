@@ -14,6 +14,7 @@ import Icon from '@components/Icon';
 import { IconProps } from '@components/Icon/types';
 import Button from '@components/Button';
 import Wrapper from '@components/Wrapper';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 import { Typeahead } from '.';
 import { TypeaheadProps, TypeaheadValue } from './types';
 import { highlightInputMatch } from './utils';
@@ -176,22 +177,22 @@ const managerOptions = [
   {
     id: '1',
     name: 'John Doe',
-    avatar: 'https://i.pravatar.cc/150?img=1',
+    avatar: getStorybookAvatar(0),
   },
   {
     id: '2',
     name: 'Jane Smith',
-    avatar: 'https://i.pravatar.cc/150?img=2',
+    avatar: getStorybookAvatar(1),
   },
   {
     id: '3',
     name: 'Bob Johnson',
-    avatar: 'https://i.pravatar.cc/150?img=3',
+    avatar: getStorybookAvatar(2),
   },
   {
     id: '4',
     name: 'Alice Williams',
-    avatar: 'https://i.pravatar.cc/150?img=4',
+    avatar: getStorybookAvatar(3),
   },
 ] as const;
 

@@ -7,6 +7,7 @@ import Button from '@components/Button';
 import { applyHiddenWidget, getFieldsToHide } from './utils';
 import { Form } from './';
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 
 type FormProps = Omit<React.ComponentProps<typeof Form>, 'validator'>;
 
@@ -14,22 +15,22 @@ const managerOptions = [
   {
     id: '1',
     name: 'John Doe',
-    avatar: 'https://i.pravatar.cc/150?img=1',
+    avatar: getStorybookAvatar(0),
   },
   {
     id: '2',
     name: 'Jane Smith',
-    avatar: 'https://i.pravatar.cc/150?img=2',
+    avatar: getStorybookAvatar(1),
   },
   {
     id: '3',
     name: 'Bob Johnson',
-    avatar: 'https://i.pravatar.cc/150?img=3',
+    avatar: getStorybookAvatar(2),
   },
   {
     id: '4',
     name: 'Alice Williams',
-    avatar: 'https://i.pravatar.cc/150?img=4',
+    avatar: getStorybookAvatar(3),
   },
 ];
 

@@ -3,7 +3,6 @@ import { CommonProps } from '@global-types/emotion';
 
 const Wrapper = styled.div<
   {
-    avatarSize?: number;
     direction?: string;
     alignItems?: string;
     fade?: boolean;
