@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { fireEvent, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
-import { DateRangePicker } from './DateRangePicker';
+import { DateRangePicker } from '@components';
 import { DEFAULT_MASK_FORMAT, DEFAULT_MONTH_MASK_FORMAT } from './constants';
 import { DateRangePickerProps } from './types';
 import { FormGroup, mainTheme } from '../..';
@@ -46,7 +46,6 @@ describe('DateRangePicker', () => {
             <DateRangePicker
               name="field1"
               label="Field"
-              openCalendarMode="both"
               rangePickerType="days"
               onChange={mockOnChange}
               onBlur={mockOnBlur}
@@ -68,10 +67,10 @@ describe('DateRangePicker', () => {
     expect(getByTestId('daterangepicker')).toBeInTheDocument();
   });
 
-  it('should open the date range picker when clicked', async () => {
-    const { getByTestId } = setup();
-    const input = getByTestId('daterangepicker-input-from');
-    await fireEvent.click(input);
+  it('should open the date range picker when calendar button is clicked', async () => {
+    const { getByTestId, user } = setup();
+    const calendarButton = getByTestId('daterangepicker-button');
+    await user.click(calendarButton);
     expect(getByTestId('daterangepicker-calendar')).toBeVisible();
   });
 
@@ -105,13 +104,14 @@ describe('DateRangePicker', () => {
     } = setup();
     const startDate = getByTestId('daterangepicker-input-from');
     const endDate = getByTestId('daterangepicker-input-to');
+    const calendarButton = getByTestId('daterangepicker-button');
 
     expect(startDate).toBeInTheDocument();
     expect(endDate).toBeInTheDocument();
-    await user.click(startDate);
+    await user.click(calendarButton);
 
     expect(mockOnClose).toHaveBeenCalledTimes(0);
-    expect(mockOnBlur).toHaveBeenCalledTimes(1);
+    expect(mockOnBlur).toHaveBeenCalledTimes(0);
     expect(mockOnChange).toHaveBeenCalledTimes(0);
     expect(mockOnError).toHaveBeenCalledTimes(0);
     expect(mockOnMonthChange).toHaveBeenCalledTimes(0);
@@ -159,7 +159,7 @@ describe('DateRangePicker', () => {
     ]);
     expect(mockOnOpen).toHaveBeenCalledTimes(1);
     expect(mockOnClose).toHaveBeenCalledTimes(1);
-    expect(mockOnBlur).toHaveBeenCalledTimes(2);
+    expect(mockOnBlur).toHaveBeenCalledTimes(0);
     expect(mockOnError).toHaveBeenCalledTimes(0);
   });
 
@@ -174,10 +174,11 @@ describe('DateRangePicker', () => {
     } = setup();
     const startDate = getByTestId('daterangepicker-input-from');
     const endDate = getByTestId('daterangepicker-input-to');
+    const calendarButton = getByTestId('daterangepicker-button');
 
     expect(startDate).toBeInTheDocument();
     expect(endDate).toBeInTheDocument();
-    await user.click(startDate);
+    await user.click(calendarButton);
 
     expect(mockOnMonthChange).toHaveBeenCalledTimes(0);
     expect(mockOnYearChange).toHaveBeenCalledTimes(0);
@@ -193,7 +194,7 @@ describe('DateRangePicker', () => {
     const day15Element = within(dialogEl).getByText(15);
     await user.click(day15Element);
 
-    await user.click(endDate);
+    await user.click(calendarButton);
 
     const dateFrom = DateTime.now().minus({ month: 1 }).set({
       day: 15,
@@ -289,7 +290,7 @@ describe('DateRangePicker', () => {
     const { getByTestId, getByRole, user } = setup({
       defaultValue: ['02/15/2025', '02/20/2025'],
     });
-    await user.click(getByTestId('daterangepicker-input-from'));
+    await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
     const days = within(dialogEl).queryAllByText('29');
@@ -303,7 +304,7 @@ describe('DateRangePicker', () => {
     const { getByTestId, getByRole, user } = setup({
       defaultValue: ['02/15/2024', '02/20/2024'],
     });
-    await user.click(getByTestId('daterangepicker-input-from'));
+    await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
     const days = within(dialogEl).queryAllByText('29');
@@ -317,7 +318,7 @@ describe('DateRangePicker', () => {
     const { getByTestId, getByRole, user } = setup({
       rangePickerType: 'months',
     });
-    await user.click(getByTestId('daterangepicker-input-from'));
+    await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
     [
       'Jan',
@@ -344,7 +345,7 @@ describe('DateRangePicker', () => {
       dateMin: minDate.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
       dateMax: maxDate.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     });
-    await user.click(getByTestId('daterangepicker-input-from'));
+    await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
     const beforeMin = within(dialogEl).getAllByText('9');
     const beforeMinDays = beforeMin.filter(
@@ -385,7 +386,8 @@ describe('DateRangePicker', () => {
       month: 6,
     });
 
-    await user.click(startDate);
+    const calendarButton = getByTestId('daterangepicker-button');
+    await user.click(calendarButton);
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
@@ -395,7 +397,7 @@ describe('DateRangePicker', () => {
       dateFrom.toFormat(DEFAULT_MONTH_MASK_FORMAT.replace('mm', 'MM')),
     );
 
-    await user.click(endDate);
+    await user.click(calendarButton);
     expect(dialogEl).toBeInTheDocument();
     const june = within(dialogEl).getByText('Jun');
     await user.click(june);
@@ -431,7 +433,8 @@ describe('DateRangePicker', () => {
       day: 25,
     });
 
-    await user.click(startDate);
+    const calendarButton = getByTestId('daterangepicker-button');
+    await user.click(calendarButton);
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
@@ -446,7 +449,7 @@ describe('DateRangePicker', () => {
       dateFrom.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
 
-    await user.click(endDate);
+    await user.click(calendarButton);
     const dialogEl2 = getByRole('dialog');
     expect(dialogEl2).toBeInTheDocument();
 
@@ -462,7 +465,7 @@ describe('DateRangePicker', () => {
     );
   });
 
-  it('should clear start date if end date is selected earlier than start date', async () => {
+  it('should auto-swap dates when end date is selected earlier than start date', async () => {
     const { getByTestId, getByRole, user } = setup({
       value: [
         DateTime.now()
@@ -480,8 +483,10 @@ describe('DateRangePicker', () => {
 
     const startDate = getByTestId('daterangepicker-input-from');
     const endDate = getByTestId('daterangepicker-input-to');
+    const calendarButton = getByTestId('daterangepicker-button');
 
     await user.click(endDate);
+    await user.click(calendarButton);
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
@@ -492,15 +497,20 @@ describe('DateRangePicker', () => {
     expect(enabledDay10.length).toBeGreaterThanOrEqual(1);
     await user.click(enabledDay10[0]);
 
-    expect(startDate).toHaveValue('');
-    expect(endDate).toHaveValue(
+    // When selecting end date earlier than start, dates are auto-swapped
+    expect(startDate).toHaveValue(
       DateTime.now()
         .set({ day: 10 })
         .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
+    expect(endDate).toHaveValue(
+      DateTime.now()
+        .set({ day: 15 })
+        .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
+    );
   });
 
-  it('should clear end date if start date is selected later than end date', async () => {
+  it('should auto-swap dates when start date is selected later than end date', async () => {
     const { getByTestId, getByRole, user } = setup({
       value: [
         DateTime.now()
@@ -518,8 +528,10 @@ describe('DateRangePicker', () => {
 
     const startDate = getByTestId('daterangepicker-input-from');
     const endDate = getByTestId('daterangepicker-input-to');
+    const calendarButton = getByTestId('daterangepicker-button');
 
     await user.click(startDate);
+    await user.click(calendarButton);
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
@@ -530,11 +542,18 @@ describe('DateRangePicker', () => {
     expect(enabledDay25.length).toBeGreaterThanOrEqual(1);
     await user.click(enabledDay25[0]);
 
+    // When selecting a date when both dates are set, it updates the end date
+    // Then auto-swaps if dates are in reverse order
+    // Since we selected 25 and start is 15, end becomes 25, then swaps: start=15, end=25
     expect(startDate).toHaveValue(
+      DateTime.now()
+        .set({ day: 15 })
+        .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
+    );
+    expect(endDate).toHaveValue(
       DateTime.now()
         .set({ day: 25 })
         .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
-    expect(endDate).toHaveValue('');
   });
 });

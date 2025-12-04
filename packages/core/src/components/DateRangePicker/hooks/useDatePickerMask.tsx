@@ -1,16 +1,9 @@
-import { useMask, format as maskFormat } from '@react-input/mask';
-import { DateRangePickerProps } from '../types';
-import { processDate } from '../utils';
+import { useMask, type MaskOptions } from '@react-input/mask';
 
 export const useDatePickerMask = ({
   maskOptions,
-  formatIndexes,
-  dateMinParts,
-  dateMaxParts,
-}: Pick<DateRangePickerProps, 'maskOptions'> & {
-  formatIndexes: { day: number; month: number; year: number };
-  dateMinParts: number[];
-  dateMaxParts: number[];
+}: {
+  maskOptions?: MaskOptions;
 }) => {
   const {
     mask,
@@ -21,30 +14,12 @@ export const useDatePickerMask = ({
   const useMaskResult = useMask({
     mask,
     replacement,
-    track: ({ data, selectionStart, selectionEnd, value: currentValue }) => {
-      const isDateMask = typeof mask === 'string' && /^[_/]+$/.test(mask);
-      if (isDateMask) {
-        const newValue =
-          currentValue.slice(0, selectionStart) +
-          data +
-          currentValue.slice(selectionEnd);
-
-        const updatedValue = maskFormat(newValue, { mask, replacement });
-        const splittedValue = updatedValue.split('/');
-        const isChecked = processDate(
-          {
-            day: splittedValue[formatIndexes['day']],
-            month: splittedValue[formatIndexes['month']],
-            year: splittedValue[formatIndexes['year']],
-          },
-          dateMinParts[formatIndexes['year']],
-          dateMaxParts[formatIndexes['year']],
-        );
-
-        return isChecked ? data : '';
-      } else {
-        return data;
-      }
+    track: ({ data }) => {
+      // The mask should only format input, not validate it
+      // Validation happens on blur in useDateRangePicker.handleBlur
+      // This allows users to freely type and edit dates without blocking
+      // Return data as-is (string for insertions, null/undefined for deletions)
+      return data;
     },
     ...restMaskOptions,
   });

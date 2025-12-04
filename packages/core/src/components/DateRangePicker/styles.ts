@@ -214,4 +214,5 @@ export const MonthsViewCell = styled.div<{
 
 export const TriggerWrapper = styled(Wrapper)`
   padding: 14px;
+  cursor: default;
 `;

@@ -4,16 +4,13 @@ import { useForm, FieldValues, FormProvider } from 'react-hook-form';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
-import { DateRangePicker } from './DateRangePicker';
+import { DateRangePicker } from '@components';
 import { DateRangePickerProps } from './types';
 
 export default {
   title: 'Components/DateRangePicker',
   component: DateRangePicker,
   argTypes: {
-    openCalendarMode: {
-      defaultValue: 'both',
-    },
     defaultValue: {
       type: 'string',
     },
@@ -26,22 +23,13 @@ export default {
   // required due to https://github.com/storybookjs/storybook/issues/17025
   parameters: {
     controls: {
-      include: [
-        'rangePickerType',
-        'disabled',
-        'label',
-        'openCalendarMode',
-        'helperText',
-      ],
+      include: ['rangePickerType', 'disabled', 'label', 'helperText'],
     },
   },
   decorators: [
     (Story, context) => {
       const useFormResult = useForm<FieldValues>({
-        defaultValues: {
-          field1From: '01/15/2025',
-          field1To: '01/25/2025',
-        },
+        defaultValues: {},
       });
       return (
         <FormProvider {...useFormResult}>
@@ -68,7 +56,6 @@ export default {
 
 const commonArgs: Partial<DateRangePickerProps> = {
   label: 'Field',
-  openCalendarMode: 'both',
   rangePickerType: 'days',
   onChange: (dates) => {
     console.log('event: onChange', dates);
@@ -149,12 +136,12 @@ CustomSuccess.args = {
   },
 };
 
-export const AnotherFormat: StoryObj<typeof DateRangePicker> = (
+export const EuropeanFormat: StoryObj<typeof DateRangePicker> = (
   args: DateRangePickerProps,
 ) => {
   return <DateRangePicker {...args} />;
 };
-AnotherFormat.args = {
+EuropeanFormat.args = {
   ...commonArgs,
   name: 'field2',
   format: 'dd/mm/yyyy',

@@ -1,30 +1,39 @@
 import { DateTime } from 'luxon';
 import { MouseEventHandler } from 'react';
 import { MONTHS } from '../constants';
-import { useRangeHighlighting } from '../hooks';
-import { DateTimeTuple } from '../types';
+import { useRangeHighlighting, useRangeSelection } from '../hooks';
 import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { DatesListWrapper } from './DatesListWrapper';
 
 export const MonthsView = () => {
   const {
-    dateTime,
-    calendarViewDateTime,
     dateMinDT,
     dateMaxDT,
     lastFocusedElement,
     currentCalendarViewDT,
+    calendarViewDateTime,
     rangePickerType,
     setCalendarType,
     setCalendarViewDateTime,
     onMonthChange,
-    setDateTime,
-    setIsOpen,
   } = useDateRangePickerContext();
 
   const { handleDateHover, getClassNames, isHighlightDate } =
     useRangeHighlighting();
+
+  const { handleRangeSelect, getDateSelectionState } = useRangeSelection({
+    createNewDate: (selectedMonth) => {
+      const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
+      const newMonth = currentCalendarViewDT?.set({
+        month: monthNumber + 1,
+      });
+      return newMonth?.set({
+        day: lastFocusedElement === 'from' ? 1 : newMonth.daysInMonth,
+      });
+    },
+    getComparisonFormat: () => 'yyyy-MM',
+  });
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
@@ -34,42 +43,23 @@ export const MonthsView = () => {
       return;
     }
     const selectedMonth = (target as HTMLDivElement).innerHTML;
-    const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
 
     if (rangePickerType === 'days') {
+      // Navigation case: selecting month navigates to days view
+      const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
       const newDate = currentCalendarViewDT?.set({ month: monthNumber + 1 });
-      setCalendarViewDateTime(
-        lastFocusedElement === 'from'
-          ? [newDate, calendarViewDateTime[1]]
-          : [calendarViewDateTime[0], newDate],
-      );
       if (newDate) {
+        setCalendarViewDateTime(
+          lastFocusedElement === 'from'
+            ? [newDate, calendarViewDateTime[1]]
+            : [calendarViewDateTime[0], newDate],
+        );
         onMonthChange?.(newDate.toJSDate());
+        setCalendarType('days');
       }
-
-      setCalendarType('days');
     } else {
-      const newMonth = currentCalendarViewDT?.set({
-        month: monthNumber + 1,
-      });
-      const newDate = newMonth?.set({
-        day: lastFocusedElement === 'from' ? 1 : newMonth.daysInMonth,
-      });
-
-      const newDateTuple: DateTimeTuple =
-        lastFocusedElement === 'from'
-          ? [newDate, dateTime[1]]
-          : [dateTime[0], newDate];
-
-      setCalendarViewDateTime(
-        lastFocusedElement === 'from'
-          ? [newDate, dateTime[1] ? calendarViewDateTime?.[1] : newDate]
-          : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
-      );
-      setDateTime(newDateTuple);
-      if (newDateTuple[0] && newDateTuple[1]) {
-        setIsOpen(false);
-      }
+      // Range selection case: selecting month completes the range
+      handleRangeSelect(selectedMonth);
     }
   };
   return (
@@ -90,12 +80,8 @@ export const MonthsView = () => {
           : false;
         const isAriaDisabled = isMinMonthReached || isMaxMonthReached;
 
-        const isCalendarFirstDateSelected =
-          currentMonthDT.toFormat('yyyy-MM') ===
-          dateTime[0]?.toFormat('yyyy-MM');
-        const isCalendarSecondDateSelected =
-          currentMonthDT.toFormat('yyyy-MM') ===
-          dateTime[1]?.toFormat('yyyy-MM');
+        const { isCalendarFirstDateSelected, isCalendarSecondDateSelected } =
+          getDateSelectionState(currentMonthDT);
 
         const classNames = getClassNames(currentMonthDT, {
           isCalendarFirstDateSelected,

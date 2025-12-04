@@ -10,7 +10,6 @@ export const DateRangePickerContext =
     nameFrom: '',
     nameTo: '',
     maskOptions: {},
-    openCalendarMode: 'icon',
     inputFromRef: { current: null },
     inputToRef: { current: null },
     inputProps: {},
@@ -29,9 +28,6 @@ export const DateRangePickerContext =
     lastFocusedElement: 'from',
     currentCalendarViewDT: DateTime.now().set({ day: 1 }),
     currentIndex: 0,
-    handleSetIsOpen: () => {
-      // no-op
-    },
     handleToggleOpen: () => {
       // no-op
     },
@@ -39,6 +35,13 @@ export const DateRangePickerContext =
       // no-op
     },
     setCalendarType: () => {
+      // no-op
+    },
+    rangeSelectionStep: null,
+    setRangeSelectionStep: () => {
+      // no-op
+    },
+    clearInputValue: () => {
       // no-op
     },
     setCalendarViewDateTime: () => {

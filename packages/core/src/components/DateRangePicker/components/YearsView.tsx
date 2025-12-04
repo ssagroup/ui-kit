@@ -1,16 +1,14 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
 import { DateTime } from 'luxon';
-import { useRangeHighlighting } from '../hooks';
+import { useRangeHighlighting, useRangeSelection } from '../hooks';
 import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
 import { getYearsList } from '../utils';
 import { DatesListWrapper } from './DatesListWrapper';
-import { DateTimeTuple } from '../types';
 
 export const YearsView = () => {
   const {
     rangePickerType,
-    dateTime,
     calendarViewDateTime,
     currentCalendarViewDT,
     dateMinParts,
@@ -20,8 +18,6 @@ export const YearsView = () => {
     setCalendarType,
     setCalendarViewDateTime,
     onYearChange,
-    setDateTime,
-    setIsOpen,
   } = useDateRangePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
   const yearsList = getYearsList({
@@ -35,6 +31,20 @@ export const YearsView = () => {
   const { handleDateHover, getClassNames, isHighlightDate } =
     useRangeHighlighting();
 
+  const { handleRangeSelect, getDateSelectionState } = useRangeSelection({
+    createNewDate: (selectedYear) => {
+      const newYear = currentCalendarViewDT?.set({
+        year: Number(selectedYear),
+      });
+      return newYear?.set(
+        lastFocusedElement === 'from'
+          ? { day: 1, month: 1 }
+          : { day: 31, month: 12 },
+      );
+    },
+    getComparisonFormat: () => 'yyyy',
+  });
+
   useEffect(() => {
     if (currentCalendarViewDT && wrapper.current) {
       wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
@@ -42,15 +52,16 @@ export const YearsView = () => {
         block: 'center',
       });
     }
-  }, [calendarViewDateTime, lastFocusedElement]);
+  }, [calendarViewDateTime, lastFocusedElement, currentCalendarViewDT]);
 
   const handleYearSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
-    const selectedYear = Number((target as HTMLDivElement).innerHTML);
+    const selectedYear = (target as HTMLDivElement).innerHTML;
 
     if (rangePickerType !== 'years') {
+      // Navigation case: selecting year navigates to months view
       const newDate = currentCalendarViewDT.set({
-        year: selectedYear,
+        year: Number(selectedYear),
       });
       setCalendarType('months');
       setCalendarViewDateTime(
@@ -62,29 +73,8 @@ export const YearsView = () => {
         onYearChange?.(newDate.toJSDate());
       }
     } else {
-      const newYear = currentCalendarViewDT?.set({
-        year: selectedYear,
-      });
-      const newDate = newYear?.set(
-        lastFocusedElement === 'from'
-          ? { day: 1, month: 1 }
-          : { day: 31, month: 12 },
-      );
-
-      const newDateTuple: DateTimeTuple =
-        lastFocusedElement === 'from'
-          ? [newDate, dateTime[1]]
-          : [dateTime[0], newDate];
-
-      setCalendarViewDateTime(
-        lastFocusedElement === 'from'
-          ? [newDate, dateTime[1] ? calendarViewDateTime?.[1] : newDate]
-          : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
-      );
-      setDateTime(newDateTuple);
-      if (newDateTuple[0] && newDateTuple[1]) {
-        setIsOpen(false);
-      }
+      // Range selection case: selecting year completes the range
+      handleRangeSelect(selectedYear);
     }
   };
 
@@ -111,10 +101,8 @@ export const YearsView = () => {
           additionalProps['aria-current'] = 'date';
         }
 
-        const isCalendarFirstDateSelected =
-          year.toString() === dateTime[0]?.toFormat('yyyy');
-        const isCalendarSecondDateSelected =
-          year.toString() === dateTime[1]?.toFormat('yyyy');
+        const { isCalendarFirstDateSelected, isCalendarSecondDateSelected } =
+          getDateSelectionState(currentYearDT);
 
         const classNames = getClassNames(currentYearDT, {
           isCalendarFirstDateSelected,
