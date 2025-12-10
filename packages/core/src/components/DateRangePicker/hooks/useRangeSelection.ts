@@ -52,27 +52,21 @@ export const useRangeSelection = ({
         : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
     );
 
-    if (allowReverseSelection) {
-      if (
-        newDateTuple[0] &&
-        newDateTuple[1] &&
-        newDateTuple[0].toMillis() > newDateTuple[1].toMillis()
-      ) {
+    // Check if dates are in reverse order
+    const isReversed =
+      newDateTuple[0] &&
+      newDateTuple[1] &&
+      newDateTuple[0].toMillis() > newDateTuple[1].toMillis();
+
+    if (isReversed) {
+      if (allowReverseSelection) {
+        // Auto-swap dates when reverse selection is allowed
         newDateTuple = [newDateTuple[1], newDateTuple[0]];
-      }
-    } else {
-      if (
-        !isSelectingStart &&
-        newDateTuple[0] &&
-        newDateTuple[1] &&
-        newDateTuple[0].toMillis() > newDateTuple[1].toMillis()
-      ) {
+      } else if (!isSelectingStart) {
         // User selected an earlier date - update start date
         newDateTuple = [newDateTuple[1], undefined];
         setLastFocusedElement('to');
         setRangeSelectionStep('end');
-
-        // Update calendar view to show the new start date
         setCalendarViewDateTime([newDateTuple[0], newDateTuple[0]]);
       }
     }

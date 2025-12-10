@@ -92,12 +92,12 @@ Default.args = {
   helperText: 'some nice text',
 };
 
-export const AnotherFormat: StoryObj<typeof DatePicker> = (
+export const EuropeanFormat: StoryObj<typeof DatePicker> = (
   args: DatePickerProps,
 ) => {
   return <DatePicker {...args} />;
 };
-AnotherFormat.args = {
+EuropeanFormat.args = {
   ...commonArgs,
   name: 'field2',
   format: 'dd/mm/yyyy',

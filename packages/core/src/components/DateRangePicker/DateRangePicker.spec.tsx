@@ -507,7 +507,7 @@ describe('DateRangePicker', () => {
     expect(endDate).toHaveValue('');
   });
 
-  it('should auto-swap dates when start date is selected later than end date', async () => {
+  it('should clear end date when start date is selected later than end date', async () => {
     const { getByTestId, getByRole, user } = setup({
       value: [
         DateTime.now()
