@@ -23,7 +23,13 @@ export default {
   // required due to https://github.com/storybookjs/storybook/issues/17025
   parameters: {
     controls: {
-      include: ['rangePickerType', 'disabled', 'label', 'helperText'],
+      include: [
+        'rangePickerType',
+        'disabled',
+        'label',
+        'helperText',
+        'allowReverseSelection',
+      ],
     },
   },
   decorators: [
@@ -209,4 +215,19 @@ export const WithExternalValue: StoryObj<typeof DateRangePicker> = (
 WithExternalValue.args = {
   ...commonArgs,
   name: 'field6',
+};
+
+export const WithReverseSelection: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+WithReverseSelection.args = {
+  ...commonArgs,
+  name: 'field10',
+  allowReverseSelection: true,
+  messages: {
+    description:
+      'Reverse selection enabled: If you select a later date first, then an earlier date, the start date will be updated to the earlier date instead of auto-swapping. Calendar stays open until dates are in correct order (start ≤ end).',
+  },
 };

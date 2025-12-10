@@ -465,7 +465,7 @@ describe('DateRangePicker', () => {
     );
   });
 
-  it('should auto-swap dates when end date is selected earlier than start date', async () => {
+  it('should update start date when end date is selected earlier than start date', async () => {
     const { getByTestId, getByRole, user } = setup({
       value: [
         DateTime.now()
@@ -497,17 +497,14 @@ describe('DateRangePicker', () => {
     expect(enabledDay10.length).toBeGreaterThanOrEqual(1);
     await user.click(enabledDay10[0]);
 
-    // When selecting end date earlier than start, dates are auto-swapped
+    // When selecting end date earlier than start,
+    // the start date is updated to the earlier date and end date is cleared
     expect(startDate).toHaveValue(
       DateTime.now()
         .set({ day: 10 })
         .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
-    expect(endDate).toHaveValue(
-      DateTime.now()
-        .set({ day: 15 })
-        .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
-    );
+    expect(endDate).toHaveValue('');
   });
 
   it('should auto-swap dates when start date is selected later than end date', async () => {
@@ -542,18 +539,61 @@ describe('DateRangePicker', () => {
     expect(enabledDay25.length).toBeGreaterThanOrEqual(1);
     await user.click(enabledDay25[0]);
 
-    // When selecting a date when both dates are set, it updates the end date
-    // Then auto-swaps if dates are in reverse order
-    // Since we selected 25 and start is 15, end becomes 25, then swaps: start=15, end=25
+    // When selecting a date when both dates are set and rangeSelectionStep is 'start',
+    // it updates the start date to the new value and clears the end date
+    // Since we selected 25 as the start date, start becomes 25 and end is cleared
     expect(startDate).toHaveValue(
-      DateTime.now()
-        .set({ day: 15 })
-        .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
-    );
-    expect(endDate).toHaveValue(
       DateTime.now()
         .set({ day: 25 })
         .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
+    expect(endDate).toHaveValue('');
+  });
+
+  it('should auto-swap dates when allowReverseSelection is true', async () => {
+    const { getByTestId, getByRole, queryByRole, user } = setup({
+      allowReverseSelection: true,
+    });
+
+    const startDate = getByTestId('daterangepicker-input-from');
+    const endDate = getByTestId('daterangepicker-input-to');
+    const calendarButton = getByTestId('daterangepicker-button');
+
+    // Open calendar and select first date (day 15)
+    await user.click(calendarButton);
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toBeInTheDocument();
+
+    const day15Element = within(dialogEl).getAllByText('15');
+    const enabledDay15 = day15Element.filter(
+      (day) => day.getAttribute('aria-disabled') === 'false',
+    );
+    expect(enabledDay15.length).toBeGreaterThanOrEqual(1);
+    await user.click(enabledDay15[0]);
+
+    // Calendar should still be open (waiting for end date)
+    expect(getByRole('dialog')).toBeInTheDocument();
+
+    // Select an earlier date (day 10) - should auto-swap
+    const day10Element = within(dialogEl).getAllByText('10');
+    const enabledDay10 = day10Element.filter(
+      (day) => day.getAttribute('aria-disabled') === 'false',
+    );
+    expect(enabledDay10.length).toBeGreaterThanOrEqual(1);
+    await user.click(enabledDay10[0]);
+
+    // When allowReverseSelection is true: dates are auto-swapped when selected in reverse order
+    expect(startDate).toHaveValue(
+      DateTime.now()
+        .set({ day: 10 })
+        .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
+    );
+    expect(endDate).toHaveValue(
+      DateTime.now()
+        .set({ day: 15 })
+        .toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
+    );
+    // Calendar should be closed after auto-swap
+    expect(queryByRole('dialog')).not.toBeInTheDocument();
   });
 });

@@ -13,9 +13,6 @@ type UseRangeSelectionOptions = {
   getComparisonFormat: () => string;
 };
 
-/**
- * Shared hook for handling range selection logic across DaysView, MonthsView, and YearsView
- */
 export const useRangeSelection = ({
   createNewDate,
   getComparisonFormat,
@@ -30,6 +27,7 @@ export const useRangeSelection = ({
     rangeSelectionStep,
     setRangeSelectionStep,
     clearInputValue,
+    allowReverseSelection = false,
   } = useDateRangePickerContext();
 
   const handleRangeSelect = (selectedValue: number | string) => {
@@ -54,18 +52,39 @@ export const useRangeSelection = ({
         : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
     );
 
-    // Auto-swap if user selected in reverse order
-    if (
-      newDateTuple[0] &&
-      newDateTuple[1] &&
-      newDateTuple[0].toMillis() > newDateTuple[1].toMillis()
-    ) {
-      newDateTuple = [newDateTuple[1], newDateTuple[0]];
+    if (allowReverseSelection) {
+      if (
+        newDateTuple[0] &&
+        newDateTuple[1] &&
+        newDateTuple[0].toMillis() > newDateTuple[1].toMillis()
+      ) {
+        newDateTuple = [newDateTuple[1], newDateTuple[0]];
+      }
+    } else {
+      if (
+        !isSelectingStart &&
+        newDateTuple[0] &&
+        newDateTuple[1] &&
+        newDateTuple[0].toMillis() > newDateTuple[1].toMillis()
+      ) {
+        // User selected an earlier date - update start date
+        newDateTuple = [newDateTuple[1], undefined];
+        setLastFocusedElement('to');
+        setRangeSelectionStep('end');
+
+        // Update calendar view to show the new start date
+        setCalendarViewDateTime([newDateTuple[0], newDateTuple[0]]);
+      }
     }
 
     setDateTime(newDateTuple);
 
-    if (newDateTuple[0] && newDateTuple[1]) {
+    // Only close calendar if dates are in correct order (start < end)
+    if (
+      newDateTuple[0] &&
+      newDateTuple[1] &&
+      newDateTuple[0].toMillis() <= newDateTuple[1].toMillis()
+    ) {
       setRangeSelectionStep(null);
       setIsOpen(false);
     }

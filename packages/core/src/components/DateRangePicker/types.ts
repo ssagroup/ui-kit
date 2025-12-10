@@ -1,4 +1,9 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  FocusEventHandler,
+} from 'react';
 import { DateTime } from 'luxon';
 import { useMask } from '@react-input/mask';
 import { FieldContextValue } from '@components/Field/FieldProvider';
@@ -47,7 +52,8 @@ export type DateRangePickerProps = {
   onError?: (date: unknown, error?: string | null) => void;
   onMonthChange?: (date: Date) => void;
   onYearChange?: (date: Date) => void;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  allowReverseSelection?: boolean;
 };
 
 export type DateTimeTuple = [DateTime | undefined, DateTime | undefined];

@@ -53,4 +53,5 @@ export const DateRangePickerContext =
     setLastFocusedElement: () => {
       // no-op
     },
+    allowReverseSelection: false,
   });
