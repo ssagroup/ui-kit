@@ -25,13 +25,11 @@ export const DateRangePickerProvider = ({
     e,
   ) => {
     const tagName = e.currentTarget.tagName.toLowerCase();
-    if (
-      rest.openCalendarMode === 'both' ||
-      (rest.openCalendarMode === 'input' && tagName === 'input') ||
-      (rest.openCalendarMode === 'icon' && tagName === 'button')
-    ) {
+
+    if (tagName === 'button') {
       toggleOpen();
     }
+
     if (tagName === 'input' && rest.inputProps?.inputProps?.onClick) {
       rest.inputProps.inputProps.onClick(
         e as React.MouseEvent<HTMLInputElement>,

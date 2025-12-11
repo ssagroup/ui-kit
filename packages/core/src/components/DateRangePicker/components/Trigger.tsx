@@ -15,7 +15,6 @@ export const Trigger = () => {
     lastFocusedElement,
     disabled,
     status,
-    openCalendarMode,
     isOpen,
     showCalendarIcon,
     showStatusArea,
@@ -53,61 +52,57 @@ export const Trigger = () => {
           ref={wrapperRef}
           className={classNames?.trigger?.controlsWrapper}>
           <TriggerInput
-            withPopover
             datepickerType="from"
             className={classNames?.trigger?.inputFrom}
-            onClick={() => {
-              if (!isOpen) {
-                setIsOpen(true);
-              }
-            }}
           />
           <C.Icon
             name="carrot-right"
             size={16}
             color={disabled ? theme.colors.grey : theme.colors.greyDarker}
             className={classNames?.trigger?.arrowIcon}
+            onClick={() => {
+              if (isOpen) {
+                setIsOpen(false);
+              }
+            }}
             css={{
               margin: '0 3px',
+              cursor: 'pointer',
             }}
           />
           <TriggerInput
             datepickerType="to"
             className={classNames?.trigger?.inputTo}
-            onClick={() => {
-              if (!isOpen) {
-                setIsOpen(true);
-              }
-            }}
           />
           {showCalendarIcon && (
-            <C.Button
-              endIcon={
-                <C.Icon
-                  name="calendar"
-                  size={16}
-                  color={disabled ? theme.colors.grey : theme.colors.greyDarker}
-                />
-              }
-              data-testid={'daterangepicker-button'}
-              onClick={handleToggleOpen}
-              variant="tertiary"
-              aria-label="Calendar"
-              isDisabled={disabled}
-              className={classNames?.trigger?.calendarIcon}
-              css={{
-                padding: 0,
-                margin: '0 0 0 10px',
-                height: 'auto',
-                cursor:
-                  openCalendarMode === 'input' || disabled
-                    ? 'default'
-                    : 'pointer',
-                '&:focus::before': {
-                  display: 'none',
-                },
-              }}
-            />
+            <C.PopoverTrigger asChild>
+              <C.Button
+                endIcon={
+                  <C.Icon
+                    name="calendar"
+                    size={16}
+                    color={
+                      disabled ? theme.colors.grey : theme.colors.greyDarker
+                    }
+                  />
+                }
+                data-testid={'daterangepicker-button'}
+                onClick={handleToggleOpen}
+                variant="tertiary"
+                aria-label="Calendar"
+                isDisabled={disabled}
+                className={classNames?.trigger?.calendarIcon}
+                css={{
+                  padding: 0,
+                  margin: '0 0 0 10px',
+                  height: 'auto',
+                  cursor: disabled ? 'default' : 'pointer',
+                  '&:focus::before': {
+                    display: 'none',
+                  },
+                }}
+              />
+            </C.PopoverTrigger>
           )}
         </S.TriggerWrapper>
       </C.Field.Control>

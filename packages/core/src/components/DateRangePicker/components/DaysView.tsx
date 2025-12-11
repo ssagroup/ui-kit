@@ -5,22 +5,12 @@ import { DatesListWrapper } from './DatesListWrapper';
 import * as S from '../styles';
 import { getDaysForCalendarMonth, getWeekDays } from '../utils';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
-import { DateTimeTuple } from '../types';
-import { useRangeHighlighting } from '../hooks';
+import { useRangeHighlighting, useRangeSelection } from '../hooks';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();
-  const {
-    dateTime,
-    calendarViewDateTime,
-    dateMinDT,
-    dateMaxDT,
-    lastFocusedElement,
-    currentCalendarViewDT,
-    setCalendarViewDateTime,
-    setDateTime,
-    setIsOpen,
-  } = useDateRangePickerContext();
+  const { dateMinDT, dateMaxDT, currentCalendarViewDT } =
+    useDateRangePickerContext();
   const currentDate = currentCalendarViewDT.toJSDate();
   const currentMonth = currentDate?.getMonth();
   const dates = getDaysForCalendarMonth(currentDate);
@@ -29,28 +19,21 @@ export const DaysView = () => {
   const { handleDateHover, getClassNames, isHighlightDate } =
     useRangeHighlighting();
 
+  const { handleRangeSelect, getDateSelectionState } = useRangeSelection({
+    createNewDate: (selectedDay) =>
+      currentCalendarViewDT.set({
+        day: Number(selectedDay),
+      }),
+    getComparisonFormat: () => 'D',
+  });
+
   const handleDaySelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
-    const selectedDay = Number((target as HTMLDivElement).innerHTML);
+    const selectedDay = (target as HTMLDivElement).innerHTML;
     const isEnabled =
       (target as HTMLDivElement).getAttribute('aria-disabled') === 'false';
     if (isEnabled) {
-      const newDate = currentCalendarViewDT.set({
-        day: selectedDay,
-      });
-      const newDateTuple: DateTimeTuple =
-        lastFocusedElement === 'from'
-          ? [newDate, dateTime[1]]
-          : [dateTime[0], newDate];
-      setCalendarViewDateTime(
-        lastFocusedElement === 'from'
-          ? [newDate, dateTime[1] ? calendarViewDateTime?.[1] : newDate]
-          : [dateTime[0] ? calendarViewDateTime?.[0] : newDate, newDate],
-      );
-      setDateTime(newDateTuple);
-      if (newDateTuple[0] && newDateTuple[1]) {
-        setIsOpen(false);
-      }
+      handleRangeSelect(selectedDay);
     }
   };
 
@@ -79,19 +62,18 @@ export const DaysView = () => {
         }}
         onClick={handleDaySelect}>
         {dates.map((currentDate, index) => {
-          const currentDT = DateTime.fromJSDate(currentDate);
+          const currentDT = DateTime.fromJSDate(currentDate).startOf('day');
           const calendarDate = currentDT.toFormat('D');
           const calendarDay = currentDate.getDate();
           const calendarMonth = currentDate.getMonth();
           const ariaLabel = currentDT.toLocaleString(DateTime.DATE_HUGE);
           const isCalendarDateNow = nowDate === calendarDate;
           const isCalendarMonth = currentMonth === calendarMonth;
-          const isCalendarFirstDateSelected =
-            calendarDate === dateTime[0]?.toFormat('D');
-          const isCalendarSecondDateSelected =
-            calendarDate === dateTime[1]?.toFormat('D');
-          const isCalendarDateSelected =
-            isCalendarFirstDateSelected || isCalendarSecondDateSelected;
+          const {
+            isCalendarFirstDateSelected,
+            isCalendarSecondDateSelected,
+            isCalendarDateSelected,
+          } = getDateSelectionState(currentDT);
 
           let isAriaDisabled = false;
           if (dateMinDT && dateMaxDT) {

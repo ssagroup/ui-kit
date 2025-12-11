@@ -60,6 +60,14 @@ export const Default: Story = {
       selectMultipleField: ['Option 1', 'Option 2', 'Option 3'],
       managerSelectField: [managerOptions[1].id],
       passwordField: 'password',
+      dateRangeField: {
+        start: '01/15/2025',
+        end: '01/25/2025',
+      },
+      dateRangeField2: {
+        start: '02/10/2025',
+        end: '02/28/2025',
+      },
     },
     schema: {
       title: 'Test Form',
@@ -130,9 +138,29 @@ export const Default: Story = {
           title: 'Password field title',
           minLength: 8,
         },
-        dateField: {
-          type: 'string',
-          title: 'Date field title',
+        dateRangeField: {
+          type: 'object',
+          title: 'Date Range field',
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
+        },
+        dateRangeField2: {
+          type: 'object',
+          title: 'Second Date Range field',
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
         },
       },
     },
@@ -158,9 +186,20 @@ export const Default: Story = {
         'ui:widget': 'password',
         'ui:help': 'Password field help',
       },
-      dateField: {
-        'ui:widget': 'date',
-        'ui:help': 'Date field help',
+      dateRangeField: {
+        'ui:field': 'daterange',
+        'ui:help': 'First date range picker example',
+        'ui:options': {
+          outputFormat: 'mm/dd/yyyy',
+        },
+      },
+      dateRangeField2: {
+        'ui:field': 'daterange',
+        'ui:help':
+          'Second date range picker example - shows how multiple DateRangePickers work independently',
+        'ui:options': {
+          outputFormat: 'mm/dd/yyyy',
+        },
       },
       selectField: {
         'ui:placeholder': 'Choose an option',
@@ -182,7 +221,20 @@ export const Default: Story = {
 export const Accordion: Story = {
   render: (args) => {
     const [search, setSearch] = useState('');
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState<Record<string, unknown>>({
+      employmentDetails: {
+        employmentStartDate: {
+          start: '2024-01-15',
+          end: '2024-12-31',
+        },
+      },
+      companyAndWorkConditions: {
+        projectPeriod: {
+          start: '2024-06-01',
+          end: '2024-08-31',
+        },
+      },
+    });
 
     const searchResults = search ? getFieldsToHide(args.schema, search) : [];
     const updatedUiSchema = applyHiddenWidget(
@@ -218,12 +270,52 @@ export const Accordion: Story = {
             }}
             formData={formData}
             onChange={(data) => {
-              setFormData(data.formData as object);
+              setFormData(data.formData as Record<string, unknown>);
+              // Example: Access both date ranges from form data
+              const formDataObj = data.formData as {
+                employmentDetails?: {
+                  employmentStartDate?: { start?: string; end?: string };
+                };
+                companyAndWorkConditions?: {
+                  projectPeriod?: { start?: string; end?: string };
+                };
+              };
+              if (formDataObj.employmentDetails?.employmentStartDate) {
+                console.log(
+                  'Employment period:',
+                  formDataObj.employmentDetails.employmentStartDate,
+                );
+              }
+              if (formDataObj.companyAndWorkConditions?.projectPeriod) {
+                console.log(
+                  'Project period:',
+                  formDataObj.companyAndWorkConditions.projectPeriod,
+                );
+              }
             }}
             uiSchema={updatedUiSchema}
             validator={validator}>
             <Button onClick={() => setFormData({})}>Clear</Button>
-            <Button type="submit" css={{ marginLeft: '10px' }}>
+            <Button
+              type="submit"
+              css={{ marginLeft: '10px' }}
+              onClick={() => {
+                // Example: Access both date ranges on submit
+                const formDataObj = formData as {
+                  employmentDetails?: {
+                    employmentStartDate?: { start?: string; end?: string };
+                  };
+                  companyAndWorkConditions?: {
+                    projectPeriod?: { start?: string; end?: string };
+                  };
+                };
+                const employmentPeriod =
+                  formDataObj.employmentDetails?.employmentStartDate;
+                const projectPeriod =
+                  formDataObj.companyAndWorkConditions?.projectPeriod;
+                console.log('Employment period:', employmentPeriod);
+                console.log('Project period:', projectPeriod);
+              }}>
               Submit
             </Button>
           </Form>
@@ -277,6 +369,18 @@ export const Accordion: Story = {
               title: 'Work mode',
               enum: ['remote-id', 'on-site-id'],
             },
+            projectPeriod: {
+              type: 'object',
+              title: 'Project period',
+              properties: {
+                start: {
+                  type: 'string',
+                },
+                end: {
+                  type: 'string',
+                },
+              },
+            },
           },
         },
       },
@@ -300,6 +404,12 @@ export const Accordion: Story = {
         },
         workMode: {
           'ui:enumNames': ['Remote', 'On-site'],
+        },
+        projectPeriod: {
+          'ui:field': 'daterange',
+          'ui:options': {
+            outputFormat: 'yyyy-MM-dd',
+          },
         },
       },
     },

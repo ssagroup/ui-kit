@@ -1,4 +1,9 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  FocusEventHandler,
+} from 'react';
 import { DateTime } from 'luxon';
 import { useMask } from '@react-input/mask';
 import { FieldContextValue } from '@components/Field/FieldProvider';
@@ -16,7 +21,6 @@ export type DateRangePickerProps = {
   value?: [string | undefined, string | undefined]; // depends on the format
   defaultValue?: [string, string]; // depends on the format
   maskOptions?: Parameters<typeof useMask>[0];
-  openCalendarMode?: 'icon' | 'input' | 'both';
   inputProps?: Partial<InputProps>;
   status?: FieldContextValue['status'];
   showStatusArea?: boolean;
@@ -48,7 +52,8 @@ export type DateRangePickerProps = {
   onError?: (date: unknown, error?: string | null) => void;
   onMonthChange?: (date: Date) => void;
   onYearChange?: (date: Date) => void;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  allowReverseSelection?: boolean;
 };
 
 export type DateTimeTuple = [DateTime | undefined, DateTime | undefined];
@@ -83,11 +88,13 @@ export type DateRangePickerContextProps = Omit<
   safeOnChange?: (date?: DateTime) => void;
   setLastFocusedElement: Dispatch<SetStateAction<LastFocusedElement>>;
   handleToggleOpen: MouseEventHandler<HTMLButtonElement | HTMLInputElement>;
-  handleSetIsOpen: (open: boolean) => void;
   setCalendarViewDateTime: Dispatch<SetStateAction<DateTimeTuple>>;
   setDateTime: Dispatch<SetStateAction<DateTimeTuple>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCalendarType: Dispatch<SetStateAction<CalendarType>>;
+  rangeSelectionStep: 'start' | 'end' | null;
+  setRangeSelectionStep: Dispatch<SetStateAction<'start' | 'end' | null>>;
+  clearInputValue: (field: 'from' | 'to') => void;
 };
 
 export type CalendarType = 'days' | 'months' | 'years';
