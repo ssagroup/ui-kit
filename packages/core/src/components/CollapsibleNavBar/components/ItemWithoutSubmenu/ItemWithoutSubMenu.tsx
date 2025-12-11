@@ -51,7 +51,7 @@ export const Item = ({
       iconName={iconName}
       iconSize={iconSize}
       CustomIcon={CustomIcon}
-      css={{ ...css }}
+      css={css as never}
     />
   );
 

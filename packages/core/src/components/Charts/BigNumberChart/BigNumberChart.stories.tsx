@@ -5,7 +5,7 @@ import { seededRandom } from '@ssa-ui-kit/utils';
 
 import { BigNumberChart } from './';
 
-const generateMockData = () => {
+const generateMockData = (): Array<{ x: string | null; y: number | null }> => {
   const days = 15;
   const rand = seededRandom(10);
 
@@ -14,7 +14,8 @@ const generateMockData = () => {
     .map((_, index) => ({
       x: DateTime.now()
         .minus({ days: index + 1 })
-        .toMillis(),
+        .toMillis()
+        .toString(),
       y: Math.floor(rand() * 100),
     }))
     .reverse();
@@ -35,11 +36,9 @@ const meta = {
       </span>
     ),
     trendLineProps: {
-      tooltipProps: {
-        valueFormat: (value) => {
-          const date = DateTime.fromMillis(Number(value.x));
-          return date.toRelative();
-        },
+      tooltipValueFormat: (value) => {
+        const date = DateTime.fromMillis(Number(value.x));
+        return date.toRelative();
       },
     },
     data: generateMockData(),
@@ -85,11 +84,9 @@ export const Dynamic: Story = {
   args: {
     trendLineProps: {
       curve: 'monotoneX',
-      tooltipProps: {
-        valueFormat: (value) => {
-          const date = DateTime.fromMillis(Number(value.x));
-          return date.toRelative();
-        },
+      tooltipValueFormat: (value) => {
+        const date = DateTime.fromMillis(Number(value.x));
+        return date.toRelative();
       },
     },
     features: ['header', 'fullscreenMode'],
@@ -100,12 +97,12 @@ export const Dynamic: Story = {
       const interval = setInterval(() => {
         setData((prevData) => {
           const value = Math.floor(Math.random() * 100);
-          const nextDay = DateTime.fromMillis(
-            prevData.at(-1)?.x as number,
-          ).plus({ day: 1 });
+          const nextDay = DateTime.fromMillis(Number(prevData.at(-1)?.x)).plus({
+            day: 1,
+          });
           const newData = [
             ...prevData.slice(1),
-            { x: nextDay.toMillis(), y: value },
+            { x: nextDay.toMillis().toString(), y: value },
           ];
           return newData;
         });

@@ -41,8 +41,8 @@ describe('BigNumberChart', () => {
     const { getByText } = render(
       <BigNumberChart
         data={[
-          { x: 1, y: 321 },
-          { x: 2, y: 123 },
+          { x: '1', y: 321 },
+          { x: '2', y: 123 },
         ]}
       />,
     );

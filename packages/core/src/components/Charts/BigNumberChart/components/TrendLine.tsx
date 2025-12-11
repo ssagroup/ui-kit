@@ -1,23 +1,29 @@
 import { useTheme } from '@emotion/react';
 import { DotsItem } from '@nivo/core';
 import {
-  CustomLayerProps,
-  Layer,
-  LineProps,
+  LineSvgProps,
+  LineCustomSvgLayerProps,
+  LineSvgLayer,
   Point,
-  Datum,
+  DefaultSeries,
   ResponsiveLine,
 } from '@nivo/line';
 import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
 
-export interface TrendLineProps extends LineProps {
+type Datum = DefaultSeries['data'][number];
+
+export interface TrendLineProps
+  extends Omit<LineSvgProps<DefaultSeries>, 'data' | 'height' | 'width'> {
   color?: string;
-  tooltipValueFormat?: TrendLineTooltipProps['valueFormat'];
+  tooltipValueFormat?: TrendLineTooltipProps<DefaultSeries>['valueFormat'];
   lastActivePoint?: Datum;
+  data: LineSvgProps<DefaultSeries>['data'];
+  height: number;
+  width: number;
 }
 
 type ActivePointExtraProps = {
-  currentPoint: Point;
+  currentPoint: Point<DefaultSeries>;
   lastActivePoint?: Datum;
 };
 
@@ -26,7 +32,7 @@ const ActivePoint = ({
   lastActivePoint,
   points,
   ...props
-}: CustomLayerProps & ActivePointExtraProps) => {
+}: LineCustomSvgLayerProps<DefaultSeries> & ActivePointExtraProps) => {
   const activePoint = lastActivePoint
     ? points.find(
         ({ data }) =>
@@ -127,7 +133,7 @@ export const TrendLine = ({
           'mesh',
           'legends',
           ActivePoint,
-        ] as Layer[]
+        ] as LineSvgLayer<DefaultSeries>[]
       }
       {...props}
     />

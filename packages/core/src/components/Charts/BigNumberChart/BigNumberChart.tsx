@@ -1,18 +1,20 @@
 import { useState } from 'react';
-import { Datum, PointMouseHandler } from '@nivo/line';
-import { useThrottledCallback } from '@ssa-ui-kit/hooks';
+import { PointOrSliceMouseHandler, DefaultSeries } from '@nivo/line';
+import { useThrottledCallback, useElementSize } from '@ssa-ui-kit/hooks';
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
 import { Wrapper, WidgetCardProps, WithWidgetCard } from '@components';
 import { BigNumberChartHeader, TrendLine, TrendLineProps } from './components';
 
 export type BigNumberChartFeatures = 'header' | 'fullscreenMode';
 
+type Datum = DefaultSeries['data'][number];
+
 export interface BigNumberChartProps {
   data: Datum[];
   interactive?: boolean;
   title?: string;
   widgetCardProps?: WidgetCardProps;
-  trendLineProps?: Omit<TrendLineProps, 'data'>;
+  trendLineProps?: Omit<TrendLineProps, 'data' | 'height' | 'width'>;
   features?: BigNumberChartFeatures[];
   valueFormat?: (value: Datum) => React.ReactNode;
 }
@@ -27,6 +29,11 @@ export const BigNumberChartComponent = ({
   valueFormat,
 }: BigNumberChartProps) => {
   const [hoveredValue, setHoveredValue] = useState<Datum | null>(null);
+  const {
+    ref: chartContainerRef,
+    width,
+    height,
+  } = useElementSize<HTMLDivElement>();
 
   const lastValue = data
     .sort((a, b) => {
@@ -43,13 +50,11 @@ export const BigNumberChartComponent = ({
     100,
   );
 
-  const handleMouseMove: PointMouseHandler = (data) => {
+  const handleMouseMove: PointOrSliceMouseHandler<DefaultSeries> = (datum) => {
     if (!interactive) return;
-    setHoveredValueThrottled(data.data);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredValueThrottled(null);
+    if ('data' in datum) {
+      setHoveredValueThrottled(datum.data);
+    }
   };
 
   const value = hoveredValue ?? lastValue;
@@ -70,19 +75,23 @@ export const BigNumberChartComponent = ({
           <span>{value && (valueFormat?.(value) ?? value?.y?.toString())}</span>
         </div>
         <div
+          ref={chartContainerRef}
           css={{
             position: 'relative',
             width: '100%',
             height: '50%',
+            minHeight: '100px',
           }}>
-          <div css={{ position: 'absolute', width: '100%', height: '100%' }}>
+          {width > 0 && height > 0 && (
             <TrendLine
               {...trendLineProps}
               data={[{ id: 'trend-line', data }]}
               onMouseMove={handleMouseMove}
               lastActivePoint={value}
+              height={height}
+              width={width}
             />
-          </div>
+          )}
         </div>
       </Wrapper>
     </WithWidgetCard>

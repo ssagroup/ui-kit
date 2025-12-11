@@ -31,7 +31,42 @@ export const useDateRangePicker = ({
   onError,
   onChange,
   ...rest
-}: DateRangePickerProps & { isOpenState?: boolean }) => {
+}: DateRangePickerProps & { isOpenState?: boolean }): {
+  formatIndexes: {
+    day: number;
+    month: number;
+    year: number;
+  };
+  dateMinParts: number[];
+  dateMaxParts: number[];
+  dateMinDT: DateTime;
+  dateMaxDT: DateTime;
+  dateTime: DateTimeTuple;
+  inputValueFrom?: string;
+  inputValueTo?: string;
+  calendarViewDateTime: DateTimeTuple;
+  maskInputRef: ReturnType<typeof useDatePickerMask>;
+  calendarType: CalendarType;
+  lastChangedDate?: [Date | undefined, Date | undefined];
+  luxonFormat: string;
+  lastFocusedElement: 'from' | 'to';
+  nameFrom: string;
+  nameTo: string;
+  currentIndex: number;
+  currentCalendarViewDT: DateTime;
+  isOpen: boolean;
+  status?: 'error' | 'success' | 'basic';
+  inputFromRef: ReturnType<typeof useMergeRefs<HTMLInputElement | null>>;
+  inputToRef: ReturnType<typeof useMergeRefs<HTMLInputElement | null>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSetIsOpen: (open: boolean) => void;
+  setLastFocusedElement: React.Dispatch<React.SetStateAction<'from' | 'to'>>;
+  safeOnChange: (newDateTime?: DateTime) => void;
+  setCalendarType: React.Dispatch<React.SetStateAction<CalendarType>>;
+  setCalendarViewDateTime: React.Dispatch<React.SetStateAction<DateTimeTuple>>;
+  setDateTime: React.Dispatch<React.SetStateAction<DateTimeTuple>>;
+  handleBlur: React.FocusEventHandler<HTMLInputElement>;
+} => {
   const format = propFormat || getFormatForRangePickerType(rangePickerType);
   const { defaultMin, defaultMax } = getDefaultDateRange(format);
   const finalDateMin = dateMin || defaultMin;
