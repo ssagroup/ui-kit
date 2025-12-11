@@ -1,6 +1,6 @@
 import { FieldValues, Form, FormProvider, useForm } from 'react-hook-form';
 import { DateTime } from 'luxon';
-import { fireEvent, render, within } from '@testing-library/react';
+import { fireEvent, render, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
 import { DateRangePicker } from '@components';
@@ -168,6 +168,7 @@ describe('DateRangePicker', () => {
     const {
       getByTestId,
       getByRole,
+      queryByRole,
       user,
       mockOnMonthChange,
       mockOnYearChange,
@@ -194,8 +195,6 @@ describe('DateRangePicker', () => {
     const day15Element = within(dialogEl).getByText(15);
     await user.click(day15Element);
 
-    await user.click(calendarButton);
-
     const dateFrom = DateTime.now().minus({ month: 1 }).set({
       day: 15,
     });
@@ -203,21 +202,30 @@ describe('DateRangePicker', () => {
       day: 20,
     });
 
-    const calendarTypeChangeButton = within(dialogEl).getByTestId(
+    // Check if calendar is still open, if not click button to reopen
+    let dialogEl2 = queryByRole('dialog');
+    if (!dialogEl2) {
+      await user.click(calendarButton);
+      dialogEl2 = await waitFor(() => getByRole('dialog'), { timeout: 2000 });
+    }
+    const calendarTypeChangeButton = within(dialogEl2).getByTestId(
       'calendar-type-change-button',
     );
 
-    const nextMonthButton = within(dialogEl).getByTestId('next-year-month');
+    const nextMonthButton = within(dialogEl2).getByTestId('next-year-month');
     await user.click(nextMonthButton);
 
     await user.click(calendarTypeChangeButton);
-    const yearNext = within(dialogEl).getByText(dateTo.year);
+    const dialogEl3 = await waitFor(() => getByRole('dialog'));
+    const yearNext = within(dialogEl3).getByText(dateTo.year.toString());
     await user.click(yearNext);
 
-    const monthNext = within(dialogEl).getByText(dateTo.toFormat('MMM'));
+    const dialogEl4 = await waitFor(() => getByRole('dialog'));
+    const monthNext = within(dialogEl4).getByText(dateTo.toFormat('MMM'));
     await user.click(monthNext);
 
-    const day20Element = within(dialogEl).getByText(20);
+    const dialogEl5 = await waitFor(() => getByRole('dialog'));
+    const day20Element = within(dialogEl5).getByText(20);
     await user.click(day20Element);
 
     expect(startDate).toHaveValue(
@@ -368,7 +376,7 @@ describe('DateRangePicker', () => {
   });
 
   it('should select a months range', async () => {
-    const { getByTestId, getByRole, user } = setup({
+    const { getByTestId, getByRole, queryByRole, user } = setup({
       rangePickerType: 'months',
     });
 
@@ -397,9 +405,14 @@ describe('DateRangePicker', () => {
       dateFrom.toFormat(DEFAULT_MONTH_MASK_FORMAT.replace('mm', 'MM')),
     );
 
-    await user.click(calendarButton);
-    expect(dialogEl).toBeInTheDocument();
-    const june = within(dialogEl).getByText('Jun');
+    // Check if calendar is still open, if not click button to reopen
+    let dialogEl2 = queryByRole('dialog');
+    if (!dialogEl2) {
+      await user.click(calendarButton);
+      dialogEl2 = await waitFor(() => getByRole('dialog'), { timeout: 2000 });
+    }
+    expect(dialogEl2).toBeInTheDocument();
+    const june = within(dialogEl2).getByText('Jun');
     await user.click(june);
 
     expect(endDate).toHaveValue(
@@ -408,7 +421,7 @@ describe('DateRangePicker', () => {
   });
 
   it('should update start date and end date when selecting a date earlier than current start date and after than current end date', async () => {
-    const { getByTestId, getByRole, user } = setup({
+    const { getByTestId, getByRole, queryByRole, user } = setup({
       value: [
         DateTime.now()
           .set({
@@ -449,8 +462,12 @@ describe('DateRangePicker', () => {
       dateFrom.toFormat(DEFAULT_MASK_FORMAT.replace('mm', 'MM')),
     );
 
-    await user.click(calendarButton);
-    const dialogEl2 = getByRole('dialog');
+    // Check if calendar is still open, if not click button to reopen
+    let dialogEl2 = queryByRole('dialog');
+    if (!dialogEl2) {
+      await user.click(calendarButton);
+      dialogEl2 = await waitFor(() => getByRole('dialog'), { timeout: 2000 });
+    }
     expect(dialogEl2).toBeInTheDocument();
 
     const day25Element = within(dialogEl2).getAllByText('25');

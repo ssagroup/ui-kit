@@ -28,6 +28,7 @@ export const useRangeSelection = ({
     setRangeSelectionStep,
     clearInputValue,
     allowReverseSelection = false,
+    onChange,
   } = useDateRangePickerContext();
 
   const handleRangeSelect = (selectedValue: number | string) => {
@@ -73,12 +74,23 @@ export const useRangeSelection = ({
 
     setDateTime(newDateTuple);
 
-    // Only close calendar if dates are in correct order (start < end)
-    if (
+    const normalizeToMidnight = (dt: DateTime) =>
+      dt.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toJSDate();
+
+    // Call onChange when a date is selected from calendar
+    if (isSelectingStart && newDateTuple[0]) {
+      // First date selected
+      onChange?.([normalizeToMidnight(newDateTuple[0]), null]);
+    } else if (
       newDateTuple[0] &&
       newDateTuple[1] &&
       newDateTuple[0].toMillis() <= newDateTuple[1].toMillis()
     ) {
+      // Both dates selected and in correct order
+      onChange?.([
+        normalizeToMidnight(newDateTuple[0]),
+        normalizeToMidnight(newDateTuple[1]),
+      ]);
       setRangeSelectionStep(null);
       setIsOpen(false);
     }
