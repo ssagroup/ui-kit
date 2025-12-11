@@ -228,6 +228,6 @@ WithReverseSelection.args = {
   allowReverseSelection: true,
   messages: {
     description:
-      'Reverse selection enabled: If you select a later date first, then an earlier date, the start date will be updated to the earlier date instead of auto-swapping. Calendar stays open until dates are in correct order (start ≤ end).',
+      'Reverse selection enabled: If you select a later date first, then an earlier date, the dates will be auto-swapped so the earlier date becomes the start date.',
   },
 };
