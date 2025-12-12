@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
@@ -45,7 +45,6 @@ export const useDateRangePicker = ({
   inputValueFrom?: string;
   inputValueTo?: string;
   calendarViewDateTime: DateTimeTuple;
-  maskInputRef: ReturnType<typeof useDatePickerMask>;
   calendarType: CalendarType;
   lastChangedDate?: [Date | undefined, Date | undefined];
   luxonFormat: string;
@@ -59,13 +58,17 @@ export const useDateRangePicker = ({
   inputFromRef: ReturnType<typeof useMergeRefs<HTMLInputElement | null>>;
   inputToRef: ReturnType<typeof useMergeRefs<HTMLInputElement | null>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSetIsOpen: (open: boolean) => void;
   setLastFocusedElement: React.Dispatch<React.SetStateAction<'from' | 'to'>>;
   safeOnChange: (newDateTime?: DateTime) => void;
   setCalendarType: React.Dispatch<React.SetStateAction<CalendarType>>;
   setCalendarViewDateTime: React.Dispatch<React.SetStateAction<DateTimeTuple>>;
   setDateTime: React.Dispatch<React.SetStateAction<DateTimeTuple>>;
   handleBlur: React.FocusEventHandler<HTMLInputElement>;
+  rangeSelectionStep: 'start' | 'end' | null;
+  setRangeSelectionStep: React.Dispatch<
+    React.SetStateAction<'start' | 'end' | null>
+  >;
+  clearInputValue: (field: 'from' | 'to') => void;
 } => {
   const format = propFormat || getFormatForRangePickerType(rangePickerType);
   const { defaultMin, defaultMax } = getDefaultDateRange(format);

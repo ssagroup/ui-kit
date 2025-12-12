@@ -77,7 +77,7 @@ export const TriggerInput = ({
         onBeforeInput: (e: unknown) => {
           // pass-through
           inputProps?.inputProps?.onBeforeInput?.(
-            e as React.FormEvent<HTMLInputElement>,
+            e as React.InputEvent<HTMLInputElement>,
           );
         },
         onInput: (e) => {
