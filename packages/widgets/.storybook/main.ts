@@ -24,7 +24,7 @@ const config: StorybookConfig = {
       },
     },
   },
-  babel: (options) => ({
+  babel: (options: Record<string, unknown>) => ({
     ...options,
     ...initBabelConfig,
   }),
@@ -33,9 +33,19 @@ const config: StorybookConfig = {
       ...config,
       resolve: {
         ...config.resolve,
+        // Prefer ESM over CommonJS to avoid PR #2773 issue with react-virtualized-auto-sizer
+        // https://github.com/plouc/nivo/pull/2773
+        mainFields: ['module', 'main'],
+        // Ensure webpack uses the 'import' condition from package.json exports field
+        conditionNames: ['import', 'require', 'node', 'default'],
+        // Ensure .mjs files are resolved
+        extensions: ['.mjs', ...(config.resolve?.extensions || [])],
         alias: {
           ...config.resolve?.alias,
           ...appWebpackConfig.resolve?.alias,
+          // Ensure only one React instance is used to prevent "Cannot read properties of null (reading 'useContext')" errors
+          react: resolve(__dirname, '../../../node_modules/react'),
+          'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
           // workaround for a react-router bug that can lead to multiple react-router versions
           // being installed across the main package and dependencies that list react-router as a peer dependency
           // https://github.com/remix-run/react-router/issues/12785
