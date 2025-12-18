@@ -31,7 +31,7 @@
     "usehooks-ts": "3.1.1"
   },
   "peerDependencies": {
-    "react": "19.x"
+    "react": "18.x || 19.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {
