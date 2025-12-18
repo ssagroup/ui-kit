@@ -1,7 +1,12 @@
 import { Fragment } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import { Meta, Decorator } from '@storybook/react-webpack5';
-import { Title, Description, Subtitle, Primary } from '@storybook/addon-docs';
+import {
+  Title,
+  Description,
+  Subtitle,
+  Primary,
+} from '@storybook/addon-docs/blocks';
 
 import { NavBar } from './NavBar';
 
