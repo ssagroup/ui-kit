@@ -25,9 +25,9 @@
     "@ssa-ui-kit/widgets": "workspace:^",
     "dotenv": "^16.0.3",
     "loose-envify": "^1.4.0",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "react-router-dom": "^7.2.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.10.1"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -65,12 +65,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@emotion/jest": "^11.13.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@emotion/jest": "^11.14.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.17",
     "css-loader": "^7.1.2",
-    "html-webpack-plugin": "^5.5.1",
+    "html-webpack-plugin": "^5.6.5",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.11",
-    "webpack": "^5.98.0"
+    "webpack": "^5.103.0"
   }
 }
