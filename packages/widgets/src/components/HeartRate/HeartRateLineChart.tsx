@@ -1,9 +1,21 @@
-import { ResponsiveLine, LineSvgProps, LineSeries } from '@nivo/line';
+import {
+  ResponsiveLine as ResponsiveLineOriginal,
+  LineSvgProps,
+  LineSeries,
+} from '@nivo/line';
 import { ResponsiveProps } from '@nivo/core';
 
-import { SimpleChartTooltip } from '@ssa-ui-kit/core';
+import {
+  SimpleChartTooltip,
+  wrapNivoResponsiveComponent,
+} from '@ssa-ui-kit/core';
 
 import { getTime } from './utils';
+
+const ResponsiveLine = wrapNivoResponsiveComponent(
+  ResponsiveLineOriginal,
+  'ResponsiveLine',
+);
 
 type LineProps = ResponsiveProps<LineSvgProps<LineSeries>>;
 

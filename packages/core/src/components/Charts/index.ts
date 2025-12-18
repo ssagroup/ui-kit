@@ -8,3 +8,4 @@ export * from './GaugeChart';
 export * from './BarGaugeChart';
 export * from './BigNumberChart';
 export * from './CandlestickChart';
+export * from './utils/nivoReact19Compat';

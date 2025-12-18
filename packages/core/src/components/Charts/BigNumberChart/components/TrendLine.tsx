@@ -6,14 +6,22 @@ import {
   LineSvgLayer,
   Point,
   DefaultSeries,
-  ResponsiveLine,
+  ResponsiveLine as ResponsiveLineOriginal,
 } from '@nivo/line';
 import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
+import { wrapNivoResponsiveComponent } from '../../utils/nivoReact19Compat';
+
+const ResponsiveLine = wrapNivoResponsiveComponent(
+  ResponsiveLineOriginal,
+  'ResponsiveLine',
+);
 
 type Datum = DefaultSeries['data'][number];
 
-export interface TrendLineProps
-  extends Omit<LineSvgProps<DefaultSeries>, 'data' | 'height' | 'width'> {
+export interface TrendLineProps extends Omit<
+  LineSvgProps<DefaultSeries>,
+  'data' | 'height' | 'width'
+> {
   color?: string;
   tooltipValueFormat?: TrendLineTooltipProps<DefaultSeries>['valueFormat'];
   lastActivePoint?: Datum;

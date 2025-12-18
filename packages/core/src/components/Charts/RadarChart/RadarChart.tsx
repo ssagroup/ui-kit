@@ -1,9 +1,12 @@
 import { ComponentProps } from 'react';
 import { useTheme } from '@emotion/react';
-import { ResponsiveRadar } from '@nivo/radar';
+import { ResponsiveRadar as ResponsiveRadarOriginal } from '@nivo/radar';
 import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
 import { RadarChartHeader, RadarChartTooltip } from './components';
+import { wrapNivoResponsiveComponent } from '../utils/nivoReact19Compat';
+
+const ResponsiveRadar = wrapNivoResponsiveComponent(ResponsiveRadarOriginal, 'ResponsiveRadar');
 
 export type RadarChartFeatures = 'header' | 'fullscreenMode';
 
