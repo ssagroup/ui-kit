@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { TranslationProvider } from '@ssa-ui-kit/core';
 import type { Meta } from '@storybook/react-webpack5';
 import { HeaderProvider } from '@hr/contexts';
@@ -21,22 +21,19 @@ export default {
     (Story, { args }) => {
       const ref = useRef<HTMLElement>(null);
       return (
-        <TranslationProvider defaultTranslations={translationConfig}>
-          <HeaderProvider>
-            <AppLayoutProvider mainRef={ref}>
-              <RightPaneBase ref={ref}>
-                <RouterProvider
-                  router={createBrowserRouter([
-                    {
-                      path: '/*',
-                      element: <Story {...args} />,
-                    },
-                  ])}
-                />
-              </RightPaneBase>
-            </AppLayoutProvider>
-          </HeaderProvider>
-        </TranslationProvider>
+        <BrowserRouter>
+          <TranslationProvider defaultTranslations={translationConfig}>
+            <HeaderProvider>
+              <AppLayoutProvider mainRef={ref}>
+                <RightPaneBase ref={ref}>
+                  <Routes>
+                    <Route path="/*" element={<Story {...args} />} />
+                  </Routes>
+                </RightPaneBase>
+              </AppLayoutProvider>
+            </HeaderProvider>
+          </TranslationProvider>
+        </BrowserRouter>
       );
     },
   ],
