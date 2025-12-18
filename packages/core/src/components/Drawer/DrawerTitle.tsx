@@ -7,8 +7,7 @@ const StyledDrawerTitle = styled.h2`
   text-align: center;
 `;
 
-export interface DrawerTitleProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {
+export interface DrawerTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   children?: React.ReactNode;
 }
 

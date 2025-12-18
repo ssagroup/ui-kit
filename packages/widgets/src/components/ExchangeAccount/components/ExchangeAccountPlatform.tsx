@@ -4,8 +4,10 @@ import { Typography } from '@ssa-ui-kit/core';
 import * as S from '../styles';
 import { useExchangeAccountContext } from './ExchangeAccountProvider';
 
-export interface ExchangeAccountPlatformProps
-  extends Omit<React.ComponentProps<typeof Typography>, 'children'> {
+export interface ExchangeAccountPlatformProps extends Omit<
+  React.ComponentProps<typeof Typography>,
+  'children'
+> {
   children?: React.ReactNode;
 }
 

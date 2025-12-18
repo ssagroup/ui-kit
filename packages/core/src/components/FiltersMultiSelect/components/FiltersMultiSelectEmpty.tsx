@@ -9,8 +9,7 @@ const FiltersMultiSelectEmptyBase = styled.div`
   font-size: 13.33px;
 `;
 
-export interface FiltersMultiSelectEmptyProps
-  extends HTMLAttributes<HTMLDivElement> {
+export interface FiltersMultiSelectEmptyProps extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 

@@ -24,8 +24,7 @@ export interface PieChartTooltipProps {
   percentageRoundingDigits?: number;
 }
 export interface PieChartProps
-  extends CommonProps,
-    React.ComponentProps<typeof ResponsivePie> {
+  extends CommonProps, React.ComponentProps<typeof ResponsivePie> {
   title?: React.ReactNode;
   children?: React.ReactNode;
   width?: string;

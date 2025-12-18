@@ -54,8 +54,10 @@ const FieldControlBase = styled.div<FieldContextValue>`
   }
 `;
 
-export interface FieldControlProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface FieldControlProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   controlRef?: React.RefObject<HTMLElement | null>;
   children: React.ReactNode | ((props: FieldContextValue) => React.ReactNode);
 }

@@ -19,8 +19,7 @@ export interface TabProps extends CommonProps {
 }
 
 export interface SmallTabProps
-  extends TabProps,
-    Omit<HTMLAttributes<HTMLButtonElement>, 'onClick'> {
+  extends TabProps, Omit<HTMLAttributes<HTMLButtonElement>, 'onClick'> {
   text: string;
 }
 
@@ -32,8 +31,10 @@ export interface LargeTabProps extends TabProps {
   bottomText: string;
 }
 
-export interface TabBarProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'> {
+export interface TabBarProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'className' | 'children'
+> {
   children: React.ReactElement<React.PropsWithChildren<TabProps>>[];
   className?: string;
 }

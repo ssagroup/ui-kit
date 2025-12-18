@@ -65,11 +65,10 @@ export interface BarLineComplexChartContextProps {
   >;
 }
 
-export interface BarLineComplexChartContextProviderProps
-  extends Pick<
-    BarLineComplexChartProps,
-    'data' | 'lineShape' | 'maxVisibleBars' | 'maxVisibleLines' | 'features'
-  > {
+export interface BarLineComplexChartContextProviderProps extends Pick<
+  BarLineComplexChartProps,
+  'data' | 'lineShape' | 'maxVisibleBars' | 'maxVisibleLines' | 'features'
+> {
   children: React.ReactNode;
 }
 

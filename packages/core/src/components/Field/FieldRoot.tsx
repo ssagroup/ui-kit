@@ -3,8 +3,7 @@ import { Fragment, type HTMLAttributes } from 'react';
 import { FieldProvider, FieldContextValue } from './FieldProvider';
 
 export interface FieldRootProps
-  extends Partial<FieldContextValue>,
-    HTMLAttributes<HTMLDivElement> {
+  extends Partial<FieldContextValue>, HTMLAttributes<HTMLDivElement> {
   asChild?: boolean;
   children: React.ReactNode;
 }

@@ -3,8 +3,10 @@ import { useTheme } from '@emotion/react';
 
 import { useExchangeAccountContext } from './ExchangeAccountProvider';
 
-export interface ExchangeAccountTitleProps
-  extends Omit<React.ComponentProps<typeof Typography>, 'children'> {
+export interface ExchangeAccountTitleProps extends Omit<
+  React.ComponentProps<typeof Typography>,
+  'children'
+> {
   children?: React.ReactNode;
 }
 

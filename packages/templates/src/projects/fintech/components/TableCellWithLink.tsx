@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { TableCell } from '@ssa-ui-kit/core';
 import { useTableRow } from '@fintech/contexts';
 
-interface TableCellWithLinkProps
-  extends React.PropsWithChildren<Parameters<typeof TableCell>[0]> {
+interface TableCellWithLinkProps extends React.PropsWithChildren<
+  Parameters<typeof TableCell>[0]
+> {
   includeLink?: boolean;
   href?: string;
 }

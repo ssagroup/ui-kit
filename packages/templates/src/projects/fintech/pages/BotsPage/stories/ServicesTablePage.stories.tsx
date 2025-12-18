@@ -46,7 +46,10 @@ export default {
                               <Fragment>
                                 <Header />
                                 <Routes>
-                                  <Route path="/*" element={<Story {...args} />} />
+                                  <Route
+                                    path="/*"
+                                    element={<Story {...args} />}
+                                  />
                                 </Routes>
                                 <Toastify {...TOASTIFY_OPTIONS} />
                               </Fragment>

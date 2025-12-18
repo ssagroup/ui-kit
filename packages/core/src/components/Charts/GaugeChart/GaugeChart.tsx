@@ -21,7 +21,8 @@ import { WithFullscreenMode } from '@components/FullscreenModeContext';
 export type GaugeChartFeature = 'header' | 'fullscreenMode';
 
 export interface GaugeChartProps
-  extends Pick<
+  extends
+    Pick<
       GaugeChartLabelsProps,
       'maxLabel' | 'minLabel' | 'unitLabel' | 'totalLabel'
     >,

@@ -6,8 +6,9 @@ import {
   UseFormReturn,
 } from 'react-hook-form';
 
-export interface CheckboxProps
-  extends Partial<Pick<UseFormReturn, 'register'>> {
+export interface CheckboxProps extends Partial<
+  Pick<UseFormReturn, 'register'>
+> {
   text?: ReactNode;
   id?: string;
   onChange?: (newState: boolean) => void;

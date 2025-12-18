@@ -14,8 +14,9 @@ const TrendLineTooltipStyled = styled.div`
   padding: 0.5rem;
 `;
 
-export interface TrendLineTooltipProps<Series extends LineSeries>
-  extends PointTooltipProps<Series> {
+export interface TrendLineTooltipProps<
+  Series extends LineSeries,
+> extends PointTooltipProps<Series> {
   valueFormat?: (data: Point<Series>['data']) => React.ReactNode;
   css?: Interpolation<Theme>;
 }
