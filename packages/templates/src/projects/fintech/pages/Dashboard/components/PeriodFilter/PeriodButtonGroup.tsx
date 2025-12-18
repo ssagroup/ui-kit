@@ -1,3 +1,4 @@
+import { ComponentType } from 'react';
 import { useTheme, css } from '@emotion/react';
 import {
   ButtonGroup,
@@ -24,10 +25,11 @@ export const PeriodButtonGroup = ({
   );
 };
 
-export const ButtonGroupSM = WithVisibleSM(
+export const ButtonGroupSM: ComponentType<ButtonGroupProps> = WithVisibleSM(
   PeriodButtonGroup,
   css`
     margin-left: auto;
   `,
 );
-export const ButtonGroupMD = WithVisibleMD(PeriodButtonGroup);
+export const ButtonGroupMD: ComponentType<ButtonGroupProps> =
+  WithVisibleMD(PeriodButtonGroup);

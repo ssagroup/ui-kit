@@ -1,13 +1,13 @@
 import { path as originalPath } from './path';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const pathOr =
-  <T extends Record<string | number, any>, R>(
-    defaultValue: any,
+  <T extends Record<string | number, unknown>, R>(
+    defaultValue: R,
     path: Array<string | number>,
   ) =>
   (obj: T): R => {
-    const result = originalPath(path)(obj);
-    return result === null || result === undefined ? defaultValue : result;
+    const result = originalPath<T, R>(path)(obj);
+    return result === null || result === undefined
+      ? defaultValue
+      : (result as R);
   };
-/* eslint-enable @typescript-eslint/no-explicit-any */

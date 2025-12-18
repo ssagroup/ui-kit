@@ -71,7 +71,7 @@ export const BarLineComplexChartView = ({
     xaxis = {},
     legend = {},
     ...layoutRest
-  } = layout;
+  } = layout as typeof layout & { titlefont?: Record<string, unknown> };
 
   const tickFont = {
     color: theme.colors.greyDarker,
