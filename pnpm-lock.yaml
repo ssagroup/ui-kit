@@ -352,10 +352,10 @@ importers:
         specifier: 3.0.0
         version: 3.0.0(mapbox-gl@1.13.3)(webpack@5.103.0(esbuild@0.25.12)(webpack-cli@6.0.1))
       react:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3
       react-dom:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3(react@19.2.3)
       react-hook-form:
         specifier: ^7.46.1
@@ -419,7 +419,7 @@ importers:
         specifier: workspace:^
         version: link:../utils
       react:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3
       usehooks-ts:
         specifier: 3.1.1
@@ -443,10 +443,10 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       react:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3
       react-dom:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3(react@19.2.3)
       react-error-boundary:
         specifier: 6.0.0
@@ -519,10 +519,10 @@ importers:
         specifier: 3.0.0
         version: 3.0.0(mapbox-gl@1.13.3)(webpack@5.103.0(esbuild@0.25.12)(webpack-cli@6.0.1))
       react:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3
       react-dom:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3(react@19.2.3)
       react-hook-form:
         specifier: ^7.46.1
@@ -603,10 +603,10 @@ importers:
         specifier: 1.4.0
         version: 1.4.0
       react:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3
       react-dom:
-        specifier: 19.x
+        specifier: 18.x || 19.x
         version: 19.2.3(react@19.2.3)
       react-hook-form:
         specifier: ^7.46.1
