@@ -3,32 +3,31 @@ import React from 'react';
 /**
  * React 19 compatibility wrapper for Nivo responsive components.
  *
- * @nivo/core's ResponsiveWrapper returns an object in React 19, which causes
- * type checking issues. This utility wraps any Nivo responsive component
- * with forwardRef to ensure it's recognized as a proper React component.
+ * @nivo v0.99.0 works correctly with React 19 without additional wrapping.
+ * This function simply returns the component as-is to avoid type issues.
  *
- * @param Component - The Nivo responsive component to wrap (e.g., ResponsiveLine, ResponsivePie)
- * @param displayName - The display name for the wrapped component
- * @returns A React 19 compatible version of the component
+ * Previously, this function attempted to wrap components with forwardRef,
+ * but this caused issues in production builds where the wrapped component
+ * would be passed as an object instead of a function, resulting in:
+ * "React.jsx: type is invalid -- expected a string or a class/function but got: object"
+ *
+ * By returning the component unchanged, we let the consuming application's
+ * bundler resolve the module correctly and avoid CommonJS/ESM interop issues.
+ *
+ * @param Component - The Nivo responsive component (e.g., ResponsiveLine, ResponsivePie)
+ * @param displayName - Optional display name for debugging in React DevTools
+ * @returns The original component unchanged (with displayName set if provided)
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function wrapNivoResponsiveComponent<T extends React.ComponentType<any>>(
   Component: T,
-  displayName: string,
+  displayName?: string,
 ): T {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const WrappedComponent = React.forwardRef<any, React.ComponentProps<T>>(
-    (props, ref) => {
-      // Force React.createElement to handle the component, even if it's an object
-      // This works around React 19's stricter type checking
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return React.createElement(Component as any, { ...props, ref } as any);
-    },
-  );
-
-  WrappedComponent.displayName = displayName;
-
-  // Type assertion needed for React 19 compatibility
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return WrappedComponent as any as T;
+  // Set displayName for better debugging if provided
+  if (displayName && Component) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (Component as any).displayName = displayName;
+  }
+  
+  return Component;
 }
