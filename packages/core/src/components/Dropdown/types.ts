@@ -15,8 +15,9 @@ export type ControlledButtonProps =
   | 'aria-controls'
   | 'children';
 
-export interface DropdownProps<P extends DropdownOptionProps>
-  extends CommonProps {
+export interface DropdownProps<
+  P extends DropdownOptionProps,
+> extends CommonProps {
   selectedItem?: P;
   onChange?: (item: P) => void;
   isDisabled?: boolean;
