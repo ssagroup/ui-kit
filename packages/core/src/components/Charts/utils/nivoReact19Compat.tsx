@@ -1,33 +1,120 @@
-import React from 'react';
+import React, { type ComponentType } from 'react';
 
 /**
  * React 19 compatibility wrapper for Nivo responsive components.
  *
- * @nivo v0.99.0 works correctly with React 19 without additional wrapping.
- * This function simply returns the component as-is to avoid type issues.
+ * @nivo components can be received as module objects instead of functions due to
+ * CommonJS/ESM interop issues. This wrapper detects and unwraps such objects,
+ * then creates a functional component wrapper.
  *
- * Previously, this function attempted to wrap components with forwardRef,
- * but this caused issues in production builds where the wrapped component
- * would be passed as an object instead of a function, resulting in:
- * "React.jsx: type is invalid -- expected a string or a class/function but got: object"
- *
- * By returning the component unchanged, we let the consuming application's
- * bundler resolve the module correctly and avoid CommonJS/ESM interop issues.
+ * The unwrapping process checks for:
+ * - .default export (CommonJS/ESM default export)
+ * - .ResponsiveWrapper property (Nivo's internal wrapper)
+ * - Direct function component
  *
  * @param Component - The Nivo responsive component (e.g., ResponsiveLine, ResponsivePie)
- * @param displayName - Optional display name for debugging in React DevTools
- * @returns The original component unchanged (with displayName set if provided)
+ * @param displayName - Display name for debugging in React DevTools
+ * @returns A React 19 compatible functional component
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function wrapNivoResponsiveComponent<T extends React.ComponentType<any>>(
+export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
   Component: T,
   displayName?: string,
 ): T {
-  // Set displayName for better debugging if provided
-  if (displayName && Component) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (Component as any).displayName = displayName;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let ActualComponent: any = Component;
+
+  // Debug logging in development
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[wrapNivoResponsiveComponent] ${displayName}:`, {
+      type: typeof Component,
+      isFunction: typeof Component === 'function',
+      hasDefault:
+        Component && typeof Component === 'object' && 'default' in Component,
+      hasResponsiveWrapper:
+        Component &&
+        typeof Component === 'object' &&
+        'ResponsiveWrapper' in Component,
+      keys:
+        Component && typeof Component === 'object'
+          ? Object.keys(Component)
+          : [],
+    });
   }
-  
-  return Component;
+
+  // Unwrap if it's a module object (CommonJS/ESM interop issue)
+  if (typeof Component === 'object' && Component !== null) {
+    // Try .default first (standard ES module default export)
+    if (
+      'default' in Component &&
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      typeof (Component as any).default === 'function'
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ActualComponent = (Component as any).default;
+      if (process.env.NODE_ENV === 'development') {
+        console.log(
+          `[wrapNivoResponsiveComponent] ${displayName}: Unwrapped .default`,
+        );
+      }
+    }
+    // Try .ResponsiveWrapper (Nivo's internal structure)
+    else if (
+      'ResponsiveWrapper' in Component &&
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      typeof (Component as any).ResponsiveWrapper === 'function'
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ActualComponent = (Component as any).ResponsiveWrapper;
+      if (process.env.NODE_ENV === 'development') {
+        console.log(
+          `[wrapNivoResponsiveComponent] ${displayName}: Unwrapped .ResponsiveWrapper`,
+        );
+      }
+    }
+    // Check if the object itself has a render property
+    else if (
+      'render' in Component &&
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      typeof (Component as any).render === 'function'
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ActualComponent = (Component as any).render;
+      if (process.env.NODE_ENV === 'development') {
+        console.log(
+          `[wrapNivoResponsiveComponent] ${displayName}: Unwrapped .render`,
+        );
+      }
+    }
+  }
+
+  // Validate that we have a function component
+  if (typeof ActualComponent !== 'function') {
+    const errorMsg = `[wrapNivoResponsiveComponent] ${displayName}: Failed to unwrap component. Received: ${typeof Component}`;
+    console.error(errorMsg, Component);
+
+    // Return a fallback error component in production
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const ErrorComponent: any = () => {
+      return React.createElement(
+        'div',
+        { style: { color: 'red', padding: '20px', border: '1px solid red' } },
+        `Error: Invalid ${displayName} component. Check console for details.`,
+      );
+    };
+    ErrorComponent.displayName = `Error_${displayName}`;
+    return ErrorComponent as T;
+  }
+
+  // Create a functional component wrapper
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function WrappedComponent(props: any) {
+    // Now ActualComponent is guaranteed to be a function
+    return <ActualComponent {...props} />;
+  }
+
+  WrappedComponent.displayName = displayName || 'WrappedNivoComponent';
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return WrappedComponent as any as T;
 }

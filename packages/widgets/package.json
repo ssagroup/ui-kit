@@ -31,17 +31,17 @@
     "loose-envify": "1.4.0"
   },
   "scripts": {
-    "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
-    "sb:dev": "storybook dev -p 6007",
-    "sb:build": "storybook build",
-    "test:e2e": "pnpm exec playwright test --project=chromium",
-    "test:e2e:ui": "pnpm exec playwright test --project=chromium --ui",
-    "test:e2e:debug": "pnpm exec playwright test --project=chromium --debug",
-    "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
-    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "tsc --noEmit -p ./tsconfig.json",
-    "ts-check-build": "tsc -p ./tsconfig.build.json"
+    "test": "NODE_OPTIONS=\"--no-webstorage\" jest -i --no-cache",
+    "build": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=production --node-env=production && NODE_OPTIONS=\"--no-webstorage\" tsc --build --force ./tsconfig.build.json && NODE_OPTIONS=\"--no-webstorage\" resolve-tspaths -p ./tsconfig.build.json",
+    "sb:dev": "env NODE_OPTIONS=\"--no-webstorage\" storybook dev -p 6007",
+    "sb:build": "env NODE_OPTIONS=\"--no-webstorage\" storybook build",
+    "test:e2e": "NODE_OPTIONS=\"--no-webstorage\" pnpm exec playwright test --project=chromium",
+    "test:e2e:ui": "NODE_OPTIONS=\"--no-webstorage\" pnpm exec playwright test --project=chromium --ui",
+    "test:e2e:debug": "NODE_OPTIONS=\"--no-webstorage\" pnpm exec playwright test --project=chromium --debug",
+    "ts-show-config-build": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.build.json",
+    "ts-show-config": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "NODE_OPTIONS=\"--no-webstorage\" tsc --noEmit -p ./tsconfig.json",
+    "ts-check-build": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.build.json"
   },
   "browserslist": [
     ">0.1%",
