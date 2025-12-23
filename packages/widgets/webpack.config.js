@@ -17,8 +17,8 @@ module.exports = () => {
         // Bundle @nivo packages into the library instead of making them external
         // This ensures @nivo's internal module resolution works correctly
         allowlist: [
-          /^@nivo\//,  // Bundle all @nivo packages
-          /^d3-/,      // Bundle d3 dependencies (required by @nivo)
+          /^@nivo\//, // Bundle all @nivo packages
+          /^d3-/, // Bundle d3 dependencies (required by @nivo)
         ],
       }),
     ],
