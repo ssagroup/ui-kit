@@ -103,7 +103,9 @@ export const FieldControl = React.forwardRef<HTMLDivElement, FieldControlProps>(
 
       // In React 19, ref is a regular prop, not a special property
       // Access it from the element's props
-      const existingRef = _children.props?.ref as ForwardedRef<unknown> | undefined;
+      const existingRef = _children.props?.ref as
+        | ForwardedRef<unknown>
+        | undefined;
       _children = cloneElement(_children, {
         ref: setRef(existingRef),
       });

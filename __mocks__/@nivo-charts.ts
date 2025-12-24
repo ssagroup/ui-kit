@@ -12,7 +12,8 @@ export const ResponsiveTreeMap = () => null;
 // Mock @nivo/core exports
 export const DotsItem = () => null;
 export const useTheme = () => ({});
-export const Container = ({ children }: { children: React.ReactNode }) => children as React.ReactElement;
+export const Container = ({ children }: { children: React.ReactNode }) =>
+  children as React.ReactElement;
 export const linearGradientDef = (
   id: string,
   defs: Array<{ offset: number; color: string }>,
@@ -23,6 +24,7 @@ export const linearGradientDef = (
 });
 
 // Mock @nivo/line exports
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isPoint = (point: any): boolean => {
   return (
     point &&
@@ -33,4 +35,5 @@ export const isPoint = (point: any): boolean => {
   );
 };
 export type PointOrSliceData<T> = T;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type LineSeries = any;

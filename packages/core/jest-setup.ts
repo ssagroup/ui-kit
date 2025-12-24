@@ -23,9 +23,15 @@ beforeAll(() => {
     // Suppress @react-input/mask validation errors during typing
     // These are expected when users type partial dates (intermediate states)
     if (
-      message.includes('An invalid character was found in the initialized property value') ||
-      message.includes('The initialized value of the `value` or `defaultValue` property is longer') ||
-      message.includes('To initialize an unmasked value, use the `format` utility')
+      message.includes(
+        'An invalid character was found in the initialized property value',
+      ) ||
+      message.includes(
+        'The initialized value of the `value` or `defaultValue` property is longer',
+      ) ||
+      message.includes(
+        'To initialize an unmasked value, use the `format` utility',
+      )
     ) {
       return;
     }
@@ -36,12 +42,16 @@ beforeAll(() => {
     if (
       message.includes('Not implemented: navigation') ||
       (typeof args[0] === 'object' &&
-       args[0] !== null &&
-       'type' in args[0] &&
-       (args[0] as { type?: string }).type === 'not implemented' &&
-       (message.includes('navigation') ||
-        ('message' in args[0] && typeof (args[0] as { message?: string }).message === 'string' && (args[0] as { message?: string }).message?.includes('navigation')) ||
-        String(args[0]).includes('navigation')))
+        args[0] !== null &&
+        'type' in args[0] &&
+        (args[0] as { type?: string }).type === 'not implemented' &&
+        (message.includes('navigation') ||
+          ('message' in args[0] &&
+            typeof (args[0] as { message?: string }).message === 'string' &&
+            (args[0] as { message?: string }).message?.includes(
+              'navigation',
+            )) ||
+          String(args[0]).includes('navigation')))
     ) {
       return;
     }
@@ -55,16 +65,28 @@ beforeAll(() => {
     // Suppress Input/Textarea component warnings about missing Form context
     // These are expected in tests where components are tested in isolation
     // Note: Tests that specifically verify this warning use spies, so they still work
-    if (message.includes('Input component must be used within a Form component') ||
-        message.includes('Textarea component must be used within a Form component')) {
+    if (
+      message.includes(
+        'Input component must be used within a Form component',
+      ) ||
+      message.includes(
+        'Textarea component must be used within a Form component',
+      )
+    ) {
       return;
     }
 
     // Suppress React controlled/uncontrolled input warnings
     // These are common in tests when components initialize with undefined values
     // and then receive defined values, which is expected behavior during component mounting
-    if (message.includes('A component is changing an uncontrolled input to be controlled') ||
-        message.includes('A component is changing a controlled input to be uncontrolled')) {
+    if (
+      message.includes(
+        'A component is changing an uncontrolled input to be controlled',
+      ) ||
+      message.includes(
+        'A component is changing a controlled input to be uncontrolled',
+      )
+    ) {
       return;
     }
 
@@ -85,7 +107,6 @@ import theme from '@themes/main';
 const customRender = initRender(theme);
 
 declare global {
-  // eslint-disable-next-line no-var
   var render: typeof customRender;
 }
 

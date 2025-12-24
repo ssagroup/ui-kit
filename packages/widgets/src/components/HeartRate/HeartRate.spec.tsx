@@ -60,7 +60,7 @@ describe('HeartRate', () => {
       () => {
         getByText(170);
       },
-      { timeout: 300 }
+      { timeout: 300 },
     );
   });
 

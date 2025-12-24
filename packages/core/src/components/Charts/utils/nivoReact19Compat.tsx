@@ -90,7 +90,8 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
 
   // Validate that we have a function component
   if (typeof ActualComponent !== 'function') {
-    const isTestEnv = process.env.NODE_ENV === 'test' || typeof jest !== 'undefined';
+    const isTestEnv =
+      process.env.NODE_ENV === 'test' || typeof jest !== 'undefined';
     const errorMsg = `[wrapNivoResponsiveComponent] ${displayName}: Failed to unwrap component. Received: ${typeof Component}`;
 
     // In test environments, silently return a mock component to avoid console noise

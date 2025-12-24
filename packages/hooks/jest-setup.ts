@@ -7,4 +7,3 @@ import '@testing-library/jest-dom';
 
 URL.createObjectURL = jest.fn();
 HTMLCanvasElement.prototype.getContext = jest.fn();
-
