@@ -1,5 +1,6 @@
 import userEvent from '@testing-library/user-event';
-import { waitFor } from '@testing-library/react';
+import { waitFor, fireEvent } from '@testing-library/react';
+import { act } from 'react';
 
 import { heartRateData as data } from './mockHeartRateRequest';
 
@@ -16,14 +17,15 @@ const HeartRateLineChartMock = ({
   onMouseMove,
   colors,
 }: {
-  onMouseMove: (p: { data: { y: number } }) => void;
+  onMouseMove: (p: { data: { y: number }; x?: number; y?: number }) => void;
   colors?: string;
 }) => (
   <div
     data-testid="chart-mock"
     css={{ color: colors }}
     onMouseMove={() => {
-      onMouseMove({ data: { y: 170 } });
+      // isPoint checks for x and y properties, and the component accesses point.data.y
+      onMouseMove({ data: { y: 170 }, x: 0, y: 170 });
     }}></div>
 );
 
@@ -47,11 +49,19 @@ describe('HeartRate', () => {
     getByText('BPM');
     const chartEl = getByTestId('chart-mock');
 
-    await userEvent.hover(chartEl);
-
-    await waitFor(() => {
-      getByText(170);
+    // Use fireEvent.mouseMove to trigger onMouseMove (userEvent.hover doesn't trigger mousemove)
+    // Wrap in act() to ensure state updates are handled correctly
+    act(() => {
+      fireEvent.mouseMove(chartEl);
     });
+
+    // Wait for the throttled callback to update the value (throttle is 100ms, so wait a bit longer)
+    await waitFor(
+      () => {
+        getByText(170);
+      },
+      { timeout: 300 }
+    );
   });
 
   it('Renders with a custom color', () => {

@@ -13,7 +13,7 @@ All Storybook `main.ts` files were updated to fix compatibility issues with Reac
    ```typescript
    mainFields: ['module', 'main'],
    conditionNames: ['import', 'require', 'node', 'default'],
-   extensions: ['.mjs', ...(config.resolve?.extensions || [])],
+   extensions: ['.mjs', ...(config.resolve?.extensions || [])]
    ```
    **Why:** Fixes issue with `react-virtualized-auto-sizer` in Nivo charts (PR #2773). Ensures webpack prefers ESM builds and can resolve `.mjs` files.
 

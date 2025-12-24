@@ -95,7 +95,7 @@ const config: JestConfigWithTsJest = {
     '!**/*.stories.{ts,tsx}',
     '!**/*.d.{ts,tsx}',
     '!**/.storybook/**',
-    '!**/global-setup.ts',
+    '!**/jest-global-setup.ts',
     '!**/jest-setup.ts',
     '!**/jest.config.ts',
     '!./packages/**/dist/**',
@@ -111,18 +111,36 @@ const config: JestConfigWithTsJest = {
     defineProjectConfig('packages/utils', {
       displayName: 'UI Kit Utils',
       moduleNameMapper: {
+        '^@components$': '<rootDir>/packages/core/src/components/index',
+        '^@components/Charts/utils/nivoReact19Compat$':
+          '<rootDir>/__mocks__/@components-charts-utils.ts',
         '^d3-color$': '<rootDir>/__mocks__/d3-color.ts',
+        '^@nivo/core$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/pie$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/radar$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/line$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/treemap$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
     defineProjectConfig('packages/hooks', {
       displayName: 'UI Kit Hooks',
       moduleNameMapper: {
+        '^@components$': '<rootDir>/packages/core/src/components/index',
+        '^@components/Charts/utils/nivoReact19Compat$':
+          '<rootDir>/__mocks__/@components-charts-utils.ts',
         '^@hooks/(.*)$': [
           '<rootDir>/packages/hooks/src/hooks/$1',
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
           '<rootDir>/packages/hooks/src/hooks/$1.tsx',
         ],
         '^d3-color$': '<rootDir>/__mocks__/d3-color.ts',
+        '^@nivo/core$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/pie$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/radar$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/line$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '^@nivo/treemap$': '<rootDir>/__mocks__/@nivo-charts.ts',
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
     defineProjectConfig('packages/core', {
@@ -178,13 +196,27 @@ const config: JestConfigWithTsJest = {
     defineProjectConfig('packages/widgets', {
       displayName: 'UI Kit Widgets',
       moduleNameMapper: {
+        '^@components$': '<rootDir>/packages/core/src/components/index',
         '^@components/Wrapper/Wrapper$': '<rootDir>/__mocks__/Wrapper.tsx',
         '^@components/Charts/utils/nivoReact19Compat$':
           '<rootDir>/__mocks__/@components-charts-utils.ts',
-        '^@(apis|components)/(.*)$': [
-          '<rootDir>/packages/widgets/src/$1/$2',
-          '<rootDir>/packages/widgets/src/$1/$2.ts',
-          '<rootDir>/packages/widgets/src/$1/$2.tsx',
+        // IMPORTANT: Check core components FIRST for nested imports (like @components/Label)
+        // This prevents errors when jest.requireActual('@components') tries to resolve nested imports
+        // The array allows fallback if not found in core
+        '^@components/(.*)$': [
+          '<rootDir>/packages/core/src/components/$1',
+          '<rootDir>/packages/core/src/components/$1.ts',
+          '<rootDir>/packages/core/src/components/$1.tsx',
+          // Fallback to widgets if not found in core (for TradingInfoCard, AccountBalance, etc.)
+          '<rootDir>/packages/widgets/src/components/$1',
+          '<rootDir>/packages/widgets/src/components/$1.ts',
+          '<rootDir>/packages/widgets/src/components/$1.tsx',
+        ],
+        // Then check widgets-specific APIs
+        '^@apis/(.*)$': [
+          '<rootDir>/packages/widgets/src/apis/$1',
+          '<rootDir>/packages/widgets/src/apis/$1.ts',
+          '<rootDir>/packages/widgets/src/apis/$1.tsx',
         ],
         '^@themes/(.*)$': [
           '<rootDir>/packages/core/src/themes/$1',
@@ -225,8 +257,14 @@ const config: JestConfigWithTsJest = {
     defineProjectConfig('packages/templates', {
       displayName: 'UI Kit Templates',
       moduleNameMapper: {
+        '^@components$': '<rootDir>/packages/core/src/components/index',
         '^@(components|themes|styles|types)$': [
           '<rootDir>/packages/templates/src/index.ts',
+        ],
+        '^@components/(.*)$': [
+          '<rootDir>/packages/core/src/components/$1',
+          '<rootDir>/packages/core/src/components/$1.ts',
+          '<rootDir>/packages/core/src/components/$1.tsx',
         ],
         '^@(components|themes|styles|types)/(.*)$': [
           '<rootDir>/packages/templates/src/$1/$2',
@@ -260,7 +298,7 @@ const config: JestConfigWithTsJest = {
         '^@ssa-ui-kit/hooks$': '<rootDir>/packages/hooks/src/index.ts',
         '^@ssa-ui-kit/utils$': '<rootDir>/packages/utils/src/index.ts',
         '^d3-color$': '<rootDir>/__mocks__/d3-color.ts',
-        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/d3-color.ts',
+        '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/css-stub.ts',
       },
     }),
     defineProjectConfig('packages/infra-dash', {
@@ -314,6 +352,12 @@ const config: JestConfigWithTsJest = {
     defineProjectConfig('examples/fitness-dashboard', {
       displayName: 'Examples: Fitness Dashboard',
       moduleNameMapper: {
+        '^@components$': '<rootDir>/packages/core/src/components/index',
+        '^@components/(.*)$': [
+          '<rootDir>/packages/core/src/components/$1',
+          '<rootDir>/packages/core/src/components/$1.ts',
+          '<rootDir>/packages/core/src/components/$1.tsx',
+        ],
         '^@(apis|hooks|components)/(.*)$': [
           '<rootDir>/examples/fitness-dashboard/src/$1/$2',
           '<rootDir>/examples/fitness-dashboard/src/$1/$2.ts',

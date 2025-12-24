@@ -21,6 +21,8 @@ export default tseslint.config(
       '**/node_modules',
       '**/coverage',
       '**/@types',
+      '**/*.md',
+      '**/*.mdx',
       '!**/babel.config.js',
       '!**/.storybook',
     ],

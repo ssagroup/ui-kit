@@ -68,7 +68,7 @@ externals: [
       /^d3-/,      // Bundle d3 dependencies
     ],
   }),
-],
+]
 ```
 
 **Impact:**

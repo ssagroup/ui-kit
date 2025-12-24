@@ -1,10 +1,6 @@
-// Global setup to patch wrapNivoResponsiveComponent
-const wrapNivoResponsiveComponent = <T>(Component: T): T => Component;
-
-// Make it globally available
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(global as any).wrapNivoResponsiveComponent = wrapNivoResponsiveComponent;
-
+// Global setup for Jest
+// Sets timezone for consistent date/time testing across environments
 export default () => {
+  process.env.TZ = 'Europe/London';
   return Promise.resolve();
 };

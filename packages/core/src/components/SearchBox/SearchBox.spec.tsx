@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, act } from 'react';
 import { fireEvent } from '@testing-library/dom';
 import { StoryComponent } from './stories/StoryComponent';
 
@@ -55,7 +55,9 @@ describe('SearchBox', () => {
 
     const inputElement = getByPlaceholderText('Search by name');
     fireEvent.change(inputElement, { target: { value: 'test' } });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(consoleLogMock.mock.calls).toEqual([
       ['Searching for the term...', 'test'],
     ]);
@@ -80,14 +82,18 @@ describe('SearchBox', () => {
 
     const inputElement = getByPlaceholderText('Search by name');
     fireEvent.change(inputElement, { target: { value: 'test' } });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(callbackMock).toHaveBeenCalledWith({
       prevValue: null,
       value: 'test',
     });
 
     fireEvent.change(inputElement, { target: { value: 'new' } });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(callbackMock).toHaveBeenLastCalledWith({
       prevValue: 'test',
       value: 'new',
