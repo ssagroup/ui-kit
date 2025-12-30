@@ -23,8 +23,8 @@
   ],
   "scripts": {
     "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --build --force && NODE_OPTIONS=\"--max_old_space_size=8192\" resolve-tspaths",
-    "ts-show-config": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.json"
+    "ts-show-config": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.json"
   },
   "dependencies": {
     "@ssa-ui-kit/utils": "workspace:^",

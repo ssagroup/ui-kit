@@ -52,18 +52,18 @@
     "@types/react-plotly.js": "2.6.3"
   },
   "scripts": {
-    "test": "NODE_OPTIONS=\"--no-webstorage\" jest -i --no-cache",
+    "test": "NODE_OPTIONS=\"--max_old_space_size=8192\" jest -i --no-cache",
     "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --build --force ./tsconfig.build.json && NODE_OPTIONS=\"--max_old_space_size=8192\" resolve-tspaths -p ./tsconfig.build.json",
-    "build:watch": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=production --node-env=production --watch && NODE_OPTIONS=\"--no-webstorage\" tsc --build --force ./tsconfig.build.json && NODE_OPTIONS=\"--no-webstorage\" resolve-tspaths -p ./tsconfig.build.json",
+    "build:watch": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --mode=production --node-env=production --watch && NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --build --force ./tsconfig.build.json && NODE_OPTIONS=\"--max_old_space_size=8192\" resolve-tspaths -p ./tsconfig.build.json",
     "sb:dev": "env NODE_OPTIONS=\"--max_old_space_size=8192\" storybook dev -p 6006",
-    "sb:build": "env NODE_OPTIONS=\"--no-webstorage\" storybook build",
-    "test:e2e": "NODE_OPTIONS=\"--no-webstorage\" pnpm exec playwright test --project=chromium",
-    "test:e2e:ui": "NODE_OPTIONS=\"--no-webstorage\" pnpm exec playwright test --project=chromium --ui",
-    "test:e2e:debug": "NODE_OPTIONS=\"--no-webstorage\" pnpm exec playwright test --project=chromium --debug",
-    "ts-show-config-build": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.build.json",
-    "ts-show-config": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "NODE_OPTIONS=\"--no-webstorage\" tsc --noEmit -p ./tsconfig.json",
-    "ts-check-build": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.build.json"
+    "sb:build": "env NODE_OPTIONS=\"--max_old_space_size=8192\" storybook build",
+    "test:e2e": "NODE_OPTIONS=\"--max_old_space_size=8192\" pnpm exec playwright test --project=chromium",
+    "test:e2e:ui": "NODE_OPTIONS=\"--max_old_space_size=8192\" pnpm exec playwright test --project=chromium --ui",
+    "test:e2e:debug": "NODE_OPTIONS=\"--max_old_space_size=8192\" pnpm exec playwright test --project=chromium --debug",
+    "ts-show-config-build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.build.json",
+    "ts-show-config": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --noEmit -p ./tsconfig.json",
+    "ts-check-build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.build.json"
   },
   "browserslist": [
     ">0.1%",

@@ -23,10 +23,10 @@
   ],
   "scripts": {
     "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --build --force ./tsconfig.build.json && NODE_OPTIONS=\"--max_old_space_size=8192\" resolve-tspaths -p ./tsconfig.build.json",
-    "ts-show-config": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.json",
-    "ts-show-config-build": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.build.json",
-    "ts-check": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.json",
-    "ts-check-build": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.build.json"
+    "ts-show-config": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.json",
+    "ts-show-config-build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.build.json",
+    "ts-check": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.json",
+    "ts-check-build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.build.json"
   },
   "browserslist": [
     ">0.1%",
