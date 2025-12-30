@@ -110,6 +110,9 @@ importers:
       cspell:
         specifier: 8.19.4
         version: 8.19.4
+      css-loader:
+        specifier: 7.1.2
+        version: 7.1.2(webpack@5.103.0(esbuild@0.25.12)(webpack-cli@6.0.1))
       eslint:
         specifier: 9.39.2
         version: 9.39.2
@@ -203,6 +206,9 @@ importers:
       storybook-addon-pseudo-states:
         specifier: 9.1.16
         version: 9.1.16(storybook@9.1.16(@testing-library/dom@10.4.1)(prettier@3.7.4))
+      style-loader:
+        specifier: 4.0.0
+        version: 4.0.0(webpack@5.103.0(esbuild@0.25.12)(webpack-cli@6.0.1))
       stylelint:
         specifier: 16.26.1
         version: 16.26.1(typescript@5.9.3)
@@ -8513,6 +8519,7 @@ packages:
   whatwg-encoding@2.0.0:
     resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}
     engines: {node: '>=12'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@3.0.0:
     resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}

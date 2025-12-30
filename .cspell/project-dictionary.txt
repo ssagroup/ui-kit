@@ -190,6 +190,7 @@ uuidv4
 VERCEL
 viewports
 vtpit
+webstorage
 xanchor
 xaxes
 xaxis

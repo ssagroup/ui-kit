@@ -14,14 +14,14 @@ const OUTPUT_PATH = path.resolve(__dirname, 'dist');
 // Comments on HMR for React:
 // https://github.com/gaearon/react-hot-loader/issues/1150
 
-const publicEnvironmentVariables = [
-  'FIREBASE_API_KEY',
-  'FIREBASE_AUTH_DOMAIN',
-  'FIREBASE_PROJECT_ID',
-  'FIREBASE_STORAGE_BUCKET',
-  'FIREBASE_MESSAGING_SENDERID',
-  'FIREBASE_APP_ID',
-];
+const publicEnvironmentVariables = {
+  FIREBASE_API_KEY: '',
+  FIREBASE_AUTH_DOMAIN: '',
+  FIREBASE_PROJECT_ID: '',
+  FIREBASE_STORAGE_BUCKET: '',
+  FIREBASE_MESSAGING_SENDERID: '',
+  FIREBASE_APP_ID: '',
+};
 
 const config = {
   entry: ['./src/index.tsx'],
@@ -121,6 +121,11 @@ const config = {
         loader: 'babel-loader',
         exclude: ['/node_modules/'],
         options: {
+          configFile: false, // Don't use global babel config
+          presets: [
+            ['@babel/preset-react', { runtime: 'automatic' }],
+            '@babel/preset-typescript',
+          ],
           plugins: isProduction ? [] : [require.resolve('react-refresh/babel')],
         },
       },
@@ -145,7 +150,7 @@ const config = {
       // https://github.com/remix-run/react-router/issues/12785
       'react-router-dom': path.resolve(
         __dirname,
-        './node_modules/react-router-dom/dist/index.mjs',
+        '../../node_modules/react-router-dom/dist/index.mjs',
       ),
     },
   },
