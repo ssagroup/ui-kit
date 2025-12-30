@@ -47,17 +47,17 @@
     }
   },
   "scripts": {
-    "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve",
-    "create": "node ./tasks/create.js",
-    "analyze": "webpack --profile --json > stats.json;  webpack-bundle-analyzer ./stats.json",
-    "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json;  webpack-bundle-analyzer ./stats.json",
-    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "tsc -p ./tsconfig.json"
+    "test": "NODE_OPTIONS=\"--no-webstorage\" jest -i --no-cache",
+    "build": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=production --node-env=production",
+    "build:dev": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=development",
+    "build:prod": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=production --node-env=production",
+    "watch": "NODE_OPTIONS=\"--no-webstorage\" webpack --watch",
+    "serve": "NODE_OPTIONS=\"--no-webstorage\" webpack serve",
+    "create": "NODE_OPTIONS=\"--no-webstorage\" node ./tasks/create.js",
+    "analyze": "NODE_OPTIONS=\"--no-webstorage\" webpack --profile --json > stats.json; NODE_OPTIONS=\"--no-webstorage\" webpack-bundle-analyzer ./stats.json",
+    "analyze:prod": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=production --node-env=production --profile --json > stats.json; NODE_OPTIONS=\"--no-webstorage\" webpack-bundle-analyzer ./stats.json",
+    "ts-show-config": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.json"
   },
   "browserslist": [
     ">0.1%",

@@ -22,9 +22,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc --build --force && resolve-tspaths",
-    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "tsc -p ./tsconfig.json"
+    "build": "NODE_OPTIONS=\"--no-webstorage\" webpack --mode=production --node-env=production && NODE_OPTIONS=\"--no-webstorage\" tsc --build --force && NODE_OPTIONS=\"--no-webstorage\" resolve-tspaths",
+    "ts-show-config": "NODE_OPTIONS=\"--no-webstorage\" tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "NODE_OPTIONS=\"--no-webstorage\" tsc -p ./tsconfig.json"
   },
   "dependencies": {
     "@ssa-ui-kit/utils": "workspace:^",
