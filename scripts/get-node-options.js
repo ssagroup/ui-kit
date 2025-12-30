@@ -14,4 +14,13 @@ if (supportsNoWebstorage) {
   baseOptions.push('--no-webstorage');
 }
 
-console.log(baseOptions.join(' '));
+const nodeOptions = baseOptions.join(' ');
+
+// Try to set NODE_OPTIONS, but handle cases where flags might be rejected
+try {
+  process.env.NODE_OPTIONS = nodeOptions;
+  console.log(`NODE_OPTIONS set to: ${nodeOptions}`);
+} catch (error) {
+  console.warn(`Warning: Could not set NODE_OPTIONS: ${error.message}`);
+  console.log('NODE_OPTIONS not set due to environment restrictions');
+}

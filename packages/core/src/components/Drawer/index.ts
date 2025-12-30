@@ -1,3 +1,4 @@
 export * as Drawer from './index.parts';
 
-export { useDrawer, UseDrawerOptions } from './useDrawer';
+export { useDrawer } from './useDrawer';
+export type { UseDrawerOptions } from './useDrawer';

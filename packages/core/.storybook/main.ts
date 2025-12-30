@@ -61,7 +61,15 @@ const config: StorybookConfig = {
         ...config.module,
         rules: [
           ...(config.module?.rules || []),
-          ...(appWebpackConfig.module?.rules || []),
+          // Filter out problematic CSS rules from app config that conflict with Storybook
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ...(appWebpackConfig.module?.rules || []).filter((rule: any) => {
+            // Exclude CSS rules that cause issues in Storybook
+            if (rule.test && rule.test.toString().includes('css')) {
+              return false;
+            }
+            return true;
+          }),
         ],
       },
     };
