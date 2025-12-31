@@ -47,17 +47,17 @@
     }
   },
   "scripts": {
-    "test": "NODE_OPTIONS=\"--max_old_space_size=8192\" jest -i --no-cache",
-    "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --mode=production --node-env=production",
-    "build:dev": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --mode=development",
-    "build:prod": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --mode=production --node-env=production",
-    "watch": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --watch",
-    "serve": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack serve",
-    "create": "NODE_OPTIONS=\"--max_old_space_size=8192\" node ./tasks/create.js",
-    "analyze": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --profile --json > stats.json; NODE_OPTIONS=\"--max_old_space_size=8192\" webpack-bundle-analyzer ./stats.json",
-    "analyze:prod": "NODE_OPTIONS=\"--max_old_space_size=8192\" webpack --mode=production --node-env=production --profile --json > stats.json; NODE_OPTIONS=\"--max_old_space_size=8192\" webpack-bundle-analyzer ./stats.json",
-    "ts-show-config": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.json",
-    "ts-check": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.json"
+    "test": "jest -i --no-cache",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve",
+    "create": "node ./tasks/create.js",
+    "analyze": "webpack --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
+    "analyze:prod": "webpack --mode=production --node-env=production --profile --json > stats.json; webpack-bundle-analyzer ./stats.json",
+    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
+    "ts-check": "tsc -p ./tsconfig.json"
   },
   "browserslist": [
     ">0.1%",

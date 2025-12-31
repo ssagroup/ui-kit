@@ -14,15 +14,11 @@ concurrency:
 jobs:
   lint-build-test:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: '--max_old_space_size=8192'
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-
-      - name: Check Node.js version
-        run: |
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
-          node -e "const v=process.versions.node.split('.'); console.log('Supports --no-webstorage:', (v[0]>=20||(v[0]==18&&v[1]>=17)));"
 
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install

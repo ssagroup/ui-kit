@@ -134,6 +134,7 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
           '<rootDir>/packages/hooks/src/hooks/$1.tsx',
         ],
+        '^@ssa-ui-kit/utils$': '<rootDir>/packages/utils/src/index.ts',
         '^d3-color$': '<rootDir>/__mocks__/d3-color.ts',
         '^@nivo/core$': '<rootDir>/__mocks__/@nivo-charts.ts',
         '^@nivo/pie$': '<rootDir>/__mocks__/@nivo-charts.ts',

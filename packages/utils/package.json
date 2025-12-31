@@ -22,11 +22,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --build --force ./tsconfig.build.json && NODE_OPTIONS=\"--max_old_space_size=8192\" resolve-tspaths -p ./tsconfig.build.json",
-    "ts-show-config": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.json",
-    "ts-show-config-build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc --showConfig -p ./tsconfig.build.json",
-    "ts-check": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.json",
-    "ts-check-build": "NODE_OPTIONS=\"--max_old_space_size=8192\" tsc -p ./tsconfig.build.json"
+    "build": "tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
+    "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
+    "ts-check": "tsc -p ./tsconfig.json",
+    "ts-check-build": "tsc -p ./tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/sass": "1.45.0"
   },
   "browserslist": [
     ">0.1%",

@@ -84,6 +84,7 @@ hovertemplate
 hsl
 HTMLSVGElement
 IBMP
+internmap
 ipsum
 itemclick
 jsdom

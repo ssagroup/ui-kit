@@ -4,6 +4,8 @@ import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
 import initBabelConfig from '../../../babel.config';
+import webpack from 'webpack';
+
 const appWebpackConfig = initWebpackConfig();
 
 const config: StorybookConfig = {
@@ -43,6 +45,22 @@ const config: StorybookConfig = {
         alias: {
           ...config.resolve?.alias,
           ...appWebpackConfig.resolve?.alias,
+          // Workspace package aliases - point to source files
+          '@ssa-ui-kit/core': resolve(__dirname, '../../core/src/index.ts'),
+          '@ssa-ui-kit/hooks': resolve(__dirname, '../../hooks/src/index.ts'),
+          '@ssa-ui-kit/utils': resolve(__dirname, '../../utils/src/index.ts'),
+          // Path aliases for workspace packages - Core package
+          '@components': resolve(__dirname, '../../core/src/components'),
+          '@contexts': resolve(__dirname, '../../core/src/contexts'),
+          '@themes': resolve(__dirname, '../../core/src/themes'),
+          '@styles': resolve(__dirname, '../../core/src/styles'),
+          '@global-types': resolve(__dirname, '../../core/src/types'),
+          // Widgets-specific component aliases (widgets uses @components for its own components)
+          '@components/AccountBalance': resolve(__dirname, '../src/components/AccountBalance'),
+          '@components/AccountBalance/AccountBalanceContext': resolve(__dirname, '../src/components/AccountBalance/AccountBalanceContext.tsx'),
+          '@components/TradingInfoCard': resolve(__dirname, '../src/components/TradingInfoCard'),
+          // Hooks package internal aliases
+          '@hooks/useWindowResize': resolve(__dirname, '../../hooks/src/hooks/useWindowResize.tsx'),
           // Ensure only one React instance is used to prevent "Cannot read properties of null (reading 'useContext')" errors
           react: resolve(__dirname, '../../../node_modules/react'),
           'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
@@ -51,7 +69,7 @@ const config: StorybookConfig = {
           // https://github.com/remix-run/react-router/issues/12785
           'react-router-dom': resolve(
             __dirname,
-            '../node_modules/react-router-dom/dist/index.mjs',
+            '../../../node_modules/react-router-dom/dist/index.mjs',
           ),
         },
       },
@@ -59,9 +77,45 @@ const config: StorybookConfig = {
         ...config.module,
         rules: [
           ...(config.module?.rules || []),
-          ...(appWebpackConfig.module?.rules || []),
+          // Filter out problematic CSS rules from app config that conflict with Storybook
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ...(appWebpackConfig.module?.rules || []).filter((rule: any) => {
+            // Exclude CSS rules that cause issues in Storybook
+            if (rule.test && rule.test.toString().includes('css')) {
+              return false;
+            }
+            return true;
+          }),
         ],
       },
+      plugins: [
+        ...(config.plugins || []),
+        // Handle TypeScript path mappings for workspace packages
+        new webpack.NormalModuleReplacementPlugin(
+          /^@hooks\/useWindowResize$/,
+          function (resource) {
+            resource.request = resolve(__dirname, '../../hooks/src/hooks/useWindowResize.tsx');
+          },
+        ),
+        new webpack.NormalModuleReplacementPlugin(
+          /^@components\/AccountBalance$/,
+          function (resource) {
+            resource.request = resolve(__dirname, '../src/components/AccountBalance/index.ts');
+          },
+        ),
+        new webpack.NormalModuleReplacementPlugin(
+          /^@components\/AccountBalance\/AccountBalanceContext$/,
+          function (resource) {
+            resource.request = resolve(__dirname, '../src/components/AccountBalance/AccountBalanceContext.tsx');
+          },
+        ),
+        new webpack.NormalModuleReplacementPlugin(
+          /^@components\/TradingInfoCard$/,
+          function (resource) {
+            resource.request = resolve(__dirname, '../src/components/TradingInfoCard/index.ts');
+          },
+        ),
+      ],
     };
 
     return newConfig;

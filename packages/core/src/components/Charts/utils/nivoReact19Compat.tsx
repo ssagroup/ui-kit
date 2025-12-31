@@ -1,5 +1,8 @@
 import React, { type ComponentType } from 'react';
 
+// Type declaration for jest (available in test environments)
+declare const jest: any;
+
 /**
  * React 19 compatibility wrapper for Nivo responsive components.
  *

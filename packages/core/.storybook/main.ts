@@ -3,6 +3,7 @@ import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config';
 import initBabelConfig from '../../../babel.config';
+import webpack from 'webpack';
 
 const appWebpackConfig: Configuration = initWebpackConfig();
 
@@ -48,6 +49,20 @@ const config: StorybookConfig = {
         alias: {
           ...config.resolve?.alias,
           ...appWebpackConfig.resolve?.alias,
+          // Workspace package aliases - point to source files
+          '@ssa-ui-kit/utils': path.resolve(
+            __dirname,
+            '../../utils/src/index.ts',
+          ),
+          '@ssa-ui-kit/hooks': path.resolve(
+            __dirname,
+            '../../hooks/src/index.ts',
+          ),
+          // Hooks package internal aliases - for hooks package's own @hooks/* imports
+          '@hooks/useWindowResize': path.resolve(
+            __dirname,
+            '../../hooks/src/hooks/useWindowResize.tsx',
+          ),
           // Ensure only one React instance is used to prevent "Cannot read properties of null (reading 'useContext')" errors
           react: path.resolve(__dirname, '../../../node_modules/react'),
           'react-dom': path.resolve(
@@ -72,6 +87,19 @@ const config: StorybookConfig = {
           }),
         ],
       },
+      plugins: [
+        ...(config.plugins || []),
+        // Handle TypeScript path mappings for workspace packages
+        new webpack.NormalModuleReplacementPlugin(
+          /^@hooks\/useWindowResize$/,
+          function (resource) {
+            resource.request = path.resolve(
+              __dirname,
+              '../../hooks/src/hooks/useWindowResize.tsx',
+            );
+          },
+        ),
+      ],
     };
 
     return newConfig;
