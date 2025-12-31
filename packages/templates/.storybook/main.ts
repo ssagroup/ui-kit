@@ -195,26 +195,25 @@ const config: StorybookConfig = {
         // This ensures InternMap constructor is properly available to d3-array
         // Match any request containing 'internmap' - be very aggressive to catch all variations
         // Using ESM source matches d3-array's ESM source for consistent module types
-        new webpack.NormalModuleReplacementPlugin(
-          /internmap/,
-          function (resource) {
-            // Replace any internmap import with the ESM source file
-            // This catches: 'internmap', 'internmap/index.js', 'internmap/src/index.js', etc.
-            const newPath = resolve(
-              __dirname,
-              '../../../node_modules/internmap/src/index.js',
-            );
-            console.log(
-              '[Webpack Debug] internmap replacement:',
-              resource.request,
-              '->',
-              newPath,
-              '| context:',
-              resource.context,
-            );
-            resource.request = newPath;
-          },
-        ),
+        new webpack.NormalModuleReplacementPlugin(/internmap/, function (
+          resource,
+        ) {
+          // Replace any internmap import with the ESM source file
+          // This catches: 'internmap', 'internmap/index.js', 'internmap/src/index.js', etc.
+          const newPath = resolve(
+            __dirname,
+            '../../../node_modules/internmap/src/index.js',
+          );
+          console.log(
+            '[Webpack Debug] internmap replacement:',
+            resource.request,
+            '->',
+            newPath,
+            '| context:',
+            resource.context,
+          );
+          resource.request = newPath;
+        }),
         // Handle TypeScript path mappings for workspace packages
         new webpack.NormalModuleReplacementPlugin(
           /^@hooks\/useWindowResize$/,
@@ -285,20 +284,21 @@ const config: StorybookConfig = {
           ),
         ),
         // Handle firebase/firestore imports - replace with browser build
-        new NormalModuleReplacementPlugin(
-          /^firebase\/firestore$/,
-          function (resource) {
-            resource.request = resolve(
-              __dirname,
-              '../../../node_modules/@firebase/firestore/dist/index.esm2017.js',
-            );
-          },
-        ),
+        new NormalModuleReplacementPlugin(/^firebase\/firestore$/, function (
+          resource,
+        ) {
+          resource.request = resolve(
+            __dirname,
+            '../../../node_modules/@firebase/firestore/dist/index.esm2017.js',
+          );
+        }),
       ],
     };
 
     // Debug: Log final resolve config
-    const aliases = newConfig.resolve?.alias as Record<string, string> | undefined;
+    const aliases = newConfig.resolve?.alias as
+      | Record<string, string>
+      | undefined;
     console.log('[Webpack Debug] Final resolve config:', {
       mainFields: newConfig.resolve?.mainFields,
       conditionNames: newConfig.resolve?.conditionNames,

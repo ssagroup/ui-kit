@@ -1,7 +1,7 @@
 import React, { type ComponentType } from 'react';
 
 // Type declaration for jest (available in test environments)
-declare const jest: any;
+declare const jest: unknown;
 
 /**
  * React 19 compatibility wrapper for Nivo responsive components.
@@ -19,12 +19,12 @@ declare const jest: any;
  * @param displayName - Display name for debugging in React DevTools
  * @returns A React 19 compatible functional component
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
   Component: T,
   displayName?: string,
 ): T {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   let ActualComponent: any = Component;
 
   // Debug logging in development
@@ -50,10 +50,10 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
     // Try .default first (standard ES module default export)
     if (
       'default' in Component &&
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       typeof (Component as any).default === 'function'
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       ActualComponent = (Component as any).default;
       if (process.env.NODE_ENV === 'development') {
         console.log(
@@ -64,10 +64,10 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
     // Try .ResponsiveWrapper (Nivo's internal structure)
     else if (
       'ResponsiveWrapper' in Component &&
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       typeof (Component as any).ResponsiveWrapper === 'function'
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       ActualComponent = (Component as any).ResponsiveWrapper;
       if (process.env.NODE_ENV === 'development') {
         console.log(
@@ -78,10 +78,10 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
     // Check if the object itself has a render property
     else if (
       'render' in Component &&
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       typeof (Component as any).render === 'function'
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       ActualComponent = (Component as any).render;
       if (process.env.NODE_ENV === 'development') {
         console.log(
@@ -100,7 +100,7 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
     // In test environments, silently return a mock component to avoid console noise
     // This handles cases where @nivo mocks return undefined or invalid components
     if (isTestEnv) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       const MockComponent: any = () => null;
       MockComponent.displayName = `Mock_${displayName || 'NivoComponent'}`;
       return MockComponent as T;
@@ -110,7 +110,7 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
     console.error(errorMsg, Component);
 
     // Return a fallback error component
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const ErrorComponent: any = () => {
       return React.createElement(
         'div',
@@ -123,7 +123,7 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
   }
 
   // Create a functional component wrapper
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   function WrappedComponent(props: any) {
     // Now ActualComponent is guaranteed to be a function
     return <ActualComponent {...props} />;
@@ -131,6 +131,6 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
 
   WrappedComponent.displayName = displayName || 'WrappedNivoComponent';
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   return WrappedComponent as any as T;
 }

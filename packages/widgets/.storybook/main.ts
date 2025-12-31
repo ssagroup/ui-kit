@@ -56,11 +56,23 @@ const config: StorybookConfig = {
           '@styles': resolve(__dirname, '../../core/src/styles'),
           '@global-types': resolve(__dirname, '../../core/src/types'),
           // Widgets-specific component aliases (widgets uses @components for its own components)
-          '@components/AccountBalance': resolve(__dirname, '../src/components/AccountBalance'),
-          '@components/AccountBalance/AccountBalanceContext': resolve(__dirname, '../src/components/AccountBalance/AccountBalanceContext.tsx'),
-          '@components/TradingInfoCard': resolve(__dirname, '../src/components/TradingInfoCard'),
+          '@components/AccountBalance': resolve(
+            __dirname,
+            '../src/components/AccountBalance',
+          ),
+          '@components/AccountBalance/AccountBalanceContext': resolve(
+            __dirname,
+            '../src/components/AccountBalance/AccountBalanceContext.tsx',
+          ),
+          '@components/TradingInfoCard': resolve(
+            __dirname,
+            '../src/components/TradingInfoCard',
+          ),
           // Hooks package internal aliases
-          '@hooks/useWindowResize': resolve(__dirname, '../../hooks/src/hooks/useWindowResize.tsx'),
+          '@hooks/useWindowResize': resolve(
+            __dirname,
+            '../../hooks/src/hooks/useWindowResize.tsx',
+          ),
           // Ensure only one React instance is used to prevent "Cannot read properties of null (reading 'useContext')" errors
           react: resolve(__dirname, '../../../node_modules/react'),
           'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
@@ -94,25 +106,37 @@ const config: StorybookConfig = {
         new webpack.NormalModuleReplacementPlugin(
           /^@hooks\/useWindowResize$/,
           function (resource) {
-            resource.request = resolve(__dirname, '../../hooks/src/hooks/useWindowResize.tsx');
+            resource.request = resolve(
+              __dirname,
+              '../../hooks/src/hooks/useWindowResize.tsx',
+            );
           },
         ),
         new webpack.NormalModuleReplacementPlugin(
           /^@components\/AccountBalance$/,
           function (resource) {
-            resource.request = resolve(__dirname, '../src/components/AccountBalance/index.ts');
+            resource.request = resolve(
+              __dirname,
+              '../src/components/AccountBalance/index.ts',
+            );
           },
         ),
         new webpack.NormalModuleReplacementPlugin(
           /^@components\/AccountBalance\/AccountBalanceContext$/,
           function (resource) {
-            resource.request = resolve(__dirname, '../src/components/AccountBalance/AccountBalanceContext.tsx');
+            resource.request = resolve(
+              __dirname,
+              '../src/components/AccountBalance/AccountBalanceContext.tsx',
+            );
           },
         ),
         new webpack.NormalModuleReplacementPlugin(
           /^@components\/TradingInfoCard$/,
           function (resource) {
-            resource.request = resolve(__dirname, '../src/components/TradingInfoCard/index.ts');
+            resource.request = resolve(
+              __dirname,
+              '../src/components/TradingInfoCard/index.ts',
+            );
           },
         ),
       ],

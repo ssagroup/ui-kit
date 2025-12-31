@@ -117,25 +117,37 @@ const config = {
     new webpack.NormalModuleReplacementPlugin(
       /^@hooks\/useWindowResize$/,
       function (resource) {
-        resource.request = path.resolve(__dirname, '../../packages/hooks/src/hooks/useWindowResize.tsx');
+        resource.request = path.resolve(
+          __dirname,
+          '../../packages/hooks/src/hooks/useWindowResize.tsx',
+        );
       },
     ),
     new webpack.NormalModuleReplacementPlugin(
       /^@components\/AccountBalance$/,
       function (resource) {
-        resource.request = path.resolve(__dirname, '../../packages/widgets/src/components/AccountBalance/index.ts');
+        resource.request = path.resolve(
+          __dirname,
+          '../../packages/widgets/src/components/AccountBalance/index.ts',
+        );
       },
     ),
     new webpack.NormalModuleReplacementPlugin(
       /^@components\/AccountBalance\/AccountBalanceContext$/,
       function (resource) {
-        resource.request = path.resolve(__dirname, '../../packages/widgets/src/components/AccountBalance/AccountBalanceContext.tsx');
+        resource.request = path.resolve(
+          __dirname,
+          '../../packages/widgets/src/components/AccountBalance/AccountBalanceContext.tsx',
+        );
       },
     ),
     new webpack.NormalModuleReplacementPlugin(
       /^@components\/TradingInfoCard$/,
       function (resource) {
-        resource.request = path.resolve(__dirname, '../../packages/widgets/src/components/TradingInfoCard/index.ts');
+        resource.request = path.resolve(
+          __dirname,
+          '../../packages/widgets/src/components/TradingInfoCard/index.ts',
+        );
       },
     ),
   ],
@@ -181,19 +193,43 @@ const config = {
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@apis': path.resolve(__dirname, './src/apis'),
       // Workspace package aliases for CI builds
-      '@ssa-ui-kit/core': path.resolve(__dirname, '../../packages/core/src/index.ts'),
-      '@ssa-ui-kit/hooks': path.resolve(__dirname, '../../packages/hooks/src/index.ts'),
-      '@ssa-ui-kit/utils': path.resolve(__dirname, '../../packages/utils/src/index.ts'),
-      '@ssa-ui-kit/widgets': path.resolve(__dirname, '../../packages/widgets/src/index.ts'),
+      '@ssa-ui-kit/core': path.resolve(
+        __dirname,
+        '../../packages/core/src/index.ts',
+      ),
+      '@ssa-ui-kit/hooks': path.resolve(
+        __dirname,
+        '../../packages/hooks/src/index.ts',
+      ),
+      '@ssa-ui-kit/utils': path.resolve(
+        __dirname,
+        '../../packages/utils/src/index.ts',
+      ),
+      '@ssa-ui-kit/widgets': path.resolve(
+        __dirname,
+        '../../packages/widgets/src/index.ts',
+      ),
       // Path aliases for workspace packages - Components
       // Core uses @components for its components
-      '@components': path.resolve(__dirname, '../../packages/core/src/components'),
+      '@components': path.resolve(
+        __dirname,
+        '../../packages/core/src/components',
+      ),
       // Widgets-specific component aliases (widgets uses @components for its own components)
       // These override @components for specific widgets components
       // Point to index files or the component files directly
-      '@components/AccountBalance': path.resolve(__dirname, '../../packages/widgets/src/components/AccountBalance/index.ts'),
-      '@components/AccountBalance/AccountBalanceContext': path.resolve(__dirname, '../../packages/widgets/src/components/AccountBalance/AccountBalanceContext.tsx'),
-      '@components/TradingInfoCard': path.resolve(__dirname, '../../packages/widgets/src/components/TradingInfoCard/index.ts'),
+      '@components/AccountBalance': path.resolve(
+        __dirname,
+        '../../packages/widgets/src/components/AccountBalance/index.ts',
+      ),
+      '@components/AccountBalance/AccountBalanceContext': path.resolve(
+        __dirname,
+        '../../packages/widgets/src/components/AccountBalance/AccountBalanceContext.tsx',
+      ),
+      '@components/TradingInfoCard': path.resolve(
+        __dirname,
+        '../../packages/widgets/src/components/TradingInfoCard/index.ts',
+      ),
       '@contexts': path.resolve(__dirname, '../../packages/core/src/contexts'),
       '@themes': path.resolve(__dirname, '../../packages/core/src/themes'),
       '@styles': path.resolve(__dirname, '../../packages/core/src/styles'),
@@ -201,7 +237,10 @@ const config = {
       // Hooks package internal aliases - for hooks package's own @hooks/* imports
       // This needs to be after the local @hooks to avoid conflicts when possible
       // But hooks package uses @hooks/* internally, so we need this
-      '@hooks/useWindowResize': path.resolve(__dirname, '../../packages/hooks/src/hooks/useWindowResize.tsx'),
+      '@hooks/useWindowResize': path.resolve(
+        __dirname,
+        '../../packages/hooks/src/hooks/useWindowResize.tsx',
+      ),
       // workaround for a react-router bug that can lead to multiple react-router versions
       // being installed across the main package and dependencies that list react-router as a peer dependency
       // https://github.com/remix-run/react-router/issues/12785
