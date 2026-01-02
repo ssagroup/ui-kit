@@ -30,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc --build --force && resolve-tspaths",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force && resolve-tspaths",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },

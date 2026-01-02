@@ -18,7 +18,7 @@
   "description": "SSA UI Kit",
   "scripts": {
     "test": "jest -i --no-cache",
-    "build": "tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "build": "webpack --mode=production --node-env=production && tsc --build --force ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "sb:dev": "env storybook dev -p 6009",
     "sb:build": "env storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",
