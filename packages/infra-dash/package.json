@@ -3,6 +3,14 @@
   "version": "0.4.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
