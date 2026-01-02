@@ -123,10 +123,19 @@ export function wrapNivoResponsiveComponent<T extends ComponentType<any>>(
   }
 
   // Create a functional component wrapper
+  // Wrap in a div with explicit dimensions to provide a stable container
+  // for ResponsiveWrapper to measure. This fixes initial positioning issues
+  // where ResponsiveWrapper measures before the parent container has final dimensions.
   /* eslint-disable @typescript-eslint/no-explicit-any */
   function WrappedComponent(props: any) {
     // Now ActualComponent is guaranteed to be a function
-    return <ActualComponent {...props} />;
+    // The wrapper div with explicit dimensions ensures ResponsiveWrapper
+    // can measure correctly on initial render
+    return (
+      <div style={{ width: '100%', height: '100%' }}>
+        <ActualComponent {...props} />
+      </div>
+    );
   }
 
   WrappedComponent.displayName = displayName || 'WrappedNivoComponent';
