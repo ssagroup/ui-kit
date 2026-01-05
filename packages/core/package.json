@@ -90,8 +90,8 @@
     "@nivo/treemap": "^0.99.0",
     "@rjsf/core": "^5.0.0",
     "@rjsf/utils": "^5.0.0",
-    "react": "18.x || 19.x",
-    "react-dom": "18.x || 19.x",
+    "react": "19.x",
+    "react-dom": "19.x",
     "react-hook-form": "^7.46.1",
     "react-router-dom": "6.x || 7.x"
   },
