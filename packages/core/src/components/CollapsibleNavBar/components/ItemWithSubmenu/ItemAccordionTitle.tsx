@@ -57,7 +57,7 @@ export const ItemAccordionTitle = ({
     <TriggerIcon
       iconName={item.iconName}
       iconSize={item.iconSize}
-      css={item.css as never}
+      css={item.css}
     />
   );
 

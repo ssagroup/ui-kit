@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import { PathPattern } from 'react-router-dom';
+import { CSSObject } from '@emotion/react';
 import {
   NavBarExtendedGroup,
   NavBarExtendedItem,
@@ -8,14 +9,14 @@ import {
 
 export interface CollapsibleNavBarItem extends NavBarExtendedItem {
   iconSize: number;
-  css?: React.CSSProperties;
+  css?: CSSObject;
 }
 
 export interface CollapsibleNavBarGroup<
   T extends NavBarExtendedSubItem = NavBarExtendedSubItem,
 > extends NavBarExtendedGroup<T> {
   iconSize: number;
-  css?: React.CSSProperties;
+  css?: CSSObject;
   prefix: string;
 }
 

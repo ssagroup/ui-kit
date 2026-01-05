@@ -34,7 +34,7 @@ export const TriggerIcon = ({
           position: relative;
           height: 26px;
         `,
-        cssProp as CSSObject | undefined,
+        cssProp,
       ]}
       className="trigger-icon">
       {CustomIcon ? (
