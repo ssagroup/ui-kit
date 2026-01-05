@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PointOrSliceMouseHandler, DefaultSeries } from '@nivo/line';
+import { PointOrSliceMouseHandler, LineSeries } from '@nivo/line';
 import { useThrottledCallback, useElementSize } from '@ssa-ui-kit/hooks';
 import { WithFullscreenMode } from '@components/FullscreenModeContext';
 import { Wrapper, WidgetCardProps, WithWidgetCard } from '@components';
@@ -7,7 +7,7 @@ import { BigNumberChartHeader, TrendLine, TrendLineProps } from './components';
 
 export type BigNumberChartFeatures = 'header' | 'fullscreenMode';
 
-type Datum = DefaultSeries['data'][number];
+type Datum = LineSeries['data'][number];
 
 export interface BigNumberChartProps {
   data: Datum[];
@@ -50,7 +50,7 @@ export const BigNumberChartComponent = ({
     100,
   );
 
-  const handleMouseMove: PointOrSliceMouseHandler<DefaultSeries> = (datum) => {
+  const handleMouseMove: PointOrSliceMouseHandler<LineSeries> = (datum) => {
     if (!interactive) return;
     if ('data' in datum) {
       setHoveredValueThrottled(datum.data);

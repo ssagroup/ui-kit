@@ -5,7 +5,7 @@ import {
   LineCustomSvgLayerProps,
   LineSvgLayer,
   Point,
-  DefaultSeries,
+  LineSeries,
   ResponsiveLine as ResponsiveLineOriginal,
 } from '@nivo/line';
 import { TrendLineTooltip, TrendLineTooltipProps } from './TrendLineTooltip';
@@ -16,22 +16,22 @@ const ResponsiveLine = wrapNivoResponsiveComponent(
   'ResponsiveLine',
 );
 
-type Datum = DefaultSeries['data'][number];
+type Datum = LineSeries['data'][number];
 
 export interface TrendLineProps extends Omit<
-  LineSvgProps<DefaultSeries>,
+  LineSvgProps<LineSeries>,
   'data' | 'height' | 'width'
 > {
   color?: string;
-  tooltipValueFormat?: TrendLineTooltipProps<DefaultSeries>['valueFormat'];
+  tooltipValueFormat?: TrendLineTooltipProps<LineSeries>['valueFormat'];
   lastActivePoint?: Datum;
-  data: LineSvgProps<DefaultSeries>['data'];
+  data: LineSvgProps<LineSeries>['data'];
   height: number;
   width: number;
 }
 
 type ActivePointExtraProps = {
-  currentPoint: Point<DefaultSeries>;
+  currentPoint: Point<LineSeries>;
   lastActivePoint?: Datum;
 };
 
@@ -40,7 +40,7 @@ const ActivePoint = ({
   lastActivePoint,
   points,
   ...props
-}: LineCustomSvgLayerProps<DefaultSeries> & ActivePointExtraProps) => {
+}: LineCustomSvgLayerProps<LineSeries> & ActivePointExtraProps) => {
   const activePoint = lastActivePoint
     ? points.find(
         ({ data }) =>
@@ -141,7 +141,7 @@ export const TrendLine = ({
           'mesh',
           'legends',
           ActivePoint,
-        ] as LineSvgLayer<DefaultSeries>[]
+        ] as LineSvgLayer<LineSeries>[]
       }
       {...props}
     />

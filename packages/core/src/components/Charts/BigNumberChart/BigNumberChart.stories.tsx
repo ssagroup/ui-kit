@@ -5,7 +5,7 @@ import { seededRandom } from '@ssa-ui-kit/utils';
 
 import { BigNumberChart } from './';
 
-const generateMockData = (): Array<{ x: string | null; y: number | null }> => {
+const generateMockData = (): Array<{ x: number | null; y: number | null }> => {
   const days = 15;
   const rand = seededRandom(10);
 
@@ -14,8 +14,7 @@ const generateMockData = (): Array<{ x: string | null; y: number | null }> => {
     .map((_, index) => ({
       x: DateTime.now()
         .minus({ days: index + 1 })
-        .toMillis()
-        .toString(),
+        .toMillis(),
       y: Math.floor(rand() * 100),
     }))
     .reverse();
@@ -85,7 +84,7 @@ export const Dynamic: Story = {
     trendLineProps: {
       curve: 'monotoneX',
       tooltipValueFormat: (value) => {
-        const date = DateTime.fromMillis(Number(value.x));
+        const date = DateTime.fromMillis(value.x as number);
         return date.toRelative();
       },
     },
@@ -102,7 +101,7 @@ export const Dynamic: Story = {
           });
           const newData = [
             ...prevData.slice(1),
-            { x: nextDay.toMillis().toString(), y: value },
+            { x: nextDay.toMillis(), y: value },
           ];
           return newData;
         });
