@@ -9,8 +9,7 @@ const StyledDrawerHeader = styled.header`
   justify-content: space-between;
 `;
 
-export interface DrawerHeaderProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface DrawerHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 

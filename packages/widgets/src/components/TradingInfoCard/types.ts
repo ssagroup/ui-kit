@@ -22,6 +22,6 @@ export type TradingInfoCardWrapperProps = Pick<
 };
 
 export interface TradingInfoCardTooltipProps {
-  trigger: string | number | JSX.Element;
+  trigger: string | number | React.JSX.Element;
   children: React.ReactNode;
 }

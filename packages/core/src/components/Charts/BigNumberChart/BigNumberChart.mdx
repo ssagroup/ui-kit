@@ -1,4 +1,4 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
 import * as BigNumberChartStories from './BigNumberChart.stories';
 
 <Meta of={BigNumberChartStories} />
@@ -93,7 +93,7 @@ return (
       color: '#28a745',
       curve: 'monotoneX',
       tooltipValueFormat: (value) => {
-        const date = DateTime.fromMillis(Number(value.x));
+        const date = DateTime.fromMillis(value.x as number);
         return `${date.toFormat('MMM dd')}: ${value.y}%`;
       },
     }}

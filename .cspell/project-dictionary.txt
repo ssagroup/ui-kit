@@ -84,6 +84,7 @@ hovertemplate
 hsl
 HTMLSVGElement
 IBMP
+internmap
 ipsum
 itemclick
 jsdom
@@ -190,6 +191,7 @@ uuidv4
 VERCEL
 viewports
 vtpit
+webstorage
 xanchor
 xaxes
 xaxis

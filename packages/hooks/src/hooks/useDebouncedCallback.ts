@@ -5,7 +5,7 @@ export const useDebouncedCallback = <T extends unknown[]>(
   func: (...args: T) => unknown,
   wait = 200,
 ) => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>(null);
   const handleCallback = useCallbackRef(func);
 
   const executedFunction = (...args: T) => {

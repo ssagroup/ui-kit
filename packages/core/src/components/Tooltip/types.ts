@@ -5,7 +5,7 @@ import {
   UseFloatingReturn,
   OffsetOptions,
 } from '@floating-ui/react';
-import { PointTooltipProps, Point } from '@nivo/line';
+import { PointTooltipProps, Point, LineSeries } from '@nivo/line';
 import { MapIconsType } from '@components/Icon/types';
 import { ProgressBarProps } from '@components/ProgressBar/types';
 import { SerializedStyles } from '@emotion/react';
@@ -32,7 +32,7 @@ export type UseTooltipArgs = Omit<TooltipProps, 'children'>;
 
 type UseInteractions = ReturnType<typeof useInteractions>;
 
-interface MutableRefObject<T> {
+interface RefObject<T> {
   current: T;
 }
 
@@ -40,7 +40,7 @@ export type UseTooltip = (props?: UseTooltipArgs) => Pick<
   TooltipProps,
   'size' | 'hasArrow' | 'arrowProps'
 > & {
-  arrowRef: MutableRefObject<null>;
+  arrowRef: RefObject<null>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 } & UseFloatingReturn &
@@ -77,10 +77,11 @@ export interface TooltipTriggerProps {
   className?: string;
 }
 
-export type SimpleChartTooltipProps = PointTooltipProps &
-  Pick<TooltipProps, 'size'> & {
-    renderValue?: (data: Point['data']) => React.ReactNode;
-  };
+export type SimpleChartTooltipProps<Series extends LineSeries> =
+  PointTooltipProps<Series> &
+    Pick<TooltipProps, 'size'> & {
+      renderValue?: (data: Point<Series>['data']) => React.ReactNode;
+    };
 
 export interface ProgressChartTooltipProps {
   caption: string;

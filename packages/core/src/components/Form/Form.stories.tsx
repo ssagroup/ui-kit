@@ -7,7 +7,7 @@ import {
   Description,
   Primary,
   Stories,
-} from '@storybook/addon-docs';
+} from '@storybook/addon-docs/blocks';
 import { within, userEvent } from 'storybook/test';
 import {
   useForm,

@@ -1,5 +1,5 @@
 import { useRef, Fragment } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { Meta } from '@storybook/react-webpack5';
 import { TranslationProvider } from '@contexts';
 import { USDT } from '@/fintech/constants';
@@ -32,40 +32,38 @@ export default {
     (Story, { args }) => {
       const ref = useRef<HTMLElement>(null);
       return (
-        <TranslationProvider defaultTranslations={translationConfig}>
-          <HeaderProvider>
-            <CurrencyProvider currency={USDT}>
-              <PeriodProvider>
-                <AppLayoutProvider isNavBarOpened={false} mainRef={ref}>
-                  <LayoutBase>
-                    <RightPaneBase ref={ref}>
-                      <GraphsProvider>
-                        <TableProvider>
-                          <PeriodProvider>
-                            <RouterProvider
-                              router={createBrowserRouter([
-                                {
-                                  path: '/*',
-                                  element: (
-                                    <Fragment>
-                                      <Header />
-                                      <Story {...args} />
-                                      <Toastify {...TOASTIFY_OPTIONS} />
-                                    </Fragment>
-                                  ),
-                                },
-                              ])}
-                            />
-                          </PeriodProvider>
-                        </TableProvider>
-                      </GraphsProvider>
-                    </RightPaneBase>
-                  </LayoutBase>
-                </AppLayoutProvider>
-              </PeriodProvider>
-            </CurrencyProvider>
-          </HeaderProvider>
-        </TranslationProvider>
+        <BrowserRouter>
+          <TranslationProvider defaultTranslations={translationConfig}>
+            <HeaderProvider>
+              <CurrencyProvider currency={USDT}>
+                <PeriodProvider>
+                  <AppLayoutProvider isNavBarOpened={false} mainRef={ref}>
+                    <LayoutBase>
+                      <RightPaneBase ref={ref}>
+                        <GraphsProvider>
+                          <TableProvider>
+                            <PeriodProvider>
+                              <Fragment>
+                                <Header />
+                                <Routes>
+                                  <Route
+                                    path="/*"
+                                    element={<Story {...args} />}
+                                  />
+                                </Routes>
+                                <Toastify {...TOASTIFY_OPTIONS} />
+                              </Fragment>
+                            </PeriodProvider>
+                          </TableProvider>
+                        </GraphsProvider>
+                      </RightPaneBase>
+                    </LayoutBase>
+                  </AppLayoutProvider>
+                </PeriodProvider>
+              </CurrencyProvider>
+            </HeaderProvider>
+          </TranslationProvider>
+        </BrowserRouter>
       );
     },
   ],

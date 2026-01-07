@@ -1,5 +1,14 @@
 import { useTheme } from '@emotion/react';
-import { MayHaveLabel, ResponsivePie } from '@nivo/pie';
+import {
+  MayHaveLabel,
+  ResponsivePie as ResponsivePieOriginal,
+} from '@nivo/pie';
+import { wrapNivoResponsiveComponent } from '../../utils/nivoReact19Compat';
+
+const ResponsivePie = wrapNivoResponsiveComponent(
+  ResponsivePieOriginal,
+  'ResponsivePie',
+);
 
 export type GaugeChartData = { color?: string; value?: number } & MayHaveLabel;
 

@@ -166,7 +166,7 @@ WithExternalValue.args = {
 export const WithInputRef: StoryObj<typeof DatePicker> = (
   args: DatePickerProps,
 ) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   console.log('inputRef:', inputRef.current?.value);
   return <DatePicker {...args} ref={inputRef} />;
 };

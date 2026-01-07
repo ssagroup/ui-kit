@@ -1989,10 +1989,10 @@ exports[`Form (rjsf) Render form 1`] = `
               data-testid="typeahead"
             >
               <div
-                aria-controls="typeahead-popup-:r7:"
+                aria-controls="typeahead-popup-_r_7_"
                 aria-expanded="false"
                 aria-haspopup="dialog"
-                aria-labelledby="typeahead-label-:r7:"
+                aria-labelledby="typeahead-label-_r_7_"
                 class="emotion-56"
                 data-state="closed"
                 data-testid="trigger-button"
@@ -2081,10 +2081,10 @@ exports[`Form (rjsf) Render form 1`] = `
               data-testid="typeahead"
             >
               <div
-                aria-controls="typeahead-popup-:ra:"
+                aria-controls="typeahead-popup-_r_a_"
                 aria-expanded="false"
                 aria-haspopup="dialog"
-                aria-labelledby="typeahead-label-:ra:"
+                aria-labelledby="typeahead-label-_r_a_"
                 class="emotion-56"
                 data-state="closed"
                 data-testid="trigger-button"
@@ -2265,10 +2265,10 @@ exports[`Form (rjsf) Render form 1`] = `
               data-testid="typeahead"
             >
               <div
-                aria-controls="typeahead-popup-:rd:"
+                aria-controls="typeahead-popup-_r_d_"
                 aria-expanded="false"
                 aria-haspopup="dialog"
-                aria-labelledby="typeahead-label-:rd:"
+                aria-labelledby="typeahead-label-_r_d_"
                 class="emotion-56"
                 data-state="closed"
                 data-testid="trigger-button"

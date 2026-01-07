@@ -5,15 +5,27 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "tsBuildInfoFile": "./tsbuildcache",
+    "skipDefaultLibCheck": true,
     "typeRoots": [
       "./src/types",
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
+    "types": ["node"],
     "paths": {
       "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["dist/**/*"]
+  "exclude": [
+    "dist/**/*",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.specBackup.ts",
+    "src/**/*.specBackup.tsx",
+    "src/**/*.e2e.ts",
+    "src/**/*.e2e.tsx",
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts"
+  ]
 }

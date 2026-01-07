@@ -14,13 +14,15 @@ export const EventInfoPopoverTrigger = React.forwardRef<
 ) {
   const context = usePopoverContext();
   const theme = useTheme();
-  const childrenRef = (
-    children as React.ReactNode & { ref: React.Ref<unknown> }
-  )?.ref;
+  // In React 19, ref is a regular prop, not a special property
+  // Access it from the element's props if children is a valid element
+  const childrenRef = React.isValidElement(children)
+    ? (children.props as { ref?: React.Ref<unknown> })?.ref
+    : undefined;
   const ref = useMergeRefs([context?.refs.setReference, propRef, childrenRef]);
 
   // `asChild` allows the user to pass any element as the anchor
-  if (asChild && React.isValidElement(children)) {
+  if (asChild && React.isValidElement<object>(children)) {
     return React.cloneElement(
       children,
       context?.getReferenceProps({
@@ -28,7 +30,7 @@ export const EventInfoPopoverTrigger = React.forwardRef<
         ...props,
         ...children.props,
         'data-state': context.open ? 'open' : 'closed',
-      }),
+      } as React.HTMLProps<HTMLElement>),
     );
   }
 

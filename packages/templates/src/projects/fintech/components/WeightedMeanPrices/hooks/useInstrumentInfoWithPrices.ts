@@ -10,7 +10,7 @@ export const useInstrumentInfoWithPrices = (props: WeightedMeanPrices) => {
     isIncreasing: null,
   });
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
-  const mockIndex = useRef<number>();
+  const mockIndex = useRef<number>(undefined);
 
   useEffect(() => {
     const interval = setInterval(() => {

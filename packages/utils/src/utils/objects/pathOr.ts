@@ -8,6 +8,8 @@ export const pathOr =
   ) =>
   (obj: T): R => {
     const result = originalPath(path)(obj);
-    return result === null || result === undefined ? defaultValue : result;
+    return result === null || result === undefined
+      ? defaultValue
+      : (result as R);
   };
 /* eslint-enable @typescript-eslint/no-explicit-any */

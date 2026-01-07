@@ -2,13 +2,13 @@ import { BaseSyntheticEvent, KeyboardEventHandler } from 'react';
 import type { FieldError, UseFormReturn } from 'react-hook-form';
 import type { Interpolation, Theme } from '@emotion/react';
 
-interface ExtendedInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface ExtendedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   'data-testid'?: string;
 }
 
-export interface InputProps
-  extends Partial<Pick<UseFormReturn, 'register' | 'control' | 'setValue'>> {
+export interface InputProps extends Partial<
+  Pick<UseFormReturn, 'register' | 'control' | 'setValue'>
+> {
   name: string;
   status?: keyof InputStatusColors;
   type?: string;

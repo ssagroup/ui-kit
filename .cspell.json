@@ -16,6 +16,8 @@
     "package.json",
     "packages/templates/.env",
     "**/{*,.*}/**/tsconfig.build.json",
-    "**/{*,.*}/**/tsconfig.json"
+    "**/{*,.*}/**/tsconfig.json",
+    "**/*.md",
+    "**/*.mdx"
   ]
 }

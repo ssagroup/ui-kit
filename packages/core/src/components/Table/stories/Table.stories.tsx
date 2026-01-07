@@ -7,7 +7,7 @@ import {
   Description,
   Primary,
   Stories,
-} from '@storybook/addon-docs';
+} from '@storybook/addon-docs/blocks';
 
 import Badge from '@components/Badge';
 import Icon from '@components/Icon';

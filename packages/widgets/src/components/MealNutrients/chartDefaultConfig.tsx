@@ -1,9 +1,11 @@
-import { LineProps } from '@nivo/line';
-import { DotsItem, useTheme as useNivoTheme } from '@nivo/core';
+import { LineSeries, LineSvgProps } from '@nivo/line';
+import { DotsItem, ResponsiveProps } from '@nivo/core';
 
 import { dateFormatters } from '@ssa-ui-kit/utils';
 
 import { CustomPointLayerProps } from './types';
+
+type LineProps = ResponsiveProps<LineSvgProps<LineSeries>>;
 
 const { formatDayOfWeek } = dateFormatters;
 
@@ -13,8 +15,6 @@ const CustomPointLayer = ({
   pointBorderWidth,
   ...props
 }: CustomPointLayerProps) => {
-  const theme = useNivoTheme();
-
   if (!currentPoint) {
     return;
   }
@@ -30,7 +30,6 @@ const CustomPointLayer = ({
         color={point.color}
         borderColor={point.borderColor}
         datum={point.data}
-        theme={theme}
         size={pointSize || 0}
         borderWidth={pointBorderWidth || 0}
         {...props}

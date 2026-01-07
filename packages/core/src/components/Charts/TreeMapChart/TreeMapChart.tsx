@@ -1,4 +1,4 @@
-import { ResponsiveTreeMap } from '@nivo/treemap';
+import { ResponsiveTreeMap as ResponsiveTreeMapOriginal } from '@nivo/treemap';
 import { useTheme } from '@emotion/react';
 
 import { WithWidgetCard, WidgetCardProps } from '@components/WidgetCard';
@@ -6,6 +6,12 @@ import { WithFullscreenMode } from '@components/FullscreenModeContext';
 
 import { TreeMapChartHeader } from './TreeMapChartHeader';
 import { TreeMapChartTooltip } from './TreeMapChartTooltip';
+import { wrapNivoResponsiveComponent } from '../utils/nivoReact19Compat';
+
+const ResponsiveTreeMap = wrapNivoResponsiveComponent(
+  ResponsiveTreeMapOriginal,
+  'ResponsiveTreeMap',
+);
 
 export type TreeNode = {
   name: string;

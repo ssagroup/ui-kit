@@ -9,6 +9,7 @@
     "strict": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "esModuleInterop": true,
     "target": "es6",
     "module": "esnext",
@@ -26,7 +27,8 @@
       "./node_modules/@types",
       "../../node_modules/@types"
     ],
-     "paths": {
+    "types": [],
+    "paths": {
       "@shared/*": ["./src/shared/*"],
       "@components/*": ["./src/components/*"],
       "@entities/*": ["./src/entities/*"],

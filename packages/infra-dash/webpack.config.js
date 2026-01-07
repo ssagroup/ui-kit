@@ -10,6 +10,10 @@ module.exports = () => {
       '@components': path.resolve(__dirname, './src/components'),
       '@entities': path.resolve(__dirname, './src/entities'),
       '@features': path.resolve(__dirname, './src/features'),
+      'react-use/lib/usePrevious': path.resolve(
+        __dirname,
+        '../../node_modules/react-use/lib/usePrevious.js',
+      ),
     },
   });
 

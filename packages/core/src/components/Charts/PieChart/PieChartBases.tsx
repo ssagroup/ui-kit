@@ -34,7 +34,14 @@ export const PieChartBase = styled.div<{
     }
     height: ${({ isFullscreenMode }) => (isFullscreenMode ? '100%' : '160px')};
 
+    /* Override ResponsiveWrapper's internal div (0×0) - it's created by @nivo library */
+
+    /* Structure: pie-chart-wrapper > our-wrapper > ResponsiveWrapper-internal-div > chart-div */
     & > div > div {
+      /* Fix ResponsiveWrapper's internal div that has width: 0px; height: 0px; overflow: visible; */
+
+      width: 100% !important;
+
       display: ${({ isFullscreenMode }) =>
         isFullscreenMode ? 'flex' : 'block'};
       justify-content: ${({ isFullscreenMode }) =>

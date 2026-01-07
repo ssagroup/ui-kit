@@ -54,9 +54,11 @@ const FieldControlBase = styled.div<FieldContextValue>`
   }
 `;
 
-export interface FieldControlProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  controlRef?: React.RefObject<HTMLElement>;
+export interface FieldControlProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
+  controlRef?: React.RefObject<HTMLElement | null>;
   children: React.ReactNode | ((props: FieldContextValue) => React.ReactNode);
 }
 
@@ -76,12 +78,14 @@ export const FieldControl = React.forwardRef<HTMLDivElement, FieldControlProps>(
     const ctx = useFieldContext();
     const baseProps = { ...props, ...ctx };
 
-    const internalRef = useRef<HTMLElement | null>(null);
+    const internalRef = useRef<HTMLElement>(null);
 
     let _children = typeof children === 'function' ? children(ctx) : children;
     if (
       ctx.forwardFocus &&
-      isValidElement(_children) &&
+      isValidElement<{
+        ref?: React.Ref<HTMLElement | null>;
+      }>(_children) &&
       isForwardRefComponent(_children)
     ) {
       const setRef =
@@ -92,13 +96,18 @@ export const FieldControl = React.forwardRef<HTMLDivElement, FieldControlProps>(
             if (typeof defaultRef === 'function') {
               defaultRef(element);
             } else {
-              (defaultRef as React.MutableRefObject<unknown>).current = element;
+              (defaultRef as React.RefObject<unknown>).current = element;
             }
           }
         };
 
-      _children = cloneElement(_children as React.ReactElement, {
-        ref: setRef((children as { ref?: ForwardedRef<unknown> }).ref),
+      // In React 19, ref is a regular prop, not a special property
+      // Access it from the element's props
+      const existingRef = _children.props?.ref as
+        | ForwardedRef<unknown>
+        | undefined;
+      _children = cloneElement(_children, {
+        ref: setRef(existingRef),
       });
     }
 

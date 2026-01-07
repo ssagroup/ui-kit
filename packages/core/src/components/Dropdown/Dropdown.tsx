@@ -93,15 +93,18 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
-  const items = (childrenArray as React.ReactElement[]).map((child, index) => {
-    options.push(child.props);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const items = (childrenArray as React.ReactElement<any>[]).map(
+    (child, index) => {
+      options.push(child.props);
 
-    return React.cloneElement(child, {
-      index,
-      onClick: onChange.bind(this),
-      ...child.props,
-    });
-  });
+      return React.cloneElement(child, {
+        index,
+        onClick: onChange.bind(this),
+        ...child.props,
+      });
+    },
+  );
 
   const contextValue: DropdownContextType = React.useMemo(
     () => ({ onChange, activeItem }),

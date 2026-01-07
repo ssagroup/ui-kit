@@ -3,6 +3,14 @@
   "version": "2.33.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -28,10 +36,10 @@
   },
   "dependencies": {
     "@ssa-ui-kit/utils": "workspace:^",
-    "usehooks-ts": "3.1.0"
+    "usehooks-ts": "3.1.1"
   },
   "peerDependencies": {
-    "react": "18.x"
+    "react": "19.x"
   },
   "peerDependenciesMeta": {
     "@types/react": {

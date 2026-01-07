@@ -18,8 +18,9 @@ import {
 
 export type CandlestickChartFeatures = 'header' | 'fullscreenMode';
 
-export interface CandlestickChartProps
-  extends Partial<Omit<PlotParams, 'data' | 'style'>> {
+export interface CandlestickChartProps extends Partial<
+  Omit<PlotParams, 'data' | 'style'>
+> {
   data: CandlestickChartData;
   style?: CandlestickStyle;
   title?: string;

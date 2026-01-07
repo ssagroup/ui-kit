@@ -1,6 +1,6 @@
 import {
   createContext,
-  MutableRefObject,
+  RefObject,
   ReactNode,
   useContext,
   useEffect,
@@ -12,8 +12,8 @@ import { DEFAULT_DATE_FORMAT } from '@hr/utils';
 import { getDateColumnWidth } from '../utils';
 
 export type EventInfoContextType = {
-  firstEventCellRef: MutableRefObject<HTMLTableCellElement | null>;
-  photoCellRef: MutableRefObject<HTMLTableCellElement | null>;
+  firstEventCellRef: RefObject<HTMLTableCellElement | null>;
+  photoCellRef: RefObject<HTMLTableCellElement | null>;
   popoverOffsetLeft: number;
   dateColumnWidth: number;
   items: EventItemInfo[];
@@ -44,8 +44,8 @@ export const EventInfoProvider = ({
   EventInfoContextType,
   'items' | 'outputDateFormat' | 'suffixNeeded'
 >) => {
-  const firstEventCellRef = useRef<HTMLTableCellElement | null>(null);
-  const photoCellRef = useRef<HTMLTableCellElement | null>(null);
+  const firstEventCellRef = useRef<HTMLTableCellElement>(null);
+  const photoCellRef = useRef<HTMLTableCellElement>(null);
   const [popoverOffsetLeft, setPopoverOffsetLeft] = useState(0);
   const [dateColumnWidth, setDateColumnWidth] = useState(65);
 
