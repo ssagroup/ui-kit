@@ -25,6 +25,7 @@ export const CollapsibleNavBar = ({
   className,
   useMatchPattern,
   onChange,
+  exactMatch = false,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
   const { width } = useWindowSize();
@@ -49,7 +50,8 @@ export const CollapsibleNavBar = ({
     <CollapsibleNavBarProvider
       theme={theme}
       subMenuMaxWidth={subMenuMaxWidth}
-      showIconTooltip={showIconTooltip}>
+      showIconTooltip={showIconTooltip}
+      exactMatch={exactMatch}>
       <CollapsibleNavBarBase
         className={className + (isChecked ? ' opened' : '')}
         data-theme={theme}>
