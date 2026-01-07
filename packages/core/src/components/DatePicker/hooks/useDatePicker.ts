@@ -2,22 +2,97 @@ import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useDatePickerMask } from './useDatePickerMask';
-import { DATE_MAX, DATE_MIN, INVALID_DATE, OUT_OF_RANGE } from '../constants';
-import { CalendarType, DatePickerProps } from '../types';
+import {
+  DATE_MAX,
+  DATE_MIN,
+  MONTH_DATE_MIN,
+  MONTH_DATE_MAX,
+  DEFAULT_MONTH_MASK_FORMAT,
+  DEFAULT_MASK_FORMAT,
+  DEFAULT_MASK,
+  DEFAULT_MONTH_MASK,
+  FULL_DATE_LENGTH,
+  FULL_MONTH_DATE_LENGTH,
+  INVALID_DATE,
+  OUT_OF_RANGE,
+  PICKER_TYPE,
+  CALENDAR_TYPE,
+} from '../constants';
+import {
+  CalendarType,
+  DatePickerProps,
+  DatePickerFormat,
+  PickerType,
+} from '../types';
+
+const getFormatForPickerType = (pickerType?: PickerType): DatePickerFormat => {
+  switch (pickerType) {
+    case PICKER_TYPE.MONTHS:
+      return DEFAULT_MONTH_MASK_FORMAT as DatePickerFormat;
+    case PICKER_TYPE.DAYS:
+    default:
+      return DEFAULT_MASK_FORMAT as DatePickerFormat;
+  }
+};
+
+const isMonthOnlyFormat = (format?: string): boolean => {
+  if (!format) return false;
+  const lowerFormat = format.toLowerCase();
+  const hasMonth = lowerFormat.includes('mm');
+  const hasYear = lowerFormat.includes('yyyy');
+  const hasDay = lowerFormat.includes('dd');
+  return hasMonth && hasYear && !hasDay;
+};
+
+const getExpectedDateLength = (format?: string): number => {
+  if (!format) return FULL_DATE_LENGTH;
+  if (isMonthOnlyFormat(format)) {
+    return FULL_MONTH_DATE_LENGTH;
+  }
+  return FULL_DATE_LENGTH;
+};
+
+const getDefaultDateRange = (
+  format?: string,
+): { defaultMin: string; defaultMax: string } => {
+  if (isMonthOnlyFormat(format)) {
+    return {
+      defaultMin: MONTH_DATE_MIN,
+      defaultMax: MONTH_DATE_MAX,
+    };
+  }
+  return {
+    defaultMin: DATE_MIN,
+    defaultMax: DATE_MAX,
+  };
+};
+
+const getMaskForFormat = (format?: string): string => {
+  if (isMonthOnlyFormat(format)) {
+    return DEFAULT_MONTH_MASK;
+  }
+  return DEFAULT_MASK;
+};
 
 export const useDatePicker = ({
-  dateMin = DATE_MIN,
-  dateMax = DATE_MAX,
+  dateMin,
+  dateMax,
   name,
   defaultValue,
-  format = 'mm/dd/yyyy',
+  format: propFormat,
   maskOptions,
+  pickerType = PICKER_TYPE.DAYS,
   onOpen,
   onClose,
   onError,
   onChange,
   ...rest
 }: DatePickerProps) => {
+  const format: DatePickerFormat =
+    propFormat || getFormatForPickerType(pickerType);
+  const { defaultMin, defaultMax } = getDefaultDateRange(format);
+  const finalDateMin = dateMin || defaultMin;
+  const finalDateMax = dateMax || defaultMax;
   const { clearErrors, setError, setValue } = useFormContext();
   const inputValue = useWatch({ name });
   const [isLoading, setLoading] = useState(true);
@@ -43,16 +118,25 @@ export const useDatePicker = ({
     month: splittedFormat.findIndex((item) => item === 'mm'),
     year: splittedFormat.findIndex((item) => item === 'yyyy'),
   });
-  const [calendarType, setCalendarType] = useState<CalendarType>('days');
+  const [calendarType, setCalendarType] = useState<CalendarType>(
+    pickerType === PICKER_TYPE.MONTHS
+      ? CALENDAR_TYPE.MONTHS
+      : CALENDAR_TYPE.DAYS,
+  );
   const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     DateTime | undefined
   >(undefined);
   const luxonFormat = format.replace('mm', 'MM');
-  const dateMinParts = dateMin.split('/').map(Number);
-  const dateMaxParts = dateMax.split('/').map(Number);
+  const expectedDateLength = getExpectedDateLength(format);
+  const dateMinParts = finalDateMin.split('/').map(Number);
+  const dateMaxParts = finalDateMax.split('/').map(Number);
 
+  const defaultMask = getMaskForFormat(format);
   const maskInputRef = useDatePickerMask({
-    maskOptions,
+    maskOptions: {
+      mask: defaultMask,
+      ...(maskOptions || {}),
+    },
     dateMaxParts,
     dateMinParts,
     formatIndexes,
@@ -61,19 +145,25 @@ export const useDatePicker = ({
   const dateMaxDT = DateTime.fromObject({
     year: dateMaxParts[formatIndexes['year']],
     month: dateMaxParts[formatIndexes['month']],
-    day: dateMaxParts[formatIndexes['day']],
+    day: formatIndexes['day'] !== -1 ? dateMaxParts[formatIndexes['day']] : 1,
   });
   const dateMinDT = DateTime.fromObject({
     year: dateMinParts[formatIndexes['year']],
     month: dateMinParts[formatIndexes['month']],
-    day: dateMinParts[formatIndexes['day']],
+    day: formatIndexes['day'] !== -1 ? dateMinParts[formatIndexes['day']] : 1,
   });
 
   const safeOnChange = (newDateTime?: DateTime) => {
-    const _newDateTime = newDateTime ? newDateTime.startOf('day') : undefined;
+    const _newDateTime = newDateTime
+      ? pickerType === PICKER_TYPE.MONTHS
+        ? newDateTime.startOf('month')
+        : newDateTime.startOf('day')
+      : undefined;
 
     const _dateTimeForChangeEvent = dateTimeForChangeEvent
-      ? dateTimeForChangeEvent.startOf('day')
+      ? pickerType === PICKER_TYPE.MONTHS
+        ? dateTimeForChangeEvent.startOf('month')
+        : dateTimeForChangeEvent.startOf('day')
       : undefined;
     if (_newDateTime?.toMillis() !== _dateTimeForChangeEvent?.toMillis()) {
       setDateTimeForChangeEvent(newDateTime);
@@ -97,7 +187,7 @@ export const useDatePicker = ({
 
   const processValue = (newValue: string) => {
     const newDateTime =
-      typeof newValue === 'string' && newValue.length === 10
+      typeof newValue === 'string' && newValue.length === expectedDateLength
         ? DateTime.fromFormat(newValue, luxonFormat)
         : undefined;
 
@@ -135,7 +225,7 @@ export const useDatePicker = ({
     if (
       typeof inputValue === 'string' &&
       inputValue.length &&
-      inputValue.length < 10
+      inputValue.length < expectedDateLength
     ) {
       setIsOpen(false);
       setTimeout(() => {
@@ -144,7 +234,10 @@ export const useDatePicker = ({
     }
     let newDateTime;
 
-    if (typeof inputValue === 'string' && inputValue.length === 10) {
+    if (
+      typeof inputValue === 'string' &&
+      inputValue.length === expectedDateLength
+    ) {
       newDateTime = DateTime.fromFormat(inputValue, luxonFormat);
       setValue(name, inputValue);
       processValue(inputValue);
@@ -153,7 +246,9 @@ export const useDatePicker = ({
     const newCalendarViewDateTime =
       newDateTime && newDateTime.isValid
         ? newDateTime
-        : DateTime.now().set({ day: 1 });
+        : pickerType === PICKER_TYPE.MONTHS
+          ? DateTime.now().startOf('month')
+          : DateTime.now().set({ day: 1 });
 
     if (newCalendarViewDateTime < dateMinDT) {
       const { year, month, day } = dateMinDT;
@@ -182,7 +277,11 @@ export const useDatePicker = ({
         onOpen?.();
       } else {
         onClose?.();
-        setCalendarType('days');
+        setCalendarType(
+          pickerType === PICKER_TYPE.MONTHS
+            ? CALENDAR_TYPE.MONTHS
+            : CALENDAR_TYPE.DAYS,
+        );
       }
     }
   }, [isOpen]);
@@ -214,6 +313,7 @@ export const useDatePicker = ({
   }, []);
 
   return {
+    format,
     formatIndexes,
     dateMinParts,
     dateMaxParts,
@@ -233,5 +333,6 @@ export const useDatePicker = ({
     setDateTime,
     setIsOpen,
     handleBlur,
+    pickerType,
   };
 };

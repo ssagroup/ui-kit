@@ -4,6 +4,7 @@ import Wrapper from '@components/Wrapper';
 import { useDatePickerContext } from '../useDatePickerContext';
 import { getYearsList } from '../utils';
 import * as S from '../styles';
+import { CALENDAR_TYPE } from '../constants';
 
 export const YearsView = () => {
   const {
@@ -45,9 +46,11 @@ export const YearsView = () => {
     const { target } = event;
     const selectedYear = Number((target as HTMLDivElement).innerHTML);
     const newDate = calendarViewDateTime?.set({ year: selectedYear });
-    setCalendarType('months');
+
+    setCalendarType(CALENDAR_TYPE.MONTHS);
     setCalendarViewDateTime(newDate);
     setDateTime(newDate);
+
     if (newDate) {
       onYearChange?.(newDate.toJSDate());
     }

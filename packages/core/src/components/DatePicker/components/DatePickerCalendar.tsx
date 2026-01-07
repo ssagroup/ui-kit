@@ -3,13 +3,14 @@ import * as DPC from '.';
 import * as C from '../..';
 import { CalendarType } from '../types';
 import { useDatePickerContext } from '../useDatePickerContext';
+import { CALENDAR_TYPE } from '../constants';
 
 export const DatePickerCalendar = () => {
   const theme = useTheme();
   const components: Record<CalendarType, () => React.ReactNode> = {
-    days: DPC.DaysView,
-    months: DPC.MonthsView,
-    years: DPC.YearsView,
+    [CALENDAR_TYPE.DAYS]: DPC.DaysView,
+    [CALENDAR_TYPE.MONTHS]: DPC.MonthsView,
+    [CALENDAR_TYPE.YEARS]: DPC.YearsView,
   };
   const { calendarType, classNames } = useDatePickerContext();
   const Component = components[calendarType];

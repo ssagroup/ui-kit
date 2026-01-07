@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import Wrapper from '@components/Wrapper';
 import * as S from '../styles';
 import { useDatePickerContext } from '../useDatePickerContext';
-import { MONTHS } from '../constants';
+import { MONTHS, PICKER_TYPE, CALENDAR_TYPE } from '../constants';
 
 export const MonthsView = () => {
   const {
@@ -17,6 +17,8 @@ export const MonthsView = () => {
     setDateTime,
     setCalendarViewDateTime,
     onMonthChange,
+    pickerType,
+    setIsOpen,
   } = useDatePickerContext();
 
   const isHighlightEnabled = !!highlightDates?.enabled;
@@ -33,12 +35,28 @@ export const MonthsView = () => {
     const selectedMonth = (target as HTMLDivElement).innerHTML;
     const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
     const newDate = calendarViewDateTime?.set({ month: monthNumber + 1 });
-    setCalendarViewDateTime(newDate);
-    setDateTime(newDate);
-    if (newDate) {
-      onMonthChange?.(newDate.toJSDate());
+
+    if (pickerType === PICKER_TYPE.DAYS) {
+      setCalendarViewDateTime(newDate);
+      setDateTime(newDate);
+
+      if (newDate) {
+        onMonthChange?.(newDate.toJSDate());
+      }
+
+      setCalendarType(CALENDAR_TYPE.DAYS);
+    } else if (pickerType === PICKER_TYPE.MONTHS) {
+      if (newDate) {
+        const monthStartDate = newDate.startOf('month');
+
+        setCalendarViewDateTime(monthStartDate);
+        setDateTime(monthStartDate);
+
+        onMonthChange?.(monthStartDate.toJSDate());
+
+        setIsOpen(false);
+      }
     }
-    setCalendarType('days');
   };
   return (
     <Wrapper

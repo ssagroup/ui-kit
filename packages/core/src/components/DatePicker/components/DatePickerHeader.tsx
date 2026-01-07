@@ -1,15 +1,34 @@
 import * as C from '../..';
 import * as DPC from '.';
 import { useDatePickerContext } from '../useDatePickerContext';
+import { CALENDAR_TYPE, PICKER_TYPE } from '../constants';
 
 export const DatePickerHeader = () => {
-  const { calendarType, setCalendarType, calendarViewDateTime, classNames } =
-    useDatePickerContext();
+  const {
+    calendarType,
+    setCalendarType,
+    calendarViewDateTime,
+    classNames,
+    pickerType,
+  } = useDatePickerContext();
   const handleCalendarTypeChange = () => {
-    if (calendarType === 'days') {
-      setCalendarType('years');
+    if (pickerType === PICKER_TYPE.MONTHS) {
+      // For month picker: switch between months and years
+      if (calendarType === CALENDAR_TYPE.MONTHS) {
+        setCalendarType(CALENDAR_TYPE.YEARS);
+      } else {
+        setCalendarType(CALENDAR_TYPE.MONTHS);
+      }
     } else {
-      setCalendarType('days');
+      // For day picker: cycle through days -> months -> years -> months -> days
+      if (calendarType === CALENDAR_TYPE.DAYS) {
+        setCalendarType(CALENDAR_TYPE.MONTHS);
+      } else if (calendarType === CALENDAR_TYPE.MONTHS) {
+        setCalendarType(CALENDAR_TYPE.YEARS);
+      } else {
+        // From years, go back to months (not directly to days)
+        setCalendarType(CALENDAR_TYPE.MONTHS);
+      }
     }
   };
   return (
@@ -26,7 +45,12 @@ export const DatePickerHeader = () => {
       <C.Button
         endIcon={
           <C.Icon
-            name={calendarType === 'days' ? 'carrot-down' : 'carrot-up'}
+            name={
+              calendarType === CALENDAR_TYPE.DAYS ||
+              calendarType === CALENDAR_TYPE.MONTHS
+                ? 'carrot-down'
+                : 'carrot-up'
+            }
             size={14}
             tooltip=""
           />
@@ -45,7 +69,9 @@ export const DatePickerHeader = () => {
             display: 'none',
           },
         }}>
-        {calendarViewDateTime?.toFormat('LLLL yyyy')}
+        {calendarViewDateTime?.toFormat(
+          calendarType === CALENDAR_TYPE.YEARS ? 'yyyy' : 'LLLL yyyy',
+        )}
       </C.Button>
       <DPC.DatePickerMonthsSwitch />
     </C.PopoverHeading>

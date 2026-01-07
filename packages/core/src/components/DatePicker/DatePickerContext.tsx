@@ -1,8 +1,18 @@
 import { createContext } from 'react';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
-import { DatePickerContextProps, DatePickerProps } from './types';
-import { DATE_MAX, DATE_MIN, DEFAULT_MASK_FORMAT } from './constants';
+import {
+  DatePickerContextProps,
+  DatePickerProps,
+  DatePickerFormat,
+} from './types';
+import {
+  DATE_MAX,
+  DATE_MIN,
+  DEFAULT_MASK_FORMAT,
+  PICKER_TYPE,
+  CALENDAR_TYPE,
+} from './constants';
 import { useDatePicker } from './hooks';
 
 export const DatePickerContext = createContext<DatePickerContextProps>({
@@ -10,10 +20,11 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
   name: '',
   maskOptions: {},
   openCalendarMode: 'icon',
+  pickerType: PICKER_TYPE.DAYS,
   inputRef: { current: null },
   inputProps: {},
   isOpen: false,
-  calendarType: 'days',
+  calendarType: CALENDAR_TYPE.DAYS,
   inputValue: undefined,
   dateTime: undefined,
   calendarViewDateTime: undefined,
@@ -42,7 +53,13 @@ export const DatePickerProvider = ({
 }: React.PropsWithChildren<
   DatePickerProps & Pick<DatePickerContextProps, 'inputRef'>
 >) => {
-  const { maskInputRef, formatIndexes, ...restHook } = useDatePicker(rest);
+  const {
+    maskInputRef,
+    formatIndexes,
+    format: hookFormat,
+    pickerType: hookPickerType,
+    ...restHook
+  } = useDatePicker(rest);
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     restHook.handleBlur(e);
@@ -54,6 +71,10 @@ export const DatePickerProvider = ({
       value={{
         ...rest,
         ...restHook,
+        pickerType: hookPickerType || rest.pickerType || PICKER_TYPE.DAYS,
+        format: (hookFormat ||
+          rest.format ||
+          DEFAULT_MASK_FORMAT) as DatePickerFormat,
         formatIndexes,
         inputRef: useMergeRefs([maskInputRef, rest.inputRef]),
         onBlur: handleBlur,

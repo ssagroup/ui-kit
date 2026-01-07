@@ -6,6 +6,7 @@ import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
 import { DatePicker } from './DatePicker';
 import { DatePickerProps } from './types';
+import { PICKER_TYPE } from './constants';
 
 export default {
   title: 'Components/DatePicker',
@@ -174,4 +175,17 @@ WithInputRef.args = {
   ...commonArgs,
   name: 'field7',
   defaultValue: '02/10/2025',
+};
+
+export const MonthlyView: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+MonthlyView.args = {
+  ...commonArgs,
+  name: 'field8',
+  pickerType: PICKER_TYPE.MONTHS,
+  defaultValue: '04/2025',
+  helperText: 'Select a month',
 };
