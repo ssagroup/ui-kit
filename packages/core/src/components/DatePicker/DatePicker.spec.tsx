@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { within } from '@testing-library/dom';
 import { DatePicker } from '.';
 import { DatePickerProps } from './types';
+import { PICKER_TYPE } from './constants';
 
 const ResponsivePieMock = () => <div data-testid="responsive-pie"></div>;
 
@@ -200,5 +201,65 @@ describe('DatePicker', () => {
     const buttonEl = getByTestId('datepicker-button');
     await user.click(buttonEl);
     expect(mockOnOpen).toHaveBeenCalledTimes(0);
+  });
+
+  it('Month view: shows months and closes calendar on month selection', async () => {
+    const {
+      user,
+      mockOnChange,
+      mockOnMonthChange,
+      getByRole,
+      queryByRole,
+      getByTestId,
+    } = setup({
+      pickerType: PICKER_TYPE.MONTHS,
+      defaultValue: '04/2025',
+    });
+
+    const inputEl = getByTestId('datepicker-input');
+    expect(inputEl).toHaveAttribute('placeholder', 'mm/yyyy');
+
+    const buttonEl = getByTestId('datepicker-button');
+    await user.click(buttonEl);
+
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toBeInTheDocument();
+
+    // Should show months view
+    const monthEl = within(dialogEl).getByText('May', { exact: true });
+    await user.click(monthEl);
+
+    // Calendar should close after selecting a month
+    const dialogEl2 = queryByRole('dialog');
+    expect(dialogEl2).toBeNull();
+
+    expect(mockOnChange).toHaveBeenCalled();
+    expect(mockOnMonthChange).toHaveBeenCalled();
+  });
+
+  it('Month view: navigates between months and years', async () => {
+    const { user, getByRole, getByTestId } = setup({
+      pickerType: PICKER_TYPE.MONTHS,
+      defaultValue: '04/2025',
+    });
+
+    const buttonEl = getByTestId('datepicker-button');
+    await user.click(buttonEl);
+
+    const dialogEl = getByRole('dialog');
+    const calendarTypeChangeButton = within(dialogEl).getByTestId(
+      'calendar-type-change-button',
+    );
+
+    // Should show month and year
+    expect(calendarTypeChangeButton.textContent).toContain('2025');
+
+    // Click to go to years view
+    await user.click(calendarTypeChangeButton);
+    expect(calendarTypeChangeButton.textContent).toBe('2025');
+
+    // Click again to go back to months view
+    await user.click(calendarTypeChangeButton);
+    expect(calendarTypeChangeButton.textContent).toContain('2025');
   });
 });
