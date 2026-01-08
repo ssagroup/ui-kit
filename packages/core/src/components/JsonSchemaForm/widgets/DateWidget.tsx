@@ -15,7 +15,7 @@ import {
 
 import { DatePicker } from '@components/DatePicker';
 import { DatePickerFormat, PickerType } from '@components/DatePicker/types';
-import { PICKER_TYPE } from '@components/DatePicker/constants';
+import { PICKER_TYPE, VALID_DATE_FORMATS } from '@components/DatePicker/constants';
 
 /**
  * Type guards to ensure RJSF ui:options match our DatePicker requirements
@@ -23,7 +23,7 @@ import { PICKER_TYPE } from '@components/DatePicker/constants';
 const isValidDatePickerFormat = (value: unknown): value is DatePickerFormat => {
   return (
     typeof value === 'string' &&
-    ['mm/dd/yyyy', 'dd/mm/yyyy', 'mm/yyyy', 'yyyy'].includes(value)
+    VALID_DATE_FORMATS.includes(value as DatePickerFormat)
   );
 };
 
