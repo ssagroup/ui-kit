@@ -12,6 +12,10 @@ export const DatePickerHeader = () => {
     pickerType,
   } = useDatePickerContext();
   const handleCalendarTypeChange = () => {
+    if (pickerType === PICKER_TYPE.YEARS) {
+      return;
+    }
+
     if (pickerType === PICKER_TYPE.MONTHS) {
       // For month picker: switch between months and years
       if (calendarType === CALENDAR_TYPE.MONTHS) {
@@ -44,16 +48,18 @@ export const DatePickerHeader = () => {
       as={'div'}>
       <C.Button
         endIcon={
-          <C.Icon
-            name={
-              calendarType === CALENDAR_TYPE.DAYS ||
-              calendarType === CALENDAR_TYPE.MONTHS
-                ? 'carrot-down'
-                : 'carrot-up'
-            }
-            size={14}
-            tooltip=""
-          />
+          pickerType !== PICKER_TYPE.YEARS ? (
+            <C.Icon
+              name={
+                calendarType === CALENDAR_TYPE.DAYS ||
+                calendarType === CALENDAR_TYPE.MONTHS
+                  ? 'carrot-down'
+                  : 'carrot-up'
+              }
+              size={14}
+              tooltip=""
+            />
+          ) : null
         }
         variant="tertiary"
         onClick={handleCalendarTypeChange}
@@ -65,12 +71,16 @@ export const DatePickerHeader = () => {
           lineHeight: '24px',
           height: 32,
           gap: 16,
+          cursor: pickerType === PICKER_TYPE.YEARS ? 'default' : 'pointer',
           '&:focus::before': {
             display: 'none',
           },
         }}>
         {calendarViewDateTime?.toFormat(
-          calendarType === CALENDAR_TYPE.YEARS ? 'yyyy' : 'LLLL yyyy',
+          calendarType === CALENDAR_TYPE.YEARS ||
+            pickerType === PICKER_TYPE.YEARS
+            ? 'yyyy'
+            : 'LLLL yyyy',
         )}
       </C.Button>
       <DPC.DatePickerMonthsSwitch />

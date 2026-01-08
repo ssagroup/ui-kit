@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
-import { DatePicker } from './DatePicker';
+import { DatePicker } from '@components';
 import { DatePickerProps } from './types';
 import { PICKER_TYPE } from './constants';
 
@@ -188,4 +188,17 @@ MonthlyView.args = {
   pickerType: PICKER_TYPE.MONTHS,
   defaultValue: '04/2025',
   helperText: 'Select a month',
+};
+
+export const YearView: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+YearView.args = {
+  ...commonArgs,
+  name: 'field9',
+  pickerType: PICKER_TYPE.YEARS,
+  defaultValue: '2025',
+  helperText: 'Select a year',
 };

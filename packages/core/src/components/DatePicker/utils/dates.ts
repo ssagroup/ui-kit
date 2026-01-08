@@ -48,7 +48,7 @@ export const getYearsList = (props?: {
 
 export const processDate = (
   dateParts: {
-    month: string;
+    month?: string;
     day?: string;
     year: string;
   },

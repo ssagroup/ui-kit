@@ -3,9 +3,10 @@ import { useMask } from '@react-input/mask';
 import { DateTime } from 'luxon';
 import { InputProps } from '@components/Input/types';
 import { PICKER_TYPE, CALENDAR_TYPE } from './constants';
+import { RegisterOptions } from 'react-hook-form';
 
 export type PickerType = (typeof PICKER_TYPE)[keyof typeof PICKER_TYPE];
-export type DatePickerFormat = 'mm/dd/yyyy' | 'dd/mm/yyyy' | 'mm/yyyy';
+export type DatePickerFormat = 'mm/dd/yyyy' | 'dd/mm/yyyy' | 'mm/yyyy' | 'yyyy';
 
 export type DatePickerProps = {
   name: string;
@@ -53,6 +54,7 @@ export type DatePickerProps = {
   onMonthChange?: (date: Date) => void;
   onYearChange?: (date: Date) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  validationSchema?: RegisterOptions;
 };
 
 export type DatePickerContextProps = Omit<

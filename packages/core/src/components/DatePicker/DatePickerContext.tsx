@@ -33,6 +33,7 @@ export const DatePickerContext = createContext<DatePickerContextProps>({
   dateMinDT: DateTime.fromFormat(DATE_MIN, DEFAULT_MASK_FORMAT),
   dateMaxDT: DateTime.fromFormat(DATE_MAX, DEFAULT_MASK_FORMAT),
   formatIndexes: { day: 1, month: 0, year: 2 },
+  validationSchema: undefined,
   setIsOpen: () => {
     // no-op
   },

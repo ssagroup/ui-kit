@@ -14,6 +14,10 @@ jest.mock('@nivo/pie', () => ({
 }));
 
 describe('DatePicker', () => {
+  beforeAll(() => {
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
   function setup(props: Partial<DatePickerProps> = {}) {
     const mockOnChange = jest.fn();
     const mockOnOpen = jest.fn();
@@ -152,8 +156,6 @@ describe('DatePicker', () => {
   });
 
   it('Year change event must be called', async () => {
-    const scrollIntoViewFn = window.HTMLElement.prototype.scrollIntoView;
-    window.HTMLElement.prototype.scrollIntoView = jest.fn();
     const { user, mockOnYearChange, getByRole, getByTestId } = setup();
 
     const buttonEl = getByTestId('datepicker-button');
@@ -167,19 +169,30 @@ describe('DatePicker', () => {
     );
     expect(calendarTypeChangeButton.textContent).toEqual('January 2025');
 
+    // First click: days -> months
+    await user.click(calendarTypeChangeButton);
+    expect(
+      within(dialogEl).queryByText('Jan', { exact: true }),
+    ).toBeInTheDocument();
+
+    // Second click: months -> years
     await user.click(calendarTypeChangeButton);
 
     const year2026 = within(dialogEl).getByText('2026');
     await user.click(year2026);
 
+    // After selecting year, it returns to months view
     const monthFeb = within(dialogEl).getByText('Feb', { exact: true });
     await user.click(monthFeb);
+
+    // After selecting month, it returns to days view
+    const day15 = within(dialogEl).getByText('15');
+    await user.click(day15);
 
     const inputEl = getByTestId('datepicker-input');
     expect(inputEl).toHaveValue('02/15/2026');
 
     expect(mockOnYearChange).toHaveBeenCalledTimes(1);
-    window.HTMLElement.prototype.scrollIntoView = scrollIntoViewFn;
   });
 
   // it('Error event must be called', () => {
@@ -261,5 +274,39 @@ describe('DatePicker', () => {
     // Click again to go back to months view
     await user.click(calendarTypeChangeButton);
     expect(calendarTypeChangeButton.textContent).toContain('2025');
+  });
+
+  it('Year view: shows years and closes calendar on year selection', async () => {
+    const {
+      user,
+      mockOnChange,
+      mockOnYearChange,
+      getByRole,
+      queryByRole,
+      getByTestId,
+    } = setup({
+      pickerType: PICKER_TYPE.YEARS,
+      defaultValue: '2025',
+    });
+
+    const inputEl = getByTestId('datepicker-input');
+    expect(inputEl).toHaveAttribute('placeholder', 'yyyy');
+
+    const buttonEl = getByTestId('datepicker-button');
+    await user.click(buttonEl);
+
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toBeInTheDocument();
+
+    // Should show years view
+    const yearEl = within(dialogEl).getByText('2026');
+    await user.click(yearEl);
+
+    // Calendar should close after selecting a year
+    const dialogEl2 = queryByRole('dialog');
+    expect(dialogEl2).toBeNull();
+
+    expect(mockOnChange).toHaveBeenCalled();
+    expect(mockOnYearChange).toHaveBeenCalled();
   });
 });

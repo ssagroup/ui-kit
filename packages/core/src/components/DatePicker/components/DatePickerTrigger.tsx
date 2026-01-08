@@ -20,6 +20,7 @@ export const DatePickerTrigger = () => {
     showCalendarIcon,
     onBlur: handleBlur,
     setIsOpen,
+    validationSchema,
   } = useDatePickerContext();
 
   const { inputProps: inputElementProps, ...rest } =
@@ -112,6 +113,8 @@ export const DatePickerTrigger = () => {
           errors={fieldError as FieldError}
           status={fieldStatus}
           helperText={helperText}
+          showHelperText={!!(fieldError || helperText)}
+          validationSchema={validationSchema}
           helperClassName={css`
             & > span::first-letter {
               text-transform: uppercase;
