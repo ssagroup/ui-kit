@@ -186,9 +186,29 @@ export const useDatePicker = ({
         return;
       }
 
+      // If the field is empty and we blurred, just clear errors and stop
+      if (isBlur && newValue.length === 0) {
+        clearErrors(name);
+        setDateTime(undefined);
+        safeOnChange();
+        safeOnError(null);
+        lastProcessedValueRef.current = newValue;
+        return;
+      }
+
+      // Only validate if the string is complete OR if the user moved away (blur)
+      const isComplete = newValue.length === config.length;
+
+      if (!isComplete && !isBlur) {
+        // User is still typing - don't validate yet, but update the ref
+        lastProcessedValueRef.current = newValue;
+        return;
+      }
+
       lastProcessedValueRef.current = newValue;
 
-      if (newValue.length !== config.length) {
+      // If incomplete on blur, show error
+      if (!isComplete) {
         if (isBlur && newValue.length > 0) {
           setError(name, { message: INVALID_DATE });
           setDateTime(undefined);
@@ -218,7 +238,7 @@ export const useDatePicker = ({
         return;
       }
 
-      // Use ref to check latest dateTime to avoid stale closure
+      // Valid Date - Use ref to check latest dateTime to avoid stale closure
       setDateTime((prevDT) => {
         if (prevDT?.toMillis() === newDT.toMillis()) {
           return prevDT; // No change
@@ -245,19 +265,18 @@ export const useDatePicker = ({
   );
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    // Force validation on blur - catches incomplete inputs when user leaves the field
     processValue(e.currentTarget.value, true);
+    // Close the calendar overlay
+    setIsOpen(false);
   };
 
-  // Sync Input Value -> States
+  // Sync Input Value -> States (Passive - no focus manipulation)
   useEffect(() => {
     if (typeof inputValue !== 'string') return;
 
-    if (inputValue.length > 0 && inputValue.length < config.length) {
-      setIsOpen(false);
-      const t = setTimeout(() => maskInputRef.current?.focus(), 10);
-      return () => clearTimeout(t);
-    }
-
+    // Only auto-process while typing if they have finished the mask
+    // This allows the user to click away or tab out freely
     if (inputValue.length === config.length) {
       processValue(inputValue);
     }
@@ -305,6 +324,7 @@ export const useDatePicker = ({
     setValue(name, externalValue);
   }, [externalValue, name, setValue]);
 
+  // Open/Close side effects only - no focus manipulation
   useEffect(() => {
     if (isLoading) return;
 
