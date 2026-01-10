@@ -57,7 +57,7 @@ const mapColors: InputStatusColors = {
  *
  * @example
  * ```tsx
- * // Input with icons and helper text
+ * // Input with icons and helper text (without React Hook Form)
  * <Input
  *   name="search"
  *   placeholder="Search products..."
@@ -65,6 +65,7 @@ const mapColors: InputStatusColors = {
  *   endElement={<Icon name="clear" onClick={handleClear} />}
  *   helperText="Type to search"
  *   showHelperText
+ *   onChange={(e) => handleSearch(e.target.value)}
  * />
  * ```
  *
@@ -102,8 +103,6 @@ const mapColors: InputStatusColors = {
  * @see {@link Textarea} - For multi-line text input
  * @see {@link TextField} - Alternative text input component
  *
- * @requires React Hook Form - Must be used within FormProvider context
- *
  * @accessibility
  * - Full keyboard navigation support
  * - Screen reader friendly with proper labels
@@ -139,9 +138,11 @@ const InputInner = (
 ) => {
   useEffect(() => {
     if (!register) {
-      console.warn('Input component must be used within a Form component');
+      console.warn(
+        'Input component should be used with React Hook Form register for validation support',
+      );
     }
-  }, []);
+  }, [register]);
 
   const [countChar, setCountChar] = React.useState(0);
   const showStatusIconByProps = !disabled && !endElement && showStatusIcon;

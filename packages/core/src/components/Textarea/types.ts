@@ -45,7 +45,8 @@ import type { UseFormReturn } from 'react-hook-form';
  * />
  * ```
  *
- * @requires React Hook Form - Must be used within FormProvider context
+ * @note React Hook Form integration is optional. If `register` is not provided,
+ * the component will still work but validation features will be unavailable.
  */
 export interface TextareaProps extends Partial<
   Pick<UseFormReturn, 'register'>

@@ -55,7 +55,8 @@ interface ExtendedInputProps extends React.InputHTMLAttributes<HTMLInputElement>
  * />
  * ```
  *
- * @requires React Hook Form - Must be used within FormProvider context
+ * @note React Hook Form integration is optional. If `register` is not provided,
+ * the component will still work but validation features will be unavailable.
  */
 export interface InputProps extends Partial<
   Pick<UseFormReturn, 'register' | 'control' | 'setValue'>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { callAll } from '@ssa-ui-kit/utils';
 import { TextareaProps } from './types';
@@ -67,25 +67,22 @@ import { TextareaBase } from './TextareaBase';
  *
  * @example
  * ```tsx
- * // Read-only textarea (e.g., displaying formatted content)
+ * // Standalone textarea without React Hook Form
  * <Textarea
- *   name="preview"
- *   register={register}
- *   readOnly
- *   rows={10}
- *   value={formattedContent}
+ *   name="notes"
+ *   placeholder="Enter notes..."
+ *   rows={5}
+ *   onChange={(e) => handleChange(e.target.value)}
  * />
  * ```
  *
  * @see {@link Field} - Use Field.Root to wrap Textarea for labels and validation
  * @see {@link Input} - For single-line text input
  *
- * @requires React Hook Form - Must be used within FormProvider context
- *
  * @accessibility
  * - Full keyboard navigation support
  * - Screen reader friendly
- * - ARIA attributes via React Hook Form
+ * - ARIA attributes via React Hook Form (when register is provided)
  * - Respects disabled and readOnly states
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -105,11 +102,16 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     }: TextareaProps,
     ref?: React.ForwardedRef<HTMLTextAreaElement | null>,
   ) {
-    if (!register) {
-      throw new Error('Input component must be used within a Form component');
-    }
+    useEffect(() => {
+      if (!register) {
+        console.warn(
+          'Textarea component should be used with React Hook Form register for validation support',
+        );
+      }
+    }, [register]);
 
-    const { onChange, ...options } = register(name, validationSchema);
+    const registerResult = register?.(name, validationSchema);
+    const onChange = registerResult?.onChange;
 
     return (
       <TextareaBase
@@ -119,11 +121,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         readOnly={readOnly}
         rows={rows}
         maxLength={maxLength}
-        onChange={callAll(setCountChar, onChange)}
         onPaste={onPaste}
         title={title}
-        {...options}
-        ref={useMergeRefs([options.ref, ref])}
+        {...registerResult}
+        onChange={callAll(setCountChar, onChange)}
+        ref={useMergeRefs([registerResult?.ref, ref])}
       />
     );
   },
