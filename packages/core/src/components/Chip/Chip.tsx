@@ -16,6 +16,64 @@ import {
 import { VARIANTS, COLORS, mapSizes, ICON_SIZES } from './constants';
 import { getVariantColors } from './helpers';
 
+/**
+ * Chip - Compact component for tags, labels, and removable items
+ *
+ * A versatile chip component for displaying compact pieces of information such as tags,
+ * filters, user selections, or status indicators. Supports icons, avatars, click actions,
+ * and delete functionality. Fully accessible with keyboard navigation and ARIA support.
+ *
+ * @category Components
+ * @subcategory Display
+ *
+ * @example
+ * ```tsx
+ * // Basic chip
+ * <Chip label="React" />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Removable tag
+ * <Chip
+ *   label="TypeScript"
+ *   onDelete={(e) => removeTag('typescript')}
+ *   color="primary"
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Clickable chip with icon
+ * <Chip
+ *   label="Filter: Active"
+ *   icon="filter"
+ *   onClick={() => openFilterDialog()}
+ *   variant="outlined"
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Chip with avatar (e.g., user mention)
+ * <Chip
+ *   label="John Doe"
+ *   avatar={<Avatar size={20} image="/avatar.jpg" />}
+ *   onDelete={() => removeUser()}
+ * />
+ * ```
+ *
+ * @see {@link Avatar} - For user avatar integration
+ * @see {@link Icon} - For chip icons
+ * @see {@link Tag} - Alternative component for simpler use cases
+ *
+ * @accessibility
+ * - Keyboard navigable (Tab to focus)
+ * - Delete with Backspace/Delete keys
+ * - Escape to blur
+ * - Proper ARIA roles and attributes
+ * - Screen reader announcements for actions
+ */
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   {
     label,

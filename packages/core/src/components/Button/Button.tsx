@@ -39,6 +39,65 @@ const mapVariants: ButtonVariants = {
   attention,
 };
 
+/**
+ * Button - Interactive button component for user actions
+ *
+ * A flexible and accessible button component that supports multiple visual variants,
+ * sizes, icon configurations, and ARIA attributes. The component automatically handles
+ * text color variations based on button variant and state (hover, disabled).
+ *
+ * @category Form Controls
+ * @subcategory Action
+ *
+ * @example
+ * ```tsx
+ * // Basic button
+ * <Button text="Click me" onClick={handleClick} />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Button with start icon
+ * <Button
+ *   text="Save"
+ *   startIcon={<Icon name="check" size={16} />}
+ *   variant="primary"
+ *   onClick={handleSave}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Full-width block button
+ * <Button
+ *   text="Submit Form"
+ *   block
+ *   variant="primary"
+ *   size="large"
+ *   type="submit"
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Button with custom children
+ * <Button variant="secondary" onClick={handleAction}>
+ *   <span>Custom Content</span>
+ *   <Icon name="arrow-right" />
+ * </Button>
+ * ```
+ *
+ * @see {@link ButtonGroup} - For grouped button layouts
+ * @see {@link Icon} - For button icons
+ *
+ * @accessibility
+ * Supports full ARIA attributes including:
+ * - aria-label, aria-labelledby for accessible labels
+ * - aria-disabled for disabled state
+ * - aria-pressed for toggle buttons
+ * - Keyboard navigation (Enter/Space to activate)
+ * - Focus management
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {

@@ -5,6 +5,72 @@ import Icon from '@components/Icon';
 
 import { CheckboxProps } from './types';
 
+/**
+ * Checkbox - Form control for selecting one or more options
+ *
+ * A flexible checkbox component that supports controlled and uncontrolled states,
+ * indeterminate state, React Hook Form integration, and full accessibility.
+ * The component automatically manages indeterminate state and provides visual
+ * feedback through icons (checkmark or minus for indeterminate).
+ *
+ * @category Form Controls
+ * @subcategory Input
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Checkbox
+ *   id="accept-terms"
+ *   text="Accept terms and conditions"
+ *   onChange={(checked) => handleChange(checked)}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // With React Hook Form
+ * const { register } = useForm();
+ * <Checkbox
+ *   name="newsletter"
+ *   text="Subscribe to newsletter"
+ *   register={register}
+ *   isRequired
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Controlled checkbox
+ * const [checked, setChecked] = useState(false);
+ * <Checkbox
+ *   text="Controlled checkbox"
+ *   externalState={checked}
+ *   onChange={setChecked}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Indeterminate state (e.g., "select all")
+ * <Checkbox
+ *   text="Select all items"
+ *   isIndeterminate={someSelected && !allSelected}
+ *   initialState={allSelected}
+ *   onChange={handleSelectAll}
+ * />
+ * ```
+ *
+ * @see {@link Field} - Use Field.Root to wrap Checkbox for labels and validation
+ * @see {@link FormCheckbox} - Alternative checkbox component with form integration
+ *
+ * @accessibility
+ * - Fully keyboard accessible (Space to toggle)
+ * - Supports ARIA attributes via HTML input element
+ * - Proper label association via htmlFor/id
+ * - Screen reader friendly with proper roles
+ *
+ * @requires React Hook Form when using `register` prop
+ */
 const Checkbox = ({
   text,
   id,
