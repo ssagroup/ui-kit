@@ -57,7 +57,7 @@ const FieldControlBase = styled.div<FieldContextValue>`
 /**
  * Props for Field.Control component
  *
- * Wrapper component for form controls (inputs, textareas, selects, etc.).
+ * Wrapper component for form controls (inputs, textarea elements, selects, etc.).
  * Provides consistent styling, validation state borders, and optional focus forwarding.
  * Can accept children as React nodes or a render function that receives field context.
  */

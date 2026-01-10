@@ -68,14 +68,14 @@ export interface TextareaProps extends Partial<
 
   /**
    * Whether the textarea is disabled
-   * Disabled textareas cannot be edited
+   * Disabled textarea elements cannot be edited
    * @default false
    */
   disabled?: boolean;
 
   /**
    * Whether the textarea is read-only
-   * Read-only textareas can be focused and scrolled but not edited
+   * Read-only textarea elements can be focused and scrolled but not edited
    * @default false
    */
   readOnly?: boolean;

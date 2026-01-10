@@ -20,10 +20,12 @@ export * from './CardList';
 
 export { default as Checkbox } from './Checkbox';
 export * from './Checkbox';
+export type * from './Checkbox/types';
 
 export * from './Charts';
 
 export * from './Chip';
+export type * from './Chip/types';
 
 export * from './CollapsibleNavBar';
 
@@ -123,6 +125,7 @@ export { default as ProgressVertical } from './ProgressVertical';
 export { default as Radio } from './Radio';
 export type { RadioProps } from './Radio/types';
 export { default as RadioGroup } from './RadioGroup';
+export type * from './RadioGroup/types';
 
 export { default as ResponsiveImage } from './ResponsiveImage';
 export * from './ResponsiveImage';
