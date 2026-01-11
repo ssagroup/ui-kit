@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { CommonProps } from '@global-types/emotion';
 
 /**
@@ -24,7 +25,8 @@ import { CommonProps } from '@global-types/emotion';
  * <TableCell align="right">Right aligned</TableCell>
  * ```
  */
-export interface TableCellProps extends CommonProps {
+export interface TableCellProps
+  extends CommonProps, Omit<HTMLAttributes<HTMLTableCellElement>, 'align'> {
   /**
    * Text alignment for the cell content
    * @default 'left'

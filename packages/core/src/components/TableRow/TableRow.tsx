@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { forwardRef } from 'react';
 import { TableRowProps } from './types';
 
 /**
@@ -34,8 +35,8 @@ import { TableRowProps } from './types';
  *
  * @example
  * ```tsx
- * // Disabled table row
- * <TableRow isDisabled aria-disabled="true">
+ * // Disabled table row (aria-disabled is automatically set)
+ * <TableRow isDisabled>
  *   <TableCell>Disabled Row</TableCell>
  * </TableRow>
  * ```
@@ -48,11 +49,13 @@ import { TableRowProps } from './types';
  *
  * @accessibility
  * - Semantic HTML tr element
- * - Supports aria-disabled for disabled state
+ * - Automatically sets aria-disabled when isDisabled is true
  * - Keyboard accessible when clickable
  * - Proper table structure for screen readers
  */
-const TableRow = styled.tr<TableRowProps>`
+
+/* Removed CSS selector `& tr:first-of-type { padding-left: 18px; }` - don't see any diff in nested tables */
+const TableRowBase = styled.tr<TableRowProps>`
   display: table-row;
   outline: 0;
   vertical-align: middle;
@@ -60,9 +63,6 @@ const TableRow = styled.tr<TableRowProps>`
   border: none;
   padding: 0 16px;
   height: 44px;
-  & tr:first-of-type {
-    padding-left: 18px;
-  }
   ${({ isDisabled }) =>
     isDisabled && {
       opacity: 0.6,
@@ -70,5 +70,18 @@ const TableRow = styled.tr<TableRowProps>`
       userSelect: 'none',
     }}
 `;
+
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
+  ({ isDisabled, ...props }, ref) => (
+    <TableRowBase
+      ref={ref}
+      isDisabled={isDisabled}
+      aria-disabled={isDisabled ? 'true' : undefined}
+      {...props}
+    />
+  ),
+);
+
+TableRow.displayName = 'TableRow';
 
 export default TableRow;

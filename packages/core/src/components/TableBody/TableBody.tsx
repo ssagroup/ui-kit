@@ -33,13 +33,12 @@ import { CommonProps } from '@global-types/emotion';
  *
  * @example
  * ```tsx
- * // Table body with disabled rows
+ * // Table body with disabled rows (aria-disabled is automatically set)
  * <TableBody>
  *   {items.map(item => (
  *     <TableRow
  *       key={item.id}
- *       isDisabled={item.disabled}
- *       aria-disabled={item.disabled}>
+ *       isDisabled={item.disabled}>
  *       <TableCell>{item.name}</TableCell>
  *     </TableRow>
  *   ))}

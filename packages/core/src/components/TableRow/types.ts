@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { CommonProps } from '@global-types/emotion';
 
 /**
@@ -17,16 +18,18 @@ import { CommonProps } from '@global-types/emotion';
  *
  * @example
  * ```tsx
- * // Disabled table row
- * <TableRow isDisabled aria-disabled="true">
+ * // Disabled table row (aria-disabled is automatically set)
+ * <TableRow isDisabled>
  *   <TableCell>Disabled Row</TableCell>
  * </TableRow>
  * ```
  */
-export interface TableRowProps extends CommonProps {
+export interface TableRowProps
+  extends CommonProps, HTMLAttributes<HTMLTableRowElement> {
   /**
    * Whether the row is disabled
-   * Disabled rows have reduced opacity and no pointer cursor
+   * Disabled rows have reduced opacity and no pointer cursor.
+   * Automatically sets aria-disabled attribute when true.
    * @default false
    */
   isDisabled?: boolean;

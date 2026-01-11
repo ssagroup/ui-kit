@@ -1,3 +1,4 @@
+import React from 'react';
 import TableCell from '@components/TableCell/TableCell';
 import { TableCellHeaderProps } from './types';
 
@@ -61,8 +62,13 @@ import { TableCellHeaderProps } from './types';
  * - Supports ARIA attributes via TableCellProps
  * - Better accessibility than using TableCell in headers
  */
-const TableCellHeader = (props: TableCellHeaderProps) => (
-  <TableCell as="th" {...props} />
+const TableCellHeader = ({
+  children,
+  ...props
+}: React.PropsWithChildren<TableCellHeaderProps>) => (
+  <TableCell as="th" {...props}>
+    {children}
+  </TableCell>
 );
 
 export default TableCellHeader;
