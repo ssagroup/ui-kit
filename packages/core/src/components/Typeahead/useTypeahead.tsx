@@ -86,10 +86,6 @@ export const useTypeahead = ({
   const { ref: inputRef } = useElementSize<HTMLInputElement>();
   const triggerRef = useRef<HTMLDivElement>(null);
 
-  // TODO: useController defaultValue depends on selectedItems state which changes
-  // defaultValue should only be used on initial mount with a stable value (e.g., defaultSelectedItems)
-  // Using selectedItems state here causes defaultValue to change on re-renders, which can cause issues
-  // Consider memoizing initial defaultValue based on defaultSelectedItems prop instead
   useController({
     control: form.control,
     name,
@@ -109,10 +105,6 @@ export const useTypeahead = ({
     return opts;
   }, [children]);
 
-  // TODO: This effect filters selectedItems when options change - may conflict with controlled mode
-  // If selectedItems is controlled (providedSelectedItems is defined), this could override parent state
-  // Consider adding a check: if (providedSelectedItems !== undefined) return;
-  // This would skip filtering in controlled mode and let the parent handle invalid selections
   useEffect(() => {
     const validSelected = selectedItems.filter((item) => optionsWithKey[item]);
     if (validSelected.length !== selectedItems.length) {

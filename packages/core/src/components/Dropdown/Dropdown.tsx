@@ -104,7 +104,6 @@ const DropdownBase = styled.div`
  *
  * @see https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  */
-// TODO: allow React.ReactNode for selectedItem as well as DropdownOptionProps
 const Dropdown = <T extends DropdownOptionProps>({
   selectedItem,
   isDisabled,
@@ -119,8 +118,6 @@ const Dropdown = <T extends DropdownOptionProps>({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dropdownId = useId();
-  // TODO: Options array is populated during render phase - this is fragile and could break if children processing logic changes
-  // Consider refactoring to use useMemo or store options in state/ref
   const options: T[] = [];
 
   const [isFocused, setIsFocused] = useState(false);
@@ -137,8 +134,6 @@ const Dropdown = <T extends DropdownOptionProps>({
       return;
     }
 
-    // TODO: Prevents re-selecting the same item - verify if this is intended behavior
-    // Users might expect the dropdown to close or trigger onChange even when selecting the same item
     if (innerItem.value === activeItem?.value) {
       return;
     }
@@ -161,9 +156,6 @@ const Dropdown = <T extends DropdownOptionProps>({
     }
   }, [isOpen, isDisabled, isFocused]);
 
-  // TODO: selectedItem sync without validation - if selectedItem is set to a value not present in children,
-  // the component will still show it, which could be inconsistent
-  // Consider validating that selectedItem exists in the options before syncing
   useEffect(() => {
     setActiveItem(selectedItem);
   }, [selectedItem]);
@@ -183,17 +175,12 @@ const Dropdown = <T extends DropdownOptionProps>({
 
       return React.cloneElement(child, {
         index,
-        // TODO: Using .bind(this) in a function component is incorrect - should use .bind(null, ...) or useCallback
-        // This onClick is likely overwritten by DropdownOptions, but the code is still incorrect
         onClick: onChange.bind(this),
         ...child.props,
       });
     },
   );
 
-  // TODO: Ineffective memoization - onChange is recreated on every render, making this memoization useless
-  // This causes all context consumers to re-render on every parent render
-  // Consider memoizing onChange with useCallback, or memoize contextValue based only on activeItem
   const contextValue: DropdownContextType = React.useMemo(
     () => ({ onChange, activeItem }),
     [onChange, activeItem],
