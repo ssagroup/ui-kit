@@ -20,6 +20,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   background: #fff;
   border-radius: 8px;
 
+  max-height: 200px;
   overflow: hidden auto;
 
   z-index: 2;
@@ -50,6 +51,37 @@ const dropdownOptionButton = css`
 
 const noItemsMsg = { id: Number.NaN, value: 'No items' };
 
+/**
+ * DropdownOptions - Options menu container for Dropdown component
+ *
+ * Renders the scrollable list of options that appears when the dropdown is open.
+ * Provides proper ARIA attributes for accessibility and keyboard navigation.
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * // Used within Dropdown component
+ * <Dropdown selectedItem={selected} onChange={handleChange}>
+ *   <DropdownOptions>
+ *     {items.map(item => (
+ *       <DropdownOption key={item.id} value={item.id}>
+ *         {item.label}
+ *       </DropdownOption>
+ *     ))}
+ *   </DropdownOptions>
+ * </Dropdown>
+ * ```
+ *
+ * @see {@link Dropdown} - Parent component
+ * @see {@link DropdownOption} - Individual option components
+ *
+ * @accessibility
+ * - Uses role="listbox" for proper ARIA semantics
+ * - Supports keyboard navigation (Arrow keys, Enter, Escape)
+ * - Screen reader friendly
+ */
 const DropdownOptions = ({
   ariaLabelledby,
   id,

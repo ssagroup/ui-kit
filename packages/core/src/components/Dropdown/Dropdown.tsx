@@ -11,23 +11,99 @@ import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, DropdownProps } from './types';
 
-/**
- * The structure of the component:
- *
- * Dropdown
- *   DropdownToggle
- *   DropdownOptions
- *     DropdownOption
- *
- * Aria attributes are set according to
- * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
- **/
-
 const DropdownBase = styled.div`
   display: inline-block;
   position: relative;
 `;
 
+/**
+ * Dropdown - Select-like dropdown component for single selection
+ *
+ * A flexible dropdown component that allows users to select one option from
+ * a list of choices. Uses a compound component pattern with DropdownOption
+ * children. Provides keyboard navigation, accessibility features, and click-outside
+ * to close functionality.
+ *
+ * Component structure:
+ * - Dropdown (root container with context)
+ *   - DropdownToggle (button that opens/closes dropdown)
+ *   - DropdownOptions (menu container that appears when open)
+ *     - DropdownOption (individual selectable items)
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * const items = [
+ *   { id: 1, value: 'Apple' },
+ *   { id: 2, value: 'Banana' },
+ *   { id: 3, value: 'Cherry' },
+ * ];
+ *
+ * <Dropdown
+ *   selectedItem={items[0]}
+ *   onChange={(item) => handleSelection(item)}
+ *   placeholder="Select a fruit"
+ * >
+ *   {items.map(item => (
+ *     <DropdownOption key={item.id} value={item.id}>
+ *       {item.value}
+ *     </DropdownOption>
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Controlled open state
+ * const [isOpen, setIsOpen] = useState(false);
+ * <Dropdown
+ *   isOpen={isOpen}
+ *   onChange={handleChange}
+ *   selectedItem={selected}
+ * >
+ *   {options.map(opt => (
+ *     <DropdownOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </DropdownOption>
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // With custom props for sub-components
+ * <Dropdown
+ *   selectedItem={selected}
+ *   onChange={handleChange}
+ *   dropdownProps={{
+ *     base: { id: 'my-dropdown' },
+ *     toggleButton: { 'data-testid': 'dropdown-toggle' },
+ *     toggleButtonArrow: { className: 'custom-arrow' }
+ *   }}
+ * >
+ *   {options.map(opt => (
+ *     <DropdownOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </DropdownOption>
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @see {@link DropdownOption} - Child component for individual options
+ * @see {@link DropdownToggle} - Toggle button component
+ * @see {@link DropdownOptions} - Options menu container
+ *
+ * @accessibility
+ * - ARIA attributes set according to WAI-ARIA combobox pattern
+ * - Keyboard navigation (Arrow keys, Enter, Escape)
+ * - Click outside to close
+ * - Screen reader friendly
+ * - Focus management
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
+ */
 // TODO: allow React.ReactNode for selectedItem as well as DropdownOptionProps
 const Dropdown = <T extends DropdownOptionProps>({
   selectedItem,
@@ -43,6 +119,8 @@ const Dropdown = <T extends DropdownOptionProps>({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dropdownId = useId();
+  // TODO: Options array is populated during render phase - this is fragile and could break if children processing logic changes
+  // Consider refactoring to use useMemo or store options in state/ref
   const options: T[] = [];
 
   const [isFocused, setIsFocused] = useState(false);
@@ -59,6 +137,8 @@ const Dropdown = <T extends DropdownOptionProps>({
       return;
     }
 
+    // TODO: Prevents re-selecting the same item - verify if this is intended behavior
+    // Users might expect the dropdown to close or trigger onChange even when selecting the same item
     if (innerItem.value === activeItem?.value) {
       return;
     }
@@ -81,6 +161,9 @@ const Dropdown = <T extends DropdownOptionProps>({
     }
   }, [isOpen, isDisabled, isFocused]);
 
+  // TODO: selectedItem sync without validation - if selectedItem is set to a value not present in children,
+  // the component will still show it, which could be inconsistent
+  // Consider validating that selectedItem exists in the options before syncing
   useEffect(() => {
     setActiveItem(selectedItem);
   }, [selectedItem]);
@@ -100,12 +183,17 @@ const Dropdown = <T extends DropdownOptionProps>({
 
       return React.cloneElement(child, {
         index,
+        // TODO: Using .bind(this) in a function component is incorrect - should use .bind(null, ...) or useCallback
+        // This onClick is likely overwritten by DropdownOptions, but the code is still incorrect
         onClick: onChange.bind(this),
         ...child.props,
       });
     },
   );
 
+  // TODO: Ineffective memoization - onChange is recreated on every render, making this memoization useless
+  // This causes all context consumers to re-render on every parent render
+  // Consider memoizing onChange with useCallback, or memoize contextValue based only on activeItem
   const contextValue: DropdownContextType = React.useMemo(
     () => ({ onChange, activeItem }),
     [onChange, activeItem],
