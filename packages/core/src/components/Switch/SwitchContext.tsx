@@ -5,14 +5,23 @@ import { createContext, useState, useCallback, useContext } from 'react';
  * Provides switch state and toggle function to Switch component
  */
 export interface SwitchContext {
-  /** Current state of the switch (true = on, false = off) */
+  /**
+   * Current state of the switch
+   * - `true`: Switch is on/enabled
+   * - `false`: Switch is off/disabled (default)
+   */
   isOn: boolean;
   /** Function to toggle switch state */
   toggle: () => void;
 }
 
+/**
+ * Default context value for SwitchContext
+ * Used as fallback when context is accessed outside SwitchContextProvider
+ * @default isOn: false - Switch defaults to off state
+ */
 export const SwitchContext = createContext<SwitchContext>({
-  isOn: true,
+  isOn: false,
   toggle: () => {
     /* default no-op */
   },

@@ -95,8 +95,16 @@ const TextField = ({
 
   const status = success ? 'success' : errors ? 'error' : 'basic';
 
-  const handleCount = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setCountChar(e.currentTarget.value.length);
+  const handleCount = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => setCountChar(e.currentTarget.value.length);
+
+  const handleInputKeyUp: React.KeyboardEventHandler<HTMLInputElement> = (
+    e,
+  ) => {
+    setCountChar((e.currentTarget as HTMLInputElement).value.length);
+    props.onKeyUp?.(e);
+  };
 
   return (
     <>
@@ -111,7 +119,14 @@ const TextField = ({
           {...props}
         />
       ) : (
-        <Input name={name} status={status} disabled={disabled} {...props} />
+        <Input
+          name={name}
+          status={status}
+          disabled={disabled}
+          maxLength={maxLength}
+          onKeyUp={handleInputKeyUp}
+          {...props}
+        />
       )}
 
       <div

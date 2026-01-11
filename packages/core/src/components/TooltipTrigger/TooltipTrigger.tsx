@@ -44,6 +44,11 @@ const TooltipTrigger = ({ children, className }: TooltipTriggerProps) => {
     );
   }
 
+  console.warn(
+    'TooltipTrigger: children must be a single valid React element. Received:',
+    children,
+  );
+
   return null;
 };
 
