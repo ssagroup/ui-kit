@@ -6,6 +6,25 @@
 
 SSA UI kit is an open-source React-based library combining multiple UI Components, Widgets, Blocks, and Forms classified by application area and implemented following Atomic design principles.
 
+## 🧠 Mental Model
+
+SSA UI kit components are designed with the following principles:
+
+- **Composable & Flexible**: Components use composition patterns and compound components for maximum flexibility
+- **Form-First**: Form controls integrate seamlessly with React Hook Form for validation and state management
+- **Type-Safe**: Full TypeScript support with comprehensive type definitions and JSDoc examples
+- **Accessible by Default**: Components follow WAI-ARIA patterns and semantic HTML
+- **Themeable**: Built on Emotion for CSS-in-JS styling with a centralized theme system
+- **Controlled & Uncontrolled**: Components support both controlled and uncontrolled patterns
+
+### Component Patterns
+
+**Form Controls**: Most form inputs integrate with React Hook Form. Use `register` prop for uncontrolled inputs, or `value`/`onChange` for controlled patterns.
+
+**Compound Components**: Many components like `Table`, `Modal`, `Field`, and `Dropdown` use compound component patterns for flexible composition.
+
+**Status Props**: Components use consistent prop naming like `status` (for validation states), `isDisabled` (for disabled state), and `variant` (for visual variants).
+
 ## 🚀 Hero Example
 
 Get started in 60 seconds. Here's a complete example showing Card, Button, Input, and Table working together:
