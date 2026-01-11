@@ -1,7 +1,58 @@
 import styled from '@emotion/styled';
-import { CommonProps } from '@global-types/emotion';
+import { TableRowProps } from './types';
 
-const TableRow = styled.tr<CommonProps & { isDisabled?: boolean }>`
+/**
+ * TableRow - Table row component for table data
+ *
+ * A styled tr element that represents a single row in a table. Used within
+ * TableHead or TableBody sections. Supports disabled state for non-interactive
+ * rows. Works with TableCell or TableCellHeader components.
+ *
+ * @category Components
+ * @subcategory Data Display
+ *
+ * @example
+ * ```tsx
+ * // Basic table row in body
+ * <TableBody>
+ *   <TableRow>
+ *     <TableCell>John Doe</TableCell>
+ *     <TableCell>john@example.com</TableCell>
+ *     <TableCell>Admin</TableCell>
+ *   </TableRow>
+ * </TableBody>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Table row with click handler
+ * <TableRow onClick={() => handleRowClick(item)}>
+ *   <TableCell>{item.name}</TableCell>
+ *   <TableCell>{item.email}</TableCell>
+ * </TableRow>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Disabled table row
+ * <TableRow isDisabled aria-disabled="true">
+ *   <TableCell>Disabled Row</TableCell>
+ * </TableRow>
+ * ```
+ *
+ * @see {@link Table} - Parent table component
+ * @see {@link TableHead} - Header section (use TableCellHeader in rows)
+ * @see {@link TableBody} - Body section (use TableCell in rows)
+ * @see {@link TableCell} - Data cell component
+ * @see {@link TableCellHeader} - Header cell component
+ *
+ * @accessibility
+ * - Semantic HTML tr element
+ * - Supports aria-disabled for disabled state
+ * - Keyboard accessible when clickable
+ * - Proper table structure for screen readers
+ */
+const TableRow = styled.tr<TableRowProps>`
   display: table-row;
   outline: 0;
   vertical-align: middle;

@@ -17,14 +17,90 @@ import {
 import { TypeaheadProps } from './types';
 
 /**
- * The structure of the component:
- * - TypeaheadTrigger
- * - TypeaheadOptions
- * - FormHelperText
+ * Typeahead - Advanced autocomplete search component with dropdown functionality
  *
- * Aria attributes are set according to
- * https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/
- **/
+ * A powerful autocomplete component that provides search-as-you-type functionality
+ * with dropdown suggestions. Supports both single and multiple selection modes,
+ * filtering, custom rendering, and integrates seamlessly with React Hook Form
+ * for validation and form management.
+ *
+ * Component structure:
+ * - Typeahead (root container with context)
+ *   - TypeaheadTrigger (search input with selected items display)
+ *   - TypeaheadOptions (filtered dropdown options list)
+ *   - FormHelperText (validation messages and helper text)
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * // Single selection with React Hook Form
+ * const form = useForm();
+ * return (
+ *   <FormProvider {...form}>
+ *     <Typeahead
+ *       name="language"
+ *       label="Programming Language"
+ *       placeholder="Select a language"
+ *       validationSchema={{ required: 'Language is required' }}>
+ *       {languages.map(lang => (
+ *         <TypeaheadOption key={lang.id} value={lang.id} label={lang.name}>
+ *           {lang.name}
+ *         </TypeaheadOption>
+ *       ))}
+ *     </Typeahead>
+ *   </FormProvider>
+ * );
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Multiple selection
+ * <Typeahead
+ *   name="tags"
+ *   isMultiple
+ *   label="Tags"
+ *   selectedItems={selected}
+ *   onChange={(item, isSelected) => handleToggle(item, isSelected)}>
+ *   {options.map(opt => (
+ *     <TypeaheadOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </TypeaheadOption>
+ *   ))}
+ * </Typeahead>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // With custom option rendering
+ * <Typeahead
+ *   name="users"
+ *   label="Select User"
+ *   renderOption={({ value, label, input }) => (
+ *     <div>
+ *       <Avatar src={users[value].avatar} />
+ *       <span>{highlightMatch(label, input)}</span>
+ *     </div>
+ *   )}>
+ *   {users.map(user => (
+ *     <TypeaheadOption key={user.id} value={user.id} label={user.name} />
+ *   ))}
+ * </Typeahead>
+ * ```
+ *
+ * @see {@link TypeaheadOption} - Child component for individual options
+ * @see {@link Popover} - Used for dropdown positioning
+ *
+ * @accessibility
+ * - ARIA attributes set according to WAI-ARIA combobox pattern
+ * - Keyboard navigation (Arrow keys, Enter, Escape, Tab)
+ * - Screen reader friendly
+ * - Focus management with trap
+ * - Search input filtering
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/
+ */
 export const Typeahead = ({
   name = 'typeahead-search',
   label,
