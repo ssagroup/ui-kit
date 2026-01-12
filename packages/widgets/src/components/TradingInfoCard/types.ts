@@ -7,6 +7,7 @@ export interface TradingInfoCardProps {
   icon?: React.ReactNode;
   onClick?: () => void;
   link?: string;
+  showTooltip?: boolean;
 }
 
 export type TradingInfoContent = Pick<

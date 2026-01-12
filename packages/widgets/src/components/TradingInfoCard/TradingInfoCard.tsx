@@ -31,11 +31,11 @@ const TradingInfoCardView = ({
 };
 
 const TradingInfoCard = (props: TradingInfoCardProps) => {
-  const { value, unit } = props;
+  const { value, unit, showTooltip = true } = props;
   const number = Number(value);
   const isInteger = Number.isInteger(number);
 
-  if (isInteger || Number.isNaN(number)) {
+  if (isInteger || Number.isNaN(number) || !showTooltip) {
     return <TradingInfoCardView {...props} />;
   } else {
     return (
