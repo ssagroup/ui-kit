@@ -64,20 +64,21 @@ export const YearsView = () => {
     const selectedYear = Number((target as HTMLDivElement).innerHTML);
     const newDate = calendarViewDateTime?.set({ year: selectedYear });
 
-    if (pickerType === PICKER_TYPE.YEARS) {
-      if (newDate) {
-        const yearStartDate = newDate.startOf('year');
+    if (!newDate) return;
 
-        setCalendarViewDateTime(yearStartDate);
-        setDateTime(yearStartDate);
+    const isFinalSelection = pickerType === PICKER_TYPE.YEARS;
 
-        onYearChange?.(yearStartDate.toJSDate());
+    if (isFinalSelection) {
+      const startDate = newDate.startOf('year');
 
-        setIsOpen(false);
-      }
+      setCalendarViewDateTime(startDate);
+      setDateTime(startDate);
+      onYearChange?.(startDate.toJSDate());
+
+      setIsOpen(false);
     } else {
-      setCalendarType(CALENDAR_TYPE.MONTHS);
       setCalendarViewDateTime(newDate);
+      setCalendarType(CALENDAR_TYPE.MONTHS);
     }
   };
 

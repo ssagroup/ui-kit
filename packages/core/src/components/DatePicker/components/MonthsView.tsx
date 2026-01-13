@@ -27,7 +27,7 @@ export const MonthsView = () => {
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
-    if ((target as HTMLDivElement).getAttribute('aria-disabled') === null) {
+    if ((target as HTMLDivElement).getAttribute('aria-disabled') === 'true') {
       event.stopPropagation();
       event.preventDefault();
       return;
@@ -36,22 +36,24 @@ export const MonthsView = () => {
     const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
     const newDate = calendarViewDateTime?.set({ month: monthNumber + 1 });
 
-    if (pickerType === PICKER_TYPE.DAYS) {
+    if (!newDate) return;
+
+    const isFinalSelection = pickerType === PICKER_TYPE.MONTHS;
+
+    if (isFinalSelection) {
+      const startDate = newDate.startOf('month');
+
+      setCalendarViewDateTime(startDate);
+      setDateTime(startDate);
+      onMonthChange?.(startDate.toJSDate());
+
+      setIsOpen(false);
+    } else {
       setCalendarViewDateTime(newDate);
       setCalendarType(CALENDAR_TYPE.DAYS);
-    } else if (pickerType === PICKER_TYPE.MONTHS) {
-      if (newDate) {
-        const monthStartDate = newDate.startOf('month');
-
-        setCalendarViewDateTime(monthStartDate);
-        setDateTime(monthStartDate);
-
-        onMonthChange?.(monthStartDate.toJSDate());
-
-        setIsOpen(false);
-      }
     }
   };
+
   return (
     <Wrapper
       css={{ flexWrap: 'wrap', paddingTop: 10 }}
