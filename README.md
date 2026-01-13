@@ -121,6 +121,8 @@ yarn add @ssa-ui-kit/hooks
 pnpm add @ssa-ui-kit/hooks
 ```
 
+> ⚠️ **Vite Users**: See the [Vite Configuration](#-critical-vite-configuration-for-react-hook-form) section below for required setup to avoid `useFormContext()` errors.
+
 ### Peer Dependencies
 
 Make sure you have React 19.x, Emotion, and React Hook Form installed:
@@ -128,6 +130,51 @@ Make sure you have React 19.x, Emotion, and React Hook Form installed:
 ```bash
 npm install react@19.x react-dom@19.x @emotion/react @emotion/styled react-hook-form
 ```
+
+## ⚠️ CRITICAL: Vite Configuration for React Hook Form
+
+> **🚨 IMPORTANT**: If you're using **Vite** and experiencing `useFormContext() returned null` errors with form components (like `DateRangePicker`, `DatePicker`, etc.), you **MUST** configure Vite to use the CommonJS bundle of `react-hook-form`.
+
+### The Problem
+
+The UI kit (`@ssa-ui-kit/core`) is built with webpack and uses CommonJS externals. When webpack externalizes `react-hook-form`, it expects the **CommonJS version**. However, Vite defaults to the **ESM bundle** (`index.esm.mjs`). Different module instances = different React contexts, causing `useFormContext()` to return `null` inside UI kit components.
+
+### The Fix
+
+Add this alias to your `vite.config.ts`:
+
+```typescript
+import path from 'node:path';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    dedupe: ['react', 'react-dom', 'react-hook-form'],
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      // ⚠️ CRITICAL: Force CommonJS bundle for react-hook-form
+      // This ensures the UI kit (expecting CommonJS) uses the same instance as your app
+      'react-hook-form': path.resolve(
+        __dirname,
+        './node_modules/react-hook-form/dist/index.cjs.js' // ← CommonJS bundle
+      ),
+    },
+  },
+  optimizeDeps: {
+    include: ['react-hook-form'],
+  },
+});
+```
+
+### Why This Matters
+
+React contexts are **instance-specific**. Even with the same package version, if the library uses a different module instance (ESM vs CJS), the context won't be shared. Using the CommonJS bundle ensures both your app and the webpack-built UI kit use the **same instance**.
+
+**Related Issue**: [react-hook-form#8281](https://github.com/react-hook-form/react-hook-form/issues/8281)
+
+> **💡 Note**: This only applies to Vite projects. Webpack projects don't need this configuration.
 
 ## 🏁 Quick Start
 
