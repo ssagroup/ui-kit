@@ -15,7 +15,10 @@ import {
 
 import { DatePicker } from '@components/DatePicker';
 import { DatePickerFormat, PickerType } from '@components/DatePicker/types';
-import { PICKER_TYPE, VALID_DATE_FORMATS } from '@components/DatePicker/constants';
+import {
+  PICKER_TYPE,
+  VALID_DATE_FORMATS,
+} from '@components/DatePicker/constants';
 
 /**
  * Type guards to ensure RJSF ui:options match our DatePicker requirements

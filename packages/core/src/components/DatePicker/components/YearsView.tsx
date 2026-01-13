@@ -78,11 +78,6 @@ export const YearsView = () => {
     } else {
       setCalendarType(CALENDAR_TYPE.MONTHS);
       setCalendarViewDateTime(newDate);
-      setDateTime(newDate);
-
-      if (newDate) {
-        onYearChange?.(newDate.toJSDate());
-      }
     }
   };
 

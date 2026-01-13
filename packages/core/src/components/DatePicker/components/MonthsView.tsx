@@ -38,12 +38,6 @@ export const MonthsView = () => {
 
     if (pickerType === PICKER_TYPE.DAYS) {
       setCalendarViewDateTime(newDate);
-      setDateTime(newDate);
-
-      if (newDate) {
-        onMonthChange?.(newDate.toJSDate());
-      }
-
       setCalendarType(CALENDAR_TYPE.DAYS);
     } else if (pickerType === PICKER_TYPE.MONTHS) {
       if (newDate) {
