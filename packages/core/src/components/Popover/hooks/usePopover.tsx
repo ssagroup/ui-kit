@@ -56,9 +56,14 @@ export const usePopover: UsePopover = ({
       controlledOpen == null && ['click', 'both'].includes(interactionsEnabled),
     keyboardHandlers,
   });
+  const isControlled = controlledOpen !== undefined;
   const dismiss = useDismiss(context, {
-    referencePress: true,
-    ancestorScroll: true,
+    // When controlled, disable referencePress (parent handles toggle) but keep outsidePress
+    referencePress: !isControlled,
+    // Keep outsidePress enabled even in controlled mode
+    outsidePress: true,
+    escapeKey: true,
+    ancestorScroll: !isControlled,
   });
   const role = useRole(context);
   const hover = useHover(context, {

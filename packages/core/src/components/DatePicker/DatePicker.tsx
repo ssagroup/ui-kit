@@ -1,12 +1,11 @@
 import { forwardRef } from 'react';
 import { DatePickerProps } from './types';
-import { DEFAULT_MASK_FORMAT } from './constants';
 import { DatePickerContent } from './components';
 import { DatePickerProvider } from './DatePickerContext';
 
 const DatePickerInner = (
   {
-    format = DEFAULT_MASK_FORMAT,
+    format,
     openCalendarMode = 'icon',
     showCalendarIcon = true,
     ...rest

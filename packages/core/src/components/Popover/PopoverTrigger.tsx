@@ -13,27 +13,44 @@ export const PopoverTrigger = React.forwardRef<
   propRef,
 ) {
   const context = usePopoverContext();
-  // In React 19, ref is a regular prop, not a special property
-  // Access it from the element's props if children is a valid element
-  const childrenRef = React.isValidElement(children)
-    ? (children.props as { ref?: React.Ref<unknown> })?.ref
-    : undefined;
-  const ref = useMergeRefs([context?.refs.setReference, propRef, childrenRef]);
 
   // `asChild` allows the user to pass any element as the anchor
   if (asChild && React.isValidElement(children)) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const childrenElement = children as React.ReactElement<any>;
-    return React.cloneElement(
-      children,
-      context?.getReferenceProps({
-        ref,
-        ...props,
-        ...childrenElement.props,
-        'data-state': context.open ? 'open' : 'closed',
-      }),
-    );
+
+    // Extract ref from children props BEFORE calling getReferenceProps to avoid conflicts
+    // In React 19, refs are regular props, but forwardRef components may not expose them in children.props.ref
+    // We extract it here for backward compatibility
+    const { ref: existingChildrenRef, ...childrenPropsWithoutRef } =
+      childrenElement.props || {};
+
+    // Merge all refs: floating-ui's setReference, children's ref, and propRef
+    // This ensures positioning works while preserving any refs passed to the child component
+    const mergedRef = useMergeRefs([
+      context?.refs.setReference,
+      existingChildrenRef as React.Ref<HTMLElement> | undefined,
+      propRef,
+    ]);
+
+    // Get reference props from floating-ui - pass the merged ref to it
+    // This ensures floating-ui gets the correct element for positioning
+    const referenceProps = context?.getReferenceProps({
+      ref: mergedRef,
+      ...props,
+      ...childrenPropsWithoutRef,
+      'data-state': context.open ? 'open' : 'closed',
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return React.cloneElement(children, referenceProps as any);
   }
+
+  // For non-asChild case, merge refs normally
+  const childrenRef = React.isValidElement(children)
+    ? (children.props as { ref?: React.Ref<unknown> })?.ref
+    : undefined;
+  const ref = useMergeRefs([context?.refs.setReference, propRef, childrenRef]);
 
   return (
     <Button

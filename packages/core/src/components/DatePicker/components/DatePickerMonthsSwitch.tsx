@@ -1,6 +1,7 @@
 import { useTheme } from '@emotion/react';
 import * as C from '../..';
 import { useDatePickerContext } from '../useDatePickerContext';
+import { CALENDAR_TYPE } from '../constants';
 
 export const DatePickerMonthsSwitch = () => {
   const {
@@ -13,7 +14,7 @@ export const DatePickerMonthsSwitch = () => {
     onMonthChange,
   } = useDatePickerContext();
   const theme = useTheme();
-  const isDayCalendarType = calendarType === 'days';
+  const isDayCalendarType = calendarType === CALENDAR_TYPE.DAYS;
 
   const isMinMonthReached = calendarViewDateTime
     ? calendarViewDateTime.month === dateMinDT.month &&

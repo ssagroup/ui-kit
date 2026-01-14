@@ -1,219 +1,359 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useDatePickerMask } from './useDatePickerMask';
-import { DATE_MAX, DATE_MIN, INVALID_DATE, OUT_OF_RANGE } from '../constants';
-import { CalendarType, DatePickerProps } from '../types';
+import {
+  DATE_MAX,
+  DATE_MIN,
+  MONTH_DATE_MIN,
+  MONTH_DATE_MAX,
+  YEAR_DATE_MIN,
+  YEAR_DATE_MAX,
+  DEFAULT_MONTH_MASK_FORMAT,
+  DEFAULT_YEAR_MASK_FORMAT,
+  DEFAULT_MASK_FORMAT,
+  DEFAULT_MASK,
+  DEFAULT_MONTH_MASK,
+  DEFAULT_YEAR_MASK,
+  FULL_DATE_LENGTH,
+  FULL_MONTH_DATE_LENGTH,
+  FULL_YEAR_DATE_LENGTH,
+  INVALID_DATE,
+  OUT_OF_RANGE,
+  PICKER_TYPE,
+  CALENDAR_TYPE,
+} from '../constants';
+import { CalendarType, DatePickerProps, DatePickerFormat } from '../types';
+
+const CONFIG = {
+  [PICKER_TYPE.DAYS]: {
+    format: DEFAULT_MASK_FORMAT,
+    mask: DEFAULT_MASK,
+    length: FULL_DATE_LENGTH,
+    min: DATE_MIN,
+    max: DATE_MAX,
+    calendar: CALENDAR_TYPE.DAYS,
+    unit: 'day' as const,
+  },
+  [PICKER_TYPE.MONTHS]: {
+    format: DEFAULT_MONTH_MASK_FORMAT,
+    mask: DEFAULT_MONTH_MASK,
+    length: FULL_MONTH_DATE_LENGTH,
+    min: MONTH_DATE_MIN,
+    max: MONTH_DATE_MAX,
+    calendar: CALENDAR_TYPE.MONTHS,
+    unit: 'month' as const,
+  },
+  [PICKER_TYPE.YEARS]: {
+    format: DEFAULT_YEAR_MASK_FORMAT,
+    mask: DEFAULT_YEAR_MASK,
+    length: FULL_YEAR_DATE_LENGTH,
+    min: YEAR_DATE_MIN,
+    max: YEAR_DATE_MAX,
+    calendar: CALENDAR_TYPE.YEARS,
+    unit: 'year' as const,
+  },
+};
+
+const getNumberAtIndex = (parts: number[], index: number, fallback: number) =>
+  index >= 0 && parts[index] != null ? parts[index] : fallback;
 
 export const useDatePicker = ({
-  dateMin = DATE_MIN,
-  dateMax = DATE_MAX,
+  dateMin,
+  dateMax,
   name,
   defaultValue,
-  format = 'mm/dd/yyyy',
+  format: propFormat,
   maskOptions,
+  pickerType = PICKER_TYPE.DAYS,
   onOpen,
   onClose,
   onError,
   onChange,
-  ...rest
+  value: externalValue,
 }: DatePickerProps) => {
   const { clearErrors, setError, setValue } = useFormContext();
   const inputValue = useWatch({ name });
+
+  const config = useMemo(
+    () => CONFIG[pickerType] || CONFIG[PICKER_TYPE.DAYS],
+    [pickerType],
+  );
+  const format = (propFormat || config.format) as DatePickerFormat;
+  const luxonFormat = useMemo(() => format.replace(/mm/gi, 'MM'), [format]);
+
   const [isLoading, setLoading] = useState(true);
   const [dateTime, setDateTime] = useState<DateTime | undefined>();
-  const [lastChangedDate, setLastChangedDate] = useState<Date | undefined>(
-    undefined,
+  const [lastChangedDate, setLastChangedDate] = useState<Date | undefined>();
+  const [isOpen, setIsOpen] = useState(false);
+  const [calendarType, setCalendarType] = useState<CalendarType>(
+    config.calendar,
   );
-  const [dateTimeForChangeEvent, setDateTimeForChangeEvent] = useState<
+  const [calendarViewDateTime, setCalendarViewDateTime] = useState<
     DateTime | undefined
-  >(undefined);
-  const [currentError, setCurrentError] = useState<{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    date: any;
+  >();
+
+  const lastProcessedValueRef = useRef<string>('');
+  const lastEmittedTsRef = useRef<number | null>(null);
+  const lastExternalValueRef = useRef<string | undefined>(undefined);
+  const lastErrorRef = useRef<{
+    date: string | null | undefined;
     error?: string | null;
   }>({
     date: null,
     error: null,
   });
-  const [isOpen, setIsOpen] = useState(false);
-  const splittedFormat = format.split('/');
-  const [formatIndexes, setFormatIndexes] = useState({
-    day: splittedFormat.findIndex((item) => item === 'dd'),
-    month: splittedFormat.findIndex((item) => item === 'mm'),
-    year: splittedFormat.findIndex((item) => item === 'yyyy'),
-  });
-  const [calendarType, setCalendarType] = useState<CalendarType>('days');
-  const [calendarViewDateTime, setCalendarViewDateTime] = useState<
-    DateTime | undefined
-  >(undefined);
-  const luxonFormat = format.replace('mm', 'MM');
-  const dateMinParts = dateMin.split('/').map(Number);
-  const dateMaxParts = dateMax.split('/').map(Number);
+
+  const formatIndexes = useMemo(() => {
+    const parts = format
+      .split('/')
+      .map((p) => p.trim().toLowerCase())
+      .filter(Boolean);
+    const year = parts.findIndex((p) => p === 'yyyy');
+
+    if (year === -1) throw new Error('DatePicker format must contain year');
+
+    return {
+      day: parts.findIndex((p) => p === 'dd'),
+      month: parts.findIndex((p) => p === 'mm'),
+      year,
+    };
+  }, [format]);
+
+  const { dateMinDT, dateMaxDT, dateMinParts, dateMaxParts } = useMemo(() => {
+    const minP = (dateMin || config.min).split('/').map(Number);
+    const maxP = (dateMax || config.max).split('/').map(Number);
+
+    const toDT = (p: number[]) =>
+      DateTime.fromObject({
+        year: getNumberAtIndex(p, formatIndexes.year, DateTime.now().year),
+        month: getNumberAtIndex(p, formatIndexes.month, 1),
+        day: getNumberAtIndex(p, formatIndexes.day, 1),
+      });
+
+    return {
+      dateMinDT: toDT(minP),
+      dateMaxDT: toDT(maxP),
+      dateMinParts: minP,
+      dateMaxParts: maxP,
+    };
+  }, [dateMin, dateMax, config, formatIndexes]);
 
   const maskInputRef = useDatePickerMask({
-    maskOptions,
+    maskOptions: { mask: config.mask, ...maskOptions },
     dateMaxParts,
     dateMinParts,
     formatIndexes,
   });
 
-  const dateMaxDT = DateTime.fromObject({
-    year: dateMaxParts[formatIndexes['year']],
-    month: dateMaxParts[formatIndexes['month']],
-    day: dateMaxParts[formatIndexes['day']],
-  });
-  const dateMinDT = DateTime.fromObject({
-    year: dateMinParts[formatIndexes['year']],
-    month: dateMinParts[formatIndexes['month']],
-    day: dateMinParts[formatIndexes['day']],
-  });
+  const safeOnChange = useCallback(
+    (newDT?: DateTime) => {
+      const normalized = newDT?.startOf(config.unit);
+      const ts = normalized?.toMillis() ?? null;
 
-  const safeOnChange = (newDateTime?: DateTime) => {
-    const _newDateTime = newDateTime ? newDateTime.startOf('day') : undefined;
+      if (lastEmittedTsRef.current === ts) return;
 
-    const _dateTimeForChangeEvent = dateTimeForChangeEvent
-      ? dateTimeForChangeEvent.startOf('day')
-      : undefined;
-    if (_newDateTime?.toMillis() !== _dateTimeForChangeEvent?.toMillis()) {
-      setDateTimeForChangeEvent(newDateTime);
-      if (_newDateTime) {
-        setLastChangedDate(_newDateTime.toJSDate());
-        onChange?.(_newDateTime.toJSDate());
-      } else {
-        setLastChangedDate(undefined);
-        onChange?.();
+      lastEmittedTsRef.current = ts;
+
+      const jsDate = normalized?.toJSDate();
+
+      setLastChangedDate(jsDate);
+      onChange?.(jsDate);
+    },
+    [config.unit, onChange],
+  );
+
+  const safeOnError = useCallback(
+    (date: string | null | undefined, error?: string | null) => {
+      // Only call onError if error actually changed
+      if (
+        lastErrorRef.current.date !== date ||
+        lastErrorRef.current.error !== error
+      ) {
+        lastErrorRef.current = { date, error };
+        onError?.(date, error);
       }
-    }
-  };
+    },
+    [onError],
+  );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const safeOnError = (date: any, error?: string | null) => {
-    if (currentError.date !== date && currentError.error !== error) {
-      setCurrentError({ date, error });
-      onError?.(date, error);
-    }
-  };
+  const processValue = useCallback(
+    (newValue: string, isBlur = false) => {
+      if (
+        typeof newValue !== 'string' ||
+        (!isBlur && newValue === lastProcessedValueRef.current)
+      ) {
+        return;
+      }
 
-  const processValue = (newValue: string) => {
-    const newDateTime =
-      typeof newValue === 'string' && newValue.length === 10
-        ? DateTime.fromFormat(newValue, luxonFormat)
-        : undefined;
-
-    if (!newDateTime?.isValid) {
-      const errorMessage = newDateTime?.invalidExplanation || INVALID_DATE;
-      setError(name, { message: errorMessage }, { shouldFocus: true });
-      setDateTime(undefined);
-      safeOnChange();
-      safeOnError?.(newValue, errorMessage);
-    } else if (newDateTime !== undefined) {
-      if (newDateTime < dateMinDT || newDateTime > dateMaxDT) {
-        const errorMessage = OUT_OF_RANGE;
-        setError(name, { message: errorMessage }, { shouldFocus: true });
+      // If the field is empty and we blurred, just clear errors and stop
+      if (isBlur && newValue.length === 0) {
+        clearErrors(name);
         setDateTime(undefined);
-        safeOnError?.(newValue, errorMessage);
         safeOnChange();
-      } else {
-        setDateTime(newDateTime);
-        clearErrors();
-        safeOnError?.(null);
-        safeOnChange?.(newDateTime);
+        safeOnError(null);
+        lastProcessedValueRef.current = newValue;
+        return;
       }
-    }
+
+      // Only validate if the string is complete OR if the user moved away (blur)
+      const isComplete = newValue.length === config.length;
+
+      if (!isComplete && !isBlur) {
+        // User is still typing - don't validate yet, but update the ref
+        lastProcessedValueRef.current = newValue;
+        return;
+      }
+
+      lastProcessedValueRef.current = newValue;
+
+      // If incomplete on blur, show error
+      if (!isComplete) {
+        if (isBlur && newValue.length > 0) {
+          setError(name, { message: INVALID_DATE });
+          setDateTime(undefined);
+          safeOnChange();
+          safeOnError(newValue, INVALID_DATE);
+        }
+
+        return;
+      }
+
+      const newDT = DateTime.fromFormat(newValue, luxonFormat);
+      if (!newDT.isValid) {
+        setError(name, { message: newDT.invalidExplanation || INVALID_DATE });
+        setDateTime(undefined);
+        safeOnChange();
+        safeOnError(newValue, INVALID_DATE);
+
+        return;
+      }
+
+      if (newDT < dateMinDT || newDT > dateMaxDT) {
+        setError(name, { message: OUT_OF_RANGE });
+        setDateTime(undefined);
+        safeOnError(newValue, OUT_OF_RANGE);
+        safeOnChange();
+
+        return;
+      }
+
+      // Valid Date - Use ref to check latest dateTime to avoid stale closure
+      setDateTime((prevDT) => {
+        if (prevDT?.toMillis() === newDT.toMillis()) {
+          return prevDT; // No change
+        }
+
+        clearErrors(name);
+        safeOnError(null);
+        safeOnChange(newDT);
+
+        return newDT;
+      });
+    },
+    [
+      config.length,
+      luxonFormat,
+      dateMinDT,
+      dateMaxDT,
+      name,
+      setError,
+      clearErrors,
+      safeOnChange,
+      safeOnError,
+    ],
+  );
+
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    // Force validation on blur - catches incomplete inputs when user leaves the field
+    processValue(e.currentTarget.value, true);
+    // Close the calendar overlay
+    setIsOpen(false);
   };
 
-  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
-    event.preventDefault();
-    const blurredValue = event.currentTarget.value;
-    if (blurredValue.length > 0) {
-      processValue(blurredValue);
-    }
-  };
-
+  // Sync Input Value -> States (Passive - no focus manipulation)
   useEffect(() => {
-    if (
-      typeof inputValue === 'string' &&
-      inputValue.length &&
-      inputValue.length < 10
-    ) {
-      setIsOpen(false);
-      setTimeout(() => {
-        maskInputRef.current.focus();
-      }, 10);
-    }
-    let newDateTime;
+    if (typeof inputValue !== 'string') return;
 
-    if (typeof inputValue === 'string' && inputValue.length === 10) {
-      newDateTime = DateTime.fromFormat(inputValue, luxonFormat);
-      setValue(name, inputValue);
+    // Only auto-process while typing if they have finished the mask
+    // This allows the user to click away or tab out freely
+    if (inputValue.length === config.length) {
       processValue(inputValue);
     }
+  }, [inputValue, config.length, processValue]);
 
-    const newCalendarViewDateTime =
-      newDateTime && newDateTime.isValid
-        ? newDateTime
-        : DateTime.now().set({ day: 1 });
-
-    if (newCalendarViewDateTime < dateMinDT) {
-      const { year, month, day } = dateMinDT;
-      newCalendarViewDateTime.set({ year, month, day });
-    }
-    if (newCalendarViewDateTime > dateMaxDT) {
-      const { year, month, day } = dateMaxDT;
-      newCalendarViewDateTime.set({ year, month, day });
-    }
-
-    setCalendarViewDateTime(newCalendarViewDateTime);
+  // Sync Internal DateTime -> Form Value
+  // Using ref to track inputValue to prevent infinite loop while still checking its value
+  const inputValueRef = useRef<string | undefined>(inputValue);
+  useEffect(() => {
+    inputValueRef.current = inputValue;
   }, [inputValue]);
 
   useEffect(() => {
-    if (dateTime) {
-      const newValue = dateTime.toFormat(luxonFormat);
-      if (inputValue !== newValue) {
-        setValue(name, newValue);
-      }
-    }
-  }, [dateTime]);
+    if (!dateTime || !dateTime.isValid) return;
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (isOpen) {
-        onOpen?.();
-      } else {
-        onClose?.();
-        setCalendarType('days');
-      }
-    }
-  }, [isOpen]);
+    const formatted = dateTime.toFormat(luxonFormat);
 
-  useEffect(() => {
-    const splittedFormat = format.split('/');
-    setFormatIndexes({
-      day: splittedFormat.findIndex((item) => item === 'dd'),
-      month: splittedFormat.findIndex((item) => item === 'mm'),
-      year: splittedFormat.findIndex((item) => item === 'yyyy'),
-    });
-  }, [format]);
-
-  useEffect(() => {
-    if ('value' in rest) {
-      setValue(name, rest.value);
+    // Only setValue if it actually differs from what's in the form
+    if (inputValueRef.current !== formatted) {
+      setValue(name, formatted, { shouldValidate: true });
     }
-  }, [rest.value]);
+  }, [dateTime, luxonFormat, name, setValue]);
+
+  // Update Calendar View
+  useEffect(() => {
+    const base = (dateTime?.isValid ? dateTime : DateTime.now()).startOf(
+      config.unit,
+    );
+
+    setCalendarViewDateTime(
+      DateTime.min(DateTime.max(base, dateMinDT), dateMaxDT),
+    );
+  }, [dateTime, dateMinDT, dateMaxDT, config.unit]);
+
+  // Sync External Prop 'value'
+  useEffect(() => {
+    if (
+      externalValue === undefined ||
+      externalValue === lastExternalValueRef.current
+    ) {
+      return;
+    }
+
+    lastExternalValueRef.current = externalValue;
+    setValue(name, externalValue);
+  }, [externalValue, name, setValue]);
+
+  // Open/Close side effects only - no focus manipulation
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (isOpen) {
+      onOpen?.();
+    } else {
+      onClose?.();
+      setCalendarType(config.calendar);
+    }
+  }, [isOpen, isLoading, config.calendar, onOpen, onClose]);
 
   useEffect(() => {
     if (defaultValue) {
-      const newDateTime = DateTime.fromFormat(defaultValue, luxonFormat);
-      if (newDateTime.isValid) {
-        setDateTime(newDateTime);
+      const dt = DateTime.fromFormat(defaultValue, luxonFormat);
+
+      if (dt.isValid) {
+        // Set ref to prevent double-processing when setValue triggers inputValue effect
+        lastProcessedValueRef.current = defaultValue;
+        lastExternalValueRef.current = defaultValue;
+        setDateTime(dt);
         setValue(name, defaultValue);
       }
     }
+
     setLoading(false);
   }, []);
 
   return {
+    format,
     formatIndexes,
     dateMinParts,
     dateMaxParts,
@@ -233,5 +373,6 @@ export const useDatePicker = ({
     setDateTime,
     setIsOpen,
     handleBlur,
+    pickerType,
   };
 };

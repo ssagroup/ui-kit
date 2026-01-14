@@ -20,9 +20,10 @@ export const DatePickerTrigger = () => {
     showCalendarIcon,
     onBlur: handleBlur,
     setIsOpen,
+    validationSchema,
   } = useDatePickerContext();
 
-  const { inputProps: inputElementProps, ...restInputProps } =
+  const { inputProps: inputElementProps, ...rest } =
     (inputProps as Partial<InputProps>) || {};
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
   const useFormResult = useForm();
@@ -59,6 +60,32 @@ export const DatePickerTrigger = () => {
     }
   };
 
+  const calendarButton = showCalendarIcon ? (
+    <C.Button
+      endIcon={
+        <C.Icon
+          name="calendar"
+          size={16}
+          color={disabled ? theme.colors.grey : theme.colors.greyDarker}
+        />
+      }
+      data-testid={'datepicker-button'}
+      onClick={handleToggleOpen}
+      variant="tertiary"
+      aria-label="Calendar"
+      isDisabled={disabled}
+      className={classNames?.trigger?.calendarIcon}
+      css={{
+        padding: 0,
+        cursor:
+          openCalendarMode === 'input' || disabled ? 'default' : 'pointer',
+        '&:focus::before': {
+          display: 'none',
+        },
+      }}
+    />
+  ) : undefined;
+
   return (
     <React.Fragment>
       {label && (
@@ -68,6 +95,7 @@ export const DatePickerTrigger = () => {
       )}
       <C.PopoverTrigger asChild>
         <C.Input
+          {...rest}
           name={name}
           placeholder={format}
           ref={inputRef}
@@ -85,43 +113,14 @@ export const DatePickerTrigger = () => {
           errors={fieldError as FieldError}
           status={fieldStatus}
           helperText={helperText}
+          showHelperText={!!(fieldError || helperText)}
+          validationSchema={validationSchema}
           helperClassName={css`
             & > span::first-letter {
               text-transform: uppercase;
             }
           `}
-          endElement={
-            showCalendarIcon ? (
-              <C.Button
-                endIcon={
-                  <C.Icon
-                    name="calendar"
-                    size={16}
-                    color={
-                      disabled ? theme.colors.grey : theme.colors.greyDarker
-                    }
-                  />
-                }
-                data-testid={'datepicker-button'}
-                onClick={handleToggleOpen}
-                variant="tertiary"
-                aria-label="Calendar"
-                isDisabled={disabled}
-                className={classNames?.trigger?.calendarIcon}
-                css={{
-                  padding: 0,
-                  cursor:
-                    openCalendarMode === 'input' || disabled
-                      ? 'default'
-                      : 'pointer',
-                  '&:focus::before': {
-                    display: 'none',
-                  },
-                }}
-              />
-            ) : undefined
-          }
-          {...restInputProps}
+          endElement={calendarButton}
         />
       </C.PopoverTrigger>
     </React.Fragment>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import validator from '@rjsf/validator-ajv8';
+import { DateTime } from 'luxon';
 import TextField from '@components/TextField';
 import Icon from '@components/Icon';
 import Button from '@components/Button';
@@ -410,6 +411,76 @@ export const Accordion: Story = {
           'ui:options': {
             outputFormat: 'yyyy-MM-dd',
           },
+        },
+      },
+    },
+  },
+};
+
+export const DatePickerWithValidation: Story = {
+  args: {
+    formData: {},
+    schema: {
+      title: 'Date Picker Validation Examples',
+      description: 'Try different validation scenarios with DatePicker fields',
+      type: 'object',
+      required: ['requiredDate', 'birthDate', 'eventDate'],
+      properties: {
+        requiredDate: {
+          type: 'string',
+          title: 'Required Date *',
+          description: 'This field is required. Try submitting without a date.',
+        },
+        birthDate: {
+          type: 'string',
+          title: 'Birth Date *',
+          description: 'Required field with date range (1900-2150)',
+        },
+        eventDate: {
+          type: 'string',
+          title: 'Event Date *',
+          description:
+            'Required field - must be in the future. Try past dates or invalid formats.',
+        },
+        optionalDate: {
+          type: 'string',
+          title: 'Optional Date',
+          description: 'This field is optional, but if filled must be valid',
+        },
+      },
+    },
+    uiSchema: {
+      requiredDate: {
+        'ui:widget': 'date',
+        'ui:help': 'This field is required. Try submitting without a date.',
+        'ui:options': {
+          outputFormat: 'mm/dd/yyyy',
+        },
+      },
+      birthDate: {
+        'ui:widget': 'date',
+        'ui:help': 'Birth date must be between 01/01/1900 and 12/31/2150',
+        'ui:options': {
+          outputFormat: 'mm/dd/yyyy',
+          dateMin: '01/01/1900',
+          dateMax: '12/31/2150',
+        },
+      },
+      eventDate: {
+        'ui:widget': 'date',
+        'ui:help':
+          'Event date must be in the future. Try invalid dates like 99/99/9999 or past dates.',
+        'ui:options': {
+          outputFormat: 'mm/dd/yyyy',
+          dateMin: DateTime.now().plus({ days: 1 }).toFormat('MM/dd/yyyy'),
+        },
+      },
+      optionalDate: {
+        'ui:widget': 'date',
+        'ui:help':
+          'Optional field - try invalid dates like 13/45/2025 or 02/30/2025 to see validation errors',
+        'ui:options': {
+          outputFormat: 'mm/dd/yyyy',
         },
       },
     },

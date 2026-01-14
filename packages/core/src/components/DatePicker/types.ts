@@ -2,13 +2,19 @@ import { Dispatch, SetStateAction } from 'react';
 import { useMask } from '@react-input/mask';
 import { DateTime } from 'luxon';
 import { InputProps } from '@components/Input/types';
+import { PICKER_TYPE, CALENDAR_TYPE } from './constants';
+import { RegisterOptions } from 'react-hook-form';
+
+export type PickerType = (typeof PICKER_TYPE)[keyof typeof PICKER_TYPE];
+export type DatePickerFormat = 'mm/dd/yyyy' | 'dd/mm/yyyy' | 'mm/yyyy' | 'yyyy';
 
 export type DatePickerProps = {
   name: string;
   label?: string;
-  format?: 'mm/dd/yyyy' | 'dd/mm/yyyy';
+  format?: DatePickerFormat;
   maskOptions?: Parameters<typeof useMask>[0];
   openCalendarMode?: 'icon' | 'input' | 'both';
+  pickerType?: PickerType;
   inputProps?: Partial<InputProps>;
   value?: string; // depends on the format
   defaultValue?: string; // depends on the format
@@ -48,6 +54,7 @@ export type DatePickerProps = {
   onMonthChange?: (date: Date) => void;
   onYearChange?: (date: Date) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  validationSchema?: RegisterOptions;
 };
 
 export type DatePickerContextProps = Omit<
@@ -69,6 +76,7 @@ export type DatePickerContextProps = Omit<
     month: number;
     year: number;
   };
+  pickerType: PickerType;
   safeOnChange?: (date?: DateTime) => void;
   setCalendarViewDateTime: Dispatch<SetStateAction<DateTime | undefined>>;
   setDateTime: Dispatch<SetStateAction<DateTime<boolean> | undefined>>;
@@ -76,4 +84,4 @@ export type DatePickerContextProps = Omit<
   setCalendarType: Dispatch<SetStateAction<CalendarType>>;
 };
 
-export type CalendarType = 'days' | 'months' | 'years';
+export type CalendarType = (typeof CALENDAR_TYPE)[keyof typeof CALENDAR_TYPE];
