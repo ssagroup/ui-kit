@@ -54,11 +54,6 @@ export const DateWidget = <
 ) => {
   const { value, name, uiSchema, onChange } = props;
 
-  /**
-   * 1. Try to get parent form context.
-   * 2. Always initialize a local useForm to satisfy the 'Rules of Hooks'.
-   * 3. Use parentContext if available, otherwise fall back to localContext.
-   */
   const parentContext = useFormContext<FieldValues>();
   const localContext = useForm<FieldValues>();
   const hookFormResult = parentContext ?? localContext;
