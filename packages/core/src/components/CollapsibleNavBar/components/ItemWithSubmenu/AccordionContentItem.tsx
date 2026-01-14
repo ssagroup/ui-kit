@@ -27,13 +27,13 @@ export const NavBarAccordionContentItem = ({
   };
   onClick?: () => void;
 }) => {
-  const { theme } = useCollapsibleNavBarContext();
+  const { theme, exactMatch } = useCollapsibleNavBarContext();
   const isExternalLink = subMenuItem.path.includes('://');
 
   return (
     <Link
       onClick={onClick}
-      end
+      end={exactMatch}
       to={isExternalLink ? subMenuItem.path : '/' + prefix + subMenuItem.path}
       navbartheme={theme}>
       {subMenuItem.title}

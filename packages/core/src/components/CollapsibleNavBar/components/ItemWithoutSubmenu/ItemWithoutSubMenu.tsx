@@ -17,7 +17,7 @@ export const Item = ({
   item: T.CollapsibleNavBarItem;
   onClick?: () => void;
 }) => {
-  const { theme } = useCollapsibleNavBarContext();
+  const { theme, exactMatch } = useCollapsibleNavBarContext();
   const { path, iconName, title, iconSize, css, CustomIcon } = item;
   const isExternalLink = path.includes('://');
 
@@ -60,7 +60,7 @@ export const Item = ({
       <ItemWithSubMenu.CollapsibleNavBarItem key={path}>
         <CollapsibleNavBarLink
           to={isExternalLink ? path : '/' + path}
-          end
+          end={exactMatch}
           onClick={onClick}
           ref={linkRef}
           navbartheme={theme}

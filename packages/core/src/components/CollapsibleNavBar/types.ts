@@ -31,4 +31,10 @@ export interface CollapsibleNavBarExtendedProps<
   showIconTooltip?: boolean;
   useMatchPattern?: (prefix: string) => string | PathPattern<string>;
   onChange?: (isChecked: boolean) => void;
+  /**
+   * If true, only exact path matches will be considered active.
+   * If false, sub-routes will also be considered active.
+   * @default false
+   */
+  exactMatch?: boolean;
 }
