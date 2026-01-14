@@ -38,9 +38,9 @@ export const MonthsView = () => {
 
     if (!newDate) return;
 
-    const isFinalSelection = pickerType === PICKER_TYPE.MONTHS;
+    const isMonthTypeSelected = pickerType === PICKER_TYPE.MONTHS;
 
-    if (isFinalSelection) {
+    if (isMonthTypeSelected) {
       const startDate = newDate.startOf('month');
 
       setCalendarViewDateTime(startDate);

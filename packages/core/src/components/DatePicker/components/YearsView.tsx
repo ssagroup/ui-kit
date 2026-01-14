@@ -66,9 +66,9 @@ export const YearsView = () => {
 
     if (!newDate) return;
 
-    const isFinalSelection = pickerType === PICKER_TYPE.YEARS;
+    const isYearTypeSelected = pickerType === PICKER_TYPE.YEARS;
 
-    if (isFinalSelection) {
+    if (isYearTypeSelected) {
       const startDate = newDate.startOf('year');
 
       setCalendarViewDateTime(startDate);
