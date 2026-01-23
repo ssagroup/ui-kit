@@ -139,6 +139,8 @@ rebalancing
 revparse
 rjsf
 ROI
+safari
+Safari
 sbdocs
 sed
 sem
