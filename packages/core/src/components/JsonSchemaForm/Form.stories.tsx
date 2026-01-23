@@ -65,10 +65,6 @@ export const Default: Story = {
         start: '01/15/2025',
         end: '01/25/2025',
       },
-      dateRangeField2: {
-        start: '02/10/2025',
-        end: '02/28/2025',
-      },
     },
     schema: {
       title: 'Test Form',
@@ -141,7 +137,7 @@ export const Default: Story = {
         },
         dateRangeField: {
           type: 'object',
-          title: 'Date Range field',
+          title: 'Date Range field-1',
           properties: {
             start: {
               type: 'string',
@@ -153,7 +149,7 @@ export const Default: Story = {
         },
         dateRangeField2: {
           type: 'object',
-          title: 'Second Date Range field',
+          title: 'Date Range field-2',
           properties: {
             start: {
               type: 'string',
@@ -162,6 +158,10 @@ export const Default: Story = {
               type: 'string',
             },
           },
+        },
+        optionalDateField: {
+          type: 'string',
+          title: 'Date picker',
         },
       },
     },
@@ -197,9 +197,16 @@ export const Default: Story = {
       dateRangeField2: {
         'ui:field': 'daterange',
         'ui:help':
-          'Second date range picker example - shows how multiple DateRangePickers work independently',
+          'Date range picker example with European format (dd/mm/yyyy)',
         'ui:options': {
-          outputFormat: 'mm/dd/yyyy',
+          format: 'dd/mm/yyyy',
+          outputFormat: 'yyyy-MM-dd',
+        },
+      },
+      optionalDateField: {
+        'ui:widget': 'date',
+        'ui:options': {
+          outputFormat: 'yyyy-MM-dd',
         },
       },
       selectField: {
@@ -418,6 +425,12 @@ export const Accordion: Story = {
 };
 
 export const DatePickerWithValidation: Story = {
+  parameters: {
+    docs: {
+      // TODO create a form with validation of all fields !
+      disable: true,
+    },
+  },
   args: {
     formData: {},
     schema: {
