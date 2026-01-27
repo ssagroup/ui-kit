@@ -29,6 +29,7 @@ export const useRangeSelection = ({
     clearInputValue,
     allowReverseSelection = false,
     onChange,
+    setIsEndDatePresent,
   } = useDateRangePickerContext();
 
   const handleRangeSelect = (selectedValue: number | string) => {
@@ -37,6 +38,9 @@ export const useRangeSelection = ({
 
     // Range selection logic
     const isSelectingStart = rangeSelectionStep === 'start';
+    // Reset "present" flag whenever a date is selected (either start or end)
+    setIsEndDatePresent(false);
+
     if (isSelectingStart) {
       clearInputValue('to');
       setLastFocusedElement('to');

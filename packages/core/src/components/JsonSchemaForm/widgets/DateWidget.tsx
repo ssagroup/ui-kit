@@ -14,21 +14,9 @@ import {
 } from 'react-hook-form';
 
 import { DatePicker } from '@components/DatePicker';
-import { DatePickerFormat, PickerType } from '@components/DatePicker/types';
-import {
-  PICKER_TYPE,
-  VALID_DATE_FORMATS,
-} from '@components/DatePicker/constants';
-
-/**
- * Type guards to ensure RJSF ui:options match our DatePicker requirements
- */
-const isValidDatePickerFormat = (value: unknown): value is DatePickerFormat => {
-  return (
-    typeof value === 'string' &&
-    VALID_DATE_FORMATS.includes(value as DatePickerFormat)
-  );
-};
+import { PickerType } from '@components/DatePicker/types';
+import { PICKER_TYPE } from '@components/DatePicker/constants';
+import { isValidDateFormat } from '../utils/dateFormats';
 
 const isValidPickerType = (value: unknown): value is PickerType => {
   return (
@@ -84,7 +72,7 @@ export const DateWidget = <
         onChange={onDateChange}
         dateMin={isValidString(dateMin) ? dateMin : undefined}
         dateMax={isValidString(dateMax) ? dateMax : undefined}
-        format={isValidDatePickerFormat(format) ? format : undefined}
+        format={isValidDateFormat(format) ? format : undefined}
         pickerType={
           isValidPickerType(pickerType) ? pickerType : PICKER_TYPE.DAYS
         }

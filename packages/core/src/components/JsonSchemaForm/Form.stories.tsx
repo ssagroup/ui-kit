@@ -65,6 +65,14 @@ export const Default: Story = {
         start: '01/15/2025',
         end: '01/25/2025',
       },
+      dateRangeField3: {
+        start: '2025-03',
+        end: '2025-06',
+      },
+      dateRangeField4: {
+        start: '2020',
+        end: '2025',
+      },
     },
     schema: {
       title: 'Test Form',
@@ -163,6 +171,30 @@ export const Default: Story = {
           type: 'string',
           title: 'Date picker',
         },
+        dateRangeField3: {
+          type: 'object',
+          title: 'Date Range field-3',
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
+        },
+        dateRangeField4: {
+          type: 'object',
+          title: 'Date Range field-4',
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
+        },
       },
     },
     uiSchema: {
@@ -199,6 +231,7 @@ export const Default: Story = {
         'ui:help':
           'Date range picker example with European format (dd/mm/yyyy)',
         'ui:options': {
+          showPresentOption: true,
           format: 'dd/mm/yyyy',
           outputFormat: 'yyyy-MM-dd',
         },
@@ -207,6 +240,24 @@ export const Default: Story = {
         'ui:widget': 'date',
         'ui:options': {
           outputFormat: 'yyyy-MM-dd',
+        },
+      },
+      dateRangeField3: {
+        'ui:field': 'daterange',
+        'ui:help': 'Month range picker example (mm/yyyy)',
+        'ui:options': {
+          rangePickerType: 'months',
+          format: 'mm/yyyy',
+          outputFormat: 'yyyy-MM',
+        },
+      },
+      dateRangeField4: {
+        'ui:field': 'daterange',
+        'ui:help': 'Year range picker example (yyyy)',
+        'ui:options': {
+          rangePickerType: 'years',
+          format: 'yyyy',
+          outputFormat: 'yyyy',
         },
       },
       selectField: {

@@ -26,6 +26,9 @@ export const TriggerInput = ({
     onBlur: handleBlur,
     isOpen,
     setIsOpen,
+    isEndDatePresent,
+    setIsEndDatePresent,
+    setDateTime,
   } = useDateRangePickerContext();
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
   const useFormResult = useForm();
@@ -34,7 +37,15 @@ export const TriggerInput = ({
   const {
     register,
     formState: { errors },
+    watch,
+    setValue,
   } = hookFormResult;
+
+  // Get the current value from the form
+  const formValue = watch(currentName);
+  // Override with "Present" if it's the end date and isEndDatePresent is true
+  const displayValue =
+    datepickerType === 'to' && isEndDatePresent ? 'Present' : formValue;
   const { inputProps: inputElementProps, ...restInputProps } =
     (inputProps as Partial<InputProps>) || {};
 
@@ -46,6 +57,67 @@ export const TriggerInput = ({
   const handleFocus: FocusEventHandler<HTMLInputElement> = (e) => {
     setLastFocusedElement(datepickerType);
     inputProps?.inputProps?.onFocus?.(e);
+  };
+
+  const clearPresentAndField = () => {
+    setIsEndDatePresent(false);
+    setValue(currentName, '');
+    setDateTime((prev) => [prev[0], undefined]);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // If "Present" is displayed and user presses Backspace or Delete, clear the field entirely
+    if (
+      datepickerType === 'to' &&
+      isEndDatePresent &&
+      (e.key === 'Backspace' || e.key === 'Delete')
+    ) {
+      const input = e.currentTarget;
+
+      // Always clear "Present" entirely when Backspace/Delete is pressed
+      // This prevents letter-by-letter deletion which would be confusing
+      e.preventDefault();
+      e.stopPropagation();
+      clearPresentAndField();
+      // Focus the input after clearing to allow immediate typing
+      setTimeout(() => input.focus(), 0);
+      return;
+    }
+    // Pass through to original handler
+    inputProps?.inputProps?.onKeyDown?.(
+      e as unknown as React.KeyboardEvent<HTMLInputElement>,
+    );
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+
+    // If "Present" is displayed and user changes the value, clear "Present" flag
+    // This is a backup to handleChange in case onInput doesn't fire
+    if (datepickerType === 'to' && isEndDatePresent && newValue !== 'Present') {
+      setIsEndDatePresent(false);
+    }
+
+    // Pass through to original handler
+    inputProps?.inputProps?.onChange?.(e);
+  };
+
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const newValue = target.value;
+
+    // If "Present" is displayed and user modifies the input in any way, clear "Present" flag immediately
+    // This handles typing, deleting, pasting, etc.
+    if (datepickerType === 'to' && isEndDatePresent && newValue !== 'Present') {
+      setIsEndDatePresent(false);
+      // Also clear the form value if it's still "Present" to allow free editing
+      if (formValue === 'Present') {
+        setValue(currentName, newValue);
+      }
+    }
+
+    // Pass through to original handler
+    inputProps?.inputProps?.onInput?.(e);
   };
 
   return (
@@ -61,34 +133,28 @@ export const TriggerInput = ({
         padding-left: ${datepickerType === 'from' ? 0 : 14}px;
       `}
       inputProps={{
+        value: displayValue || '',
         onBlur: handleBlur,
         onFocus: handleFocus,
         onClick: (e) => {
           if (isOpen) {
             setIsOpen(false);
           }
+          // If "Present" is displayed and user clicks, select all text so they can easily replace it
+          if (datepickerType === 'to' && isEndDatePresent) {
+            e.currentTarget.select();
+          }
           inputProps?.inputProps?.onClick?.(e);
         },
-        onKeyDown: (e) => {
-          inputProps?.inputProps?.onKeyDown?.(
-            e as unknown as React.KeyboardEvent<HTMLInputElement>,
-          );
-        },
+        onKeyDown: handleKeyDown,
         onBeforeInput: (e: unknown) => {
           // pass-through
           inputProps?.inputProps?.onBeforeInput?.(
             e as React.InputEvent<HTMLInputElement>,
           );
         },
-        onInput: (e) => {
-          // pass-through
-          inputProps?.inputProps?.onInput?.(
-            e as React.FormEvent<HTMLInputElement>,
-          );
-        },
-        onChange: (e) => {
-          inputProps?.inputProps?.onChange?.(e);
-        },
+        onInput: handleInput,
+        onChange: handleChange,
         id: inputProps?.inputProps?.id || currentName,
         'data-testid': `daterangepicker-input-${datepickerType}`,
         autoComplete: 'off',

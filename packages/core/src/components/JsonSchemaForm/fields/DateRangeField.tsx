@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { DateTime } from 'luxon';
 import {
   FieldProps,
@@ -6,8 +7,12 @@ import {
   StrictRJSFSchema,
 } from '@rjsf/utils';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
-
 import { DateRangePicker } from '@components/DateRangePicker';
+import { getFormatForRangePickerType } from '@components/DateRangePicker/utils';
+import {
+  extractTransformedProps,
+  extractSpreadableProps,
+} from '../utils/dateRangeField';
 
 export const DateRangeField = <
   T = unknown,
@@ -19,55 +24,121 @@ export const DateRangeField = <
   const { idSchema, uiSchema, schema, name, formData, disabled, onChange } =
     props;
 
-  if (schema.type !== 'object') {
-    throw new Error(
-      'DateRangeField: schema.type must be "object" to render DateRangeField',
+  // 1. Schema Guard - return null instead of throwing to prevent form crashes
+  if (
+    schema.type !== 'object' ||
+    !schema.properties?.start ||
+    !schema.properties?.end
+  ) {
+    console.error(
+      'DateRangeField: schema.type must be "object" with start/end properties',
     );
+    return null;
   }
 
-  if (!schema.properties?.start || !schema.properties?.end) {
-    throw new Error(
-      'DateRangeField: schema.properties.start and schema.properties.end are required to render DateRangeField',
-    );
-  }
+  const uiOptions = uiSchema?.['ui:options'] || {};
+  const transformedProps = extractTransformedProps(uiOptions);
+  const spreadableProps = extractSpreadableProps(uiOptions);
+  const { rangePickerType, outputFormat } = transformedProps;
+  const inputFormat =
+    transformedProps.format ?? getFormatForRangePickerType(rangePickerType);
 
-  const useFormResult = useForm<FieldValues>();
+  // Label can be overridden from ui:options, otherwise use ui:title or schema.title
+  const label =
+    typeof uiOptions.label === 'string'
+      ? uiOptions.label
+      : uiSchema?.['ui:title'] || (schema.title as string) || name;
 
-  const { outputFormat = 'yyyy-MM-dd' } = uiSchema?.['ui:options'] || {};
-  const title = uiSchema?.['ui:title']
-    ? uiSchema['ui:title']
-    : schema?.title
-      ? schema.title
-      : name;
+  // Disabled can be overridden from ui:options, otherwise use form state
+  const isDisabled =
+    typeof uiOptions.disabled === 'boolean' ? uiOptions.disabled : disabled;
 
   const id = idSchema.$id;
-  const { start, end } = (formData || {}) as {
-    start: string;
-    end: string;
-  };
+
+  /**
+   * Format conversion: formData (outputFormat) → DateRangePicker (inputFormat)
+   *
+   * WHY THIS EXISTS:
+   * - Form stores dates in outputFormat (e.g., 'yyyy-MM-dd' ISO format for database/API)
+   * - DateRangePicker expects dates in inputFormat (e.g., 'mm/dd/yyyy' for user display)
+   * - We need to convert between these formats when initializing the picker
+   *
+   * EXAMPLE:
+   * - formData: { start: '2024-01-15', end: '2024-12-31' } (outputFormat: 'yyyy-MM-dd')
+   * - inputFormat: 'mm/dd/yyyy'
+   * - Result: ['01/15/2024', '12/31/2024'] (what DateRangePicker needs)
+   *
+   * PRIORITY:
+   * 1. formData (form's current state) - preferred source
+   * 2. ui:options.defaultValue - fallback if formData is empty
+   */
+  const defaultValue = useMemo(() => {
+    // First try formData (form's current state)
+    const { start, end } = (formData || {}) as {
+      start?: string;
+      end?: string;
+    };
+
+    if (start && end && typeof start === 'string' && typeof end === 'string') {
+      // Convert inputFormat to Luxon format (mm → MM)
+      const luxonInputFormat = inputFormat.replace(/mm/gi, 'MM');
+
+      // Step 1: Parse formData strings (in outputFormat) into DateTime objects
+      const startDT = DateTime.fromFormat(start, outputFormat);
+      const endDT = DateTime.fromFormat(end, outputFormat);
+
+      // Step 2: Convert DateTime objects back to strings, but in inputFormat
+      if (startDT.isValid && endDT.isValid) {
+        return [
+          startDT.toFormat(luxonInputFormat),
+          endDT.toFormat(luxonInputFormat),
+        ] as [string, string];
+      }
+    }
+
+    // Fallback to defaultValue from ui:options if formData is not available
+    const defaultValueFromOptions = uiOptions.defaultValue;
+    if (
+      Array.isArray(defaultValueFromOptions) &&
+      defaultValueFromOptions.length === 2 &&
+      typeof defaultValueFromOptions[0] === 'string' &&
+      typeof defaultValueFromOptions[1] === 'string'
+    ) {
+      return defaultValueFromOptions as [string, string];
+    }
+
+    return undefined;
+  }, [formData, inputFormat, outputFormat, uiOptions.defaultValue]);
+
+  // NOTE: DateRangePicker requires FormProvider because it uses useFormContext() internally
+  // Each DateRangeField creates its own isolated form context for the picker's internal state
+  // This is a known limitation - multiple DateRangeFields in one form will have separate contexts
+  const useFormResult = useForm<FieldValues>();
 
   const onDateRangeChange = (date?: [Date | null, Date | null]) => {
     const [startDate, endDate] = date || [null, null];
-    const start =
-      startDate &&
-      DateTime.fromJSDate(startDate).toFormat(outputFormat as string);
-    const end =
-      endDate && DateTime.fromJSDate(endDate).toFormat(outputFormat as string);
-    const dateRangeChange = {
-      ...(start && { start }),
-      ...(end && { end }),
-    };
-    onChange(dateRangeChange as T);
+
+    const start = startDate
+      ? DateTime.fromJSDate(startDate).toFormat(outputFormat)
+      : undefined;
+    const end = endDate
+      ? DateTime.fromJSDate(endDate).toFormat(outputFormat)
+      : undefined;
+
+    onChange({ start, end } as T);
   };
 
   return (
     <FormProvider {...useFormResult}>
       <DateRangePicker
         name={id}
-        label={title}
-        disabled={disabled}
-        defaultValue={[start, end]}
+        label={label}
+        disabled={isDisabled}
+        defaultValue={defaultValue}
         onChange={onDateRangeChange}
+        format={inputFormat}
+        rangePickerType={rangePickerType}
+        {...spreadableProps}
       />
     </FormProvider>
   );

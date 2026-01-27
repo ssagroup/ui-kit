@@ -9,16 +9,21 @@ import { useMask } from '@react-input/mask';
 import { FieldContextValue } from '@components/Field/FieldProvider';
 import { InputProps } from '@components/Input/types';
 
+import type {
+  PickerCalendarType,
+  DateFormat,
+} from '@components/JsonSchemaForm/utils/dateFormats';
+
 export type LastFocusedElement = 'from' | 'to';
-export type RangePickerType = 'days' | 'months' | 'years';
-export type Format = 'mm/dd/yyyy' | 'dd/mm/yyyy' | 'mm/yyyy' | 'yyyy';
+export type RangePickerType = PickerCalendarType;
+export type Format = DateFormat;
 
 export type DateRangePickerProps = {
   name: string;
   label?: string;
   format?: Format;
   isOpenState?: boolean;
-  value?: [string | undefined, string | undefined]; // depends on the format
+  value?: [string | undefined | null, string | undefined | null]; // depends on the format, null for end date means "present"
   defaultValue?: [string, string]; // depends on the format
   maskOptions?: Parameters<typeof useMask>[0];
   inputProps?: Partial<InputProps>;
@@ -54,6 +59,7 @@ export type DateRangePickerProps = {
   onYearChange?: (date: Date) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   allowReverseSelection?: boolean;
+  showPresentOption?: boolean;
 };
 
 export type DateTimeTuple = [DateTime | undefined, DateTime | undefined];
@@ -84,9 +90,12 @@ export type DateRangePickerContextProps = Omit<
     year: number;
   };
   lastFocusedElement: LastFocusedElement;
-  lastChangedDate?: [Date | undefined, Date | undefined];
+  lastChangedDate?: [Date | undefined | null, Date | undefined | null];
   safeOnChange?: (date?: DateTime) => void;
   setLastFocusedElement: Dispatch<SetStateAction<LastFocusedElement>>;
+  setLastChangedDate: Dispatch<
+    SetStateAction<[Date | undefined | null, Date | undefined | null]>
+  >;
   handleToggleOpen: MouseEventHandler<HTMLButtonElement | HTMLInputElement>;
   setCalendarViewDateTime: Dispatch<SetStateAction<DateTimeTuple>>;
   setDateTime: Dispatch<SetStateAction<DateTimeTuple>>;
@@ -95,6 +104,9 @@ export type DateRangePickerContextProps = Omit<
   rangeSelectionStep: 'start' | 'end' | null;
   setRangeSelectionStep: Dispatch<SetStateAction<'start' | 'end' | null>>;
   clearInputValue: (field: 'from' | 'to') => void;
+  showPresentOption?: boolean;
+  isEndDatePresent: boolean;
+  setIsEndDatePresent: Dispatch<SetStateAction<boolean>>;
 };
 
-export type CalendarType = 'days' | 'months' | 'years';
+export type CalendarType = PickerCalendarType;

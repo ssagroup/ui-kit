@@ -8,6 +8,7 @@ export const DateRangePicker = ({
   showCalendarIcon = true,
   showStatusArea = true,
   rangePickerType = 'days',
+  showPresentOption = false,
   ...rest
 }: DateRangePickerProps) => {
   const actualFormat = format || getFormatForRangePickerType(rangePickerType);
@@ -18,6 +19,7 @@ export const DateRangePicker = ({
       showCalendarIcon={showCalendarIcon}
       showStatusArea={showStatusArea}
       rangePickerType={rangePickerType}
+      showPresentOption={showPresentOption}
       {...rest}>
       <DatePickerContent />
     </DateRangePickerProvider>
