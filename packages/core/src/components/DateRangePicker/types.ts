@@ -24,7 +24,7 @@ export type DateRangePickerProps = {
   format?: Format;
   isOpenState?: boolean;
   value?: [string | undefined | null, string | undefined | null]; // depends on the format, null for end date means "present"
-  defaultValue?: [string, string]; // depends on the format
+  defaultValue?: [string, string | null] | [string, string]; // depends on the format, null for end date means "present"
   maskOptions?: Parameters<typeof useMask>[0];
   inputProps?: Partial<InputProps>;
   status?: FieldContextValue['status'];

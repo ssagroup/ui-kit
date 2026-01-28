@@ -14,6 +14,74 @@ import {
   extractSpreadableProps,
 } from '../utils/dateRangeField';
 
+/**
+ * Special value to represent "Present" (ongoing/no end date) in RJSF form data.
+ *
+ * WHY THIS EXISTS:
+ * - DateRangePicker (standalone component) uses `null` for "Present" (semantic, clean API)
+ * - RJSF schemas with type: "string" reject `null` (validation error: "must be string")
+ * - This magic string allows validation to pass while preserving the "Present" meaning
+ *
+ * DATA FLOW:
+ * 1. Standalone DateRangePicker: `null` (input) → `null` (output)
+ * 2. RJSF DateRangeField: `"present"` (input) → `null` (to DateRangePicker) → `null` (from DateRangePicker) → `"present"` (output)
+ *
+ * SCHEMA REQUIREMENT:
+ * - Works with: { type: "string" } - no schema changes needed
+ * - Alternative: { type: ["string", "null"] } - allows null directly, no magic string needed
+ *
+ * @constant {string} PRESENT_VALUE
+ */
+const PRESENT_VALUE = 'present';
+
+/**
+ * DateRangeField - RJSF adapter for DateRangePicker component
+ *
+ * PURPOSE:
+ * Adapts the standalone DateRangePicker component to work within RJSF forms by:
+ * - Converting between outputFormat (form storage) and inputFormat (user display)
+ * - Converting null (DateRangePicker's "Present") ↔ "present" (RJSF's string value)
+ * - Mapping RJSF validation errors to DateRangePicker's error display
+ *
+ * "PRESENT" BUTTON BEHAVIOR:
+ * - When "Present" button is clicked, end date is null (meaning ongoing/no end date)
+ * - This component converts null → "present" string for RJSF compatibility
+ * - On reload, "present" string is converted back to null for DateRangePicker display
+ *
+ * USAGE:
+ * ```typescript
+ * // Example schemas (start/end can be optional or required based on your needs):
+ *
+ * // Both optional (user can leave range empty)
+ * const schema1 = {
+ *   type: "object",
+ *   properties: {
+ *     start: { type: "string" },
+ *     end: { type: "string" }
+ *   }
+ * };
+ *
+ * // Only start required (common for "from date onwards")
+ * const schema2 = {
+ *   type: "object",
+ *   properties: {
+ *     start: { type: "string" },
+ *     end: { type: "string" }
+ *   },
+ *   required: ["start"]
+ * };
+ *
+ * // Both required (enforces complete date range or "present")
+ * const schema3 = {
+ *   type: "object",
+ *   properties: {
+ *     start: { type: "string" },
+ *     end: { type: "string" }  // "present" satisfies string requirement
+ *   },
+ *   required: ["start", "end"]
+ * };
+ * ```
+ */
 export const DateRangeField = <
   T = unknown,
   S extends StrictRJSFSchema = RJSFSchema,
@@ -34,7 +102,9 @@ export const DateRangeField = <
   } = props;
 
   // Extract nested errors from errorSchema for start/end fields
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const startErrors = (errorSchema as any)?.start?.__errors;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const endErrors = (errorSchema as any)?.end?.__errors;
 
   // 1. Schema Guard - return null instead of throwing to prevent form crashes
@@ -88,24 +158,35 @@ export const DateRangeField = <
   const defaultValue = useMemo(() => {
     // First try formData (form's current state)
     const { start, end } = (formData || {}) as {
-      start?: string;
-      end?: string;
+      start?: string | null;
+      end?: string | null;
     };
 
-    if (start && end && typeof start === 'string' && typeof end === 'string') {
+    // Handle case where start date exists (requirement depends on schema)
+    // Note: Typically start is required for date ranges, but schema may vary
+    if (start && typeof start === 'string') {
       // Convert inputFormat to Luxon format (mm → MM)
       const luxonInputFormat = inputFormat.replace(/mm/gi, 'MM');
 
-      // Step 1: Parse formData strings (in outputFormat) into DateTime objects
+      // Step 1: Parse start date from form data
       const startDT = DateTime.fromFormat(start, outputFormat);
-      const endDT = DateTime.fromFormat(end, outputFormat);
 
-      // Step 2: Convert DateTime objects back to strings, but in inputFormat
-      if (startDT.isValid && endDT.isValid) {
-        return [
-          startDT.toFormat(luxonInputFormat),
-          endDT.toFormat(luxonInputFormat),
-        ] as [string, string];
+      if (startDT.isValid) {
+        // Step 2: Handle end date - can be a date string, PRESENT_VALUE, or undefined
+        // Note: We check for PRESENT_VALUE from RJSF form data and convert to null for DateRangePicker
+        if (end === PRESENT_VALUE) {
+          // "present" from RJSF → null for DateRangePicker (displays "Present" in UI)
+          return [startDT.toFormat(luxonInputFormat), null] as [string, null];
+        } else if (end && typeof end === 'string') {
+          // Parse and format end date
+          const endDT = DateTime.fromFormat(end, outputFormat);
+          if (endDT.isValid) {
+            return [
+              startDT.toFormat(luxonInputFormat),
+              endDT.toFormat(luxonInputFormat),
+            ] as [string, string];
+          }
+        }
       }
     }
 
@@ -128,15 +209,29 @@ export const DateRangeField = <
   // This is a known limitation - multiple DateRangeFields in one form will have separate contexts
   const useFormResult = useForm<FieldValues>();
 
+  /**
+   * Handles DateRangePicker changes and converts to RJSF format
+   *
+   * CONVERSION LOGIC:
+   * - DateRangePicker returns: [Date | null, Date | null]
+   * - We convert to RJSF format: { start: string | undefined, end: string | "present" | undefined }
+   * - null from DateRangePicker → "present" for RJSF (allows string validation to pass)
+   */
   const onDateRangeChange = (date?: [Date | null, Date | null]) => {
     const [startDate, endDate] = date || [null, null];
 
     const start = startDate
       ? DateTime.fromJSDate(startDate).toFormat(outputFormat)
       : undefined;
-    const end = endDate
-      ? DateTime.fromJSDate(endDate).toFormat(outputFormat)
-      : undefined;
+
+    // CRITICAL: Convert null (from DateRangePicker's "Present" button) to PRESENT_VALUE string
+    // This allows RJSF schema validation to pass (type: "string" accepts "present" but not null)
+    const end =
+      endDate === null
+        ? PRESENT_VALUE
+        : endDate
+          ? DateTime.fromJSDate(endDate).toFormat(outputFormat)
+          : undefined;
 
     onChange({ start, end } as T);
   };

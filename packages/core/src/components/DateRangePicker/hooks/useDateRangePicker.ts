@@ -173,12 +173,12 @@ export const useDateRangePicker = ({
     const newDateTime: DateTimeTuple = isFromField
       ? [undefined, dateTime[1]]
       : [dateTime[0], undefined];
-    const newLastChangedDate: [
-      Date | undefined | null,
-      Date | undefined | null,
-    ] = isFromField
-      ? [undefined, lastChangedDate[1]]
-      : [lastChangedDate[0], undefined];
+
+    // Use null for cleared end date (represents "Present"/ongoing)
+    // Use undefined for cleared start date (represents empty/not set)
+    const newLastChangedDate: [Date | null, Date | null] = isFromField
+      ? [null, lastChangedDate[1] ?? null]
+      : [lastChangedDate[0] ?? null, null];
 
     setDateTime(newDateTime);
     setLastChangedDate(newLastChangedDate);
@@ -190,8 +190,8 @@ export const useDateRangePicker = ({
     }
 
     // Notify parent form that the field was cleared
-    // Convert undefined to null for onChange signature
-    onChange?.([newLastChangedDate[0] ?? null, newLastChangedDate[1] ?? null]);
+    // null for end date means "Present"/ongoing, null for start date means empty
+    onChange?.(newLastChangedDate);
   };
 
   const safeOnChange = (newDateTime?: DateTime) => {
@@ -220,11 +220,13 @@ export const useDateRangePicker = ({
           onChange?.(changeValue);
         }
       } else {
-        setLastChangedDate([
-          lastFocusedElement === 'from' ? undefined : lastChangedDate[0],
-          lastFocusedElement === 'to' ? undefined : lastChangedDate[1],
-        ]);
-        onChange?.();
+        // When clearing via safeOnChange, use null for end date (represents "Present")
+        const newLastChangedDate: [Date | null, Date | null] = [
+          lastFocusedElement === 'from' ? null : (lastChangedDate[0] ?? null),
+          lastFocusedElement === 'to' ? null : (lastChangedDate[1] ?? null),
+        ];
+        setLastChangedDate(newLastChangedDate);
+        onChange?.(newLastChangedDate);
       }
     }
   };
