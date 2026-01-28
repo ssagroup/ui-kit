@@ -165,6 +165,35 @@ export const useDateRangePicker = ({
     day: formatIndexes['day'] !== -1 ? dateMinParts[formatIndexes['day']] : 1,
   });
 
+  // Helper function to clear a field and notify form
+  const clearField = (field: 'from' | 'to') => {
+    const isFromField = field === 'from';
+    const fieldName = isFromField ? nameFrom : nameTo;
+
+    const newDateTime: DateTimeTuple = isFromField
+      ? [undefined, dateTime[1]]
+      : [dateTime[0], undefined];
+    const newLastChangedDate: [
+      Date | undefined | null,
+      Date | undefined | null,
+    ] = isFromField
+      ? [undefined, lastChangedDate[1]]
+      : [lastChangedDate[0], undefined];
+
+    setDateTime(newDateTime);
+    setLastChangedDate(newLastChangedDate);
+    setValue(fieldName, undefined);
+    clearErrors(fieldName);
+
+    if (!isFromField) {
+      setIsEndDatePresent(false);
+    }
+
+    // Notify parent form that the field was cleared
+    // Convert undefined to null for onChange signature
+    onChange?.([newLastChangedDate[0] ?? null, newLastChangedDate[1] ?? null]);
+  };
+
   const safeOnChange = (newDateTime?: DateTime) => {
     const _newDateTime = newDateTime ? newDateTime.startOf('day') : undefined;
 
@@ -176,11 +205,19 @@ export const useDateRangePicker = ({
       if (_newDateTime) {
         const _newDateTimeJS = _newDateTime.toJSDate();
         if (lastFocusedElement === 'from') {
+          const changeValue: [Date | null, Date | null] = [
+            _newDateTimeJS,
+            lastChangedDate[1] ?? null,
+          ];
           setLastChangedDate([_newDateTimeJS, lastChangedDate[1]]);
-          onChange?.([_newDateTimeJS, lastChangedDate[1] ?? null]);
+          onChange?.(changeValue);
         } else {
+          const changeValue: [Date | null, Date | null] = [
+            lastChangedDate[0] ?? null,
+            _newDateTimeJS,
+          ];
           setLastChangedDate([lastChangedDate[0], _newDateTimeJS]);
-          onChange?.([lastChangedDate[0] ?? null, _newDateTimeJS]);
+          onChange?.(changeValue);
         }
       } else {
         setLastChangedDate([
@@ -276,18 +313,8 @@ export const useDateRangePicker = ({
       }
       processValue(blurredValue, isFromField ? 'from' : 'to');
     } else {
-      // User cleared the field - clear the corresponding dateTime
-      setDateTime((prev) =>
-        isFromField ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      setLastChangedDate((prev) =>
-        isFromField ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      setValue(fieldName, undefined);
-      clearErrors(fieldName);
-      if (!isFromField) {
-        setIsEndDatePresent(false);
-      }
+      // User cleared the field - use shared clearField helper
+      clearField(isFromField ? 'from' : 'to');
     }
   };
 
@@ -711,19 +738,6 @@ export const useDateRangePicker = ({
     isEndDatePresent,
     setIsEndDatePresent,
     setLastChangedDate,
-    clearInputValue: (field: 'from' | 'to') => {
-      const targetName = field === 'from' ? nameFrom : nameTo;
-      clearErrors(targetName);
-      setValue(targetName, undefined);
-      setDateTime((prev) =>
-        field === 'from' ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      setLastChangedDate((prev) =>
-        field === 'from' ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      if (field === 'to') {
-        setIsEndDatePresent(false);
-      }
-    },
+    clearInputValue: clearField,
   };
 };

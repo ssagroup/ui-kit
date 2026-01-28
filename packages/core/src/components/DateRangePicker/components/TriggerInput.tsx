@@ -20,7 +20,6 @@ export const TriggerInput = ({
     inputToRef,
     inputProps,
     disabled,
-    messages,
     setLastFocusedElement,
     classNames,
     onBlur: handleBlur,
@@ -29,6 +28,7 @@ export const TriggerInput = ({
     isEndDatePresent,
     setIsEndDatePresent,
     setDateTime,
+    status: contextStatus,
   } = useDateRangePickerContext();
   const formContext = useFormContext(); // Using FormProvider from react-hook-form
   const useFormResult = useForm();
@@ -50,9 +50,13 @@ export const TriggerInput = ({
     (inputProps as Partial<InputProps>) || {};
 
   const fieldError = errors[currentName];
-  const fieldStatus: InputProps['status'] = fieldError?.message
-    ? 'error'
-    : 'basic';
+  // Use context status for border styling, but only show individual field errors as helperText
+  const fieldStatus: InputProps['status'] =
+    contextStatus === 'error'
+      ? 'error'
+      : fieldError?.message
+        ? 'error'
+        : 'basic';
 
   const handleFocus: FocusEventHandler<HTMLInputElement> = (e) => {
     setLastFocusedElement(datepickerType);
@@ -183,9 +187,8 @@ export const TriggerInput = ({
       showStatusIcon={false}
       errors={fieldError as FieldError}
       status={fieldStatus}
-      helperText={
-        fieldStatus === 'basic' ? messages?.description : messages?.error
-      }
+      showHelperText={!!fieldError}
+      helperText={fieldError?.message as string | undefined}
       helperClassName={css`
         & > span::first-letter {
           text-transform: uppercase;

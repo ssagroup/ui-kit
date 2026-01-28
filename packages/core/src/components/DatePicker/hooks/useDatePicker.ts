@@ -160,7 +160,7 @@ export const useDatePicker = ({
       setLastChangedDate(jsDate);
       onChange?.(jsDate);
     },
-    [config.unit, onChange],
+    [config.unit, onChange, name],
   );
 
   const safeOnError = useCallback(

@@ -21,8 +21,21 @@ export const DateRangeField = <
 >(
   props: FieldProps<T, S, F>,
 ) => {
-  const { idSchema, uiSchema, schema, name, formData, disabled, onChange } =
-    props;
+  const {
+    idSchema,
+    uiSchema,
+    schema,
+    name,
+    formData,
+    disabled,
+    onChange,
+    rawErrors,
+    errorSchema,
+  } = props;
+
+  // Extract nested errors from errorSchema for start/end fields
+  const startErrors = (errorSchema as any)?.start?.__errors;
+  const endErrors = (errorSchema as any)?.end?.__errors;
 
   // 1. Schema Guard - return null instead of throwing to prevent form crashes
   if (
@@ -128,6 +141,18 @@ export const DateRangeField = <
     onChange({ start, end } as T);
   };
 
+  // Convert RJSF errors to messages for DateRangePicker
+  // For object fields with nested properties (start/end), errors are in errorSchema not rawErrors
+  const allErrors = [
+    ...(rawErrors ?? []),
+    ...(startErrors ?? []),
+    ...(endErrors ?? []),
+  ];
+
+  const hasRjsfErrors = allErrors.length > 0;
+  const errorMessage = hasRjsfErrors ? allErrors.join(', ') : undefined;
+  const fieldStatus = hasRjsfErrors ? 'error' : 'basic';
+
   return (
     <FormProvider {...useFormResult}>
       <DateRangePicker
@@ -138,6 +163,10 @@ export const DateRangeField = <
         onChange={onDateRangeChange}
         format={inputFormat}
         rangePickerType={rangePickerType}
+        status={fieldStatus}
+        messages={{
+          error: errorMessage,
+        }}
         {...spreadableProps}
       />
     </FormProvider>

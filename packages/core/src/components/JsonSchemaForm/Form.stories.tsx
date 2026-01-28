@@ -42,6 +42,12 @@ const meta = {
     onSubmit: (data) => {
       console.log('Form submitted:', data.formData);
     },
+    onChange: (data) => {
+      console.log('Form changed:', data.formData);
+    },
+    onError: (errors) => {
+      console.log('Validation errors:', errors);
+    },
   },
   tags: ['autodocs'],
 } satisfies Meta<FormProps>;
@@ -78,6 +84,7 @@ export const Default: Story = {
       title: 'Test Form',
       description: 'Test Form Description',
       type: 'object',
+      required: ['dateRangeField2', 'optionalDateField'],
       properties: {
         stringField: {
           title: 'String field title',
@@ -158,6 +165,7 @@ export const Default: Story = {
         dateRangeField2: {
           type: 'object',
           title: 'Date Range field-2',
+          required: ['start', 'end'],
           properties: {
             start: {
               type: 'string',
