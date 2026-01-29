@@ -79,7 +79,7 @@ export const DatePickerCalendar = () => {
         <Component />
         {showPresentOption && (
           <C.Button
-            variant="secondary"
+            variant="primary"
             onClick={handlePresentClick}
             isDisabled={isPresentButtonDisabled}
             data-testid="daterangepicker-present-button"
