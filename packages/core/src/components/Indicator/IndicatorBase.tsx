@@ -7,6 +7,10 @@ const IndicatorBase = styled.div<{ background?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* Safari fix (aspect-ratio → min-size = -4px x 2) */
+  width: min-content;
+
   min-width: 5px;
   min-height: 5px;
   padding: 2px;

@@ -11,6 +11,7 @@ export const CollapsibleNavBarLink = styled(NavLink)<{
   display: inline-flex;
   align-items: center;
   gap: 20px;
+  overflow: visible;
   color: ${({ theme, navbartheme }) =>
     navbartheme === 'default' ? theme.colors.white : theme.colors.greyDarker};
 
@@ -45,8 +46,6 @@ export const CollapsibleNavBarLink = styled(NavLink)<{
   &.active,
   &:not(.active):hover {
     backdrop-filter: blur(0);
-    filter: ${({ theme }) =>
-      `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
     color: ${({ theme, navbartheme }) =>
       navbartheme === 'default'
         ? theme.colors.white80
@@ -61,6 +60,8 @@ export const CollapsibleNavBarLink = styled(NavLink)<{
     }
 
     div > svg {
+      filter: ${({ theme }) =>
+        `drop-shadow(-4px 4px 14px ${theme.colors.white})`};
       & path {
         fill: ${({ theme, navbartheme, ...rest }) =>
           !rest['data-customicon'] &&
@@ -80,13 +81,12 @@ export const CollapsibleNavBarLink = styled(NavLink)<{
   &.active {
     cursor: default;
     font-weight: 900;
-    filter: ${({ navbartheme, theme }) =>
-      navbartheme === 'default'
-        ? `drop-shadow(-4px 4px 14px ${theme.colors.white})`
-        : `drop-shadow(-4px 4px 14px ${theme.colors.greyDropdownFocused})`};
 
     div > svg {
-      filter: drop-shadow(-4px 4px 14px ${({ theme }) => theme.colors.white});
+      filter: ${({ navbartheme, theme }) =>
+        navbartheme === 'default'
+          ? `drop-shadow(-4px 4px 14px ${theme.colors.white})`
+          : `drop-shadow(-4px 4px 14px ${theme.colors.greyDropdownFocused})`};
     }
   }
 `;
