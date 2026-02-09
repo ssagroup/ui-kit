@@ -173,6 +173,14 @@ export interface TypeaheadProps {
   autoSelect?: boolean;
 
   /**
+   * Allow adding custom values not in the options list.
+   * When true, the current input is shown as the first dropdown option (highlighted)
+   * and can be selected or added with Enter.
+   * @default true
+   */
+  allowCustomValues?: boolean;
+
+  /**
    * Callback fired when an option is selected/deselected
    * Receives the selected item value and whether it's selected
    */
@@ -236,6 +244,7 @@ export type UseTypeaheadProps = Pick<
   | 'placeholder'
   | 'filterOptions'
   | 'autoSelect'
+  | 'allowCustomValues'
 >;
 
 /**
@@ -286,4 +295,19 @@ export interface TypeaheadItemProps extends CommonProps {
    * Click handler for the option
    */
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+
+  /**
+   * When true, option is a user-typed custom value (shown first, highlighted in blue)
+   */
+  isCustomValue?: boolean;
+
+  /**
+   * ARIA role for the option (e.g. 'option')
+   */
+  role?: string;
+
+  /**
+   * ARIA selected state
+   */
+  'aria-selected'?: boolean;
 }
