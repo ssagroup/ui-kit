@@ -1,5 +1,6 @@
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { useTheme } from '@emotion/react';
+import { useState } from 'react';
 import Typography from '@components/Typography';
 import Button from './index';
 import { Chip } from '@components/Chip';
@@ -47,6 +48,12 @@ const meta = {
   title: 'Design System/Component Variants Palette',
   component: () => {
     const theme = useTheme();
+    const [checkboxStates, setCheckboxStates] = useState({
+      green: false,
+      blue: false,
+      custom: false,
+    });
+    const [radioValue, setRadioValue] = useState('default');
 
     return (
       <div
@@ -373,7 +380,10 @@ const meta = {
                 <Checkbox
                   text="Green (default)"
                   color="green"
-                  onChange={() => {}}
+                  externalState={checkboxStates.green}
+                  onChange={(checked) =>
+                    setCheckboxStates({ ...checkboxStates, green: checked })
+                  }
                 />
               </div>
               <div
@@ -382,7 +392,14 @@ const meta = {
                   gap: '16px',
                   alignItems: 'center',
                 }}>
-                <Checkbox text="Blue" color="blue" onChange={() => {}} />
+                <Checkbox
+                  text="Blue"
+                  color="blue"
+                  externalState={checkboxStates.blue}
+                  onChange={(checked) =>
+                    setCheckboxStates({ ...checkboxStates, blue: checked })
+                  }
+                />
               </div>
               <div
                 css={{
@@ -390,7 +407,14 @@ const meta = {
                   gap: '16px',
                   alignItems: 'center',
                 }}>
-                <Checkbox text="Custom" color="custom" onChange={() => {}} />
+                <Checkbox
+                  text="Custom"
+                  color="custom"
+                  externalState={checkboxStates.custom}
+                  onChange={(checked) =>
+                    setCheckboxStates({ ...checkboxStates, custom: checked })
+                  }
+                />
               </div>
             </Wrapper>
           </div>
@@ -463,16 +487,18 @@ const meta = {
             }}>
             <Wrapper css={{ gap: '24px', flexDirection: 'column' }}>
               <Radio
-                name="example1"
+                name="radio-example"
                 value="default"
                 text="Default colors"
-                onChange={() => {}}
+                isChecked={radioValue === 'default'}
+                onChange={(value) => setRadioValue(value)}
               />
               <Radio
-                name="example2"
+                name="radio-example"
                 value="custom"
                 text="Custom colors"
-                onChange={() => {}}
+                isChecked={radioValue === 'custom'}
+                onChange={(value) => setRadioValue(value)}
                 colors={{
                   default: '#4ECDC4',
                   hovered: '#45B8B0',
