@@ -18,7 +18,7 @@ export async function publishPackage({
   dryRun,
 }: PublishOptions) {
   try {
-    const args = [path, '--tag', tag];
+    const args = [path, '--tag', tag, '--access', 'public'];
     if (otp) {
       args.push('--otp', otp);
     }
