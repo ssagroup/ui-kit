@@ -215,4 +215,45 @@ describe('Form (rjsf)', () => {
     expect(startInput).toHaveValue('15/01/2024');
     expect(endInput).toHaveValue('31/12/2024');
   });
+
+  it('DateRangeField converts "present" string to null for picker and displays "Present"', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+              showPresentOption: true,
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: 'present',
+          },
+        }}
+      />,
+    );
+
+    const startInput = getByTestId('daterangepicker-input-from');
+    const endInput = getByTestId('daterangepicker-input-to');
+    expect(startInput).toHaveValue('15/01/2024');
+    expect(endInput).toHaveValue('Present');
+  });
 });

@@ -153,6 +153,7 @@ export const Default: Story = {
         dateRangeField: {
           type: 'object',
           title: 'Date Range field-1',
+          required: ['start', 'end'],
           properties: {
             start: {
               type: 'string',
@@ -182,6 +183,7 @@ export const Default: Story = {
         dateRangeField3: {
           type: 'object',
           title: 'Date Range field-3',
+          required: ['start', 'end'],
           properties: {
             start: {
               type: 'string',
@@ -194,6 +196,7 @@ export const Default: Story = {
         dateRangeField4: {
           type: 'object',
           title: 'Date Range field-4',
+          required: ['start', 'end'],
           properties: {
             start: {
               type: 'string',

@@ -98,7 +98,13 @@ export const TriggerInput = ({
 
     // If "Present" is displayed and user changes the value, clear "Present" flag
     // This is a backup to handleChange in case onInput doesn't fire
-    if (datepickerType === 'to' && isEndDatePresent && newValue !== 'Present') {
+    // Note: When isEndDatePresent is true, displayValue shows "Present" but form value is empty
+    // If user changes the input, it means they're entering a date, so clear the flag
+    if (
+      datepickerType === 'to' &&
+      isEndDatePresent &&
+      newValue !== displayValue
+    ) {
       setIsEndDatePresent(false);
     }
 
@@ -112,10 +118,16 @@ export const TriggerInput = ({
 
     // If "Present" is displayed and user modifies the input in any way, clear "Present" flag immediately
     // This handles typing, deleting, pasting, etc.
-    if (datepickerType === 'to' && isEndDatePresent && newValue !== 'Present') {
+    // Note: When isEndDatePresent is true, displayValue shows "Present" but form value is empty
+    // If user changes the input from "Present", it means they're entering a date, so clear the flag
+    if (
+      datepickerType === 'to' &&
+      isEndDatePresent &&
+      newValue !== displayValue
+    ) {
       setIsEndDatePresent(false);
-      // Also clear the form value if it's still "Present" to allow free editing
-      if (formValue === 'Present') {
+      // Form value should already be empty, but ensure it's set to the new value
+      if (formValue !== newValue) {
         setValue(currentName, newValue);
       }
     }

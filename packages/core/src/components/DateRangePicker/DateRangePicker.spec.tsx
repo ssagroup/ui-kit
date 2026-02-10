@@ -613,4 +613,38 @@ describe('DateRangePicker', () => {
     // Calendar should be closed after auto-swap
     expect(queryByRole('dialog')).not.toBeInTheDocument();
   });
+
+  it('should set end date to null when "Present" button is clicked', async () => {
+    const { getByTestId, getByRole, user, mockOnChange } = setup({
+      showPresentOption: true,
+      defaultValue: ['01/15/2025', '01/20/2025'],
+    });
+
+    const endDate = getByTestId('daterangepicker-input-to');
+    const calendarButton = getByTestId('daterangepicker-button');
+
+    // Open calendar
+    await user.click(endDate);
+    await user.click(calendarButton);
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toBeInTheDocument();
+
+    // Click "Present" button
+    const presentButton = getByTestId('daterangepicker-present-button');
+    expect(presentButton).toBeInTheDocument();
+    await user.click(presentButton);
+
+    // End date should show "Present"
+    await waitFor(() => {
+      expect(endDate).toHaveValue('Present');
+    });
+
+    // onChange should be called with null for end date
+    expect(mockOnChange).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.any(Date), // start date
+        null, // end date (null means "Present")
+      ]),
+    );
+  });
 });

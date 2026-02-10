@@ -51,7 +51,9 @@ export type DateRangePickerProps = {
     calendar?: string;
     label?: string;
   };
-  onChange?: (dates?: [Date | null, Date | null]) => void;
+  onChange?: (
+    dates?: [Date | null | undefined, Date | null | undefined],
+  ) => void;
   onOpen?: () => void;
   onClose?: () => void;
   onError?: (date: unknown, error?: string | null) => void;

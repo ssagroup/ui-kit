@@ -34,17 +34,17 @@ export const DatePickerCalendar = () => {
       setRangeSelectionStep(null);
       setIsOpen(false);
 
-      // Update lastChangedDate with null for end date to represent "present"
+      // Update lastChangedDate: null for end date represents "present", undefined for empty start
       const startDate = dateTime[0];
       setLastChangedDate([
-        startDate ? startDate.toJSDate() : null,
-        null, // null represents "present"
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null represents "present" (end date only)
       ]);
 
-      // Call onChange with null for end date to indicate "present"
+      // Call onChange: null for end date = "Present", undefined = empty/unset
       onChange?.([
-        startDate ? startDate.toJSDate() : null,
-        null, // null represents "present"
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null represents "present" (end date only)
       ]);
     }
   };
