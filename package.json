@@ -9,8 +9,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "lint:styles": "stylelint \"**/*.tsx\" --fix",
-    "fix": "pnpm lint:fix && pnpm lint:styles",
+    "lint:styles": "stylelint \"**/*.tsx\"",
+    "lint:styles:fix": "stylelint \"**/*.tsx\" --fix",
+    "fix": "pnpm lint:fix && pnpm lint:styles:fix",
     "build:all": "pnpm -r build",
     "build:utils": "pnpm --filter ./packages/utils build",
     "build:hooks": "pnpm --filter ./packages/hooks build",
