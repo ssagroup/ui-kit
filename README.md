@@ -14,6 +14,9 @@ SSA UI kit includes Figma design, integration with Firebase and examples of impl
 
 SSA UI kit was founded and is supported by SSA Group. The SSA UI kit source code is available under the MIT License.  
 
+We regularly post updates, new components, and improvements for the SSA UI kit on our blog: https://www.ssa.group/blog/ssa-ui-kit/
+Please feel free to follow along.
+
 ## Core technologies
 The project is built using the following tools and technologies.  
 
