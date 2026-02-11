@@ -4,7 +4,7 @@ import Typography from '@components/Typography/Typography';
 import Icon, { iconsList } from './index';
 
 export default {
-  title: 'Components/Icons',
+  title: 'Design System/Icons',
   component: Icon,
   parameters: {
     docs: {
