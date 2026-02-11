@@ -42,9 +42,8 @@ export const TriggerInput = ({
     setValue,
   } = hookFormResult;
 
-  // Get the current value from the form
   const formValue = watch(currentName);
-  // Override with PRESENT_VALUE if it's the end date and isEndDatePresent is true
+  // Override display with PRESENT_VALUE when "Present" is selected
   const displayValue =
     datepickerType === 'to' && isEndDatePresent ? PRESENT_VALUE : formValue;
   const { inputProps: inputElementProps, ...restInputProps } =
@@ -79,8 +78,7 @@ export const TriggerInput = ({
     ) {
       const input = e.currentTarget;
 
-      // Always clear "Present" entirely when Backspace/Delete is pressed
-      // This prevents letter-by-letter deletion which would be confusing
+      // Clear "Present" entirely (prevents letter-by-letter deletion)
       e.preventDefault();
       e.stopPropagation();
       clearPresentAndField();
@@ -97,10 +95,7 @@ export const TriggerInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
-    // If "Present" is displayed and user changes the value, clear "Present" flag
-    // This is a backup to handleChange in case onInput doesn't fire
-    // Note: When isEndDatePresent is true, displayValue shows PRESENT_VALUE but form value is empty
-    // If user changes the input, it means they're entering a date, so clear the flag
+    // Clear "Present" flag when user changes input (backup if onInput doesn't fire)
     if (
       datepickerType === 'to' &&
       isEndDatePresent &&
@@ -117,10 +112,7 @@ export const TriggerInput = ({
     const target = e.currentTarget;
     const newValue = target.value;
 
-    // If "Present" is displayed and user modifies the input in any way, clear "Present" flag immediately
-    // This handles typing, deleting, pasting, etc.
-    // Note: When isEndDatePresent is true, displayValue shows PRESENT_VALUE but form value is empty
-    // If user changes the input from the display value, it means they're entering a date, so clear the flag
+    // Clear "Present" flag immediately when user modifies input (typing, deleting, pasting)
     if (
       datepickerType === 'to' &&
       isEndDatePresent &&
@@ -157,7 +149,7 @@ export const TriggerInput = ({
           if (isOpen) {
             setIsOpen(false);
           }
-          // If "Present" is displayed and user clicks, select all text so they can easily replace it
+          // Select all text when "Present" is displayed (easier to replace)
           if (datepickerType === 'to' && isEndDatePresent) {
             e.currentTarget.select();
           }

@@ -174,8 +174,7 @@ export const useDateRangePicker = ({
       ? [undefined, dateTime[1]]
       : [dateTime[0], undefined];
 
-    // Use undefined for cleared fields (represents empty/not set)
-    // null is ONLY used for "Present" end date (when isEndDatePresent === true)
+    // undefined = empty/cleared, null = "Present" end date
     const newLastChangedDate: [
       Date | null | undefined,
       Date | null | undefined,
@@ -192,8 +191,7 @@ export const useDateRangePicker = ({
       setIsEndDatePresent(false);
     }
 
-    // Notify parent form that the field was cleared
-    // undefined = empty/cleared, null = "Present" (end date only, when isEndDatePresent === true)
+    // Notify parent: undefined = cleared, null = "Present" (end date only)
     onChange?.(newLastChangedDate);
   };
 
@@ -208,20 +206,19 @@ export const useDateRangePicker = ({
       if (_newDateTime) {
         const _newDateTimeJS = _newDateTime.toJSDate();
         if (lastFocusedElement === 'from') {
-          // Preserve null for "Present" end date, use undefined for empty
-          // lastChangedDate[1] can be: Date (set), null (Present), or undefined (empty)
+          // Preserve null (Present) or Date, use undefined for empty
           const changeValue: [
             Date | null | undefined,
             Date | null | undefined,
           ] = [
             _newDateTimeJS,
-            lastChangedDate[1] === undefined ? undefined : lastChangedDate[1], // Preserve null (Present) or Date, use undefined for empty
+            lastChangedDate[1] === undefined ? undefined : lastChangedDate[1],
           ];
           setLastChangedDate([_newDateTimeJS, lastChangedDate[1] ?? null]);
           onChange?.(changeValue);
         } else {
-          // When setting end date, it's a Date (not "Present" or empty)
-          // Start date: preserve Date or use undefined for empty (start date never uses null)
+          // Setting end date: always a Date (not null/undefined)
+          // Start date: preserve Date or undefined (never null)
           const changeValue: [
             Date | null | undefined,
             Date | null | undefined,
@@ -267,10 +264,9 @@ export const useDateRangePicker = ({
     const currentElementType = elementName || lastFocusedElement;
     const currentName = currentElementType === 'from' ? nameFrom : nameTo;
 
-    // Skip processing if "Present" is displayed (isEndDatePresent flag is true)
-    // The form value is empty in this case, so we don't want to try parsing the display text as a date
+    // Skip parsing when "Present" is displayed (form value is empty, display shows PRESENT_VALUE)
     if (currentElementType === 'to' && isEndDatePresent) {
-      return; // Do nothing - "Present" is just a display value, not a real date
+      return;
     }
 
     const newDateTime =
@@ -344,8 +340,7 @@ export const useDateRangePicker = ({
     }
 
     if (blurredValue.length > 0) {
-      // Reset "present" flag if end date field has a value
-      // (When isEndDatePresent is true, form value is empty, so any non-empty value means user entered a date)
+      // Clear "Present" flag if user entered a date (non-empty value)
       if (!isFromField) {
         setIsEndDatePresent(false);
       }
@@ -365,10 +360,9 @@ export const useDateRangePicker = ({
     const currentWatchedValue =
       currentElementType === 'from' ? inputValueFrom : inputValueTo;
 
-    // Skip processing if "Present" is displayed (isEndDatePresent flag is true)
-    // The form value is empty in this case, so we don't want to try parsing the display text as a date
+    // Skip parsing when "Present" is displayed (form value is empty, display shows PRESENT_VALUE)
     if (currentElementType === 'to' && isEndDatePresent) {
-      return; // Do nothing - "Present" is just a display value, not a real date
+      return;
     }
 
     if (
@@ -379,8 +373,7 @@ export const useDateRangePicker = ({
       setIsOpen(false);
     }
 
-    // Reset "present" flag if user is typing a date in the end field
-    // (When isEndDatePresent is true, form value is empty, so any non-empty value means user entered a date)
+    // Clear "Present" flag when user types in end field
     if (currentElementType === 'to' && inputValue && inputValue.length > 0) {
       setIsEndDatePresent(false);
     }
@@ -499,9 +492,8 @@ export const useDateRangePicker = ({
     };
 
     const syncEndDateValue = () => {
-      // Handle "Present" state
-      // Note: We keep form value empty when displaying PRESENT_VALUE to avoid mask errors
-      // The PRESENT_VALUE is shown via displayValue override in TriggerInput, not via form value
+      // Keep form value empty when "Present" is displayed (avoids mask errors)
+      // Display text is overridden in TriggerInput component
       if (isEndDatePresent) {
         // Only set to empty if it's not already empty - avoid unnecessary updates
         if (inputValueTo && inputValueTo !== '') {
@@ -512,15 +504,14 @@ export const useDateRangePicker = ({
 
       const targetValue = dateTime[1]?.toFormat(luxonFormat);
       if (!targetValue) {
-        // No date - keep empty (don't set PRESENT_VALUE here, it's handled by isEndDatePresent flag)
-        // Clear any existing value that's not empty
+        // No date: keep empty (isEndDatePresent flag handles "Present" display)
         if (inputValueTo && inputValueTo !== '') {
           setValue(nameTo, '');
         }
         return;
       }
 
-      // Sync date value (handles transition from "Present" to date)
+      // Sync date value (handles "Present" → date transition)
       const isInputFocused = isUserActivelyTyping();
       const isEmpty = !inputValueTo || inputValueTo === '';
       const isSynced = inputValueTo === targetValue;
@@ -528,7 +519,7 @@ export const useDateRangePicker = ({
         inputValueTo &&
         inputValueTo.length < expectedDateLength &&
         isInputFocused;
-      // Check if transitioning from "Present" display (form value would be empty but isEndDatePresent was true)
+      // Detect transition from "Present" (empty form value but flag was true)
       const isTransitioningFromPresent = isEmpty && isEndDatePresent;
 
       if (
@@ -544,7 +535,7 @@ export const useDateRangePicker = ({
     const nextFromValue = dateTime[0]?.toFormat(luxonFormat);
     syncDateValue(nextFromValue, inputValueFrom, nameFrom);
 
-    // Sync end date (with "Present" support)
+    // Sync end date
     syncEndDateValue();
   }, [
     dateTime,
@@ -638,7 +629,7 @@ export const useDateRangePicker = ({
           ? DateTime.fromFormat(rest.value[1], luxonFormat)
           : undefined;
 
-      // Handle null for end date (represents "present")
+      // Handle null end date (represents "Present")
       const isEndPresent = rest.value[1] === null;
       setIsEndDatePresent(isEndPresent);
 
@@ -661,8 +652,7 @@ export const useDateRangePicker = ({
         newDateTime[1] || newDateTime[0] || undefined,
       ]);
       setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat));
-      // Keep form value empty when "Present" to avoid mask errors
-      // PRESENT_VALUE is displayed via displayValue override in TriggerInput, not via form value
+      // Keep form value empty when "Present" (avoids mask errors, display overridden in TriggerInput)
       setValue(
         nameTo,
         isEndPresent ? '' : newDateTime[1]?.toFormat(luxonFormat),
@@ -717,7 +707,7 @@ export const useDateRangePicker = ({
           ? DateTime.fromFormat(defaultValue[1], luxonFormat)
           : undefined;
 
-      // Handle null for end date (represents "Present")
+      // Handle null end date (represents "Present")
       const isEndPresent = defaultValue[1] === null;
       if (isEndPresent) {
         setIsEndDatePresent(true);

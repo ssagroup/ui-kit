@@ -30,6 +30,14 @@ export type DateRangePickerFormBridgeValue = {
   end?: string | typeof PRESENT_VALUE;
 };
 
+/**
+ * DateRangePickerFormBridge - adapter between form builders and DateRangePicker
+ *
+ * PURPOSE:
+ * - Keeps DateRangePicker "pure": it only ever sees inputFormat and null for "Present"
+ * - Converts form value (outputFormat + PRESENT_VALUE string) ↔ picker value (inputFormat + null)
+ * - Used by DateRangeField (RJSF); can be used by other form builders
+ */
 export type DateRangePickerFormBridgeProps = Omit<
   DateRangePickerProps,
   'defaultValue' | 'value' | 'onChange'
@@ -45,15 +53,6 @@ export type DateRangePickerFormBridgeProps = Omit<
   /** Format used for display in the picker, e.g. 'dd/mm/yyyy' */
   inputFormat: DateFormat;
 };
-
-/**
- * DateRangePickerFormBridge - adapter between form builders and DateRangePicker
- *
- * PURPOSE:
- * - Keeps DateRangePicker "pure": it only ever sees inputFormat and null for "Present"
- * - Converts form value (outputFormat + PRESENT_VALUE string) ↔ picker value (inputFormat + null)
- * - Used by DateRangeField (RJSF); can be used by other form builders
- */
 
 /**
  * Format conversion: form value (outputFormat) → DateRangePicker (inputFormat)
