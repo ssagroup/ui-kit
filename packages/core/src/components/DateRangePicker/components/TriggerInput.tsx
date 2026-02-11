@@ -1,5 +1,5 @@
 import React, { FocusEventHandler } from 'react';
-import { FieldError, useForm, useFormContext } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { css } from '@emotion/css';
 import * as C from '@components';
 import { InputProps } from '@components/Input/types';
@@ -190,10 +190,8 @@ export const TriggerInput = ({
         ...inputElementProps,
       }}
       showStatusIcon={false}
-      errors={fieldError as FieldError}
       status={fieldStatus}
-      showHelperText={!!fieldError}
-      helperText={fieldError?.message as string | undefined}
+      showHelperText={false}
       helperClassName={css`
         & > span::first-letter {
           text-transform: uppercase;
