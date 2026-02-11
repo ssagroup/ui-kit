@@ -44,7 +44,7 @@ export const useTypeahead = ({
   placeholder,
   filterOptions = true,
   autoSelect = true,
-  allowCustomValues = true,
+  allowCustomValues = false,
   onChange,
   onClearAll,
   onRemoveSelectedClick,

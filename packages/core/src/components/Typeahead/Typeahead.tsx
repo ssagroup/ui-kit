@@ -125,7 +125,7 @@ export const Typeahead = ({
   wrapperClassName,
   filterOptions,
   autoSelect = true,
-  allowCustomValues = true,
+  allowCustomValues = false,
   width = 300,
   onChange,
   onEmptyChange,
