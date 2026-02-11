@@ -6,7 +6,7 @@ import type { DateRangePickerProps } from './types';
 import { type DateFormat } from '@components/JsonSchemaForm/utils/dateFormats';
 
 /**
- * Special value to represent "Present" (ongoing/no end date) in form data.
+ * Special value to represent "Present" (ongoing/no end date) in form data and UI display.
  *
  * WHY THIS EXISTS:
  * - DateRangePicker (standalone) uses `null` for "Present" (semantic, clean API)
@@ -18,8 +18,12 @@ import { type DateFormat } from '@components/JsonSchemaForm/utils/dateFormats';
  * - Bridge → Picker: PRESENT_VALUE becomes null
  * - Picker → Bridge: null (user clicked "Present") comes back
  * - Bridge → Form: null becomes PRESENT_VALUE for storage
+ *
+ * USAGE:
+ * - Form storage: Used in form data to represent "Present" end date
+ * - UI display: Used as display text shown to users when "Present" is selected
  */
-export const PRESENT_VALUE = 'present';
+export const PRESENT_VALUE = 'Present';
 
 export type DateRangePickerFormBridgeValue = {
   start?: string;
@@ -130,13 +134,16 @@ export const DateRangePickerFormBridge = ({
   /**
    * Handles DateRangePicker changes and converts to form format.
    *
-   * CONVERSION:
-   * - Picker returns: [Date | null | undefined, Date | null | undefined] | undefined
-   * - null for end date = "Present" (when isEndDatePresent === true)
-   * - undefined = empty/unset (when clearing or not set)
-   * - We convert to form shape: { start: string | undefined, end: string | PRESENT_VALUE | undefined }
-   * - Dates are formatted with outputFormat (e.g. 'yyyy-MM-dd')
-   * - null from picker (user chose "Present") → PRESENT_VALUE so form validation (type: "string") passes
+   * CONVERSION LOGIC:
+   * - DateRangePicker uses `null` for "Present" end date (semantic, clean API)
+   * - Form schemas require `type: "string"`, so `null` fails validation
+   * - We convert: `null` → `PRESENT_VALUE` ('Present') to satisfy validation
+   * - This conversion ONLY happens here (bridge) - DateRangePicker itself never sees PRESENT_VALUE
+   *
+   * CONVERSION RULES:
+   * - endDate === null → PRESENT_VALUE (user selected "Present")
+   * - endDate === Date → formatted string in outputFormat
+   * - endDate === undefined → undefined (empty/unset)
    */
   const onPickerChange = (
     dates?: [Date | null | undefined, Date | null | undefined],
@@ -149,12 +156,14 @@ export const DateRangePickerFormBridge = ({
       ? DateTime.fromJSDate(startDate).toFormat(outputFormat)
       : undefined;
 
+    // Convert null (from DateRangePicker) → PRESENT_VALUE (for form storage)
+    // This is the ONLY place where this conversion happens
     const end: string | typeof PRESENT_VALUE | undefined =
       endDate === null
-        ? PRESENT_VALUE // null means "Present" (end date only)
+        ? PRESENT_VALUE
         : endDate
           ? DateTime.fromJSDate(endDate).toFormat(outputFormat)
-          : undefined; // undefined means empty/unset
+          : undefined;
 
     onChange({ start, end });
   };

@@ -3,6 +3,7 @@ import * as DPC from '.';
 import * as C from '../..';
 import { CalendarType } from '../types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { PRESENT_VALUE } from '../DateRangePickerFormBridge';
 
 export const DatePickerCalendar = () => {
   const theme = useTheme();
@@ -88,7 +89,7 @@ export const DatePickerCalendar = () => {
               width: '100%',
               justifyContent: 'center',
             }}>
-            Present
+            {PRESENT_VALUE}
           </C.Button>
         )}
       </C.PopoverDescription>

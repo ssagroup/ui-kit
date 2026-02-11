@@ -4,6 +4,7 @@ import { css } from '@emotion/css';
 import * as C from '@components';
 import { InputProps } from '@components/Input/types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { PRESENT_VALUE } from '../DateRangePickerFormBridge';
 
 export const TriggerInput = ({
   datepickerType,
@@ -43,9 +44,9 @@ export const TriggerInput = ({
 
   // Get the current value from the form
   const formValue = watch(currentName);
-  // Override with "Present" if it's the end date and isEndDatePresent is true
+  // Override with PRESENT_VALUE if it's the end date and isEndDatePresent is true
   const displayValue =
-    datepickerType === 'to' && isEndDatePresent ? 'Present' : formValue;
+    datepickerType === 'to' && isEndDatePresent ? PRESENT_VALUE : formValue;
   const { inputProps: inputElementProps, ...restInputProps } =
     (inputProps as Partial<InputProps>) || {};
 
@@ -70,7 +71,7 @@ export const TriggerInput = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // If "Present" is displayed and user presses Backspace or Delete, clear the field entirely
+    // If PRESENT_VALUE is displayed and user presses Backspace or Delete, clear the field entirely
     if (
       datepickerType === 'to' &&
       isEndDatePresent &&
@@ -98,7 +99,7 @@ export const TriggerInput = ({
 
     // If "Present" is displayed and user changes the value, clear "Present" flag
     // This is a backup to handleChange in case onInput doesn't fire
-    // Note: When isEndDatePresent is true, displayValue shows "Present" but form value is empty
+    // Note: When isEndDatePresent is true, displayValue shows PRESENT_VALUE but form value is empty
     // If user changes the input, it means they're entering a date, so clear the flag
     if (
       datepickerType === 'to' &&
@@ -118,8 +119,8 @@ export const TriggerInput = ({
 
     // If "Present" is displayed and user modifies the input in any way, clear "Present" flag immediately
     // This handles typing, deleting, pasting, etc.
-    // Note: When isEndDatePresent is true, displayValue shows "Present" but form value is empty
-    // If user changes the input from "Present", it means they're entering a date, so clear the flag
+    // Note: When isEndDatePresent is true, displayValue shows PRESENT_VALUE but form value is empty
+    // If user changes the input from the display value, it means they're entering a date, so clear the flag
     if (
       datepickerType === 'to' &&
       isEndDatePresent &&

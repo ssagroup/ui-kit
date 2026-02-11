@@ -267,13 +267,9 @@ export const useDateRangePicker = ({
     const currentElementType = elementName || lastFocusedElement;
     const currentName = currentElementType === 'from' ? nameFrom : nameTo;
 
-    // Skip processing if value is "Present" (display value when isEndDatePresent is true)
-    // The form value is empty in this case, so we don't want to try parsing "Present" as a date
-    if (
-      newValue === 'Present' &&
-      currentElementType === 'to' &&
-      isEndDatePresent
-    ) {
+    // Skip processing if "Present" is displayed (isEndDatePresent flag is true)
+    // The form value is empty in this case, so we don't want to try parsing the display text as a date
+    if (currentElementType === 'to' && isEndDatePresent) {
       return; // Do nothing - "Present" is just a display value, not a real date
     }
 
@@ -341,9 +337,9 @@ export const useDateRangePicker = ({
     const fieldName = event.currentTarget.name;
     const isFromField = fieldName === nameFrom;
 
-    // Skip processing if value is "Present" (display value when isEndDatePresent is true)
-    // The form value is empty in this case, so we don't want to try parsing "Present" as a date
-    if (blurredValue === 'Present' && !isFromField && isEndDatePresent) {
+    // Skip processing if "Present" is displayed (isEndDatePresent flag is true)
+    // The form value is empty in this case, so we don't want to try parsing the display text as a date
+    if (!isFromField && isEndDatePresent) {
       return; // Do nothing - "Present" is just a display value, not a real date
     }
 
@@ -369,13 +365,9 @@ export const useDateRangePicker = ({
     const currentWatchedValue =
       currentElementType === 'from' ? inputValueFrom : inputValueTo;
 
-    // Skip processing if value is "Present" (display value when isEndDatePresent is true)
-    // The form value is empty in this case, so we don't want to try parsing "Present" as a date
-    if (
-      inputValue === 'Present' &&
-      currentElementType === 'to' &&
-      isEndDatePresent
-    ) {
+    // Skip processing if "Present" is displayed (isEndDatePresent flag is true)
+    // The form value is empty in this case, so we don't want to try parsing the display text as a date
+    if (currentElementType === 'to' && isEndDatePresent) {
       return; // Do nothing - "Present" is just a display value, not a real date
     }
 
@@ -508,8 +500,8 @@ export const useDateRangePicker = ({
 
     const syncEndDateValue = () => {
       // Handle "Present" state
-      // Note: We keep form value empty when displaying "Present" to avoid mask errors
-      // The "Present" text is shown via displayValue override in TriggerInput, not via form value
+      // Note: We keep form value empty when displaying PRESENT_VALUE to avoid mask errors
+      // The PRESENT_VALUE is shown via displayValue override in TriggerInput, not via form value
       if (isEndDatePresent) {
         // Only set to empty if it's not already empty - avoid unnecessary updates
         if (inputValueTo && inputValueTo !== '') {
@@ -520,7 +512,7 @@ export const useDateRangePicker = ({
 
       const targetValue = dateTime[1]?.toFormat(luxonFormat);
       if (!targetValue) {
-        // No date - keep empty (don't set "Present" here, it's handled by isEndDatePresent flag)
+        // No date - keep empty (don't set PRESENT_VALUE here, it's handled by isEndDatePresent flag)
         // Clear any existing value that's not empty
         if (inputValueTo && inputValueTo !== '') {
           setValue(nameTo, '');
@@ -670,7 +662,7 @@ export const useDateRangePicker = ({
       ]);
       setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat));
       // Keep form value empty when "Present" to avoid mask errors
-      // "Present" is displayed via displayValue override in TriggerInput, not via form value
+      // PRESENT_VALUE is displayed via displayValue override in TriggerInput, not via form value
       setValue(
         nameTo,
         isEndPresent ? '' : newDateTime[1]?.toFormat(luxonFormat),
