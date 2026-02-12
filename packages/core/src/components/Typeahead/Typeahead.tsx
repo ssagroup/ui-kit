@@ -193,7 +193,7 @@ export const Typeahead = ({
                 css={{
                   width: hookResult.triggerRef.current?.clientWidth,
                   boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
-                  zIndex: 100,
+                  zIndex: 1100,
                 }}
                 isFocusManagerDisabled>
                 <PopoverDescription css={{ width: '100%' }}>
