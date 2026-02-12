@@ -163,6 +163,7 @@ export const useTypeahead = ({
         'aria-labelledby': `typeahead-label-${name}`,
         onClick: (e: React.BaseSyntheticEvent) => {
           e.preventDefault();
+          e.stopPropagation();
           if (!isDisabled) {
             const shouldClose = !isMultiple;
             handleChange({ value, shouldClose });

@@ -26,6 +26,7 @@ export const TypeaheadOptions = ({
       aria-selected={isActive}
       onClick={(e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
+        e.stopPropagation();
         if (!context.isDisabled) {
           context.handleChange({
             value,
