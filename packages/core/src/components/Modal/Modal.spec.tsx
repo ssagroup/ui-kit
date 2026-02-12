@@ -103,6 +103,45 @@ describe('Modal', () => {
 
       expect(queryByTestId('inner')).toBeInTheDocument();
     });
+
+    it('renders modal in place when usePortal is false', () => {
+      const { getByRole, getByText } = render(
+        <div data-testid="mount">
+          <Modal>
+            <ModalOpenButton>
+              <Button size="small" text="open" />
+            </ModalOpenButton>
+            <ModalContent aria-label="label" usePortal={false}>
+              <div data-testid="inner" />
+            </ModalContent>
+          </Modal>
+        </div>,
+      );
+      fireEvent.click(getByText(/open/i));
+      const dialog = getByRole('dialog');
+      const mount = document.querySelector('[data-testid="mount"]');
+      expect(mount).toContainElement(dialog);
+    });
+
+    it('renders modal in document.body when usePortal is true', () => {
+      const { getByRole, getByText } = render(
+        <div data-testid="mount">
+          <Modal>
+            <ModalOpenButton>
+              <Button size="small" text="open" />
+            </ModalOpenButton>
+            <ModalContent aria-label="label" usePortal>
+              <div data-testid="inner" />
+            </ModalContent>
+          </Modal>
+        </div>,
+      );
+      fireEvent.click(getByText(/open/i));
+      const dialog = getByRole('dialog');
+      const mount = document.querySelector('[data-testid="mount"]');
+      expect(document.body).toContainElement(dialog);
+      expect(mount).not.toContainElement(dialog);
+    });
   });
 
   describe('a11y', () => {
