@@ -56,7 +56,9 @@ export type OpenedAccordion = { id: string | number };
 export interface AccordionGroupContextProps {
   openedAccordions: Array<OpenedAccordion> | [];
   stayOpen: boolean;
-  setOpenedAccordions: (accordions: Array<OpenedAccordion>) => void;
+  setOpenedAccordions: React.Dispatch<
+    React.SetStateAction<Array<OpenedAccordion>>
+  >;
   toggleOpenedAccordion: (accordion: OpenedAccordion, opened?: boolean) => void;
   setStayOpen: (isStayOpen: boolean) => void;
 }

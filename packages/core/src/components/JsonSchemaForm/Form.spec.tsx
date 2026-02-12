@@ -1,5 +1,9 @@
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import type { RJSFSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 
+import { AccordionGroupContextProvider } from '@components/AccordionGroup';
 import { Form } from '.';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 
@@ -142,5 +146,109 @@ describe('Form (rjsf)', () => {
     );
 
     expect(container).toMatchSnapshot();
+  });
+
+  describe('accordion field', () => {
+    const accordionFormSchema: RJSFSchema = {
+      type: 'object',
+      properties: {
+        sectionA: {
+          type: 'object',
+          title: 'Section A',
+          properties: {
+            name: { type: 'string', title: 'Name' },
+          },
+        },
+        sectionB: {
+          type: 'object',
+          title: 'Section B',
+          properties: {
+            value: { type: 'string', title: 'Value' },
+          },
+        },
+      },
+    };
+
+    function renderFormWithAccordions(uiSchema: Record<string, unknown>) {
+      return render(
+        <AccordionGroupContextProvider>
+          <Form
+            validator={validator}
+            schema={accordionFormSchema}
+            uiSchema={uiSchema}
+          />
+        </AccordionGroupContextProvider>,
+      );
+    }
+
+    it('renders accordion closed by default when collapsed: true', () => {
+      renderFormWithAccordions({
+        sectionA: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: true },
+        },
+        sectionB: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: true },
+        },
+      });
+
+      const titles = screen.getAllByTestId('accordion-title');
+      expect(titles).toHaveLength(2);
+      titles.forEach((el) => {
+        expect(el).toHaveAttribute('aria-expanded', 'false');
+      });
+    });
+
+    it('renders accordion open by default when collapsed: false', () => {
+      renderFormWithAccordions({
+        sectionA: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: false },
+        },
+        sectionB: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: false },
+        },
+      });
+
+      const titles = screen.getAllByTestId('accordion-title');
+      expect(titles).toHaveLength(2);
+      titles.forEach((el) => {
+        expect(el).toHaveAttribute('aria-expanded', 'true');
+      });
+    });
+
+    it('toggles accordion open and closed on click', async () => {
+      const user = userEvent.setup();
+      renderFormWithAccordions({
+        sectionA: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: false },
+        },
+        sectionB: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: true },
+        },
+      });
+
+      const titles = screen.getAllByTestId('accordion-title');
+      const [sectionATitle, sectionBTitle] = titles;
+
+      expect(sectionATitle).toHaveAttribute('aria-expanded', 'true');
+      expect(sectionBTitle).toHaveAttribute('aria-expanded', 'false');
+
+      await user.click(sectionATitle);
+      expect(sectionATitle).toHaveAttribute('aria-expanded', 'false');
+
+      await user.click(sectionATitle);
+      expect(sectionATitle).toHaveAttribute('aria-expanded', 'true');
+
+      await user.click(sectionBTitle);
+      expect(sectionBTitle).toHaveAttribute('aria-expanded', 'true');
+
+      await user.click(sectionBTitle);
+      expect(sectionBTitle).toHaveAttribute('aria-expanded', 'false');
+    });
   });
 });

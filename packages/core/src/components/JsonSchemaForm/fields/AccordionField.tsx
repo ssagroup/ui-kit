@@ -12,7 +12,7 @@ import {
   AccordionTitle,
   useAccordionGroupContext,
 } from '@components/AccordionGroup';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 export type AccordionOptions = {
   targetField: string;
@@ -55,20 +55,34 @@ export const AccordionField = <
 
   // if `ui:widget` is set to 'hide', this field won't be mounted
   // useAccordionGroupContext manages the open/close state of accordions across mounts
-  const { openedAccordions, toggleOpenedAccordion, setStayOpen } =
-    useAccordionGroupContext();
+  const {
+    openedAccordions,
+    setOpenedAccordions,
+    toggleOpenedAccordion,
+    setStayOpen,
+  } = useAccordionGroupContext();
 
   useEffect(() => {
     // prevent this accordion from being auto-collapsed when another one is opened
     setStayOpen(true);
   }, []);
 
+  // Sync "open by default" from schema into context so toggle works (context is source of truth after mount)
+  useLayoutEffect(() => {
+    if (accordionOptions.collapsed === false) {
+      const id = idSchema.$id;
+      setOpenedAccordions((prev) =>
+        prev.some((a) => a.id === id) ? prev : [...prev, { id }],
+      );
+    }
+  }, []);
+
   const openedAccordion = openedAccordions.find(
     ({ id }) => id === idSchema.$id,
   );
 
-  const collapsed =
-    openedAccordion !== undefined ? false : !!accordionOptions.collapsed;
+  // Derive purely from context so open/closed state can be toggled (schema only sets initial state via effect above)
+  const collapsed = openedAccordion === undefined;
 
   const onAccordionClick = () => {
     toggleOpenedAccordion({ id: idSchema.$id }, !collapsed);

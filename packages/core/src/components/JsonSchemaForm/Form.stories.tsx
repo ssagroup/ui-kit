@@ -401,7 +401,7 @@ export const Accordion: Story = {
         'ui:field': 'accordion',
         'ui:options': {
           targetField: 'ObjectField',
-          collapsed: true,
+          collapsed: false,
         },
         workMode: {
           'ui:enumNames': ['Remote', 'On-site'],
