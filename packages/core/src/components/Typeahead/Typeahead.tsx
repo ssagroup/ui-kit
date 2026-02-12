@@ -21,8 +21,8 @@ import { TypeaheadProps } from './types';
  *
  * A powerful autocomplete component that provides search-as-you-type functionality
  * with dropdown suggestions. Supports both single and multiple selection modes,
- * filtering, custom rendering, and integrates seamlessly with React Hook Form
- * for validation and form management.
+ * filtering, custom rendering, custom values (user-typed values not in options list),
+ * and integrates seamlessly with React Hook Form for validation and form management.
  *
  * Component structure:
  * - Typeahead (root container with context)
@@ -73,6 +73,24 @@ import { TypeaheadProps } from './types';
  *
  * @example
  * ```tsx
+ * // With custom values - allows users to type and add values not in options
+ * <Typeahead
+ *   name="tags"
+ *   isMultiple
+ *   allowCustomValues={true}
+ *   label="Tags">
+ *   {options.map(opt => (
+ *     <TypeaheadOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </TypeaheadOption>
+ *   ))}
+ * </Typeahead>
+ * // Users can type "custom-tag" and press Enter to add it
+ * // Custom values appear in blue in the dropdown and selected items
+ * ```
+ *
+ * @example
+ * ```tsx
  * // With custom option rendering
  * <Typeahead
  *   name="users"
@@ -88,6 +106,76 @@ import { TypeaheadProps } from './types';
  *   ))}
  * </Typeahead>
  * ```
+ *
+ * @example
+ * ```tsx
+ * // Schema validation in Form Builder (JsonSchemaForm)
+ * // For single select - use 'required' in schema
+ * const schema = {
+ *   type: 'string',
+ *   title: 'Select field title',
+ *   enum: ['Option 1', 'Option 2'],
+ *   // required: ['selectField'] // Add to top-level required array
+ * };
+ *
+ * // For multiple select (array) - use 'required' + 'minItems'
+ * const schema = {
+ *   type: 'array',
+ *   title: 'Select multiple fields title',
+ *   items: {
+ *     type: 'string',
+ *     enum: ['Option 1', 'Option 2', 'Option 3'],
+ *   },
+ *   minItems: 1, // Ensures at least one item is selected
+ *   // required: ['selectMultipleField'] // Add to top-level required array
+ * };
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Schema validation in standalone mode (React Hook Form)
+ * // For single select - use 'required' in validationSchema
+ * <Typeahead
+ *   name="language"
+ *   label="Language"
+ *   validationSchema={{
+ *     required: 'Language is required',
+ *   }}>
+ *   {options.map(opt => (
+ *     <TypeaheadOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </TypeaheadOption>
+ *   ))}
+ * </Typeahead>
+ *
+ * // For multiple select - use 'validate' function to check array length
+ * <Typeahead
+ *   name="tags"
+ *   isMultiple
+ *   label="Tags"
+ *   validationSchema={{
+ *     validate: (value: string[]) => {
+ *       if (!value || value.length === 0) {
+ *         return 'At least one tag is required';
+ *       }
+ *       return true;
+ *     },
+ *   }}>
+ *   {options.map(opt => (
+ *     <TypeaheadOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </TypeaheadOption>
+ *   ))}
+ * </Typeahead>
+ * ```
+ *
+ * @note Validation differences:
+ * - **Form Builder (JsonSchemaForm)**: Uses JSON Schema validation. For arrays, use `minItems` property
+ *   (e.g., `minItems: 1` to require at least one selection). The `required` array at the schema root
+ *   marks fields as required.
+ * - **Standalone mode**: Uses React Hook Form validation. For arrays, use a `validate` function to check
+ *   array length, as React Hook Form doesn't have a built-in `minItems` rule. The `required` rule works
+ *   for single select fields.
  *
  * @see {@link TypeaheadOption} - Child component for individual options
  * @see {@link Popover} - Used for dropdown positioning
