@@ -8,7 +8,7 @@ import { ModalContext } from '@components/Modal';
 function ModalContent({
   children,
   'aria-label': ariaLabel,
-  usePortal = true,
+  usePortal = false,
   ...props
 }: ModalProps) {
   const [isOpen] = useContext(ModalContext);
