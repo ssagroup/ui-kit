@@ -505,6 +505,7 @@ export const WithValidation: Story = {
         multipleSelectTypeahead: {
           type: 'array',
           title: 'Multiple Select Typeahead *',
+          minItems: 1,
           uniqueItems: true,
           items: {
             type: 'string',
