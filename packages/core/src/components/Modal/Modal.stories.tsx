@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { Global, css } from '@emotion/react';
 
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import mainTheme from '@themes/main';
 
+import { Drawer } from '@components/Drawer';
 import Modal from '@components/Modal';
 import ModalContent from '@components/ModalContent';
 import ModalOpenButton from '@components/ModalOpenButton';
 import ModalDismissButton from '@components/ModalDismissButton';
-
 import Typography from '@components/Typography';
+
+import { useDrawer } from '../Drawer/useDrawer';
 
 export default {
   title: 'Components/Modal',
@@ -127,3 +130,68 @@ export const ExternalState: StoryObj<typeof Modal> = () => {
   );
 };
 ExternalState.args = {};
+
+export const InsideDrawer: StoryObj<typeof Modal> = () => {
+  const drawer = useDrawer({ position: 'right', dismissable: true });
+  return (
+    <>
+      <Global
+        styles={css`
+          .drawer-modal-content {
+            max-width: 500px !important;
+            width: 100% !important;
+            padding: 12px !important;
+          }
+        `}
+      />
+      <Button {...drawer.interactions.getReferenceProps()}>
+        {drawer.opened ? 'Close' : 'Open'} Drawer
+      </Button>
+      <Drawer.Root store={drawer}>
+        <Drawer.Portal>
+          <Drawer.Overlay>
+            <Drawer.Content
+              css={{ padding: '12px', maxWidth: '500px', width: '25%' }}>
+              <Drawer.Header>
+                <Drawer.Title>Drawer with Modal</Drawer.Title>
+                <Drawer.CloseButton />
+              </Drawer.Header>
+              <div css={{ marginTop: '24px' }}>
+                <p css={{ marginBottom: '16px' }}>
+                  This drawer takes 25% of the screen from the right. The Modal
+                  component is placed inside the drawer, but when opened, it
+                  centers on the full screen while maintaining the drawer&#39;s
+                  layout styling.
+                </p>
+                <Modal>
+                  <ModalOpenButton>
+                    <Button>Open Modal</Button>
+                  </ModalOpenButton>
+                  <ModalContent
+                    aria-label="Modal inside drawer"
+                    className="drawer-modal-content"
+                    usePortal>
+                    <div css={{ padding: '8px' }}>
+                      <h3 css={{ marginBottom: '12px' }}>Modal Title</h3>
+                      <p css={{ marginBottom: '16px' }}>
+                        This Modal opens centered on the full screen (not just
+                        within the drawer&#39;s 25% area), but it maintains the
+                        drawer&#39;s layout styling (width, padding, etc.). The
+                        Modal component uses a portal to render outside the
+                        drawer&#39;s DOM tree.
+                      </p>
+                      <ModalDismissButton>
+                        <Button variant="secondary">Close Modal</Button>
+                      </ModalDismissButton>
+                    </div>
+                  </ModalContent>
+                </Modal>
+              </div>
+            </Drawer.Content>
+          </Drawer.Overlay>
+        </Drawer.Portal>
+      </Drawer.Root>
+    </>
+  );
+};
+InsideDrawer.args = {};
