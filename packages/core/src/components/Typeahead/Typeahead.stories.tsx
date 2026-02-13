@@ -616,3 +616,59 @@ export const NoItems: StoryObj = (args: TypeaheadProps) => {
 };
 
 NoItems.args = { isDisabled: false };
+
+export const CustomValues: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { handleSubmit, watch } = useFormResult;
+  const fieldName = 'typeahead-dropdown';
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+  const fieldWatch = watch(fieldName);
+
+  return (
+    <FormProvider {...useFormResult}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Wrapper css={{ alignItems: 'flex-start', flexDirection: 'column' }}>
+          <Typeahead
+            defaultSelectedItems={[
+              items[0].id,
+              items[1].id,
+              items[2].id,
+              'four',
+            ]}
+            isMultiple
+            allowCustomValues={true}
+            isDisabled={args.isDisabled}
+            onEmptyChange={(isEmpty) => {
+              console.log('>>>onEmptyChange event', isEmpty);
+            }}
+            label="Select options or type custom values"
+            helperText="Type a custom value (e.g. 'four', 'five') and press Enter or select it from the dropdown. Custom values appear in blue."
+            name={fieldName}
+            css={{
+              width: 500,
+            }}
+            renderOption={({ label, input }) =>
+              highlightInputMatch(label, input)
+            }>
+            {items.map(({ label, value, id }) => (
+              <TypeaheadOption key={id} value={id} label={label || value}>
+                {label || value}
+              </TypeaheadOption>
+            ))}
+          </Typeahead>
+          <Button type="submit" css={{ marginTop: 5 }}>
+            Submit
+          </Button>
+          {fieldWatch && (
+            <div style={{ marginTop: 10, fontSize: 12, color: '#666' }}>
+              Selected: {JSON.stringify(fieldWatch)}
+            </div>
+          )}
+        </Wrapper>
+      </form>
+    </FormProvider>
+  );
+};
+
+CustomValues.args = { isDisabled: false };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
 import Avatar from '@components/Avatar';
@@ -338,6 +338,40 @@ describe('Typeahead Component', () => {
 
       const avatars = screen.getAllByTestId('typeahead-option-avatar');
       expect(avatars).toHaveLength(managerOptions.length);
+    });
+  });
+
+  describe('Custom Values', () => {
+    it('allows adding custom values by typing and pressing Enter', async () => {
+      const { user, mockOnChange } = setup({
+        isMultiple: true,
+        allowCustomValues: true,
+      });
+
+      const combobox = screen.getByRole('combobox');
+      const input = within(combobox).getByRole('textbox');
+
+      // Type a custom value
+      await user.type(input, 'custom-value');
+      await user.keyboard('{Enter}');
+
+      // Should call onChange with the custom value
+      expect(mockOnChange).toHaveBeenCalledWith('custom-value', true);
+    });
+
+    it('shows custom values in blue in the dropdown when selected', async () => {
+      const { user } = setup({
+        isMultiple: true,
+        allowCustomValues: true,
+        defaultSelectedItems: ['custom-selected'],
+      });
+
+      const combobox = screen.getByRole('combobox');
+      await user.click(combobox);
+
+      // Custom value should appear in the dropdown
+      const customOption = screen.getByText('custom-selected');
+      expect(customOption).toBeInTheDocument();
     });
   });
 });

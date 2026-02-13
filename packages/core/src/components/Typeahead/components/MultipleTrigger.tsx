@@ -23,28 +23,33 @@ export const MultipleTrigger = () => {
       {Object.values(context.optionsWithKey).length > 0 &&
         context.selectedItems.map((selectedItem, index) => {
           const currentOption = context.optionsWithKey[selectedItem];
+          const isCustomValue = !currentOption;
           const optionText = currentOption
             ? currentOption.children ||
               currentOption.label ||
               currentOption.value
-            : '';
+            : String(selectedItem);
           const avatar = currentOption?.avatar;
 
           return (
             <S.TypeaheadItem
               key={`typeahead-selected-selectedItem-${index}`}
               onClick={(e) => e.stopPropagation()}
-              isDisabled={context.isDisabled}>
+              isDisabled={context.isDisabled}
+              isCustomValue={isCustomValue}>
               {avatar && (
                 <S.TypeaheadItemAvatar data-testid="typeahead-item-avatar">
                   {avatar}
                 </S.TypeaheadItemAvatar>
               )}
-              <S.TypeaheadItemLabel isDisabled={context.isDisabled}>
+              <S.TypeaheadItemLabel
+                isDisabled={context.isDisabled}
+                isCustomValue={isCustomValue}>
                 {optionText}
               </S.TypeaheadItemLabel>
               <S.TypeaheadItemCross
                 isDisabled={context.isDisabled}
+                isCustomValue={isCustomValue}
                 endIcon={
                   <Icon
                     name="cross"
@@ -53,7 +58,9 @@ export const MultipleTrigger = () => {
                     color={
                       context.isDisabled
                         ? theme.colors.grey
-                        : theme.colors.greyDarker
+                        : isCustomValue
+                          ? theme.colors.blueRoyal
+                          : theme.colors.greyDarker
                     }
                     css={{
                       '& path': {
