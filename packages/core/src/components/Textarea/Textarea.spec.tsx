@@ -29,7 +29,7 @@ describe('Textarea', () => {
     expect(countChar).toHaveBeenCalled();
   });
 
-  it('Render textarea', () => {
+  it('Render textarea disabled', () => {
     render(
       <Textarea
         placeholder="Field"
@@ -44,13 +44,13 @@ describe('Textarea', () => {
     expect(textarea).toHaveProperty('disabled', true);
   });
 
-  it('Trow error when without register', () => {
-    jest.spyOn(console, 'error').mockImplementation();
-
-    expect(() =>
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      render(<Textarea placeholder="Field" name="field" disabled={true} />),
-    ).toThrow('Input component must be used within a Form component');
+  it('Throw warning when without register', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    render(<Textarea placeholder="Field" name="field" disabled={true} />);
+    expect(warnSpy).toBeCalledWith(
+      'Textarea component should be used with React Hook Form register for validation support',
+    );
   });
 });

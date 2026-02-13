@@ -19,7 +19,7 @@ describe('Inputs', () => {
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
     render(<Input placeholder="Field" name="field" disabled={true} />);
     expect(warnSpy).toBeCalledWith(
-      'Input component must be used within a Form component',
+      'Input component should be used with React Hook Form register for validation support',
     );
   });
 
