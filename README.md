@@ -6,6 +6,13 @@
 
 SSA UI kit is an open-source React-based library combining multiple UI Components, Widgets, Blocks, and Forms classified by application area and implemented following Atomic design principles.
 
+SSA UI kit includes Figma design, integration with Firebase and examples of implementation for different business domains.
+
+SSA UI kit was founded and is supported by SSA Group. The SSA UI kit source code is available under the MIT License.
+
+We regularly post updates, new components, and improvements for the SSA UI kit on our blog: https://www.ssa.group/blog/ssa-ui-kit/
+Please feel free to follow along.
+
 ## 🧠 Mental Model
 
 SSA UI kit components are designed with the following principles:
