@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { RJSFSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
-import userEvent from '@testing-library/user-event';
 import { render, waitFor } from '@testing-library/react';
 
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
