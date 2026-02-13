@@ -744,9 +744,9 @@ exports[`Form (rjsf) Render form 1`] = `
   opacity: 1;
   visibility: visible;
   position: relative;
-  -webkit-flex: 1 1 0%;
-  -ms-flex: 1 1 0%;
-  flex: 1 1 0%;
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
   min-width: auto;
   -webkit-flex-direction: column!important;
   -ms-flex-direction: column!important;
@@ -994,8 +994,7 @@ exports[`Form (rjsf) Render form 1`] = `
       rgb(64, 72, 83) 100%
     );
   background: none;
-  padding: 0;
-  padding-right: 5px;
+  padding: 0 5px 0 0;
   height: auto;
 }
 
