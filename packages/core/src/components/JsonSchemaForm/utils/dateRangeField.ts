@@ -14,7 +14,8 @@ export type NonSpreadableProps =
   | 'outputFormat'
   | 'name'
   | 'onChange'
-  | 'value';
+  | 'value'
+  | 'defaultValue';
 
 /**
  * Props that can be automatically spread from uiOptions
@@ -50,7 +51,12 @@ export const extractTransformedProps = (uiOptions: Record<string, unknown>) => {
 export const extractSpreadableProps = (
   uiOptions: Record<string, unknown>,
 ): Partial<SpreadableFromUiOptions> => {
-  const propsToExclude = ['format', 'rangePickerType', 'outputFormat'];
+  const propsToExclude = [
+    'format',
+    'rangePickerType',
+    'outputFormat',
+    'defaultValue',
+  ];
   const result: Record<string, unknown> = {};
 
   Object.entries(uiOptions).forEach(([key, value]) => {

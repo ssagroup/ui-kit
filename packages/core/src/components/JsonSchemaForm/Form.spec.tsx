@@ -1,7 +1,10 @@
 import validator from '@rjsf/validator-ajv8';
+import userEvent from '@testing-library/user-event';
+import { render, waitFor } from '@testing-library/react';
 
 import { Form } from '.';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
+import { PRESENT_VALUE } from '@components/DateRangePicker/DateRangePickerFormBridge';
 
 const managers = [
   {
@@ -142,5 +145,176 @@ describe('Form (rjsf)', () => {
     );
 
     expect(container).toMatchSnapshot();
+  });
+
+  it('DateWidget converts yyyy-MM-dd to dd/mm/yyyy format for display', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateField: {
+              type: 'string',
+              title: 'Date',
+            },
+          },
+        }}
+        uiSchema={{
+          dateField: {
+            'ui:widget': 'date',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+            },
+          },
+        }}
+        formData={{
+          dateField: '2024-01-15',
+        }}
+      />,
+    );
+
+    const dateInput = getByTestId('datepicker-input');
+    expect(dateInput).toHaveValue('15/01/2024');
+  });
+
+  it('DateRangeField converts yyyy-MM-dd to dd/mm/yyyy format for display', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: '2024-12-31',
+          },
+        }}
+      />,
+    );
+
+    const startInput = getByTestId('daterangepicker-input-from');
+    const endInput = getByTestId('daterangepicker-input-to');
+    expect(startInput).toHaveValue('15/01/2024');
+    expect(endInput).toHaveValue('31/12/2024');
+  });
+
+  it('DateRangeField converts "present" string to null for picker and displays "Present"', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+              showPresentOption: true,
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: 'present',
+          },
+        }}
+      />,
+    );
+
+    const startInput = getByTestId('daterangepicker-input-from');
+    const endInput = getByTestId('daterangepicker-input-to');
+    expect(startInput).toHaveValue('15/01/2024');
+    expect(endInput).toHaveValue('Present');
+  });
+
+  it('DateRangeField converts null to PRESENT_VALUE when "Present" button is clicked', async () => {
+    const mockOnChange = jest.fn();
+    const user = userEvent.setup();
+    const { getByTestId, getByRole } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+              showPresentOption: true,
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: '2024-12-31',
+          },
+        }}
+        onChange={mockOnChange}
+      />,
+    );
+
+    const calendarButton = getByTestId('daterangepicker-button');
+    await user.click(calendarButton);
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toBeInTheDocument();
+
+    const presentButton = getByTestId('daterangepicker-present-button');
+    await user.click(presentButton);
+
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dateRangeField: {
+            start: '2024-01-15',
+            end: PRESENT_VALUE,
+          },
+        }),
+      );
+    });
   });
 });

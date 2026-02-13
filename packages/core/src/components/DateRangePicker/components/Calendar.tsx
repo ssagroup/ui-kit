@@ -3,6 +3,7 @@ import * as DPC from '.';
 import * as C from '../..';
 import { CalendarType } from '../types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { PRESENT_VALUE } from '../DateRangePickerFormBridge';
 
 export const DatePickerCalendar = () => {
   const theme = useTheme();
@@ -28,23 +29,21 @@ export const DatePickerCalendar = () => {
 
   const handlePresentClick = () => {
     if (rangeSelectionStep === 'end') {
-      // Set end date to undefined internally, but mark as "present"
+      // Set end date to undefined internally, mark as "Present"
       setDateTime((prev) => [prev[0], undefined]);
       setIsEndDatePresent(true);
       setRangeSelectionStep(null);
       setIsOpen(false);
 
-      // Update lastChangedDate with null for end date to represent "present"
       const startDate = dateTime[0];
       setLastChangedDate([
-        startDate ? startDate.toJSDate() : null,
-        null, // null represents "present"
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null = "Present" (end date only)
       ]);
 
-      // Call onChange with null for end date to indicate "present"
       onChange?.([
-        startDate ? startDate.toJSDate() : null,
-        null, // null represents "present"
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null = "Present" (end date only)
       ]);
     }
   };
@@ -88,7 +87,7 @@ export const DatePickerCalendar = () => {
               width: '100%',
               justifyContent: 'center',
             }}>
-            Present
+            {PRESENT_VALUE}
           </C.Button>
         )}
       </C.PopoverDescription>

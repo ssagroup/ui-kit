@@ -1,9 +1,10 @@
 import React, { FocusEventHandler } from 'react';
-import { FieldError, useForm, useFormContext } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { css } from '@emotion/css';
 import * as C from '@components';
 import { InputProps } from '@components/Input/types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { PRESENT_VALUE } from '../DateRangePickerFormBridge';
 
 export const TriggerInput = ({
   datepickerType,
@@ -41,11 +42,10 @@ export const TriggerInput = ({
     setValue,
   } = hookFormResult;
 
-  // Get the current value from the form
   const formValue = watch(currentName);
-  // Override with "Present" if it's the end date and isEndDatePresent is true
+  // Override display with PRESENT_VALUE when "Present" is selected
   const displayValue =
-    datepickerType === 'to' && isEndDatePresent ? 'Present' : formValue;
+    datepickerType === 'to' && isEndDatePresent ? PRESENT_VALUE : formValue;
   const { inputProps: inputElementProps, ...restInputProps } =
     (inputProps as Partial<InputProps>) || {};
 
@@ -70,7 +70,7 @@ export const TriggerInput = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // If "Present" is displayed and user presses Backspace or Delete, clear the field entirely
+    // If PRESENT_VALUE is displayed and user presses Backspace or Delete, clear the field entirely
     if (
       datepickerType === 'to' &&
       isEndDatePresent &&
@@ -78,8 +78,7 @@ export const TriggerInput = ({
     ) {
       const input = e.currentTarget;
 
-      // Always clear "Present" entirely when Backspace/Delete is pressed
-      // This prevents letter-by-letter deletion which would be confusing
+      // Clear "Present" entirely (prevents letter-by-letter deletion)
       e.preventDefault();
       e.stopPropagation();
       clearPresentAndField();
@@ -96,9 +95,12 @@ export const TriggerInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
-    // If "Present" is displayed and user changes the value, clear "Present" flag
-    // This is a backup to handleChange in case onInput doesn't fire
-    if (datepickerType === 'to' && isEndDatePresent && newValue !== 'Present') {
+    // Clear "Present" flag when user changes input (backup if onInput doesn't fire)
+    if (
+      datepickerType === 'to' &&
+      isEndDatePresent &&
+      newValue !== displayValue
+    ) {
       setIsEndDatePresent(false);
     }
 
@@ -110,12 +112,15 @@ export const TriggerInput = ({
     const target = e.currentTarget;
     const newValue = target.value;
 
-    // If "Present" is displayed and user modifies the input in any way, clear "Present" flag immediately
-    // This handles typing, deleting, pasting, etc.
-    if (datepickerType === 'to' && isEndDatePresent && newValue !== 'Present') {
+    // Clear "Present" flag immediately when user modifies input (typing, deleting, pasting)
+    if (
+      datepickerType === 'to' &&
+      isEndDatePresent &&
+      newValue !== displayValue
+    ) {
       setIsEndDatePresent(false);
-      // Also clear the form value if it's still "Present" to allow free editing
-      if (formValue === 'Present') {
+      // Form value should already be empty, but ensure it's set to the new value
+      if (formValue !== newValue) {
         setValue(currentName, newValue);
       }
     }
@@ -144,7 +149,7 @@ export const TriggerInput = ({
           if (isOpen) {
             setIsOpen(false);
           }
-          // If "Present" is displayed and user clicks, select all text so they can easily replace it
+          // Select all text when "Present" is displayed (easier to replace)
           if (datepickerType === 'to' && isEndDatePresent) {
             e.currentTarget.select();
           }
@@ -185,10 +190,8 @@ export const TriggerInput = ({
         ...inputElementProps,
       }}
       showStatusIcon={false}
-      errors={fieldError as FieldError}
       status={fieldStatus}
-      showHelperText={!!fieldError}
-      helperText={fieldError?.message as string | undefined}
+      showHelperText={false}
       helperClassName={css`
         & > span::first-letter {
           text-transform: uppercase;

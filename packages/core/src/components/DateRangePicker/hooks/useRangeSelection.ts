@@ -84,7 +84,7 @@ export const useRangeSelection = ({
     // Call onChange when a date is selected from calendar
     if (isSelectingStart && newDateTuple[0]) {
       // First date selected
-      onChange?.([normalizeToMidnight(newDateTuple[0]), null]);
+      onChange?.([normalizeToMidnight(newDateTuple[0]), undefined]);
     } else if (
       newDateTuple[0] &&
       newDateTuple[1] &&

@@ -16,7 +16,6 @@ import { initRender } from './customTest';
 const customRender = initRender(mainTheme);
 
 declare global {
-  // eslint-disable-next-line no-var
   var render: typeof customRender;
 }
 

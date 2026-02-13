@@ -231,3 +231,19 @@ WithReverseSelection.args = {
       'Reverse selection enabled: If you select a later date first, then an earlier date, the dates will be auto-swapped so the earlier date becomes the start date.',
   },
 };
+
+export const WithPresentOption: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+WithPresentOption.args = {
+  ...commonArgs,
+  name: 'field11',
+  showPresentOption: true,
+  defaultValue: ['01/15/2025', null],
+  messages: {
+    description:
+      'Click "Present" button to set end date as ongoing (no end date). The end date will show "Present" and onChange will receive null for the end date.',
+  },
+};
