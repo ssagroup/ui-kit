@@ -46,7 +46,7 @@ export const useDateRangePicker = ({
   inputValueTo?: string;
   calendarViewDateTime: DateTimeTuple;
   calendarType: CalendarType;
-  lastChangedDate?: [Date | undefined, Date | undefined];
+  lastChangedDate?: [Date | undefined | null, Date | undefined | null];
   luxonFormat: string;
   lastFocusedElement: 'from' | 'to';
   nameFrom: string;
@@ -69,6 +69,11 @@ export const useDateRangePicker = ({
     React.SetStateAction<'start' | 'end' | null>
   >;
   clearInputValue: (field: 'from' | 'to') => void;
+  isEndDatePresent: boolean;
+  setIsEndDatePresent: React.Dispatch<React.SetStateAction<boolean>>;
+  setLastChangedDate: React.Dispatch<
+    React.SetStateAction<[Date | undefined | null, Date | undefined | null]>
+  >;
 } => {
   const format = propFormat || getFormatForRangePickerType(rangePickerType);
   const { defaultMin, defaultMax } = getDefaultDateRange(format);
@@ -94,8 +99,9 @@ export const useDateRangePicker = ({
   const [dateTime, setDateTime] = useState<
     DateRangePickerContextProps['dateTime']
   >([undefined, undefined]);
+  const [isEndDatePresent, setIsEndDatePresent] = useState(false);
   const [lastChangedDate, setLastChangedDate] = useState<
-    [Date | undefined, Date | undefined]
+    [Date | undefined | null, Date | undefined | null]
   >([undefined, undefined]);
   const [lastFocusedElement, setLastFocusedElement] = useState<'from' | 'to'>(
     'from',
@@ -159,6 +165,36 @@ export const useDateRangePicker = ({
     day: formatIndexes['day'] !== -1 ? dateMinParts[formatIndexes['day']] : 1,
   });
 
+  // Helper function to clear a field and notify form
+  const clearField = (field: 'from' | 'to') => {
+    const isFromField = field === 'from';
+    const fieldName = isFromField ? nameFrom : nameTo;
+
+    const newDateTime: DateTimeTuple = isFromField
+      ? [undefined, dateTime[1]]
+      : [dateTime[0], undefined];
+
+    // undefined = empty/cleared, null = "Present" end date
+    const newLastChangedDate: [
+      Date | null | undefined,
+      Date | null | undefined,
+    ] = isFromField
+      ? [undefined, lastChangedDate[1] ?? undefined]
+      : [lastChangedDate[0] ?? undefined, undefined];
+
+    setDateTime(newDateTime);
+    setLastChangedDate(newLastChangedDate);
+    setValue(fieldName, undefined);
+    clearErrors(fieldName);
+
+    if (!isFromField) {
+      setIsEndDatePresent(false);
+    }
+
+    // Notify parent: undefined = cleared, null = "Present" (end date only)
+    onChange?.(newLastChangedDate);
+  };
+
   const safeOnChange = (newDateTime?: DateTime) => {
     const _newDateTime = newDateTime ? newDateTime.startOf('day') : undefined;
 
@@ -170,18 +206,48 @@ export const useDateRangePicker = ({
       if (_newDateTime) {
         const _newDateTimeJS = _newDateTime.toJSDate();
         if (lastFocusedElement === 'from') {
-          setLastChangedDate([_newDateTimeJS, lastChangedDate[1]]);
-          onChange?.([_newDateTimeJS, lastChangedDate[1] || null]);
+          // Preserve null (Present) or Date, use undefined for empty
+          const changeValue: [
+            Date | null | undefined,
+            Date | null | undefined,
+          ] = [
+            _newDateTimeJS,
+            lastChangedDate[1] === undefined ? undefined : lastChangedDate[1],
+          ];
+          setLastChangedDate([_newDateTimeJS, lastChangedDate[1] ?? null]);
+          onChange?.(changeValue);
         } else {
-          setLastChangedDate([lastChangedDate[0], _newDateTimeJS]);
-          onChange?.([lastChangedDate[0] || null, _newDateTimeJS]);
+          // Setting end date: always a Date (not null/undefined)
+          // Start date: preserve Date or undefined (never null)
+          const changeValue: [
+            Date | null | undefined,
+            Date | null | undefined,
+          ] = [
+            lastChangedDate[0] === undefined ? undefined : lastChangedDate[0],
+            _newDateTimeJS,
+          ];
+          setLastChangedDate([lastChangedDate[0] ?? null, _newDateTimeJS]);
+          onChange?.(changeValue);
         }
       } else {
+        // When clearing via safeOnChange, use undefined for cleared fields (empty/not set)
+        // null is ONLY used for "Present" end date (when isEndDatePresent === true)
+        const newLastChangedDate: [
+          Date | null | undefined,
+          Date | null | undefined,
+        ] = [
+          lastFocusedElement === 'from'
+            ? undefined
+            : (lastChangedDate[0] ?? undefined),
+          lastFocusedElement === 'to'
+            ? undefined
+            : (lastChangedDate[1] ?? undefined),
+        ];
         setLastChangedDate([
-          lastFocusedElement === 'from' ? undefined : lastChangedDate[0],
-          lastFocusedElement === 'to' ? undefined : lastChangedDate[1],
+          lastFocusedElement === 'from' ? null : (lastChangedDate[0] ?? null),
+          lastFocusedElement === 'to' ? null : (lastChangedDate[1] ?? null),
         ]);
-        onChange?.();
+        onChange?.(newLastChangedDate);
       }
     }
   };
@@ -197,6 +263,12 @@ export const useDateRangePicker = ({
   const processValue = (newValue: string, elementName?: 'from' | 'to') => {
     const currentElementType = elementName || lastFocusedElement;
     const currentName = currentElementType === 'from' ? nameFrom : nameTo;
+
+    // Skip parsing when "Present" is displayed (form value is empty, display shows PRESENT_VALUE)
+    if (currentElementType === 'to' && isEndDatePresent) {
+      return;
+    }
+
     const newDateTime =
       typeof newValue === 'string' && newValue.length === expectedDateLength
         ? DateTime.fromFormat(newValue, luxonFormat)
@@ -261,18 +333,21 @@ export const useDateRangePicker = ({
     const fieldName = event.currentTarget.name;
     const isFromField = fieldName === nameFrom;
 
+    // Skip processing if "Present" is displayed (isEndDatePresent flag is true)
+    // The form value is empty in this case, so we don't want to try parsing the display text as a date
+    if (!isFromField && isEndDatePresent) {
+      return; // Do nothing - "Present" is just a display value, not a real date
+    }
+
     if (blurredValue.length > 0) {
+      // Clear "Present" flag if user entered a date (non-empty value)
+      if (!isFromField) {
+        setIsEndDatePresent(false);
+      }
       processValue(blurredValue, isFromField ? 'from' : 'to');
     } else {
-      // User cleared the field - clear the corresponding dateTime
-      setDateTime((prev) =>
-        isFromField ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      setLastChangedDate((prev) =>
-        isFromField ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      setValue(fieldName, undefined);
-      clearErrors(fieldName);
+      // User cleared the field - use shared clearField helper
+      clearField(isFromField ? 'from' : 'to');
     }
   };
 
@@ -284,6 +359,12 @@ export const useDateRangePicker = ({
     const currentName = currentElementType === 'from' ? nameFrom : nameTo;
     const currentWatchedValue =
       currentElementType === 'from' ? inputValueFrom : inputValueTo;
+
+    // Skip parsing when "Present" is displayed (form value is empty, display shows PRESENT_VALUE)
+    if (currentElementType === 'to' && isEndDatePresent) {
+      return;
+    }
+
     if (
       typeof inputValue === 'string' &&
       inputValue.length &&
@@ -291,6 +372,12 @@ export const useDateRangePicker = ({
     ) {
       setIsOpen(false);
     }
+
+    // Clear "Present" flag when user types in end field
+    if (currentElementType === 'to' && inputValue && inputValue.length > 0) {
+      setIsEndDatePresent(false);
+    }
+
     let newDateTime;
 
     if (
@@ -376,49 +463,80 @@ export const useDateRangePicker = ({
       previousDateTime.current = [dateTime[0], dateTime[1]];
     }
 
+    const isUserActivelyTyping = () => {
+      const isFromFocused =
+        inputFromRef.current && document.activeElement === inputFromRef.current;
+      const isToFocused =
+        inputToRef.current && document.activeElement === inputToRef.current;
+      return isFromFocused || isToFocused;
+    };
+
+    const syncDateValue = (
+      targetValue: string | undefined,
+      currentValue: string | undefined,
+      fieldName: string,
+    ) => {
+      if (!targetValue) return;
+
+      const isInputFocused = isUserActivelyTyping();
+      const isEmpty = !currentValue;
+      const isSynced = currentValue === targetValue;
+      const isPartialInput =
+        currentValue &&
+        currentValue.length < expectedDateLength &&
+        isInputFocused;
+
+      if (isEmpty || (!isSynced && !isPartialInput)) {
+        setValue(fieldName, targetValue);
+      }
+    };
+
+    const syncEndDateValue = () => {
+      // Keep form value empty when "Present" is displayed (avoids mask errors)
+      // Display text is overridden in TriggerInput component
+      if (isEndDatePresent) {
+        // Only set to empty if it's not already empty - avoid unnecessary updates
+        if (inputValueTo && inputValueTo !== '') {
+          setValue(nameTo, '');
+        }
+        return;
+      }
+
+      const targetValue = dateTime[1]?.toFormat(luxonFormat);
+      if (!targetValue) {
+        // No date: keep empty (isEndDatePresent flag handles "Present" display)
+        if (inputValueTo && inputValueTo !== '') {
+          setValue(nameTo, '');
+        }
+        return;
+      }
+
+      // Sync date value (handles "Present" → date transition)
+      const isInputFocused = isUserActivelyTyping();
+      const isEmpty = !inputValueTo || inputValueTo === '';
+      const isSynced = inputValueTo === targetValue;
+      const isPartialInput =
+        inputValueTo &&
+        inputValueTo.length < expectedDateLength &&
+        isInputFocused;
+      // Detect transition from "Present" (empty form value but flag was true)
+      const isTransitioningFromPresent = isEmpty && isEndDatePresent;
+
+      if (
+        isEmpty ||
+        isTransitioningFromPresent ||
+        (!isSynced && !isPartialInput)
+      ) {
+        setValue(nameTo, targetValue);
+      }
+    };
+
+    // Sync start date
     const nextFromValue = dateTime[0]?.toFormat(luxonFormat);
-    if (nextFromValue) {
-      // Sync dateTime to form when dateTime changed (calendar selection)
-      // Don't overwrite if user is actively typing (input is focused and partial)
-      const isInputFocused =
-        (inputFromRef.current &&
-          document.activeElement === inputFromRef.current) ||
-        (inputToRef.current && document.activeElement === inputToRef.current);
+    syncDateValue(nextFromValue, inputValueFrom, nameFrom);
 
-      if (!inputValueFrom) {
-        // Input is empty - sync from dateTime
-        setValue(nameFrom, nextFromValue);
-      } else if (inputValueFrom === nextFromValue) {
-        // Already in sync - no action needed
-      } else if (inputValueFrom.length < expectedDateLength && isInputFocused) {
-        // User is actively typing partial input - don't overwrite
-      } else {
-        // dateTime changed (calendar selection) - sync to form
-        setValue(nameFrom, nextFromValue);
-      }
-    }
-
-    const nextToValue = dateTime[1]?.toFormat(luxonFormat);
-    if (nextToValue) {
-      // Sync dateTime to form when dateTime changed (calendar selection)
-      // Don't overwrite if user is actively typing (input is focused and partial)
-      const isInputFocused =
-        (inputFromRef.current &&
-          document.activeElement === inputFromRef.current) ||
-        (inputToRef.current && document.activeElement === inputToRef.current);
-
-      if (!inputValueTo) {
-        // Input is empty - sync from dateTime
-        setValue(nameTo, nextToValue);
-      } else if (inputValueTo === nextToValue) {
-        // Already in sync - no action needed
-      } else if (inputValueTo.length < expectedDateLength && isInputFocused) {
-        // User is actively typing partial input - don't overwrite
-      } else {
-        // dateTime changed (calendar selection) - sync to form
-        setValue(nameTo, nextToValue);
-      }
-    }
+    // Sync end date
+    syncEndDateValue();
   }, [
     dateTime,
     inputValueFrom,
@@ -430,6 +548,7 @@ export const useDateRangePicker = ({
     expectedDateLength,
     inputFromRef,
     inputToRef,
+    isEndDatePresent,
   ]);
 
   useEffect(() => {
@@ -510,14 +629,22 @@ export const useDateRangePicker = ({
           ? DateTime.fromFormat(rest.value[1], luxonFormat)
           : undefined;
 
+      // Handle null end date (represents "Present")
+      const isEndPresent = rest.value[1] === null;
+      setIsEndDatePresent(isEndPresent);
+
       const newDateTime: DateTimeTuple = [
         newDateTimeFrom?.isValid ? newDateTimeFrom.startOf('day') : undefined,
-        newDateTimeTo?.isValid ? newDateTimeTo.startOf('day') : undefined,
+        isEndPresent
+          ? undefined
+          : newDateTimeTo?.isValid
+            ? newDateTimeTo.startOf('day')
+            : undefined,
       ];
       setDateTime(newDateTime);
       setLastChangedDate([
         newDateTime[0]?.toJSDate(),
-        newDateTime[1]?.toJSDate(),
+        isEndPresent ? null : newDateTime[1]?.toJSDate(),
       ]);
       // Sync calendar view with the new dates so they're visible when calendar opens
       setCalendarViewDateTime([
@@ -525,7 +652,11 @@ export const useDateRangePicker = ({
         newDateTime[1] || newDateTime[0] || undefined,
       ]);
       setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat));
-      setValue(nameTo, newDateTime[1]?.toFormat(luxonFormat));
+      // Keep form value empty when "Present" (avoids mask errors, display overridden in TriggerInput)
+      setValue(
+        nameTo,
+        isEndPresent ? '' : newDateTime[1]?.toFormat(luxonFormat),
+      );
     }
   }, [
     rest.value,
@@ -576,19 +707,27 @@ export const useDateRangePicker = ({
           ? DateTime.fromFormat(defaultValue[1], luxonFormat)
           : undefined;
 
+      // Handle null end date (represents "Present")
+      const isEndPresent = defaultValue[1] === null;
+      if (isEndPresent) {
+        setIsEndDatePresent(true);
+      }
+
       const newDateTime: DateTimeTuple = [
         defaultDateTimeFrom?.isValid
           ? defaultDateTimeFrom.startOf('day')
           : undefined,
-        defaultDateTimeTo?.isValid
-          ? defaultDateTimeTo.startOf('day')
-          : undefined,
+        isEndPresent
+          ? undefined
+          : defaultDateTimeTo?.isValid
+            ? defaultDateTimeTo.startOf('day')
+            : undefined,
       ];
 
       setDateTime(newDateTime);
       setLastChangedDate([
         newDateTime[0]?.toJSDate(),
-        newDateTime[1]?.toJSDate(),
+        isEndPresent ? null : newDateTime[1]?.toJSDate(),
       ]);
       // Sync calendar view with default dates so they're visible when calendar opens
       setCalendarViewDateTime([
@@ -596,7 +735,12 @@ export const useDateRangePicker = ({
         newDateTime[1] || newDateTime[0] || undefined,
       ]);
       setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat));
-      setValue(nameTo, newDateTime[1]?.toFormat(luxonFormat));
+      // Keep form value empty when "Present" to avoid mask errors
+      // "Present" is displayed via displayValue override in TriggerInput
+      setValue(
+        nameTo,
+        isEndPresent ? '' : newDateTime[1]?.toFormat(luxonFormat),
+      );
       defaultValueProcessed.current = true;
     }
   }, [
@@ -647,16 +791,9 @@ export const useDateRangePicker = ({
     handleBlur,
     rangeSelectionStep,
     setRangeSelectionStep,
-    clearInputValue: (field: 'from' | 'to') => {
-      const targetName = field === 'from' ? nameFrom : nameTo;
-      clearErrors(targetName);
-      setValue(targetName, undefined);
-      setDateTime((prev) =>
-        field === 'from' ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-      setLastChangedDate((prev) =>
-        field === 'from' ? [undefined, prev[1]] : [prev[0], undefined],
-      );
-    },
+    isEndDatePresent,
+    setIsEndDatePresent,
+    setLastChangedDate,
+    clearInputValue: clearField,
   };
 };

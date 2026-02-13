@@ -26,6 +26,9 @@ export const TriggerStatusArea = () => {
                     '&::first-letter': { textTransform: 'uppercase' },
                   }}>
                   {error}
+                  {index < errorMessage.length - 1 && (
+                    <span css={{ margin: '0 4px' }}>,</span>
+                  )}
                 </span>
               ))
             : messages?.error}

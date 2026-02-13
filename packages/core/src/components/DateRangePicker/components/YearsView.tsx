@@ -47,10 +47,25 @@ export const YearsView = () => {
 
   useEffect(() => {
     if (currentCalendarViewDT && wrapper.current) {
-      wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
-        behavior: 'instant',
-        block: 'center',
-      });
+      const container = wrapper.current;
+      const currentEl = container.querySelector(
+        '[aria-current=date]',
+      ) as HTMLElement | null;
+
+      // Scroll the internal years list WITHOUT scrolling the window/page.
+      // `scrollIntoView` can bubble up and scroll the main page, causing a "jump".
+      if (currentEl) {
+        const containerRect = container.getBoundingClientRect();
+        const elRect = currentEl.getBoundingClientRect();
+        const deltaTop = elRect.top - containerRect.top;
+        const nextTop =
+          container.scrollTop +
+          deltaTop -
+          container.clientHeight / 2 +
+          elRect.height / 2;
+
+        container.scrollTo({ top: nextTop, behavior: 'auto' });
+      }
     }
   }, [calendarViewDateTime, lastFocusedElement, currentCalendarViewDT]);
 

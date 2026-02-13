@@ -2,11 +2,15 @@ import { Dispatch, SetStateAction } from 'react';
 import { useMask } from '@react-input/mask';
 import { DateTime } from 'luxon';
 import { InputProps } from '@components/Input/types';
-import { PICKER_TYPE, CALENDAR_TYPE } from './constants';
+import { PICKER_TYPE } from './constants';
 import { RegisterOptions } from 'react-hook-form';
+import type {
+  PickerCalendarType,
+  DateFormat,
+} from '@components/JsonSchemaForm/utils/dateFormats';
 
 export type PickerType = (typeof PICKER_TYPE)[keyof typeof PICKER_TYPE];
-export type DatePickerFormat = 'mm/dd/yyyy' | 'dd/mm/yyyy' | 'mm/yyyy' | 'yyyy';
+export type DatePickerFormat = DateFormat;
 
 export type DatePickerProps = {
   name: string;
@@ -84,4 +88,4 @@ export type DatePickerContextProps = Omit<
   setCalendarType: Dispatch<SetStateAction<CalendarType>>;
 };
 
-export type CalendarType = (typeof CALENDAR_TYPE)[keyof typeof CALENDAR_TYPE];
+export type CalendarType = PickerCalendarType;

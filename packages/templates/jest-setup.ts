@@ -16,7 +16,6 @@ import { mainTheme } from '@ssa-ui-kit/core';
 const customRender = initRender(mainTheme);
 
 declare global {
-  // eslint-disable-next-line no-var
   var render: typeof customRender;
 }
 

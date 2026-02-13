@@ -53,5 +53,13 @@ export const DateRangePickerContext =
     setLastFocusedElement: () => {
       // no-op
     },
+    setLastChangedDate: () => {
+      // no-op
+    },
     allowReverseSelection: false,
+    showPresentOption: false,
+    isEndDatePresent: false,
+    setIsEndDatePresent: () => {
+      // no-op
+    },
   });

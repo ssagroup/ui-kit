@@ -54,6 +54,9 @@ export const Basic: StoryObj<typeof Typography> = ({
       <Typography variant="body2" weight={weight} gutter={gutter} color={color}>
         Body 2. text variant
       </Typography>
+      <Typography variant="body3" weight={weight} gutter={gutter} color={color}>
+        Body 3. text variant
+      </Typography>
       <Typography
         variant="caption"
         weight={weight}

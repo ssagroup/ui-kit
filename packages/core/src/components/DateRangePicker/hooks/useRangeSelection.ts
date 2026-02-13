@@ -29,6 +29,7 @@ export const useRangeSelection = ({
     clearInputValue,
     allowReverseSelection = false,
     onChange,
+    setIsEndDatePresent,
   } = useDateRangePickerContext();
 
   const handleRangeSelect = (selectedValue: number | string) => {
@@ -37,6 +38,9 @@ export const useRangeSelection = ({
 
     // Range selection logic
     const isSelectingStart = rangeSelectionStep === 'start';
+    // Reset "present" flag whenever a date is selected (either start or end)
+    setIsEndDatePresent(false);
+
     if (isSelectingStart) {
       clearInputValue('to');
       setLastFocusedElement('to');
@@ -80,7 +84,7 @@ export const useRangeSelection = ({
     // Call onChange when a date is selected from calendar
     if (isSelectingStart && newDateTuple[0]) {
       // First date selected
-      onChange?.([normalizeToMidnight(newDateTuple[0]), null]);
+      onChange?.([normalizeToMidnight(newDateTuple[0]), undefined]);
     } else if (
       newDateTuple[0] &&
       newDateTuple[1] &&

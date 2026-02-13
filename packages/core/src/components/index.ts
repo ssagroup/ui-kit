@@ -50,6 +50,7 @@ export * from './Typeahead';
 
 export * from './DatePicker';
 export * from './DateRangePicker';
+export type { CalendarType } from './DatePicker/types';
 
 export * from './ColorPicker';
 

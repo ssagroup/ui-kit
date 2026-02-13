@@ -3,6 +3,7 @@ import * as DPC from '.';
 import * as C from '../..';
 import { CalendarType } from '../types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { PRESENT_VALUE } from '../DateRangePickerFormBridge';
 
 export const DatePickerCalendar = () => {
   const theme = useTheme();
@@ -11,8 +12,43 @@ export const DatePickerCalendar = () => {
     months: DPC.MonthsView,
     years: DPC.YearsView,
   };
-  const { calendarType, classNames } = useDateRangePickerContext();
+  const {
+    calendarType,
+    classNames,
+    rangeSelectionStep,
+    showPresentOption,
+    setDateTime,
+    setIsOpen,
+    setRangeSelectionStep,
+    onChange,
+    dateTime,
+    setIsEndDatePresent,
+    setLastChangedDate,
+  } = useDateRangePickerContext();
   const Component = components[calendarType];
+
+  const handlePresentClick = () => {
+    if (rangeSelectionStep === 'end') {
+      // Set end date to undefined internally, mark as "Present"
+      setDateTime((prev) => [prev[0], undefined]);
+      setIsEndDatePresent(true);
+      setRangeSelectionStep(null);
+      setIsOpen(false);
+
+      const startDate = dateTime[0];
+      setLastChangedDate([
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null = "Present" (end date only)
+      ]);
+
+      onChange?.([
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null = "Present" (end date only)
+      ]);
+    }
+  };
+
+  const isPresentButtonDisabled = rangeSelectionStep !== 'end';
 
   return (
     <C.PopoverContent
@@ -25,7 +61,7 @@ export const DatePickerCalendar = () => {
         padding: 24,
         paddingTop: 16,
         width: 346,
-        height: 370,
+        height: showPresentOption ? 412 : 370,
         alignItems: 'flex-start',
         margin: '14px 0 0 -14px',
         zIndex: 100,
@@ -40,6 +76,20 @@ export const DatePickerCalendar = () => {
           justifyContent: 'space-between',
         }}>
         <Component />
+        {showPresentOption && (
+          <C.Button
+            variant="primary"
+            onClick={handlePresentClick}
+            isDisabled={isPresentButtonDisabled}
+            data-testid="daterangepicker-present-button"
+            css={{
+              marginTop: 12,
+              width: '100%',
+              justifyContent: 'center',
+            }}>
+            {PRESENT_VALUE}
+          </C.Button>
+        )}
       </C.PopoverDescription>
     </C.PopoverContent>
   );

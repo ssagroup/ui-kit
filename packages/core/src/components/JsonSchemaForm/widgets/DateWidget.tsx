@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { DateTime } from 'luxon';
 import {
   FormContextType,
@@ -14,21 +15,18 @@ import {
 } from 'react-hook-form';
 
 import { DatePicker } from '@components/DatePicker';
-import { DatePickerFormat, PickerType } from '@components/DatePicker/types';
+import { PickerType } from '@components/DatePicker/types';
 import {
   PICKER_TYPE,
-  VALID_DATE_FORMATS,
+  DEFAULT_MASK_FORMAT,
+  DEFAULT_MONTH_MASK_FORMAT,
+  DEFAULT_YEAR_MASK_FORMAT,
 } from '@components/DatePicker/constants';
-
-/**
- * Type guards to ensure RJSF ui:options match our DatePicker requirements
- */
-const isValidDatePickerFormat = (value: unknown): value is DatePickerFormat => {
-  return (
-    typeof value === 'string' &&
-    VALID_DATE_FORMATS.includes(value as DatePickerFormat)
-  );
-};
+import {
+  isValidDateFormat,
+  isValidOutputFormat,
+  type DateFormat,
+} from '../utils/dateFormats';
 
 const isValidPickerType = (value: unknown): value is PickerType => {
   return (
@@ -60,17 +58,81 @@ export const DateWidget = <
 
   const uiOptions = uiSchema?.['ui:options'] || {};
   const {
-    outputFormat = 'yyyy-MM-dd',
+    outputFormat: rawOutputFormat,
     dateMin,
     dateMax,
-    format,
-    pickerType,
+    format: rawFormat,
+    pickerType: rawPickerType,
     validationSchema,
   } = uiOptions;
 
+  // Validate and set defaults for formats
+  const outputFormat = isValidOutputFormat(rawOutputFormat)
+    ? rawOutputFormat
+    : 'yyyy-MM-dd';
+
+  const pickerType = isValidPickerType(rawPickerType)
+    ? rawPickerType
+    : PICKER_TYPE.DAYS;
+
+  // Determine input format: use format prop, or default based on pickerType
+  const getDefaultFormatForPickerType = (type: PickerType): DateFormat => {
+    switch (type) {
+      case PICKER_TYPE.MONTHS:
+        return DEFAULT_MONTH_MASK_FORMAT;
+      case PICKER_TYPE.YEARS:
+        return DEFAULT_YEAR_MASK_FORMAT;
+      case PICKER_TYPE.DAYS:
+      default:
+        return DEFAULT_MASK_FORMAT;
+    }
+  };
+
+  const inputFormat: DateFormat = isValidDateFormat(rawFormat)
+    ? rawFormat
+    : getDefaultFormatForPickerType(pickerType);
+
+  /**
+   * Format conversion: formData (outputFormat) → DatePicker (inputFormat)
+   *
+   * WHY THIS EXISTS:
+   * - Form stores dates in outputFormat (e.g., 'yyyy-MM-dd' ISO format for database/API)
+   * - DatePicker expects dates in inputFormat (e.g., 'mm/dd/yyyy' for user display)
+   * - We need to convert between these formats when initializing the picker
+   *
+   * EXAMPLE:
+   * - value: '2024-01-15' (outputFormat: 'yyyy-MM-dd')
+   * - inputFormat: 'mm/dd/yyyy'
+   * - Result: '01/15/2024' (what DatePicker needs)
+   */
+  const defaultValue = useMemo(() => {
+    if (!value || typeof value !== 'string') {
+      return undefined;
+    }
+
+    // If formats are the same, no conversion needed
+    if (outputFormat === inputFormat) {
+      return value;
+    }
+
+    // Convert from outputFormat to inputFormat
+    // Convert inputFormat to Luxon format (mm → MM)
+    const luxonOutputFormat = outputFormat.replace(/mm/gi, 'MM');
+    const luxonInputFormat = inputFormat.replace(/mm/gi, 'MM');
+
+    const dateTime = DateTime.fromFormat(value, luxonOutputFormat);
+
+    if (dateTime.isValid) {
+      return dateTime.toFormat(luxonInputFormat);
+    }
+
+    // If parsing fails, return undefined (DatePicker will handle it)
+    return undefined;
+  }, [value, outputFormat, inputFormat]);
+
   const onDateChange = (date?: Date) => {
     const formattedDate = date
-      ? DateTime.fromJSDate(date).toFormat(outputFormat as string)
+      ? DateTime.fromJSDate(date).toFormat(outputFormat)
       : undefined;
 
     onChange(formattedDate);
@@ -80,14 +142,12 @@ export const DateWidget = <
     <FormProvider {...hookFormResult}>
       <DatePicker
         name={name}
-        defaultValue={value as string | undefined}
+        defaultValue={defaultValue}
         onChange={onDateChange}
         dateMin={isValidString(dateMin) ? dateMin : undefined}
         dateMax={isValidString(dateMax) ? dateMax : undefined}
-        format={isValidDatePickerFormat(format) ? format : undefined}
-        pickerType={
-          isValidPickerType(pickerType) ? pickerType : PICKER_TYPE.DAYS
-        }
+        format={inputFormat}
+        pickerType={pickerType}
         validationSchema={
           isValidObject(validationSchema)
             ? (validationSchema as RegisterOptions)
