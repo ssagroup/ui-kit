@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { useFormContext } from 'react-hook-form';
 import * as DPC from '.';
 import * as C from '../..';
 import { CalendarType } from '../types';
@@ -24,18 +25,27 @@ export const DatePickerCalendar = () => {
     dateTime,
     setIsEndDatePresent,
     setLastChangedDate,
+    nameTo,
   } = useDateRangePickerContext();
   const Component = components[calendarType];
+  const formContext = useFormContext();
+  const setValue = formContext?.setValue;
 
   const handlePresentClick = () => {
     if (rangeSelectionStep === 'end') {
+      // Get current start date before updating state
+      const startDate = dateTime[0];
+
       // Set end date to undefined internally, mark as "Present"
       setDateTime((prev) => [prev[0], undefined]);
       setIsEndDatePresent(true);
+      // Clear the form value directly (without clearing isEndDatePresent flag)
+      if (setValue && nameTo) {
+        setValue(nameTo, '');
+      }
       setRangeSelectionStep(null);
       setIsOpen(false);
 
-      const startDate = dateTime[0];
       setLastChangedDate([
         startDate ? startDate.toJSDate() : undefined,
         null, // null = "Present" (end date only)
@@ -48,6 +58,7 @@ export const DatePickerCalendar = () => {
     }
   };
 
+  // Disable "Present" button when not selecting end date
   const isPresentButtonDisabled = rangeSelectionStep !== 'end';
 
   return (

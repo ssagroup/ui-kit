@@ -87,6 +87,9 @@ export const useDateRangePicker = ({
   const previousOpenState = useRef(isOpenState);
   const previousDateTime = useRef<DateTimeTuple>([undefined, undefined]);
   const defaultValueProcessed = useRef(false);
+  const previousValueRef = useRef<DateRangePickerProps['value'] | undefined>(
+    undefined,
+  );
 
   const { clearErrors, setError, setValue } = useFormContext();
 
@@ -551,6 +554,14 @@ export const useDateRangePicker = ({
     isEndDatePresent,
   ]);
 
+  // Ensure form value stays empty when "Present" is selected
+  // This runs separately to handle the case where isEndDatePresent is set but form value hasn't cleared yet
+  useEffect(() => {
+    if (isEndDatePresent && inputValueTo && inputValueTo !== '') {
+      setValue(nameTo, '');
+    }
+  }, [isEndDatePresent, inputValueTo, nameTo, setValue]);
+
   useEffect(() => {
     if (dateTime[0] && dateTime[1] && dateTime[0] > dateTime[1]) {
       // When dates are in reverse order, swap them silently
@@ -617,20 +628,49 @@ export const useDateRangePicker = ({
   }, [rangePickerType, format, dateTime, nameFrom, nameTo, setValue]);
 
   useEffect(() => {
-    if (Array.isArray(rest.value)) {
+    // Compare actual values, not array reference, to prevent infinite loops
+    // when consuming projects pass value derived from form state
+    const currentValue = rest.value;
+    const previousValue = previousValueRef.current;
+
+    // Check if values actually changed by comparing actual values, not array reference
+    // This prevents infinite loops when consuming projects pass value derived from form state
+    let valuesEqual = false;
+    if (currentValue === previousValue) {
+      // Same reference or both undefined/null
+      valuesEqual = true;
+    } else if (Array.isArray(currentValue) && Array.isArray(previousValue)) {
+      // Compare array elements by value
+      valuesEqual =
+        currentValue[0] === previousValue[0] &&
+        currentValue[1] === previousValue[1];
+    } else if (currentValue === undefined && previousValue === undefined) {
+      // Both undefined
+      valuesEqual = true;
+    }
+
+    // Skip update if values haven't actually changed (prevents infinite loop)
+    if (valuesEqual) {
+      return;
+    }
+
+    // Update ref before processing to prevent re-triggering
+    previousValueRef.current = currentValue;
+
+    if (Array.isArray(currentValue)) {
       const newDateTimeFrom =
-        typeof rest.value[0] === 'string' &&
-        rest.value[0].length === expectedDateLength
-          ? DateTime.fromFormat(rest.value[0], luxonFormat)
+        typeof currentValue[0] === 'string' &&
+        currentValue[0].length === expectedDateLength
+          ? DateTime.fromFormat(currentValue[0], luxonFormat)
           : undefined;
       const newDateTimeTo =
-        typeof rest.value[1] === 'string' &&
-        rest.value[1].length === expectedDateLength
-          ? DateTime.fromFormat(rest.value[1], luxonFormat)
+        typeof currentValue[1] === 'string' &&
+        currentValue[1].length === expectedDateLength
+          ? DateTime.fromFormat(currentValue[1], luxonFormat)
           : undefined;
 
       // Handle null end date (represents "Present")
-      const isEndPresent = rest.value[1] === null;
+      const isEndPresent = currentValue[1] === null;
       setIsEndDatePresent(isEndPresent);
 
       const newDateTime: DateTimeTuple = [
@@ -657,6 +697,13 @@ export const useDateRangePicker = ({
         nameTo,
         isEndPresent ? '' : newDateTime[1]?.toFormat(luxonFormat),
       );
+    } else if (currentValue === undefined && previousValue !== undefined) {
+      // Handle case where value prop is cleared (set to undefined)
+      setDateTime([undefined, undefined]);
+      setLastChangedDate([undefined, undefined]);
+      setIsEndDatePresent(false);
+      setValue(nameFrom, '');
+      setValue(nameTo, '');
     }
   }, [
     rest.value,

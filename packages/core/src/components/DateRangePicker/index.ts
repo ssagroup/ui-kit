@@ -13,6 +13,7 @@ export type {
   RangePickerType,
   Format,
   DateRangePickerProps,
+  DateRangePickerOnChangeDates,
   DateTimeTuple,
   DateRangePickerContextProps,
 } from './types';

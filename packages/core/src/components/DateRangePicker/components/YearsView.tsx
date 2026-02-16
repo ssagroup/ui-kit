@@ -64,7 +64,12 @@ export const YearsView = () => {
           container.clientHeight / 2 +
           elRect.height / 2;
 
-        container.scrollTo({ top: nextTop, behavior: 'auto' });
+        if (typeof container.scrollTo === 'function') {
+          container.scrollTo({ top: nextTop, behavior: 'auto' });
+        } else {
+          // Fallback for environments that don't support scrollTo (e.g., jsdom)
+          container.scrollTop = nextTop;
+        }
       }
     }
   }, [calendarViewDateTime, lastFocusedElement, currentCalendarViewDT]);

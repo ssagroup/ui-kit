@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '../../../customTest';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
 import Avatar from '@components/Avatar';
@@ -349,10 +349,23 @@ describe('Typeahead Component', () => {
       });
 
       const combobox = screen.getByRole('combobox');
-      const input = within(combobox).getByRole('textbox');
+      await user.click(combobox);
+
+      // Get the actual editable input (the one that's not readonly and has autocomplete)
+      // In multiple mode, there are two textbox elements - one editable, one readonly placeholder
+      const inputs = screen.getAllByRole('textbox');
+      const editableInput = inputs.find(
+        (input) =>
+          input.getAttribute('autocomplete') === 'off' &&
+          !input.hasAttribute('readonly'),
+      );
+
+      if (!editableInput) {
+        throw new Error('Could not find editable input');
+      }
 
       // Type a custom value
-      await user.type(input, 'custom-value');
+      await user.type(editableInput, 'custom-value');
       await user.keyboard('{Enter}');
 
       // Should call onChange with the custom value
@@ -369,8 +382,13 @@ describe('Typeahead Component', () => {
       const combobox = screen.getByRole('combobox');
       await user.click(combobox);
 
-      // Custom value should appear in the dropdown
-      const customOption = screen.getByText('custom-selected');
+      // Custom value should appear in the dropdown (use getAllByText and check the option in the listbox)
+      const customOptions = screen.getAllByText('custom-selected');
+      // Should be in both the selected chip and the dropdown option
+      expect(customOptions.length).toBeGreaterThan(0);
+      // Find the one in the dropdown (within the dialog/listbox)
+      const dialog = screen.getByRole('dialog');
+      const customOption = within(dialog).getByText('custom-selected');
       expect(customOption).toBeInTheDocument();
     });
   });

@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 import { DateTime } from 'luxon';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import { DateRangePicker } from './DateRangePicker';
-import type { DateRangePickerProps } from './types';
+import type {
+  DateRangePickerProps,
+  DateRangePickerOnChangeDates,
+} from './types';
 import { type DateFormat } from '@components/JsonSchemaForm/utils/dateFormats';
 
 /**
@@ -144,9 +147,7 @@ export const DateRangePickerFormBridge = ({
    * - endDate === Date → formatted string in outputFormat
    * - endDate === undefined → undefined (empty/unset)
    */
-  const onPickerChange = (
-    dates?: [Date | null | undefined, Date | null | undefined],
-  ) => {
+  const onPickerChange = (dates?: DateRangePickerOnChangeDates) => {
     if (!onChange) return;
 
     const [startDate, endDate] = dates ?? [undefined, undefined];

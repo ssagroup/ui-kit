@@ -371,8 +371,11 @@ describe('DateRangePicker', () => {
     const validDay = active.filter(
       (day) => day.getAttribute('aria-disabled') === 'false',
     );
+    // Clear mock to only count calls from clicking the day
+    mockOnChange.mockClear();
     await user.click(validDay[0]);
-    expect(mockOnChange).toHaveBeenCalledTimes(1);
+    // onChange is called twice: once when clearing 'to' field, once when setting start date
+    expect(mockOnChange).toHaveBeenCalledTimes(2);
   });
 
   it('should select a months range', async () => {
@@ -623,15 +626,24 @@ describe('DateRangePicker', () => {
     const endDate = getByTestId('daterangepicker-input-to');
     const calendarButton = getByTestId('daterangepicker-button');
 
-    // Open calendar
-    await user.click(endDate);
+    // Open calendar - it always starts with start date selection
     await user.click(calendarButton);
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
-    // Click "Present" button
+    // Select a start date first (this switches to end date selection mode)
+    // Calendar stays open after selecting start date
+    const day15Element = within(dialogEl).getAllByText('15');
+    const enabledDay15 = day15Element.filter(
+      (day) => day.getAttribute('aria-disabled') === 'false',
+    );
+    expect(enabledDay15.length).toBeGreaterThanOrEqual(1);
+    await user.click(enabledDay15[0]);
+
+    // Now we're selecting end date, so "Present" button should be enabled
     const presentButton = getByTestId('daterangepicker-present-button');
     expect(presentButton).toBeInTheDocument();
+    expect(presentButton).not.toBeDisabled();
     await user.click(presentButton);
 
     // End date should show "Present"
