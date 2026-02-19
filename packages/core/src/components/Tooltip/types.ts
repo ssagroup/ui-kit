@@ -82,6 +82,20 @@ export interface TooltipProps extends CommonProps {
   allowHoverContent?: boolean;
 
   /**
+   * Delay in milliseconds before tooltip appears on hover
+   * Helps prevent "traffic light" effect when quickly moving through multiple tooltips
+   * @default 0
+   */
+  hoverOpenDelay?: number;
+
+  /**
+   * Delay in milliseconds before tooltip disappears after mouse leaves
+   * Helps prevent tooltip from flickering when moving between trigger and content
+   * @default 0
+   */
+  hoverCloseDelay?: number;
+
+  /**
    * Size variant of the tooltip content
    * @default 'medium'
    */
