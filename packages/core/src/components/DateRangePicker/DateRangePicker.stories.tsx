@@ -114,6 +114,21 @@ MonthlyView.args = {
   },
 };
 
+export const YearView: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+YearView.args = {
+  ...commonArgs,
+  name: 'field9',
+  rangePickerType: 'years',
+  defaultValue: ['2020', '2025'],
+  messages: {
+    description: 'custom description',
+  },
+};
+
 export const CustomError: StoryObj<typeof DateRangePicker> = (
   args: DateRangePickerProps,
 ) => {
