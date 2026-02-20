@@ -495,6 +495,8 @@ function StyledPopover() {
 Fine-tune positioning with additional options:
 
 ```tsx
+import { offset, flip, shift } from '@floating-ui/react';
+
 function AdvancedPositioning() {
   return (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
@@ -504,11 +506,11 @@ function AdvancedPositioning() {
         floatingOptions={{
           middleware: [
             // Add offset
-            { name: 'offset', options: 10 },
+            offset(10),
             // Flip to opposite side on collision
-            { name: 'flip' },
+            flip(),
             // Shift within view
-            { name: 'shift', options: { padding: 8 } },
+            shift({ padding: 8 }),
           ],
         }}>
         <PopoverTrigger>Smart Positioning</PopoverTrigger>
