@@ -188,7 +188,7 @@ WithDelays.args = {
   hoverOpenDelay: 300,
   hoverCloseDelay: 100,
 };
-WithDelays.storyName = 'With Delays';
+
 WithDelays.parameters = {
   docs: {
     description: {
