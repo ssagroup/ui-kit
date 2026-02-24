@@ -16,7 +16,7 @@ import { CommonProps } from '@global-types/emotion';
  *
  * @category Components
  * @subcategory Layout
- *
+
  * @example
  * ```tsx
  * // Basic wrapper
@@ -51,19 +51,58 @@ import { CommonProps } from '@global-types/emotion';
  * </Wrapper>
  * ```
  */
+/** Flex container direction (maps to CSS flex-direction) */
+export type WrapperDirection =
+  | 'row'
+  | 'row-reverse'
+  | 'column'
+  | 'column-reverse';
+
+/** Cross-axis alignment (maps to CSS align-items) */
+export type WrapperAlignItems =
+  | 'flex-start'
+  | 'center'
+  | 'flex-end'
+  | 'stretch'
+  | 'baseline'
+  | 'start'
+  | 'end'
+  | 'self-start'
+  | 'self-end'
+  | 'normal';
+
+/** Main-axis alignment (maps to CSS justify-content) */
+export type WrapperJustifyContent =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | 'start'
+  | 'end'
+  | 'left'
+  | 'right'
+  | 'normal';
+
 const Wrapper = styled.div<
   {
     /**
      * Flex direction (row, column, row-reverse, column-reverse)
      * @default 'row'
      */
-    direction?: string;
+    direction?: WrapperDirection;
 
     /**
-     * Align items value (flex-start, center, flex-end, stretch, baseline)
+     * Align items value (flex-start, center, flex-end, stretch, baseline, etc.)
      * @default 'center'
      */
-    alignItems?: string;
+    alignItems?: WrapperAlignItems;
+
+    /**
+     * Justify content value (flex-start, center, flex-end, space-between, etc.)
+     */
+    justifyContent?: WrapperJustifyContent;
 
     /**
      * Enable fade in/out transition animation
@@ -87,9 +126,9 @@ const Wrapper = styled.div<
 >`
   display: flex;
   align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
-
+  ${({ justifyContent }) =>
+    justifyContent ? `justify-content: ${justifyContent};` : ''}
   width: 100%;
-
   flex-direction: ${({ direction }) => (direction ? direction : 'row')};
 
   ${({ isVisible = true, fade, fadeDelay = 0.3 }) => {
