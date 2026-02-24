@@ -75,4 +75,10 @@ export default tseslint.config(
       '@typescript-eslint/no-var-requires': 'off',
     },
   },
+  {
+    files: ['**/*.stories.tsx'],
+    rules: {
+      'react/no-unescaped-entities': 'off',
+    },
+  },
 );
