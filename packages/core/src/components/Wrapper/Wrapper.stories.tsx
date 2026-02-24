@@ -100,7 +100,10 @@ export const Direction: Story = {
         <Typography variant="body2" css={{ marginBottom: '8px' }}>
           direction="column"
         </Typography>
-        <Wrapper direction="column" alignItems="flex-start" css={{ gap: '8px' }}>
+        <Wrapper
+          direction="column"
+          alignItems="flex-start"
+          css={{ gap: '8px' }}>
           <span css={boxStyles}>A</span>
           <span css={boxStyles}>B</span>
           <span css={boxStyles}>C</span>
@@ -177,7 +180,10 @@ export const AlignItems: Story = {
         <Typography variant="body2" css={{ marginBottom: '8px' }}>
           alignItems="center" (default)
         </Typography>
-        <Wrapper direction="row" alignItems="center" css={{ gap: '12px', height: '60px' }}>
+        <Wrapper
+          direction="row"
+          alignItems="center"
+          css={{ gap: '12px', height: '60px' }}>
           <span css={boxStyles}>A</span>
           <span css={boxStyles}>B</span>
           <span css={boxStyles}>C</span>
@@ -222,4 +228,3 @@ export const Fade: Story = {
     );
   },
 };
-

@@ -62,8 +62,7 @@ export const IconButton = ({
       aria-label={resolvedAriaLabel}
       onClick={onClick}
       disabled={disabled}
-      css={[iconButton(theme, transparent), styles?.button]}
-    >
+      css={[iconButton(theme, transparent), styles?.button]}>
       <Icon
         name={icon}
         size={20}

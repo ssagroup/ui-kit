@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import Typography from '@components/Typography';
 import { iconsList } from '@components/Icon';
-import { IconButton } from './IconButton';
+import { IconButton } from '@components';
 
 const meta = {
   title: 'Components/IconButton',
@@ -25,7 +24,8 @@ const meta = {
     },
     'aria-label': {
       control: 'text',
-      description: 'Accessible label for screen readers (defaults to icon name)',
+      description:
+        'Accessible label for screen readers (defaults to icon name)',
     },
     title: {
       control: 'text',
