@@ -53,7 +53,7 @@ export const TableFilterTrigger = ({
   const theme = useTheme();
   return (
     <PopoverTrigger
-      variant="custom"
+      variant="tertiary"
       css={filterButtonStyles(count)}
       endIcon={
         <Icon name="filter" color={theme.colors.greyFilterIcon} size={20} />

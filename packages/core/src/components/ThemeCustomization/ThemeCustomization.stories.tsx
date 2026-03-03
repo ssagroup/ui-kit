@@ -17,11 +17,11 @@ const meta = {
   title: 'Design System/Theme Customization',
   component: () => {
     const [customPrimary, setCustomPrimary] = useState('#0066FF');
-    const [customInfo, setCustomInfo] = useState('#00CC66');
+    const [customSuccess, setCustomSuccess] = useState('#00CC66');
 
     // Create custom theme with palette override for Button variants
     const primaryRgb = hexToRgb(customPrimary);
-    const infoRgb = hexToRgb(customInfo);
+    const successRgb = hexToRgb(customSuccess);
 
     const customTheme: Theme = {
       ...mainTheme,
@@ -32,10 +32,10 @@ const meta = {
           light: lightenColor(customPrimary, 15),
           dark: lightenColor(customPrimary, -20),
         },
-        info: {
-          main: infoRgb,
-          light: lightenColor(customInfo, 15),
-          dark: lightenColor(customInfo, -20),
+        success: {
+          main: successRgb,
+          light: lightenColor(customSuccess, 15),
+          dark: lightenColor(customSuccess, -20),
         },
       },
     };
@@ -45,8 +45,8 @@ const meta = {
         <ThemeCustomizationContent
           customPrimary={customPrimary}
           setCustomPrimary={setCustomPrimary}
-          customInfo={customInfo}
-          setCustomInfo={setCustomInfo}
+          customSuccess={customSuccess}
+          setCustomSuccess={setCustomSuccess}
         />
       </ThemeProvider>
     );
@@ -82,13 +82,13 @@ function addOpacity(rgb: string, opacity: number): `rgb${string}` {
 function ThemeCustomizationContent({
   customPrimary,
   setCustomPrimary,
-  customInfo,
-  setCustomInfo,
+  customSuccess,
+  setCustomSuccess,
 }: {
   customPrimary: string;
   setCustomPrimary: (color: string) => void;
-  customInfo: string;
-  setCustomInfo: (color: string) => void;
+  customSuccess: string;
+  setCustomSuccess: (color: string) => void;
 }) {
   const theme = useTheme();
 
@@ -192,12 +192,11 @@ const customTheme: Theme = {
   palette: {
     ...mainTheme.palette,
     primary: {
-      main: 'rgb(0, 102, 255)', // Custom primary color
-      light: 'rgb(51, 133, 255)', // Lighter shade for hover
-      dark: 'rgb(0, 51, 204)', // Darker shade for active
-      contrastText: 'rgb(255, 255, 255)', // Text color on primary
+      main: 'rgb(0, 102, 255)',   // default background
+      dark: 'rgb(0, 51, 204)',    // hover + active background
+      light: 'rgb(51, 133, 255)', // focus background
     },
-    // Override other variants as needed
+    // Override other variants as needed:
     // secondary, tertiary, error, warning, success
   },
 };
@@ -333,12 +332,12 @@ function App() {
               gap: '8px',
             }}>
             <Typography variant="subtitle" color={theme.colors.greyDarker80}>
-              Custom Info Color
+              Custom Success Color
             </Typography>
             <input
               type="color"
-              value={customInfo}
-              onChange={(e) => setCustomInfo(e.target.value)}
+              value={customSuccess}
+              onChange={(e) => setCustomSuccess(e.target.value)}
               css={{
                 width: '100px',
                 height: '40px',
@@ -348,7 +347,7 @@ function App() {
               }}
             />
             <Typography variant="caption" color={theme.colors.greyDarker80}>
-              {customInfo}
+              {customSuccess}
             </Typography>
           </div>
         </div>
@@ -394,17 +393,20 @@ function App() {
             <Button variant="primary" size="medium">
               Primary Button
             </Button>
-            <Button variant="primary" size="medium">
-              Info Button
-            </Button>
             <Button variant="secondary" size="medium">
               Secondary Button
             </Button>
             <Button variant="tertiary" size="medium">
               Tertiary Button
             </Button>
+            <Button variant="success" size="medium">
+              Success Button
+            </Button>
             <Button variant="warning" size="medium">
-              Attention Button
+              Warning Button
+            </Button>
+            <Button variant="error" size="medium">
+              Error Button
             </Button>
           </div>
         </div>

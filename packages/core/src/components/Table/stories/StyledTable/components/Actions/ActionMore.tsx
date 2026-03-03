@@ -42,7 +42,7 @@ export const ActionMore = ({
       }}
       placement="top-start">
       <PopoverTrigger
-        variant="custom"
+        variant="tertiary"
         isDisabled={isDisabled}
         dataTestId="more-trigger-button"
         css={{
