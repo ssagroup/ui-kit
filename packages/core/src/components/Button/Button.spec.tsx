@@ -161,7 +161,9 @@ describe('Button', () => {
     });
 
     it('Renders with default style', () => {
-      const { getByTestId } = render(<Button variant="primary" text="Button" />);
+      const { getByTestId } = render(
+        <Button variant="primary" text="Button" />,
+      );
 
       const span = getByTestId('white-button-text');
 

@@ -54,7 +54,14 @@ export default {
           summary: 'string',
         },
       },
-      options: ['primary', 'secondary', 'tertiary', 'error', 'warning', 'success'],
+      options: [
+        'primary',
+        'secondary',
+        'tertiary',
+        'error',
+        'warning',
+        'success',
+      ],
       control: {
         type: 'inline-radio',
       },
@@ -191,4 +198,3 @@ export const WithCustomStyles = () => (
 );
 
 WithCustomStyles.storyName = 'With Custom Styles (css prop)';
-

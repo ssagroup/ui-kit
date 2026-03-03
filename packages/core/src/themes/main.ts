@@ -129,29 +129,29 @@ const main: Theme = {
   },
   palette: {
     primary: {
-      light: 'rgb(117, 153, 222)',  // #7599DE
-      main: 'rgb(65, 120, 225)',    // #4178E1
-      dark: 'rgb(14, 75, 193)',     // #0E4BC1
+      light: 'rgb(117, 153, 222)', // #7599DE
+      main: 'rgb(65, 120, 225)', // #4178E1
+      dark: 'rgb(14, 75, 193)', // #0E4BC1
     },
     secondary: {
-      light: 'rgb(244, 245, 249)',  // #F4F5F9 — lightest grey
-      main: 'rgb(222, 225, 236)',   // #DEE1EC — mid grey
-      dark: 'rgb(210, 212, 219)',   // #D2D4DB — darkest grey
+      light: 'rgb(244, 245, 249)', // #F4F5F9 — lightest grey
+      main: 'rgb(222, 225, 236)', // #DEE1EC — mid grey
+      dark: 'rgb(210, 212, 219)', // #D2D4DB — darkest grey
     },
     error: {
-      light: 'rgb(242, 136, 142)',  // #F2888E
-      main: 'rgb(222, 79, 79)',     // #DE4F4F
-      dark: 'rgb(198, 50, 50)',     // #C63232
+      light: 'rgb(242, 136, 142)', // #F2888E
+      main: 'rgb(222, 79, 79)', // #DE4F4F
+      dark: 'rgb(198, 50, 50)', // #C63232
     },
     warning: {
-      light: 'rgb(255, 243, 228)',  // #FFF3E4
-      main: 'rgb(237, 153, 93)',    // #ED995D
-      dark: 'rgb(231, 122, 44)',    // #E77A2C
+      light: 'rgb(255, 243, 228)', // #FFF3E4
+      main: 'rgb(237, 153, 93)', // #ED995D
+      dark: 'rgb(231, 122, 44)', // #E77A2C
     },
     success: {
-      light: 'rgb(137, 217, 150)',  // #89D996
-      main: 'rgb(82, 197, 135)',    // #52C587
-      dark: 'rgb(36, 135, 72)',     // #248748
+      light: 'rgb(137, 217, 150)', // #89D996
+      main: 'rgb(82, 197, 135)', // #52C587
+      dark: 'rgb(36, 135, 72)', // #248748
     },
     tertiary: {
       light: 'transparent',

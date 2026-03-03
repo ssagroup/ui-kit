@@ -6,8 +6,6 @@ import Button from '@components/Button';
 import { Chip } from '@components/Chip';
 import Badge from '@components/Badge';
 import Tag from '@components/Tag';
-import ProgressCircle from '@components/ProgressCircle';
-import ProgressBar from '@components/ProgressBar';
 import mainTheme from '@themes/main';
 import Icon from '@components/Icon';
 
@@ -70,13 +68,6 @@ function lightenColor(hex: string, percent: number): `rgb${string}` {
   const g = Math.min(255, ((num >> 8) & 0xff) + percent * 2.55);
   const b = Math.min(255, (num & 0xff) + percent * 2.55);
   return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})` as `rgb${string}`;
-}
-
-// Helper function to add opacity to rgb color
-function addOpacity(rgb: string, opacity: number): `rgb${string}` {
-  return rgb
-    .replace('rgb(', `rgba(`)
-    .replace(')', `, ${opacity})`) as `rgb${string}`;
 }
 
 function ThemeCustomizationContent({
