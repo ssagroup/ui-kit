@@ -200,7 +200,7 @@ export const DashboardEditorInternal = ({
           />
           <PeriodSelector />
           <Button
-            variant="info"
+            variant="primary"
             css={{ height: '46px' }}
             isDisabled={cannotPersist}
             onClick={handlePersistDashboard}>

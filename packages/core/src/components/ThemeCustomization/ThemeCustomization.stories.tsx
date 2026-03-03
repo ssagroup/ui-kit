@@ -9,40 +9,44 @@ import Tag from '@components/Tag';
 import ProgressCircle from '@components/ProgressCircle';
 import ProgressBar from '@components/ProgressBar';
 import mainTheme from '@themes/main';
+import Icon from '@components/Icon';
 
 type ThemeCustomizationProps = Record<string, never>;
 
 const meta = {
   title: 'Design System/Theme Customization',
   component: () => {
-    const [customBlue, setCustomBlue] = useState('#0066FF');
-    const [customGreen, setCustomGreen] = useState('#00CC66');
+    const [customPrimary, setCustomPrimary] = useState('#0066FF');
+    const [customInfo, setCustomInfo] = useState('#00CC66');
 
-    // Create custom theme by extending mainTheme and overriding specific colors
-    const blueRgb = hexToRgb(customBlue);
-    const greenRgb = hexToRgb(customGreen);
+    // Create custom theme with palette override for Button variants
+    const primaryRgb = hexToRgb(customPrimary);
+    const infoRgb = hexToRgb(customInfo);
 
     const customTheme: Theme = {
       ...mainTheme,
-      colors: {
-        ...mainTheme.colors,
-        blue: blueRgb,
-        blue20: addOpacity(blueRgb, 0.2),
-        blueLighter: lightenColor(customBlue, 20),
-        blueLight: lightenColor(customBlue, 40),
-        green: greenRgb,
-        green20: addOpacity(greenRgb, 0.2),
-        greenLighter: lightenColor(customGreen, 20),
+      palette: {
+        ...mainTheme.palette,
+        primary: {
+          main: primaryRgb,
+          light: lightenColor(customPrimary, 15),
+          dark: lightenColor(customPrimary, -20),
+        },
+        info: {
+          main: infoRgb,
+          light: lightenColor(customInfo, 15),
+          dark: lightenColor(customInfo, -20),
+        },
       },
     };
 
     return (
       <ThemeProvider theme={customTheme}>
         <ThemeCustomizationContent
-          customBlue={customBlue}
-          setCustomBlue={setCustomBlue}
-          customGreen={customGreen}
-          setCustomGreen={setCustomGreen}
+          customPrimary={customPrimary}
+          setCustomPrimary={setCustomPrimary}
+          customInfo={customInfo}
+          setCustomInfo={setCustomInfo}
         />
       </ThemeProvider>
     );
@@ -76,15 +80,15 @@ function addOpacity(rgb: string, opacity: number): `rgb${string}` {
 }
 
 function ThemeCustomizationContent({
-  customBlue,
-  setCustomBlue,
-  customGreen,
-  setCustomGreen,
+  customPrimary,
+  setCustomPrimary,
+  customInfo,
+  setCustomInfo,
 }: {
-  customBlue: string;
-  setCustomBlue: (color: string) => void;
-  customGreen: string;
-  setCustomGreen: (color: string) => void;
+  customPrimary: string;
+  setCustomPrimary: (color: string) => void;
+  customInfo: string;
+  setCustomInfo: (color: string) => void;
 }) {
   const theme = useTheme();
 
@@ -115,15 +119,25 @@ function ThemeCustomizationContent({
           Overview
         </Typography>
         <Typography variant="body1" color={theme.colors.greyDarker80} gutter>
-          You can override any theme color by creating a custom theme that
-          extends the default <code>mainTheme</code>. All components using the
-          overridden color will automatically use your custom color.
+          You can override theme colors in two ways:
         </Typography>
+        <div css={{ marginLeft: '24px', color: theme.colors.greyDarker80 }}>
+          <div css={{ marginBottom: '8px' }}>
+            <strong>Palette Override:</strong> Override Button variant colors
+            independently using <code>theme.palette</code>. This only affects
+            Button components.
+          </div>
+          <div>
+            <strong>Theme Colors Override:</strong> Override specific theme
+            colors using <code>theme.colors</code>. This affects all components
+            using those colors globally.
+          </div>
+        </div>
         <Typography variant="body1" color={theme.colors.greyDarker80}>
-          <strong>Note:</strong> Overriding a color affects all components using
-          that color globally. For example, overriding <code>blue</code> will
-          affect Button <code>info</code> variant, Chip <code>primary</code>{' '}
-          color, and any other component using <code>theme.colors.blue</code>.
+          <strong>Recommendation:</strong> Use palette override for Button
+          variants to avoid affecting other components. Use theme colors
+          override when you want to change a color across the entire design
+          system.
         </Typography>
       </div>
 
@@ -135,43 +149,115 @@ function ThemeCustomizationContent({
         <Typography variant="h2" gutter>
           Implementation
         </Typography>
-        <Typography variant="h6" color={theme.colors.greyDarker80} gutter>
-          Method 1: Override Specific Colors (Recommended)
-        </Typography>
-        <div
-          css={{
-            marginTop: '16px',
-            padding: '24px',
-            backgroundColor: theme.colors.greyLighter,
-            border: `1px solid ${theme.colors.greyOutline}`,
-            borderRadius: '8px',
-            overflow: 'auto',
-          }}>
-          <pre
+
+        {/* Method 1: Palette Override */}
+        <div css={{ marginTop: '32px' }}>
+          <Typography variant="h3" gutter>
+            Method 1: Override Palette Colors (Recommended for Button Variants)
+          </Typography>
+          <Typography variant="body2" color={theme.colors.greyDarker80} gutter>
+            Override Button variant colors independently using the palette
+            system. This only affects Button components, not other components
+            using theme colors.
+          </Typography>
+          <div
             css={{
-              margin: 0,
-              padding: 0,
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-word',
-              fontFamily:
-                'Monaco, Menlo, "Ubuntu Mono", Consolas, "source-code-pro", monospace',
-              fontSize: '13px',
-              lineHeight: '1.5',
-              color: theme.colors.greyDarker,
-              backgroundColor: 'transparent',
+              marginTop: '16px',
+              padding: '24px',
+              backgroundColor: theme.colors.greyLighter,
+              border: `1px solid ${theme.colors.greyOutline}`,
+              borderRadius: '8px',
+              overflow: 'auto',
             }}>
-            {`import { ThemeProvider } from '@emotion/react';
+            <pre
+              css={{
+                margin: 0,
+                padding: 0,
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                fontFamily:
+                  'Monaco, Menlo, "Ubuntu Mono", Consolas, "source-code-pro", monospace',
+                fontSize: '13px',
+                lineHeight: '1.5',
+                color: theme.colors.greyDarker,
+                backgroundColor: 'transparent',
+              }}>
+              {`import { ThemeProvider } from '@emotion/react';
 import { mainTheme, Theme } from '@ssa-ui-kit/core';
 
-// Create your custom theme by spreading mainTheme
-// and overriding specific colors
+// Override Button variant colors using palette
+// This only affects Button components, not other components
+const customTheme: Theme = {
+  ...mainTheme,
+  palette: {
+    ...mainTheme.palette,
+    primary: {
+      main: 'rgb(0, 102, 255)', // Custom primary color
+      light: 'rgb(51, 133, 255)', // Lighter shade for hover
+      dark: 'rgb(0, 51, 204)', // Darker shade for active
+      contrastText: 'rgb(255, 255, 255)', // Text color on primary
+    },
+    // Override other variants as needed
+    // secondary, tertiary, error, warning, success
+  },
+};
+
+function App() {
+  return (
+    <ThemeProvider theme={customTheme}>
+      {/* Button variant="primary" will use your custom primary color */}
+      <Button variant="primary">Custom Primary</Button>
+      {/* Other components using theme.colors.blue are unaffected */}
+    </ThemeProvider>
+  );
+}`}
+            </pre>
+          </div>
+        </div>
+
+        {/* Method 2: Theme Colors Override */}
+        <div css={{ marginTop: '32px' }}>
+          <Typography variant="h3" gutter>
+            Method 2: Override Theme Colors (Affects All Components)
+          </Typography>
+          <Typography variant="body2" color={theme.colors.greyDarker80} gutter>
+            Override specific theme colors. This affects all components using
+            those colors globally. Use this when you want to change a color
+            across the entire design system.
+          </Typography>
+          <div
+            css={{
+              marginTop: '16px',
+              padding: '24px',
+              backgroundColor: theme.colors.greyLighter,
+              border: `1px solid ${theme.colors.greyOutline}`,
+              borderRadius: '8px',
+              overflow: 'auto',
+            }}>
+            <pre
+              css={{
+                margin: 0,
+                padding: 0,
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                fontFamily:
+                  'Monaco, Menlo, "Ubuntu Mono", Consolas, "source-code-pro", monospace',
+                fontSize: '13px',
+                lineHeight: '1.5',
+                color: theme.colors.greyDarker,
+                backgroundColor: 'transparent',
+              }}>
+              {`import { ThemeProvider } from '@emotion/react';
+import { mainTheme, Theme } from '@ssa-ui-kit/core';
+
+// Override theme colors - affects ALL components using these colors
 const customTheme: Theme = {
   ...mainTheme,
   colors: {
     ...mainTheme.colors,
-    blue: '#0066FF', // Your custom blue color
+    blue: 'rgb(0, 102, 255)', // Custom blue color
     blue20: 'rgba(0, 102, 255, 0.2)', // Override opacity variants
-    blueLighter: '#3385FF',
+    blueLighter: 'rgb(51, 133, 255)',
     // Override any other colors you need
   },
 };
@@ -185,7 +271,8 @@ function App() {
     </ThemeProvider>
   );
 }`}
-          </pre>
+            </pre>
+          </div>
         </div>
       </div>
 
@@ -198,8 +285,12 @@ function App() {
           Interactive Example
         </Typography>
         <Typography variant="h6" color={theme.colors.greyDarker80} gutter>
-          Try changing the colors below to see how components update
-          automatically
+          Try changing the palette colors below to see how Button variants
+          update automatically
+        </Typography>
+        <Typography variant="body2" color={theme.colors.greyDarker80} gutter>
+          Note: Palette overrides only affect Button components. Other
+          components using theme.colors remain unchanged.
         </Typography>
 
         {/* Color Pickers */}
@@ -217,12 +308,12 @@ function App() {
               gap: '8px',
             }}>
             <Typography variant="subtitle" color={theme.colors.greyDarker80}>
-              Custom Blue Color
+              Custom Primary Color
             </Typography>
             <input
               type="color"
-              value={customBlue}
-              onChange={(e) => setCustomBlue(e.target.value)}
+              value={customPrimary}
+              onChange={(e) => setCustomPrimary(e.target.value)}
               css={{
                 width: '100px',
                 height: '40px',
@@ -232,7 +323,7 @@ function App() {
               }}
             />
             <Typography variant="caption" color={theme.colors.greyDarker80}>
-              {customBlue}
+              {customPrimary}
             </Typography>
           </div>
           <div
@@ -242,12 +333,12 @@ function App() {
               gap: '8px',
             }}>
             <Typography variant="subtitle" color={theme.colors.greyDarker80}>
-              Custom Green Color
+              Custom Info Color
             </Typography>
             <input
               type="color"
-              value={customGreen}
-              onChange={(e) => setCustomGreen(e.target.value)}
+              value={customInfo}
+              onChange={(e) => setCustomInfo(e.target.value)}
               css={{
                 width: '100px',
                 height: '40px',
@@ -257,12 +348,12 @@ function App() {
               }}
             />
             <Typography variant="caption" color={theme.colors.greyDarker80}>
-              {customGreen}
+              {customInfo}
             </Typography>
           </div>
         </div>
 
-        {/* Components Using Custom Colors */}
+        {/* Components Using Custom Palette Colors */}
         <div
           css={{
             marginTop: '32px',
@@ -272,7 +363,11 @@ function App() {
             borderRadius: '8px',
           }}>
           <Typography variant="h3" gutter>
-            Components Using Custom Blue
+            Button Components Using Custom Palette Colors
+          </Typography>
+          <Typography variant="body2" color={theme.colors.greyDarker80} gutter>
+            These buttons use palette colors - only Button components are
+            affected by palette overrides.
           </Typography>
           <div
             css={{
@@ -282,40 +377,35 @@ function App() {
               flexWrap: 'wrap',
               alignItems: 'center',
             }}>
-            <Button variant="info" size="medium">
-              Button (info variant)
+            <Button
+              variant="tertiary"
+              css={{
+                height: 'auto',
+                padding: 0,
+              }}
+              startIcon={
+                <Icon
+                  name="check"
+                  size={10}
+                  css={{ marginLeft: 'auto', minWidth: 10 }}
+                />
+              }
+            />
+            <Button variant="primary" size="medium">
+              Primary Button
             </Button>
-            <Chip label="Primary Chip" color="primary" variant="filled" />
-            <Chip label="Primary Chip" color="primary" variant="outlined" />
-            <Badge color="blue" size="medium">
-              Blue Badge
-            </Badge>
-            <Tag color="blue" size="medium">
-              Blue Tag
-            </Tag>
-            <div
-              css={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '8px',
-              }}>
-              <ProgressCircle
-                max={100}
-                currentValue={75}
-                size={60}
-                color="blue"
-              />
-              <Typography variant="caption" color={theme.colors.greyDarker80}>
-                ProgressCircle
-              </Typography>
-            </div>
-            <div
-              css={{
-                width: '200px',
-              }}>
-              <ProgressBar percentage={75} color="blue" />
-            </div>
+            <Button variant="primary" size="medium">
+              Info Button
+            </Button>
+            <Button variant="secondary" size="medium">
+              Secondary Button
+            </Button>
+            <Button variant="tertiary" size="medium">
+              Tertiary Button
+            </Button>
+            <Button variant="warning" size="medium">
+              Attention Button
+            </Button>
           </div>
         </div>
 
@@ -328,7 +418,11 @@ function App() {
             borderRadius: '8px',
           }}>
           <Typography variant="h3" gutter>
-            Components Using Custom Green
+            Other Components (Unaffected by Palette)
+          </Typography>
+          <Typography variant="body2" color={theme.colors.greyDarker80} gutter>
+            These components use theme.colors directly - they are not affected
+            by palette overrides.
           </Typography>
           <div
             css={{
@@ -338,37 +432,14 @@ function App() {
               flexWrap: 'wrap',
               alignItems: 'center',
             }}>
-            <Chip label="Success Chip" color="success" variant="filled" />
-            <Chip label="Success Chip" color="success" variant="outlined" />
-            <Badge color="green" size="medium">
-              Green Badge
+            <Chip label="Primary Chip" color="primary" variant="filled" />
+            <Chip label="Info Chip" color="info" variant="filled" />
+            <Badge color="blue" size="medium">
+              Blue Badge
             </Badge>
-            <Tag color="green" size="medium">
-              Green Tag
+            <Tag color="blue" size="medium">
+              Blue Tag
             </Tag>
-            <div
-              css={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '8px',
-              }}>
-              <ProgressCircle
-                max={100}
-                currentValue={75}
-                size={60}
-                color="green"
-              />
-              <Typography variant="caption" color={theme.colors.greyDarker80}>
-                ProgressCircle
-              </Typography>
-            </div>
-            <div
-              css={{
-                width: '200px',
-              }}>
-              <ProgressBar percentage={75} color="green" />
-            </div>
           </div>
         </div>
       </div>
@@ -441,12 +512,13 @@ declare module '@emotion/react' {
               borderRadius: '8px',
             }}>
             <Typography variant="h4" gutter>
-              1. Override Opacity Variants
+              1. Use Palette for Button Variants
             </Typography>
             <Typography variant="body1" color={theme.colors.greyDarker80}>
-              When overriding a color, also override its opacity variants (e.g.,{' '}
-              <code>blue20</code>, <code>blue40</code>) to maintain visual
-              consistency across components.
+              Override Button variant colors using <code>theme.palette</code> to
+              avoid affecting other components. This is the recommended approach
+              for customizing Button primary, secondary, tertiary, error,
+              warning, and success variants.
             </Typography>
           </div>
           <div
@@ -461,8 +533,8 @@ declare module '@emotion/react' {
             </Typography>
             <Typography variant="body1" color={theme.colors.greyDarker80}>
               Always spread <code>mainTheme</code> first to preserve all default
-              colors, then override only what you need. This ensures you
-              don&#39;t miss any required color tokens.
+              colors and palette, then override only what you need. This ensures
+              you don't miss any required tokens.
             </Typography>
           </div>
           <div
@@ -473,12 +545,12 @@ declare module '@emotion/react' {
               borderRadius: '8px',
             }}>
             <Typography variant="h4" gutter>
-              3. Global Impact
+              3. Understand Global Impact
             </Typography>
             <Typography variant="body1" color={theme.colors.greyDarker80}>
-              Remember that color overrides are global. If you override{' '}
-              <code>blue</code>, it will affect all components using that color
-              throughout your application.
+              Palette overrides only affect Button components. Theme color
+              overrides affect all components using those colors globally.
+              Choose the appropriate method based on your needs.
             </Typography>
           </div>
         </div>

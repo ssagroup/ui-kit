@@ -133,7 +133,7 @@ export const UserProfile = ({
           <CustomContentWrapper>{customContent}</CustomContentWrapper>
         )}
         <div css={LogoutWrapper}>
-          <Button variant="info" css={CustomButton} onClick={onClick}>
+          <Button variant="primary" css={CustomButton} onClick={onClick}>
             <Icon name="log-out" size={15} color={theme.colors.white} />
             {logOutText}
           </Button>

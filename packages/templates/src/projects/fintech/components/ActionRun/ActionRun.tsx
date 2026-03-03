@@ -131,7 +131,7 @@ export const ActionRun = ({
                   }}
                 />
                 <Button
-                  variant="info"
+                  variant="primary"
                   type="submit"
                   css={{
                     width: 90,

@@ -38,14 +38,14 @@ export const ModalButtons = ({
       {isDismissButton ? (
         <ModalDismissButton>
           <ConfirmButton
-            variant="info"
+            variant="primary"
             text={confirmationBtnText}
             onClick={onConfirm}
           />
         </ModalDismissButton>
       ) : (
         <ConfirmButton
-          variant="info"
+          variant="primary"
           text={confirmationBtnText}
           onClick={onConfirm}
         />

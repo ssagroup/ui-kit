@@ -108,7 +108,7 @@ export const ActionRun = ({ row }: { row: StyledTableItem }) => {
                   }}
                 />
                 <Button
-                  variant="info"
+                  variant="primary"
                   type="submit"
                   css={{
                     width: 90,

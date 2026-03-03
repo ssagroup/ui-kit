@@ -18,8 +18,9 @@ const buttonVariants = [
   'primary',
   'secondary',
   'tertiary',
-  'info',
-  'attention',
+  'error',
+  'warning',
+  'success',
 ] as const;
 
 const chipColors = [
@@ -538,7 +539,7 @@ const meta = {
                 </Typography>
                 <Typography variant="h6" color={theme.colors.greyDarker80}>
                   <strong>Button</strong> - Uses variant prop: primary,
-                  secondary, tertiary, info, attention
+                  secondary, tertiary, error, warning, success
                 </Typography>
               </div>
               <div>
