@@ -39,7 +39,13 @@ export const PopoverTrigger = React.forwardRef<
   HTMLElement,
   React.HTMLProps<HTMLElement> & ButtonProps & PopoverTriggerProps
 >(function PopoverTrigger(
-  { children, asChild = false, dataTestId = 'trigger-button', ...props },
+  {
+    children,
+    asChild = false,
+    dataTestId = 'trigger-button',
+    variant = 'primary',
+    ...props
+  },
   propRef,
 ) {
   const context = usePopoverContext();
@@ -84,13 +90,11 @@ export const PopoverTrigger = React.forwardRef<
 
   return (
     <Button
-      css={{
-        color: '#fff',
-      }}
       data-testid={dataTestId}
       ref={ref}
       // The user can style the trigger based on the state
       data-state={context?.open ? 'open' : 'closed'}
+      variant={variant}
       {...context?.getReferenceProps(props)}>
       {children}
     </Button>

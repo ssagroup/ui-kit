@@ -102,7 +102,8 @@ export type SetIDs = {
  *
  * Trigger element that activates the popover. Can render as a Button (default) or
  * as a custom element when using `asChild` prop. Automatically receives Floating UI
- * reference props for positioning.
+ * reference props for positioning. Extends ButtonProps so you can pass Button props
+ * such as variant (default `primary`), size, css, etc.
  */
 export interface PopoverTriggerProps {
   /**
