@@ -78,18 +78,7 @@ const makeSolidVariant = (
 };
 
 export const variantStyles: ButtonVariants = {
-  primary: (theme) =>
-    makeSolidVariant(
-      theme,
-      'primary',
-      css`
-        &:not(:disabled):hover,
-        &:not(:disabled):active,
-        &:not(:disabled):focus {
-          box-shadow: -4px 4px 14px ${theme.colors.blue20};
-        }
-      `,
-    ),
+  primary: (theme) => makeSolidVariant(theme, 'primary'),
 
   secondary: (theme) =>
     makeSolidVariant(
@@ -97,14 +86,6 @@ export const variantStyles: ButtonVariants = {
       'secondary',
       css`
         color: ${theme.colors.greyDarker};
-
-        &:not(:disabled) {
-          box-shadow: 0 10px 40px ${theme.colors.greyShadow};
-        }
-
-        &:not(:disabled):hover {
-          box-shadow: 0 10px 40px ${theme.colors.greyShadowHover};
-        }
       `,
     ),
 
