@@ -25,6 +25,7 @@ export const SubmitButton = <
   }
   return (
     <Button
+      variant="primary"
       type="submit"
       {...submitButtonProps}
       data-testid="rjsf-submit-button">

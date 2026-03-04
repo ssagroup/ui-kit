@@ -71,6 +71,7 @@ export const FormRadioGroupStory = (args: FormRadioGroupProps<DemoForm>) => {
         </FormRadioGroup>
 
         <Button
+          variant="primary"
           size="small"
           type="submit"
           text="Submit"

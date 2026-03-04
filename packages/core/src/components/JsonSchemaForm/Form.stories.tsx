@@ -309,8 +309,11 @@ export const Accordion: Story = {
             }}
             uiSchema={updatedUiSchema}
             validator={validator}>
-            <Button onClick={() => setFormData({})}>Clear</Button>
+            <Button variant="primary" onClick={() => setFormData({})}>
+              Clear
+            </Button>
             <Button
+              variant="primary"
               type="submit"
               css={{ marginLeft: '10px' }}
               onClick={() => {
