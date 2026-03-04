@@ -662,12 +662,7 @@ exports[`Form (rjsf) Render form 1`] = `
   letter-spacing: 0.8px;
   padding: 0 16px;
   color: rgba(255, 255, 255, 1);
-  background: linear-gradient(
-      108.3deg,
-      rgba(43, 45, 49, 1) -0.36%,
-      rgb(64, 72, 83) 100%
-    );
-  color: #fff;
+  background: rgb(65, 120, 225);
   position: relative;
   border-radius: 12px;
   border: 1px solid rgba(195, 197, 204, 1);
@@ -685,17 +680,11 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-56:hover {
-  background: linear-gradient(
-        108.3deg,
-        rgba(77, 82, 87, 1) -0.36%,
-        rgba(94, 103, 114, 1) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-56:active {
-  background: rgba(43, 45, 49, 1);
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-56:disabled {
@@ -703,12 +692,7 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-56:focus {
-  background: linear-gradient(
-        108.3deg,
-        rgb(64, 68, 73) -0.36%,
-        rgb(76, 84, 93) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(117, 153, 222);
 }
 
 .emotion-56:active,
@@ -987,42 +971,23 @@ exports[`Form (rjsf) Render form 1`] = `
   font-weight: 400;
   letter-spacing: 0.8px;
   padding: 0 16px;
-  color: rgba(255, 255, 255, 1);
-  background: linear-gradient(
-      108.3deg,
-      rgba(43, 45, 49, 1) -0.36%,
-      rgb(64, 72, 83) 100%
-    );
+  background: transparent;
   background: none;
   padding: 0 5px 0 0;
   height: auto;
 }
 
-.emotion-71:hover {
-  background: linear-gradient(
-        108.3deg,
-        rgba(77, 82, 87, 1) -0.36%,
-        rgba(94, 103, 114, 1) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
-}
-
-.emotion-71:active {
-  background: rgba(43, 45, 49, 1);
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
-}
-
-.emotion-71:disabled {
-  background: rgba(195, 197, 204, 1);
-}
-
-.emotion-71:focus {
-  background: linear-gradient(
-        108.3deg,
-        rgb(64, 68, 73) -0.36%,
-        rgb(76, 84, 93) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+.emotion-71:focus::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(208,	210,	220, 1);
+  border-radius: 12px;
 }
 
 .emotion-71:active,
@@ -1220,25 +1185,15 @@ exports[`Form (rjsf) Render form 1`] = `
   letter-spacing: 0.8px;
   padding: 0 16px;
   color: rgba(255, 255, 255, 1);
-  background: linear-gradient(
-      108.3deg,
-      rgba(43, 45, 49, 1) -0.36%,
-      rgb(64, 72, 83) 100%
-    );
+  background: rgb(65, 120, 225);
 }
 
 .emotion-122:hover {
-  background: linear-gradient(
-        108.3deg,
-        rgba(77, 82, 87, 1) -0.36%,
-        rgba(94, 103, 114, 1) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-122:active {
-  background: rgba(43, 45, 49, 1);
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-122:disabled {
@@ -1246,12 +1201,7 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-122:focus {
-  background: linear-gradient(
-        108.3deg,
-        rgb(64, 68, 73) -0.36%,
-        rgb(76, 84, 93) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(117, 153, 222);
 }
 
 <div>
