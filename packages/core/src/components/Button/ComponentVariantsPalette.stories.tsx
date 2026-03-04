@@ -50,8 +50,8 @@ const meta = {
   component: () => {
     const theme = useTheme();
     const [checkboxStates, setCheckboxStates] = useState({
-      green: false,
-      blue: false,
+      primary: false,
+      success: false,
       custom: false,
     });
     const [radioValue, setRadioValue] = useState('default');
@@ -360,7 +360,7 @@ const meta = {
             Pattern 4: Simple Color Options (Checkbox)
           </Typography>
           <Typography variant="h6" color={theme.colors.greyDarker80} gutter>
-            Checkbox component supports limited color options: green, blue,
+            Checkbox component supports limited color options: primary, success,
             custom
           </Typography>
           <div
@@ -371,52 +371,33 @@ const meta = {
               backgroundColor: theme.colors.white,
               marginTop: '24px',
             }}>
-            <Wrapper css={{ gap: '24px', flexDirection: 'column' }}>
-              <div
-                css={{
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}>
-                <Checkbox
-                  text="Green (default)"
-                  color="green"
-                  externalState={checkboxStates.green}
-                  onChange={(checked) =>
-                    setCheckboxStates({ ...checkboxStates, green: checked })
-                  }
-                />
-              </div>
-              <div
-                css={{
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}>
-                <Checkbox
-                  text="Blue"
-                  color="blue"
-                  externalState={checkboxStates.blue}
-                  onChange={(checked) =>
-                    setCheckboxStates({ ...checkboxStates, blue: checked })
-                  }
-                />
-              </div>
-              <div
-                css={{
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}>
-                <Checkbox
-                  text="Custom"
-                  color="custom"
-                  externalState={checkboxStates.custom}
-                  onChange={(checked) =>
-                    setCheckboxStates({ ...checkboxStates, custom: checked })
-                  }
-                />
-              </div>
+            <Wrapper
+              alignItems="start"
+              css={{ gap: '24px', flexDirection: 'column' }}>
+              <Checkbox
+                text="Primary (default)"
+                color="primary"
+                externalState={checkboxStates.primary}
+                onChange={(checked) =>
+                  setCheckboxStates({ ...checkboxStates, primary: checked })
+                }
+              />
+              <Checkbox
+                text="Success"
+                color="success"
+                externalState={checkboxStates.success}
+                onChange={(checked) =>
+                  setCheckboxStates({ ...checkboxStates, success: checked })
+                }
+              />
+              <Checkbox
+                text="Custom"
+                color="custom"
+                externalState={checkboxStates.custom}
+                onChange={(checked) =>
+                  setCheckboxStates({ ...checkboxStates, custom: checked })
+                }
+              />
             </Wrapper>
           </div>
         </div>
@@ -566,7 +547,7 @@ const meta = {
                   Pattern 4: Simple Color Options
                 </Typography>
                 <Typography variant="h6" color={theme.colors.greyDarker80}>
-                  <strong>Checkbox</strong> - Uses color prop: green, blue,
+                  <strong>Checkbox</strong> - Uses color prop: primary, success,
                   custom
                 </Typography>
               </div>

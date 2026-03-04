@@ -29,7 +29,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   backdrop-filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
 
-  ${({ theme }) => checkboxStyles.blueInput(theme)}
+  ${({ theme }) => checkboxStyles.primaryInput(theme)}
 `;
 
 const DropdownOptionButton = styled.div<{
@@ -124,7 +124,7 @@ const MultipleDropdownOptions = ({
             css={{
               margin: 0,
             }}
-            color="blue"
+            color="primary"
           />
         )}
         {child.props.children || child.props.label || child.props.value}

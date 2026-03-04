@@ -109,22 +109,39 @@ Checkboxes can be used without text labels when the context is clear:
 <Checkbox id="no-label-checkbox" onChange={handleChange} />
 ```
 
-### Custom Colors
+### Color Variants
 
-Apply custom colors to match your design system:
+The `color` prop controls the checked-state and focus colors. Colors are
+sourced from `theme.palette` for consistency with the rest of the design system.
+
+| Value | Palette key | Resting border | Checked fill | Hover fill |
+|-------|-------------|----------------|--------------|------------|
+| `primary` *(default)* | `palette.primary` | `primary.light` | `primary.main` | `primary.dark` |
+| `success` | `palette.success` | `success.main` | `success.main` | `success.dark` |
+| `custom` | — | none (bring your own) | — | — |
 
 ```tsx
+// Default — primary (blue)
 <Checkbox
-  id="green-checkbox"
-  text="Success option"
-  color="green"
+  id="primary-checkbox"
+  text="Primary option"
   onChange={handleChange}
 />
 
+// Success (green)
 <Checkbox
-  id="blue-checkbox"
-  text="Info option"
-  color="blue"
+  id="success-checkbox"
+  text="Success option"
+  color="success"
+  onChange={handleChange}
+/>
+
+// Custom — apply styles via className or css prop
+<Checkbox
+  id="custom-checkbox"
+  text="Custom styled"
+  color="custom"
+  css={{ /* your styles */ }}
   onChange={handleChange}
 />
 ```
