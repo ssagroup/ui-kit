@@ -19,6 +19,7 @@ export const MonthsView = () => {
     onMonthChange,
     pickerType,
     setIsOpen,
+    safeOnChange,
   } = useDatePickerContext();
 
   const isHighlightEnabled = !!highlightDates?.enabled;
@@ -45,6 +46,7 @@ export const MonthsView = () => {
 
       setCalendarViewDateTime(startDate);
       setDateTime(startDate);
+      safeOnChange?.(startDate);
       onMonthChange?.(startDate.toJSDate());
 
       setIsOpen(false);

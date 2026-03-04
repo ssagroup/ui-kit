@@ -18,8 +18,11 @@ export const YearsView = () => {
     setCalendarType,
     setCalendarViewDateTime,
     onYearChange,
+    calendarType,
+    isOpen,
   } = useDateRangePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
+  const hasScrolledRef = useRef(false);
   const yearsList = getYearsList({
     yearsFrom: dateMinParts[formatIndexes['year']],
     yearsCount:
@@ -45,8 +48,25 @@ export const YearsView = () => {
     getComparisonFormat: () => 'yyyy',
   });
 
+  // Reset scroll tracking when calendar closes or calendar type changes away from years
   useEffect(() => {
-    if (currentCalendarViewDT && wrapper.current) {
+    if (!isOpen || calendarType !== 'years') {
+      hasScrolledRef.current = false;
+    }
+  }, [isOpen, calendarType]);
+
+  // Only scroll to center the selected year when:
+  // 1. Calendar first opens and calendar type is 'years'
+  // 2. Calendar type changes to 'years' for the first time
+  // Do NOT scroll on every selection
+  useEffect(() => {
+    if (
+      currentCalendarViewDT &&
+      wrapper.current &&
+      isOpen &&
+      calendarType === 'years' &&
+      !hasScrolledRef.current
+    ) {
       const container = wrapper.current;
       const currentEl = container.querySelector(
         '[aria-current=date]',
@@ -64,10 +84,16 @@ export const YearsView = () => {
           container.clientHeight / 2 +
           elRect.height / 2;
 
-        container.scrollTo({ top: nextTop, behavior: 'auto' });
+        if (typeof container.scrollTo === 'function') {
+          container.scrollTo({ top: nextTop, behavior: 'auto' });
+        } else {
+          // Fallback for environments that don't support scrollTo (e.g., jsdom)
+          container.scrollTop = nextTop;
+        }
+        hasScrolledRef.current = true;
       }
     }
-  }, [calendarViewDateTime, lastFocusedElement, currentCalendarViewDT]);
+  }, [isOpen, calendarType, currentCalendarViewDT]);
 
   const handleYearSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;

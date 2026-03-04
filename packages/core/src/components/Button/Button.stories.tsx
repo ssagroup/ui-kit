@@ -54,7 +54,14 @@ export default {
           summary: 'string',
         },
       },
-      options: ['primary', 'info', 'secondary', 'tertiary', 'attention'],
+      options: [
+        'primary',
+        'secondary',
+        'tertiary',
+        'error',
+        'warning',
+        'success',
+      ],
       control: {
         type: 'inline-radio',
       },
@@ -73,7 +80,7 @@ export default {
   args: {
     text: 'Button',
     size: 'small',
-    variant: 'primary',
+    variant: 'tertiary',
     type: 'button',
   },
 } as Meta<typeof Button>;
@@ -103,20 +110,91 @@ AllStates.args = {
   name: 'All States',
 };
 
-export const Block = { args: { size: 'large', block: true } };
-
 export const StartIcon = {
-  args: { startIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
+  args: {
+    variant: 'primary',
+    startIcon: <Icon name={'notification'} size={16} color="#D0D2DC" />,
+  },
 };
 
 export const EndIcon = {
-  args: { endIcon: <Icon name={'notification'} size={16} color="#D0D2DC" /> },
+  args: {
+    variant: 'primary',
+    endIcon: <Icon name={'notification'} size={16} color="#D0D2DC" />,
+  },
 };
 
 export const Focused = {
+  args: { variant: 'primary' },
   parameters: {
     pseudo: {
       focus: true,
     },
   },
 };
+
+export const Disabled = () => (
+  <GridWrapper>
+    <HeaderTitle>Variant</HeaderTitle>
+    <HeaderTitle>Small</HeaderTitle>
+    <HeaderTitle>Medium</HeaderTitle>
+    <HeaderTitle>Large</HeaderTitle>
+    {variants.map((variant) => (
+      <React.Fragment key={variant}>
+        <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
+        {sizes.map((size) => (
+          <Button variant={variant} size={size} key={variant + size} isDisabled>
+            Button
+          </Button>
+        ))}
+      </React.Fragment>
+    ))}
+  </GridWrapper>
+);
+
+export const WithCustomStyles = () => (
+  <div css={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+    <div>
+      <HeaderTitle css={{ textAlign: 'left', marginBottom: 12 }}>
+        Outlined — override tertiary with border
+      </HeaderTitle>
+      <div css={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        {sizes.map((size) => (
+          <Button
+            key={size}
+            size={size}
+            css={{
+              border: '2px solid #4178E1',
+              color: '#4178E1',
+              borderRadius: 8,
+              '&:hover': { background: 'rgba(65, 120, 225, 0.08)' },
+            }}>
+            Button
+          </Button>
+        ))}
+      </div>
+    </div>
+    <div>
+      <HeaderTitle css={{ textAlign: 'left', marginBottom: 12 }}>
+        Override primary — custom brand color
+      </HeaderTitle>
+      <div css={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        {sizes.map((size) => (
+          <Button
+            key={size}
+            variant="primary"
+            size={size}
+            css={{
+              background: '#7B47EB',
+              '&:hover': { background: '#6A3AD8' },
+              '&:focus': { background: '#9061F0' },
+            }}>
+            Button
+          </Button>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+WithCustomStyles.storyName = 'With Custom Styles (css prop)';

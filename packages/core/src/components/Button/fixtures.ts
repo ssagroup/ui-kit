@@ -154,12 +154,17 @@ export const tertiaryBtnSpecs = primaryBtnSpecs.map((s) => ({
   variant: 'tertiary' as ButtonProps['variant'],
 }));
 
-export const infoBtnSpecs = primaryBtnSpecs.map((s) => ({
+export const errorBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'info' as ButtonProps['variant'],
+  variant: 'error' as ButtonProps['variant'],
 }));
 
-export const attentionBtnSpecs = primaryBtnSpecs.map((s) => ({
+export const warningBtnSpecs = primaryBtnSpecs.map((s) => ({
   ...s,
-  variant: 'attention' as ButtonProps['variant'],
+  variant: 'warning' as ButtonProps['variant'],
+}));
+
+export const successBtnSpecs = primaryBtnSpecs.map((s) => ({
+  ...s,
+  variant: 'success' as ButtonProps['variant'],
 }));

@@ -7,6 +7,8 @@ export { default as Button } from './Button';
 export type * from './Button/types';
 export * from './ButtonGroup';
 
+export * from './IconButton';
+
 export { default as Checkbox } from './Checkbox';
 export * from './Checkbox';
 export type * from './Checkbox/types';

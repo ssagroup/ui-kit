@@ -28,6 +28,8 @@ export const useTooltip: UseTooltip = (props) => {
     arrowProps = {},
     isOpen: isInitOpen = false,
     allowHoverContent = false,
+    hoverOpenDelay = 0,
+    hoverCloseDelay = 0,
   } = props || {};
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const arrowRef = useRef(null);
@@ -49,10 +51,21 @@ export const useTooltip: UseTooltip = (props) => {
 
   const { context } = floatingData;
 
+  const delayConfig = useMemo(() => {
+    if (hoverOpenDelay > 0 || hoverCloseDelay > 0) {
+      return {
+        open: hoverOpenDelay,
+        close: hoverCloseDelay,
+      };
+    }
+    return undefined;
+  }, [hoverOpenDelay, hoverCloseDelay]);
+
   const hover = useHover(context, {
     enabled: enableHover,
     move: true,
     handleClose: allowHoverContent ? safePolygon() : undefined,
+    delay: delayConfig,
   });
   const click = useClick(context, { enabled: enableClick });
   const dismiss = useDismiss(context);

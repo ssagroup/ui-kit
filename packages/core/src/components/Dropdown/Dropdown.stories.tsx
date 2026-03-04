@@ -248,7 +248,7 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
           />
         ))}
       </Dropdown>
-      <Button variant="info" css={{ marginLeft: 10 }} onClick={handleUpdate}>
+      <Button variant="primary" css={{ marginLeft: 10 }} onClick={handleUpdate}>
         Update selected item
       </Button>
     </div>

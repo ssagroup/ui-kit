@@ -125,7 +125,7 @@ export const PanelSettings = ({
       )}
       <Button
         css={{ marginTop: '20px' }}
-        variant="info"
+        variant="primary"
         onClick={handlePanelSave}>
         Save
       </Button>

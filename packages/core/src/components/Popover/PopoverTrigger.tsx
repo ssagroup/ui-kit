@@ -5,11 +5,47 @@ import { ButtonProps } from '@components/Button/types';
 import { usePopoverContext } from './hooks/usePopoverContext';
 import { PopoverTriggerProps } from './types';
 
+/**
+ * PopoverTrigger - Trigger element for popover
+ *
+ * Activates the popover when interacted with. By default renders as a Button,
+ * but can be customized using the `asChild` prop to render as any React element.
+ * Automatically receives Floating UI reference props for positioning and state
+ * management.
+ *
+ * @category Components
+ * @subcategory Overlay
+ *
+ * @example
+ * ```tsx
+ * // Default Button trigger
+ * <PopoverTrigger>
+ *   Open Popover
+ * </PopoverTrigger>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Custom element trigger
+ * <PopoverTrigger asChild>
+ *   <Icon name="info" />
+ * </PopoverTrigger>
+ * ```
+ *
+ * @see {@link Popover} - Root component
+ * @see {@link PopoverContent} - Content display component
+ */
 export const PopoverTrigger = React.forwardRef<
   HTMLElement,
   React.HTMLProps<HTMLElement> & ButtonProps & PopoverTriggerProps
 >(function PopoverTrigger(
-  { children, asChild = false, dataTestId = 'trigger-button', ...props },
+  {
+    children,
+    asChild = false,
+    dataTestId = 'trigger-button',
+    variant = 'primary',
+    ...props
+  },
   propRef,
 ) {
   const context = usePopoverContext();
@@ -54,13 +90,11 @@ export const PopoverTrigger = React.forwardRef<
 
   return (
     <Button
-      css={{
-        color: '#fff',
-      }}
       data-testid={dataTestId}
       ref={ref}
       // The user can style the trigger based on the state
       data-state={context?.open ? 'open' : 'closed'}
+      variant={variant}
       {...context?.getReferenceProps(props)}>
       {children}
     </Button>

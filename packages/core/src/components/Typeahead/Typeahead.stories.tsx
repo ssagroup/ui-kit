@@ -396,7 +396,7 @@ export const DynamicallyChangedItems = (args: TypeaheadProps) => {
           <Button variant="primary" onClick={handleUpdate}>
             Update items
           </Button>
-          <Button type="submit" variant="info">
+          <Button type="submit" variant="primary">
             Submit
           </Button>
         </Wrapper>
@@ -475,7 +475,7 @@ export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
           <Button variant="primary" onClick={handleUpdate}>
             Update selected items
           </Button>
-          <Button type="submit" variant="info">
+          <Button type="submit" variant="primary">
             Submit
           </Button>
         </Wrapper>
@@ -542,7 +542,7 @@ export const WithFormState = (args: TypeaheadProps) => {
           <Button variant="primary" onClick={handleUpdate}>
             Update selected items
           </Button>
-          <Button type="submit" variant="info">
+          <Button type="submit" variant="primary">
             Submit
           </Button>
         </Wrapper>

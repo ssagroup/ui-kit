@@ -21,6 +21,7 @@ export const YearsView = () => {
     onYearChange,
     pickerType,
     setIsOpen,
+    safeOnChange,
   } = useDatePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
   const yearsList = getYearsList({
@@ -54,7 +55,12 @@ export const YearsView = () => {
           container.clientHeight / 2 +
           elRect.height / 2;
 
-        container.scrollTo({ top: nextTop, behavior: 'auto' });
+        if (typeof container.scrollTo === 'function') {
+          container.scrollTo({ top: nextTop, behavior: 'auto' });
+        } else {
+          // Fallback for environments that don't support scrollTo (e.g., jsdom)
+          container.scrollTop = nextTop;
+        }
       }
     }
   }, [calendarViewDateTime]);
@@ -73,10 +79,14 @@ export const YearsView = () => {
 
       setCalendarViewDateTime(startDate);
       setDateTime(startDate);
+      safeOnChange?.(startDate);
       onYearChange?.(startDate.toJSDate());
 
       setIsOpen(false);
     } else {
+      // When selecting a year in years view (for day/month pickers), call onYearChange
+      // but don't close - user still needs to select month and day
+      onYearChange?.(newDate.startOf('year').toJSDate());
       setCalendarViewDateTime(newDate);
       setCalendarType(CALENDAR_TYPE.MONTHS);
     }

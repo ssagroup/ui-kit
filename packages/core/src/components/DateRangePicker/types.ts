@@ -18,6 +18,18 @@ export type LastFocusedElement = 'from' | 'to';
 export type RangePickerType = PickerCalendarType;
 export type Format = DateFormat;
 
+/**
+ * Type for the dates tuple passed to DateRangePicker's onChange callback.
+ *
+ * - Date: A valid date was selected
+ * - null: "Present" option was selected (end date only)
+ * - undefined: Date field is empty/unset
+ */
+export type DateRangePickerOnChangeDates = [
+  Date | null | undefined,
+  Date | null | undefined,
+];
+
 export type DateRangePickerProps = {
   name: string;
   label?: string;
@@ -51,9 +63,7 @@ export type DateRangePickerProps = {
     calendar?: string;
     label?: string;
   };
-  onChange?: (
-    dates?: [Date | null | undefined, Date | null | undefined],
-  ) => void;
+  onChange?: (dates?: DateRangePickerOnChangeDates) => void;
   onOpen?: () => void;
   onClose?: () => void;
   onError?: (date: unknown, error?: string | null) => void;

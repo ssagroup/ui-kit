@@ -27,12 +27,13 @@ export default {
 export const Default: StoryObj<typeof Modal> = () => (
   <Modal>
     <ModalOpenButton>
-      <Button size="small" text="Open modal" />
+      <Button variant="primary" size="small" text="Open modal" />
     </ModalOpenButton>
     <ModalContent aria-label="label">
       <div css={{ display: 'flex', justifyContent: 'flex-end' }}>
         <ModalDismissButton>
           <Button
+            variant="primary"
             size="small"
             startIcon={
               <Icon name="cross" size={12} color={mainTheme.colors.white} />
@@ -53,7 +54,7 @@ Default.args = {};
 export const Custom: StoryObj<typeof Modal> = () => (
   <Modal>
     <ModalOpenButton>
-      <Button size="small" text="Open modal" />
+      <Button variant="primary" size="small" text="Open modal" />
     </ModalOpenButton>
     <ModalContent noBackground={true} aria-label="label">
       <div>
@@ -67,7 +68,7 @@ export const Custom: StoryObj<typeof Modal> = () => (
         </Typography>
 
         <ModalDismissButton>
-          <Button size="small" text="close" />
+          <Button variant="primary" size="small" text="close" />
         </ModalDismissButton>
       </div>
     </ModalContent>
@@ -78,7 +79,7 @@ Custom.args = {};
 export const Opened: StoryObj<typeof Modal> = () => (
   <Modal isOpen>
     <ModalOpenButton>
-      <Button size="small" text="Open modal" />
+      <Button variant="primary" size="small" text="Open modal" />
     </ModalOpenButton>
     <ModalContent noBackground={true} aria-label="label">
       <div>
@@ -92,7 +93,7 @@ export const Opened: StoryObj<typeof Modal> = () => (
         </Typography>
 
         <ModalDismissButton>
-          <Button size="small" text="close" />
+          <Button variant="primary" size="small" text="close" />
         </ModalDismissButton>
       </div>
     </ModalContent>
@@ -108,7 +109,7 @@ export const ExternalState: StoryObj<typeof Modal> = () => {
   return (
     <Modal isOpen={isOpen}>
       <ModalOpenButton>
-        <Button size="small" text="Open modal" />
+        <Button variant="primary" size="small" text="Open modal" />
       </ModalOpenButton>
       <ModalContent noBackground={true} aria-label="label">
         <div>
@@ -122,7 +123,7 @@ export const ExternalState: StoryObj<typeof Modal> = () => {
           </Typography>
 
           <ModalDismissButton>
-            <Button size="small" text="close" />
+            <Button variant="primary" size="small" text="close" />
           </ModalDismissButton>
         </div>
       </ModalContent>
@@ -165,7 +166,7 @@ export const InsideDrawer: StoryObj<typeof Modal> = () => {
                 </p>
                 <Modal>
                   <ModalOpenButton>
-                    <Button>Open Modal</Button>
+                    <Button variant="primary">Open Modal</Button>
                   </ModalOpenButton>
                   <ModalContent
                     aria-label="Modal inside drawer"

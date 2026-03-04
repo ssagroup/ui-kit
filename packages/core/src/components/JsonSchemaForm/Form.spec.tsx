@@ -1,9 +1,7 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor, within } from '../../../customTest';
 import userEvent from '@testing-library/user-event';
 import type { RJSFSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
-import userEvent from '@testing-library/user-event';
-import { render, waitFor } from '@testing-library/react';
 
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
 import { Form } from '.';
@@ -223,7 +221,7 @@ describe('Form (rjsf)', () => {
     expect(endInput).toHaveValue('31/12/2024');
   });
 
-  it('DateRangeField converts "present" string to null for picker and displays "Present"', () => {
+  it('DateRangeField converts "Present" string to null for picker and displays "Present"', () => {
     const { getByTestId } = render(
       <Form
         validator={validator}
@@ -252,7 +250,7 @@ describe('Form (rjsf)', () => {
         formData={{
           dateRangeField: {
             start: '2024-01-15',
-            end: 'present',
+            end: 'Present',
           },
         }}
       />,
@@ -307,18 +305,28 @@ describe('Form (rjsf)', () => {
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
 
+    // Calendar always starts with start date selection
+    // Select a start date first (this switches to end date selection mode)
+    const day15Element = within(dialogEl).getAllByText('15');
+    const enabledDay15 = day15Element.filter(
+      (day) => day.getAttribute('aria-disabled') === 'false',
+    );
+    expect(enabledDay15.length).toBeGreaterThanOrEqual(1);
+    await user.click(enabledDay15[0]);
+
+    // Now we're selecting end date, so "Present" button should be enabled
     const presentButton = getByTestId('daterangepicker-present-button');
+    expect(presentButton).toBeInTheDocument();
+    expect(presentButton).not.toBeDisabled();
     await user.click(presentButton);
 
     await waitFor(() => {
-      expect(mockOnChange).toHaveBeenCalledWith(
-        expect.objectContaining({
-          dateRangeField: {
-            start: '2024-01-15',
-            end: PRESENT_VALUE,
-          },
-        }),
-      );
+      expect(mockOnChange).toHaveBeenCalled();
+      const call = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1];
+      expect(call[0].formData.dateRangeField).toEqual({
+        start: '2024-01-15',
+        end: PRESENT_VALUE,
+      });
     });
   });
 

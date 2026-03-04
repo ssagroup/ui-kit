@@ -42,7 +42,7 @@ export const ActionRun = ({ row }: { row: StyledTableItem }) => {
       }}
       placement="top-start">
       <PopoverTrigger
-        variant="custom"
+        variant="tertiary"
         isDisabled={isDisabled}
         dataTestId="run-reason-trigger-button"
         css={{
@@ -108,7 +108,7 @@ export const ActionRun = ({ row }: { row: StyledTableItem }) => {
                   }}
                 />
                 <Button
-                  variant="info"
+                  variant="primary"
                   type="submit"
                   css={{
                     width: 90,

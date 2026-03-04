@@ -53,7 +53,7 @@ export const ArrowButton = ({
           color={theme.colors.greyDisabled}
         />
       }
-      variant="custom"
+      variant="tertiary"
       onClick={onClick}
       isDisabled={isDisabled}
       size="small"

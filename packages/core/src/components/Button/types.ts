@@ -89,16 +89,11 @@ export interface ButtonProps extends ButtonAriaProps {
   endIconClassName?: string;
 
   /**
-   * Visual style variant of the button
-   * - `primary`: Main action button, high emphasis (default)
-   * - `secondary`: Secondary action, medium emphasis
-   * - `tertiary`: Tertiary action, low emphasis
-   * - `info`: Informational action, blue emphasis
-   * - `attention`: Warning/attention action, attention-grabbing
-   * - `custom`: No default styling, use custom CSS
-   * @default 'primary'
+   * Visual style variant of the button (uses theme.palette)
+   * - `primary` | `secondary` | `tertiary` | `error` | `warning` | `success`
+   * @default 'tertiary'
    */
-  variant?: keyof ButtonVariants | 'custom';
+  variant?: keyof ButtonVariants;
 
   /**
    * HTML button type attribute
@@ -135,21 +130,19 @@ export interface ButtonProps extends ButtonAriaProps {
 }
 
 /**
- * Button variant style functions
- * Each variant is a function that receives the theme and returns Emotion styles
- *
- * - `primary`: High-emphasis primary action styling
- * - `secondary`: Medium-emphasis secondary action styling
- * - `tertiary`: Low-emphasis tertiary action styling
- * - `info`: Informational action with blue accent
- * - `attention`: Attention-grabbing warning/caution styling
+ * Button variant style functions.
+ * Each function reads from `theme.palette.<variant>` using the following convention:
+ * - `main`  → default background
+ * - `dark`  → hover and active background
+ * - `light` → focus background
  */
 export interface ButtonVariants {
   primary: (theme: Theme) => SerializedStyles;
-  info: (theme: Theme) => SerializedStyles;
   secondary: (theme: Theme) => SerializedStyles;
   tertiary: (theme: Theme) => SerializedStyles;
-  attention: (theme: Theme) => SerializedStyles;
+  error: (theme: Theme) => SerializedStyles;
+  warning: (theme: Theme) => SerializedStyles;
+  success: (theme: Theme) => SerializedStyles;
 }
 
 export type ButtonTextProps = {

@@ -4,10 +4,11 @@ import { ButtonVariants } from './types';
 export const sizes: Array<keyof MainSizes> = ['small', 'medium', 'large'];
 export const variants: Array<keyof ButtonVariants> = [
   'primary',
-  'info',
   'secondary',
   'tertiary',
-  'attention',
+  'error',
+  'warning',
+  'success',
 ];
 
 export const HeaderTitle = styled.span`

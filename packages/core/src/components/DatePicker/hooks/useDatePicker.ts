@@ -103,6 +103,7 @@ export const useDatePicker = ({
     date: null,
     error: null,
   });
+  const wasOpenRef = useRef<boolean | undefined>(undefined);
 
   const formatIndexes = useMemo(() => {
     const parts = format
@@ -329,9 +330,14 @@ export const useDatePicker = ({
     if (isLoading) return;
 
     if (isOpen) {
+      wasOpenRef.current = true;
       onOpen?.();
     } else {
-      onClose?.();
+      // Only call onClose if the calendar was previously open (not on initial mount)
+      if (wasOpenRef.current === true) {
+        onClose?.();
+      }
+      wasOpenRef.current = false;
       setCalendarType(config.calendar);
     }
   }, [isOpen, isLoading, config.calendar, onOpen, onClose]);

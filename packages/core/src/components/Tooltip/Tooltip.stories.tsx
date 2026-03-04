@@ -48,7 +48,7 @@ export const OnClick: StoryObj<typeof Tooltip> = (args: Args) => {
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
-        <Button size="medium" text="Click me!" />
+        <Button variant="primary" size="medium" text="Click me!" />
       </TooltipTrigger>
       <TooltipContent>Tooltip</TooltipContent>
     </Tooltip>
@@ -64,7 +64,7 @@ export const OnHover: StoryObj<typeof Tooltip> = (args: Args) => {
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
-        <Button size="medium" text="Hover over me!" />
+        <Button variant="primary" size="medium" text="Hover over me!" />
       </TooltipTrigger>
       <TooltipContent>Tooltip</TooltipContent>
     </Tooltip>
@@ -85,6 +85,7 @@ export const CustomContent: StoryObj<typeof Tooltip> = (args: Args) => {
     <Tooltip {...args}>
       <TooltipTrigger>
         <Button
+          variant="primary"
           size="medium"
           endIcon={<Icon name="plus" color={theme.colors.white} size={12} />}
         />
@@ -118,6 +119,7 @@ export const NoArrow: StoryObj<typeof Tooltip> = (args: Args) => {
     <Tooltip {...args}>
       <TooltipTrigger>
         <Button
+          variant="primary"
           size="small"
           endIcon={<Icon name="check" color={theme.colors.white} size={12} />}
           text="Action"
@@ -139,7 +141,7 @@ export const Opened: StoryObj<typeof Tooltip> = (args: Args) => {
   return (
     <Tooltip {...args}>
       <TooltipTrigger>
-        <Button size="medium" text="Hover over me!" />
+        <Button variant="primary" size="medium" text="Hover over me!" />
       </TooltipTrigger>
       <TooltipContent>Tooltip</TooltipContent>
     </Tooltip>
@@ -156,5 +158,44 @@ Opened.parameters = {
   pseudo: {
     hover: true,
     rootSelector: 'body',
+  },
+};
+
+export const WithDelays: StoryObj<typeof Tooltip> = (args: Args) => {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '20px',
+        width: '100%',
+        maxWidth: '600px',
+      }}>
+      {[1, 2, 3, 4, 5, 6].map((item) => (
+        <Tooltip key={item} {...args}>
+          <TooltipTrigger>
+            <Button variant="primary" size="medium" text={`Item ${item}`} />
+          </TooltipTrigger>
+          <TooltipContent>Tooltip for item {item}</TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
+};
+
+WithDelays.args = {
+  enableClick: false,
+  enableHover: true,
+  size: 'medium',
+  hoverOpenDelay: 300,
+  hoverCloseDelay: 100,
+};
+
+WithDelays.parameters = {
+  docs: {
+    description: {
+      story:
+        'Tooltips with delay configuration. Move your mouse quickly across the buttons to see how delays prevent the "traffic light" effect. Configure `hoverOpenDelay` (300ms) and `hoverCloseDelay` (100ms) to control appearance and disappearance timing.',
+    },
   },
 };
