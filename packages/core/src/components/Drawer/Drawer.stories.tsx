@@ -58,7 +58,7 @@ export const Default: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
@@ -81,7 +81,7 @@ export const PositionRight: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
@@ -104,7 +104,7 @@ export const PositionTop: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
@@ -127,7 +127,7 @@ export const PositionBottom: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
@@ -154,7 +154,7 @@ export const WithinContainer: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Wrapper
@@ -174,7 +174,9 @@ export const WithinContainer: Story = {
                 padding: '12px',
                 maxWidth: '400px',
               }}>
-              <Button onClick={() => drawer.toggle(false)}>Close</Button>
+              <Button variant="primary" onClick={() => drawer.toggle(false)}>
+                Close
+              </Button>
             </Drawer.Content>
           </Drawer.Root>
           <div css={{ padding: '12px' }}>Post Content</div>
@@ -195,7 +197,7 @@ export const WithinContainerPositionTop: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Wrapper
@@ -214,7 +216,9 @@ export const WithinContainerPositionTop: Story = {
               css={{
                 padding: '12px',
               }}>
-              <Button onClick={() => drawer.toggle(false)}>Close</Button>
+              <Button variant="primary" onClick={() => drawer.toggle(false)}>
+                Close
+              </Button>
             </Drawer.Content>
           </Drawer.Root>
           <div css={{ padding: '12px' }}>Post Content</div>
@@ -230,7 +234,7 @@ export const WithinContainerOverlap: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Wrapper
@@ -252,7 +256,9 @@ export const WithinContainerOverlap: Story = {
                   padding: '12px',
                   maxWidth: '400px',
                 }}>
-                <Button onClick={() => drawer.toggle(false)}>Close</Button>
+                <Button variant="primary" onClick={() => drawer.toggle(false)}>
+                  Close
+                </Button>
               </Drawer.Content>
             </Drawer.Overlay>
           </Drawer.Root>
@@ -274,7 +280,7 @@ export const WithinContainerOverlapPositionTop: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Wrapper
@@ -297,7 +303,9 @@ export const WithinContainerOverlapPositionTop: Story = {
                   padding: '12px',
                   maxHeight: '200px',
                 }}>
-                <Button onClick={() => drawer.toggle(false)}>Close</Button>
+                <Button variant="primary" onClick={() => drawer.toggle(false)}>
+                  Close
+                </Button>
               </Drawer.Content>
             </Drawer.Overlay>
           </Drawer.Root>
@@ -317,7 +325,7 @@ export const DismissableWithLockScroll: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
@@ -346,7 +354,7 @@ export const WithHeaderComponent: Story = {
     const drawer = useDrawer(args);
     return (
       <>
-        <Button {...drawer.interactions.getReferenceProps()}>
+        <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
           {drawer.opened ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
