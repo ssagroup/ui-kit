@@ -12,22 +12,18 @@ export default {
   component: Radio,
   args: {
     text: 'label',
+    color: 'primary',
   },
   argTypes: {
+    color: {
+      options: ['primary', 'success', 'custom'],
+      control: { type: 'select' },
+    },
     className: {
-      control: {
-        disable: true,
-      },
+      control: { disable: true },
     },
-    initialState: {
-      control: {
-        disable: true,
-      },
-    },
-    control: {
-      control: {
-        disable: true,
-      },
+    colors: {
+      control: { disable: true },
     },
   },
   parameters: {
@@ -50,3 +46,48 @@ export const Default: StoryObj<typeof Radio> = (args: Args) => (
   </Fragment>
 );
 Default.storyName = 'Radio';
+
+const colorVariants: Array<{ color: Args['color']; label: string }> = [
+  { color: 'primary', label: 'Primary (blue)' },
+  { color: 'success', label: 'Success (green)' },
+];
+
+export const Colors = () => (
+  <Fragment>
+    {colorVariants.map(({ color, label }) => (
+      <Fragment key={color}>
+        <Typography variant="h6" css={{ marginTop: 16 }}>
+          {label}
+        </Typography>
+        <div css={{ display: 'flex', gap: 24 }}>
+          <Radio
+            id={`${color}-unchecked`}
+            name={`${color}-group`}
+            value="unchecked"
+            text="Unchecked"
+            color={color}
+            onChange={() => {}}
+          />
+          <Radio
+            id={`${color}-checked`}
+            name={`${color}-group`}
+            value="checked"
+            text="Checked"
+            color={color}
+            isChecked
+            onChange={() => {}}
+          />
+          <Radio
+            id={`${color}-disabled`}
+            name={`${color}-group`}
+            value="disabled"
+            text="Disabled"
+            color={color}
+            isDisabled
+            onChange={() => {}}
+          />
+        </div>
+      </Fragment>
+    ))}
+  </Fragment>
+);

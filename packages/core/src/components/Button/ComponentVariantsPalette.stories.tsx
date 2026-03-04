@@ -54,7 +54,7 @@ const meta = {
       success: false,
       custom: false,
     });
-    const [radioValue, setRadioValue] = useState('default');
+    const [radioValue, setRadioValue] = useState('primary');
 
     return (
       <div
@@ -447,17 +447,16 @@ const meta = {
           </div>
         </div>
 
-        {/* Pattern 6: Color Object */}
+        {/* Pattern 6: Simple Color Options (Radio) */}
         <div
           css={{
             marginTop: '48px',
           }}>
           <Typography variant="h2" gutter>
-            Pattern 6: Color Object (Radio)
+            Pattern 6: Simple Color Options (Radio)
           </Typography>
           <Typography variant="h6" color={theme.colors.greyDarker80} gutter>
-            Radio component accepts a colors object with multiple color
-            properties
+            Radio component supports color options: primary, success, custom
           </Typography>
           <div
             css={{
@@ -467,26 +466,36 @@ const meta = {
               backgroundColor: theme.colors.white,
               marginTop: '24px',
             }}>
-            <Wrapper css={{ gap: '24px', flexDirection: 'column' }}>
+            <Wrapper css={{ gap: '24px' }}>
               <Radio
                 name="radio-example"
-                value="default"
-                text="Default colors"
-                isChecked={radioValue === 'default'}
+                value="primary"
+                text="Primary (default)"
+                color="primary"
+                isChecked={radioValue === 'primary'}
+                onChange={(value) => setRadioValue(value)}
+              />
+              <Radio
+                name="radio-example"
+                value="success"
+                text="Success"
+                color="success"
+                isChecked={radioValue === 'success'}
                 onChange={(value) => setRadioValue(value)}
               />
               <Radio
                 name="radio-example"
                 value="custom"
-                text="Custom colors"
-                isChecked={radioValue === 'custom'}
-                onChange={(value) => setRadioValue(value)}
+                text="Custom"
+                color="custom"
                 colors={{
                   default: '#4ECDC4',
                   hovered: '#45B8B0',
                   disabled: '#CCCCCC',
                   focusShadow: '#4ECDC4',
                 }}
+                isChecked={radioValue === 'custom'}
+                onChange={(value) => setRadioValue(value)}
               />
             </Wrapper>
           </div>
@@ -565,8 +574,8 @@ const meta = {
                   Pattern 6: Color Object
                 </Typography>
                 <Typography variant="h6" color={theme.colors.greyDarker80}>
-                  <strong>Radio</strong> - Uses colors object with default,
-                  hovered, disabled, focusShadow properties
+                  <strong>Radio</strong> - Uses color prop: primary, success,
+                  custom (custom accepts a colors object)
                 </Typography>
               </div>
             </div>

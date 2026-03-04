@@ -97,23 +97,54 @@ Use radio buttons without text labels when the context is clear:
 <Radio id="no-text-radio" value="no-text" onChange={handleChange} />
 ```
 
-### Custom Colors
+### Color Variants
 
-Customize the appearance with custom color schemes:
+The `color` prop controls the icon and focus-ring colors. Colors are sourced
+from `theme.palette` for consistency with Button, Checkbox, and Chip.
+
+| Value | Palette key | Resting / Checked | Hover | Focus shadow |
+|-------|-------------|-------------------|-------|--------------|
+| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.dark` | `blue20` |
+| `success` | `palette.success` | `success.main` | `success.dark` | `green40` |
+| `custom` | — | via `colors.default` | via `colors.hovered` | via `colors.focusShadow` |
 
 ```tsx
+// Default — primary (blue)
+<Radio id="r1" value="r1" text="Primary option" onChange={handleChange} />
+
+// Success (green)
 <Radio
-  id="custom-colors"
-  value="custom"
-  text="Custom Colors"
+  id="r2"
+  value="r2"
+  text="Success option"
+  color="success"
+  onChange={handleChange}
+/>
+
+// Custom escape hatch
+<Radio
+  id="r3"
+  value="r3"
+  text="Custom option"
+  color="custom"
   colors={{
-    default: '#007bff',
-    hovered: '#0056b3',
-    disabled: '#6c757d',
-    focusShadow: 'rgba(0, 123, 255, 0.25)',
+    default: '#ff0000',
+    hovered: '#cc0000',
+    disabled: '#cccccc',
+    focusShadow: 'rgba(255, 0, 0, 0.25)',
   }}
   onChange={handleChange}
 />
+```
+
+The `color` prop can also be set on `RadioGroup` to apply the same variant to
+all child radio buttons at once:
+
+```tsx
+<RadioGroup name="fruit" color="success" onChange={handleChange}>
+  <Radio id="r1" value="apple" text="Apple" />
+  <Radio id="r2" value="orange" text="Orange" />
+</RadioGroup>
 ```
 
 ### Form Integration
