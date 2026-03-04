@@ -426,7 +426,7 @@ function App() {
               alignItems: 'center',
             }}>
             <Chip label="Primary Chip" color="primary" variant="filled" />
-            <Chip label="Info Chip" color="info" variant="filled" />
+            <Chip label="Secondary Chip" color="secondary" variant="filled" />
             <Badge color="blue" size="medium">
               Blue Badge
             </Badge>

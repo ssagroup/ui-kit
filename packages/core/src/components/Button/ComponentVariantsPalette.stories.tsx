@@ -26,9 +26,9 @@ const buttonVariants = [
 const chipColors = [
   'default',
   'primary',
+  'secondary',
   'success',
   'error',
-  'info',
   'warning',
 ] as const;
 
