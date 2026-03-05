@@ -35,9 +35,9 @@ const checkSwitchStyleAndMarkup: CheckSwitchStyleAndMarkup = (
       height: 24px;
       background: ${
         isDisabled
-          ? theme.colors.greyDisabled
+          ? theme.colors.greyFocused40
           : isOn
-            ? `linear-gradient(117.5deg, ${theme.colors.greenLighter}, ${theme.colors.green})`
+            ? theme.palette.primary.main
             : theme.colors.greyFocused
       };
       outline: 0;

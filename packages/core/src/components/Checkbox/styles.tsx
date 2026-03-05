@@ -3,14 +3,15 @@ import { css, Theme } from '@emotion/react';
 /**
  * Styles for the `primary` color variant (blue).
  * Uses `theme.palette.primary` for all interactive state colors:
- * - `light`  → unchecked border (resting)
- * - `main`   → unchecked hover border + checked background
- * - `dark`   → checked hover background
+ * - `light`       → unchecked border (resting)
+ * - `main`        → unchecked hover border + checked background
+ * - `dark`        → checked hover background
+ * - `greyFocused40` → disabled box background
  */
 const primaryInput = (theme: Theme) => css`
   & input:disabled + div,
   & input:indeterminate:disabled + div {
-    background: ${theme.colors.greyFocused};
+    background: ${theme.colors.greyFocused40};
   }
   & input:not(:checked, :indeterminate, :disabled) + div::before {
     border: 1.5px solid ${theme.palette.primary.light};
@@ -34,13 +35,14 @@ const primaryInput = (theme: Theme) => css`
 /**
  * Styles for the `success` color variant (green).
  * Uses `theme.palette.success` for all interactive state colors:
- * - `main`  → unchecked border + checked background
- * - `dark`  → unchecked hover border + checked hover background
+ * - `main`        → unchecked border + checked background
+ * - `dark`        → unchecked hover border + checked hover background
+ * - `greyFocused40` → disabled box background
  */
 const successInput = (theme: Theme) => css`
   & input:disabled + div,
   & input:indeterminate:disabled + div {
-    background: ${theme.colors.greyFocused};
+    background: ${theme.colors.greyFocused40};
   }
 
   & input:not(:checked, :indeterminate, :disabled) + div::before {

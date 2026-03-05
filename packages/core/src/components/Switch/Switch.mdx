@@ -23,6 +23,52 @@ function BasicSwitch() {
 
 ## Features
 
+### Color Variants
+
+The `color` prop controls the on-state background, hover/focus shadow, and the
+off-state focus outline. Colors are sourced from `theme.palette`.
+
+| Value | Palette key | On background | Off outline |
+|-------|-------------|---------------|-------------|
+| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.light` |
+| `success` | `palette.success` | `success.main` | `success.light` |
+| `custom` | — | via `colors.on` | via `colors.offOutline` |
+
+The off state (unchecked) always shows a neutral grey background regardless of
+color variant. The disabled state always uses `greyFocused40` (same for all variants).
+
+```tsx
+// Default — primary (blue)
+<SwitchContextProvider initialState={false}>
+  <Switch label="Enable feature" />
+</SwitchContextProvider>
+
+// Success (green)
+<SwitchContextProvider initialState={false}>
+  <Switch label="Enable feature" color="success" />
+</SwitchContextProvider>
+
+// Custom escape hatch
+<SwitchContextProvider initialState={false}>
+  <Switch
+    label="Custom toggle"
+    color="custom"
+    colors={{ on: '#ff0000', offOutline: '#ff9999' }}
+  />
+</SwitchContextProvider>
+```
+
+### Disabled State
+
+Disabled switches show a muted grey background in both on and off positions
+and cannot be toggled:
+
+```tsx
+<SwitchContextProvider initialState={true}>
+  <Switch label="Locked feature" isDisabled />
+</SwitchContextProvider>
+```
+
 ### Basic Toggle Functionality
 
 Simple on/off switch with context provider:

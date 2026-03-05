@@ -15,8 +15,9 @@ import { CheckboxProps } from './types';
  *
  * Colors are driven by `theme.palette`:
  * - `primary` (default) — blue; uses `palette.primary.light/main/dark` for
- *   the resting border, checked fill, and hover fill respectively.
+ *   the resting border, checked fill, and hover fill. Disabled uses `greyFocused40`.
  * - `success` — green; uses `palette.success.main/dark` for the border and fills.
+ *   Disabled uses `greyFocused40`.
  * - `custom` — unstyled; apply your own colors via `className` or the `css` prop.
  *
  * @category Form Controls
