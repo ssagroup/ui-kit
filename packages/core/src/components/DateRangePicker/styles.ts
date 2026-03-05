@@ -20,8 +20,7 @@ export const DaysViewCell = styled(Wrapper)<{
   color: ${({ theme, isCalendarDateSelected }) =>
     isCalendarDateSelected ? theme.colors.white : theme.colors.greyDarker};
   background: ${({ theme, isCalendarDateSelected }) =>
-    isCalendarDateSelected &&
-    `linear-gradient(247deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`};
+    isCalendarDateSelected && theme.palette.primary.main};
   cursor: pointer;
   user-select: none;
   &[aria-disabled='true'] {
@@ -31,7 +30,11 @@ export const DaysViewCell = styled(Wrapper)<{
   }
   &[aria-disabled='false'] {
     background: ${({ theme, isCalendarDateSelected, isHighlighted }) =>
-      isHighlighted && !isCalendarDateSelected && theme.colors.blueRoyal16};
+      isHighlighted &&
+      !isCalendarDateSelected &&
+      theme.palette.primary.main
+        .replace('rgb(', 'rgba(')
+        .replace(')', ', 0.2)')};
     &:hover {
       background: ${({ theme }) => theme.colors.greyLighter};
       color: ${({ theme }) => theme.colors.greyDarker};
@@ -53,7 +56,10 @@ export const DaysViewCell = styled(Wrapper)<{
       right: ${({ isCalendarFirstDateSelected }) =>
         isCalendarFirstDateSelected ? '0' : 'auto'};
       z-index: -1;
-      background: ${({ theme }) => theme.colors.blueRoyal16};
+      background: ${({ theme }) =>
+        theme.palette.primary.main
+          .replace('rgb(', 'rgba(')
+          .replace(')', ', 0.2)')};
     }
   }
   &:hover {
@@ -102,7 +108,7 @@ export const YearsViewCell = styled.div<{
     isCalendarYear ||
     isCalendarFirstDateSelected ||
     isCalendarSecondDateSelected
-      ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
+      ? theme.palette.primary.main
       : 'none'};
   background: ${({
     theme,
@@ -113,7 +119,7 @@ export const YearsViewCell = styled.div<{
     isHighlighted &&
     !isCalendarYear &&
     !isCalendarSecondDateSelected &&
-    theme.colors.blueRoyal16};
+    theme.palette.primary.main.replace('rgb(', 'rgba(').replace(')', ', 0.2)')};
   &:hover {
     background: ${({ theme }) => theme.colors.greyLighter};
     color: ${({ theme }) => theme.colors.greyDarker};
@@ -136,7 +142,10 @@ export const YearsViewCell = styled.div<{
     right: ${({ isCalendarFirstDateSelected }) =>
       isCalendarFirstDateSelected ? '0' : 'auto'};
     z-index: -1;
-    background: ${({ theme }) => theme.colors.blueRoyal16};
+    background: ${({ theme }) =>
+      theme.palette.primary.main
+        .replace('rgb(', 'rgba(')
+        .replace(')', ', 0.2)')};
   }
 `;
 
@@ -173,7 +182,7 @@ export const MonthsViewCell = styled.div<{
     isCalendarSecondDateSelected,
   }) =>
     isCalendarFirstDateSelected || isCalendarSecondDateSelected
-      ? `linear-gradient(247.37deg, ${theme.colors.blueLighter} 14.71%, ${theme.colors.blue} 85.29%)`
+      ? theme.palette.primary.main
       : 'none'};
   &[aria-disabled='true'] {
     cursor: default;
@@ -185,7 +194,9 @@ export const MonthsViewCell = styled.div<{
     background: ${({ theme, isHighlighted, isCalendarSecondDateSelected }) =>
       isHighlighted &&
       !isCalendarSecondDateSelected &&
-      theme.colors.blueRoyal16};
+      theme.palette.primary.main
+        .replace('rgb(', 'rgba(')
+        .replace(')', ', 0.2)')};
     &:hover {
       background: ${({ theme }) => theme.colors.greyLighter};
       color: ${({ theme }) => theme.colors.greyDarker};
@@ -207,7 +218,10 @@ export const MonthsViewCell = styled.div<{
       right: ${({ isCalendarFirstDateSelected }) =>
         isCalendarFirstDateSelected ? '0' : 'auto'};
       z-index: -1;
-      background: ${({ theme }) => theme.colors.blueRoyal16};
+      background: ${({ theme }) =>
+        theme.palette.primary.main
+          .replace('rgb(', 'rgba(')
+          .replace(')', ', 0.2)')};
     }
   }
 `;
