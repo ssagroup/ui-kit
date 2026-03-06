@@ -97,13 +97,6 @@ const config: StorybookConfig = {
         },
         alias: {
           ...config.resolve?.alias,
-          // CRITICAL: Alias internmap to its ESM source to match d3-array's ESM imports
-          // Using ESM source for both ensures proper module interop
-          // This must come before appWebpackConfig to prevent overrides
-          internmap: resolve(
-            __dirname,
-            '../../../node_modules/internmap/src/index.js',
-          ),
           // Now merge appWebpackConfig aliases
           ...appWebpackConfig.resolve?.alias,
           // Workspace package aliases - point to source files
@@ -181,32 +174,6 @@ const config: StorybookConfig = {
       },
       plugins: [
         ...(config.plugins || []),
-        // NOTE: We're NOT replacing d3-array - let webpack use the ESM source via mainFields: ['module', 'main']
-        // The dist file is UMD which causes module type mismatch. The ESM source is correct.
-        // We just need to ensure internmap is properly resolved when d3-array imports it.
-        // CRITICAL: Force internmap to use ESM source via NormalModuleReplacementPlugin
-        // This ensures InternMap constructor is properly available to d3-array
-        // Match any request containing 'internmap' - be very aggressive to catch all variations
-        // Using ESM source matches d3-array's ESM source for consistent module types
-        new webpack.NormalModuleReplacementPlugin(/internmap/, function (
-          resource,
-        ) {
-          // Replace any internmap import with the ESM source file
-          // This catches: 'internmap', 'internmap/index.js', 'internmap/src/index.js', etc.
-          const newPath = resolve(
-            __dirname,
-            '../../../node_modules/internmap/src/index.js',
-          );
-          console.log(
-            '[Webpack Debug] internmap replacement:',
-            resource.request,
-            '->',
-            newPath,
-            '| context:',
-            resource.context,
-          );
-          resource.request = newPath;
-        }),
         // Handle TypeScript path mappings for workspace packages
         new webpack.NormalModuleReplacementPlugin(
           /^@hooks\/useWindowResize$/,
