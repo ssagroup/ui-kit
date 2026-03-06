@@ -81,6 +81,11 @@ const config: StorybookConfig = {
           // Ensure only one React instance is used to prevent "Cannot read properties of null (reading 'useContext')" errors
           react: resolve(__dirname, '../../../node_modules/react'),
           'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
+          // @grafana/data imports 'react-use/lib/usePrevious' which fails to resolve under pnpm
+          'react-use/lib/usePrevious': resolve(
+            __dirname,
+            '../node_modules/react-use/lib/usePrevious.js',
+          ),
         },
       },
       module: {
