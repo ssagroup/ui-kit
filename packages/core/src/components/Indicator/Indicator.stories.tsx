@@ -96,7 +96,7 @@ export const WithContent: StoryObj<typeof Indicator> = () => {
           +2100
         </Typography>
       }>
-      <Button size="large" block={true}>
+      <Button variant="primary" size="large" block={true}>
         Button
       </Button>
     </Indicator>

@@ -102,7 +102,9 @@ export const WithStatus: Story = {
     );
     return (
       <div>
-        <Button onClick={() => toggleStatus()}>Toggle status</Button>
+        <Button variant="primary" onClick={() => toggleStatus()}>
+          Toggle status
+        </Button>
         <FiltersMultiSelect
           {...args}
           status={status}

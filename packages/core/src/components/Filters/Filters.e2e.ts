@@ -28,8 +28,7 @@ test('Widgets: Filters - More button should be shown', async ({ page }) => {
     return window.getComputedStyle(el, ':before').content;
   });
   await expect(beforeContent).toEqual('"More"');
-  const buttonText = await triggerButton.innerText();
-  await expect(buttonText).toEqual('2');
+  await expect(page.getByTestId('trigger-notification')).toHaveText('2');
   const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--more-button__`;
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w900px].png`,
@@ -46,8 +45,7 @@ test('Widgets: Filters - More button should be shown when items selected', async
     return window.getComputedStyle(el, ':before').content;
   });
   expect(beforeContent).toEqual('"More"');
-  const buttonText = await triggerButton.innerText();
-  expect(buttonText).toEqual('4');
+  await expect(page.getByTestId('trigger-notification')).toHaveText('4');
   const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--more-button-items-selected__`;
   await page.screenshot({
     path: `${SCREENSHOT_PREFIX}[w390px].png`,
@@ -59,13 +57,12 @@ test('Widgets: Filters - More button count notification should be changed', asyn
 }) => {
   await gotoPage(page);
   await page.setViewportSize(SCREEN_SIZES[900]);
-  let triggerButton = await page.getByTestId('trigger-button');
+  let triggerButton = page.getByTestId('trigger-button');
   let beforeContent = await triggerButton.evaluate((el) => {
     return window.getComputedStyle(el, ':before').content;
   });
   expect(beforeContent).toEqual('"More"');
-  const buttonText = await triggerButton.innerText();
-  expect(buttonText).toEqual('2');
+  await expect(page.getByTestId('trigger-notification')).toHaveText('2');
 
   await page.getByText('Status: Running').click();
   await page.getByRole('button', { name: 'Stopped' }).click();
@@ -93,8 +90,7 @@ test('Widgets: Filters - Filter button should be shown when items not selected',
     return window.getComputedStyle(el, ':before').content;
   });
   expect(beforeContent).toEqual('"More"');
-  const buttonText = await triggerButton.innerText();
-  expect(buttonText).toEqual('1');
+  await expect(page.getByTestId('trigger-notification')).toHaveText('1');
 
   await page.getByTestId('trigger-button').click();
   /* cSpell:disable */

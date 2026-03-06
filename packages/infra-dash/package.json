@@ -48,6 +48,7 @@
     "@ssa-ui-kit/core": "workspace:^",
     "@ssa-ui-kit/hooks": "workspace:^",
     "@grafana/data": "12.0.1",
+    "react-use": "17.5.0",
     "react-error-boundary": "6.0.0",
     "react-grid-layout": "1.5.1",
     "react-resizable": "3.0.5",
