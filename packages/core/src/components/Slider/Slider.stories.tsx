@@ -12,8 +12,12 @@ import {
 
 const WRAPPER = {
   padding: '40px 32px',
-  background: '#eef1f7',
   borderRadius: 16,
+} as const;
+
+const WRAPPER_WITH_BG = {
+  ...WRAPPER,
+  background: 'rgb(238, 241, 247)',
 } as const;
 
 export default {
@@ -363,7 +367,7 @@ export const WithInputsControlled: Story = {
   render: () => {
     const [value, setValue] = useState<[number, number]>([100, 800]);
     return (
-      <div style={WRAPPER}>
+      <div style={WRAPPER_WITH_BG}>
         <Slider
           label="Budget range"
           min={0}

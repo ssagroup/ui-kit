@@ -93,8 +93,8 @@ export const SliderValueLabel = styled.div<{
   position: absolute;
   transform: translateX(-50%);
   left: ${({ leftCalc }) => leftCalc};
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 6px;
+  background: ${({ theme }) => theme.palette.secondary.light};
+  border-radius: 8px;
   padding: 4px 10px;
   font-size: 13px;
   font-weight: 500;
@@ -124,7 +124,7 @@ export const SliderTrackBg = styled.div<{ size: SliderSize }>`
   top: 50%;
   transform: translateY(-50%);
   border-radius: 100px;
-  background: ${({ theme }) => theme.colors.greyFocused};
+  background: ${({ theme }) => theme.palette.secondary.main};
   ${({ size }) => trackSizeStyles[size]}
 `;
 
@@ -141,7 +141,7 @@ export const SliderTrackFill = styled.div<{
   left: ${({ left }) => left}%;
   width: ${({ width }) => width}%;
   background: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.greyFocused40 : theme.palette.primary.main};
+    isDisabled ? '#B2B3B5' : theme.palette.primary.light};
   pointer-events: none;
   ${({ size }) => trackSizeStyles[size]}
 `;
@@ -211,7 +211,7 @@ export const SliderRangeInput = styled('input', {
   }
 
   &:disabled::-webkit-slider-thumb {
-    background: ${({ theme }) => theme.colors.greyFocused};
+    background: #B2B3B5;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -233,7 +233,7 @@ export const SliderRangeInput = styled('input', {
   }
 
   &:disabled::-moz-range-thumb {
-    background: ${({ theme }) => theme.colors.greyFocused};
+    background: #B2B3B5;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -271,7 +271,7 @@ export const SliderMarkTick = styled.div`
 
 export const SliderMarkLabel = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.greyFocused};
+  color: ${({ theme }) => theme.colors.greyDarker};
   white-space: nowrap;
   user-select: none;
 `;

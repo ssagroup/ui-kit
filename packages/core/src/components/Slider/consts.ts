@@ -4,14 +4,14 @@ import { MainSizes } from '../../types/global';
 import { SliderSize } from './types';
 
 export const SLIDER_THUMB_SIZES: Record<SliderSize, number> = {
-  small: 14,
-  medium: 18,
-  large: 22,
+  small: 10,
+  medium: 14,
+  large: 20,
 };
 
 const TRACK_HEIGHTS: Record<SliderSize, number> = {
-  small: 4,
-  medium: 6,
+  small: 2,
+  medium: 4,
   large: 8,
 };
 
