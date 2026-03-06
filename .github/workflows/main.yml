@@ -42,13 +42,17 @@ jobs:
         include:
           - project: 'core'
             e2e: true
+            deploy: true
           - project: 'widgets'
             e2e: true
+            deploy: true
           - project: 'templates'
             # templates does not have e2e tests
             e2e: false
+            deploy: false
           - project: 'infra-dash'
             e2e: false
+            deploy: true
     steps:
       - name: Checkout source code (${{ github.ref }})
         uses: actions/checkout@v4
@@ -79,17 +83,17 @@ jobs:
           LOST_PIXEL_CONFIG_DIR: ./packages/${{ matrix.project }}
 
       - name: Install firebase tools
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && matrix.deploy }}
         run: curl -sL https://firebase.tools | sed s/latest/v14.11.0/ | bash
 
       - name: Authenticate with Google Cloud
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && matrix.deploy }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
 
       - name: Deploy Storybook (${{ matrix.project }})
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && matrix.deploy }}
         run: pnpm sb:deploy:${{ matrix.project }}
 
   lost-pixel-finalize:
