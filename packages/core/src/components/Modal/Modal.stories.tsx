@@ -145,7 +145,7 @@ export const InsideDrawer: StoryObj<typeof Modal> = () => {
           }
         `}
       />
-      <Button {...drawer.interactions.getReferenceProps()}>
+      <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
         {drawer.opened ? 'Close' : 'Open'} Drawer
       </Button>
       <Drawer.Root store={drawer}>
