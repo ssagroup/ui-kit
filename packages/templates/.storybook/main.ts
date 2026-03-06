@@ -68,8 +68,10 @@ const config: StorybookConfig = {
           );
           return fields;
         })(),
-        // Ensure webpack uses the 'import' condition from package.json exports field
-        conditionNames: ['import', 'require', 'node', 'default'],
+        // Ensure webpack uses the browser build via the 'browser' condition from package.json exports field
+        // 'browser' must come before 'node' so packages like @firebase/firestore resolve to their
+        // browser build (dist/index.esm2017.js or equivalent) rather than the gRPC Node.js build
+        conditionNames: ['browser', 'import', 'require', 'node', 'default'],
         // Ensure .mjs files are resolved
         extensions: ['.mjs', ...(config.resolve?.extensions || [])],
         // Allow webpack to resolve ESM imports without explicit file extensions
@@ -146,17 +148,8 @@ const config: StorybookConfig = {
             __dirname,
             '../../../node_modules/react-router-dom/dist/index.mjs',
           ),
-          // Force @firebase/firestore to use browser build (not Node.js build with gRPC-js)
-          '@firebase/firestore': resolve(
-            __dirname,
-            '../../../node_modules/@firebase/firestore/dist/index.esm2017.js',
-          ),
-          // Replace firebase/firestore with direct import to browser build
-          // This avoids the re-export chain that causes resolution issues
-          'firebase/firestore': resolve(
-            __dirname,
-            '../../../node_modules/@firebase/firestore/dist/index.esm2017.js',
-          ),
+          // @firebase/firestore and firebase/firestore are resolved via the package exports map
+          // using the 'browser' conditionName above — no hardcoded paths needed
         },
         // Prioritize root node_modules to ensure single instance of Emotion
         // This prevents multiple Emotion instances when importing from @ssa-ui-kit/widgets or @ssa-ui-kit/core
@@ -274,24 +267,15 @@ const config: StorybookConfig = {
         new ProvidePlugin({
           process: 'process/browser',
         }),
-        // Replace Node.js Firebase Firestore build with browser build
-        // This prevents gRPC-js from being loaded (which is Node.js only)
+        // Safety net: if the Node.js CJS build somehow gets imported directly, redirect to the browser CJS build
+        // With 'browser' in conditionNames above this should never trigger, but kept as a guard
         new NormalModuleReplacementPlugin(
           /@firebase\/firestore\/dist\/index\.node\.cjs\.js/,
           resolve(
             __dirname,
-            '../../../node_modules/@firebase/firestore/dist/index.esm2017.js',
+            '../../../node_modules/@firebase/firestore/dist/index.cjs.js',
           ),
         ),
-        // Handle firebase/firestore imports - replace with browser build
-        new NormalModuleReplacementPlugin(/^firebase\/firestore$/, function (
-          resource,
-        ) {
-          resource.request = resolve(
-            __dirname,
-            '../../../node_modules/@firebase/firestore/dist/index.esm2017.js',
-          );
-        }),
       ],
     };
 
