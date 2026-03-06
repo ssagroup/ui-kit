@@ -1,13 +1,5 @@
 import styled from '@emotion/styled';
 
-import { InputColors } from '@components/Input/types';
-
-const statusColor: Record<string, InputColors> = {
-  error: 'red',
-  success: 'greenLighter',
-  basic: 'greyDarker60',
-};
-
 export const FormHelperTextBase = styled.span<{
   status?: string;
 }>`
@@ -18,5 +10,9 @@ export const FormHelperTextBase = styled.span<{
 
   margin: 6px 0 0 4px;
 
-  color: ${({ theme, status = 'basic' }) => theme.colors[statusColor[status]]};
+  color: ${({ theme, status = 'basic' }) => {
+    if (status === 'error') return theme.palette.error.main;
+    if (status === 'success') return theme.palette.success.main;
+    return theme.colors.greyDarker60;
+  }};
 `;

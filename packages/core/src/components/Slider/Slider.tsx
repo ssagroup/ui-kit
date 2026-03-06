@@ -29,13 +29,13 @@ import {
  * - **With inputs** (`withInputs`) — two editable number fields above the
  *   track; floating labels are hidden.
  *
- * ## Thumb-crossing behaviour
+ * ## Thumb-crossing behavior
  * - **Default** (`disableSwap` omitted) — thumbs cross freely; values are
  *   re-sorted automatically so the fill always sits between them.
  * - **`disableSwap`** — the active thumb stops at the other thumb (or
  *   `minDistance` away). Use with `minDistance` to enforce a minimum gap.
  *
- * ## Customisation
+ * ## Customization
  * All inner styled sub-elements are exported from `@ssa-ui-kit/core` as
  * `Slider*` components. Pass them as selectors inside the `css` prop or
  * target them by their generated class names via `className`.
@@ -44,7 +44,7 @@ import {
  * import { css } from '@emotion/react';
  * import { Slider, SliderTrackFill, SliderRangeInput } from '@ssa-ui-kit/core';
  *
- * // Override fill colour via the css prop
+ * // Override fill color via the css prop
  * <Slider
  *   css={css`
  *     ${SliderTrackFill} { background: #52c587; }
@@ -214,7 +214,7 @@ export const Slider = ({
   const minPct = range === 0 ? 0 : ((currentValue[0] - min) / range) * 100;
   const maxPct = range === 0 ? 100 : ((currentValue[1] - min) / range) * 100;
 
-  // When thumbs converge, bring the min input forward so both stay grabbable
+  // When thumbs converge, bring the min input forward so both stay draggable
   const minZIndex = minPct >= maxPct ? 3 : 2;
   const maxZIndex = minPct >= maxPct ? 2 : 3;
 

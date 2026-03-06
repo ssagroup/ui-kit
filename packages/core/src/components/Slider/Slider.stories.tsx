@@ -287,12 +287,12 @@ export const Controlled: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Customisation — css prop
+// Customization — css prop
 // Sub-elements are exported as Slider* named components and can be used
 // directly as CSS-in-JS selectors inside the css prop.
 // ---------------------------------------------------------------------------
 
-export const CustomisationViaCssProp: Story = {
+export const CustomizationViaCssProp: Story = {
   render: () => (
     <div
       style={{ ...WRAPPER, display: 'flex', flexDirection: 'column', gap: 40 }}>
@@ -331,10 +331,10 @@ export const CustomisationViaCssProp: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Customisation — className
+// Customization — className
 // ---------------------------------------------------------------------------
 
-export const CustomisationViaClassName: Story = {
+export const CustomizationViaClassName: Story = {
   render: () => (
     <div style={WRAPPER}>
       <style>{`
@@ -350,7 +350,7 @@ export const CustomisationViaClassName: Story = {
 
       <div className="amber-slider">
         <Slider
-          label="Amber — customised via className"
+          label="Amber — customized via className"
           defaultValue={[25, 70]}
           valueLabelDisplay="on"
         />
