@@ -12,9 +12,14 @@ export default {
         disable: true,
       },
     },
+    color: {
+      options: ['primary', 'success', 'custom'],
+      control: { type: 'select' },
+    },
   },
   args: {
     text: 'label',
+    color: 'primary',
   },
 } as Meta<typeof Checkbox>;
 
@@ -79,6 +84,57 @@ export const AllStates = () => (
             <Checkbox text="label" {...props} id={id} />
           </span>{' '}
           <Checkbox {...props} id={`${id}-no-text`} />
+        </div>
+      </Fragment>
+    ))}
+  </Fragment>
+);
+
+const colors: Array<CheckboxProps['color']> = ['primary', 'success'];
+
+export const Colors = () => (
+  <Fragment>
+    {colors.map((color) => (
+      <Fragment key={color}>
+        <Typography variant="h6" css={{ textTransform: 'capitalize' }}>
+          {color}
+        </Typography>
+        <div style={{ display: 'flex', gap: '24px', marginBottom: '16px' }}>
+          <Checkbox
+            id={`${color}-unchecked`}
+            text="Unchecked"
+            color={color}
+            onChange={() => {
+              /* no-op */
+            }}
+          />
+          <Checkbox
+            id={`${color}-checked`}
+            text="Checked"
+            color={color}
+            initialState
+            onChange={() => {
+              /* no-op */
+            }}
+          />
+          <Checkbox
+            id={`${color}-indeterminate`}
+            text="Indeterminate"
+            color={color}
+            isIndeterminate
+            onChange={() => {
+              /* no-op */
+            }}
+          />
+          <Checkbox
+            id={`${color}-disabled`}
+            text="Disabled"
+            color={color}
+            isDisabled
+            onChange={() => {
+              /* no-op */
+            }}
+          />
         </div>
       </Fragment>
     ))}

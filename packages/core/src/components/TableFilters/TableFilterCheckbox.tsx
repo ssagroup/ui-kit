@@ -15,7 +15,7 @@ const getStyles = (theme: Theme) => css`
       border-radius: 2px;
     }
   }
-  ${checkboxStyles.blueInput(theme)}
+  ${checkboxStyles.primaryInput(theme)}
 `;
 
 export const TableFilterCheckbox = (props: CheckboxProps) => {

@@ -6,7 +6,7 @@ import { inputStatus } from './styles';
 
 export const InputError = styled.div`
   background: ${({ theme }) =>
-    `linear-gradient(117.5deg, ${theme.colors.red}, ${theme.colors.redLighter});`};
+    `linear-gradient(117.5deg, ${theme.palette.error.main}, ${theme.palette.error.light});`};
 
   svg {
     transform: rotateX(180deg);

@@ -13,16 +13,34 @@ import { CheckboxProps } from './types';
  * The component automatically manages indeterminate state and provides visual
  * feedback through icons (checkmark or minus for indeterminate).
  *
+ * Colors are driven by `theme.palette`:
+ * - `primary` (default) — blue; uses `palette.primary.light/main/dark` for
+ *   the resting border, checked fill, and hover fill. Disabled uses `greyFocused40`.
+ * - `success` — green; uses `palette.success.main/dark` for the border and fills.
+ *   Disabled uses `greyFocused40`.
+ * - `custom` — unstyled; apply your own colors via `className` or the `css` prop.
+ *
  * @category Form Controls
  * @subcategory Input
  *
  * @example
  * ```tsx
- * // Basic usage
+ * // Basic usage (primary / blue by default)
  * <Checkbox
  *   id="accept-terms"
  *   text="Accept terms and conditions"
  *   onChange={(checked) => handleChange(checked)}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Green (success) variant
+ * <Checkbox
+ *   id="success-checkbox"
+ *   text="Task completed"
+ *   color="success"
+ *   onChange={handleChange}
  * />
  * ```
  *

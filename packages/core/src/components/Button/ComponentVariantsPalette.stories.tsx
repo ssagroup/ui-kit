@@ -26,9 +26,9 @@ const buttonVariants = [
 const chipColors = [
   'default',
   'primary',
+  'secondary',
   'success',
   'error',
-  'info',
   'warning',
 ] as const;
 
@@ -50,11 +50,11 @@ const meta = {
   component: () => {
     const theme = useTheme();
     const [checkboxStates, setCheckboxStates] = useState({
-      green: false,
-      blue: false,
+      primary: false,
+      success: false,
       custom: false,
     });
-    const [radioValue, setRadioValue] = useState('default');
+    const [radioValue, setRadioValue] = useState('primary');
 
     return (
       <div
@@ -360,7 +360,7 @@ const meta = {
             Pattern 4: Simple Color Options (Checkbox)
           </Typography>
           <Typography variant="h6" color={theme.colors.greyDarker80} gutter>
-            Checkbox component supports limited color options: green, blue,
+            Checkbox component supports limited color options: primary, success,
             custom
           </Typography>
           <div
@@ -371,52 +371,33 @@ const meta = {
               backgroundColor: theme.colors.white,
               marginTop: '24px',
             }}>
-            <Wrapper css={{ gap: '24px', flexDirection: 'column' }}>
-              <div
-                css={{
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}>
-                <Checkbox
-                  text="Green (default)"
-                  color="green"
-                  externalState={checkboxStates.green}
-                  onChange={(checked) =>
-                    setCheckboxStates({ ...checkboxStates, green: checked })
-                  }
-                />
-              </div>
-              <div
-                css={{
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}>
-                <Checkbox
-                  text="Blue"
-                  color="blue"
-                  externalState={checkboxStates.blue}
-                  onChange={(checked) =>
-                    setCheckboxStates({ ...checkboxStates, blue: checked })
-                  }
-                />
-              </div>
-              <div
-                css={{
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}>
-                <Checkbox
-                  text="Custom"
-                  color="custom"
-                  externalState={checkboxStates.custom}
-                  onChange={(checked) =>
-                    setCheckboxStates({ ...checkboxStates, custom: checked })
-                  }
-                />
-              </div>
+            <Wrapper
+              alignItems="start"
+              css={{ gap: '24px', flexDirection: 'column' }}>
+              <Checkbox
+                text="Primary (default)"
+                color="primary"
+                externalState={checkboxStates.primary}
+                onChange={(checked) =>
+                  setCheckboxStates({ ...checkboxStates, primary: checked })
+                }
+              />
+              <Checkbox
+                text="Success"
+                color="success"
+                externalState={checkboxStates.success}
+                onChange={(checked) =>
+                  setCheckboxStates({ ...checkboxStates, success: checked })
+                }
+              />
+              <Checkbox
+                text="Custom"
+                color="custom"
+                externalState={checkboxStates.custom}
+                onChange={(checked) =>
+                  setCheckboxStates({ ...checkboxStates, custom: checked })
+                }
+              />
             </Wrapper>
           </div>
         </div>
@@ -466,17 +447,16 @@ const meta = {
           </div>
         </div>
 
-        {/* Pattern 6: Color Object */}
+        {/* Pattern 6: Simple Color Options (Radio) */}
         <div
           css={{
             marginTop: '48px',
           }}>
           <Typography variant="h2" gutter>
-            Pattern 6: Color Object (Radio)
+            Pattern 6: Simple Color Options (Radio)
           </Typography>
           <Typography variant="h6" color={theme.colors.greyDarker80} gutter>
-            Radio component accepts a colors object with multiple color
-            properties
+            Radio component supports color options: primary, success, custom
           </Typography>
           <div
             css={{
@@ -486,26 +466,36 @@ const meta = {
               backgroundColor: theme.colors.white,
               marginTop: '24px',
             }}>
-            <Wrapper css={{ gap: '24px', flexDirection: 'column' }}>
+            <Wrapper css={{ gap: '24px' }}>
               <Radio
                 name="radio-example"
-                value="default"
-                text="Default colors"
-                isChecked={radioValue === 'default'}
+                value="primary"
+                text="Primary (default)"
+                color="primary"
+                isChecked={radioValue === 'primary'}
+                onChange={(value) => setRadioValue(value)}
+              />
+              <Radio
+                name="radio-example"
+                value="success"
+                text="Success"
+                color="success"
+                isChecked={radioValue === 'success'}
                 onChange={(value) => setRadioValue(value)}
               />
               <Radio
                 name="radio-example"
                 value="custom"
-                text="Custom colors"
-                isChecked={radioValue === 'custom'}
-                onChange={(value) => setRadioValue(value)}
+                text="Custom"
+                color="custom"
                 colors={{
                   default: '#4ECDC4',
                   hovered: '#45B8B0',
                   disabled: '#CCCCCC',
                   focusShadow: '#4ECDC4',
                 }}
+                isChecked={radioValue === 'custom'}
+                onChange={(value) => setRadioValue(value)}
               />
             </Wrapper>
           </div>
@@ -566,7 +556,7 @@ const meta = {
                   Pattern 4: Simple Color Options
                 </Typography>
                 <Typography variant="h6" color={theme.colors.greyDarker80}>
-                  <strong>Checkbox</strong> - Uses color prop: green, blue,
+                  <strong>Checkbox</strong> - Uses color prop: primary, success,
                   custom
                 </Typography>
               </div>
@@ -584,8 +574,8 @@ const meta = {
                   Pattern 6: Color Object
                 </Typography>
                 <Typography variant="h6" color={theme.colors.greyDarker80}>
-                  <strong>Radio</strong> - Uses colors object with default,
-                  hovered, disabled, focusShadow properties
+                  <strong>Radio</strong> - Uses color prop: primary, success,
+                  custom (custom accepts a colors object)
                 </Typography>
               </div>
             </div>

@@ -10,20 +10,23 @@ import { RadioProps } from './types';
  * Radio - Radio button component for single selection
  *
  * A radio button component for selecting a single option from a group.
- * Supports controlled and uncontrolled states, custom styling, and full
- * accessibility. Displays a radio icon that changes appearance based on
- * checked state and hover interactions.
+ * Supports controlled and uncontrolled states, palette-based color variants,
+ * and full accessibility. Displays a radio icon that changes appearance based
+ * on checked state and hover interactions.
  *
- * Typically used within RadioGroup component for managing selection state
- * across multiple radio buttons, but can also be used standalone with
- * controlled state management.
+ * Colors are sourced from `theme.palette` for consistency with Button and
+ * Checkbox. Pass `color="custom"` together with the `colors` object to supply
+ * arbitrary CSS color values.
+ *
+ * Typically used within RadioGroup for managing selection state across
+ * multiple radio buttons, but can also be used standalone.
  *
  * @category Form Controls
  * @subcategory Input
  *
  * @example
  * ```tsx
- * // Basic radio button
+ * // Default (primary / blue)
  * <Radio
  *   id="option1"
  *   name="choice"
@@ -35,29 +38,31 @@ import { RadioProps } from './types';
  *
  * @example
  * ```tsx
- * // Controlled radio button
- * const [selected, setSelected] = useState('option1');
+ * // Success (green) variant
  * <Radio
- *   name="theme"
- *   value="dark"
- *   text="Dark Mode"
- *   isChecked={selected === 'dark'}
- *   onChange={setSelected}
+ *   name="status"
+ *   value="active"
+ *   text="Active"
+ *   color="success"
+ *   onChange={handleChange}
  * />
  * ```
  *
  * @example
  * ```tsx
- * // Radio with custom colors
+ * // Custom color escape hatch
  * <Radio
  *   name="priority"
  *   value="high"
  *   text="High Priority"
+ *   color="custom"
  *   colors={{
  *     default: '#ff0000',
  *     hovered: '#cc0000',
- *     disabled: '#cccccc'
+ *     disabled: '#cccccc',
+ *     focusShadow: 'rgba(255,0,0,0.25)',
  *   }}
+ *   onChange={handleChange}
  * />
  * ```
  *
@@ -77,6 +82,7 @@ const Radio = ({
   isDisabled,
   isRequired,
   text,
+  color = 'primary',
   colors,
   className,
   onChange,
@@ -87,15 +93,33 @@ const Radio = ({
   const [isHovered, setIsHovered] = useState(false);
   const radioId = id || autoGenId;
 
-  const disabledColor = colors?.disabled || theme.colors.greyFocused40;
-  const hoveredColor = colors?.hovered || theme.colors.green60;
-  const defaultColor = colors?.default || theme.colors.green;
+  let defaultColor: string;
+  let hoveredColor: string;
+  let disabledColor: string;
+  let focusShadowColor: string | undefined;
+
+  if (color === 'primary') {
+    defaultColor = theme.palette.primary.main;
+    hoveredColor = theme.palette.primary.dark;
+    disabledColor = theme.colors.greyFocused40 as string;
+    focusShadowColor = theme.colors.blue20;
+  } else if (color === 'success') {
+    defaultColor = theme.palette.success.main;
+    hoveredColor = theme.palette.success.dark;
+    disabledColor = theme.colors.greyFocused40 as string;
+    focusShadowColor = theme.colors.green40;
+  } else {
+    defaultColor = colors?.default || theme.palette.primary.main;
+    hoveredColor = colors?.hovered || theme.palette.primary.dark;
+    disabledColor = colors?.disabled || (theme.colors.greyFocused40 as string);
+    focusShadowColor = colors?.focusShadow;
+  }
 
   return (
     <RadioBase
       htmlFor={radioId}
       className={className}
-      focusShadowColor={colors?.focusShadow}
+      focusShadowColor={focusShadowColor}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <input

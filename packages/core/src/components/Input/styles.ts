@@ -10,7 +10,7 @@ export const basic = (theme: Theme) =>
         borderColor: theme.colors.greyDarker80,
       },
       '&:focus': {
-        borderColor: theme.colors.blueRoyal,
+        borderColor: theme.palette.primary.main,
       },
     },
   });
@@ -18,12 +18,12 @@ export const basic = (theme: Theme) =>
 export const error = (theme: Theme) =>
   css({
     [`& ${InputBase}`]: {
-      border: `1px solid ${theme.colors.dangerShades300}`,
+      border: `1px solid ${theme.palette.error.light}`,
       '&:hover': {
-        borderColor: theme.colors.dangerShades500,
+        borderColor: theme.palette.error.main,
       },
       '&:focus': {
-        borderColor: theme.colors.dangerShades700,
+        borderColor: theme.palette.error.dark,
       },
     },
   });
@@ -31,16 +31,16 @@ export const error = (theme: Theme) =>
 export const success = (theme: Theme) =>
   css({
     [`& ${InputBase}`]: {
-      border: `1px solid ${theme.colors.green}`,
+      border: `1px solid ${theme.palette.success.light}`,
       '&:hover': {
-        borderColor: theme.colors.successShades500,
+        borderColor: theme.palette.success.main,
       },
       '&:focus': {
-        borderColor: theme.colors.successShades700,
+        borderColor: theme.palette.success.dark,
       },
     },
     svg: {
-      stroke: `${theme.colors.green}`,
+      stroke: theme.palette.success.main,
     },
   });
 

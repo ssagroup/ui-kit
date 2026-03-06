@@ -2,12 +2,20 @@
  * Props for the Radio component
  *
  * Radio button component for single selection from a group of options.
- * Supports controlled and uncontrolled states, custom colors, and accessibility
- * features. Typically used within RadioGroup for managing selection state.
+ * Supports controlled and uncontrolled states, palette-based color variants,
+ * and full accessibility. Typically used within RadioGroup for managing
+ * selection state.
+ *
+ * Colors are driven by `theme.palette`:
+ * - `primary` (default) — blue; uses `palette.primary.main` for resting/checked,
+ *   `palette.primary.dark` for hover.
+ * - `success` — green; uses `palette.success.main` for resting/checked,
+ *   `palette.success.dark` for hover.
+ * - `custom` — no built-in color; provide exact values via the `colors` object.
  *
  * @example
  * ```tsx
- * // Basic radio button
+ * // Basic radio button (primary / blue by default)
  * <Radio
  *   id="option1"
  *   name="choice"
@@ -19,13 +27,31 @@
  *
  * @example
  * ```tsx
- * // Controlled radio button
+ * // Success (green) variant
  * <Radio
- *   name="theme"
- *   value="dark"
- *   text="Dark Mode"
- *   isChecked={selectedTheme === 'dark'}
- *   onChange={(value) => setSelectedTheme(value)}
+ *   name="status"
+ *   value="active"
+ *   text="Active"
+ *   color="success"
+ *   onChange={(value) => handleChange(value)}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Custom color via escape hatch
+ * <Radio
+ *   name="priority"
+ *   value="high"
+ *   text="High Priority"
+ *   color="custom"
+ *   colors={{
+ *     default: '#ff0000',
+ *     hovered: '#cc0000',
+ *     disabled: '#cccccc',
+ *     focusShadow: 'rgba(255, 0, 0, 0.25)',
+ *   }}
+ *   onChange={(value) => handleChange(value)}
  * />
  * ```
  */
@@ -85,17 +111,26 @@ export interface RadioProps {
   className?: string;
 
   /**
-   * Custom color scheme for the radio button
-   * Allows overriding default, hover, disabled, and focus colors
+   * Palette-based color variant.
+   * - `primary` — blue (uses `palette.primary`)
+   * - `success` — green (uses `palette.success`)
+   * - `custom` — unstyled; supply exact colors via the `colors` prop
+   * @default 'primary'
+   */
+  color?: 'primary' | 'success' | 'custom';
+
+  /**
+   * Fine-grained color overrides — only applied when `color="custom"`.
+   * Allows overriding every interactive state independently.
    */
   colors?: {
-    /** Default color when unchecked */
+    /** Resting (and checked) icon color */
     default?: string;
-    /** Hover color */
+    /** Hover icon color */
     hovered?: string;
-    /** Disabled state color */
+    /** Disabled state icon color */
     disabled?: string;
-    /** Focus ring shadow color */
+    /** Focus ring drop-shadow color */
     focusShadow?: string;
   };
 }

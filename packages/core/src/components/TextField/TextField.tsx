@@ -6,12 +6,13 @@ import Textarea from '@components/Textarea';
 import { TextFieldProps } from './types';
 
 /**
- * TextField - Unified text input component (Input or Textarea)
+ * TextField - Ready-to-use text input (single- or multi-line) with label and validation UI.
  *
- * A flexible text field component that can render as either a single-line Input
- * or multi-line Textarea based on the `multirow` prop. Includes built-in label,
- * helper text, validation error display, and optional character counting.
- * Automatically manages status states (basic, error, success) based on props.
+ * Purpose: one component for text inputs with built-in label, helper text, validation
+ * error/success display, and optional character counting. Renders as Input or Textarea
+ * based on the `multirow` prop. Automatically manages status (basic, error, success)
+ * from props. Use when you want a complete text field without composing Field primitives;
+ * use Field when you need custom layout or non-text controls.
  *
  * @category Form Controls
  * @subcategory Input

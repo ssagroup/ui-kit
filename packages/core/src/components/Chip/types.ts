@@ -11,20 +11,20 @@ import { IconProps } from '@components/Icon/types';
 export type ChipVariant = 'filled' | 'outlined';
 
 /**
- * Color theme for Chip component
- * - `default`: Neutral gray color scheme
- * - `primary`: Primary brand color
- * - `success`: Green success color
- * - `error`: Red error color
- * - `info`: Blue informational color
- * - `warning`: Orange/yellow warning color
+ * Color theme for Chip component — aligns with `theme.palette`.
+ * - `default`:    Neutral: white bg (outlined) / greyLighter bg (filled)
+ * - `primary`:    Blue — uses `theme.palette.primary`
+ * - `secondary`:  Grey — uses `theme.palette.secondary`
+ * - `success`:    Green — uses `theme.palette.success`
+ * - `error`:      Red — uses `theme.palette.error`
+ * - `warning`:    Orange — uses `theme.palette.warning`
  */
 export type ChipColor =
   | 'default'
   | 'primary'
+  | 'secondary'
   | 'success'
   | 'error'
-  | 'info'
   | 'warning';
 
 /**
@@ -102,7 +102,8 @@ export interface ChipProps extends CommonProps {
   variant?: ChipVariant;
 
   /**
-   * Color theme for the chip
+   * Color theme for the chip. Semantic colors read from `theme.palette`,
+   * so palette overrides in a custom theme apply automatically.
    * @default 'default'
    */
   color?: ChipColor;

@@ -30,6 +30,8 @@ export { default as Switch } from './Switch';
 export * from './Switch';
 export type * from './Switch/types';
 
+export * from './Slider';
+
 export { default as Radio } from './Radio';
 export type { RadioProps } from './Radio/types';
 export { default as RadioGroup } from './RadioGroup';

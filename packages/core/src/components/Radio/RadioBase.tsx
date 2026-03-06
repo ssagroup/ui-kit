@@ -12,10 +12,14 @@ export const RadioBase = styled(Label)<{ focusShadowColor?: string }>`
     cursor: default;
   }
 
+  svg {
+    flex-shrink: 0;
+  }
+
   input:focus + svg {
     filter: drop-shadow(
       ${({ theme, focusShadowColor }) =>
-        `-4px 4px 10px ${focusShadowColor || theme.colors.green40}`}
+        `-4px 4px 10px ${focusShadowColor || theme.colors.blue20}`}
     );
   }
 

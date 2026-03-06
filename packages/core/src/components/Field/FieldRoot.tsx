@@ -36,10 +36,17 @@ export interface FieldRootProps
 }
 
 /**
- * Field.Root - Root container for form field components
+ * Field - Compound layout primitives for building accessible form fields.
  *
- * Provides context and styling container for form fields. Manages validation status,
- * disabled state, and focus forwarding behavior. Use with Field.Label, Field.Control,
+ * Purpose: use when you need full control over field layout or when building custom
+ * form widgets (e.g. JsonSchemaForm, custom inputs). Field does not render an input
+ * itself — you compose Field.Root, Field.Label, Field.Control, Field.Description,
+ * Field.Error, and Field.Success around Input, Textarea, or other controls. Use
+ * TextField for a ready-made text input with label and validation UI.
+ *
+ * Field.Root - Root container for form field components. Provides context and
+ * styling container for form fields. Manages validation status, disabled state,
+ * and focus forwarding behavior. Use with Field.Label, Field.Control,
  * Field.Description, Field.Error, and Field.Success components.
  *
  * @category Form Controls
@@ -86,6 +93,11 @@ export interface FieldRootProps
  * @see {@link Field.Description} - For helper text
  * @see {@link Field.Error} - For error messages
  * @see {@link Field.Success} - For success messages
+ *
+ * @accessibility
+ * - Label/control association via htmlFor on Field.Label
+ * - Status (error/success) and disabled flow from context to child components
+ * - Optional focus forwarding from Field.Control to the inner input
  */
 export const FieldRoot = ({ children, ...props }: FieldRootProps) => {
   const {

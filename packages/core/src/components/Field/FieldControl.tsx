@@ -21,8 +21,8 @@ const FieldControlBase = styled.div<FieldContextValue>`
   overflow: hidden;
   border: 1px solid
     ${({ status, theme }) => {
-      if (status === 'error') return theme.colors.red;
-      if (status === 'success') return theme.colors.greenLighter;
+      if (status === 'error') return theme.palette.error.main;
+      if (status === 'success') return theme.palette.success.light;
       return theme.colors.grey;
     }};
 
@@ -47,9 +47,9 @@ const FieldControlBase = styled.div<FieldContextValue>`
   &:active {
     border-color: ${({ status, disabled, theme }) => {
       if (disabled) return theme.colors.grey;
-      if (status === 'error') return theme.colors.red;
-      if (status === 'success') return theme.colors.greenLighter;
-      return theme.colors.blueRoyal;
+      if (status === 'error') return theme.palette.error.main;
+      if (status === 'success') return theme.palette.success.light;
+      return theme.palette.primary.main;
     }};
   }
 `;

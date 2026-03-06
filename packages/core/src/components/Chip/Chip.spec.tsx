@@ -80,10 +80,13 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" />);
 
       const chip = screen.getByText('Primary').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.blue);
+      expect(chip).toHaveStyleRule(
+        'background-color',
+        theme.palette.primary.main,
+      );
       expect(chip).toHaveStyleRule(
         'border',
-        `1px solid ${theme.colors.blue20}`,
+        `1px solid ${theme.palette.primary.main}`,
       );
       expect(chip).toHaveStyleRule('color', theme.colors.white);
     });
@@ -92,9 +95,15 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" variant="outlined" />);
 
       const chip = screen.getByText('Primary').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.blue20);
-      expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
-      expect(chip).toHaveStyleRule('color', theme.colors.blue);
+      expect(chip).toHaveStyleRule(
+        'background-color',
+        theme.palette.primary.light,
+      );
+      expect(chip).toHaveStyleRule(
+        'border',
+        `1px solid ${theme.palette.primary.main}`,
+      );
+      expect(chip).toHaveStyleRule('color', theme.palette.primary.dark);
     });
 
     it('Renders title with primary color', () => {
@@ -121,10 +130,13 @@ describe('Chip', () => {
       render(<Chip label="Warning" color="warning" />);
 
       const chip = screen.getByText('Warning').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.yellow);
+      expect(chip).toHaveStyleRule(
+        'background-color',
+        theme.palette.warning.main,
+      );
       expect(chip).toHaveStyleRule(
         'border',
-        `1px solid ${theme.colors.yellow20}`,
+        `1px solid ${theme.palette.warning.main}`,
       );
       expect(chip).toHaveStyleRule('color', theme.colors.white);
     });

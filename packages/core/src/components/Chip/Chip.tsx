@@ -17,24 +17,35 @@ import { VARIANTS, COLORS, mapSizes, ICON_SIZES } from './constants';
 import { getVariantColors } from './helpers';
 
 /**
- * Chip - Compact component for tags, labels, and removable items
+ * Chip - Compact component for tags, labels, and removable items.
  *
- * A versatile chip component for displaying compact pieces of information such as tags,
- * filters, user selections, or status indicators. Supports icons, avatars, click actions,
- * and delete functionality. Fully accessible with keyboard navigation and ARIA support.
+ * Colors are driven by `theme.palette` for semantic values, allowing palette
+ * overrides in a custom theme to flow through automatically.
+ *
+ * ### Color / Palette mapping
+ * - `default`   — neutral: white bg (outlined) / greyLighter bg (filled), uses `theme.colors`
+ * - `primary`   — blue, uses `theme.palette.primary`
+ * - `secondary` — grey, uses `theme.palette.secondary` (dark text)
+ * - `success`   — green, uses `theme.palette.success`
+ * - `error`     — red, uses `theme.palette.error`
+ * - `warning`   — orange, uses `theme.palette.warning`
+ *
+ * ### Variant / Palette token mapping
+ * - `filled`   — `palette.main` background, white text (dark for `secondary`)
+ * - `outlined` — `palette.light` background, `palette.main` border, `palette.dark` text
  *
  * @category Components
  * @subcategory Display
  *
  * @example
  * ```tsx
- * // Basic chip
+ * // Basic chip — default color, filled
  * <Chip label="React" />
  * ```
  *
  * @example
  * ```tsx
- * // Removable tag
+ * // Removable palette-colored tag
  * <Chip
  *   label="TypeScript"
  *   onDelete={(e) => removeTag('typescript')}
@@ -44,18 +55,19 @@ import { getVariantColors } from './helpers';
  *
  * @example
  * ```tsx
- * // Clickable chip with icon
+ * // Outlined chip using palette light/main/dark
  * <Chip
  *   label="Filter: Active"
  *   icon="filter"
  *   onClick={() => openFilterDialog()}
  *   variant="outlined"
+ *   color="secondary"
  * />
  * ```
  *
  * @example
  * ```tsx
- * // Chip with avatar (e.g., user mention)
+ * // Chip with avatar
  * <Chip
  *   label="John Doe"
  *   avatar={<Avatar size={20} image="/avatar.jpg" />}

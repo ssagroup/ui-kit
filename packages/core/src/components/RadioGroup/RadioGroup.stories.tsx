@@ -13,19 +13,14 @@ export default {
   component: RadioGroup,
   argTypes: {
     className: {
-      control: {
-        disable: true,
-      },
+      control: { disable: true },
     },
     externalState: {
-      control: {
-        disable: true,
-      },
+      control: { disable: true },
     },
-    control: {
-      control: {
-        disable: true,
-      },
+    color: {
+      options: ['primary', 'success', 'custom'],
+      control: { type: 'select' },
     },
   },
   parameters: {
@@ -36,6 +31,7 @@ export default {
     },
   },
   args: {
+    color: 'primary',
     onChange() {
       /* no-op */
     },

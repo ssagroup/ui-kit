@@ -79,7 +79,7 @@ exports[`Form (rjsf) Render form 1`] = `
 
 .emotion-5:focus-within,
 .emotion-5:active {
-  border-color: rgba(72, 125, 225, 1);
+  border-color: rgb(65, 120, 225);
 }
 
 .emotion-6 {
@@ -100,7 +100,7 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-6 .undefined:focus {
-  border-color: rgba(72, 125, 225, 1);
+  border-color: rgb(65, 120, 225);
 }
 
 .emotion-7 {
@@ -379,39 +379,31 @@ exports[`Form (rjsf) Render form 1`] = `
   z-index: 1;
 }
 
-.emotion-40 input:focus+div {
-  box-shadow: -4px 4px 10px rgba(82, 197, 135, 0.4);
-}
-
 .emotion-40 input:disabled+div,
 .emotion-40 input:indeterminate:disabled+div {
-  background: rgba(210, 212, 219, 1);
+  background: rgba(210, 212, 219, 0.4);
 }
 
 .emotion-40 input:not(:checked, :indeterminate, :disabled)+div::before {
-  border: 1.5px solid rgba(82, 197, 135, 1);
+  border: 1.5px solid rgb(117, 153, 222);
 }
 
 .emotion-40 input:not(:checked, :indeterminate, :disabled)+div:hover::before {
-  border: 1.5px solid rgba(82, 197, 135, 0.6);
+  border: 1.5px solid rgb(65, 120, 225);
 }
 
 .emotion-40 input:not(:disabled):checked+div::before,
 .emotion-40 input:not(:disabled):indeterminate+div::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 1) 17.12%,
-        rgba(82, 197, 135, 1) 85.53%
-      );
+  background: rgb(65, 120, 225);
 }
 
 .emotion-40 input:not(:disabled):checked+div:hover::before,
 .emotion-40 input:not(:disabled):indeterminate+div:hover::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 0.6) 17.12%,
-        rgba(82, 197, 135, 0.6) 85.53%
-      );
+  background: rgb(14, 75, 193);
+}
+
+.emotion-40 input:not(:disabled):checked+div+span {
+  color: rgba(21, 21, 21, 1);
 }
 
 .emotion-40 input {
@@ -472,12 +464,18 @@ exports[`Form (rjsf) Render form 1`] = `
   cursor: default;
 }
 
+.emotion-45 svg {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
 .emotion-45 input:focus+svg {
   -webkit-filter: drop-shadow(
-        -4px 4px 10px rgba(82, 197, 135, 0.4)
+        -4px 4px 10px rgba(65, 120, 225, 0.2)
       );
   filter: drop-shadow(
-        -4px 4px 10px rgba(82, 197, 135, 0.4)
+        -4px 4px 10px rgba(65, 120, 225, 0.2)
       );
 }
 
@@ -563,39 +561,31 @@ exports[`Form (rjsf) Render form 1`] = `
   z-index: 1;
 }
 
-.emotion-49 input:focus+div {
-  box-shadow: -4px 4px 10px rgba(82, 197, 135, 0.4);
-}
-
 .emotion-49 input:disabled+div,
 .emotion-49 input:indeterminate:disabled+div {
-  background: rgba(210, 212, 219, 1);
+  background: rgba(210, 212, 219, 0.4);
 }
 
 .emotion-49 input:not(:checked, :indeterminate, :disabled)+div::before {
-  border: 1.5px solid rgba(82, 197, 135, 1);
+  border: 1.5px solid rgb(117, 153, 222);
 }
 
 .emotion-49 input:not(:checked, :indeterminate, :disabled)+div:hover::before {
-  border: 1.5px solid rgba(82, 197, 135, 0.6);
+  border: 1.5px solid rgb(65, 120, 225);
 }
 
 .emotion-49 input:not(:disabled):checked+div::before,
 .emotion-49 input:not(:disabled):indeterminate+div::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 1) 17.12%,
-        rgba(82, 197, 135, 1) 85.53%
-      );
+  background: rgb(65, 120, 225);
 }
 
 .emotion-49 input:not(:disabled):checked+div:hover::before,
 .emotion-49 input:not(:disabled):indeterminate+div:hover::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 0.6) 17.12%,
-        rgba(82, 197, 135, 0.6) 85.53%
-      );
+  background: rgb(14, 75, 193);
+}
+
+.emotion-49 input:not(:disabled):checked+div+span {
+  color: rgba(21, 21, 21, 1);
 }
 
 .emotion-49 input {
@@ -1719,7 +1709,7 @@ exports[`Form (rjsf) Render form 1`] = `
                   Radio on
                 </title>
                 <rect
-                  fill="rgba(82, 197, 135, 1)"
+                  fill="rgb(65, 120, 225)"
                   height="18.6"
                   rx="9.3"
                   width="18.6"
@@ -1729,7 +1719,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 <rect
                   height="18.6"
                   rx="9.3"
-                  stroke="rgba(82, 197, 135, 1)"
+                  stroke="rgb(65, 120, 225)"
                   stroke-width="1.4"
                   width="18.6"
                   x="0.7"
@@ -1738,7 +1728,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 <circle
                   cx="10"
                   cy="10.7"
-                  fill="rgba(82, 197, 135, 1)"
+                  fill="rgb(65, 120, 225)"
                   r="5"
                 />
               </svg>
@@ -1779,7 +1769,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 <rect
                   height="18.6"
                   rx="9.3"
-                  stroke="rgba(82, 197, 135, 1)"
+                  stroke="rgb(65, 120, 225)"
                   stroke-width="1.4"
                   width="18.6"
                   x="0.7"
