@@ -25,7 +25,9 @@ export const Default: Story = {
 
     return (
       <div>
-        <Button onClick={() => toggleStatus()}>Toggle status</Button>
+        <Button variant="primary" onClick={() => toggleStatus()}>
+          Toggle status
+        </Button>
         <Button onClick={() => toggleDisabled()}>Toggle disabled</Button>
         <Field.Root
           css={{ marginTop: '10px' }}
