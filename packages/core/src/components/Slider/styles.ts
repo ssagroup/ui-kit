@@ -211,7 +211,7 @@ export const SliderRangeInput = styled('input', {
   }
 
   &:disabled::-webkit-slider-thumb {
-    background: #B2B3B5;
+    background: #b2b3b5;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -233,7 +233,7 @@ export const SliderRangeInput = styled('input', {
   }
 
   &:disabled::-moz-range-thumb {
-    background: #B2B3B5;
+    background: #b2b3b5;
     cursor: not-allowed;
     box-shadow: none;
   }
