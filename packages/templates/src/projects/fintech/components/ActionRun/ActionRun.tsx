@@ -68,7 +68,6 @@ export const ActionRun = ({
       }}
       placement="top-start">
       <PopoverTrigger
-        variant="custom"
         isDisabled={isDisabled}
         dataTestId="run-reason-trigger-button"
         css={{
@@ -131,7 +130,7 @@ export const ActionRun = ({
                   }}
                 />
                 <Button
-                  variant="info"
+                  variant="primary"
                   type="submit"
                   css={{
                     width: 90,

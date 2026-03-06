@@ -1,11 +1,11 @@
 import { NotificationCardProps } from '@components/NotificationCard';
 
 export interface NotificationMenuProps {
-  trigger: string | JSX.Element;
+  trigger: string | React.JSX.Element;
   notifications: Array<NotificationCardProps>;
   children: React.ReactNode;
   onClick?: () => void;
   isLoading: boolean;
-  leftButton?: string | JSX.Element | null;
-  rightButton?: string | JSX.Element;
+  leftButton?: string | React.JSX.Element | null;
+  rightButton?: string | React.JSX.Element;
 }

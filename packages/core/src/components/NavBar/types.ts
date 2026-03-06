@@ -7,7 +7,7 @@ export interface NavBarProps {
 export type CustomIconProps = (props: {
   className?: string;
   showIconTooltip?: boolean;
-}) => JSX.Element;
+}) => React.JSX.Element;
 
 export type NavBarExtendedItem = {
   CustomIcon?: CustomIconProps;

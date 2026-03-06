@@ -31,10 +31,17 @@ const meta = {
     },
     color: {
       control: 'select',
-      options: ['default', 'primary', 'success', 'error', 'info', 'warning'],
+      options: [
+        'default',
+        'primary',
+        'secondary',
+        'success',
+        'error',
+        'warning',
+      ],
       table: {
         type: {
-          summary: 'default | primary | success | error | info | warning',
+          summary: 'default | primary | secondary | success | error | warning',
         },
         defaultValue: { summary: 'default' },
       },
@@ -98,8 +105,8 @@ export const Variants = () => (
 export const Colors = () => {
   const variants: Array<'filled' | 'outlined'> = ['filled', 'outlined'];
   const colors: Array<
-    'default' | 'primary' | 'success' | 'error' | 'info' | 'warning'
-  > = ['default', 'primary', 'success', 'error', 'info', 'warning'];
+    'default' | 'primary' | 'secondary' | 'success' | 'error' | 'warning'
+  > = ['default', 'primary', 'secondary', 'success', 'error', 'warning'];
 
   return (
     <div css={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -285,7 +292,7 @@ export const WithTitle = () => (
           showIcon={false}
         />
         <Chip title="Success" label="Status" color="success" showIcon={false} />
-        <Chip title="Info" label="Message" color="info" />
+        <Chip title="Secondary" label="Message" color="secondary" />
       </Wrapper>
     </div>
   </div>

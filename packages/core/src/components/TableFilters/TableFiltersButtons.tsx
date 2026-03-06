@@ -25,7 +25,7 @@ export const TableFiltersButtons = ({
       <TableFiltersClearButton onClick={handleOnClear}>
         Clear
       </TableFiltersClearButton>
-      <Button css={baseButtonStyle} variant="info" type="submit">
+      <Button css={baseButtonStyle} variant="primary" type="submit">
         Apply
       </Button>
     </Wrapper>

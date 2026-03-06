@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 
 import Wrapper from '@components/Wrapper/Wrapper';
@@ -7,38 +7,85 @@ import { ButtonBase } from './ButtonBase';
 import {
   WhiteButtonText,
   GreyButtonText,
-  GreyLightButtonText,
   DisabledButtonText,
 } from './ButtonText';
 import { ButtonProps, ButtonVariants } from './types';
 import {
-  large,
-  medium,
-  small,
-  primary,
-  info,
-  secondary,
-  tertiary,
-  attention,
+  sizeStyles,
+  variantStyles,
   buttonBlock,
   iconWrapperLeft,
   iconWrapperRight,
 } from './styles';
 
-const mapSizes: MainSizes = {
-  small,
-  medium,
-  large,
-};
+const WHITE_TEXT_VARIANTS = new Set<keyof ButtonVariants>([
+  'primary',
+  'error',
+  'warning',
+  'success',
+]);
 
-const mapVariants: ButtonVariants = {
-  primary,
-  secondary,
-  tertiary,
-  info,
-  attention,
-};
-
+/**
+ * Button - Interactive button component for user actions.
+ *
+ * Variant colors are driven entirely by `theme.palette` — each variant reads
+ * `palette.<variant>.main` for the default background, `palette.<variant>.dark`
+ * for hover and active states, and `palette.<variant>.light` for focus state.
+ * Override any palette entry in a custom theme to restyle a variant without
+ * affecting other components.
+ *
+ * ### Variants (default: `tertiary`)
+ * - `primary`   — blue, high emphasis, white text
+ * - `secondary` — grey, medium emphasis, dark text
+ * - `tertiary`  — transparent background, dark text, focus outline only (default)
+ * - `error`     — red, destructive actions, white text
+ * - `warning`   — orange, caution actions, white text
+ * - `success`   — green, confirmation actions, white text
+ *
+ * @category Form Controls
+ * @subcategory Action
+ *
+ * @example
+ * ```tsx
+ * // No variant passed → tertiary (transparent ghost button)
+ * <Button text="Cancel" onClick={handleCancel} />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * <Button variant="primary" size="medium" onClick={handleSave}>
+ *   Save
+ * </Button>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Full-width block button
+ * <Button variant="primary" size="large" block type="submit">
+ *   Submit Form
+ * </Button>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Button with custom children
+ * <Button variant="secondary" onClick={handleAction}>
+ *   <span>Custom Content</span>
+ *   <Icon name="arrow-right" />
+ * </Button>
+ * ```
+ *
+ * @see {@link ButtonGroup} - For grouped button layouts
+ * @see {@link Icon} - For button icons
+ *
+ * @accessibility
+ * Supports full ARIA attributes including:
+ * - aria-label, aria-labelledby for accessible labels
+ * - aria-disabled for disabled state
+ * - aria-pressed for toggle buttons
+ * - Keyboard navigation (Enter/Space to activate)
+ * - Focus management
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {
@@ -49,7 +96,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       endIcon,
       startIconClassName,
       endIconClassName,
-      variant = 'primary',
+      variant = 'tertiary',
       type = 'button',
       className,
       isDisabled,
@@ -65,56 +112,39 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const theme = useTheme();
 
-    const [isHovered, setIsHovered] = useState(false);
+    const appliedVariantStyle = variantStyles[variant](theme);
 
-    const isPrimary = variant === 'primary';
-    const isInfo = variant === 'info';
-    const isSecondary = variant === 'secondary';
-    const isTertiary = variant === 'tertiary';
-    const isAttention = variant === 'attention';
-    const noMargin = !text ? { margin: 0 } : {};
-
-    const variantStyles =
-      isPrimary || isInfo || isTertiary || isSecondary || isAttention
-        ? mapVariants[variant] && mapVariants[variant](theme)
-        : undefined;
+    const resolveTextNode = () => {
+      if (!text) return null;
+      if (isDisabled) return <DisabledButtonText text={text} size={size} />;
+      if (WHITE_TEXT_VARIANTS.has(variant)) {
+        return <WhiteButtonText text={text} size={size} />;
+      }
+      return <GreyButtonText text={text} size={size} />;
+    };
 
     const btn = (
       <ButtonBase
         ref={ref}
-        css={[mapSizes[size], variantStyles]}
+        css={[sizeStyles[size], appliedVariantStyle]}
         type={type}
         disabled={isDisabled}
         className={className}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         onClick={onClick}
         {...ariaProps}>
         {startIcon ? (
           <span
-            style={noMargin}
-            css={[iconWrapperRight]}
+            style={!text ? { margin: 0 } : undefined}
+            css={iconWrapperRight}
             className={startIconClassName}>
             {startIcon}
           </span>
         ) : null}
-        {children ? (
-          children
-        ) : text ? (
-          isDisabled ? (
-            <DisabledButtonText text={text} size={size} />
-          ) : isPrimary || isInfo || isAttention ? (
-            <WhiteButtonText text={text} size={size} />
-          ) : isTertiary && isHovered ? (
-            <GreyLightButtonText text={text} size={size} />
-          ) : (
-            <GreyButtonText text={text} size={size} />
-          )
-        ) : null}
+        {children ?? resolveTextNode()}
         {endIcon ? (
           <span
-            style={noMargin}
-            css={[iconWrapperLeft]}
+            style={!text ? { margin: 0 } : undefined}
+            css={iconWrapperLeft}
             className={endIconClassName}>
             {endIcon}
           </span>

@@ -1,5 +1,6 @@
 import { waitFor, fireEvent } from '../../../customTest';
-import type { Point } from '@nivo/line';
+import { act } from 'react';
+import type { LineSeries, Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
 import ResizeObserver from 'resize-observer-polyfill';
 import theme from '@themes/main';
@@ -120,6 +121,48 @@ describe('Tooltip', () => {
     getByTestId('floating-arrow');
   });
 
+  it('respects hoverOpenDelay and hoverCloseDelay', () => {
+    const OPEN_DELAY = 100;
+    const CLOSE_DELAY = 50;
+
+    jest.useFakeTimers();
+    try {
+      const { queryByText, getByText, getByRole } = setup(
+        <Tooltip
+          enableClick={false}
+          enableHover
+          hoverOpenDelay={OPEN_DELAY}
+          hoverCloseDelay={CLOSE_DELAY}>
+          <TooltipTrigger>
+            <Button size="medium" text="Hover me" />
+          </TooltipTrigger>
+          <TooltipContent>{tooltipText}</TooltipContent>
+        </Tooltip>,
+      );
+
+      const button = getByRole('button');
+      expect(queryByText(tooltipText)).not.toBeInTheDocument();
+
+      fireEvent.mouseEnter(button);
+      expect(queryByText(tooltipText)).not.toBeInTheDocument();
+
+      act(() => {
+        jest.advanceTimersByTime(OPEN_DELAY);
+      });
+      getByText(tooltipText);
+
+      fireEvent.mouseLeave(button);
+      expect(queryByText(tooltipText)).toBeInTheDocument();
+
+      act(() => {
+        jest.advanceTimersByTime(CLOSE_DELAY);
+      });
+      expect(queryByText(tooltipText)).not.toBeInTheDocument();
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('allows interacting with content when allowHoverContent is set', async () => {
     const interactiveText = 'Tooltip Link';
     const { user, getByRole, getByText, queryByText } = setup(
@@ -207,11 +250,13 @@ describe('Tooltip', () => {
   });
 
   describe('SimpleChartTooltip', () => {
-    const point: Point = {
+    const point: Point<LineSeries> = {
       id: '',
-      index: 0,
-      serieId: '',
-      serieColor: '',
+      seriesIndex: 0,
+      seriesId: '',
+      indexInSeries: 0,
+      absIndex: 0,
+      seriesColor: '',
       x: 1,
       y: 1,
       color: 'white',

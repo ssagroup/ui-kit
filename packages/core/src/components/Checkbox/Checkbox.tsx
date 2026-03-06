@@ -5,6 +5,90 @@ import Icon from '@components/Icon';
 
 import { CheckboxProps } from './types';
 
+/**
+ * Checkbox - Form control for selecting one or more options
+ *
+ * A flexible checkbox component that supports controlled and uncontrolled states,
+ * indeterminate state, React Hook Form integration, and full accessibility.
+ * The component automatically manages indeterminate state and provides visual
+ * feedback through icons (checkmark or minus for indeterminate).
+ *
+ * Colors are driven by `theme.palette`:
+ * - `primary` (default) — blue; uses `palette.primary.light/main/dark` for
+ *   the resting border, checked fill, and hover fill. Disabled uses `greyFocused40`.
+ * - `success` — green; uses `palette.success.main/dark` for the border and fills.
+ *   Disabled uses `greyFocused40`.
+ * - `custom` — unstyled; apply your own colors via `className` or the `css` prop.
+ *
+ * @category Form Controls
+ * @subcategory Input
+ *
+ * @example
+ * ```tsx
+ * // Basic usage (primary / blue by default)
+ * <Checkbox
+ *   id="accept-terms"
+ *   text="Accept terms and conditions"
+ *   onChange={(checked) => handleChange(checked)}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Green (success) variant
+ * <Checkbox
+ *   id="success-checkbox"
+ *   text="Task completed"
+ *   color="success"
+ *   onChange={handleChange}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // With React Hook Form
+ * const { register } = useForm();
+ * <Checkbox
+ *   name="newsletter"
+ *   text="Subscribe to newsletter"
+ *   register={register}
+ *   isRequired
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Controlled checkbox
+ * const [checked, setChecked] = useState(false);
+ * <Checkbox
+ *   text="Controlled checkbox"
+ *   externalState={checked}
+ *   onChange={setChecked}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Indeterminate state (e.g., "select all")
+ * <Checkbox
+ *   text="Select all items"
+ *   isIndeterminate={someSelected && !allSelected}
+ *   initialState={allSelected}
+ *   onChange={handleSelectAll}
+ * />
+ * ```
+ *
+ * @see {@link Field} - Use Field.Root to wrap Checkbox for labels and validation
+ * @see {@link FormCheckbox} - Alternative checkbox component with form integration
+ *
+ * @accessibility
+ * - Fully keyboard accessible (Space to toggle)
+ * - Supports ARIA attributes via HTML input element
+ * - Proper label association via htmlFor/id
+ * - Screen reader friendly with proper roles
+ *
+ * @requires React Hook Form when using `register` prop
+ */
 const Checkbox = ({
   text,
   id,
@@ -22,7 +106,7 @@ const Checkbox = ({
   const [isChecked, setIsChecked] = useState(Boolean(initialState));
   const autoGenId = useId();
   const theme = useTheme();
-  const checkboxInputRef = useRef<HTMLInputElement | null>(null);
+  const checkboxInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // istanbul ignore else

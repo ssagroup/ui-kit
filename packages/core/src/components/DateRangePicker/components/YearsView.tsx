@@ -18,8 +18,11 @@ export const YearsView = () => {
     setCalendarType,
     setCalendarViewDateTime,
     onYearChange,
+    calendarType,
+    isOpen,
   } = useDateRangePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
+  const hasScrolledRef = useRef(false);
   const yearsList = getYearsList({
     yearsFrom: dateMinParts[formatIndexes['year']],
     yearsCount:
@@ -45,14 +48,52 @@ export const YearsView = () => {
     getComparisonFormat: () => 'yyyy',
   });
 
+  // Reset scroll tracking when calendar closes or calendar type changes away from years
   useEffect(() => {
-    if (currentCalendarViewDT && wrapper.current) {
-      wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
-        behavior: 'instant',
-        block: 'center',
-      });
+    if (!isOpen || calendarType !== 'years') {
+      hasScrolledRef.current = false;
     }
-  }, [calendarViewDateTime, lastFocusedElement, currentCalendarViewDT]);
+  }, [isOpen, calendarType]);
+
+  // Only scroll to center the selected year when:
+  // 1. Calendar first opens and calendar type is 'years'
+  // 2. Calendar type changes to 'years' for the first time
+  // Do NOT scroll on every selection
+  useEffect(() => {
+    if (
+      currentCalendarViewDT &&
+      wrapper.current &&
+      isOpen &&
+      calendarType === 'years' &&
+      !hasScrolledRef.current
+    ) {
+      const container = wrapper.current;
+      const currentEl = container.querySelector(
+        '[aria-current=date]',
+      ) as HTMLElement | null;
+
+      // Scroll the internal years list WITHOUT scrolling the window/page.
+      // `scrollIntoView` can bubble up and scroll the main page, causing a "jump".
+      if (currentEl) {
+        const containerRect = container.getBoundingClientRect();
+        const elRect = currentEl.getBoundingClientRect();
+        const deltaTop = elRect.top - containerRect.top;
+        const nextTop =
+          container.scrollTop +
+          deltaTop -
+          container.clientHeight / 2 +
+          elRect.height / 2;
+
+        if (typeof container.scrollTo === 'function') {
+          container.scrollTo({ top: nextTop, behavior: 'auto' });
+        } else {
+          // Fallback for environments that don't support scrollTo (e.g., jsdom)
+          container.scrollTop = nextTop;
+        }
+        hasScrolledRef.current = true;
+      }
+    }
+  }, [isOpen, calendarType, currentCalendarViewDT]);
 
   const handleYearSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;

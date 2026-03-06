@@ -84,6 +84,7 @@ hovertemplate
 hsl
 HTMLSVGElement
 IBMP
+internmap
 ipsum
 itemclick
 jsdom
@@ -138,6 +139,8 @@ rebalancing
 revparse
 rjsf
 ROI
+safari
+Safari
 sbdocs
 sed
 sem
@@ -190,6 +193,8 @@ uuidv4
 VERCEL
 viewports
 vtpit
+WAI
+webstorage
 xanchor
 xaxes
 xaxis

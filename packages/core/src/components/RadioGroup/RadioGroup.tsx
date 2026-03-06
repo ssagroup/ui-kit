@@ -18,6 +18,7 @@ const RadioGroup = ({
   onChange,
   children,
   className,
+  color,
 }: RadioGroupProps) => {
   const [activeValue, setActiveValue] = useState(externalState);
 
@@ -49,6 +50,7 @@ const RadioGroup = ({
             isRequired,
             text,
             onChange: onRadioValueChange,
+            color: child.props.color ?? color,
           });
         }
       })}

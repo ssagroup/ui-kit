@@ -72,7 +72,7 @@ export const Default: StoryObj<typeof NotificationCard> = (
           />
           <Button
             size="small"
-            variant="attention"
+            variant="warning"
             text="Stop bot"
             css={{ padding: '5px 26px' }}
           />

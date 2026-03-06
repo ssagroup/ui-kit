@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { LineSeries } from '@nivo/line';
+
 import { MealNutrientsProps, MealNutrients } from '@ssa-ui-kit/widgets';
 import { useApi } from '@ssa-ui-kit/hooks';
 
@@ -20,7 +22,7 @@ const MealNutrientsWithData = () => {
 
   return (
     <MealNutrients
-      data={mealNutrientsData}
+      data={mealNutrientsData as unknown as LineSeries[]}
       options={options}
       onOptionChange={({ value }) => loadMealNutrients(value)}
     />

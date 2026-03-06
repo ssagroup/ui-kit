@@ -21,6 +21,8 @@ export default tseslint.config(
       '**/node_modules',
       '**/coverage',
       '**/@types',
+      '**/*.md',
+      '**/*.mdx',
       '!**/babel.config.js',
       '!**/.storybook',
     ],
@@ -64,6 +66,19 @@ export default tseslint.config(
     files: ['**/*.js'],
     rules: {
       '@typescript-eslint/no-require-imports': 0,
+    },
+  },
+  {
+    files: ['**/jest-setup.ts'],
+    rules: {
+      'no-var': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+    },
+  },
+  {
+    files: ['**/*.stories.tsx'],
+    rules: {
+      'react/no-unescaped-entities': 'off',
     },
   },
 );

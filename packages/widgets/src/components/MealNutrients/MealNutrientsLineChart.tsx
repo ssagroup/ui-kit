@@ -1,14 +1,27 @@
 import { useMemo } from 'react';
-import { ResponsiveLine, LineSvgProps, LineProps } from '@nivo/line';
+import {
+  ResponsiveLine as ResponsiveLineOriginal,
+  LineSvgProps,
+  LineSeries,
+} from '@nivo/line';
 import { useTheme } from '@emotion/react';
 import type { ColorsKeys, MainColors } from '@ssa-ui-kit/core';
+import { wrapNivoResponsiveComponent } from '@ssa-ui-kit/core';
 
 import { defaults } from './chartDefaultConfig';
 import { MealNutrientsTooltip } from './MealNutrientsTooltip';
+import { ResponsiveProps } from '@nivo/core';
+
+const ResponsiveLine = wrapNivoResponsiveComponent(
+  ResponsiveLineOriginal,
+  'ResponsiveLine',
+);
 
 const colorPalette = ['pink', 'purple', 'turquoise', 'yellow', 'green', 'blue'];
 
-export const MealNutrientsLineChart = ({ data, ...props }: LineSvgProps) => {
+type LineProps = ResponsiveProps<LineSvgProps<LineSeries>>;
+
+export const MealNutrientsLineChart = ({ data, ...props }: LineProps) => {
   const theme = useTheme();
 
   const defaultColorMapping = useMemo(

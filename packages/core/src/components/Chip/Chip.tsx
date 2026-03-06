@@ -16,6 +16,76 @@ import {
 import { VARIANTS, COLORS, mapSizes, ICON_SIZES } from './constants';
 import { getVariantColors } from './helpers';
 
+/**
+ * Chip - Compact component for tags, labels, and removable items.
+ *
+ * Colors are driven by `theme.palette` for semantic values, allowing palette
+ * overrides in a custom theme to flow through automatically.
+ *
+ * ### Color / Palette mapping
+ * - `default`   — neutral: white bg (outlined) / greyLighter bg (filled), uses `theme.colors`
+ * - `primary`   — blue, uses `theme.palette.primary`
+ * - `secondary` — grey, uses `theme.palette.secondary` (dark text)
+ * - `success`   — green, uses `theme.palette.success`
+ * - `error`     — red, uses `theme.palette.error`
+ * - `warning`   — orange, uses `theme.palette.warning`
+ *
+ * ### Variant / Palette token mapping
+ * - `filled`   — `palette.main` background, white text (dark for `secondary`)
+ * - `outlined` — `palette.light` background, `palette.main` border, `palette.dark` text
+ *
+ * @category Components
+ * @subcategory Display
+ *
+ * @example
+ * ```tsx
+ * // Basic chip — default color, filled
+ * <Chip label="React" />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Removable palette-colored tag
+ * <Chip
+ *   label="TypeScript"
+ *   onDelete={(e) => removeTag('typescript')}
+ *   color="primary"
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Outlined chip using palette light/main/dark
+ * <Chip
+ *   label="Filter: Active"
+ *   icon="filter"
+ *   onClick={() => openFilterDialog()}
+ *   variant="outlined"
+ *   color="secondary"
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Chip with avatar
+ * <Chip
+ *   label="John Doe"
+ *   avatar={<Avatar size={20} image="/avatar.jpg" />}
+ *   onDelete={() => removeUser()}
+ * />
+ * ```
+ *
+ * @see {@link Avatar} - For user avatar integration
+ * @see {@link Icon} - For chip icons
+ * @see {@link Tag} - Alternative component for simpler use cases
+ *
+ * @accessibility
+ * - Keyboard navigable (Tab to focus)
+ * - Delete with Backspace/Delete keys
+ * - Escape to blur
+ * - Proper ARIA roles and attributes
+ * - Screen reader announcements for actions
+ */
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   {
     label,

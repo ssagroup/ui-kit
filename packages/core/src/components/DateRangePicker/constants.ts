@@ -1,4 +1,5 @@
 export const DEFAULT_MASK_FORMAT = 'mm/dd/yyyy';
+export const DEFAULT_EUROPEAN_MASK_FORMAT = 'dd/mm/yyyy';
 export const DEFAULT_MONTH_MASK_FORMAT = 'mm/yyyy';
 export const DEFAULT_YEAR_MASK_FORMAT = 'yyyy';
 export const DEFAULT_MASK = '__/__/____';

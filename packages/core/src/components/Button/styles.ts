@@ -1,5 +1,6 @@
-import { css, Theme } from '@emotion/react';
+import { css, SerializedStyles, Theme } from '@emotion/react';
 import { focusOutline } from '@styles/safari-focus-outline';
+import { ButtonVariants } from './types';
 
 export const buttonBlock = css`
   display: grid;
@@ -20,149 +21,83 @@ export const iconWrapperLeft = css`
   margin-left: 6px;
 `;
 
-export const large = css`
-  height: 54px;
+export const sizeStyles: MainSizes = {
+  large: css`
+    height: 54px;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    padding: 0 32px;
+  `,
+  medium: css`
+    height: 46px;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    padding: 0 24px;
+  `,
+  small: css`
+    height: 36px;
+    font-size: 13.33px;
+    font-weight: 400;
+    letter-spacing: 0.8px;
+    padding: 0 16px;
+  `,
+};
 
-  font-weight: 400;
-  font-size: 16px;
-  letter-spacing: 0.8px;
+type SolidVariantKey = Exclude<keyof ButtonVariants, 'tertiary'>;
 
-  padding: 0 32px;
-`;
+const makeSolidVariant = (
+  theme: Theme,
+  key: SolidVariantKey,
+  extra?: SerializedStyles,
+) => {
+  const { main, dark, light } = theme.palette[key];
+  return css`
+    color: ${theme.colors.white};
+    background: ${main};
 
-export const medium = css`
-  height: 46px;
+    &:hover {
+      background: ${dark};
+    }
 
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 0.8px;
+    &:active {
+      background: ${dark};
+    }
 
-  padding: 0 24px;
-`;
+    &:disabled {
+      background: ${theme.colors.grey};
+    }
 
-export const small = css`
-  height: 36px;
+    &:focus {
+      background: ${light};
+    }
 
-  font-size: 13.33px;
-  font-weight: 400;
-  letter-spacing: 0.8px;
+    ${extra}
+  `;
+};
 
-  padding: 0 16px;
-`;
+export const variantStyles: ButtonVariants = {
+  primary: (theme) => makeSolidVariant(theme, 'primary'),
 
-export const primary = (theme: Theme) => css`
-  color: ${theme.colors.white};
-  background: linear-gradient(
-    108.3deg,
-    ${theme.colors.greyDarker} -0.36%,
-    ${theme.colors.greyDark} 100%
-  );
+  secondary: (theme) =>
+    makeSolidVariant(
+      theme,
+      'secondary',
+      css`
+        color: ${theme.colors.greyDarker};
+      `,
+    ),
 
-  &:hover {
-    background: linear-gradient(
-      108.3deg,
-      ${theme.colors.greyButtonGradient} -0.36%,
-      ${theme.colors.greyButtonGradientLight} 100%
-    );
-    box-shadow: -4px 4px 14px ${theme.colors.greyDarker14};
-  }
+  tertiary: (theme) => css`
+    background: transparent;
 
-  &:active {
-    background: ${theme.colors.greyDarker};
-    box-shadow: -4px 4px 14px ${theme.colors.greyDarker14};
-  }
+    ${focusOutline(theme, 'greyOutline')}
+  `,
 
-  &:disabled {
-    background: ${theme.colors.grey};
-  }
+  error: (theme) => makeSolidVariant(theme, 'error'),
 
-  &:focus {
-    background: linear-gradient(
-      108.3deg,
-      ${theme.colors.greyBackground} -0.36%,
-      ${theme.colors.greyBackgroundLight} 100%
-    );
-    box-shadow: -4px 4px 14px ${theme.colors.greyDarker14};
-  }
-`;
+  warning: (theme) => makeSolidVariant(theme, 'warning'),
 
-export const info = (theme: Theme) => css`
-  color: ${theme.colors.white};
-  background: linear-gradient(
-    247deg,
-    ${theme.colors.blueLighter} 14.71%,
-    ${theme.colors.blue} 85.29%
-  );
-
-  &:hover {
-    background: linear-gradient(
-      247deg,
-      ${theme.colors.blueButtonHoverGradientFrom} 14.71%,
-      ${theme.colors.blueButtonHoverGradientTo} 85.29%
-    );
-  }
-
-  &:active {
-    background: ${theme.colors.blueButtonActive};
-  }
-
-  &:disabled {
-    background: ${theme.colors.grey};
-  }
-`;
-
-export const secondary = (theme: Theme) => css`
-  background: ${theme.colors.greyLighter};
-  box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-
-  &:hover {
-    background: ${theme.colors.white};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadowHover};
-  }
-
-  &:active {
-    background: ${theme.colors.greyFocused};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-  }
-
-  &:disabled {
-    background: ${theme.colors.grey};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-  }
-
-  &:focus {
-    background: ${theme.colors.greySelectedMenuItem};
-    box-shadow: 0px 10px 40px ${theme.colors.greyShadow};
-  }
-`;
-
-export const tertiary = (theme: Theme) => css`
-  background: transparent;
-
-  ${focusOutline(theme, 'greyOutline')}
-`;
-
-export const attention = (theme: Theme) => css`
-  color: ${theme.colors.white};
-  background: linear-gradient(
-    99.26deg,
-    ${theme.colors.pink} -7.01%,
-    ${theme.colors.pinkLighter} 92.87%
-  );
-
-  &:hover {
-    background: linear-gradient(
-      99.26deg,
-      ${theme.colors.pinkDark} 7.01%,
-      ${theme.colors.pinkDarker} 92.87%
-    );
-  }
-
-  &:active {
-    background: ${theme.colors.pinkDark};
-  }
-
-  &:disabled {
-    background: ${theme.colors.grey};
-  }
-`;
+  success: (theme) => makeSolidVariant(theme, 'success'),
+};

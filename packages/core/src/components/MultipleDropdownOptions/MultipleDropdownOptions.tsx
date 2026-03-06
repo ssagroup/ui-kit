@@ -29,7 +29,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   backdrop-filter: ${({ theme }) =>
     `drop-shadow(-4px 4px 14px ${theme.colors.greyDarker14})`};
 
-  ${({ theme }) => checkboxStyles.blueInput(theme)}
+  ${({ theme }) => checkboxStyles.primaryInput(theme)}
 `;
 
 const DropdownOptionButton = styled.div<{
@@ -94,7 +94,8 @@ const MultipleDropdownOptions = ({
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
-  const options = (childrenArray as React.ReactElement[]).map((child) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const options = (childrenArray as React.ReactElement<any>[]).map((child) => {
     const element = allItems[child.props.value];
     const isActive = Boolean(element?.isSelected);
     const isDisabled = Boolean(element?.isDisabled);
@@ -123,7 +124,7 @@ const MultipleDropdownOptions = ({
             css={{
               margin: 0,
             }}
-            color="blue"
+            color="primary"
           />
         )}
         {child.props.children || child.props.label || child.props.value}

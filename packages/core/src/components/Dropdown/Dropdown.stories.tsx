@@ -15,6 +15,30 @@ const items = [
   { value: 1, label: 'One lorem ipsum', subText: 'subtext' },
   { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
   { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 10, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 11, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 12, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 13, label: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 110, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 111, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 112, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 113, label: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 110, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 111, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 112, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 113, label: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 210, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 211, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 122, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 123, label: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 1210, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 1211, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 1122, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 1123, label: 'Three lorem ipsum', subText: 'subtext' },
+  { value: 1120, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 1121, label: 'One lorem ipsum', subText: 'subtext' },
+  { value: 1122, label: 'Two lorem ipsum', subText: 'subtext' },
+  { value: 1132, label: 'Three lorem ipsum', subText: 'subtext' },
 ];
 
 export default {
@@ -224,7 +248,7 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
           />
         ))}
       </Dropdown>
-      <Button variant="info" css={{ marginLeft: 10 }} onClick={handleUpdate}>
+      <Button variant="primary" css={{ marginLeft: 10 }} onClick={handleUpdate}>
         Update selected item
       </Button>
     </div>

@@ -1,7 +1,12 @@
+import { screen, waitFor, within } from '../../../customTest';
+import userEvent from '@testing-library/user-event';
+import type { RJSFSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 
+import { AccordionGroupContextProvider } from '@components/AccordionGroup';
 import { Form } from '.';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
+import { PRESENT_VALUE } from '@components/DateRangePicker/DateRangePickerFormBridge';
 
 const managers = [
   {
@@ -142,5 +147,290 @@ describe('Form (rjsf)', () => {
     );
 
     expect(container).toMatchSnapshot();
+  });
+
+  it('DateWidget converts yyyy-MM-dd to dd/mm/yyyy format for display', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateField: {
+              type: 'string',
+              title: 'Date',
+            },
+          },
+        }}
+        uiSchema={{
+          dateField: {
+            'ui:widget': 'date',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+            },
+          },
+        }}
+        formData={{
+          dateField: '2024-01-15',
+        }}
+      />,
+    );
+
+    const dateInput = getByTestId('datepicker-input');
+    expect(dateInput).toHaveValue('15/01/2024');
+  });
+
+  it('DateRangeField converts yyyy-MM-dd to dd/mm/yyyy format for display', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: '2024-12-31',
+          },
+        }}
+      />,
+    );
+
+    const startInput = getByTestId('daterangepicker-input-from');
+    const endInput = getByTestId('daterangepicker-input-to');
+    expect(startInput).toHaveValue('15/01/2024');
+    expect(endInput).toHaveValue('31/12/2024');
+  });
+
+  it('DateRangeField converts "Present" string to null for picker and displays "Present"', () => {
+    const { getByTestId } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+              showPresentOption: true,
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: 'Present',
+          },
+        }}
+      />,
+    );
+
+    const startInput = getByTestId('daterangepicker-input-from');
+    const endInput = getByTestId('daterangepicker-input-to');
+    expect(startInput).toHaveValue('15/01/2024');
+    expect(endInput).toHaveValue('Present');
+  });
+
+  it('DateRangeField converts null to PRESENT_VALUE when "Present" button is clicked', async () => {
+    const mockOnChange = jest.fn();
+    const user = userEvent.setup();
+    const { getByTestId, getByRole } = render(
+      <Form
+        validator={validator}
+        schema={{
+          type: 'object',
+          properties: {
+            dateRangeField: {
+              type: 'object',
+              properties: {
+                start: { type: 'string' },
+                end: { type: 'string' },
+              },
+            },
+          },
+        }}
+        uiSchema={{
+          dateRangeField: {
+            'ui:field': 'daterange',
+            'ui:options': {
+              format: 'dd/mm/yyyy',
+              outputFormat: 'yyyy-MM-dd',
+              showPresentOption: true,
+            },
+          },
+        }}
+        formData={{
+          dateRangeField: {
+            start: '2024-01-15',
+            end: '2024-12-31',
+          },
+        }}
+        onChange={mockOnChange}
+      />,
+    );
+
+    const calendarButton = getByTestId('daterangepicker-button');
+    await user.click(calendarButton);
+    const dialogEl = getByRole('dialog');
+    expect(dialogEl).toBeInTheDocument();
+
+    // Calendar always starts with start date selection
+    // Select a start date first (this switches to end date selection mode)
+    const day15Element = within(dialogEl).getAllByText('15');
+    const enabledDay15 = day15Element.filter(
+      (day) => day.getAttribute('aria-disabled') === 'false',
+    );
+    expect(enabledDay15.length).toBeGreaterThanOrEqual(1);
+    await user.click(enabledDay15[0]);
+
+    // Now we're selecting end date, so "Present" button should be enabled
+    const presentButton = getByTestId('daterangepicker-present-button');
+    expect(presentButton).toBeInTheDocument();
+    expect(presentButton).not.toBeDisabled();
+    await user.click(presentButton);
+
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalled();
+      const call = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1];
+      expect(call[0].formData.dateRangeField).toEqual({
+        start: '2024-01-15',
+        end: PRESENT_VALUE,
+      });
+    });
+  });
+
+  describe('accordion field', () => {
+    const accordionFormSchema: RJSFSchema = {
+      type: 'object',
+      properties: {
+        sectionA: {
+          type: 'object',
+          title: 'Section A',
+          properties: {
+            name: { type: 'string', title: 'Name' },
+          },
+        },
+        sectionB: {
+          type: 'object',
+          title: 'Section B',
+          properties: {
+            value: { type: 'string', title: 'Value' },
+          },
+        },
+      },
+    };
+
+    function renderFormWithAccordions(uiSchema: Record<string, unknown>) {
+      return render(
+        <AccordionGroupContextProvider>
+          <Form
+            validator={validator}
+            schema={accordionFormSchema}
+            uiSchema={uiSchema}
+          />
+        </AccordionGroupContextProvider>,
+      );
+    }
+
+    it('renders accordion closed by default when collapsed: true', () => {
+      renderFormWithAccordions({
+        sectionA: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: true },
+        },
+        sectionB: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: true },
+        },
+      });
+
+      const titles = screen.getAllByTestId('accordion-title');
+      expect(titles).toHaveLength(2);
+      titles.forEach((el) => {
+        expect(el).toHaveAttribute('aria-expanded', 'false');
+      });
+    });
+
+    it('renders accordion open by default when collapsed: false', () => {
+      renderFormWithAccordions({
+        sectionA: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: false },
+        },
+        sectionB: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: false },
+        },
+      });
+
+      const titles = screen.getAllByTestId('accordion-title');
+      expect(titles).toHaveLength(2);
+      titles.forEach((el) => {
+        expect(el).toHaveAttribute('aria-expanded', 'true');
+      });
+    });
+
+    it('toggles accordion open and closed on click', async () => {
+      const user = userEvent.setup();
+      renderFormWithAccordions({
+        sectionA: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: false },
+        },
+        sectionB: {
+          'ui:field': 'accordion',
+          'ui:options': { targetField: 'ObjectField', collapsed: true },
+        },
+      });
+
+      const titles = screen.getAllByTestId('accordion-title');
+      const [sectionATitle, sectionBTitle] = titles;
+
+      expect(sectionATitle).toHaveAttribute('aria-expanded', 'true');
+      expect(sectionBTitle).toHaveAttribute('aria-expanded', 'false');
+
+      await user.click(sectionATitle);
+      expect(sectionATitle).toHaveAttribute('aria-expanded', 'false');
+
+      await user.click(sectionATitle);
+      expect(sectionATitle).toHaveAttribute('aria-expanded', 'true');
+
+      await user.click(sectionBTitle);
+      expect(sectionBTitle).toHaveAttribute('aria-expanded', 'true');
+
+      await user.click(sectionBTitle);
+      expect(sectionBTitle).toHaveAttribute('aria-expanded', 'false');
+    });
   });
 });

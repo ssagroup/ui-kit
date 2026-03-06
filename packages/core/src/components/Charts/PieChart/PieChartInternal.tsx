@@ -11,7 +11,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 import { css } from '@emotion/react';
-import { ResponsivePie } from '@nivo/pie';
+import { ResponsivePie as ResponsivePieOriginal } from '@nivo/pie';
 import { propOr } from '@ssa-ui-kit/utils';
 import { FullscreenModeContextType } from '@components/FullscreenModeContext';
 import { WithWidgetCard } from '@components/WidgetCard';
@@ -22,6 +22,12 @@ import { PieChartTooltip } from './PieChartTooltip';
 import { PieChartProvider } from './PieChartContext';
 import { getFixedNumber, getRoundedNumber } from '../SegmentedPieChart/utils';
 import { TOOLTIP_HEIGHT } from './constants';
+import { wrapNivoResponsiveComponent } from '@components';
+
+const ResponsivePie = wrapNivoResponsiveComponent(
+  ResponsivePieOriginal,
+  'ResponsivePie',
+);
 
 export const PieChartInternal = ({
   as,

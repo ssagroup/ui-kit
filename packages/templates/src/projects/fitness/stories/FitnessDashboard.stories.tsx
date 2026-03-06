@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { Meta } from '@storybook/react-webpack5';
 import { mainTheme } from '@ssa-ui-kit/core';
 import { AuthProvider } from '../hooks/useAuth';
@@ -17,18 +17,15 @@ export default {
   decorators: [
     (Story, { args }) => {
       return (
-        <ThemeProvider theme={mainTheme}>
-          <AuthProvider>
-            <RouterProvider
-              router={createBrowserRouter([
-                {
-                  path: '/*',
-                  element: <Story {...args} />,
-                },
-              ])}
-            />
-          </AuthProvider>
-        </ThemeProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={mainTheme}>
+            <AuthProvider>
+              <Routes>
+                <Route path="/*" element={<Story {...args} />} />
+              </Routes>
+            </AuthProvider>
+          </ThemeProvider>
+        </BrowserRouter>
       );
     },
   ],

@@ -23,6 +23,10 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   status: 'basic',
   isDisabled: false,
   options: [],
+  customOptionValue: null,
+  handleChange: () => {
+    /* no-op */
+  },
   placeholder: '',
   useFormResult: {} as UseFormReturn<FieldValues>,
   error: undefined,

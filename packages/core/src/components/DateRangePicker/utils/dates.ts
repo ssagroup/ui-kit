@@ -48,8 +48,8 @@ export const getYearsList = (props?: {
 
 export const processDate = (
   dateParts: {
-    month: string;
-    day: string;
+    month?: string;
+    day?: string;
     year: string;
   },
   yearMin: number,

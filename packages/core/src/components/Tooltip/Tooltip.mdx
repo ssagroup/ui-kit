@@ -1,4 +1,4 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs';
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
 import * as TooltipStories from './Tooltip.stories';
 
 <Meta of={TooltipStories} />
@@ -21,7 +21,7 @@ function BasicTooltip() {
   return (
     <Tooltip enableHover>
       <TooltipTrigger>
-        <Button text="Hover me" />
+        <Button variant='primary' text="Hover me" />
       </TooltipTrigger>
       <TooltipContent>This is a helpful tooltip message</TooltipContent>
     </Tooltip>

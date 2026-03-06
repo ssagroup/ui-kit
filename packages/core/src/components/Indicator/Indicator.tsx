@@ -13,7 +13,7 @@ const Indicator = ({
   children,
 }: IndicatorProps) => {
   const indicatorRef = useRef<HTMLDivElement>(null);
-  const childrenRef = useRef<HTMLDivElement | null>(null);
+  const childrenRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
   const [childrenData, setChildrenData] = useState<ChildrenDataProps>({});
   const { width: windowWidth } = useWindowSize();
@@ -84,7 +84,9 @@ const Indicator = ({
         </IndicatorBase>
       ) : null}
       {React.cloneElement(children, {
-        ref: (ref: HTMLDivElement | null) => (childrenRef.current = ref),
+        ref: (ref: HTMLDivElement | null) => {
+          childrenRef.current = ref;
+        },
       })}
     </React.Fragment>
   );

@@ -15,6 +15,7 @@ import {
 } from '@components';
 import { DEFAULT_AVATAR_SIZE } from '../constants';
 import { SelectOptionSchemaExtension, SelectWidgetUiOptions } from '../types';
+import { extractSelectWidgetSpreadableProps } from '../utils/selectWidget';
 
 const getAvatarNode = <S extends StrictRJSFSchema>(
   option: EnumOptionsType<S>,
@@ -55,6 +56,7 @@ export const SelectWidget = <
   const customPlaceholder = placeholder || uiSchema?.['ui:placeholder'];
   const selectUiOptions =
     (uiSchema?.['ui:options'] as SelectWidgetUiOptions) || {};
+  const spreadableProps = extractSelectWidgetSpreadableProps(selectUiOptions);
 
   const isMultiple = !!multiple || Array.isArray(value);
   const items = Array.isArray(enumOptions)
@@ -147,7 +149,8 @@ export const SelectWidget = <
         onEmptyChange={onEmptyChange}
         onClearAll={onClearAll}
         onRemoveSelectedClick={onRemoveSelectedClick}
-        renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+        renderOption={({ label, input }) => highlightInputMatch(label, input)}
+        {...spreadableProps}>
         {items.map((item) => (
           <TypeaheadOption
             key={item.value}

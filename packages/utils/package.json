@@ -3,6 +3,14 @@
   "version": "2.33.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "private": false,
   "sideEffects": false,
   "author": "SSA Group",
@@ -27,6 +35,9 @@
     "ts-show-config-build": "tsc --showConfig -p ./tsconfig.build.json",
     "ts-check": "tsc -p ./tsconfig.json",
     "ts-check-build": "tsc -p ./tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/sass": "1.45.0"
   },
   "browserslist": [
     ">0.1%",

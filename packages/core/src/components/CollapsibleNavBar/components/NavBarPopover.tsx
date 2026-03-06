@@ -48,7 +48,7 @@ export const CollapsibleNavBarPopover = ({
       placement="right-start"
       interactionsEnabled="both">
       <PopoverTrigger
-        variant="custom"
+        variant="tertiary"
         dataTestId="collapsible-nav-bar-trigger-button"
         css={{
           height: 'auto',

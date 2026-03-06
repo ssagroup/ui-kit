@@ -4,8 +4,9 @@ import { DateTime } from 'luxon';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
-import { DatePicker } from './DatePicker';
+import { DatePicker } from '@components';
 import { DatePickerProps } from './types';
+import { PICKER_TYPE } from './constants';
 
 export default {
   title: 'Components/DatePicker',
@@ -166,7 +167,7 @@ WithExternalValue.args = {
 export const WithInputRef: StoryObj<typeof DatePicker> = (
   args: DatePickerProps,
 ) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   console.log('inputRef:', inputRef.current?.value);
   return <DatePicker {...args} ref={inputRef} />;
 };
@@ -174,4 +175,30 @@ WithInputRef.args = {
   ...commonArgs,
   name: 'field7',
   defaultValue: '02/10/2025',
+};
+
+export const MonthlyView: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+MonthlyView.args = {
+  ...commonArgs,
+  name: 'field8',
+  pickerType: PICKER_TYPE.MONTHS,
+  defaultValue: '04/2025',
+  helperText: 'Select a month',
+};
+
+export const YearView: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+YearView.args = {
+  ...commonArgs,
+  name: 'field9',
+  pickerType: PICKER_TYPE.YEARS,
+  defaultValue: '2025',
+  helperText: 'Select a year',
 };

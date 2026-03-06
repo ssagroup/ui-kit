@@ -79,7 +79,7 @@ exports[`Form (rjsf) Render form 1`] = `
 
 .emotion-5:focus-within,
 .emotion-5:active {
-  border-color: rgba(72, 125, 225, 1);
+  border-color: rgb(65, 120, 225);
 }
 
 .emotion-6 {
@@ -100,7 +100,7 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-6 .undefined:focus {
-  border-color: rgba(72, 125, 225, 1);
+  border-color: rgb(65, 120, 225);
 }
 
 .emotion-7 {
@@ -379,39 +379,31 @@ exports[`Form (rjsf) Render form 1`] = `
   z-index: 1;
 }
 
-.emotion-40 input:focus+div {
-  box-shadow: -4px 4px 10px rgba(82, 197, 135, 0.4);
-}
-
 .emotion-40 input:disabled+div,
 .emotion-40 input:indeterminate:disabled+div {
-  background: rgba(210, 212, 219, 1);
+  background: rgba(210, 212, 219, 0.4);
 }
 
 .emotion-40 input:not(:checked, :indeterminate, :disabled)+div::before {
-  border: 1.5px solid rgba(82, 197, 135, 1);
+  border: 1.5px solid rgb(117, 153, 222);
 }
 
 .emotion-40 input:not(:checked, :indeterminate, :disabled)+div:hover::before {
-  border: 1.5px solid rgba(82, 197, 135, 0.6);
+  border: 1.5px solid rgb(65, 120, 225);
 }
 
 .emotion-40 input:not(:disabled):checked+div::before,
 .emotion-40 input:not(:disabled):indeterminate+div::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 1) 17.12%,
-        rgba(82, 197, 135, 1) 85.53%
-      );
+  background: rgb(65, 120, 225);
 }
 
 .emotion-40 input:not(:disabled):checked+div:hover::before,
 .emotion-40 input:not(:disabled):indeterminate+div:hover::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 0.6) 17.12%,
-        rgba(82, 197, 135, 0.6) 85.53%
-      );
+  background: rgb(14, 75, 193);
+}
+
+.emotion-40 input:not(:disabled):checked+div+span {
+  color: rgba(21, 21, 21, 1);
 }
 
 .emotion-40 input {
@@ -472,12 +464,18 @@ exports[`Form (rjsf) Render form 1`] = `
   cursor: default;
 }
 
+.emotion-45 svg {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
 .emotion-45 input:focus+svg {
   -webkit-filter: drop-shadow(
-        -4px 4px 10px rgba(82, 197, 135, 0.4)
+        -4px 4px 10px rgba(65, 120, 225, 0.2)
       );
   filter: drop-shadow(
-        -4px 4px 10px rgba(82, 197, 135, 0.4)
+        -4px 4px 10px rgba(65, 120, 225, 0.2)
       );
 }
 
@@ -563,39 +561,31 @@ exports[`Form (rjsf) Render form 1`] = `
   z-index: 1;
 }
 
-.emotion-49 input:focus+div {
-  box-shadow: -4px 4px 10px rgba(82, 197, 135, 0.4);
-}
-
 .emotion-49 input:disabled+div,
 .emotion-49 input:indeterminate:disabled+div {
-  background: rgba(210, 212, 219, 1);
+  background: rgba(210, 212, 219, 0.4);
 }
 
 .emotion-49 input:not(:checked, :indeterminate, :disabled)+div::before {
-  border: 1.5px solid rgba(82, 197, 135, 1);
+  border: 1.5px solid rgb(117, 153, 222);
 }
 
 .emotion-49 input:not(:checked, :indeterminate, :disabled)+div:hover::before {
-  border: 1.5px solid rgba(82, 197, 135, 0.6);
+  border: 1.5px solid rgb(65, 120, 225);
 }
 
 .emotion-49 input:not(:disabled):checked+div::before,
 .emotion-49 input:not(:disabled):indeterminate+div::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 1) 17.12%,
-        rgba(82, 197, 135, 1) 85.53%
-      );
+  background: rgb(65, 120, 225);
 }
 
 .emotion-49 input:not(:disabled):checked+div:hover::before,
 .emotion-49 input:not(:disabled):indeterminate+div:hover::before {
-  background: linear-gradient(
-        117.5deg,
-        rgba(137, 217, 150, 0.6) 17.12%,
-        rgba(82, 197, 135, 0.6) 85.53%
-      );
+  background: rgb(14, 75, 193);
+}
+
+.emotion-49 input:not(:disabled):checked+div+span {
+  color: rgba(21, 21, 21, 1);
 }
 
 .emotion-49 input {
@@ -662,12 +652,7 @@ exports[`Form (rjsf) Render form 1`] = `
   letter-spacing: 0.8px;
   padding: 0 16px;
   color: rgba(255, 255, 255, 1);
-  background: linear-gradient(
-      108.3deg,
-      rgba(43, 45, 49, 1) -0.36%,
-      rgb(64, 72, 83) 100%
-    );
-  color: #fff;
+  background: rgb(65, 120, 225);
   position: relative;
   border-radius: 12px;
   border: 1px solid rgba(195, 197, 204, 1);
@@ -685,17 +670,11 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-56:hover {
-  background: linear-gradient(
-        108.3deg,
-        rgba(77, 82, 87, 1) -0.36%,
-        rgba(94, 103, 114, 1) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-56:active {
-  background: rgba(43, 45, 49, 1);
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-56:disabled {
@@ -703,12 +682,7 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-56:focus {
-  background: linear-gradient(
-        108.3deg,
-        rgb(64, 68, 73) -0.36%,
-        rgb(76, 84, 93) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(117, 153, 222);
 }
 
 .emotion-56:active,
@@ -744,9 +718,9 @@ exports[`Form (rjsf) Render form 1`] = `
   opacity: 1;
   visibility: visible;
   position: relative;
-  -webkit-flex: 1 1 0%;
-  -ms-flex: 1 1 0%;
-  flex: 1 1 0%;
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
   min-width: auto;
   -webkit-flex-direction: column!important;
   -ms-flex-direction: column!important;
@@ -987,43 +961,23 @@ exports[`Form (rjsf) Render form 1`] = `
   font-weight: 400;
   letter-spacing: 0.8px;
   padding: 0 16px;
-  color: rgba(255, 255, 255, 1);
-  background: linear-gradient(
-      108.3deg,
-      rgba(43, 45, 49, 1) -0.36%,
-      rgb(64, 72, 83) 100%
-    );
+  background: transparent;
   background: none;
-  padding: 0;
-  padding-right: 5px;
+  padding: 0 5px 0 0;
   height: auto;
 }
 
-.emotion-71:hover {
-  background: linear-gradient(
-        108.3deg,
-        rgba(77, 82, 87, 1) -0.36%,
-        rgba(94, 103, 114, 1) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
-}
-
-.emotion-71:active {
-  background: rgba(43, 45, 49, 1);
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
-}
-
-.emotion-71:disabled {
-  background: rgba(195, 197, 204, 1);
-}
-
-.emotion-71:focus {
-  background: linear-gradient(
-        108.3deg,
-        rgb(64, 68, 73) -0.36%,
-        rgb(76, 84, 93) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+.emotion-71:focus::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(208,	210,	220, 1);
+  border-radius: 12px;
 }
 
 .emotion-71:active,
@@ -1221,25 +1175,15 @@ exports[`Form (rjsf) Render form 1`] = `
   letter-spacing: 0.8px;
   padding: 0 16px;
   color: rgba(255, 255, 255, 1);
-  background: linear-gradient(
-      108.3deg,
-      rgba(43, 45, 49, 1) -0.36%,
-      rgb(64, 72, 83) 100%
-    );
+  background: rgb(65, 120, 225);
 }
 
 .emotion-122:hover {
-  background: linear-gradient(
-        108.3deg,
-        rgba(77, 82, 87, 1) -0.36%,
-        rgba(94, 103, 114, 1) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-122:active {
-  background: rgba(43, 45, 49, 1);
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(14, 75, 193);
 }
 
 .emotion-122:disabled {
@@ -1247,12 +1191,7 @@ exports[`Form (rjsf) Render form 1`] = `
 }
 
 .emotion-122:focus {
-  background: linear-gradient(
-        108.3deg,
-        rgb(64, 68, 73) -0.36%,
-        rgb(76, 84, 93) 100%
-      );
-  box-shadow: -4px 4px 14px rgba(43, 45, 49, 0.14);
+  background: rgb(117, 153, 222);
 }
 
 <div>
@@ -1770,7 +1709,7 @@ exports[`Form (rjsf) Render form 1`] = `
                   Radio on
                 </title>
                 <rect
-                  fill="rgba(82, 197, 135, 1)"
+                  fill="rgb(65, 120, 225)"
                   height="18.6"
                   rx="9.3"
                   width="18.6"
@@ -1780,7 +1719,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 <rect
                   height="18.6"
                   rx="9.3"
-                  stroke="rgba(82, 197, 135, 1)"
+                  stroke="rgb(65, 120, 225)"
                   stroke-width="1.4"
                   width="18.6"
                   x="0.7"
@@ -1789,7 +1728,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 <circle
                   cx="10"
                   cy="10.7"
-                  fill="rgba(82, 197, 135, 1)"
+                  fill="rgb(65, 120, 225)"
                   r="5"
                 />
               </svg>
@@ -1830,7 +1769,7 @@ exports[`Form (rjsf) Render form 1`] = `
                 <rect
                   height="18.6"
                   rx="9.3"
-                  stroke="rgba(82, 197, 135, 1)"
+                  stroke="rgb(65, 120, 225)"
                   stroke-width="1.4"
                   width="18.6"
                   x="0.7"
@@ -1989,10 +1928,10 @@ exports[`Form (rjsf) Render form 1`] = `
               data-testid="typeahead"
             >
               <div
-                aria-controls="typeahead-popup-:r7:"
+                aria-controls="typeahead-popup-_r_7_"
                 aria-expanded="false"
                 aria-haspopup="dialog"
-                aria-labelledby="typeahead-label-:r7:"
+                aria-labelledby="typeahead-label-_r_7_"
                 class="emotion-56"
                 data-state="closed"
                 data-testid="trigger-button"
@@ -2081,10 +2020,10 @@ exports[`Form (rjsf) Render form 1`] = `
               data-testid="typeahead"
             >
               <div
-                aria-controls="typeahead-popup-:ra:"
+                aria-controls="typeahead-popup-_r_a_"
                 aria-expanded="false"
                 aria-haspopup="dialog"
-                aria-labelledby="typeahead-label-:ra:"
+                aria-labelledby="typeahead-label-_r_a_"
                 class="emotion-56"
                 data-state="closed"
                 data-testid="trigger-button"
@@ -2265,10 +2204,10 @@ exports[`Form (rjsf) Render form 1`] = `
               data-testid="typeahead"
             >
               <div
-                aria-controls="typeahead-popup-:rd:"
+                aria-controls="typeahead-popup-_r_d_"
                 aria-expanded="false"
                 aria-haspopup="dialog"
-                aria-labelledby="typeahead-label-:rd:"
+                aria-labelledby="typeahead-label-_r_d_"
                 class="emotion-56"
                 data-state="closed"
                 data-testid="trigger-button"

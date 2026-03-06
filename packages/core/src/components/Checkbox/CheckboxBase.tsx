@@ -42,12 +42,12 @@ export const CheckboxBase = styled(Label)<Pick<CheckboxProps, 'color'>>`
     }
   }
 
-  ${({ color = 'green', theme }) => {
+  ${({ color = 'primary', theme }) => {
     switch (color) {
-      case 'blue':
-        return checkboxStyles.blueInput(theme);
-      case 'green':
-        return checkboxStyles.greenInput(theme);
+      case 'primary':
+        return checkboxStyles.primaryInput(theme);
+      case 'success':
+        return checkboxStyles.successInput(theme);
       default:
     }
   }}

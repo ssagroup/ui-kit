@@ -1,6 +1,43 @@
 import styled from '@emotion/styled';
 import { CommonProps } from '@global-types/emotion';
 
+/**
+ * TableHead - Header section container for table columns
+ *
+ * A styled thead element that wraps table header rows. Provides styling
+ * for the table header section including bold font weight, border styling,
+ * and rounded corners. Used with TableRow and TableCellHeader components.
+ *
+ * @category Components
+ * @subcategory Data Display
+ *
+ * @example
+ * ```tsx
+ * // Basic table head
+ * <Table>
+ *   <TableHead>
+ *     <TableRow>
+ *       <TableCellHeader>Name</TableCellHeader>
+ *       <TableCellHeader>Email</TableCellHeader>
+ *       <TableCellHeader>Role</TableCellHeader>
+ *     </TableRow>
+ *   </TableHead>
+ *   <TableBody>
+ *     // data rows go here
+ *   </TableBody>
+ * </Table>
+ * ```
+ *
+ * @see {@link Table} - Parent table component
+ * @see {@link TableRow} - Row component for header
+ * @see {@link TableCellHeader} - Header cell component
+ * @see {@link TableBody} - Body section component
+ *
+ * @accessibility
+ * - Semantic HTML thead element
+ * - Proper table structure for screen readers
+ * - Supports ARIA attributes via CommonProps
+ */
 const TableHead = styled.thead<CommonProps>`
   display: table-header-group;
   background: none;

@@ -128,7 +128,7 @@ describe('Field', () => {
     const user = userEvent.setup();
 
     const Component = () => {
-      const inputRef = useRef<HTMLInputElement | null>(null);
+      const inputRef = useRef<HTMLInputElement>(null);
       return (
         <Field.Root>
           <Field.Label htmlFor="input-name">Label</Field.Label>
@@ -156,7 +156,7 @@ describe('Field', () => {
     const user = userEvent.setup();
 
     const Component = () => {
-      const inputRef = useRef<HTMLInputElement | null>(null);
+      const inputRef = useRef<HTMLInputElement>(null);
       return (
         <Field.Root>
           <Field.Label htmlFor="input-name">Label</Field.Label>

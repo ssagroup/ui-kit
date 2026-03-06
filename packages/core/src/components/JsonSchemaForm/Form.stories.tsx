@@ -41,6 +41,12 @@ const meta = {
     onSubmit: (data) => {
       console.log('Form submitted:', data.formData);
     },
+    onChange: (data) => {
+      console.log('Form changed:', data.formData);
+    },
+    onError: (errors) => {
+      console.log('Validation errors:', errors);
+    },
   },
   tags: ['autodocs'],
 } satisfies Meta<FormProps>;
@@ -64,10 +70,7 @@ export const Default: Story = {
         start: '01/15/2025',
         end: '01/25/2025',
       },
-      dateRangeField2: {
-        start: '02/10/2025',
-        end: '02/28/2025',
-      },
+      dateField: '2025-01-15',
     },
     schema: {
       title: 'Test Form',
@@ -136,11 +139,10 @@ export const Default: Story = {
         passwordField: {
           type: 'string',
           title: 'Password field title',
-          minLength: 8,
         },
         dateRangeField: {
           type: 'object',
-          title: 'Date Range field',
+          title: 'Date Range field-1',
           properties: {
             start: {
               type: 'string',
@@ -152,7 +154,7 @@ export const Default: Story = {
         },
         dateRangeField2: {
           type: 'object',
-          title: 'Second Date Range field',
+          title: 'Date Range field-2',
           properties: {
             start: {
               type: 'string',
@@ -161,6 +163,10 @@ export const Default: Story = {
               type: 'string',
             },
           },
+        },
+        dateField: {
+          type: 'string',
+          title: 'Date picker',
         },
       },
     },
@@ -196,9 +202,17 @@ export const Default: Story = {
       dateRangeField2: {
         'ui:field': 'daterange',
         'ui:help':
-          'Second date range picker example - shows how multiple DateRangePickers work independently',
+          'Date range picker example with European format (dd/mm/yyyy)',
         'ui:options': {
-          outputFormat: 'mm/dd/yyyy',
+          showPresentOption: true,
+          format: 'dd/mm/yyyy',
+          outputFormat: 'yyyy-MM-dd',
+        },
+      },
+      dateField: {
+        'ui:widget': 'date',
+        'ui:options': {
+          outputFormat: 'yyyy-MM-dd',
         },
       },
       selectField: {
@@ -295,8 +309,11 @@ export const Accordion: Story = {
             }}
             uiSchema={updatedUiSchema}
             validator={validator}>
-            <Button onClick={() => setFormData({})}>Clear</Button>
+            <Button variant="primary" onClick={() => setFormData({})}>
+              Clear
+            </Button>
             <Button
+              variant="primary"
               type="submit"
               css={{ marginLeft: '10px' }}
               onClick={() => {
@@ -400,7 +417,7 @@ export const Accordion: Story = {
         'ui:field': 'accordion',
         'ui:options': {
           targetField: 'ObjectField',
-          collapsed: true,
+          collapsed: false,
         },
         workMode: {
           'ui:enumNames': ['Remote', 'On-site'],
@@ -412,6 +429,171 @@ export const Accordion: Story = {
           },
         },
       },
+    },
+  },
+};
+
+export const WithValidation: Story = {
+  args: {
+    formData: {
+      singleSelectTypeahead: undefined,
+      multipleSelectTypeahead: undefined,
+    },
+    showErrorList: false,
+    schema: {
+      title: 'Form with Validation',
+      description: 'Date picker and date range picker - all fields required',
+      type: 'object',
+      required: [
+        'dateField',
+        'dateRangeField',
+        'dateRangeField2',
+        'dateRangeField3',
+        'singleSelectTypeahead',
+        'multipleSelectTypeahead',
+      ],
+      properties: {
+        dateField: {
+          type: 'string',
+          title: 'Date picker *',
+        },
+        dateRangeField: {
+          type: 'object',
+          title: 'Date Range field *',
+          required: ['start', 'end'],
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
+        },
+        dateRangeField2: {
+          type: 'object',
+          title: 'Date Range field-2 *',
+          required: ['start', 'end'],
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
+        },
+        dateRangeField3: {
+          type: 'object',
+          title: 'Date Range field-3 *',
+          required: ['start', 'end'],
+          properties: {
+            start: {
+              type: 'string',
+            },
+            end: {
+              type: 'string',
+            },
+          },
+        },
+        singleSelectTypeahead: {
+          type: 'string',
+          title: 'Single Select Typeahead *',
+          oneOf: managerOptions.map((manager) => ({
+            const: manager.id,
+            title: manager.name,
+            avatar: manager.avatar,
+          })),
+        },
+        multipleSelectTypeahead: {
+          type: 'array',
+          title: 'Multiple Select Typeahead *',
+          minItems: 1,
+          uniqueItems: true,
+          items: {
+            type: 'string',
+            oneOf: managerOptions.map((manager) => ({
+              const: manager.id,
+              title: manager.name,
+              avatar: manager.avatar,
+            })),
+          },
+        },
+      },
+    },
+    uiSchema: {
+      dateField: {
+        'ui:widget': 'date',
+        'ui:options': {
+          outputFormat: 'yyyy-MM-dd',
+        },
+      },
+      dateRangeField: {
+        'ui:field': 'daterange',
+        'ui:help':
+          'Date range picker with "Present" option - click "Present" button to set end date as ongoing',
+        'ui:options': {
+          format: 'dd/mm/yyyy',
+          outputFormat: 'yyyy-MM-dd',
+          showPresentOption: true,
+        },
+      },
+      dateRangeField2: {
+        'ui:field': 'daterange',
+        'ui:help': 'Month range picker example (mm/yyyy)',
+        'ui:options': {
+          rangePickerType: 'months',
+          format: 'mm/yyyy',
+          outputFormat: 'yyyy-MM',
+        },
+      },
+      dateRangeField3: {
+        'ui:field': 'daterange',
+        'ui:help': 'Year range picker example (yyyy)',
+        'ui:options': {
+          rangePickerType: 'years',
+          format: 'yyyy',
+          outputFormat: 'yyyy',
+        },
+      },
+      singleSelectTypeahead: {
+        'ui:widget': 'select',
+        'ui:placeholder': 'Select a manager',
+        'ui:options': {
+          typeaheadAvatarSize: 24,
+        },
+      },
+      multipleSelectTypeahead: {
+        'ui:widget': 'select',
+        'ui:placeholder': 'Select multiple managers',
+        'ui:options': {
+          typeaheadAvatarSize: 24,
+        },
+      },
+    },
+    onChange: (data) => {
+      console.log('=== Form Changed ===');
+      console.log('Form data:', data.formData);
+      console.log('Validation errors:', data.errors);
+      console.log('Form state:', {
+        formData: data.formData,
+        errors: data.errors,
+        schema: data.schema,
+      });
+    },
+    onError: (errors) => {
+      console.log('=== Validation Errors ===');
+      console.log('Errors:', errors);
+    },
+    onSubmit: (data) => {
+      console.log('=== Form Submitted ===');
+      console.log('Form data:', data.formData);
+      console.log('Validation errors:', data.errors);
+      console.log('Form state:', {
+        formData: data.formData,
+        errors: data.errors,
+        schema: data.schema,
+      });
     },
   },
 };

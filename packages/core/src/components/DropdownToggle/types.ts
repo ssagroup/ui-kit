@@ -4,7 +4,8 @@ import { CommonProps } from '@global-types/emotion';
 import { ControlledButtonProps } from '@components/Dropdown/types';
 
 export interface DropdownToggleProps
-  extends CommonProps,
+  extends
+    CommonProps,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, ControlledButtonProps> {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;

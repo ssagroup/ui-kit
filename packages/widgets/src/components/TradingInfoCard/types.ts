@@ -7,6 +7,7 @@ export interface TradingInfoCardProps {
   icon?: React.ReactNode;
   onClick?: () => void;
   link?: string;
+  showTooltip?: boolean;
 }
 
 export type TradingInfoContent = Pick<
@@ -22,6 +23,6 @@ export type TradingInfoCardWrapperProps = Pick<
 };
 
 export interface TradingInfoCardTooltipProps {
-  trigger: string | number | JSX.Element;
+  trigger: string | number | React.JSX.Element;
   children: React.ReactNode;
 }

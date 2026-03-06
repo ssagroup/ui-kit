@@ -42,10 +42,15 @@ const baseConfig = {
         resourceQuery: [/react/], // include react component if *.svg?react
         use: ['@svgr/webpack'],
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+    fullySpecified: false,
   },
   stats: {
     errorDetails: true,

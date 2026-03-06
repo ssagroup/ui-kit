@@ -6,7 +6,7 @@ import {
   Description,
   Primary,
   Stories,
-} from '@storybook/addon-docs';
+} from '@storybook/addon-docs/blocks';
 import Table from '@components/Table';
 import { NestedTableDefaultStory, NestedTableStory } from './NestedTableStory';
 

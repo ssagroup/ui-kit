@@ -14,6 +14,27 @@ import {
 } from '@floating-ui/react';
 import { PopoverOptions, UsePopover } from '../types';
 
+/**
+ * usePopover - Hook for popover functionality
+ *
+ * Custom hook that provides popover state management, positioning, and interactions.
+ * Handles both controlled and uncontrolled modes, supports multiple interaction types
+ * (click, hover, both), and integrates with Floating UI for positioning and focus management.
+ *
+ * @param options - Popover configuration options
+ * @returns Popover context value with state, positioning, and interaction handlers
+ *
+ * @example
+ * ```tsx
+ * const popover = usePopover({
+ *   placement: 'top',
+ *   interactionsEnabled: 'click',
+ *   modal: false,
+ * });
+ * ```
+ *
+ * @see {@link Popover} - Component that uses this hook
+ */
 export const usePopover: UsePopover = ({
   initialOpen = false,
   placement = 'bottom',
@@ -56,9 +77,14 @@ export const usePopover: UsePopover = ({
       controlledOpen == null && ['click', 'both'].includes(interactionsEnabled),
     keyboardHandlers,
   });
+  const isControlled = controlledOpen !== undefined;
   const dismiss = useDismiss(context, {
-    referencePress: true,
-    ancestorScroll: true,
+    // When controlled, disable referencePress (parent handles toggle) but keep outsidePress
+    referencePress: !isControlled,
+    // Keep outsidePress enabled even in controlled mode
+    outsidePress: true,
+    escapeKey: true,
+    ancestorScroll: !isControlled,
   });
   const role = useRole(context);
   const hover = useHover(context, {

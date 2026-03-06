@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import Wrapper from '@components/Wrapper';
 import * as S from '../styles';
 import { useDatePickerContext } from '../useDatePickerContext';
-import { MONTHS } from '../constants';
+import { MONTHS, PICKER_TYPE, CALENDAR_TYPE } from '../constants';
 
 export const MonthsView = () => {
   const {
@@ -17,6 +17,9 @@ export const MonthsView = () => {
     setDateTime,
     setCalendarViewDateTime,
     onMonthChange,
+    pickerType,
+    setIsOpen,
+    safeOnChange,
   } = useDatePickerContext();
 
   const isHighlightEnabled = !!highlightDates?.enabled;
@@ -25,7 +28,7 @@ export const MonthsView = () => {
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
-    if ((target as HTMLDivElement).getAttribute('aria-disabled') === null) {
+    if ((target as HTMLDivElement).getAttribute('aria-disabled') === 'true') {
       event.stopPropagation();
       event.preventDefault();
       return;
@@ -33,13 +36,26 @@ export const MonthsView = () => {
     const selectedMonth = (target as HTMLDivElement).innerHTML;
     const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
     const newDate = calendarViewDateTime?.set({ month: monthNumber + 1 });
-    setCalendarViewDateTime(newDate);
-    setDateTime(newDate);
-    if (newDate) {
-      onMonthChange?.(newDate.toJSDate());
+
+    if (!newDate) return;
+
+    const isMonthTypeSelected = pickerType === PICKER_TYPE.MONTHS;
+
+    if (isMonthTypeSelected) {
+      const startDate = newDate.startOf('month');
+
+      setCalendarViewDateTime(startDate);
+      setDateTime(startDate);
+      safeOnChange?.(startDate);
+      onMonthChange?.(startDate.toJSDate());
+
+      setIsOpen(false);
+    } else {
+      setCalendarViewDateTime(newDate);
+      setCalendarType(CALENDAR_TYPE.DAYS);
     }
-    setCalendarType('days');
   };
+
   return (
     <Wrapper
       css={{ flexWrap: 'wrap', paddingTop: 10 }}

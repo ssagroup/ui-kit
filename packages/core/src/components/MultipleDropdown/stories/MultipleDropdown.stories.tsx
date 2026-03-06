@@ -224,7 +224,7 @@ export const DynamicallyChangedItems = (args: Args) => {
           </DropdownOption>
         ))}
       </MultipleDropdown>
-      <Button variant="info" css={{ marginLeft: 10 }} onClick={handleUpdate}>
+      <Button variant="primary" css={{ marginLeft: 10 }} onClick={handleUpdate}>
         Update items
       </Button>
     </div>

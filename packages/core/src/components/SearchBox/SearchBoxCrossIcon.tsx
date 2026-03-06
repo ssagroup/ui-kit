@@ -11,7 +11,7 @@ export const SearchBoxCrossIcon = ({
   return (
     <Button
       onClick={onClick}
-      variant="custom"
+      variant="tertiary"
       data-testid="cross-icon"
       css={{
         padding: 0,

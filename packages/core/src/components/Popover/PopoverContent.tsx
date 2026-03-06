@@ -8,6 +8,39 @@ import { usePopoverContext } from './hooks/usePopoverContext';
 import Wrapper from '@components/Wrapper';
 import { MountMode } from './types';
 
+/**
+ * PopoverContent - Content container for popover
+ *
+ * Renders the actual popover content that appears when the trigger is activated.
+ * Automatically positioned using Floating UI, supports portal rendering, and
+ * includes focus management for modal popovers. Can be configured to unmount
+ * or keep mounted when closed.
+ *
+ * @category Components
+ * @subcategory Overlay
+ *
+ * @example
+ * ```tsx
+ * <PopoverContent>
+ *   <PopoverHeading variant="h4">Title</PopoverHeading>
+ *   <PopoverDescription>Content goes here</PopoverDescription>
+ *   <PopoverClose>Close</PopoverClose>
+ * </PopoverContent>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Keep content mounted when closed
+ * <PopoverContent mountMode="keep-mounted">
+ *   <div>This stays in DOM when closed</div>
+ * </PopoverContent>
+ * ```
+ *
+ * @see {@link Popover} - Root component
+ * @see {@link PopoverTrigger} - Trigger element component
+ * @see {@link PopoverHeading} - Accessible heading component
+ * @see {@link PopoverDescription} - Accessible description component
+ */
 export const PopoverContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLProps<HTMLDivElement> & {

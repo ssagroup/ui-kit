@@ -6,6 +6,7 @@ type MakeColors<T extends Array<string>> = {
 
 type Colors = MakeColors<
   [
+    'black',
     'black25',
     'black45',
     'white',
@@ -137,8 +138,72 @@ export type ColorsKeys = keyof Colors;
 
 type MediaQueryString = `@media${string}`;
 
+/**
+ * Palette color token for a single semantic color.
+ *
+ * Used by Button (and potentially other components) to drive background colors
+ * across interactive states:
+ * - `main`  — default/resting background
+ * - `dark`  — hover and active (pressed) background
+ * - `light` — focus background (keyboard navigation highlight)
+ *
+ * All three values can be `transparent` (used by the `tertiary` variant).
+ */
+export interface PaletteColor {
+  /** Default/resting background color */
+  main: RGBString | 'transparent';
+  /** Focus state background — lighter, softer highlight */
+  light: RGBString | 'transparent';
+  /** Hover and active state background — darker, stronger emphasis */
+  dark: RGBString | 'transparent';
+}
+
+/**
+ * Semantic color palette for the design system.
+ *
+ * Each entry maps to a Button variant of the same name and controls its
+ * background color across interactive states via `PaletteColor` (main / dark / light).
+ *
+ * Override individual entries in a custom theme to restyle Button variants
+ * without affecting other components that use `theme.colors`.
+ *
+ * @example
+ * ```ts
+ * const customTheme: Theme = {
+ *   ...mainTheme,
+ *   palette: {
+ *     ...mainTheme.palette,
+ *     primary: {
+ *       main: 'rgb(0, 102, 255)',
+ *       dark: 'rgb(0, 51, 204)',
+ *       light: 'rgb(51, 133, 255)',
+ *     },
+ *   },
+ * };
+ * ```
+ */
+export interface Palette {
+  /** Blue brand color — high-emphasis primary actions. White text. */
+  primary: PaletteColor;
+  /** Grey neutral color — medium-emphasis secondary actions. Dark text. */
+  secondary: PaletteColor;
+  /** Red — destructive or error actions. White text. */
+  error: PaletteColor;
+  /** Orange — caution or warning actions. White text. */
+  warning: PaletteColor;
+  /** Green — success or confirmation actions. White text. */
+  success: PaletteColor;
+  /** All-transparent — low-emphasis ghost button. Dark text. Focus shown via outline only. */
+  tertiary: PaletteColor;
+}
+
 export interface Theme {
   colors: Colors;
+  /**
+   * Semantic color palette used by Button variants.
+   * Override individual entries to restyle buttons without touching global theme colors.
+   */
+  palette: Palette;
   mediaQueries: {
     xs: MediaQueryString;
     sm: MediaQueryString;

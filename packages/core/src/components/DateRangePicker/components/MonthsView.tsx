@@ -37,7 +37,7 @@ export const MonthsView = () => {
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
-    if ((target as HTMLDivElement).getAttribute('aria-disabled') === null) {
+    if ((target as HTMLDivElement).getAttribute('aria-disabled') === 'true') {
       event.stopPropagation();
       event.preventDefault();
       return;

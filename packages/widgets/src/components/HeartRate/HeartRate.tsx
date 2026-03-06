@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { linearGradientDef } from '@nivo/core';
-import { Point } from '@nivo/line';
+import { isPoint, LineSeries, PointOrSliceData } from '@nivo/line';
 
 import {
   CardHeader,
@@ -34,7 +34,11 @@ export const HeartRate = ({
   );
   const [onBpmValueChange, cancelTimer] = useMemo(
     () =>
-      throttle((point: Point) => setBpmValue(point?.data?.y as number), 100),
+      throttle((point: PointOrSliceData<LineSeries>) => {
+        if (isPoint(point)) {
+          setBpmValue(point?.data?.y as number);
+        }
+      }, 100),
     [],
   );
 

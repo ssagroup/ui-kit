@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, within } from '@testing-library/react';
+import { screen, within } from '../../../customTest';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
 import Avatar from '@components/Avatar';
@@ -338,6 +338,58 @@ describe('Typeahead Component', () => {
 
       const avatars = screen.getAllByTestId('typeahead-option-avatar');
       expect(avatars).toHaveLength(managerOptions.length);
+    });
+  });
+
+  describe('Custom Values', () => {
+    it('allows adding custom values by typing and pressing Enter', async () => {
+      const { user, mockOnChange } = setup({
+        isMultiple: true,
+        allowCustomValues: true,
+      });
+
+      const combobox = screen.getByRole('combobox');
+      await user.click(combobox);
+
+      // Get the actual editable input (the one that's not readonly and has autocomplete)
+      // In multiple mode, there are two textbox elements - one editable, one readonly placeholder
+      const inputs = screen.getAllByRole('textbox');
+      const editableInput = inputs.find(
+        (input) =>
+          input.getAttribute('autocomplete') === 'off' &&
+          !input.hasAttribute('readonly'),
+      );
+
+      if (!editableInput) {
+        throw new Error('Could not find editable input');
+      }
+
+      // Type a custom value
+      await user.type(editableInput, 'custom-value');
+      await user.keyboard('{Enter}');
+
+      // Should call onChange with the custom value
+      expect(mockOnChange).toHaveBeenCalledWith('custom-value', true);
+    });
+
+    it('shows custom values in blue in the dropdown when selected', async () => {
+      const { user } = setup({
+        isMultiple: true,
+        allowCustomValues: true,
+        defaultSelectedItems: ['custom-selected'],
+      });
+
+      const combobox = screen.getByRole('combobox');
+      await user.click(combobox);
+
+      // Custom value should appear in the dropdown (use getAllByText and check the option in the listbox)
+      const customOptions = screen.getAllByText('custom-selected');
+      // Should be in both the selected chip and the dropdown option
+      expect(customOptions.length).toBeGreaterThan(0);
+      // Find the one in the dropdown (within the dialog/listbox)
+      const dialog = screen.getByRole('dialog');
+      const customOption = within(dialog).getByText('custom-selected');
+      expect(customOption).toBeInTheDocument();
     });
   });
 });

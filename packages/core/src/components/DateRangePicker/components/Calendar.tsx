@@ -1,8 +1,10 @@
 import { useTheme } from '@emotion/react';
+import { useFormContext } from 'react-hook-form';
 import * as DPC from '.';
 import * as C from '../..';
 import { CalendarType } from '../types';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { PRESENT_VALUE } from '../DateRangePickerFormBridge';
 
 export const DatePickerCalendar = () => {
   const theme = useTheme();
@@ -11,8 +13,53 @@ export const DatePickerCalendar = () => {
     months: DPC.MonthsView,
     years: DPC.YearsView,
   };
-  const { calendarType, classNames } = useDateRangePickerContext();
+  const {
+    calendarType,
+    classNames,
+    rangeSelectionStep,
+    showPresentOption,
+    setDateTime,
+    setIsOpen,
+    setRangeSelectionStep,
+    onChange,
+    dateTime,
+    setIsEndDatePresent,
+    setLastChangedDate,
+    nameTo,
+  } = useDateRangePickerContext();
   const Component = components[calendarType];
+  const formContext = useFormContext();
+  const setValue = formContext?.setValue;
+
+  const handlePresentClick = () => {
+    if (rangeSelectionStep === 'end') {
+      // Get current start date before updating state
+      const startDate = dateTime[0];
+
+      // Set end date to undefined internally, mark as "Present"
+      setDateTime((prev) => [prev[0], undefined]);
+      setIsEndDatePresent(true);
+      // Clear the form value directly (without clearing isEndDatePresent flag)
+      if (setValue && nameTo) {
+        setValue(nameTo, '');
+      }
+      setRangeSelectionStep(null);
+      setIsOpen(false);
+
+      setLastChangedDate([
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null = "Present" (end date only)
+      ]);
+
+      onChange?.([
+        startDate ? startDate.toJSDate() : undefined,
+        null, // null = "Present" (end date only)
+      ]);
+    }
+  };
+
+  // Disable "Present" button when not selecting end date
+  const isPresentButtonDisabled = rangeSelectionStep !== 'end';
 
   return (
     <C.PopoverContent
@@ -25,7 +72,7 @@ export const DatePickerCalendar = () => {
         padding: 24,
         paddingTop: 16,
         width: 346,
-        height: 370,
+        height: showPresentOption ? 412 : 370,
         alignItems: 'flex-start',
         margin: '14px 0 0 -14px',
         zIndex: 100,
@@ -40,6 +87,20 @@ export const DatePickerCalendar = () => {
           justifyContent: 'space-between',
         }}>
         <Component />
+        {showPresentOption && (
+          <C.Button
+            variant="primary"
+            onClick={handlePresentClick}
+            isDisabled={isPresentButtonDisabled}
+            data-testid="daterangepicker-present-button"
+            css={{
+              marginTop: 12,
+              width: '100%',
+              justifyContent: 'center',
+            }}>
+            {PRESENT_VALUE}
+          </C.Button>
+        )}
       </C.PopoverDescription>
     </C.PopoverContent>
   );

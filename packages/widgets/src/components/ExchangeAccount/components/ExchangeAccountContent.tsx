@@ -8,8 +8,10 @@ import { useExchangeAccountContext } from './ExchangeAccountProvider';
 import { BalancePieChart } from '@components/AccountBalance';
 import { AccountBalanceProvider } from '@components/AccountBalance/AccountBalanceContext';
 
-export interface ExchangeAccountContentProps
-  extends Omit<React.ComponentProps<typeof CardContent>, 'children'> {
+export interface ExchangeAccountContentProps extends Omit<
+  React.ComponentProps<typeof CardContent>,
+  'children'
+> {
   pieChartProps?: Partial<Omit<PieChartProps, 'data'>>;
 }
 

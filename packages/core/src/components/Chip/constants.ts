@@ -8,9 +8,9 @@ export const VARIANTS = {
 export const COLORS = {
   DEFAULT: 'default',
   PRIMARY: 'primary',
+  SECONDARY: 'secondary',
   SUCCESS: 'success',
   ERROR: 'error',
-  INFO: 'info',
   WARNING: 'warning',
 } as const;
 

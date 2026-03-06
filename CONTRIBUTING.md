@@ -39,12 +39,25 @@ pnpm build:all
 
 ## Project structure
 
-The project consists of 5 sub-projects:
-1. **Core** ([`./packages/core/`](https://github.com/ssagroup/ui-kit/tree/main/packages/core))- The Core library.   
-2. **Utils** ([`./packages/utils/`](https://github.com/ssagroup/ui-kit/tree/main/packages/utils)) - Utility functions used by the Core library.  
-3. **Hooks** ([`./packages/hooks/`](https://github.com/ssagroup/ui-kit/tree/main/packages/hooks)) - Hooks used by the Core library.  
-4. **Widgets** ([`./packages/widgets`](https://github.com/ssagroup/ui-kit/tree/main/packages/widgets)) - Components built on top of the Core library.
-5. **Fitness Dashboard** ([`./examples/fitness-dashboard`](https://github.com/ssagroup/ui-kit/tree/main/examples/fitness-dashboard)) - An example Dashboard built on top of the Widgets and Core library.   
+The project is a monorepo consisting of multiple packages and examples:
+
+### Core Packages
+
+1. **Core** ([`./packages/core/`](https://github.com/ssagroup/ui-kit/tree/main/packages/core)) - The main UI component library containing all base components (buttons, inputs, tables, forms, etc.). This is the foundation of the design system.
+
+2. **Utils** ([`./packages/utils/`](https://github.com/ssagroup/ui-kit/tree/main/packages/utils)) - Utility functions and helpers used across the UI Kit. Contains pure functions for data manipulation, formatting, and common operations.
+
+3. **Hooks** ([`./packages/hooks/`](https://github.com/ssagroup/ui-kit/tree/main/packages/hooks)) - Custom React hooks used by the Core library and other packages. Provides reusable stateful logic and side effects.
+
+4. **Widgets** ([`./packages/widgets`](https://github.com/ssagroup/ui-kit/tree/main/packages/widgets)) - Higher-level components built on top of the Core library. Widgets combine multiple Core components to create complex, feature-rich UI elements (dashboards, charts, data tables, etc.).
+
+5. **Templates** ([`./packages/templates`](https://github.com/ssagroup/ui-kit/tree/main/packages/templates)) - Pre-built page templates and layouts that demonstrate how to combine Core components and Widgets into complete page structures.
+
+6. **Infra-Dash** ([`./packages/infra-dash`](https://github.com/ssagroup/ui-kit/tree/main/packages/infra-dash)) - Infrastructure dashboard components and monitoring widgets, specialized for infrastructure and system monitoring use cases.
+
+### Examples
+
+7. **Fitness Dashboard** ([`./examples/fitness-dashboard`](https://github.com/ssagroup/ui-kit/tree/main/examples/fitness-dashboard)) - A complete example application demonstrating how to use the UI Kit packages together. Built on top of Widgets, Core, Hooks, and Utils.   
 
 ## Development
 
@@ -71,45 +84,160 @@ To run a script for a sub-project use the [`--filter`](https://pnpm.io/filtering
 
 ### Storybook
 
-We use [Storybook Composition](https://storybook.js.org/docs/react/sharing/storybook-composition) that is currently consists of 3 parts:  
-1. The [root Storybook](https://github.com/ssagroup/ui-kit/tree/main/.storybook) (has one `.mdx` welcome message and references to the other Storybooks).  
-2. The [`Core` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/core/.storybook).  
-3. The [`Widgets` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/widgets/.storybook).  
+We use [Storybook Composition](https://storybook.js.org/docs/react/sharing/storybook-composition) that consists of multiple Storybook instances:  
+1. The [root Storybook](https://github.com/ssagroup/ui-kit/tree/main/.storybook) (port 6001) - Main entry point with welcome message and references to all other Storybooks.  
+2. The [`Core` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/core/.storybook) (port 6006) - Documentation for all Core components.  
+3. The [`Widgets` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/widgets/.storybook) (port 6007) - Documentation for Widget components.  
+4. The [`Templates` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/templates/.storybook) (port 6008) - Documentation for Template components.  
+5. The [`Infra-Dash` library Storybook](https://github.com/ssagroup/ui-kit/tree/main/packages/infra-dash/.storybook) (port 6009) - Documentation for Infra-Dash components.  
 
-**To run the Storybook Composition in the development mode**:  
-``` bash
-# Run the following commands in order in separate terminal tabs
-# 1. Core library Storybook
-> pnpm --filter ./packages/core sb:dev  
-# 2. Widgets library Storybook
-> pnpm --filter ./packages/widgets sb:dev
-# 3. The Root Storybook
-> pnpm sb:dev 
+**To run Storybook in development mode**:  
+```bash
+# Run individual Storybook instances (choose based on what you're working on)
+> pnpm sb:dev              # Root Storybook (port 6001)
+> pnpm sb:core            # Core library Storybook (port 6006)
+> pnpm sb:widgets         # Widgets library Storybook (port 6007)
+> pnpm sb:templates       # Templates library Storybook (port 6008)
+> pnpm sb:infra-dash      # Infra-Dash library Storybook (port 6009)
 ```
 
-All the above commands run separate Storybook instances. If you don't need the whole Storybook Composition, you can use just one of the above commands to work on the project you need.  
+**To run the full Storybook Composition** (all instances together):  
+```bash
+# Run the following commands in separate terminal tabs
+# 1. Core library Storybook
+> pnpm sb:core
+# 2. Widgets library Storybook
+> pnpm sb:widgets
+# 3. Templates library Storybook (optional)
+> pnpm sb:templates
+# 4. Infra-Dash library Storybook (optional)
+> pnpm sb:infra-dash
+# 5. The Root Storybook (must be last)
+> pnpm sb:dev
+```
+
+**To build Storybook for production**:  
+```bash
+# Build individual Storybooks
+> pnpm sb:build:root       # Root Storybook
+> pnpm sb:build:core       # Core library Storybook
+> pnpm sb:build:widgets    # Widgets library Storybook
+> pnpm sb:build:templates  # Templates library Storybook
+> pnpm sb:build:infra-dash # Infra-Dash library Storybook
+```
+
+All Storybook instances run separately. If you don't need the whole Storybook Composition, you can use just one of the above commands to work on the specific package you need.  
 
 ### Tests
 
-To run tests use one of the following commands:  
-``` bash
-# 1. Run tests across all the sub-projects
+The project uses [Jest](https://jestjs.io/) for unit tests and [Playwright](https://playwright.dev/) for end-to-end (E2E) tests.
+
+#### Unit Tests
+
+**Run all unit tests**:  
+```bash
+# Run tests across all packages
 > pnpm test
-# 2. Run Core library tests
-> pnpm test:core
-# 3. Run Utils library tests
-> pnpm test:utils
-# 4. Run Hooks library tests
-> pnpm test:hooks
-# 5. Run Widgets library tests
-> pnpm test:widgets
 ```
 
-### Fitness Dashboard
-
-To run the Fitness Dashboard in the development mode use this command:  
+**Run tests for specific packages**:  
 ```bash
+> pnpm test:core        # Core library tests
+> pnpm test:utils       # Utils library tests
+> pnpm test:hooks       # Hooks library tests
+> pnpm test:widgets     # Widgets library tests
+> pnpm test:templates   # Templates library tests
+> pnpm test:infra-dash  # Infra-Dash library tests
+```
+
+**Test utilities**:  
+```bash
+# Run tests with coverage report
+> pnpm test:coverage
+
+# Update snapshot tests
+> pnpm test:update-snapshots
+
+# Update snapshots in parallel (faster for large projects)
+> pnpm test:update-snapshots:parallel
+
+# Clear Jest cache (useful if tests are behaving unexpectedly)
+> pnpm test:clearcache
+```
+
+#### End-to-End (E2E) Tests
+
+E2E tests use Playwright and test components in a real browser environment.
+
+**Run all E2E tests**:  
+```bash
+# Run E2E tests for Core and Widgets
+> pnpm test:e2e
+```
+
+**Run E2E tests for specific packages**:  
+```bash
+# Core library E2E tests
+> pnpm test:core:e2e         # Run in headless mode
+> pnpm test:core:e2e:ui      # Run with Playwright UI
+> pnpm test:core:e2e:debug   # Run in debug mode
+
+# Widgets library E2E tests
+> pnpm test:widgets:e2e
+> pnpm test:widgets:e2e:ui
+> pnpm test:widgets:e2e:debug
+
+# Templates library E2E tests
+> pnpm test:templates:e2e
+> pnpm test:templates:e2e:ui
+> pnpm test:templates:e2e:debug
+
+# Infra-Dash library E2E tests
+> pnpm test:infra-dash:e2e
+> pnpm test:infra-dash:e2e:ui
+> pnpm test:infra-dash:e2e:debug
+```
+
+**E2E test modes**:
+- **Headless mode** (`test:e2e`) - Runs tests without opening a browser window (fastest, used in CI)
+- **UI mode** (`test:e2e:ui`) - Opens Playwright's interactive UI to watch tests run and debug
+- **Debug mode** (`test:e2e:debug`) - Opens browser in debug mode with Playwright Inspector
+
+### Linting and Code Quality
+
+**ESLint** (JavaScript/TypeScript linting):  
+```bash
+# Lint all files
+> pnpm lint
+
+# Lint specific files or directories
+> pnpm lint packages/core/src
+```
+
+**Stylelint** (CSS/TSX style linting):  
+```bash
+# Lint styles in all TSX files
+> pnpm lint:styles
+```
+
+**Spellcheck**:  
+```bash
+# Check spelling in all TypeScript, TSX, and Markdown files
+> pnpm spellcheck
+
+# Check specific file
+> pnpm spellcheck CONTRIBUTING.md
+```
+
+### Examples
+
+**Fitness Dashboard** - Example application demonstrating UI Kit usage:  
+```bash
+# Run in development mode
 > pnpm --filter ./examples/fitness-dashboard serve
+
+# Build for production
+> pnpm --filter ./examples/fitness-dashboard build
 ```
 
 ### Dependencies management
@@ -139,34 +267,43 @@ To install/remove a dependency to/from a sub-project use this syntax (instead of
 
 ### Building 
 
-Once you've made changes to a library, you have to make a build to let other sub-project see those changes.  
-For example, if you change something in the Utils library, you must build it first, then build the Core library, and Widgets Library. After that the changes will be available in the Fitness Dashboard sub-project:  
+Once you've made changes to a library, you need to build it so other packages can see those changes.  
+**Build order matters**: Build packages in dependency order (Utils → Hooks → Core → Widgets → Templates/Infra-Dash).
 
-
-``` bash
-# Make changes to the Utils library, then
-# 1. Build the Utils library
-> pnpm --filter ./packages/utils build
-# 2. Build the Core library
-> pnpm --filter ./packages/core build
-# 3. Build the Widgets library
-> pnpm --filter ./packages/widgets build
-# Now the changes are available in the Fitness Dashboard
-```
-
-The root `./package.json` contains shortcuts for `build` commands:
+**Example**: If you change something in the Utils library:
 ```bash
-# Build all projects located in the ./packages/ directory
-> pnpm build:all
-# Build ./packages/utils project
+# 1. Build the Utils library
 > pnpm build:utils
-# Build ./packages/hooks project
+# 2. Build the Hooks library (if it depends on Utils)
 > pnpm build:hooks
-# Build ./packages/core project
+# 3. Build the Core library (depends on Utils and Hooks)
 > pnpm build:core
-# Build ./packages/widgets project
+# 4. Build the Widgets library (depends on Core)
 > pnpm build:widgets
+# 5. Build Templates or Infra-Dash if needed
+> pnpm build:templates
+> pnpm build:infra-dash
+# Now the changes are available in dependent packages
 ```
+
+**Build commands**:
+```bash
+# Build all packages in ./packages/ directory
+> pnpm build:all
+
+# Build individual packages
+> pnpm build:utils       # Utils library
+> pnpm build:hooks       # Hooks library
+> pnpm build:core       # Core library
+> pnpm build:widgets    # Widgets library
+> pnpm build:templates  # Templates library
+> pnpm build:infra-dash # Infra-Dash library
+
+# Watch mode for Core (rebuilds automatically on file changes)
+> pnpm build:core:watch
+```
+
+**Note**: The build process compiles TypeScript, bundles with Webpack, and resolves TypeScript path aliases. Each package outputs to its `dist/` directory.
 
 ## Release Process
 

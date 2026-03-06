@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
-import { outlineStyles } from '@styles/safari-focus-outline';
 
-const SwitchBase = styled.button`
+interface SwitchBaseProps {
+  onColor: string;
+  offOutlineColor: string;
+}
+
+const SwitchBase = styled.button<SwitchBaseProps>`
   width: 44px;
   height: 24px;
   border: 0;
@@ -9,8 +13,7 @@ const SwitchBase = styled.button`
   padding: 0;
   border-radius: 50px;
   position: relative;
-  background: ${({ theme }) =>
-    `linear-gradient(117.5deg, ${theme.colors.greenLighter}, ${theme.colors.green});`};
+  background: ${({ onColor }) => onColor};
   cursor: pointer;
 
   &::before {
@@ -31,23 +34,20 @@ const SwitchBase = styled.button`
     background: ${({ theme }) => theme.colors.greyFocused};
   }
 
-  &:focus {
-    box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
-    outline: 0;
-  }
-
   &:disabled {
-    background: ${({ theme }) => theme.colors.greyDisabled};
+    background: ${({ theme }) => theme.colors.greyFocused40};
     cursor: auto;
-  }
-
-  &:not(:disabled):hover {
-    box-shadow: ${({ theme }) => `-4px 4px 10px ${theme.colors.green40}`};
   }
 
   &[aria-checked='false']:focus::after,
   &:not(:disabled)[aria-checked='false']:hover::after {
-    ${({ theme }) => outlineStyles(theme, 'greenLighter', '50px')}
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-style: solid;
+    border-width: 1px;
+    border-color: ${({ offOutlineColor }) => offOutlineColor};
+    border-radius: 50px;
   }
 
   &[aria-checked='true']::before {

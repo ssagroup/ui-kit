@@ -1,10 +1,26 @@
-import { ResponsiveLine, LineSvgProps, LineProps } from '@nivo/line';
-import { SimpleChartTooltip } from '@ssa-ui-kit/core';
+import {
+  ResponsiveLine as ResponsiveLineOriginal,
+  LineSvgProps,
+  LineSeries,
+} from '@nivo/line';
+import { ResponsiveProps } from '@nivo/core';
+
+import {
+  SimpleChartTooltip,
+  wrapNivoResponsiveComponent,
+} from '@ssa-ui-kit/core';
 
 import { getTime } from './utils';
 
+const ResponsiveLine = wrapNivoResponsiveComponent(
+  ResponsiveLineOriginal,
+  'ResponsiveLine',
+);
+
+type LineProps = ResponsiveProps<LineSvgProps<LineSeries>>;
+
 // ScaleSpec is not exported from @nivo/line
-type ScaleSpec = LineSvgProps['xScale'];
+type ScaleSpec = LineProps['xScale'];
 
 const defaults: Omit<LineProps, 'data'> = {
   margin: { top: 0, right: 0, bottom: 0, left: 0 },
@@ -18,12 +34,12 @@ const defaults: Omit<LineProps, 'data'> = {
   } as ScaleSpec,
   pointBorderColor: { from: 'serieColor' },
   legends: [],
-  xFormat: (yVal) => getTime(new Date(yVal)),
+  xFormat: (yVal) => getTime(new Date(String(yVal))),
   yFormat: (xVal) => `${xVal} bpm`,
   tooltip: (args) => <SimpleChartTooltip {...args} />,
 };
 
-export const HeartRateLineChart = ({ data, ...props }: LineSvgProps) => {
+export const HeartRateLineChart = ({ data, ...props }: LineProps) => {
   return (
     <ResponsiveLine
       data={data}

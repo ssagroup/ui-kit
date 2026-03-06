@@ -24,8 +24,10 @@ import { FiltersMultiSelectProvider } from './FiltersMultiSelectProvider';
 import { FilterBadge } from './components/FilterBadge';
 import { FiltersMultiSelectEmpty } from './components/FiltersMultiSelectEmpty';
 
-export interface FiltersMultiSelectProps
-  extends Pick<FieldProps, 'status' | 'disabled'> {
+export interface FiltersMultiSelectProps extends Pick<
+  FieldProps,
+  'status' | 'disabled'
+> {
   children: React.ReactNode;
   description?: string;
   emptyNode?: React.ReactNode;

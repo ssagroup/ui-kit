@@ -7,6 +7,47 @@ import { usePaginationContext } from '@components/Pagination/PaginationContext';
 import { RowsPerPageDropdownProps } from './types';
 import { DEFAULT_PER_PAGE_VALUE, ROWS_PER_PAGE_LIST } from '../../constants';
 
+/**
+ * RowsPerPageDropdown - Dropdown component for selecting rows per page
+ *
+ * A dropdown component that allows users to select the number of rows
+ * displayed per page in paginated data. Used within Pagination component
+ * when isRowPerPageVisible is true. Requires PaginationContextProvider
+ * to access and update the perPage state.
+ *
+ * @category Components
+ * @subcategory Navigation
+ *
+ * @example
+ * ```tsx
+ * <PaginationContextProvider selectedPage={1} defaultPerPage={25}>
+ *   <Pagination
+ *     pagesCount={20}
+ *     isRowPerPageVisible={true}
+ *     rowPerPageProps={{
+ *       selectedItem: 25,
+ *       rowsPerPageText: "Items per page",
+ *       rowsPerPageList: [
+ *         { id: 1, value: 10 },
+ *         { id: 2, value: 25 },
+ *         { id: 3, value: 50 },
+ *       ],
+ *     }}
+ *   />
+ * </PaginationContextProvider>
+ * ```
+ *
+ * @see {@link Pagination} - Parent component that uses this component
+ * @see {@link PaginationContextProvider} - Required context provider
+ * @see {@link Dropdown} - Base dropdown component used internally
+ *
+ * @requires PaginationContextProvider - Must be used within PaginationContextProvider
+ *
+ * @accessibility
+ * - ARIA attributes via Dropdown component
+ * - Keyboard navigation support
+ * - Screen reader friendly
+ */
 export const RowsPerPageDropdown = ({
   selectedItem = DEFAULT_PER_PAGE_VALUE,
   rowsPerPageList = ROWS_PER_PAGE_LIST,

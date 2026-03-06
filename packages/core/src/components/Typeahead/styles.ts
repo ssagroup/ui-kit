@@ -26,7 +26,6 @@ export const TypeaheadOptionsBase = styled.ul`
 export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   display: flex;
   align-items: center;
-  padding: 0 16px;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -89,7 +88,10 @@ export const TypeaheadInputWrapper = css`
   }
 `;
 
-export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
+export const TypeaheadItem = styled.div<{
+  isDisabled?: boolean;
+  isCustomValue?: boolean;
+}>`
   display: flex;
   gap: 6px;
   background: ${({ theme, isDisabled }) =>
@@ -97,7 +99,9 @@ export const TypeaheadItem = styled.div<{ isDisabled?: boolean }>`
       ? theme.colors.greySelectedMenuItem
       : theme.colors.greyLighter40};
   border-radius: 24px;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border: 1px solid
+    ${({ theme, isCustomValue }) =>
+      isCustomValue ? theme.colors.blueRoyal : theme.colors.grey};
   color: ${({ theme, isDisabled }) =>
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-weight: 500;
@@ -115,9 +119,16 @@ export const TypeaheadItemAvatar = styled.span`
   flex-shrink: 0;
 `;
 
-export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
-  color: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.grey : theme.colors.greyDarker};
+export const TypeaheadItemLabel = styled.div<{
+  isDisabled?: boolean;
+  isCustomValue?: boolean;
+}>`
+  color: ${({ theme, isDisabled, isCustomValue }) =>
+    isDisabled
+      ? theme.colors.grey
+      : isCustomValue
+        ? theme.colors.blueRoyal
+        : theme.colors.greyDarker};
   font-size: 14px;
   font-weight: 500;
   display: flex;
@@ -127,11 +138,13 @@ export const TypeaheadItemLabel = styled.div<{ isDisabled?: boolean }>`
   text-overflow: ellipsis;
 `;
 
-export const TypeaheadItemCross = styled(Button)`
+export const TypeaheadItemCross = styled(Button)<{
+  isCustomValue?: boolean;
+}>`
   background: none;
-  padding: 0;
-  padding-right: 5px;
+  padding: 0 5px 0 0;
   height: auto;
+
   &:active,
   &:focus,
   &:hover {
@@ -139,6 +152,7 @@ export const TypeaheadItemCross = styled(Button)`
     background: none;
     box-shadow: none;
   }
+
   &:disabled {
     background: none;
   }
@@ -148,7 +162,7 @@ export const TypeaheadInputsGroupWrapper = styled(Wrapper)<{
   isOpen: boolean;
 }>`
   position: relative;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   min-width: ${({ isOpen }) => (isOpen ? '50px' : 'auto')};
   flex-direction: column !important;
 `;

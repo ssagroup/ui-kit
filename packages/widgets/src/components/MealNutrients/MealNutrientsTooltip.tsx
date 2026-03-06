@@ -10,7 +10,7 @@ export const MealNutrientsTooltip = ({
   colorName,
   point,
 }: MealNutrientsTooltipProps) => {
-  const caption = capitalize(String(point.serieId));
+  const caption = capitalize(String(point.seriesId));
   const {
     data: { y, comp, unit },
   } = point;

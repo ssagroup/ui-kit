@@ -4,6 +4,7 @@ import Wrapper from '@components/Wrapper';
 import { useDatePickerContext } from '../useDatePickerContext';
 import { getYearsList } from '../utils';
 import * as S from '../styles';
+import { CALENDAR_TYPE, PICKER_TYPE } from '../constants';
 
 export const YearsView = () => {
   const {
@@ -18,6 +19,9 @@ export const YearsView = () => {
     setCalendarViewDateTime,
     setDateTime,
     onYearChange,
+    pickerType,
+    setIsOpen,
+    safeOnChange,
   } = useDatePickerContext();
   const wrapper = useRef<HTMLDivElement>(null);
   const yearsList = getYearsList({
@@ -34,10 +38,30 @@ export const YearsView = () => {
 
   useEffect(() => {
     if (calendarViewDateTime && wrapper.current) {
-      wrapper.current.querySelector('[aria-current=date]')?.scrollIntoView({
-        behavior: 'instant',
-        block: 'center',
-      });
+      const container = wrapper.current;
+      const currentEl = container.querySelector(
+        '[aria-current=date]',
+      ) as HTMLElement | null;
+
+      // Scroll the internal years list WITHOUT scrolling the window/page.
+      // `scrollIntoView` can bubble up and scroll the main page, causing a "jump".
+      if (currentEl) {
+        const containerRect = container.getBoundingClientRect();
+        const elRect = currentEl.getBoundingClientRect();
+        const deltaTop = elRect.top - containerRect.top;
+        const nextTop =
+          container.scrollTop +
+          deltaTop -
+          container.clientHeight / 2 +
+          elRect.height / 2;
+
+        if (typeof container.scrollTo === 'function') {
+          container.scrollTo({ top: nextTop, behavior: 'auto' });
+        } else {
+          // Fallback for environments that don't support scrollTo (e.g., jsdom)
+          container.scrollTop = nextTop;
+        }
+      }
     }
   }, [calendarViewDateTime]);
 
@@ -45,13 +69,29 @@ export const YearsView = () => {
     const { target } = event;
     const selectedYear = Number((target as HTMLDivElement).innerHTML);
     const newDate = calendarViewDateTime?.set({ year: selectedYear });
-    setCalendarType('months');
-    setCalendarViewDateTime(newDate);
-    setDateTime(newDate);
-    if (newDate) {
-      onYearChange?.(newDate.toJSDate());
+
+    if (!newDate) return;
+
+    const isYearTypeSelected = pickerType === PICKER_TYPE.YEARS;
+
+    if (isYearTypeSelected) {
+      const startDate = newDate.startOf('year');
+
+      setCalendarViewDateTime(startDate);
+      setDateTime(startDate);
+      safeOnChange?.(startDate);
+      onYearChange?.(startDate.toJSDate());
+
+      setIsOpen(false);
+    } else {
+      // When selecting a year in years view (for day/month pickers), call onYearChange
+      // but don't close - user still needs to select month and day
+      onYearChange?.(newDate.startOf('year').toJSDate());
+      setCalendarViewDateTime(newDate);
+      setCalendarType(CALENDAR_TYPE.MONTHS);
     }
   };
+
   return (
     <Wrapper
       css={{

@@ -45,7 +45,6 @@ export const ComponentPopover = React.forwardRef<
       placement="top-start"
       {...restPopoverProps}>
       <PopoverTrigger
-        variant="custom"
         dataTestId="component-popover-button"
         isDisabled={isDisabled}
         asChild={asChild}

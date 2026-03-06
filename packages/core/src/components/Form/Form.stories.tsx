@@ -7,7 +7,7 @@ import {
   Description,
   Primary,
   Stories,
-} from '@storybook/addon-docs';
+} from '@storybook/addon-docs/blocks';
 import { within, userEvent } from 'storybook/test';
 import {
   useForm,
@@ -148,7 +148,7 @@ export const SingIn: StoryObj<typeof Card> = () => {
             </FormGroup>
 
             <FormAction>
-              <Button type="submit" text="Submit" block />
+              <Button variant="primary" type="submit" text="Submit" block />
             </FormAction>
 
             <span css={wrapper}>
@@ -227,7 +227,12 @@ export const ForgotPasswordTemplate: StoryObj<typeof Card> = () => {
             </FormGroup>
 
             <FormAction>
-              <Button type="submit" text="Reset Password" block />
+              <Button
+                variant="primary"
+                type="submit"
+                text="Reset Password"
+                block
+              />
             </FormAction>
           </Form>
         </CardContent>
@@ -370,7 +375,12 @@ export const RecoverPasswordTemplate: StoryObj<typeof Card> = () => {
             </FormGroup>
 
             <FormAction>
-              <Button type="submit" text="Reset Password" block />
+              <Button
+                variant="primary"
+                type="submit"
+                text="Reset Password"
+                block
+              />
             </FormAction>
           </Form>
         </CardContent>
@@ -395,7 +405,7 @@ export const RecoverPasswordTemplate: StoryObj<typeof Card> = () => {
               Your password has been successfully reset. Click to Sign In.
             </Typography>
 
-            <Button text="Sign In" block />
+            <Button variant="primary" text="Sign In" block />
           </div>
         </CardContent>
       </Card>

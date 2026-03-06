@@ -1,6 +1,10 @@
 import { useMask, format as maskFormat } from '@react-input/mask';
 import { DatePickerProps } from '../types';
-import { DEFAULT_MASK } from '../constants';
+import {
+  DEFAULT_MASK,
+  DEFAULT_MONTH_MASK,
+  DEFAULT_YEAR_MASK,
+} from '../constants';
 import { processDate } from '../utils';
 
 export const useDatePickerMask = ({
@@ -23,7 +27,11 @@ export const useDatePickerMask = ({
     mask,
     replacement,
     track: ({ data, selectionStart, selectionEnd, value: currentValue }) => {
-      if (mask === DEFAULT_MASK) {
+      if (
+        mask === DEFAULT_MASK ||
+        mask === DEFAULT_MONTH_MASK ||
+        mask === DEFAULT_YEAR_MASK
+      ) {
         const newValue =
           currentValue.slice(0, selectionStart) +
           data +
@@ -33,8 +41,14 @@ export const useDatePickerMask = ({
         const splittedValue = updatedValue.split('/');
         const isChecked = processDate(
           {
-            day: splittedValue[formatIndexes['day']],
-            month: splittedValue[formatIndexes['month']],
+            day:
+              formatIndexes['day'] !== -1
+                ? splittedValue[formatIndexes['day']]
+                : '',
+            month:
+              formatIndexes['month'] !== -1
+                ? splittedValue[formatIndexes['month']]
+                : '',
             year: splittedValue[formatIndexes['year']],
           },
           dateMinParts[formatIndexes['year']],

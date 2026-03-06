@@ -1,70 +1,70 @@
 import { css, Theme } from '@emotion/react';
 
-const blueInput = (theme: Theme) => css`
-  & input:focus + div {
-    box-shadow: -4px 4px 10px ${theme.colors.blueNotification40};
-  }
+/**
+ * Styles for the `primary` color variant (blue).
+ * Uses `theme.palette.primary` for all interactive state colors:
+ * - `light`       → unchecked border (resting)
+ * - `main`        → unchecked hover border + checked background
+ * - `dark`        → checked hover background
+ * - `greyFocused40` → disabled box background
+ */
+const primaryInput = (theme: Theme) => css`
   & input:disabled + div,
   & input:indeterminate:disabled + div {
-    background: ${theme.colors.greyFocused};
+    background: ${theme.colors.greyFocused40};
   }
   & input:not(:checked, :indeterminate, :disabled) + div::before {
-    border: 1.5px solid ${theme.colors.greyDropdownMain};
+    border: 1.5px solid ${theme.palette.primary.light};
   }
   & input:not(:checked, :indeterminate, :disabled) + div:hover::before {
-    border: 1.5px solid ${theme.colors.greyDropdownMain};
+    border: 1.5px solid ${theme.palette.primary.main};
   }
   & input:not(:disabled):checked + div::before,
   & input:not(:disabled):indeterminate + div::before {
-    background: ${theme.colors.blueNotification};
+    background: ${theme.palette.primary.main};
   }
-  & input:not(:disabled):checked + div:hover::before {
-    background: ${theme.colors.blueNotification};
+  & input:not(:disabled):checked + div:hover::before,
+  & input:not(:disabled):indeterminate + div:hover::before {
+    background: ${theme.palette.primary.dark};
   }
   & input:not(:disabled):checked + div + span {
-    font-weight: 500;
     color: ${theme.colors.greyDropdownText};
   }
 `;
 
-const greenInput = (theme: Theme) => css`
-  & input:focus + div {
-    box-shadow: -4px 4px 10px ${theme.colors.green40};
-  }
-
+/**
+ * Styles for the `success` color variant (green).
+ * Uses `theme.palette.success` for all interactive state colors:
+ * - `main`        → unchecked border + checked background
+ * - `dark`        → unchecked hover border + checked hover background
+ * - `greyFocused40` → disabled box background
+ */
+const successInput = (theme: Theme) => css`
   & input:disabled + div,
   & input:indeterminate:disabled + div {
-    background: ${theme.colors.greyFocused};
+    background: ${theme.colors.greyFocused40};
   }
 
   & input:not(:checked, :indeterminate, :disabled) + div::before {
-    border: 1.5px solid ${theme.colors.green};
+    border: 1.5px solid ${theme.palette.success.main};
   }
 
   & input:not(:checked, :indeterminate, :disabled) + div:hover::before {
-    border: 1.5px solid ${theme.colors.green60};
+    border: 1.5px solid ${theme.palette.success.dark};
   }
 
   & input:not(:disabled):checked + div::before,
   & input:not(:disabled):indeterminate + div::before {
-    background: linear-gradient(
-      117.5deg,
-      ${theme.colors.greenLighter} 17.12%,
-      ${theme.colors.green} 85.53%
-    );
+    background: ${theme.palette.success.main};
   }
 
   & input:not(:disabled):checked + div:hover::before,
   & input:not(:disabled):indeterminate + div:hover::before {
-    background: linear-gradient(
-      117.5deg,
-      ${theme.colors.greenLighter60} 17.12%,
-      ${theme.colors.green60} 85.53%
-    );
+    background: ${theme.palette.success.dark};
   }
 `;
 
 export const checkboxStyles = {
-  blueInput,
-  greenInput,
+  primaryInput,
+  successInput,
 };

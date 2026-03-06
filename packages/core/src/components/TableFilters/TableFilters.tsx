@@ -35,6 +35,78 @@ import {
   getSubmitData,
 } from './utils/handlers';
 
+/**
+ * TableFilters - Filter component for table data with grouped checkboxes
+ *
+ * A comprehensive filter component that provides grouped checkbox filters in a
+ * popover with accordion-style collapsible groups. Supports draft state management
+ * with submit, reset, and clear actions. Displays notification badge with selected
+ * filter group count.
+ *
+ * Component structure:
+ * - TableFilters (main component)
+ *   - Popover (wrapper with trigger and content)
+ *     - TableFilterTriggerWithNotification (trigger button with badge)
+ *     - PopoverContent (filter content)
+ *       - AccordionGroup (collapsible filter groups)
+ *         - TableFiltersAccordion (individual filter group)
+ *           - TableFiltersAccordionContent
+ *             - TableFilterCheckbox (filter items)
+ *       - TableFiltersButtons (submit, cancel, clear actions)
+ *
+ * @category Components
+ * @subcategory Data Display
+ *
+ * @example
+ * ```tsx
+ * const filterConfig: TableFilterConfig = {
+ *   status: {
+ *     id: 'status',
+ *     title: 'Status',
+ *     isOpened: true,
+ *     ariaControls: 'status-controls',
+ *     items: {
+ *       active: {
+ *         key: 'active',
+ *         name: 'active',
+ *         content: { statePath: [], text: 'Active' },
+ *       },
+ *     },
+ *     selectedItems: [],
+ *   },
+ * };
+ *
+ * <TableFilters
+ *   checkboxData={filterConfig}
+ *   onSubmit={() => applyFilters()}
+ *   onReset={() => resetFilters()}
+ *   onClear={() => clearFilters()}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // With checkbox toggle callback
+ * <TableFilters
+ *   checkboxData={filterConfig}
+ *   onCheckboxToggle={(groupName, itemName) => {
+ *     console.log(`Toggled ${itemName} in ${groupName}`);
+ *   }}
+ *   onSubmit={handleSubmit}
+ * />
+ * ```
+ *
+ * @see {@link AccordionGroup} - Used for collapsible filter groups
+ * @see {@link Popover} - Used for filter popover overlay
+ * @see {@link TableFilterConfig} - Configuration type for filter data
+ *
+ * @accessibility
+ * - ARIA attributes for accordion groups
+ * - Keyboard navigation support
+ * - Screen reader friendly
+ * - Proper focus management
+ * - Notification badge for selected filters
+ */
 export const TableFilters = ({
   checkboxData = {} as TableFilterConfig,
   onReset,

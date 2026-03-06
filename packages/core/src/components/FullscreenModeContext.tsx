@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { setHocDisplayName } from '../utils/react19HocCompat';
 
 export type FullscreenModeContextType = {
   isFullscreenMode: boolean;
@@ -59,6 +60,9 @@ export const WithFullscreenMode = <T extends object>(
     </FullscreenModeProvider>
   );
 
-  decoratedComp.displayName = `WithFullscreenMode(${Component.displayName})`;
-  return decoratedComp;
+  return setHocDisplayName(
+    'WithFullscreenMode',
+    Component,
+    decoratedComp,
+  ) as React.ComponentType<T>;
 };

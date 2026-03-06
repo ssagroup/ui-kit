@@ -22,7 +22,6 @@ export const ActionButton = ({
   const theme = useTheme();
   return (
     <Button
-      variant="custom"
       startIcon={
         iconName ? (
           <Icon name={iconName} size={20} color={theme.colors.greyFilterIcon} />

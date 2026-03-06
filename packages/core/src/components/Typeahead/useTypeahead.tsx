@@ -44,6 +44,7 @@ export const useTypeahead = ({
   placeholder,
   filterOptions = true,
   autoSelect = true,
+  allowCustomValues = false,
   onChange,
   onClearAll,
   onRemoveSelectedClick,
@@ -98,7 +99,7 @@ export const useTypeahead = ({
   const optionsWithKey = useMemo(() => {
     const opts: Record<string | number, TypeaheadOptionProps> = {};
     React.Children.forEach(children, (child) => {
-      if (React.isValidElement(child)) {
+      if (React.isValidElement<TypeaheadOptionProps>(child)) {
         opts[child.props.value] = child.props;
       }
     });
@@ -106,7 +107,11 @@ export const useTypeahead = ({
   }, [children]);
 
   useEffect(() => {
-    const validSelected = selectedItems.filter((item) => optionsWithKey[item]);
+    // When allowCustomValues is false, remove selected items that are no longer in options.
+    // When true, keep custom (non-option) values in selection.
+    const validSelected = allowCustomValues
+      ? selectedItems
+      : selectedItems.filter((item) => optionsWithKey[item]);
     if (validSelected.length !== selectedItems.length) {
       setSelected(validSelected);
       const fieldValue = isMultiple ? validSelected : undefined;
@@ -116,13 +121,14 @@ export const useTypeahead = ({
       form.trigger(name);
       onEmptyChange?.(validSelected.length === 0);
     }
-  }, [optionsWithKey, selectedItems]);
+  }, [optionsWithKey, selectedItems, allowCustomValues]);
 
   const inputValue = useMemo(() => {
     if (isMultiple) return rawInput ?? '';
     if (rawInput != null) return rawInput;
     return selectedItems.length === 1
-      ? optionsWithKey[selectedItems[0]]?.label?.toString() || ''
+      ? (optionsWithKey[selectedItems[0]]?.label?.toString() ??
+          String(selectedItems[0] ?? ''))
       : '';
   }, [isMultiple, rawInput, selectedItems, optionsWithKey]);
 
@@ -142,11 +148,13 @@ export const useTypeahead = ({
   const items = useMemo(() => {
     return filteredChildren.map((child, index) => {
       if (!React.isValidElement(child)) return null;
-      const isActive = selectedItems.includes(child.props.value);
-      const { value, label, id, isDisabled } = child.props;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const childElement = child as React.ReactElement<any>;
+      const isActive = selectedItems.includes(childElement.props.value);
+      const { value, label, id, isDisabled } = childElement.props;
 
-      return React.cloneElement(child, {
-        ...child.props,
+      return React.cloneElement(childElement, {
+        ...childElement.props,
         index,
         isActive,
         isDisabled,
@@ -155,6 +163,7 @@ export const useTypeahead = ({
         'aria-labelledby': `typeahead-label-${name}`,
         onClick: (e: React.BaseSyntheticEvent) => {
           e.preventDefault();
+          e.stopPropagation();
           if (!isDisabled) {
             const shouldClose = !isMultiple;
             handleChange({ value, shouldClose });
@@ -162,7 +171,7 @@ export const useTypeahead = ({
         },
         children:
           renderOption?.({ value: id || value, input: inputValue, label }) ??
-          child.props.children ??
+          childElement.props.children ??
           label ??
           value,
       });
@@ -174,7 +183,11 @@ export const useTypeahead = ({
     const needle = inputValue.toLowerCase();
     for (const child of filteredChildren) {
       if (!React.isValidElement(child)) continue;
-      const labelText = (child.props.label ?? child.props.value).toString();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const childElement = child as React.ReactElement<any>;
+      const labelText = (
+        childElement.props.label ?? childElement.props.value
+      ).toString();
       if (labelText.toLowerCase().startsWith(needle)) {
         return inputValue + labelText.slice(inputValue.length);
       }
@@ -214,7 +227,7 @@ export const useTypeahead = ({
       const rawInputValue = isMultiple
         ? null
         : updatedSelected.length
-          ? String(optionsWithKey[value]?.label)
+          ? String(optionsWithKey[value]?.label ?? value)
           : null;
       setRawInput(rawInputValue);
     }
@@ -269,10 +282,25 @@ export const useTypeahead = ({
     }
   };
 
+  const customOptionValue =
+    allowCustomValues && inputValue.trim() ? inputValue.trim() : null;
+
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     e,
   ) => {
     const isEnterOrTab = ['Enter', 'Tab'].includes(e.code);
+
+    // Enter: add custom value when it's the first option
+    if (
+      e.code === 'Enter' &&
+      allowCustomValues &&
+      customOptionValue &&
+      !selectedItems.includes(customOptionValue)
+    ) {
+      handleChange({ value: customOptionValue });
+      e.preventDefault();
+      return;
+    }
 
     if (isEnterOrTab && firstSuggestion && firstSuggestion !== inputValue) {
       const match = findExactMatch(firstSuggestion, optionsWithKey);
@@ -356,6 +384,8 @@ export const useTypeahead = ({
     error: error ?? form.formState.errors[name],
     placeholder,
     options: items,
+    customOptionValue,
+    handleChange,
     useFormResult: form,
     register,
     setValue,

@@ -11,24 +11,99 @@ import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, DropdownProps } from './types';
 
-/**
- * The structure of the component:
- *
- * Dropdown
- *   DropdownToggle
- *   DropdownOptions
- *     DropdownOption
- *
- * Aria attributes are set according to
- * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
- **/
-
 const DropdownBase = styled.div`
   display: inline-block;
   position: relative;
 `;
 
-// TODO: allow React.ReactNode for selectedItem as well as DropdownOptionProps
+/**
+ * Dropdown - Select-like dropdown component for single selection
+ *
+ * A flexible dropdown component that allows users to select one option from
+ * a list of choices. Uses a compound component pattern with DropdownOption
+ * children. Provides keyboard navigation, accessibility features, and click-outside
+ * to close functionality.
+ *
+ * Component structure:
+ * - Dropdown (root container with context)
+ *   - DropdownToggle (button that opens/closes dropdown)
+ *   - DropdownOptions (menu container that appears when open)
+ *     - DropdownOption (individual selectable items)
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * const items = [
+ *   { id: 1, value: 'Apple' },
+ *   { id: 2, value: 'Banana' },
+ *   { id: 3, value: 'Cherry' },
+ * ];
+ *
+ * <Dropdown
+ *   selectedItem={items[0]}
+ *   onChange={(item) => handleSelection(item)}
+ *   placeholder="Select a fruit"
+ * >
+ *   {items.map(item => (
+ *     <DropdownOption key={item.id} value={item.id}>
+ *       {item.value}
+ *     </DropdownOption>
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Controlled open state
+ * const [isOpen, setIsOpen] = useState(false);
+ * <Dropdown
+ *   isOpen={isOpen}
+ *   onChange={handleChange}
+ *   selectedItem={selected}
+ * >
+ *   {options.map(opt => (
+ *     <DropdownOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </DropdownOption>
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // With custom props for sub-components
+ * <Dropdown
+ *   selectedItem={selected}
+ *   onChange={handleChange}
+ *   dropdownProps={{
+ *     base: { id: 'my-dropdown' },
+ *     toggleButton: { 'data-testid': 'dropdown-toggle' },
+ *     toggleButtonArrow: { className: 'custom-arrow' }
+ *   }}
+ * >
+ *   {options.map(opt => (
+ *     <DropdownOption key={opt.id} value={opt.id}>
+ *       {opt.label}
+ *     </DropdownOption>
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @see {@link DropdownOption} - Child component for individual options
+ * @see {@link DropdownToggle} - Toggle button component
+ * @see {@link DropdownOptions} - Options menu container
+ *
+ * @accessibility
+ * - ARIA attributes set according to WAI-ARIA combobox pattern
+ * - Keyboard navigation (Arrow keys, Enter, Escape)
+ * - Click outside to close
+ * - Screen reader friendly
+ * - Focus management
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
+ */
 const Dropdown = <T extends DropdownOptionProps>({
   selectedItem,
   isDisabled,
@@ -93,15 +168,18 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
-  const items = (childrenArray as React.ReactElement[]).map((child, index) => {
-    options.push(child.props);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const items = (childrenArray as React.ReactElement<any>[]).map(
+    (child, index) => {
+      options.push(child.props);
 
-    return React.cloneElement(child, {
-      index,
-      onClick: onChange.bind(this),
-      ...child.props,
-    });
-  });
+      return React.cloneElement(child, {
+        index,
+        onClick: onChange.bind(this),
+        ...child.props,
+      });
+    },
+  );
 
   const contextValue: DropdownContextType = React.useMemo(
     () => ({ onChange, activeItem }),
