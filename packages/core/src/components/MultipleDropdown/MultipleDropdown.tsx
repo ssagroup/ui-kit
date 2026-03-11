@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useId, useRef } from 'react';
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import { mapObjIndexed } from '@ssa-ui-kit/utils';
@@ -48,13 +47,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
-  const theme = useTheme();
   const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
   const dropdownId = useId();
-  const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
-  const [colors, setColors] = useState<Array<string | undefined>>([]);
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, T>
   >({});
@@ -106,16 +102,6 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   };
 
   useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
-
-  useEffect(() => {
-    if (isDisabled) {
-      setColors([theme.colors.greyDarker60, theme.colors.grey20]);
-    } else if (isOpen) {
-      setColors([theme.colors.white, theme.colors.white60]);
-    } else if (isFocused) {
-      setColors([theme.colors.greyDarker, theme.colors.greyDarker60]);
-    }
-  }, [isOpen, isDisabled, isFocused]);
 
   useEffect(() => {
     if (isDisabled && isOpen) {
@@ -174,8 +160,6 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
           isOpen={isOpen}
           disabled={isDisabled}
           onClick={setIsOpen.bind(null, !isOpen)}
-          onFocus={setIsFocused.bind(null, true)}
-          colors={colors}
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}
           isMultiple={isMultiple}

@@ -1,6 +1,5 @@
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { focusOutline } from '@styles/safari-focus-outline';
 import { DropdownToggleProps, MultipleStylesProps } from './types';
 
 /** Single-select dropdown: input-like look (white bg, palette borders, primary when open) */
@@ -39,19 +38,8 @@ const singleDropdownStyles = ({
   }
 `;
 
-const multipleStyles = ({ theme, selectedCount = 0 }: MultipleStylesProps) => {
-  let borderColor = theme.colors.grey;
-  let borderColorFocused = theme.palette.primary.main;
-  let backgroundColor = theme.colors.white;
-  if (selectedCount > 0) {
-    borderColor =
-      theme.colors.blueDropdownWithSelectedItemsBorder ?? theme.colors.grey;
-    borderColorFocused =
-      theme.colors.blueDropdownWithSelectedItemsBorder ??
-      theme.palette.primary.main;
-    backgroundColor =
-      theme.colors.blueDropdownWithSelectedItems ?? theme.colors.white;
-  }
+const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
+  const borderColor = isOpen ? theme.palette.primary.main : theme.colors.grey;
 
   return css`
     justify-content: space-between;
@@ -62,20 +50,32 @@ const multipleStyles = ({ theme, selectedCount = 0 }: MultipleStylesProps) => {
     color: ${theme.colors.greyDarker};
     border: 1px solid ${borderColor};
     border-radius: 12px;
-    background: ${backgroundColor};
+    background: ${theme.colors.white};
     max-width: 250px;
 
-    &:focus {
-      background: ${backgroundColor};
-      &::before {
-        border-color: ${borderColorFocused};
+    svg path {
+      stroke: ${theme.colors.greyDarker};
+    }
+
+    &:disabled {
+      background: ${theme.colors.greyLighter};
+      border-color: ${theme.colors.grey};
+      color: ${theme.colors.greyDarker60};
+      cursor: default;
+
+      svg path {
+        stroke: ${theme.colors.grey};
       }
     }
 
-    svg {
-      path {
-        stroke: ${theme.colors.greyDarker};
-      }
+    &:focus:not(:disabled) {
+      border-color: ${theme.palette.primary.main};
+    }
+
+    &:hover:not(:disabled) {
+      border-color: ${isOpen
+        ? theme.palette.primary.main
+        : theme.colors.greyDarker80};
     }
   `;
 };
@@ -86,9 +86,6 @@ export const DropdownToggleBase = styled.button<
     'colors' | 'isOpen' | 'disabled' | 'isMultiple' | 'selectedCount'
   >
 >`
-  ${({ isMultiple, theme }) =>
-    isMultiple ? focusOutline(theme, 'greyDropdownFocused', '5px') : css``}
-
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -115,11 +112,11 @@ export const DropdownToggleBase = styled.button<
     !isMultiple && singleDropdownStyles({ theme, isOpen, disabled })}
 
   /* Multiple dropdown: overrides above and adds its own border/background */
-  ${({ isMultiple, selectedCount, theme }) =>
+  ${({ isMultiple, isOpen, theme }) =>
     isMultiple &&
     multipleStyles({
       theme,
-      selectedCount,
+      isOpen,
     })}
 
   /* Text/icon color for single dropdown (multiple has its own in multipleStyles) */

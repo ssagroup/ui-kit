@@ -5,9 +5,61 @@ import { css } from '@emotion/react';
 
 import DropdownOption from '@components/DropdownOption';
 import Button from '@components/Button';
+import { focusOutline } from '@styles/safari-focus-outline';
 
 import MultipleDropdown from '../MultipleDropdown';
 import { items } from './consts';
+
+/**
+ * Recreates the MultipleDropdown look from before the "dropdown styles" commit.
+ * Key differences vs the new design:
+ *   - border-radius: 5px (was 12px)
+ *   - border: greyDropdownMain (was grey → primary)
+ *   - color: greyDropdownText (was greyDarker)
+ *   - blue background when items are selected (blueDropdownWithSelectedItems)
+ *   - focus ring via ::before pseudo-element with greyDropdownFocused
+ *
+ * The blue background is shown statically here since the story always has
+ * pre-selected items (it was selection-state-dependent in the old component).
+ * Uses &&& (triple class selector) to exceed the specificity of the new
+ * hover/focus rules (which use pseudo-classes like :hover:not(:disabled),
+ * giving them specificity 0,2,0 — three repeated classes gives us 0,3,0).
+ */
+const LegacyMultipleDropdown = styled(MultipleDropdown)`
+  &&& {
+    border-radius: 5px;
+    color: ${({ theme }) => theme.colors.greyDropdownText};
+    border: 1px solid ${({ theme }) => theme.colors.greyDropdownMain};
+    background: ${({ theme }) =>
+      theme.colors.blueDropdownWithSelectedItems ?? theme.colors.white};
+  }
+
+  ${({ theme }) => focusOutline(theme, 'greyDropdownFocused', '5px')}
+
+  &&&:focus {
+    border-color: ${({ theme }) => theme.colors.greyDropdownFocused};
+  }
+
+  &&&:focus::before {
+    border-color: ${({ theme }) => theme.colors.greyDropdownFocused};
+  }
+
+  &&&:hover:not(:disabled) {
+    border-color: ${({ theme }) => theme.colors.greyDropdownMain};
+  }
+`;
+
+/*
+ * styled(MultipleDropdown) only forwards className to DropdownToggle —
+ * it cannot reach the options list. This wrapper restores the old 2px
+ * checkbox border-radius that was in DropdownOptionButton before the refactor.
+ */
+const LegacyCheckboxWrapper = styled.div`
+  & label input + div,
+  & label input + div::before {
+    border-radius: 2px;
+  }
+`;
 
 type Args = Parameters<typeof MultipleDropdown>[0];
 
@@ -201,6 +253,40 @@ export const Custom: StoryObj = (args: Args) => {
 Custom.args = {
   isDisabled: false,
 };
+
+export const LegacyStyle: StoryObj<Args> = {
+  name: 'Legacy (Previous Style)',
+  render: (args) => (
+    <LegacyCheckboxWrapper>
+      <LegacyMultipleDropdown
+        {...args}
+        selectedItems={[items[0], items[2]]}
+        label="Strategy">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </LegacyMultipleDropdown>
+    </LegacyCheckboxWrapper>
+  ),
+};
+
+LegacyStyle.args = { isDisabled: false, isMultiple: true };
+
+export const Disabled: StoryObj<Args> = {
+  render: () => (
+    <MultipleDropdown label="Strategy" isDisabled selectedItems={[items[0]]}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  ),
+};
+
+Disabled.args = { isDisabled: true };
 
 export const DynamicallyChangedItems = (args: Args) => {
   const [localItems, setLocalItems] = useState(items);

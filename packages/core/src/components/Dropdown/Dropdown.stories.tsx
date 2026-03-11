@@ -43,7 +43,7 @@ const LegacyStyledDropdown = styled(Dropdown)`
     }
   }
 
-  &:focus:not([aria-expanded='true']):not(:disabled) {
+  &:focus:not([aria-expanded='true'], :disabled) {
     background: ${({ theme }) => theme.colors.greyFocused};
     color: ${({ theme }) => theme.colors.greyDarker};
   }
