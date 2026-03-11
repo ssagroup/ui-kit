@@ -128,6 +128,45 @@ export default {
   title: 'Components/Dropdown',
   component: Dropdown,
   argTypes: {
+    selectedItem: {
+      description:
+        'Currently selected item. When provided, its label (or value) is shown in the toggle button.',
+      control: { disable: true },
+      table: { type: { summary: 'DropdownOptionProps' } },
+    },
+    isDisabled: {
+      description: 'Disables the dropdown, preventing any user interaction.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    placeholder: {
+      description: 'Text shown in the toggle button when no item is selected.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Select something'" },
+      },
+    },
+    isOpen: {
+      description:
+        'Controlled open state. When provided, overrides the internal open/close logic.',
+      control: 'boolean',
+      table: { type: { summary: 'boolean' } },
+    },
+    onChange: {
+      description:
+        'Callback fired when an option is selected. Receives the selected DropdownOptionProps object.',
+      control: { disable: true },
+    },
+    className: {
+      description:
+        'Custom CSS class forwarded to the toggle button. Useful for styling via `styled(Dropdown)`.',
+      table: { type: { summary: 'StyledComponent' } },
+      control: { disable: true },
+    },
     'dropdownProps.toggleButton.name': {
       description: 'Custom name attribute for dropdown div.',
       control: { type: 'text' },
@@ -150,22 +189,6 @@ export default {
       table: {
         type: { summary: 'string' },
         category: 'dropdownProps',
-      },
-    },
-    onChange: {
-      control: {
-        disable: true,
-      },
-    },
-    className: {
-      description: 'Used in order to overwrite the default style',
-      table: {
-        type: {
-          summary: 'StyledComponent',
-        },
-      },
-      control: {
-        disable: true,
       },
     },
   },

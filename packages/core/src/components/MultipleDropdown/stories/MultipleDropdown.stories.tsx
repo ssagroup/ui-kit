@@ -67,21 +67,71 @@ export default {
   title: 'Components/MultipleDropdown',
   component: MultipleDropdown,
   argTypes: {
-    onChange: {
-      control: {
-        disable: true,
+    selectedItems: {
+      description:
+        'List of currently selected items. Each entry must match one of the DropdownOption values.',
+      control: { disable: true },
+      table: {
+        type: { summary: 'DropdownOptionProps[]' },
+        defaultValue: { summary: '[]' },
       },
     },
-    className: {
-      description: 'Used in order to overwrite the default style',
+    isMultiple: {
+      description:
+        'Enables multi-select mode — each option toggles independently. When `false` the dropdown behaves like a single-select and closes on pick.',
+      control: 'boolean',
       table: {
-        type: {
-          summary: 'StyledComponent',
-        },
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'true' },
       },
-      control: {
-        disable: true,
+    },
+    isDisabled: {
+      description: 'Disables the dropdown, preventing any user interaction.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
       },
+    },
+    placeholder: {
+      description: 'Text shown in the toggle button when no item is selected.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Select something'" },
+      },
+    },
+    showPlaceholder: {
+      description:
+        'When `true` the placeholder value is included in the displayed list. Set to `false` to hide it and only show the badge count.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'true' },
+      },
+    },
+    isOpen: {
+      description:
+        'Controlled open state. When provided, overrides the internal open/close logic.',
+      control: 'boolean',
+      table: { type: { summary: 'boolean' } },
+    },
+    label: {
+      description:
+        'Label prefix shown in the toggle button before the selected value(s), e.g. `label="Strategy"` renders "Strategy: Value".',
+      control: 'text',
+      table: { type: { summary: 'string' } },
+    },
+    onChange: {
+      description:
+        'Callback fired when an option is toggled. Receives the option value and whether it was selected or deselected.',
+      control: { disable: true },
+    },
+    className: {
+      description:
+        'Custom CSS class forwarded to the toggle button. Useful for styling via `styled(MultipleDropdown)`.',
+      table: { type: { summary: 'StyledComponent' } },
+      control: { disable: true },
     },
   },
   decorators: [

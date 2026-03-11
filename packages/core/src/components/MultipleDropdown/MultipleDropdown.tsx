@@ -22,16 +22,78 @@ const DropdownPlaceholderLabel = styled.div`
 `;
 
 /**
- * The structure of the component:
+ * MultipleDropdown - Dropdown component for multi-select and single-select
  *
- * MultipleDropdown
- *   DropdownToggle
- *   MultipleDropdownOptions
- *     DropdownOption
+ * A flexible dropdown that lets users select one or more options from a list.
+ * In multi-select mode (`isMultiple=true`, default) each option toggles independently;
+ * the toggle button shows the first selected value and a `+N` badge for overflow.
+ * In single-select mode (`isMultiple=false`) selecting an option closes the menu.
+ * Forwards its ref to the root container div.
  *
- * Aria attributes are set according to
- * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
- **/
+ * Component structure:
+ * - MultipleDropdown (root container with context)
+ *   - DropdownToggle (button that opens/closes the menu)
+ *   - MultipleDropdownOptions (menu container rendered when open)
+ *     - DropdownOption (individual selectable items)
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * // Basic multi-select
+ * <MultipleDropdown
+ *   label="Fruits"
+ *   selectedItems={[{ value: 'apple' }]}
+ *   onChange={(value, isSelected) => handleChange(value, isSelected)}
+ * >
+ *   <DropdownOption value="apple">Apple</DropdownOption>
+ *   <DropdownOption value="banana">Banana</DropdownOption>
+ *   <DropdownOption value="cherry">Cherry</DropdownOption>
+ * </MultipleDropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Single-select mode (closes on pick)
+ * <MultipleDropdown
+ *   label="Country"
+ *   isMultiple={false}
+ *   selectedItems={selected}
+ *   onChange={handleChange}
+ * >
+ *   <DropdownOption value="us">United States</DropdownOption>
+ *   <DropdownOption value="uk">United Kingdom</DropdownOption>
+ * </MultipleDropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Hide placeholder text, only show badge count
+ * <MultipleDropdown
+ *   label="Tags"
+ *   showPlaceholder={false}
+ *   selectedItems={tags}
+ *   onChange={handleChange}
+ * >
+ *   {tags.map(tag => (
+ *     <DropdownOption key={tag.value} value={tag.value}>{tag.label}</DropdownOption>
+ *   ))}
+ * </MultipleDropdown>
+ * ```
+ *
+ * @see {@link DropdownOption} - Child component for individual options
+ * @see {@link DropdownToggle} - Toggle button component
+ * @see {@link MultipleDropdownOptions} - Options menu container
+ *
+ * @accessibility
+ * - ARIA attributes set according to WAI-ARIA combobox pattern
+ * - Keyboard navigation (Arrow keys, Enter, Escape)
+ * - Click outside to close
+ * - Screen reader friendly with aria-expanded and aria-controls
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
+ */
 function MultipleDropdownInner<T extends DropdownOptionProps>(
   {
     selectedItems = [],
