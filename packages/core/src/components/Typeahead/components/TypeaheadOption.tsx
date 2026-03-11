@@ -24,7 +24,7 @@ export const TypeaheadOption = ({
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           flex: 1,
-          color: isCustomValue ? theme.colors.blueRoyal : 'inherit',
+          color: isCustomValue ? theme.palette.primary.main : 'inherit',
         }}>
         {children}{' '}
       </div>
