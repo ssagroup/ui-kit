@@ -95,6 +95,16 @@ export interface TextareaProps extends Partial<
   maxLength?: number;
 
   /**
+   * Visual validation status (aligns with Input/TextField palette behaviour).
+   * - `basic`: default border/outline (theme.colors grey)
+   * - `error`: error state (theme.palette.error)
+   * - `success`: success state (theme.palette.success)
+   * - `custom`: same as basic (no palette styling)
+   * @default 'basic'
+   */
+  status?: 'basic' | 'error' | 'success' | 'custom';
+
+  /**
    * Custom element type to render as (for composition)
    */
   as?: React.ElementType;
@@ -109,6 +119,12 @@ export interface TextareaProps extends Partial<
    * Provides tooltip text on hover
    */
   title?: string;
+
+  /**
+   * HTML id attribute for the textarea (e.g. for label htmlFor).
+   * Defaults to `formElement-${name}` when not provided.
+   */
+  id?: string;
 
   /**
    * Paste event handler

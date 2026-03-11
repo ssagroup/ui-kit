@@ -114,6 +114,7 @@ const TextField = ({
       {multirow ? (
         <Textarea
           name={name}
+          status={status}
           disabled={disabled}
           maxLength={maxLength}
           setCountChar={handleCount}

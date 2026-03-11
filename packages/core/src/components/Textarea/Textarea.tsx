@@ -96,9 +96,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       rows = 10,
       maxLength,
       title,
+      id: idProp,
       onPaste,
       register,
       setCountChar,
+      status = 'basic',
     }: TextareaProps,
     ref?: React.ForwardedRef<HTMLTextAreaElement | null>,
   ) {
@@ -115,7 +117,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <TextareaBase
-        id={`formElement-${name}`}
+        id={idProp ?? `formElement-${name}`}
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readOnly}
@@ -123,6 +125,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         maxLength={maxLength}
         onPaste={onPaste}
         title={title}
+        status={status}
         {...registerResult}
         onChange={callAll(setCountChar, onChange)}
         ref={useMergeRefs([registerResult?.ref, ref])}

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Textarea from '@components/Textarea';
+import FormHelperText from '@components/FormHelperText';
 
 type Args = Parameters<typeof Textarea>[0];
 
@@ -23,6 +24,11 @@ export default {
       control: {
         disable: true,
       },
+    },
+    status: {
+      control: 'select',
+      options: ['basic', 'error', 'success', 'custom'],
+      description: 'Visual validation status (palette: error/success/primary)',
     },
   },
 } as Meta<typeof Textarea>;
@@ -79,3 +85,83 @@ ReadOnly.args = {
   ...Basic.args,
   readOnly: true,
 };
+
+export const AllStatuses: StoryObj<typeof Textarea> = () => {
+  const { register } = useForm<FieldValues>();
+  const baseProps = {
+    register,
+    rows: 3,
+    validationSchema: { required: 'Required' },
+  };
+  return (
+    <div css={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <div>
+        <label
+          htmlFor="sb-status-basic"
+          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
+          Basic
+        </label>
+        <Textarea
+          {...baseProps}
+          name="sb-status-basic"
+          id="sb-status-basic"
+          status="basic"
+          placeholder="Basic (default)"
+        />
+        <FormHelperText status="basic">
+          Default state, no validation feedback.
+        </FormHelperText>
+      </div>
+      <div>
+        <label
+          htmlFor="sb-status-error"
+          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
+          Error
+        </label>
+        <Textarea
+          {...baseProps}
+          name="sb-status-error"
+          id="sb-status-error"
+          status="error"
+          placeholder="Error state"
+        />
+        <FormHelperText status="error">
+          Validation failed. Please fix the errors.
+        </FormHelperText>
+      </div>
+      <div>
+        <label
+          htmlFor="sb-status-success"
+          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
+          Success
+        </label>
+        <Textarea
+          {...baseProps}
+          name="sb-status-success"
+          id="sb-status-success"
+          status="success"
+          placeholder="Success state"
+        />
+        <FormHelperText status="success">Looks good!</FormHelperText>
+      </div>
+      <div>
+        <label
+          htmlFor="sb-status-custom"
+          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
+          Custom
+        </label>
+        <Textarea
+          {...baseProps}
+          name="sb-status-custom"
+          id="sb-status-custom"
+          status="custom"
+          placeholder="Custom (same as basic)"
+        />
+        <FormHelperText status="basic">
+          Custom status, same styling as basic.
+        </FormHelperText>
+      </div>
+    </div>
+  );
+};
+AllStatuses.storyName = 'All statuses';
