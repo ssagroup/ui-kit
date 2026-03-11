@@ -17,7 +17,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   margin: 4px 0 0;
   padding: 0;
 
-  background: #fff;
+  background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
   max-height: 200px;
