@@ -12,6 +12,8 @@ interface DropdownItemProps extends CommonProps {
   value?: string | number | boolean;
   label?: string | number;
   children?: React.ReactNode;
+  /** Avatar or icon to display before the option content (e.g. <Avatar size={20} image={url} />) */
+  avatar?: React.ReactNode;
 }
 
 interface MultipleStylesProps {

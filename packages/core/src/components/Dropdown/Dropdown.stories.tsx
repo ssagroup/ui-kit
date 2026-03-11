@@ -4,14 +4,47 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import Button from '@components/Button';
+import Avatar from '@components/Avatar';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 import Dropdown from './Dropdown';
 import { DropdownProps } from './types';
 import { DropdownOptionProps } from '../..';
 
 type Args = DropdownProps<DropdownOptionProps>;
 
+const managerOptions = [
+  {
+    id: 1,
+    value: 1,
+    name: 'Alice Smith',
+    label: 'Alice Smith',
+    avatar: getStorybookAvatar(0),
+  },
+  {
+    id: 2,
+    value: 2,
+    name: 'Bob Jones',
+    label: 'Bob Jones',
+    avatar: getStorybookAvatar(1),
+  },
+  {
+    id: 3,
+    value: 3,
+    name: 'Carol White',
+    label: 'Carol White',
+    avatar: getStorybookAvatar(2),
+  },
+  {
+    id: 4,
+    value: 4,
+    name: 'David Brown',
+    label: 'David Brown',
+    avatar: getStorybookAvatar(3),
+  },
+];
+
 const items = [
-  { value: 0, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 0, label: 'Zero lorem ipsum ipsum', subText: 'subtext' },
   { value: 1, label: 'One lorem ipsum', subText: 'subtext' },
   { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
   { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
@@ -155,6 +188,27 @@ export const Disabled: StoryObj<Args> = {
     </Dropdown>
   ),
 };
+
+export const WithAvatars: StoryObj<Args> = {
+  render: (args) => (
+    <Dropdown
+      {...args}
+      selectedItem={managerOptions[1]}
+      placeholder="Select a person...">
+      {managerOptions.map(({ id, name, avatar }) => (
+        <DropdownOption
+          key={id}
+          value={id}
+          label={name}
+          avatar={<Avatar size={20} image={avatar} />}>
+          {name}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  ),
+};
+
+WithAvatars.args = { isDisabled: false };
 
 export const Simple: StoryObj = (args: Args) => {
   return (
