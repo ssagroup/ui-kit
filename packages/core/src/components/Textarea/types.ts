@@ -95,7 +95,7 @@ export interface TextareaProps extends Partial<
   maxLength?: number;
 
   /**
-   * Visual validation status (aligns with Input/TextField palette behaviour).
+   * Visual validation status (aligns with Input/TextField palette behavior).
    * - `basic`: default border/outline (theme.colors grey)
    * - `error`: error state (theme.palette.error)
    * - `success`: success state (theme.palette.success)
