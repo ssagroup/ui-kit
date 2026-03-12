@@ -1,9 +1,9 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Sticky = ({
+export const Document = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Sticky',
+  tooltip = 'Document',
   ...props
 }: SVGProps) => (
   <svg
@@ -21,4 +21,4 @@ export const Sticky = ({
   </svg>
 );
 
-export const ICON_NAME = 'sticky';
+export const ICON_NAME = 'document';

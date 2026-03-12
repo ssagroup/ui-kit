@@ -1,9 +1,9 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Courses = ({
+export const OpenBook = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Courses',
+  tooltip = 'Open Book',
   ...props
 }: SVGProps) => (
   <svg
@@ -24,4 +24,4 @@ export const Courses = ({
   </svg>
 );
 
-export const ICON_NAME = 'courses';
+export const ICON_NAME = 'open-book';
