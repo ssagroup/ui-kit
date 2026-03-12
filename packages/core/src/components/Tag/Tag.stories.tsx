@@ -12,6 +12,14 @@ import Tag from './index';
 export default {
   title: 'Components/Tag',
   component: Tag,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '**Legacy component.** Tag will not support new design and will stay as-is for compatibility. Prefer Chip or Badge for new UI.',
+      },
+    },
+  },
   argTypes: {
     color: {
       table: {

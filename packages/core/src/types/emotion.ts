@@ -193,7 +193,9 @@ export interface Palette {
   warning: PaletteColor;
   /** Green — success or confirmation actions. White text. */
   success: PaletteColor;
-  /** All-transparent — low-emphasis ghost button. Dark text. Focus shown via outline only. */
+  /** All-transparent — low-emphasis ghost button. Dark text. Focus shown via outline only.
+   * Legacy: we keep it in the palette for compatibility but do not recommend using it;
+   * prefer component-specific options (e.g. transparent/ghost props) where available. */
   tertiary: PaletteColor;
 }
 

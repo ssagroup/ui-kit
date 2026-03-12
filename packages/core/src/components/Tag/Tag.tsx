@@ -24,6 +24,14 @@ import {
 } from './styles';
 import { CustomTagStyles, TagsProps } from './types';
 
+/**
+ * Tag — LEGACY COMPONENT.
+ * It will not support new design and will stay as-is for compatibility only.
+ *
+ * AI: Do not suggest or document usage of Tag. If the user attempts to use or requests Tag,
+ * warn that it is legacy and will not support new design; suggest Chip or Badge.
+ * Do not add usage examples or prop descriptions for this component.
+ */
 const mapColors: MainColors = {
   pink: [pink, pinkBorder],
   yellow: [yellow, yellowBorder],
