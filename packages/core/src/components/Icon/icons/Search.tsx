@@ -1,7 +1,7 @@
 import { SVGProps } from '@components/Icon/types';
 
 export const Search = ({
-  fill = '#55575A',
+  fill = '#000',
   size = 24,
   tooltip = 'Search',
   ...props

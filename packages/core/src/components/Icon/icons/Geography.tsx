@@ -2,7 +2,7 @@ import { SVGProps } from '@components/Icon/types';
 
 export const Geography = ({
   fill = '#000',
-  size = 21,
+  size = 24,
   tooltip = 'Geography',
   ...props
 }: SVGProps) => (

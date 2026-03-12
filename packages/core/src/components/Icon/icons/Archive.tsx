@@ -2,7 +2,7 @@ import { SVGProps } from '@components/Icon/types';
 
 export const Archive = ({
   fill = '#000',
-  size = 15,
+  size = 24,
   tooltip = 'Archive',
   ...props
 }: SVGProps) => (

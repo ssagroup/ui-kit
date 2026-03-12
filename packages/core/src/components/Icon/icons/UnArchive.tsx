@@ -2,7 +2,7 @@ import { SVGProps } from '@components/Icon/types';
 
 export const UnArchive = ({
   fill = '#000',
-  size = 20,
+  size = 24,
   tooltip = 'Unarchive',
   ...props
 }: SVGProps) => (

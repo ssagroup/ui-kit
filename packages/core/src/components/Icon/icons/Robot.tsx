@@ -2,7 +2,7 @@ import { SVGProps } from '@components/Icon/types';
 
 export const Robot = ({
   fill = '#000',
-  size = 50,
+  size = 24,
   tooltip = 'Robot',
   ...props
 }: SVGProps) => (
