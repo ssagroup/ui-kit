@@ -1,0 +1,27 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as IconsStories from './Icons.stories';
+
+<Meta of={IconsStories} />
+
+# Icons
+
+Icon set for the design system. Use the `Icon` component with a `name` from the list below. All icons share the same API: `name`, `size`, `color`, and optional `tooltip`.
+
+## Usage
+
+```tsx
+import { Icon } from '@ssa-ui-kit/core';
+
+<Icon name="circle-user" size={24} color="#2B2D31" />
+<Icon name="edit" size={20} />
+<Icon name="search" color="#55575A" />
+```
+
+## Available icons
+
+The grid below lists all available icon names. New icons added to the library appear here automatically.
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
