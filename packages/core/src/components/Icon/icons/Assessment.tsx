@@ -3,7 +3,7 @@ import { SVGProps } from '@components/Icon/types';
 export const Assessment = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Assessment',
+  tooltip = 'Clipboard Assessment',
   ...props
 }: SVGProps) => (
   <svg
