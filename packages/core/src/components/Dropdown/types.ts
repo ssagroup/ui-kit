@@ -1,4 +1,5 @@
 import React from 'react';
+import { Interpolation, Theme } from '@emotion/react';
 import { DropdownOptionProps } from '@components/DropdownOptions';
 import { CommonProps } from '@global-types/emotion';
 import { IconProps } from '@components/Icon/types';
@@ -102,7 +103,29 @@ export interface DropdownProps<
     toggleButton?: Omit<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
       ControlledButtonProps
-    >;
+    > & {
+      /**
+       * Emotion css prop for custom styles on the toggle button.
+       * Merged on top of the component's built-in styles, so any rule here
+       * overrides the default appearance.
+       *
+       * @example
+       * ```tsx
+       * import { css } from '@emotion/react';
+       *
+       * <Dropdown
+       *   dropdownProps={{
+       *     toggleButton: {
+       *       css: css`background: hotpink; border: none;`,
+       *     },
+       *   }}
+       * >
+       *   ...
+       * </Dropdown>
+       * ```
+       */
+      css?: Interpolation<Theme>;
+    };
     /** Props for the arrow icon SVG element */
     toggleButtonArrow?: Omit<IconProps, 'name' | 'size'>;
   };

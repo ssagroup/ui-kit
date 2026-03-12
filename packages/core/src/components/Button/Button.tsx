@@ -112,7 +112,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const theme = useTheme();
 
-    const appliedVariantStyle = variantStyles[variant](theme);
+    const appliedVariantStyle = (
+      variantStyles[variant] ?? variantStyles.tertiary
+    )(theme);
 
     const resolveTextNode = () => {
       if (!text) return null;

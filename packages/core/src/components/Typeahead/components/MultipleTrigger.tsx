@@ -59,7 +59,7 @@ export const MultipleTrigger = () => {
                       context.isDisabled
                         ? theme.colors.grey
                         : isCustomValue
-                          ? theme.colors.blueRoyal
+                          ? theme.palette.primary.main
                           : theme.colors.greyDarker
                     }
                     css={{
@@ -104,7 +104,7 @@ export const MultipleTrigger = () => {
           className={[
             'typeahead-input',
             S.TypeaheadInput(theme),
-            S.TypeaheadInputPlaceholder,
+            S.TypeaheadInputPlaceholder(theme),
           ].join(' ')}
           {...typeaheadInputAdditionalProps}
         />

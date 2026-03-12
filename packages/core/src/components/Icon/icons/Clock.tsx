@@ -2,7 +2,7 @@ import { SVGProps } from '@components/Icon/types';
 
 export const Clock = ({
   fill = '#000',
-  size = 15,
+  size = 24,
   tooltip = 'Clock',
   ...props
 }: SVGProps) => (

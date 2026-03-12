@@ -6,6 +6,7 @@ import { useClickOutside } from '@ssa-ui-kit/hooks';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
+import Avatar from '@components/Avatar';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
@@ -14,6 +15,14 @@ import { DropdownContextType, DropdownProps } from './types';
 const DropdownBase = styled.div`
   display: inline-block;
   position: relative;
+`;
+
+const SelectedContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-width: 0;
 `;
 
 /**
@@ -196,6 +205,28 @@ const Dropdown = <T extends DropdownOptionProps>({
       : placeholder
   ) as ReactNode;
 
+  const rawAvatar =
+    activeItem && (activeItem as Record<string, unknown>).avatar;
+
+  const selectedAvatar =
+    rawAvatar != null ? (
+      typeof rawAvatar === 'string' ? (
+        <Avatar size={20} image={rawAvatar} />
+      ) : React.isValidElement(rawAvatar) ? (
+        (rawAvatar as ReactNode)
+      ) : null
+    ) : null;
+
+  const toggleContent =
+    selectedAvatar != null ? (
+      <SelectedContent>
+        {selectedAvatar as ReactNode}
+        <span style={{ minWidth: 0 }}>{value}</span>
+      </SelectedContent>
+    ) : (
+      value
+    );
+
   return (
     <DropdownContext.Provider value={contextValue}>
       <DropdownBase
@@ -212,7 +243,7 @@ const Dropdown = <T extends DropdownOptionProps>({
           colors={colors}
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}>
-          {value}
+          {toggleContent}
           <DropdownArrow {...componentProps?.toggleButtonArrow} isUp={isOpen} />
         </DropdownToggle>
 

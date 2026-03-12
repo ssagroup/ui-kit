@@ -17,7 +17,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   margin: 4px 0 0;
   padding: 0;
 
-  background: #fff;
+  background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
   max-height: 200px;
@@ -34,6 +34,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
 const dropdownOptionButton = css`
   display: flex;
   align-items: center;
+  gap: 8px;
   cursor: pointer;
   font: inherit;
   font-size: 0.813rem;
@@ -47,6 +48,12 @@ const dropdownOptionButton = css`
   background: none;
   color: inherit;
   border: none;
+`;
+
+const avatarWrapper = css`
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 `;
 
 const noItemsMsg = { id: Number.NaN, value: 'No items' };
@@ -94,6 +101,7 @@ const DropdownOptions = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const options = (childrenArray as React.ReactElement<any>[]).map((child) => {
     const isActive = activeItem?.value === child.props.value;
+    const avatar = child.props.avatar;
 
     return React.cloneElement(
       child,
@@ -104,6 +112,7 @@ const DropdownOptions = ({
         onClick: onChange.bind(null, child.props.value),
       },
       <button type="button" css={dropdownOptionButton}>
+        {avatar ? <span css={avatarWrapper}>{avatar}</span> : null}
         {child.props.children || child.props.label || child.props.value}
       </button>,
     );

@@ -3,7 +3,7 @@ import { SVGProps } from '@components/Icon/types';
 export const Report = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Report',
+  tooltip = 'Clipboard Report',
   ...props
 }: SVGProps) => (
   <svg
@@ -23,4 +23,4 @@ export const Report = ({
   </svg>
 );
 
-export const ICON_NAME = 'report';
+export const ICON_NAME = 'clipboard-report';

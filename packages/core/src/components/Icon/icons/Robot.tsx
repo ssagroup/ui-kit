@@ -2,7 +2,7 @@ import { SVGProps } from '@components/Icon/types';
 
 export const Robot = ({
   fill = '#000',
-  size = 50,
+  size = 24,
   tooltip = 'Robot',
   ...props
 }: SVGProps) => (
@@ -10,8 +10,9 @@ export const Robot = ({
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
     height={`${size}px`}
-    viewBox="0 0 54 50"
+    viewBox="14 14 26 22"
     fill="none"
+    preserveAspectRatio="none"
     {...props}>
     <title>{tooltip}</title>
     <path

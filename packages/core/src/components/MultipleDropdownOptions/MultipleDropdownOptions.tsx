@@ -59,12 +59,6 @@ const DropdownOptionButton = styled.div<{
 
   '& label': {
     margin: '0 16px 0 0',
-    '& input + div': {
-      borderRadius: '2px',
-      '&::before': {
-        borderRadius: '2px',
-      },
-    },
   },
 
   '&:has(:scope > label > input:checked)': {
@@ -72,7 +66,7 @@ const DropdownOptionButton = styled.div<{
   },
 
   [`&:hover input:not(:checked, :indeterminate) + div::before`]: {
-    borderColor: theme.colors.greyDropdownFocused,
+    borderColor: theme.palette.primary.main,
   },
 }));
 

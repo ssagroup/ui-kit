@@ -4,14 +4,97 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import Button from '@components/Button';
+import Avatar from '@components/Avatar';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 import Dropdown from './Dropdown';
 import { DropdownProps } from './types';
 import { DropdownOptionProps } from '../..';
 
+/**
+ * Recreates the look from before the "dropdown styles" commit.
+ * Grey pill background when closed, dark gradient when open.
+ * Uses styled(Dropdown) so theme tokens can be interpolated.
+ * The generated className is forwarded to DropdownToggle via className prop.
+ */
+const LegacyStyledDropdown = styled(Dropdown)`
+  background: ${({ theme }) => theme.colors.greyLighter};
+  border: none;
+  color: ${({ theme }) => theme.colors.greyDarker};
+
+  svg path {
+    stroke: ${({ theme }) => theme.colors.greyDarker};
+  }
+
+  /*
+   * Use && to double the class selector specificity (0,3,0), which beats the
+   * internal singleDropdownStyles :focus:not(:disabled) rule at (0,2,0).
+   * Without this, clicking to open causes white text on a white background.
+   */
+  &&[aria-expanded='true'] {
+    background: linear-gradient(
+      108.3deg,
+      ${({ theme }) => theme.colors.greyDarker} -0.36%,
+      ${({ theme }) => theme.colors.greyDark} 100%
+    );
+    color: ${({ theme }) => theme.colors.white};
+
+    svg path {
+      stroke: ${({ theme }) => theme.colors.white};
+    }
+  }
+
+  &:focus:not([aria-expanded='true'], :disabled) {
+    background: ${({ theme }) => theme.colors.greyFocused};
+    color: ${({ theme }) => theme.colors.greyDarker};
+  }
+
+  &&:disabled {
+    background: ${({ theme }) => theme.colors.grey};
+    border: none;
+    color: ${({ theme }) => theme.colors.greyDarker60};
+    cursor: default;
+
+    svg path {
+      stroke: ${({ theme }) => theme.colors.grey20};
+    }
+  }
+`;
+
 type Args = DropdownProps<DropdownOptionProps>;
 
+const managerOptions = [
+  {
+    id: 1,
+    value: 1,
+    name: 'Alice Smith',
+    label: 'Alice Smith',
+    avatar: getStorybookAvatar(0),
+  },
+  {
+    id: 2,
+    value: 2,
+    name: 'Bob Jones',
+    label: 'Bob Jones',
+    avatar: getStorybookAvatar(1),
+  },
+  {
+    id: 3,
+    value: 3,
+    name: 'Carol White',
+    label: 'Carol White',
+    avatar: getStorybookAvatar(2),
+  },
+  {
+    id: 4,
+    value: 4,
+    name: 'David Brown',
+    label: 'David Brown',
+    avatar: getStorybookAvatar(3),
+  },
+];
+
 const items = [
-  { value: 0, label: 'Zero lorem ipsum', subText: 'subtext' },
+  { value: 0, label: 'Zero lorem ipsum ipsum', subText: 'subtext' },
   { value: 1, label: 'One lorem ipsum', subText: 'subtext' },
   { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
   { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
@@ -45,6 +128,45 @@ export default {
   title: 'Components/Dropdown',
   component: Dropdown,
   argTypes: {
+    selectedItem: {
+      description:
+        'Currently selected item. When provided, its label (or value) is shown in the toggle button.',
+      control: { disable: true },
+      table: { type: { summary: 'DropdownOptionProps' } },
+    },
+    isDisabled: {
+      description: 'Disables the dropdown, preventing any user interaction.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    placeholder: {
+      description: 'Text shown in the toggle button when no item is selected.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Select something'" },
+      },
+    },
+    isOpen: {
+      description:
+        'Controlled open state. When provided, overrides the internal open/close logic.',
+      control: 'boolean',
+      table: { type: { summary: 'boolean' } },
+    },
+    onChange: {
+      description:
+        'Callback fired when an option is selected. Receives the selected DropdownOptionProps object.',
+      control: { disable: true },
+    },
+    className: {
+      description:
+        'Custom CSS class forwarded to the toggle button. Useful for styling via `styled(Dropdown)`.',
+      table: { type: { summary: 'StyledComponent' } },
+      control: { disable: true },
+    },
     'dropdownProps.toggleButton.name': {
       description: 'Custom name attribute for dropdown div.',
       control: { type: 'text' },
@@ -67,22 +189,6 @@ export default {
       table: {
         type: { summary: 'string' },
         category: 'dropdownProps',
-      },
-    },
-    onChange: {
-      control: {
-        disable: true,
-      },
-    },
-    className: {
-      description: 'Used in order to overwrite the default style',
-      table: {
-        type: {
-          summary: 'StyledComponent',
-        },
-      },
-      control: {
-        disable: true,
       },
     },
   },
@@ -143,6 +249,54 @@ export const Opened: StoryObj = (args: Args) => {
 };
 
 Opened.args = { isOpen: true, isDisabled: false };
+
+export const Disabled: StoryObj<Args> = {
+  render: () => (
+    <Dropdown selectedItem={items[2]} isDisabled>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  ),
+};
+
+export const WithAvatars: StoryObj<Args> = {
+  render: (args) => (
+    <Dropdown
+      {...args}
+      selectedItem={managerOptions[1]}
+      placeholder="Select a person...">
+      {managerOptions.map(({ id, name, avatar }) => (
+        <DropdownOption
+          key={id}
+          value={id}
+          label={name}
+          avatar={<Avatar size={20} image={avatar} />}>
+          {name}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  ),
+};
+
+WithAvatars.args = { isDisabled: false };
+
+export const LegacyStyle: StoryObj<Args> = {
+  name: 'Legacy (Previous Style)',
+  render: (args) => (
+    <LegacyStyledDropdown {...args} selectedItem={items[2]}>
+      {items.slice(0, 5).map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </LegacyStyledDropdown>
+  ),
+};
+
+LegacyStyle.args = { isDisabled: false };
 
 export const Simple: StoryObj = (args: Args) => {
   return (

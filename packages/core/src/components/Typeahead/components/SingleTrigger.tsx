@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
-import { useTypeaheadContext } from '../Typeahead.context';
+import { useTypeaheadContext } from '@components';
 import * as S from '../styles';
 
 export const SingleTrigger = () => {
@@ -49,7 +49,7 @@ export const SingleTrigger = () => {
         className={[
           'typeahead-input',
           S.TypeaheadInput(theme),
-          S.TypeaheadInputPlaceholder,
+          S.TypeaheadInputPlaceholder(theme),
         ].join(' ')}
         {...typeaheadInputAdditionalProps}
       />

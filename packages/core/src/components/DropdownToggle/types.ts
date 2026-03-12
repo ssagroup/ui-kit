@@ -1,5 +1,5 @@
 import React from 'react';
-import { Theme } from '@emotion/react';
+import { Interpolation, Theme } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
 import { ControlledButtonProps } from '@components/Dropdown/types';
 
@@ -7,8 +7,10 @@ export interface DropdownToggleProps
   extends
     CommonProps,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, ControlledButtonProps> {
+  /** Emotion css prop forwarded to the underlying styled button */
+  css?: Interpolation<Theme>;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
-  onFocus: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;
   isOpen: boolean;
   isMultiple?: boolean;
   disabled?: boolean;
@@ -22,5 +24,5 @@ export interface DropdownToggleProps
 
 export interface MultipleStylesProps {
   theme: Theme;
-  selectedCount?: number;
+  isOpen?: boolean;
 }

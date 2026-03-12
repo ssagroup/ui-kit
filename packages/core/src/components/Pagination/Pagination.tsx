@@ -1,4 +1,5 @@
 import { KeyboardEvent, useState } from 'react';
+import { useTheme } from '@emotion/react';
 import { usePaginationRange } from '@ssa-ui-kit/hooks';
 import { InputProps } from '@components/Input/types';
 import Wrapper from '@components/Wrapper';
@@ -104,6 +105,7 @@ const Pagination = ({
   rowPerPageProps,
   manualPageNumberProps,
 }: PaginationProps) => {
+  const theme = useTheme();
   const { page, setPage } = usePaginationContext();
   const range = usePaginationRange({ pagesCount, selectedPage: page });
   const [inputStatus, setInputStatus] = useState<InputProps['status']>('basic');
@@ -141,7 +143,13 @@ const Pagination = ({
             {...manualPageNumberProps}
           />
           {isPageFromCountVisible && (
-            <span css={{ textWrap: 'nowrap', fontSize: 14, marginLeft: 16 }}>
+            <span
+              css={{
+                textWrap: 'nowrap',
+                fontSize: 14,
+                marginLeft: 16,
+                color: theme.colors.greyDarker,
+              }}>
               {page || 0} / {pagesCount}
             </span>
           )}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useId, useRef } from 'react';
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import { mapObjIndexed } from '@ssa-ui-kit/utils';
@@ -23,16 +22,78 @@ const DropdownPlaceholderLabel = styled.div`
 `;
 
 /**
- * The structure of the component:
+ * MultipleDropdown - Dropdown component for multi-select and single-select
  *
- * MultipleDropdown
- *   DropdownToggle
- *   MultipleDropdownOptions
- *     DropdownOption
+ * A flexible dropdown that lets users select one or more options from a list.
+ * In multi-select mode (`isMultiple=true`, default) each option toggles independently;
+ * the toggle button shows the first selected value and a `+N` badge for overflow.
+ * In single-select mode (`isMultiple=false`) selecting an option closes the menu.
+ * Forwards its ref to the root container div.
  *
- * Aria attributes are set according to
- * https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
- **/
+ * Component structure:
+ * - MultipleDropdown (root container with context)
+ *   - DropdownToggle (button that opens/closes the menu)
+ *   - MultipleDropdownOptions (menu container rendered when open)
+ *     - DropdownOption (individual selectable items)
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * // Basic multi-select
+ * <MultipleDropdown
+ *   label="Fruits"
+ *   selectedItems={[{ value: 'apple' }]}
+ *   onChange={(value, isSelected) => handleChange(value, isSelected)}
+ * >
+ *   <DropdownOption value="apple">Apple</DropdownOption>
+ *   <DropdownOption value="banana">Banana</DropdownOption>
+ *   <DropdownOption value="cherry">Cherry</DropdownOption>
+ * </MultipleDropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Single-select mode (closes on pick)
+ * <MultipleDropdown
+ *   label="Country"
+ *   isMultiple={false}
+ *   selectedItems={selected}
+ *   onChange={handleChange}
+ * >
+ *   <DropdownOption value="us">United States</DropdownOption>
+ *   <DropdownOption value="uk">United Kingdom</DropdownOption>
+ * </MultipleDropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Hide placeholder text, only show badge count
+ * <MultipleDropdown
+ *   label="Tags"
+ *   showPlaceholder={false}
+ *   selectedItems={tags}
+ *   onChange={handleChange}
+ * >
+ *   {tags.map(tag => (
+ *     <DropdownOption key={tag.value} value={tag.value}>{tag.label}</DropdownOption>
+ *   ))}
+ * </MultipleDropdown>
+ * ```
+ *
+ * @see {@link DropdownOption} - Child component for individual options
+ * @see {@link DropdownToggle} - Toggle button component
+ * @see {@link MultipleDropdownOptions} - Options menu container
+ *
+ * @accessibility
+ * - ARIA attributes set according to WAI-ARIA combobox pattern
+ * - Keyboard navigation (Arrow keys, Enter, Escape)
+ * - Click outside to close
+ * - Screen reader friendly with aria-expanded and aria-controls
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
+ */
 function MultipleDropdownInner<T extends DropdownOptionProps>(
   {
     selectedItems = [],
@@ -48,13 +109,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
-  const theme = useTheme();
   const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
   const dropdownId = useId();
-  const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
-  const [colors, setColors] = useState<Array<string | undefined>>([]);
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, T>
   >({});
@@ -106,16 +164,6 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   };
 
   useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
-
-  useEffect(() => {
-    if (isDisabled) {
-      setColors([theme.colors.greyDarker60, theme.colors.grey20]);
-    } else if (isOpen) {
-      setColors([theme.colors.white, theme.colors.white60]);
-    } else if (isFocused) {
-      setColors([theme.colors.greyDarker, theme.colors.greyDarker60]);
-    }
-  }, [isOpen, isDisabled, isFocused]);
 
   useEffect(() => {
     if (isDisabled && isOpen) {
@@ -174,8 +222,6 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
           isOpen={isOpen}
           disabled={isDisabled}
           onClick={setIsOpen.bind(null, !isOpen)}
-          onFocus={setIsFocused.bind(null, true)}
-          colors={colors}
           ariaLabelledby={`dropdown-label-${dropdownId}`}
           ariaControls={`dropdown-popup-${dropdownId}`}
           isMultiple={isMultiple}

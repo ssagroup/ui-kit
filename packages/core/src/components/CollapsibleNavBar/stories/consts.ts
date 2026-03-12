@@ -2,16 +2,7 @@ import { CollapsibleNavBarExtendedProps } from '../types';
 
 export const ITEMS: CollapsibleNavBarExtendedProps['items'] = [
   { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
-  {
-    path: 'bots',
-    iconName: 'robot',
-    iconSize: 54,
-    title: 'Bots',
-    css: {
-      position: 'absolute',
-      top: '-14px',
-    },
-  },
+  { path: 'bots', iconName: 'robot', iconSize: 24, title: 'Bots' },
   {
     path: 'notifications',
     iconName: 'notification',

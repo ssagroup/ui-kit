@@ -138,6 +138,8 @@ Make sure you have React 19.x, Emotion, and React Hook Form installed:
 npm install react@19.x react-dom@19.x @emotion/react @emotion/styled react-hook-form
 ```
 
+> **Note:** The UI kit targets React 19.x. Using React 18 may cause compatibility issues; we recommend upgrading to React 19.
+
 ## ⚠️ CRITICAL: Vite Configuration for React Hook Form
 
 > **🚨 IMPORTANT**: If you're using **Vite** and experiencing `useFormContext() returned null` errors with form components (like `DateRangePicker`, `DatePicker`, etc.), you **MUST** configure Vite to use the CommonJS bundle of `react-hook-form`.

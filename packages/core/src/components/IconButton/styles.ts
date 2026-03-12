@@ -10,16 +10,18 @@ export const iconButton = (theme: Theme, transparent: boolean) =>
     padding: 0,
     border: 'none',
     borderRadius: 8,
-    backgroundColor: transparent ? 'transparent' : theme.colors.greyLighter,
+    backgroundColor: transparent ? 'transparent' : theme.palette.secondary.main,
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     '&:hover:not(:disabled)': {
-      backgroundColor: transparent ? 'transparent' : theme.colors.greyLighter,
+      backgroundColor: transparent
+        ? 'transparent'
+        : theme.palette.secondary.dark,
       '& svg': {
-        color: theme.colors.blue,
+        color: theme.palette.primary.main,
       },
       '& svg path': {
-        fill: theme.colors.blue,
+        fill: theme.palette.primary.main,
       },
     },
     '&:disabled': {
