@@ -20,7 +20,7 @@ export const pageBtnStyles = (theme: Theme) => css`
 
   background: unset;
   box-shadow: unset;
-  color: #070821;
+  color: ${theme.colors.greyDarker};
   padding: 0 11px;
 
   ${theme.mediaQueries.md} {
@@ -35,26 +35,16 @@ export const pageBtnStyles = (theme: Theme) => css`
   &:not(:disabled):hover,
   &:not(:disabled):active,
   &:not(:disabled):focus {
-    background: #eef1f7;
+    background: ${theme.colors.greyLighter};
     box-shadow: unset;
   }
 `;
 
 const selectedBtnBg = (theme: Theme) => css`
-  background: ${theme.colors.blueLightDarker};
-  background: linear-gradient(
-    247.37deg,
-    ${theme.colors.blueDark},
-    ${theme.colors.blueLightDarker}
-  );
+  background: ${theme.palette.primary.main};
 
   &:disabled {
-    background: ${theme.colors.blueLightDarker};
-    background: linear-gradient(
-      247.37deg,
-      ${theme.colors.blueDark},
-      ${theme.colors.blueLightDarker}
-    );
+    background: ${theme.palette.primary.main};
   }
 `;
 
@@ -63,7 +53,7 @@ export const selectedPageBtnStyles = (theme: Theme) => css`
 
   ${selectedBtnBg(theme)}
 
-  color: white;
+  color: ${theme.colors.white};
   margin: 0 3px;
   padding: 0 13px;
 

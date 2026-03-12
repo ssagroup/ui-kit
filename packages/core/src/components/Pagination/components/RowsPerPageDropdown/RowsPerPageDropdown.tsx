@@ -79,22 +79,27 @@ export const RowsPerPageDropdown = ({
       <Dropdown
         selectedItem={selectedItemForDropdown}
         onChange={onChange}
-        css={{
-          marginLeft: 10,
-          marginRight: 15,
-          background: 'none',
-          color: '#070821',
-          gap: 5,
-          padding: 0,
-          '&:focus': {
-            color: '#070821',
-            background: 'none',
-            '&::before': {
-              display: 'none',
+        dropdownProps={{
+          toggleButton: {
+            css: {
+              marginLeft: 10,
+              marginRight: 15,
+              border: 'none',
+              background: 'none',
+              color: theme.colors.greyDarker,
+              gap: 5,
+              padding: 0,
+              '&:focus': {
+                color: theme.colors.greyDarker,
+                background: 'none',
+                '&::before': {
+                  display: 'none',
+                },
+              },
+              '& svg path': {
+                stroke: theme.colors.greyDarker,
+              },
             },
-          },
-          '& svg path': {
-            stroke: theme.colors.greyDarker,
           },
         }}
         {...rest}>
