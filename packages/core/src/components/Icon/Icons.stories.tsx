@@ -47,7 +47,7 @@ export const Default: StoryObj<typeof Icon> = (
           text-align: center;
         }
       `}>
-      {iconsList.map((iconName) => (
+      {[...iconsList].sort((a, b) => a.localeCompare(b)).map((iconName) => (
         <div css={iconWrapper} key={iconName}>
           <Icon
             name={iconName}
