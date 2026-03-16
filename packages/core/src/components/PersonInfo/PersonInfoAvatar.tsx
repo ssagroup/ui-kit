@@ -1,3 +1,9 @@
+/**
+ * PersonInfoAvatar - Avatar + value row for PersonInfo.
+ * Renders optional Avatar (image URL) and PersonInfoValue. When link is set, wraps in anchor
+ * using helpers.getLinkAttributes; link hover uses theme.colors.blue (avatarWrapperLinkStyles).
+ * Uses styles.avatarName when avatar present, styles.value when only value. Used only by PersonInfo.
+ */
 import React from 'react';
 import Avatar from '@components/Avatar';
 import * as S from './styles';

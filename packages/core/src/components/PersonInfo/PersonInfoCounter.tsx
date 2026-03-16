@@ -1,3 +1,9 @@
+/**
+ * PersonInfoCounter - “+N” counter with tooltip for PersonInfo.
+ * Renders counter value from counterTooltip.users.length; tooltip lists users via ImageItem
+ * (image, name, optional link). Uses Tooltip (hover, no click). Counter text uses
+ * theme.colors.greyDropdownFocused (S.Counter). Used only by PersonInfo when counterTooltip is set.
+ */
 import React from 'react';
 import Tooltip from '@components/Tooltip';
 import TooltipTrigger from '@components/TooltipTrigger';

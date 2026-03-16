@@ -1,3 +1,8 @@
+/**
+ * PersonInfoIcon - Leading icon for PersonInfo row.
+ * Renders Icon with theme.colors.greyDarker when icon is a string; otherwise renders custom ReactNode.
+ * Used only by PersonInfo when icon prop is set.
+ */
 import React from 'react';
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';

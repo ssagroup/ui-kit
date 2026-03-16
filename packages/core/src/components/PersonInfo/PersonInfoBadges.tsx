@@ -1,3 +1,9 @@
+/**
+ * PersonInfoBadges - Badge row for PersonInfo.
+ * badges can be a single ReactNode or array of string | ReactNode. Strings are rendered with
+ * CustomBadge using DEFAULT_BADGE_COLORS (cycled by index) and BADGE_COLORS(theme) for text/bg.
+ * Other items rendered as-is (e.g. <Badge>). Uses styles.badge and styles.badgeItem.
+ */
 import React from 'react';
 import * as S from './styles';
 import { PersonInfoStyles } from './types';
