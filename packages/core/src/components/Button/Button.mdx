@@ -9,7 +9,7 @@ Button triggers an action or event.
 
 ## Default Usage
 
-When no `variant` is passed the button defaults to `tertiary` — a transparent ghost button.
+When no `variant` is passed the button defaults to `custom` — a transparent, low-emphasis button (recommended).
 Pass an explicit variant for styled buttons:
 
 ```tsx
@@ -18,7 +18,7 @@ import { Button } from '@ssa-ui-kit/core';
 function Demo() {
   return (
     <>
-      {/* transparent ghost — default when no variant is passed */}
+      {/* custom — default when no variant is passed (recommended) */}
       <Button onClick={() => console.log('Clicked!')}>Cancel</Button>
 
       {/* explicit variant */}
@@ -60,7 +60,7 @@ const customTheme: Theme = {
 
 ## Variants
 
-Button supports six variants for different use cases and visual hierarchy:
+Button supports seven variants for different use cases and visual hierarchy:
 
 ### Primary
 
@@ -78,17 +78,22 @@ The secondary variant is used for secondary actions with medium emphasis. It use
 <Button variant="secondary">Secondary Action</Button>
 ```
 
-### Tertiary (default)
+### Custom (default, recommended)
 
-The tertiary variant is the default. It has a transparent background and shows
-only a focus outline on keyboard navigation — ideal for low-emphasis or ghost buttons.
+The custom variant is the default and recommended for low-emphasis actions. It has a transparent background and dark text, with no focus outline.
 
-**Note:** Tertiary is legacy. We keep it in the palette for compatibility but do not recommend using it; prefer component-specific options (e.g. transparent or ghost props) where available.
+```tsx
+<Button>Cancel</Button>
+{/* same as */}
+<Button variant="custom">Cancel</Button>
+```
+
+### Tertiary (legacy)
+
+Same appearance as custom; kept for compatibility. Prefer `custom` instead.
 
 ```tsx
 <Button variant="tertiary">Tertiary Action</Button>
-{/* same as */}
-<Button>Tertiary Action</Button>
 ```
 
 ### Error

@@ -55,6 +55,7 @@ export default {
         },
       },
       options: [
+        'custom',
         'primary',
         'secondary',
         'tertiary',
@@ -80,7 +81,7 @@ export default {
   args: {
     text: 'Button',
     size: 'small',
-    variant: 'tertiary',
+    variant: 'custom',
     type: 'button',
   },
 } as Meta<typeof Button>;
