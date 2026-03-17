@@ -41,7 +41,7 @@ const baseFilled = (theme: Theme) => css`
 `;
 
 const baseOutlined = (theme: Theme) => css`
-  background-color: ${theme.colors.white};
+  background-color: color-mix(in srgb, ${theme.colors.grey} 8%, transparent);
   border: 1px solid ${theme.colors.grey};
 `;
 
@@ -62,9 +62,23 @@ export const outlined = (theme: Theme) => css`
 `;
 
 export const outlinedDisabled = (theme: Theme) => css`
-  ${baseOutlined(theme)};
+  background-color: color-mix(in srgb, ${theme.colors.grey} 24%, transparent);
+  border: 1px solid ${theme.colors.grey};
   color: ${theme.colors.greyDisabled};
   opacity: 0.6;
+`;
+
+/** Hover/active bg opacity for default (grey) outlined clickable chip */
+export const clickableOutlinedDefault = (theme: Theme) => css`
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: color-mix(in srgb, ${theme.colors.grey} 24%, transparent);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, ${theme.colors.grey} 40%, transparent);
+  }
 `;
 
 export const clickable = css`
@@ -78,6 +92,12 @@ export const clickable = css`
   &:active {
     opacity: 0.7;
   }
+`;
+
+/** cursor + transition only; hover/active handled by variant (e.g. outlined bg opacity) */
+export const clickableBase = css`
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 `;
 
 export const clickableDisabled = css`

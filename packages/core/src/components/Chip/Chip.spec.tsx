@@ -95,9 +95,10 @@ describe('Chip', () => {
       render(<Chip label="Primary" color="primary" variant="outlined" />);
 
       const chip = screen.getByText('Primary').closest('div');
+      // Outlined uses light color at 8% opacity (color-mix)
       expect(chip).toHaveStyleRule(
         'background-color',
-        theme.palette.primary.light,
+        expect.stringContaining('color-mix'),
       );
       expect(chip).toHaveStyleRule(
         'border',

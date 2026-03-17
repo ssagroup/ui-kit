@@ -1,7 +1,7 @@
 import { css, Theme } from '@emotion/react';
 import { ChipProps } from './types';
 import { filled, outlined, filledDisabled, outlinedDisabled } from './styles';
-import { VARIANTS, COLORS } from './constants';
+import { VARIANTS, COLORS, OUTLINED_BG_OPACITY } from './constants';
 
 type SemanticColor = Exclude<ChipProps['color'], 'default' | undefined>;
 
@@ -50,13 +50,28 @@ const getVariantColorBlock = (
   variant: 'filled' | 'outlined',
   config: ColorConfig,
   disabled: boolean,
+  isClickable: boolean,
 ) => {
   if (variant === VARIANTS.OUTLINED) {
+    const bgDefault = `color-mix(in srgb, ${config.bg} ${OUTLINED_BG_OPACITY.DEFAULT * 100}%, transparent)`;
+    const bgHover = `color-mix(in srgb, ${config.bg} ${OUTLINED_BG_OPACITY.HOVER * 100}%, transparent)`;
+    const bgActive = `color-mix(in srgb, ${config.bg} ${OUTLINED_BG_OPACITY.ACTIVE * 100}%, transparent)`;
+    const bgDisabled = `color-mix(in srgb, ${config.bg} ${OUTLINED_BG_OPACITY.DISABLED * 100}%, transparent)`;
+
     return css`
-      background-color: ${config.bg};
+      background-color: ${disabled ? bgDisabled : bgDefault};
       border: 1px solid ${config.main};
       color: ${config.dark};
+      transition: background-color 0.2s ease;
       ${disabled ? 'opacity: 0.5;' : ''}
+      ${!disabled && isClickable ? `
+        &:hover {
+          background-color: ${bgHover};
+        }
+        &:active {
+          background-color: ${bgActive};
+        }
+      ` : ''}
     `;
   }
 
@@ -73,6 +88,7 @@ export const getVariantColors = (
   variant: ChipProps['variant'],
   color: ChipProps['color'],
   disabled: boolean,
+  isClickable = false,
 ) => {
   const variantKey = variant ?? VARIANTS.FILLED;
   const colorKey = color ?? COLORS.DEFAULT;
@@ -94,7 +110,13 @@ export const getVariantColors = (
   }
 
   const palette = colorMap(theme)[colorKey as SemanticColor];
-  const chipStyles = getVariantColorBlock(theme, variantKey, palette, disabled);
+  const chipStyles = getVariantColorBlock(
+    theme,
+    variantKey,
+    palette,
+    disabled,
+    isClickable,
+  );
 
   const iconColor = (() => {
     if (variantKey === VARIANTS.OUTLINED) return palette.dark;
