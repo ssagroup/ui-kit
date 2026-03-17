@@ -63,7 +63,11 @@ describe('Chip', () => {
       render(<Chip label="Outlined" variant="outlined" />);
 
       const chip = screen.getByText('Outlined').closest('div');
-      expect(chip).toHaveStyleRule('background-color', theme.colors.white);
+      // Default outlined uses grey at 8% opacity (color-mix)
+      expect(chip).toHaveStyleRule(
+        'background-color',
+        expect.stringContaining('color-mix'),
+      );
       expect(chip).toHaveStyleRule('border', `1px solid ${theme.colors.grey}`);
     });
   });
