@@ -7,6 +7,7 @@ const DropdownContext = React.createContext<DropdownContextType>({
   onChange: () => {
     /* noop */
   },
+  maxHeight: 200,
 });
 
 export function useDropdownContext(): DropdownContextType {

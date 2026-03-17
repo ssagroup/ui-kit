@@ -11,6 +11,7 @@ const MultipleDropdownContext = React.createContext<
   onChange: () => {
     /* noop */
   },
+  maxHeight: 200,
 });
 
 export function useMultipleDropdownContext(): DropdownContextType<DropdownOptionType> {

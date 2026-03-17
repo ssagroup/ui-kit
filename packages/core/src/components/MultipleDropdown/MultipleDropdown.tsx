@@ -106,6 +106,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     children,
     onChange: handleChange,
     className,
+    maxHeight = 200,
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
@@ -199,8 +200,13 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   }, [memoSelectedItems, children]);
 
   const contextValue: DropdownContextType<DropdownOptionProps> = React.useMemo(
-    () => ({ onChange, allItems: optionsWithKey, isMultiple }),
-    [onChange, optionsWithKey, isMultiple],
+    () => ({
+      onChange,
+      allItems: optionsWithKey,
+      isMultiple,
+      maxHeight,
+    }),
+    [onChange, optionsWithKey, isMultiple, maxHeight],
   );
 
   useEffect(() => {

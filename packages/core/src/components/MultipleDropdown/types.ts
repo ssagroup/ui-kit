@@ -82,6 +82,12 @@ export type DropdownProps<P extends DropdownOptionProps> = {
    * @param isSelected   - `true` if the option was just selected, `false` if deselected
    */
   onChange?: (selectedItem: string | number, isSelected: boolean) => void;
+
+  /**
+   * Max height (px) of the options list; overflow scrolls.
+   * @default 200
+   */
+  maxHeight?: number;
 };
 
 /**
@@ -102,4 +108,9 @@ export interface DropdownContextType<T extends DropdownOptionProps> {
    * Map of all option values to their current state (including `isSelected`)
    */
   allItems: Record<string | number, T>;
+
+  /**
+   * Max height (px) of the options list
+   */
+  maxHeight?: number;
 }

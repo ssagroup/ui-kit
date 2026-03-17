@@ -7,7 +7,10 @@ import DropdownOption from '@components/DropdownOption';
 
 import { DropdownItemsListProps } from './types';
 
-const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
+const DropdownOptionsBase = styled.ul<{
+  tabindex?: string;
+  maxHeight?: number;
+}>`
   position: absolute;
   width: 100%;
   min-width: max-content;
@@ -20,7 +23,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
-  max-height: 200px;
+  max-height: ${({ maxHeight = 200 }) => maxHeight}px;
   overflow: hidden auto;
 
   z-index: 2;
@@ -94,7 +97,7 @@ const DropdownOptions = ({
   id,
   children,
 }: DropdownItemsListProps) => {
-  const { onChange, activeItem } = useDropdownContext();
+  const { onChange, activeItem, maxHeight } = useDropdownContext();
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
@@ -135,7 +138,8 @@ const DropdownOptions = ({
       role="listbox"
       tabindex="-1"
       id={id}
-      aria-labelledby={ariaLabelledby}>
+      aria-labelledby={ariaLabelledby}
+      maxHeight={maxHeight}>
       {options}
     </DropdownOptionsBase>
   );
