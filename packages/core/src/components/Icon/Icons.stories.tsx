@@ -47,18 +47,20 @@ export const Default: StoryObj<typeof Icon> = (
           text-align: center;
         }
       `}>
-      {[...iconsList].sort((a, b) => a.localeCompare(b)).map((iconName) => (
-        <div css={iconWrapper} key={iconName}>
-          <Icon
-            name={iconName}
-            size={
-              args.size && (iconName === 'robot' ? args.size * 2 : args.size)
-            }
-            color={args.color}
-          />
-          <Typography variant="body1">{iconName}</Typography>
-        </div>
-      ))}
+      {[...iconsList]
+        .sort((a, b) => a.localeCompare(b))
+        .map((iconName) => (
+          <div css={iconWrapper} key={iconName}>
+            <Icon
+              name={iconName}
+              size={
+                args.size && (iconName === 'robot' ? args.size * 2 : args.size)
+              }
+              color={args.color}
+            />
+            <Typography variant="body1">{iconName}</Typography>
+          </div>
+        ))}
     </div>
   );
 };

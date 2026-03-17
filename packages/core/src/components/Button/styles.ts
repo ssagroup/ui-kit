@@ -44,10 +44,7 @@ export const sizeStyles: MainSizes = {
   `,
 };
 
-type SolidVariantKey = Exclude<
-  keyof ButtonVariants,
-  'tertiary' | 'custom'
->;
+type SolidVariantKey = Exclude<keyof ButtonVariants, 'tertiary' | 'custom'>;
 
 const makeSolidVariant = (
   theme: Theme,
