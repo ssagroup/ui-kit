@@ -124,13 +124,9 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
   const sizeStyles = mapSizes[size];
 
   const clickableStyles =
-    variant === VARIANTS.OUTLINED
-      ? clickableBase
-      : clickable;
+    variant === VARIANTS.OUTLINED ? clickableBase : clickable;
   const outlinedDefaultClickableStyles =
-    variant === VARIANTS.OUTLINED &&
-    color === COLORS.DEFAULT &&
-    isClickable
+    variant === VARIANTS.OUTLINED && color === COLORS.DEFAULT && isClickable
       ? clickableOutlinedDefault(theme)
       : undefined;
 

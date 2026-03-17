@@ -64,14 +64,16 @@ const getVariantColorBlock = (
       color: ${config.dark};
       transition: background-color 0.2s ease;
       ${disabled ? 'opacity: 0.5;' : ''}
-      ${!disabled && isClickable ? `
+      ${!disabled && isClickable
+        ? `
         &:hover {
           background-color: ${bgHover};
         }
         &:active {
           background-color: ${bgActive};
         }
-      ` : ''}
+      `
+        : ''}
     `;
   }
 

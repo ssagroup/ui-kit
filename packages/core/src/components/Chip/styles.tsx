@@ -97,7 +97,9 @@ export const clickable = css`
 /** cursor + transition only; hover/active handled by variant (e.g. outlined bg opacity) */
 export const clickableBase = css`
   cursor: pointer;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
 `;
 
 export const clickableDisabled = css`
