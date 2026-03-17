@@ -55,10 +55,10 @@ export default {
         },
       },
       options: [
-        'custom',
         'primary',
         'secondary',
         'tertiary',
+        'custom',
         'error',
         'warning',
         'success',
@@ -110,6 +110,14 @@ export const AllStates = () => (
 AllStates.args = {
   name: 'All States',
 };
+AllStates.parameters = {
+  docs: {
+    description: {
+      story:
+        'Use **custom** for new code; **tertiary** is legacy (same appearance, kept for compatibility).',
+    },
+  },
+};
 
 export const StartIcon = {
   args: {
@@ -152,6 +160,15 @@ export const Disabled = () => (
     ))}
   </GridWrapper>
 );
+
+Disabled.parameters = {
+  docs: {
+    description: {
+      story:
+        'Use **custom** for new code; **tertiary** is legacy (same appearance, kept for compatibility).',
+    },
+  },
+};
 
 export const WithCustomStyles = () => (
   <div css={{ display: 'flex', flexDirection: 'column', gap: 24 }}>

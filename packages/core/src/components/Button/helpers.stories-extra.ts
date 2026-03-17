@@ -3,10 +3,10 @@ import { ButtonVariants } from './types';
 
 export const sizes: Array<keyof MainSizes> = ['small', 'medium', 'large'];
 export const variants: Array<keyof ButtonVariants> = [
-  'custom',
   'primary',
   'secondary',
   'tertiary',
+  'custom',
   'error',
   'warning',
   'success',
