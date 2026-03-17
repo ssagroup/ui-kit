@@ -28,16 +28,16 @@ const WHITE_TEXT_VARIANTS = new Set<keyof ButtonVariants>([
 /**
  * Button - Interactive button component for user actions.
  *
- * Variant colors are driven entirely by `theme.palette` — each variant reads
- * `palette.<variant>.main` for the default background, `palette.<variant>.dark`
- * for hover and active states, and `palette.<variant>.light` for focus state.
- * Override any palette entry in a custom theme to restyle a variant without
- * affecting other components.
+ * Variant colors are driven entirely by `theme.palette` for solid variants — each
+ * reads `palette.<variant>.main` (default), `palette.<variant>.dark` (hover/active),
+ * `palette.<variant>.light` (focus). Override any palette entry in a custom theme
+ * to restyle a variant without affecting other components.
  *
- * ### Variants (default: `tertiary`)
+ * ### Variants (default: `custom`)
+ * - `custom`    — transparent, dark text; recommended for low-emphasis actions (default)
  * - `primary`   — blue, high emphasis, white text
  * - `secondary` — grey, medium emphasis, dark text
- * - `tertiary`  — transparent background, dark text, focus outline only (default)
+ * - `tertiary`  — legacy; same as custom; prefer `custom` instead
  * - `error`     — red, destructive actions, white text
  * - `warning`   — orange, caution actions, white text
  * - `success`   — green, confirmation actions, white text
@@ -47,7 +47,7 @@ const WHITE_TEXT_VARIANTS = new Set<keyof ButtonVariants>([
  *
  * @example
  * ```tsx
- * // No variant passed → tertiary (transparent ghost button)
+ * // No variant passed → custom (transparent, recommended)
  * <Button text="Cancel" onClick={handleCancel} />
  * ```
  *
@@ -96,7 +96,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       endIcon,
       startIconClassName,
       endIconClassName,
-      variant = 'tertiary',
+      variant = 'custom',
       type = 'button',
       className,
       isDisabled,
@@ -113,7 +113,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const theme = useTheme();
 
     const appliedVariantStyle = (
-      variantStyles[variant] ?? variantStyles.tertiary
+      variantStyles[variant] ?? variantStyles.custom
     )(theme);
 
     const resolveTextNode = () => {

@@ -82,16 +82,17 @@ export const RowsPerPageDropdown = ({
         dropdownProps={{
           toggleButton: {
             css: {
-              marginLeft: 10,
+              marginLeft: 5,
               marginRight: 15,
               border: 'none',
-              background: 'none',
+              background: 'transparent',
+              borderRadius: 6,
               color: theme.colors.greyDarker,
               gap: 5,
-              padding: 0,
+              padding: 3,
               '&:focus': {
                 color: theme.colors.greyDarker,
-                background: 'none',
+                background: 'transparent !important',
                 '&::before': {
                   display: 'none',
                 },

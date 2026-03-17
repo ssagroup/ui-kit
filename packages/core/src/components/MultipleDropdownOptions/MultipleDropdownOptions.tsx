@@ -8,7 +8,10 @@ import DropdownOption from '@components/DropdownOption';
 import { checkboxStyles } from '@components/Checkbox/styles';
 import { DropdownItemsListProps } from './types';
 
-const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
+const DropdownOptionsBase = styled.ul<{
+  tabindex?: string;
+  maxHeight?: number;
+}>`
   position: absolute;
   width: 100%;
 
@@ -20,6 +23,7 @@ const DropdownOptionsBase = styled.ul<{ tabindex?: string }>`
   background: #fff;
   border-radius: 8px;
 
+  max-height: ${({ maxHeight = 200 }) => maxHeight}px;
   overflow: hidden auto;
 
   z-index: 1;
@@ -77,7 +81,8 @@ const MultipleDropdownOptions = ({
   id,
   children,
 }: DropdownItemsListProps) => {
-  const { onChange, allItems, isMultiple } = useMultipleDropdownContext();
+  const { onChange, allItems, isMultiple, maxHeight } =
+    useMultipleDropdownContext();
 
   const toggleItem = (value: string | number, isDisabled: boolean) => {
     if (!isDisabled) {
@@ -141,7 +146,8 @@ const MultipleDropdownOptions = ({
       role="listbox"
       tabindex="-1"
       id={id}
-      aria-labelledby={ariaLabelledby}>
+      aria-labelledby={ariaLabelledby}
+      maxHeight={maxHeight}>
       {options}
     </DropdownOptionsBase>
   );

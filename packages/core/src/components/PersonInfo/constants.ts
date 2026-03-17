@@ -1,3 +1,8 @@
+/**
+ * PersonInfo badge color config. Uses theme.colors only (no palette).
+ * DEFAULT_BADGE_COLORS: order of MainColors keys used when badges are strings (cycled by index).
+ * BADGE_COLORS(theme): map of MainColors key → { text, bg } using theme.colors.* and theme.colors.*20.
+ */
 import type { Theme } from '@emotion/react';
 
 type BadgeColorName = keyof MainColors;

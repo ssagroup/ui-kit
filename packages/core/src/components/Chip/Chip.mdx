@@ -1,0 +1,51 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ChipStories from './Chip.stories';
+
+<Meta of={ChipStories} />
+
+# Chip
+
+Compact component for **tags**, **labels**, and **removable items**. Use chips for filters, selections, user pills, or status badges. Colors come from `theme.palette` (primary, secondary, success, error, warning); supports **filled** and **outlined** variants, optional **icon** or **avatar**, **onClick**, **onDelete**, and full keyboard/ARIA support.
+
+## Hero example
+
+```tsx
+import { Chip } from '@ssa-ui-kit/core';
+
+// Basic tag
+<Chip label="React" />
+
+// Removable tag with palette color
+<Chip
+  label="TypeScript"
+  color="primary"
+  onDelete={(e) => removeTag('typescript')}
+/>
+
+// Clickable filter chip with icon
+<Chip
+  label="Active"
+  icon="filter"
+  variant="outlined"
+  color="secondary"
+  onClick={() => openFilters()}
+/>
+
+// User pill with avatar
+<Chip
+  label="Jane Doe"
+  avatar={<Avatar size={20} image="/avatar.jpg" />}
+  onDelete={() => removeUser()}
+/>
+```
+
+## Variants and colors
+
+- **Filled**: `palette.main` background; white text (or dark for secondary).
+- **Outlined**: `palette.light` background, `palette.main` border, `palette.dark` text.
+- **default**: Neutral (greyLighter filled / white + grey border outlined).
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

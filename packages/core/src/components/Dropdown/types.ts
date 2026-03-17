@@ -93,6 +93,12 @@ export interface DropdownProps<
   isOpen?: boolean;
 
   /**
+   * Max height (px) of the options list; overflow scrolls.
+   * @default 200
+   */
+  maxHeight?: number;
+
+  /**
    * Props object for sub-components
    * Allows fine-grained control over component parts
    */
@@ -147,4 +153,9 @@ export interface DropdownContextType {
    * Used to highlight the selected option
    */
   activeItem?: DropdownOptionProps | null;
+
+  /**
+   * Max height (px) of the options list
+   */
+  maxHeight?: number;
 }

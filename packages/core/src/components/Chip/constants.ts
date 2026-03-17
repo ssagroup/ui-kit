@@ -14,6 +14,14 @@ export const COLORS = {
   WARNING: 'warning',
 } as const;
 
+/** Outlined variant background opacity (light color with opacity) */
+export const OUTLINED_BG_OPACITY = {
+  DEFAULT: 0.08,
+  HOVER: 0.24,
+  ACTIVE: 0.4,
+  DISABLED: 0.24,
+} as const;
+
 export const mapSizes = {
   small,
   medium,

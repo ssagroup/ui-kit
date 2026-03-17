@@ -58,6 +58,7 @@ export default {
         'primary',
         'secondary',
         'tertiary',
+        'custom',
         'error',
         'warning',
         'success',
@@ -80,7 +81,7 @@ export default {
   args: {
     text: 'Button',
     size: 'small',
-    variant: 'tertiary',
+    variant: 'custom',
     type: 'button',
   },
 } as Meta<typeof Button>;
@@ -108,6 +109,14 @@ export const AllStates = () => (
 
 AllStates.args = {
   name: 'All States',
+};
+AllStates.parameters = {
+  docs: {
+    description: {
+      story:
+        'Use **custom** for new code; **tertiary** is legacy (same appearance, kept for compatibility).',
+    },
+  },
 };
 
 export const StartIcon = {
@@ -151,6 +160,15 @@ export const Disabled = () => (
     ))}
   </GridWrapper>
 );
+
+Disabled.parameters = {
+  docs: {
+    description: {
+      story:
+        'Use **custom** for new code; **tertiary** is legacy (same appearance, kept for compatibility).',
+    },
+  },
+};
 
 export const WithCustomStyles = () => (
   <div css={{ display: 'flex', flexDirection: 'column', gap: 24 }}>

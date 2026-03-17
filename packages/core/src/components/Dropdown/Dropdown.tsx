@@ -121,6 +121,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   onChange: handleChange,
   className,
   placeholder = 'Select something',
+  maxHeight = 200,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
   const theme = useTheme();
@@ -191,8 +192,8 @@ const Dropdown = <T extends DropdownOptionProps>({
   );
 
   const contextValue: DropdownContextType = React.useMemo(
-    () => ({ onChange, activeItem }),
-    [onChange, activeItem],
+    () => ({ onChange, activeItem, maxHeight }),
+    [onChange, activeItem, maxHeight],
   );
 
   const value = (

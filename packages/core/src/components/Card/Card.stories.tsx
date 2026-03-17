@@ -14,6 +14,7 @@ import Card from './index';
 import { CardProps } from './types';
 import ResponsiveImage from '@components/ResponsiveImage';
 import { useTheme } from '@emotion/react';
+import { getStorybookAvatar } from '@storybook-assets/avatars';
 
 export default {
   title: 'Components/Card',
@@ -109,7 +110,7 @@ export const FloatHeader: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
 FloatHeader.args = {};
 
 export const ItemCard: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
-  const image = 'https://via.placeholder.com/42x42';
+  const image = getStorybookAvatar(0);
   const name = 'John Doe';
 
   return (
@@ -146,7 +147,7 @@ ItemCard.args = {};
 export const ItemCardAction: StoryObj<typeof Card> = ({
   noShadow,
 }: CardProps) => {
-  const image = 'https://via.placeholder.com/42x42';
+  const image = getStorybookAvatar(1);
   const name = 'John Doe';
 
   return (
@@ -187,7 +188,7 @@ ItemCardAction.args = {};
 export const ItemCardAvatar: StoryObj<typeof Card> = ({
   noShadow,
 }: CardProps) => {
-  const image = 'https://via.placeholder.com/64x64';
+  const image = getStorybookAvatar(2);
 
   return (
     <Card noShadow={noShadow}>

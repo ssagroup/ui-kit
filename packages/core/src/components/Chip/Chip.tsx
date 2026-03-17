@@ -6,7 +6,9 @@ import { ChipProps } from './types';
 import {
   ChipBase,
   clickable,
+  clickableBase,
   clickableDisabled,
+  clickableOutlinedDefault,
   IconWrapper,
   AvatarWrapper,
   TitleWrapper,
@@ -109,7 +111,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
 ) {
   const theme = useTheme();
 
-  const isClickable = !disabled && (onClick || clickableProp);
+  const isClickable = Boolean(!disabled && (onClick || clickableProp));
   const hasDeleteIcon = Boolean(onDelete);
 
   const { chipStyles, iconColor } = getVariantColors(
@@ -117,8 +119,16 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
     variant,
     color,
     disabled,
+    isClickable,
   );
   const sizeStyles = mapSizes[size];
+
+  const clickableStyles =
+    variant === VARIANTS.OUTLINED ? clickableBase : clickable;
+  const outlinedDefaultClickableStyles =
+    variant === VARIANTS.OUTLINED && color === COLORS.DEFAULT && isClickable
+      ? clickableOutlinedDefault(theme)
+      : undefined;
 
   const iconName: IconProps['name'] | null = showIcon ? (icon ?? 'plus') : null;
   const deleteIconName: IconProps['name'] = deleteIcon ?? 'cross';
@@ -169,7 +179,8 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(function Chip(
       css={[
         sizeStyles,
         chipStyles,
-        isClickable && !disabled ? clickable : undefined,
+        isClickable && !disabled ? clickableStyles : undefined,
+        outlinedDefaultClickableStyles,
         disabled ? clickableDisabled : undefined,
         customCss,
       ]}

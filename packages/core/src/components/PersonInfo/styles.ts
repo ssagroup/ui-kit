@@ -1,3 +1,8 @@
+/**
+ * PersonInfo layout and theme styles.
+ * Uses theme.colors only: greyDropdownFocused (counter), greyDarker (link default), blue (link hover).
+ * CustomBadge uses BADGE_COLORS(theme) for text/bg per MainColors. No theme.palette.
+ */
 import styled from '@emotion/styled';
 import { Interpolation, Theme } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';

@@ -5,6 +5,40 @@ import * as CollapsibleNavBarStories from './CollapsibleNavBar.stories';
 
 # CollapsibleNavBar
 
+Responsive sidebar navigation that toggles between **collapsed** (icons only) and **expanded** (icon + label). On desktop it behaves as a narrow sidebar with a toggle; on small viewports it becomes a mobile-friendly overlay menu. Supports top-level links, expandable submenus, optional tooltips, and light/default themes. Use it for app shells, dashboards, and admin panels.
+
+## Hero example
+
+```tsx
+import { CollapsibleNavBar } from '@ssa-ui-kit/core';
+import { MemoryRouter } from 'react-router-dom';
+
+const items = [
+  { path: '', iconName: 'home', iconSize: 20, title: 'Dashboard' },
+  { path: 'users', iconName: 'user', iconSize: 20, title: 'Users' },
+  {
+    prefix: 'reports/',
+    iconName: 'chart',
+    iconSize: 22,
+    title: 'Reports',
+    items: [
+      { path: 'analytics', title: 'Analytics' },
+      { path: 'sales', title: 'Sales' },
+    ],
+  },
+];
+
+const Logo = () => <img src="/logo.svg" alt="Logo" width={48} height={42} />;
+
+<MemoryRouter>
+  <CollapsibleNavBar
+    items={items}
+    renderLogo={<Logo />}
+    onChange={(isOpen) => console.log('Sidebar open:', isOpen)}
+  />
+</MemoryRouter>
+```
+
 ## Default Usage
 
 CollapsibleNavBar is a responsive navigation component that provides a clean, space-efficient sidebar navigation with collapsible functionality. Perfect for applications that need both desktop and mobile navigation patterns:
@@ -54,6 +88,10 @@ function BasicNavigation() {
 ```
 
 ## Features
+
+### Collapsed vs expanded (icons only vs icon + text)
+
+The sidebar has two states: **collapsed** (icons only) and **expanded** (icon + text next to each item). This is the same component — use the toggle (hamburger/chevron) to switch. There is no separate “variant” for icon+text; the **Expanded** story shows the sidebar open by default (`defaultExpanded`) so you can see that state in the docs.
 
 ### Responsive Design with Mobile Toggle
 

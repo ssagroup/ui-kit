@@ -26,10 +26,11 @@ export const CollapsibleNavBar = ({
   useMatchPattern,
   onChange,
   exactMatch = false,
+  defaultExpanded = false,
 }: CollapsibleNavBarExtendedProps) => {
   const toggleId = useId();
   const { width } = useWindowSize();
-  const [isChecked, onToggle] = useState(false);
+  const [isChecked, onToggle] = useState(defaultExpanded);
   const isMobile = width < SCREEN_SIZES['900'].width;
 
   useEffect(() => {

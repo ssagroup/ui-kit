@@ -1,5 +1,4 @@
 import { css, SerializedStyles, Theme } from '@emotion/react';
-import { focusOutline } from '@styles/safari-focus-outline';
 import { ButtonVariants } from './types';
 
 export const buttonBlock = css`
@@ -45,7 +44,7 @@ export const sizeStyles: MainSizes = {
   `,
 };
 
-type SolidVariantKey = Exclude<keyof ButtonVariants, 'tertiary'>;
+type SolidVariantKey = Exclude<keyof ButtonVariants, 'tertiary' | 'custom'>;
 
 const makeSolidVariant = (
   theme: Theme,
@@ -77,7 +76,14 @@ const makeSolidVariant = (
   `;
 };
 
+/** Transparent variant (no focus outline). Shared by custom (recommended) and tertiary (legacy). */
+const transparentVariant = () => css`
+  background: transparent;
+`;
+
 export const variantStyles: ButtonVariants = {
+  custom: transparentVariant,
+
   primary: (theme) => makeSolidVariant(theme, 'primary'),
 
   secondary: (theme) =>
@@ -89,11 +95,7 @@ export const variantStyles: ButtonVariants = {
       `,
     ),
 
-  tertiary: (theme) => css`
-    background: transparent;
-
-    ${focusOutline(theme, 'greyOutline')}
-  `,
+  tertiary: transparentVariant,
 
   error: (theme) => makeSolidVariant(theme, 'error'),
 

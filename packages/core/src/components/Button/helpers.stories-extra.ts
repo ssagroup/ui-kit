@@ -6,6 +6,7 @@ export const variants: Array<keyof ButtonVariants> = [
   'primary',
   'secondary',
   'tertiary',
+  'custom',
   'error',
   'warning',
   'success',

@@ -1,4 +1,4 @@
-import { AriaAttributes } from 'react';
+import React, { AriaAttributes } from 'react';
 import { SerializedStyles, Theme } from '@emotion/react';
 import { MouseEventHandler } from 'react';
 
@@ -89,9 +89,11 @@ export interface ButtonProps extends ButtonAriaProps {
   endIconClassName?: string;
 
   /**
-   * Visual style variant of the button (uses theme.palette)
-   * - `primary` | `secondary` | `tertiary` | `error` | `warning` | `success`
-   * @default 'tertiary'
+   * Visual style variant of the button (uses theme.palette for solid variants).
+   * - `custom` — transparent, dark text; recommended for low-emphasis actions (default)
+   * - `primary` | `secondary` | `error` | `warning` | `success` — use theme.palette
+   * - `tertiary` — legacy; same as custom; prefer `custom` instead
+   * @default 'custom'
    */
   variant?: keyof ButtonVariants;
 
@@ -131,14 +133,16 @@ export interface ButtonProps extends ButtonAriaProps {
 
 /**
  * Button variant style functions.
- * Each function reads from `theme.palette.<variant>` using the following convention:
- * - `main`  → default background
- * - `dark`  → hover and active background
- * - `light` → focus background
+ * Solid variants (primary, secondary, error, warning, success) read from
+ * `theme.palette.<variant>`: main (default), dark (hover/active), light (focus).
+ * Custom and tertiary are transparent (no palette); prefer custom to tertiary.
  */
 export interface ButtonVariants {
+  /** Recommended transparent variant; no focus outline. */
+  custom: (theme: Theme) => SerializedStyles;
   primary: (theme: Theme) => SerializedStyles;
   secondary: (theme: Theme) => SerializedStyles;
+  /** Legacy transparent variant; prefer custom. */
   tertiary: (theme: Theme) => SerializedStyles;
   error: (theme: Theme) => SerializedStyles;
   warning: (theme: Theme) => SerializedStyles;
