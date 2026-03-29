@@ -28,18 +28,23 @@ import { type DateFormat } from '@components/JsonSchemaForm/utils/dateFormats';
  */
 export const PRESENT_VALUE = 'Present';
 
+/**
+ * Form-side shape: **start** / **end** strings in **`outputFormat`**; **end** may be **`PRESENT_VALUE`**
+ * when the user chose **Present** (maps to **`null`** inside **DateRangePicker**).
+ */
 export type DateRangePickerFormBridgeValue = {
+  /** Start date string (e.g. ISO in **outputFormat**) */
   start?: string;
+  /** End date string, or **`PRESENT_VALUE`** for open-ended range */
   end?: string | typeof PRESENT_VALUE;
 };
 
 /**
- * DateRangePickerFormBridge - adapter between form builders and DateRangePicker
+ * Props for **DateRangePickerFormBridge** — adapter between string-based forms and **DateRangePicker**.
  *
- * PURPOSE:
- * - Keeps DateRangePicker "pure": it only ever sees inputFormat and null for "Present"
- * - Converts form value (outputFormat + PRESENT_VALUE string) ↔ picker value (inputFormat + null)
- * - Used by DateRangeField (RJSF); can be used by other form builders
+ * - Keeps **DateRangePicker** on **inputFormat** and **`null`** for Present
+ * - Converts **outputFormat** storage ↔ display **inputFormat**
+ * - Used by **DateRangeField** (RJSF) and similar builders
  */
 export type DateRangePickerFormBridgeProps = Omit<
   DateRangePickerProps,
@@ -110,6 +115,25 @@ function formValueToPickerDefault(
   return undefined;
 }
 
+/**
+ * Wraps **DateRangePicker** with an internal **FormProvider** and converts between
+ * **`outputFormat`** (form storage) and **`inputFormat`** (picker display). Maps **`null`** ↔
+ * **`PRESENT_VALUE`** for the end date only.
+ *
+ * @category Components
+ * @subcategory Form Controls
+ *
+ * @example
+ * ```tsx
+ * <DateRangePickerFormBridge
+ *   name="contract"
+ *   outputFormat="yyyy-MM-dd"
+ *   inputFormat="mm/dd/yyyy"
+ *   value={{ start: '2024-01-01', end: 'Present' }}
+ *   onChange={(v) => save(v)}
+ * />
+ * ```
+ */
 export const DateRangePickerFormBridge = ({
   value,
   defaultValue: defaultValueProp,

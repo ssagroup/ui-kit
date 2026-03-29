@@ -1,7 +1,17 @@
+/**
+ * Default formats, masks, bounds, and validation messages for **DateRangePicker**
+ * (aligned with **DatePicker** constants for shared behavior).
+ */
+
+/** Default US day format (`mm/dd/yyyy`). Re-exported from the package barrel. */
 export const DEFAULT_MASK_FORMAT = 'mm/dd/yyyy';
+/** Default European day format (`dd/mm/yyyy`). Re-exported from the package barrel. */
 export const DEFAULT_EUROPEAN_MASK_FORMAT = 'dd/mm/yyyy';
+/** Default month format (`mm/yyyy`). Re-exported from the package barrel. */
 export const DEFAULT_MONTH_MASK_FORMAT = 'mm/yyyy';
+/** Default year-only format (`yyyy`). Re-exported from the package barrel. */
 export const DEFAULT_YEAR_MASK_FORMAT = 'yyyy';
+
 export const DEFAULT_MASK = '__/__/____';
 export const DEFAULT_MONTH_MASK = '__/____';
 export const DEFAULT_YEAR_MASK = '____';
