@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { HistoryProps } from './types';
 import History from './index';
 
-export default {
+const meta = {
   title: 'Components/History',
   component: History,
   argTypes: {
@@ -27,7 +27,18 @@ export default {
       control: { type: 'number' },
     },
   },
-} as Meta<typeof History>;
+  parameters: {
+    docs: {
+      source: {
+        // Avoid dynamic source extraction on very large inline JSX stories (can freeze the tab).
+        type: 'code',
+      },
+    },
+  },
+} satisfies Meta<typeof History>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 /*
  *
@@ -80,7 +91,7 @@ const tag = (text: string, color: string, bg: string) => (
   </span>
 );
 
-export const Default: StoryObj = ({
+export const Default: Story = ({
   defaultColor,
   lineColor,
   dateWidth,
@@ -256,7 +267,7 @@ Default.storyName = 'History';
  * Custom line color and larger circles
  */
 
-export const CustomAppearance: StoryObj = () => (
+export const CustomAppearance: Story = () => (
   <div style={{ width: 480, padding: 24 }}>
     <History
       defaultColor="#6366f1"
