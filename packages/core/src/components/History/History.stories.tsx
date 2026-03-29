@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css } from '@emotion/react';
 
@@ -125,7 +124,9 @@ export const Default: StoryObj = ({
           content: (
             <>
               {title('New Certification')}
-              {subtitle('Microsoft Certified Solutions Associate: Web Applications')}
+              {subtitle(
+                'Microsoft Certified Solutions Associate: Web Applications',
+              )}
             </>
           ),
         },
@@ -163,7 +164,13 @@ export const Default: StoryObj = ({
                   margin-top: 4px;
                 `}>
                 {tag('active', '#16a34a', '#dcfce7')}
-                <span css={css`color: #888; font-size: 14px;`}>›</span>
+                <span
+                  css={css`
+                    color: #888;
+                    font-size: 14px;
+                  `}>
+                  ›
+                </span>
                 {tag('on trial', '#d97706', '#fef3c7')}
               </div>
             </div>
@@ -175,9 +182,21 @@ export const Default: StoryObj = ({
           content: (
             <div>
               {title('Work Schedule')}
-              <div css={css`display: flex; align-items: center; gap: 8px; font-size: 14px; color: #555;`}>
+              <div
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  font-size: 14px;
+                  color: #555;
+                `}>
                 <span>Full-time</span>
-                <span css={css`color: #888;`}>›</span>
+                <span
+                  css={css`
+                    color: #888;
+                  `}>
+                  ›
+                </span>
                 <span>Part-time (Availability 50%)</span>
               </div>
             </div>
@@ -199,9 +218,21 @@ export const Default: StoryObj = ({
           content: (
             <div>
               {title('Utilization')}
-              <div css={css`display: flex; align-items: center; gap: 8px; font-size: 14px; color: #555;`}>
+              <div
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  font-size: 14px;
+                  color: #555;
+                `}>
                 <span>100</span>
-                <span css={css`color: #888;`}>›</span>
+                <span
+                  css={css`
+                    color: #888;
+                  `}>
+                  ›
+                </span>
                 <span>50</span>
               </div>
             </div>
