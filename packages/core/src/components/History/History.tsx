@@ -77,7 +77,11 @@ export const History = ({
               <div css={circle(color, circleSize, circleTopOffset)} />
               {!isLast && (
                 <div
-                  css={connector(resolvedLineColor, circleTopOffset, circleSize)}
+                  css={connector(
+                    resolvedLineColor,
+                    circleTopOffset,
+                    circleSize,
+                  )}
                 />
               )}
             </div>
