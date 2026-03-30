@@ -16,7 +16,7 @@ const DEFAULT_CIRCLE_SIZE = 12;
 const DEFAULT_DATE_WIDTH = 120;
 const LEFT_COLUMN_MARGIN_RIGHT = 16;
 
-const History = ({
+export const History = ({
   items,
   defaultColor = DEFAULT_COLOR,
   lineColor,
@@ -51,5 +51,3 @@ const History = ({
     </div>
   );
 };
-
-export default History;

@@ -1,2 +1,2 @@
-export { default } from './History';
+export * from './History';
 export type * from './types';

@@ -168,7 +168,7 @@ export { default as Step } from './Step';
 export { default as StepConnector } from './StepConnector';
 export { default as StepLabel } from './StepLabel';
 
-export { default as History } from './History';
+export * from './History';
 export type * from './History/types';
 
 export * from './Pagination';

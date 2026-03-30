@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css } from '@emotion/react';
 
 import { HistoryProps } from './types';
-import History from './index';
+import { History } from './index';
 
 const meta = {
   title: 'Components/History',
