@@ -72,10 +72,14 @@ export const History = ({
         return (
           <div key={item.key ?? index} css={row}>
             <div
-              css={leftColumn}
+              css={leftColumn(circleSize)}
               style={{ marginRight: LEFT_COLUMN_MARGIN_RIGHT }}>
               <div css={circle(color, circleSize, circleTopOffset)} />
-              {!isLast && <div css={connector(resolvedLineColor)} />}
+              {!isLast && (
+                <div
+                  css={connector(resolvedLineColor, circleTopOffset, circleSize)}
+                />
+              )}
             </div>
 
             <div css={dateColumn(dateWidth)}>{item.date}</div>
