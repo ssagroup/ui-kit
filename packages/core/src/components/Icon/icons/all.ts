@@ -98,6 +98,7 @@ export * as Roles from './Roles';
 export * as Search from './Search';
 export * as Seniority from './Seniority';
 export * as Settings from './Settings';
+export * as SettingClock from './SettingClock';
 export * as Signature from './Signature';
 export * as Sleep from './Sleep';
 export * as StaffGrowthCoefficient from './StaffGrowthCoefficient';

@@ -5,6 +5,8 @@ import * as DateRangePickerStories from './DateRangePicker.stories';
 
 # DateRangePicker
 
+Two masked fields (**from** → **to**) with one **popover calendar**, **Luxon** parsing, and **react-hook-form** fields derived from **`name`** (e.g. **`nameFrom`** / **`nameTo`**). **`onChange`** returns a tuple of **`Date`**, **`undefined`**, or **`null`** on the **end** only for **Present** (ongoing range). Use **`DateRangePickerFormBridge`** when forms store **ISO** strings and the **`Present`** sentinel. **`rangePickerType`** selects day / month / year density; **`showPresentOption`** adds an end-only **Present** action.
+
 ## Default Usage
 
 The DateRangePicker component allows users to select a range of dates using two connected input fields with masked entry and a shared calendar popup. Here's how to use it:
