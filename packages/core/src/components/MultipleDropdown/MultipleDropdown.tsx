@@ -255,9 +255,11 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
           <DropdownArrow isUp={isOpen} />
         </DropdownToggle>
 
-        {isOpen ? (
-          <MultipleDropdownOptions>{items}</MultipleDropdownOptions>
-        ) : null}
+        <div>
+          {isOpen ? (
+            <MultipleDropdownOptions>{items}</MultipleDropdownOptions>
+          ) : null}
+        </div>
       </DropdownBase>
     </MultipleDropdownContext.Provider>
   );

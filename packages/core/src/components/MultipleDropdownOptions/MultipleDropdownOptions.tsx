@@ -144,7 +144,7 @@ const MultipleDropdownOptions = ({
   return (
     <DropdownOptionsBase
       role="listbox"
-      tabindex="-1"
+      tabindex=""
       id={id}
       aria-labelledby={ariaLabelledby}
       maxHeight={maxHeight}>
