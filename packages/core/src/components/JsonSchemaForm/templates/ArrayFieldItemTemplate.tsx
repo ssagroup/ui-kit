@@ -35,7 +35,7 @@ export const ArrayFieldItemTemplate = <
   const { toolbarAlign = 'flex-end' } = registry.formContext;
 
   const buttonCss = {
-    width: '32px',
+    width: '332px',
     height: '32px',
     marginBottom: '8px',
     justifyContent: 'center',
