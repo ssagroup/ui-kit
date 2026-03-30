@@ -1,5 +1,8 @@
 import { css } from '@emotion/react';
 
+export const FIRST_LINE_TOP_PADDING = 2;
+export const FIRST_LINE_HEIGHT = 20;
+
 export const container = css`
   display: flex;
   flex-direction: column;
@@ -17,13 +20,13 @@ export const leftColumn = css`
   flex-shrink: 0;
 `;
 
-export const circle = (color: string, size: number) => css`
+export const circle = (color: string, size: number, topOffset: number) => css`
   width: ${size}px;
   height: ${size}px;
   border-radius: 50%;
   background-color: ${color};
   flex-shrink: 0;
-  margin-top: 3px;
+  margin-top: ${topOffset}px;
 `;
 
 export const connector = (color: string) => css`
@@ -38,14 +41,14 @@ export const connector = (color: string) => css`
 export const dateColumn = (width: number) => css`
   width: ${width}px;
   flex-shrink: 0;
-  padding-top: 2px;
+  padding-top: ${FIRST_LINE_TOP_PADDING}px;
   padding-bottom: 20px;
   font-size: 14px;
-  line-height: 20px;
+  line-height: ${FIRST_LINE_HEIGHT}px;
 `;
 
 export const contentColumn = css`
   flex: 1;
-  padding-top: 2px;
+  padding-top: ${FIRST_LINE_TOP_PADDING}px;
   padding-bottom: 20px;
 `;
