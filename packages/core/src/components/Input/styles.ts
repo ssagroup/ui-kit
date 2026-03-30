@@ -73,6 +73,10 @@ export const startElement = css`
   align-items: center;
 
   border-radius: 10px;
+
+  button {
+    padding: 0;
+  }
 `;
 
 export const endElement = css`
@@ -88,4 +92,8 @@ export const endElement = css`
   align-items: center;
 
   border-radius: 10px;
+
+  button {
+    padding: 0;
+  }
 `;

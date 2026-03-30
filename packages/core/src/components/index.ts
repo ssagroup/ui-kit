@@ -54,7 +54,6 @@ export * from './Typeahead';
 
 export * from './DatePicker';
 export * from './DateRangePicker';
-export type { CalendarType } from './DatePicker/types';
 
 export * from './ColorPicker';
 
@@ -168,6 +167,9 @@ export type * from './Stepper/types';
 export { default as Step } from './Step';
 export { default as StepConnector } from './StepConnector';
 export { default as StepLabel } from './StepLabel';
+
+export * from './History';
+export type * from './History/types';
 
 export * from './Pagination';
 

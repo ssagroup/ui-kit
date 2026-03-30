@@ -32,11 +32,12 @@ export const ArrayFieldItemTemplate = <
   } = props;
   const { CopyButton, MoveDownButton, MoveUpButton, RemoveButton } =
     registry.templates.ButtonTemplates;
-  const { toolbarAlign = 'top' } = registry.formContext;
+  const { toolbarAlign = 'flex-end' } = registry.formContext;
 
   const buttonCss = {
     width: '32px',
     height: '32px',
+    marginBottom: '8px',
     justifyContent: 'center',
   };
 
