@@ -39,12 +39,6 @@ const meta = {
 
 export default meta;
 
-/*
- *
- * EXAMPLE 1
- * Default history with simple text content
- */
-
 const BLUE = '#4178e1';
 const TEAL = '#4BCAB0';
 const ORANGE = '#F59E0B';
@@ -254,66 +248,7 @@ export const Default: StoryObj = ({
 );
 
 Default.args = {
-  defaultColor: BLUE,
   dateWidth: 120,
   circleSize: 12,
 };
 Default.storyName = 'History';
-
-/*
- *
- * EXAMPLE 2
- * Custom line color and larger circles
- */
-
-export const CustomAppearance: StoryObj = () => (
-  <div style={{ width: 480, padding: 24 }}>
-    <History
-      defaultColor="#6366f1"
-      lineColor="#c7d2fe"
-      circleSize={14}
-      dateWidth={110}
-      items={[
-        {
-          date: '15.01.2026',
-          content: title('Account Created'),
-        },
-        {
-          date: '20.01.2026',
-          color: '#10b981',
-          content: (
-            <>
-              {title('Onboarding Completed')}
-              {subtitle('All required steps finished')}
-            </>
-          ),
-        },
-        {
-          date: '01.02.2026',
-          color: '#f59e0b',
-          content: (
-            <>
-              {title('Plan Upgraded')}
-              {subtitle('Free → Professional')}
-            </>
-          ),
-        },
-        {
-          date: '10.03.2026',
-          color: '#ef4444',
-          content: (
-            <>
-              {title('Subscription Cancelled')}
-              {subtitle('Reason: switching provider')}
-            </>
-          ),
-        },
-      ]}
-    />
-  </div>
-);
-
-CustomAppearance.storyName = 'History custom appearance';
-CustomAppearance.parameters = {
-  controls: { disable: true },
-};
