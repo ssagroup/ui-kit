@@ -38,7 +38,6 @@ const meta = {
 } satisfies Meta<typeof History>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 /*
  *
@@ -91,7 +90,7 @@ const tag = (text: string, color: string, bg: string) => (
   </span>
 );
 
-export const Default: Story = ({
+export const Default: StoryObj = ({
   defaultColor,
   lineColor,
   dateWidth,
@@ -267,7 +266,7 @@ Default.storyName = 'History';
  * Custom line color and larger circles
  */
 
-export const CustomAppearance: Story = () => (
+export const CustomAppearance: StoryObj = () => (
   <div style={{ width: 480, padding: 24 }}>
     <History
       defaultColor="#6366f1"
