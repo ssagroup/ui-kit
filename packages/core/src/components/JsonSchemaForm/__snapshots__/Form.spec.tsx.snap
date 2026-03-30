@@ -198,10 +198,10 @@ exports[`Form (rjsf) Render form 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: top;
-  -webkit-box-align: top;
-  -ms-flex-align: top;
-  align-items: top;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
   width: 100%;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
@@ -248,6 +248,7 @@ exports[`Form (rjsf) Render form 1`] = `
   background: transparent;
   width: 32px;
   height: 32px;
+  margin-bottom: 8px;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   -webkit-justify-content: center;
@@ -1086,6 +1087,10 @@ exports[`Form (rjsf) Render form 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border-radius: 10px;
+}
+
+.emotion-118 button {
+  padding: 0;
 }
 
 .emotion-122 {
