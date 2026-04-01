@@ -249,6 +249,7 @@ exports[`Form (rjsf) Render form 1`] = `
   width: 32px;
   height: 32px;
   margin-bottom: 8px;
+  margin: 400px;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   -webkit-justify-content: center;
