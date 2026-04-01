@@ -38,6 +38,7 @@ export const ArrayFieldItemTemplate = <
     width: '32px',
     height: '32px',
     marginBottom: '8px',
+    margin: 400, // bump commit
     justifyContent: 'center',
   };
 
