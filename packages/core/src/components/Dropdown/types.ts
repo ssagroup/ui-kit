@@ -4,6 +4,12 @@ import { DropdownOptionProps } from '@components/DropdownOptions';
 import { CommonProps } from '@global-types/emotion';
 import { IconProps } from '@components/Icon/types';
 
+export enum DropdownPositions {
+  top = 'top',
+  bottom = 'bottom',
+  auto = 'auto',
+}
+
 /**
  * Props that are controlled by Dropdown component
  * These props cannot be passed via dropdownProps.toggleButton
@@ -54,7 +60,7 @@ export type ControlledButtonProps =
  * <Dropdown
  *   selectedItem={selected}
  *   onChange={handleChange}
- *   dropdownProps={{ dropdownPosition: 'top' }}
+ *   dropdownProps={{ dropdownPosition: DropdownPositions.top }}
  * >
  *   ...
  * </Dropdown>
@@ -149,13 +155,13 @@ export interface DropdownProps<
     toggleButtonArrow?: Omit<IconProps, 'name' | 'size'>;
     /**
      * Controls the opening direction of the options list.
-     * - 'auto': opens downward by default; flips upward automatically when
+     * - DropdownPositions.auto: opens downward by default; flips upward automatically when
      *   there is insufficient space below the toggle in the viewport
-     * - 'top': always opens upward
-     * - 'bottom': always opens downward
-     * @default 'auto'
+     * - DropdownPositions.top: always opens upward
+     * - DropdownPositions.bottom: always opens downward
+     * @default DropdownPositions.auto
      */
-    dropdownPosition?: 'auto' | 'top' | 'bottom';
+    dropdownPosition?: DropdownPositions;
   };
 }
 

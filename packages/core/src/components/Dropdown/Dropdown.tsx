@@ -17,7 +17,7 @@ import Avatar from '@components/Avatar';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
-import { DropdownContextType, DropdownProps } from './types';
+import { DropdownContextType, DropdownPositions, DropdownProps } from './types';
 
 const DropdownBase = styled.div`
   display: inline-block;
@@ -102,7 +102,7 @@ const SelectedContent = styled.span`
  *     base: { id: 'my-dropdown' },
  *     toggleButton: { 'data-testid': 'dropdown-toggle' },
  *     toggleButtonArrow: { className: 'custom-arrow' },
- *     dropdownPosition: 'top',
+ *     dropdownPosition: DropdownPositions.top,
  *   }}
  * >
  *   {options.map(opt => (
@@ -137,7 +137,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   maxHeight = 200,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
-  const { dropdownPosition = 'auto' } = componentProps ?? {};
+  const { dropdownPosition = DropdownPositions.auto } = componentProps ?? {};
 
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -196,7 +196,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   useLayoutEffect(() => {
     if (!isOpen || !dropdownRef.current) return;
 
-    if (dropdownPosition !== 'auto') {
+    if (dropdownPosition !== DropdownPositions.auto) {
       setPlacement(dropdownPosition);
       return;
     }
