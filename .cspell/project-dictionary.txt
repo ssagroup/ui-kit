@@ -4,6 +4,7 @@ amet
 arcu
 auctor
 autodocs
+autoselect
 automargin
 autosizable
 autosize

@@ -498,7 +498,7 @@ export const WithValidation: Story = {
         },
         singleSelectTypeahead: {
           type: 'string',
-          title: 'Single Select Typeahead *',
+          title: 'Single Select Typeahead (AutoSelect disabled) *',
           oneOf: managerOptions.map((manager) => ({
             const: manager.id,
             title: manager.name,
@@ -507,7 +507,7 @@ export const WithValidation: Story = {
         },
         multipleSelectTypeahead: {
           type: 'array',
-          title: 'Multiple Select Typeahead *',
+          title: 'Multiple Select Typeahead (AutoSelect disabled) *',
           minItems: 1,
           uniqueItems: true,
           items: {
@@ -561,6 +561,7 @@ export const WithValidation: Story = {
         'ui:placeholder': 'Select a manager',
         'ui:options': {
           typeaheadAvatarSize: 24,
+          autoSelect: false,
         },
       },
       multipleSelectTypeahead: {
@@ -568,6 +569,7 @@ export const WithValidation: Story = {
         'ui:placeholder': 'Select multiple managers',
         'ui:options': {
           typeaheadAvatarSize: 24,
+          autoSelect: false,
         },
       },
     },
