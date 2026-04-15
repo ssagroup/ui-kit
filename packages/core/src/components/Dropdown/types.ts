@@ -25,7 +25,8 @@ export type ControlledButtonProps =
  *
  * A select-like dropdown component that allows users to choose one option from
  * a list. Uses compound component pattern with DropdownOption children.
- * Provides keyboard navigation, accessibility, and customizable styling.
+ * Provides keyboard navigation, accessibility, customizable styling, and
+ * automatic viewport-aware placement of the options list.
  *
  * @example
  * ```tsx
@@ -44,6 +45,18 @@ export type ControlledButtonProps =
  *       {item.value}
  *     </DropdownOption>
  *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Force the list to always open upward (e.g. component near the bottom of the page)
+ * <Dropdown
+ *   selectedItem={selected}
+ *   onChange={handleChange}
+ *   dropdownProps={{ dropdownPosition: 'top' }}
+ * >
+ *   ...
  * </Dropdown>
  * ```
  */
@@ -134,6 +147,15 @@ export interface DropdownProps<
     };
     /** Props for the arrow icon SVG element */
     toggleButtonArrow?: Omit<IconProps, 'name' | 'size'>;
+    /**
+     * Controls the opening direction of the options list.
+     * - 'auto': opens downward by default; flips upward automatically when
+     *   there is insufficient space below the toggle in the viewport
+     * - 'top': always opens upward
+     * - 'bottom': always opens downward
+     * @default 'auto'
+     */
+    dropdownPosition?: 'auto' | 'top' | 'bottom';
   };
 }
 
@@ -158,4 +180,16 @@ export interface DropdownContextType {
    * Max height (px) of the options list
    */
   maxHeight?: number;
+
+  /**
+   * Ref attached to the options list element
+   * Used by Dropdown to measure actual list height for placement calculation
+   */
+  listRef?: React.RefObject<HTMLUListElement | null>;
+
+  /**
+   * Resolved placement of the options list
+   * Computed by Dropdown based on dropdownPosition prop and available viewport space
+   */
+  placement?: 'top' | 'bottom';
 }

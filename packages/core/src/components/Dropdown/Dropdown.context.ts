@@ -8,6 +8,8 @@ const DropdownContext = React.createContext<DropdownContextType>({
     /* noop */
   },
   maxHeight: 200,
+  listRef: undefined,
+  placement: 'bottom',
 });
 
 export function useDropdownContext(): DropdownContextType {

@@ -47,6 +47,7 @@ You can pass props to different parts of the Dropdown component using the `dropd
 - `dropdownProps.base` - Props for the wrapper div element
 - `dropdownProps.toggleButton` - Props for the button element (e.g., `name`, `id`, `data-*` attributes)
 - `dropdownProps.toggleButtonArrow` - Props for the arrow icon SVG element
+- `dropdownProps.dropdownPosition` - Controls the opening direction of the options list (`'auto'` | `'top'` | `'bottom'`)
 
 ```tsx
 <Dropdown
@@ -64,6 +65,40 @@ You can pass props to different parts of the Dropdown component using the `dropd
   selectedItem={items[0]}
   onChange={handleChange}
   placeholder="Select an option">
+  {items.map((item) => (
+    <DropdownOption key={item.id} value={item.id}>
+      {item.value}
+    </DropdownOption>
+  ))}
+</Dropdown>
+```
+
+### Viewport-Aware Placement
+
+By default (`dropdownPosition: 'auto'`) the options list opens downward. On every open the component
+measures available space below the toggle button and automatically flips the list upward when there
+is not enough room, preventing it from being clipped by the viewport edge.
+
+Use `'top'` or `'bottom'` to force a fixed direction regardless of available space.
+
+```tsx
+{/* Always opens upward — useful when the dropdown is near the bottom of the page */}
+<Dropdown
+  selectedItem={items[0]}
+  onChange={handleChange}
+  dropdownProps={{ dropdownPosition: 'top' }}>
+  {items.map((item) => (
+    <DropdownOption key={item.id} value={item.id}>
+      {item.value}
+    </DropdownOption>
+  ))}
+</Dropdown>
+
+{/* Automatic flip based on available viewport space (default) */}
+<Dropdown
+  selectedItem={items[0]}
+  onChange={handleChange}
+  dropdownProps={{ dropdownPosition: 'auto' }}>
   {items.map((item) => (
     <DropdownOption key={item.id} value={item.id}>
       {item.value}

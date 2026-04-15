@@ -191,6 +191,17 @@ export default {
         category: 'dropdownProps',
       },
     },
+    'dropdownProps.dropdownPosition': {
+      description:
+        "Controls the opening direction of the options list. 'auto' flips upward automatically when there is insufficient space below the toggle in the viewport.",
+      control: { type: 'select' },
+      options: ['auto', 'top', 'bottom'],
+      table: {
+        type: { summary: "'auto' | 'top' | 'bottom'" },
+        defaultValue: { summary: "'auto'" },
+        category: 'dropdownProps',
+      },
+    },
   },
   decorators: [
     (Story, { args }) => {
@@ -376,6 +387,26 @@ export const Custom: StoryObj = (args: Args) => {
 Custom.args = {
   isDisabled: false,
 };
+
+export const PositionAuto: StoryObj<Args> = {
+  name: 'Position: Auto (near bottom of viewport)',
+  decorators: [
+    (Story) => (
+      <div style={{ position: 'fixed', bottom: 16, left: 16 }}>{Story()}</div>
+    ),
+  ],
+  render: (args) => (
+    <Dropdown {...args} selectedItem={items[2]}>
+      {items.slice(0, 5).map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  ),
+};
+
+PositionAuto.args = { isDisabled: false };
 
 export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
   const [selectedIndex, setSelectedIndex] = useState(1);

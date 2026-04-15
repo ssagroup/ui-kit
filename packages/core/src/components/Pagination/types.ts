@@ -95,8 +95,11 @@ export interface PaginationProps extends CommonProps {
   isPageFromCountVisible?: boolean;
 
   /**
-   * Props for the rows per page dropdown
-   * Only used when isRowPerPageVisible is true
+   * Props for the rows per page dropdown.
+   * Only used when isRowPerPageVisible is true.
+   * Use rowPerPageProps.dropdownPosition to control the opening direction
+   * ('auto' | 'top' | 'bottom'). Defaults to 'auto', which flips the list
+   * upward automatically when there is insufficient space below the toggle.
    */
   rowPerPageProps?: RowsPerPageDropdownProps;
 
