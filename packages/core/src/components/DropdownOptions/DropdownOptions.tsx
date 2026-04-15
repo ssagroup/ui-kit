@@ -10,6 +10,7 @@ import { DropdownItemsListProps } from './types';
 const DropdownOptionsBase = styled.ul<{
   tabindex?: string;
   maxHeight?: number;
+  placement?: 'top' | 'bottom';
 }>`
   position: absolute;
   width: 100%;
@@ -17,8 +18,12 @@ const DropdownOptionsBase = styled.ul<{
 
   list-style: none;
 
-  margin: 4px 0 0;
   padding: 0;
+
+  ${({ placement = 'bottom' }) =>
+    placement === 'top'
+      ? 'bottom: 100%; top: auto; margin: 0 0 4px;'
+      : 'top: 100%; bottom: auto; margin: 4px 0 0;'}
 
   background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
@@ -67,6 +72,11 @@ const noItemsMsg = { id: Number.NaN, value: 'No items' };
  * Renders the scrollable list of options that appears when the dropdown is open.
  * Provides proper ARIA attributes for accessibility and keyboard navigation.
  *
+ * Placement (opening upward or downward) is driven entirely by the parent
+ * Dropdown via context — this component does not calculate position itself.
+ * A ref is attached to the list element so Dropdown can measure its actual
+ * rendered height when determining the correct placement on each open.
+ *
  * @category Form Controls
  * @subcategory Selection
  *
@@ -97,7 +107,8 @@ const DropdownOptions = ({
   id,
   children,
 }: DropdownItemsListProps) => {
-  const { onChange, activeItem, maxHeight } = useDropdownContext();
+  const { onChange, activeItem, maxHeight, listRef, placement } =
+    useDropdownContext();
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
@@ -135,11 +146,13 @@ const DropdownOptions = ({
 
   return (
     <DropdownOptionsBase
+      ref={listRef}
       role="listbox"
       tabindex="-1"
       id={id}
       aria-labelledby={ariaLabelledby}
-      maxHeight={maxHeight}>
+      maxHeight={maxHeight}
+      placement={placement}>
       {options}
     </DropdownOptionsBase>
   );

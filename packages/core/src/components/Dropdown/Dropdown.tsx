@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useRef, useId, ReactNode } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useId,
+  ReactNode,
+} from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
@@ -30,8 +37,13 @@ const SelectedContent = styled.span`
  *
  * A flexible dropdown component that allows users to select one option from
  * a list of choices. Uses a compound component pattern with DropdownOption
- * children. Provides keyboard navigation, accessibility features, and click-outside
- * to close functionality.
+ * children. Provides keyboard navigation, accessibility features, click-outside
+ * to close functionality, and automatic viewport-aware placement of the options list.
+ *
+ * On every open the component measures available space below the toggle button
+ * and flips the list upward when there is not enough room, preventing the list
+ * from being clipped by the viewport edge. This behavior can be overridden via
+ * dropdownProps.dropdownPosition.
  *
  * Component structure:
  * - Dropdown (root container with context)
@@ -82,14 +94,15 @@ const SelectedContent = styled.span`
  *
  * @example
  * ```tsx
- * // With custom props for sub-components
+ * // With custom props for sub-components and forced upward placement
  * <Dropdown
  *   selectedItem={selected}
  *   onChange={handleChange}
  *   dropdownProps={{
  *     base: { id: 'my-dropdown' },
  *     toggleButton: { 'data-testid': 'dropdown-toggle' },
- *     toggleButtonArrow: { className: 'custom-arrow' }
+ *     toggleButtonArrow: { className: 'custom-arrow' },
+ *     dropdownPosition: 'top',
  *   }}
  * >
  *   {options.map(opt => (
@@ -124,8 +137,11 @@ const Dropdown = <T extends DropdownOptionProps>({
   maxHeight = 200,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
+  const { dropdownPosition = 'auto' } = componentProps ?? {};
+
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const dropdownId = useId();
   const options: T[] = [];
@@ -134,6 +150,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [colors, setColors] = useState<Array<string | undefined>>([]);
   const [activeItem, setActiveItem] = useState<T | undefined>(selectedItem);
+  const [placement, setPlacement] = useState<'top' | 'bottom'>('bottom');
 
   const onChange: DropdownContextType['onChange'] = (item) => {
     const innerItem = options.filter((option) => option.value === item)[0];
@@ -176,6 +193,20 @@ const Dropdown = <T extends DropdownOptionProps>({
     }
   }, [isDisabled]);
 
+  useLayoutEffect(() => {
+    if (!isOpen || !dropdownRef.current) return;
+
+    if (dropdownPosition !== 'auto') {
+      setPlacement(dropdownPosition);
+      return;
+    }
+
+    const rect = dropdownRef.current.getBoundingClientRect();
+    const listHeight = listRef.current?.offsetHeight || maxHeight;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    setPlacement(spaceBelow < listHeight ? 'top' : 'bottom');
+  }, [isOpen]);
+
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -192,8 +223,8 @@ const Dropdown = <T extends DropdownOptionProps>({
   );
 
   const contextValue: DropdownContextType = React.useMemo(
-    () => ({ onChange, activeItem, maxHeight }),
-    [onChange, activeItem, maxHeight],
+    () => ({ onChange, activeItem, maxHeight, listRef, placement }),
+    [onChange, activeItem, maxHeight, placement],
   );
 
   const value = (

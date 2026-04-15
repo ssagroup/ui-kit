@@ -69,6 +69,37 @@ const WithRowsPerPage = () => {
 };
 ```
 
+### Rows Per Page Dropdown Placement
+
+When the Pagination component sits near the bottom of the page the rows-per-page dropdown can be
+clipped by the viewport edge. Use `rowPerPageProps.dropdownPosition` to control the opening
+direction:
+
+- `'auto'` *(default)* — opens downward; flips upward automatically when there is insufficient
+  space below the toggle in the viewport
+- `'top'` — always opens upward
+- `'bottom'` — always opens downward
+
+```tsx
+{/* Automatic flip — safe for any position on the page */}
+<PaginationContextProvider selectedPage={1}>
+  <Pagination
+    pagesCount={10}
+    isRowPerPageVisible={true}
+    rowPerPageProps={{ dropdownPosition: 'auto' }}
+  />
+</PaginationContextProvider>
+
+{/* Force upward — useful when Pagination is always at the bottom of the page */}
+<PaginationContextProvider selectedPage={1}>
+  <Pagination
+    pagesCount={10}
+    isRowPerPageVisible={true}
+    rowPerPageProps={{ dropdownPosition: 'top' }}
+  />
+</PaginationContextProvider>
+```
+
 ### Manual Page Input
 
 Allow users to jump directly to a specific page number.

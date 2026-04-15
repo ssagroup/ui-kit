@@ -45,4 +45,13 @@ export interface RowsPerPageDropdownProps extends CommonProps {
    * @default [{ id: 1, value: 10 }, { id: 2, value: 25 }, { id: 3, value: 50 }, { id: 4, value: 100 }]
    */
   rowsPerPageList?: Array<{ id: number; value: number }>;
+  /**
+   * Controls the opening direction of the options list.
+   * - 'auto': opens downward by default; flips upward automatically when
+   *   there is insufficient space below the toggle in the viewport
+   * - 'top': always opens upward
+   * - 'bottom': always opens downward
+   * @default 'auto'
+   */
+  dropdownPosition?: 'auto' | 'top' | 'bottom';
 }

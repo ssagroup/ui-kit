@@ -52,6 +52,7 @@ export const RowsPerPageDropdown = ({
   selectedItem = DEFAULT_PER_PAGE_VALUE,
   rowsPerPageList = ROWS_PER_PAGE_LIST,
   rowsPerPageText = 'Rows per page',
+  dropdownPosition,
   ...rest
 }: RowsPerPageDropdownProps) => {
   const theme = useTheme();
@@ -102,6 +103,7 @@ export const RowsPerPageDropdown = ({
               },
             },
           },
+          dropdownPosition,
         }}
         {...rest}>
         {rowsPerPageList.map((item) => (

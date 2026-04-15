@@ -85,3 +85,26 @@ export const WithoutPageFromCount: Story = {
 
 WithManualPageSettingAndPerPage.storyName =
   'With records per page and page number setting';
+
+export const RowsPerPageAtBottom: Story = {
+  name: 'Rows per page — dropdown position auto (near bottom)',
+  decorators: [
+    (Story, { parameters, args }) => (
+      <PaginationContextProvider {...parameters}>
+        <div style={{ position: 'fixed', bottom: 16, left: 16 }}>
+          {Story(args)}
+        </div>
+      </PaginationContextProvider>
+    ),
+  ],
+  args: {
+    pagesCount: 10,
+    isRowPerPageVisible: true,
+    rowPerPageProps: {
+      dropdownPosition: 'auto',
+    },
+  },
+  parameters: {
+    selectedPage: 1,
+  },
+};
