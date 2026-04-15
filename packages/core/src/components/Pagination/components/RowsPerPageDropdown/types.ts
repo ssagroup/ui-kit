@@ -1,4 +1,5 @@
 import { CommonProps } from '@global-types/emotion';
+import { DropdownPositions } from '@components';
 
 /**
  * Props for the RowsPerPageDropdown component
@@ -47,11 +48,11 @@ export interface RowsPerPageDropdownProps extends CommonProps {
   rowsPerPageList?: Array<{ id: number; value: number }>;
   /**
    * Controls the opening direction of the options list.
-   * - 'auto': opens downward by default; flips upward automatically when
+   * - DropdownPositions.auto: opens downward by default; flips upward automatically when
    *   there is insufficient space below the toggle in the viewport
-   * - 'top': always opens upward
-   * - 'bottom': always opens downward
-   * @default 'auto'
+   * - DropdownPositions.top: always opens upward
+   * - DropdownPositions.bottom: always opens downward
+   * @default DropdownPositions.auto
    */
-  dropdownPosition?: 'auto' | 'top' | 'bottom';
+  dropdownPosition?: DropdownPositions;
 }

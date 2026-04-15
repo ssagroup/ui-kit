@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Pagination, PaginationContextProvider } from './index';
+import { DropdownPositions } from '@components/Dropdown/types';
 
 export default {
   title: 'Widgets/Pagination',
@@ -101,7 +102,7 @@ export const RowsPerPageAtBottom: Story = {
     pagesCount: 10,
     isRowPerPageVisible: true,
     rowPerPageProps: {
-      dropdownPosition: 'auto',
+      dropdownPosition: DropdownPositions.auto,
     },
   },
   parameters: {
