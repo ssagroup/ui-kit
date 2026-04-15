@@ -99,6 +99,64 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
 
 Basic.args = { isDisabled: false };
 
+export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  const { handleSubmit } = useFormResult;
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+  return (
+    <FormProvider {...useFormResult}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Wrapper
+          css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
+          <Typeahead
+            isDisabled={args.isDisabled}
+            onEmptyChange={(isEmpty) => {
+              console.log('>>>onEmptyChange event', isEmpty);
+            }}
+            name={'typeahead-autoselect-disabled'}
+            label="AutoSelect disabled (single)"
+            helperText='Type exact option text (e.g. "First") and it should NOT auto-select'
+            autoSelect={false}
+            renderOption={({ label, input }) =>
+              highlightInputMatch(label, input)
+            }>
+            {items.map(({ label, value, id }) => (
+              <TypeaheadOption key={id} value={id} label={label || value}>
+                {label || value}
+              </TypeaheadOption>
+            ))}
+          </Typeahead>
+          <Typeahead
+            isDisabled={args.isDisabled}
+            isMultiple
+            defaultSelectedItems={[items[1].id]}
+            onEmptyChange={(isEmpty) => {
+              console.log('>>>onEmptyChange event (multiple)', isEmpty);
+            }}
+            name={'typeahead-autoselect-disabled-multiple'}
+            label="AutoSelect disabled (multiple)"
+            helperText="In multiple mode, typing exact text should also NOT auto-select"
+            autoSelect={false}
+            renderOption={({ label, input }) =>
+              highlightInputMatch(label, input)
+            }>
+            {items.map(({ label, value, id }) => (
+              <TypeaheadOption key={id} value={id} label={label || value}>
+                {label || value}
+              </TypeaheadOption>
+            ))}
+          </Typeahead>
+        </Wrapper>
+        <Button type="submit" css={{ marginTop: 5 }}>
+          Submit
+        </Button>
+      </form>
+    </FormProvider>
+  );
+};
+
+AutoSelectDisabled.args = { isDisabled: false };
+
 export const Multiple: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
   const {
