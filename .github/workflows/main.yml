@@ -127,7 +127,7 @@ jobs:
         run: pnpm build:all
 
       - name: Install Vercel CLI
-        run: pnpm i -g vercel@46
+        run: pnpm i -g vercel@latest
 
       - name: Rename Git folder
         run: mv .git .git2
