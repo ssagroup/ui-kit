@@ -154,6 +154,10 @@ export const BarLineComplexChartView = ({
       window.removeEventListener('resize', handleDebouncedFn, false);
     };
   }, []);
+  // title is rendered as an absolutely positioned overlay so it shares the same
+  // visual row as Plotly's mode bar buttons, matching the original Plotly title behavior.
+  // Plotly does not support JSX in layout.title, so this DOM overlay is used instead.
+  // The Wrapper is kept `position: relative` so the overlay coordinates are relative to the chart.
   return (
     <Wrapper
       className="bar-line-complex-chart-wrapper"

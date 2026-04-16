@@ -79,6 +79,15 @@ export const Fullscreen: Story = {
 };
 
 export const WithJsxTitle: Story = {
+  name: 'With JSX Title',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The `title` prop accepts any React node. The title is rendered as a DOM overlay above the Plotly canvas so JSX (icons, tooltips, etc.) is fully supported.',
+      },
+    },
+  },
   args: {
     title: (
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>

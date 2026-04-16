@@ -69,13 +69,16 @@ export const CandlestickChartComponent = ({
   }
 
   return (
+    // title is rendered as an absolutely positioned overlay so it shares the same
+    // visual row as Plotly's mode bar buttons, matching the original Plotly title behavior.
+    // Plotly does not support JSX in layout.title, so this DOM overlay is used instead.
     <WithWidgetCard features={features} cardProps={{ ...widgetCardProps }}>
       <div css={{ position: 'relative', width: '100%', height: '100%' }}>
         {title && (
           <CardHeader
             css={{
               position: 'absolute',
-              top: '10px',
+              top: '1px',
               left: '10px',
               width: 'auto',
               marginBottom: 0,
@@ -103,7 +106,7 @@ export const CandlestickChartComponent = ({
             xaxis: { rangeslider: { visible: false } },
             yaxis: { side: 'right' },
             margin: {
-              t: 30,
+              t: 20,
               b: 40,
               l: 20,
               r: 20,

@@ -26,11 +26,9 @@ export const WidgetCard = ({
         isFullscreenMode={isFullscreenMode}
         width={width}
         height={height}>
-        {(title || headerContent) && (
-          <Header title={title} className={headerClassName}>
-            {headerContent}
-          </Header>
-        )}
+        <Header title={title} className={headerClassName}>
+          {headerContent}
+        </Header>
         <Content
           className={contentClassName}
           isFullscreenMode={isFullscreenMode}>
