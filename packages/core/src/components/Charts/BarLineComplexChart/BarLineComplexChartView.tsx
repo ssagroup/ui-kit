@@ -159,7 +159,7 @@ export const BarLineComplexChartView = ({
       className="bar-line-complex-chart-wrapper"
       ref={plotlyWrapperRef}
       css={{
-        position: isFullscreenMode ? 'fixed' : 'static',
+        position: isFullscreenMode ? 'fixed' : 'relative',
         top: isFullscreenMode ? '2.5%' : 'unset',
         left: isFullscreenMode ? '2.5%' : 'unset',
         width: isFullscreenMode ? '95%' : width,
@@ -167,8 +167,8 @@ export const BarLineComplexChartView = ({
         borderRadius: 20,
         zIndex: isFullscreenMode ? 2 : 1,
         overflow: 'hidden',
+        background: theme.colors.white,
         boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
-        flexDirection: 'column',
         '& .plotly': {
           '& > div': isFullscreenMode && {
             width: '100% !important',
@@ -182,11 +182,25 @@ export const BarLineComplexChartView = ({
         },
       }}>
       {features?.includes('header') && props.cardProps?.title && (
-        <CardHeader css={{ padding: '12px 20px 0' }}>
+        <CardHeader
+          css={{
+            position: 'absolute',
+            top: isFullscreenMode ? '13px' : '10px',
+            left: '10px',
+            width: 'auto',
+            marginBottom: 0,
+            zIndex: 1,
+          }}>
           <WidgetCardTitle
             variant="h3"
             weight="bold"
-            css={{ flexDirection: 'row', width: '100%' }}>
+            css={{
+              flexDirection: 'row',
+              fontSize: isFullscreenMode ? '24px' : '12px',
+              [theme.mediaQueries.md]: {
+                fontSize: isFullscreenMode ? '24px' : '16px',
+              },
+            }}>
             {props.cardProps.title}
           </WidgetCardTitle>
         </CardHeader>
@@ -211,9 +225,14 @@ export const BarLineComplexChartView = ({
           orientation: 1,
           margin: {
             b: isFullscreenMode ? 15 : 0,
-            l: orientation === 'v' ? 40 : isFullscreenMode ? 30 : 15,
+            l: orientation === 'v' ? 10 : isFullscreenMode ? 30 : 15,
             r: orientation === 'v' ? 40 : 0,
-            t: 10,
+            t:
+              features?.includes('header') && props.cardProps?.title
+                ? isFullscreenMode
+                  ? 45
+                  : 43
+                : 10,
             pad: 10,
             ...margin,
           },
