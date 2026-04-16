@@ -68,6 +68,15 @@ export const FillScreen: Story = {
 };
 
 export const WithJsxTitle: Story = {
+  name: 'With JSX Title',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The `title` prop accepts any React node. This example shows an icon embedded alongside the chart title text.',
+      },
+    },
+  },
   args: {
     title: (
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>

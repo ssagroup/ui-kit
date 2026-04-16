@@ -121,6 +121,15 @@ export const FullscreenWithTitle: Story = {
 };
 
 export const WithJsxTitle: Story = {
+  name: 'With JSX Title',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The `pieChartProps.cardProps.title` prop accepts any React node. This example shows an icon embedded alongside the chart title text.',
+      },
+    },
+  },
   args: {
     pieChartProps: {
       features: ['header'],

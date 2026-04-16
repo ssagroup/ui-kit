@@ -366,7 +366,16 @@ export const WithJsxTitle: StoryObj<typeof PieChart> = () => {
     </PieChart>
   );
 };
+WithJsxTitle.storyName = 'With JSX Title';
 WithJsxTitle.args = {};
+WithJsxTitle.parameters = {
+  docs: {
+    description: {
+      story:
+        'The `cardProps.title` prop accepts any React node. This example shows an icon embedded alongside the chart title text.',
+    },
+  },
+};
 
 const WithTooltipTemplate: StoryObj<
   Pick<PieChartProps, 'data' | 'legendOutputType'> & {

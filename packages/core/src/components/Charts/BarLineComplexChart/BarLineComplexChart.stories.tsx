@@ -146,6 +146,15 @@ export const Horizontal: Args = {
 
 export const WithJsxTitle: Args = {
   ...Default,
+  name: 'With JSX Title',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The `cardProps.title` prop accepts any React node. The title is rendered as a DOM overlay above the Plotly canvas so JSX (icons, tooltips, etc.) is fully supported.',
+      },
+    },
+  },
   args: {
     data: mockDataHorizontal,
     features: ['filtering', 'fullscreenMode'],
