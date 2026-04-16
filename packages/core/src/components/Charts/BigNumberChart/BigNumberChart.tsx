@@ -12,7 +12,7 @@ type Datum = LineSeries['data'][number];
 export interface BigNumberChartProps {
   data: Datum[];
   interactive?: boolean;
-  title?: string;
+  title?: React.ReactNode;
   widgetCardProps?: WidgetCardProps;
   trendLineProps?: Omit<TrendLineProps, 'data' | 'height' | 'width'>;
   features?: BigNumberChartFeatures[];

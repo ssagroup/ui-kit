@@ -3,6 +3,7 @@ import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { DateTime } from 'luxon';
 import { seededRandom } from '@ssa-ui-kit/utils';
 
+import Icon from '@components/Icon';
 import { BigNumberChart } from './';
 
 const generateMockData = (): Array<{ x: number | null; y: number | null }> => {
@@ -71,6 +72,17 @@ export const FillScreen: Story = {
 export const NonInteractive: Story = {
   args: {
     interactive: false,
+  },
+};
+
+export const WithJsxTitle: Story = {
+  args: {
+    title: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        BigNumber Chart
+        <Icon name="information" size={16} />
+      </div>
+    ),
   },
 };
 

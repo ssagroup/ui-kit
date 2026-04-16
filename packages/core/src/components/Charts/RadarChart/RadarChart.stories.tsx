@@ -1,5 +1,6 @@
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 
+import Icon from '@components/Icon';
 import { RadarChart } from './';
 
 const meta: Meta<typeof RadarChart> = {
@@ -58,6 +59,17 @@ export const CustomColors: Story = {
 export const FullScreen: Story = {
   args: {
     features: ['header', 'fullscreenMode'],
+  },
+};
+
+export const WithJsxTitle: Story = {
+  args: {
+    title: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        Radar Chart
+        <Icon name="information" size={16} />
+      </div>
+    ),
   },
 };
 

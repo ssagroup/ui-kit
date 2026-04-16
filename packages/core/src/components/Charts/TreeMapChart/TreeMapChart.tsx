@@ -27,7 +27,7 @@ type NivoTreeMapChartProps = React.ComponentProps<
 >;
 export interface TreeMapChartProps extends Omit<NivoTreeMapChartProps, 'data'> {
   data: TreeNode;
-  title?: string;
+  title?: React.ReactNode;
   fullScreen?: boolean;
   features?: TreeMapChartFeature[];
   widgetCardProps?: WidgetCardProps;

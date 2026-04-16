@@ -21,7 +21,7 @@ export interface BarLineComplexChartProps extends Omit<PlotParams, 'layout'> {
   lineShape?: Plotly.ScatterLine['shape'];
   width?: string;
   height?: string;
-  title?: string;
+  title?: React.ReactNode;
   maxVisibleBars?: number;
   maxVisibleLines?: number;
   container?: Element | DocumentFragment;

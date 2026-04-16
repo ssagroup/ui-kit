@@ -2,6 +2,7 @@ import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { DateTime } from 'luxon';
 import { seededRandom } from '@ssa-ui-kit/utils';
 
+import Icon from '@components/Icon';
 import { CandlestickChart, CandlestickChartProps } from './';
 
 const generateMockData = (count = 60, stepMinutes = 1) => {
@@ -74,6 +75,17 @@ export const Japanese: Story = {
 export const Fullscreen: Story = {
   args: {
     features: ['fullscreenMode', 'header'],
+  },
+};
+
+export const WithJsxTitle: Story = {
+  args: {
+    title: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        Candlestick Chart
+        <Icon name="information" size={16} />
+      </div>
+    ),
   },
 };
 

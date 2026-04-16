@@ -20,7 +20,7 @@ type ResponsiveRadarProps<D extends Record<string, unknown>> = ComponentProps<
 export interface RadarChartProps<
   D extends Record<string, unknown>,
 > extends Omit<ResponsiveRadarProps<D>, 'legends'> {
-  title?: string;
+  title?: React.ReactNode;
   legends?: Partial<NonNullable<ResponsiveRadarProps<D>['legends']>[number]>[];
   features?: RadarChartFeatures[];
   widgetCardProps?: WidgetCardProps;

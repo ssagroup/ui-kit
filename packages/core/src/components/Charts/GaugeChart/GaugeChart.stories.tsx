@@ -1,5 +1,6 @@
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 
+import Icon from '@components/Icon';
 import { GaugeChart } from './';
 
 const meta = {
@@ -63,5 +64,16 @@ export const NoLabels: Story = {
 export const FillScreen: Story = {
   args: {
     features: ['header', 'fullscreenMode'],
+  },
+};
+
+export const WithJsxTitle: Story = {
+  args: {
+    title: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        Gauge
+        <Icon name="information" size={16} />
+      </div>
+    ),
   },
 };

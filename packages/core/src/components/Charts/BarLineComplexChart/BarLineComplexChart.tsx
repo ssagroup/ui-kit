@@ -21,6 +21,11 @@ const BarLineComplexChartComponent = ({
   onFullscreenModeChange,
   ...rest
 }: BarLineComplexChartProps) => {
+  const effectiveTitle = cardProps?.title ?? title;
+  const effectiveFeatures =
+    effectiveTitle && !features.includes('header')
+      ? ([...features, 'header'] as BarLineComplexChartProps['features'])
+      : features;
   const tooltip = useTooltip();
   const { isFullscreenMode, setFullscreenMode } = useFullscreenMode();
   const [componentData, setComponentData] = useState<BarLineChartItem[]>(data);
@@ -44,13 +49,13 @@ const BarLineComplexChartComponent = ({
       lineShape={lineShape}
       maxVisibleBars={maxVisibleBars}
       maxVisibleLines={maxVisibleLines}
-      features={features}>
+      features={effectiveFeatures}>
       <TooltipContext.Provider value={tooltip}>
         <BarLineComplexChartInternal
           {...rest}
           cardProps={{
             ...cardProps,
-            title: cardProps?.title || title,
+            title: effectiveTitle,
           }}
         />
       </TooltipContext.Provider>

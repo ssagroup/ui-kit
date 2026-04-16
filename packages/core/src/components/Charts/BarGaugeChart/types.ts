@@ -27,7 +27,7 @@ export interface GaugeBarProps {
 }
 
 export interface BarGaugeChartProps {
-  title?: string;
+  title?: React.ReactNode;
   widgetCardProps?: WidgetCardProps;
   bars?: GaugeBarProps[];
   features?: BarGaugeChartFeature[];
