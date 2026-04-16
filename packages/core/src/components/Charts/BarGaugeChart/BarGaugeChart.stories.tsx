@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
 import { useTheme } from '@emotion/react';
 
+import Icon from '@components/Icon';
 import { BarGaugeChart } from './BarGaugeChart';
 import {
   GaugeBarProps,
@@ -78,6 +79,17 @@ export const WithoutHeader: Story = { args: { features: [] } };
 export const FillScreen: Story = {
   args: {
     features: ['header', 'fullscreenMode'],
+  },
+};
+
+export const WithJsxTitle: Story = {
+  args: {
+    title: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        BarGauge Chart
+        <Icon name="information" size={16} />
+      </div>
+    ),
   },
 };
 

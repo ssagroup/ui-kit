@@ -23,7 +23,7 @@ export interface CandlestickChartProps extends Partial<
 > {
   data: CandlestickChartData;
   style?: CandlestickStyle;
-  title?: string;
+  title?: React.ReactNode;
   features?: CandlestickChartFeatures[];
   widgetCardProps?: WidgetCardProps;
 }
@@ -31,7 +31,7 @@ export interface CandlestickChartProps extends Partial<
 export const CandlestickChartComponent = ({
   title,
   data,
-  features,
+  features = [],
   widgetCardProps,
   style = 'hollow',
   ...plotParams
@@ -63,34 +63,26 @@ export const CandlestickChartComponent = ({
     });
   }
 
+  const effectiveFeatures =
+    title && !features.includes('header')
+      ? ([...features, 'header'] as CandlestickChartFeatures[])
+      : features;
+
   return (
     <WithWidgetCard
-      features={features}
+      features={effectiveFeatures}
       cardProps={{
+        title,
         ...widgetCardProps,
       }}>
       <Plot
         layout={{
           ...plotlyDefaultLayoutConfig.layout,
-          title: {
-            text: title,
-            x: 0,
-            y: 1,
-            pad: {
-              l: 10,
-              t: 5,
-            },
-            font: {
-              size: 24,
-              weight: 700,
-              family: 'Manrope, sans-serif',
-            },
-          },
           dragmode: 'zoom',
           xaxis: { rangeslider: { visible: false } },
           yaxis: { side: 'right' },
           margin: {
-            t: 20,
+            t: 10,
             b: 40,
             l: 20,
             r: 20,

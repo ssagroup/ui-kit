@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css, useTheme } from '@emotion/react';
 import { css as cssString } from '@emotion/css';
+import Icon from '@components/Icon';
 import Typography from '@components/Typography';
 import Tooltip from '@components/Tooltip';
 import TooltipTrigger from '@components/TooltipTrigger';
@@ -341,6 +342,31 @@ export const FullscreenAndTitle: StoryObj<typeof PieChart> = () => {
   );
 };
 FullscreenAndTitle.args = {};
+
+export const WithJsxTitle: StoryObj<typeof PieChart> = () => {
+  const theme = useTheme();
+  const { legendColorNames, pieChartColors } =
+    pieChartPalettes.getBalancePalette(theme);
+
+  return (
+    <PieChart
+      data={accountData}
+      colors={pieChartColors}
+      animate={false}
+      features={['header']}
+      cardProps={{
+        title: (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            Pie Chart
+            <Icon name="information" size={16} />
+          </div>
+        ),
+      }}>
+      <PieChartLegend data={accountData} colors={legendColorNames} />
+    </PieChart>
+  );
+};
+WithJsxTitle.args = {};
 
 const WithTooltipTemplate: StoryObj<
   Pick<PieChartProps, 'data' | 'legendOutputType'> & {

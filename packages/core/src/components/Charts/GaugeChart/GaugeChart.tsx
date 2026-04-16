@@ -30,7 +30,7 @@ export interface GaugeChartProps
   minValue: number;
   maxValue: number;
   value: number;
-  title?: string;
+  title?: React.ReactNode;
   segments?: {
     value: number;
     id?: string;

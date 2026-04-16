@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import Icon from '@components/Icon';
 import {
   balanceData,
   balanceMissedPartsData,
@@ -114,6 +115,22 @@ export const FullscreenWithTitle: Story = {
       features: ['header', 'fullscreenMode'],
       cardProps: {
         title: 'Segmented Pie Chart',
+      },
+    },
+  },
+};
+
+export const WithJsxTitle: Story = {
+  args: {
+    pieChartProps: {
+      features: ['header'],
+      cardProps: {
+        title: (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            Segmented Pie Chart
+            <Icon name="information" size={16} />
+          </div>
+        ),
       },
     },
   },

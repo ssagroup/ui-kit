@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TranslationProvider } from '@contexts';
+import Icon from '@components/Icon';
 import { BarLineComplexChart } from './BarLineComplexChart';
 import {
   mockBigData,
@@ -33,6 +34,7 @@ export const Default: Args = {
       height="220px"
       cardProps={{
         title: 'Bar & Line Complex Chart',
+        ...(args.cardProps ?? {}),
       }}
       {...args}
     />
@@ -139,6 +141,24 @@ export const Horizontal: Args = {
     features: ['filtering', 'fullscreenMode'],
     systemModeBarButtons: [],
     maxVisibleBars: 8,
+  },
+};
+
+export const WithJsxTitle: Args = {
+  ...Default,
+  args: {
+    data: mockDataHorizontal,
+    features: ['filtering', 'fullscreenMode'],
+    systemModeBarButtons: [],
+    maxVisibleBars: 8,
+    cardProps: {
+      title: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          Bar & Line Complex Chart
+          <Icon name="information" size={16} />
+        </div>
+      ),
+    },
   },
 };
 

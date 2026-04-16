@@ -1,17 +1,13 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
-import { debounce, pathOr, propOr } from '@ssa-ui-kit/utils';
-import { useDeviceType } from '@ssa-ui-kit/hooks';
+import { debounce, pathOr } from '@ssa-ui-kit/utils';
 import Wrapper from '@components/Wrapper';
+import CardHeader from '@components/CardHeader';
+import { WidgetCardTitle } from '@components/WidgetCard';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { BarLineComplexChartTooltip } from './BarLineComplexChartTooltip';
-import {
-  FONT_FAMILY,
-  TITLE_FONT_SIZE,
-  TITLE_PADDING_LEFT,
-  TITLE_PADDING_TOP,
-} from './constants';
+import { FONT_FAMILY } from './constants';
 import { usePlotlyDefaultConfig } from '../hooks';
 import { useBarLineComplexChartContext } from './BarLIneComplexChart.context';
 import { BarLineChartItem, BarLineComplexInternalProps } from './types';
@@ -43,7 +39,6 @@ export const BarLineComplexChartView = ({
   const theme = useTheme();
   const plotlyWrapperRef = useRef<HTMLDivElement>(null);
   const plotlyDefaultLayoutConfig = usePlotlyDefaultConfig();
-  const deviceType = useDeviceType();
   const { data } = useBarLineComplexChartContext();
   const orientation = pathOr<BarLineChartItem[], 'h' | 'v'>('v', [
     0,
@@ -61,17 +56,17 @@ export const BarLineComplexChartView = ({
   const [debouncedFn, cancel] = debounceThrottled.current;
   const { setIsOpen } = useTooltipContext();
 
+  const { features } = useBarLineComplexChartContext();
+
   const { layout = {}, config = {}, ...restProps } = props;
   const {
     margin = {},
-    title = {},
-    titlefont = {},
     yaxis = {},
     yaxis2 = {},
     xaxis = {},
     legend = {},
     ...layoutRest
-  } = layout as typeof layout & { titlefont?: Record<string, unknown> };
+  } = layout;
 
   const tickFont = {
     color: theme.colors.greyDarker,
@@ -79,14 +74,6 @@ export const BarLineComplexChartView = ({
     size: isFullscreenMode ? 16 : 12,
     weight: 500,
   };
-
-  if (
-    typeof props.cardProps?.title === 'string' &&
-    typeof title !== 'string' &&
-    typeof title.text !== 'string'
-  ) {
-    title.text = props.cardProps.title;
-  }
 
   const formattedTicks = timestamps.map((timestamp, index) => {
     const dateTime = new Date(timestamp);
@@ -181,6 +168,7 @@ export const BarLineComplexChartView = ({
         zIndex: isFullscreenMode ? 2 : 1,
         overflow: 'hidden',
         boxShadow: 'rgba(42, 48, 57, 0.08) 0px 10px 40px 0px',
+        flexDirection: 'column',
         '& .plotly': {
           '& > div': isFullscreenMode && {
             width: '100% !important',
@@ -193,6 +181,16 @@ export const BarLineComplexChartView = ({
           },
         },
       }}>
+      {features?.includes('header') && props.cardProps?.title && (
+        <CardHeader css={{ padding: '12px 20px 0' }}>
+          <WidgetCardTitle
+            variant="h3"
+            weight="bold"
+            css={{ flexDirection: 'row', width: '100%' }}>
+            {props.cardProps.title}
+          </WidgetCardTitle>
+        </CardHeader>
+      )}
       <Plot
         divId={'bar-line-complex-chart-graph'}
         css={{
@@ -213,51 +211,12 @@ export const BarLineComplexChartView = ({
           orientation: 1,
           margin: {
             b: isFullscreenMode ? 15 : 0,
-            l:
-              orientation === 'v'
-                ? propOr(
-                    TITLE_PADDING_LEFT.other,
-                    deviceType,
-                  )(TITLE_PADDING_LEFT)
-                : isFullscreenMode
-                  ? 30
-                  : 15,
+            l: orientation === 'v' ? 40 : isFullscreenMode ? 30 : 15,
             r: orientation === 'v' ? 40 : 0,
-            t:
-              propOr(TITLE_PADDING_TOP.other, deviceType)(TITLE_PADDING_TOP) +
-              25,
+            t: 10,
             pad: 10,
             ...margin,
           },
-          title:
-            typeof title === 'string'
-              ? title
-              : {
-                  x: 0,
-                  y: 1,
-                  font: {
-                    size: isFullscreenMode
-                      ? 24
-                      : propOr(
-                          TITLE_FONT_SIZE.other,
-                          deviceType,
-                        )(TITLE_FONT_SIZE),
-                    weight: 700,
-                    family: FONT_FAMILY,
-                    ...titlefont,
-                  },
-                  pad: {
-                    l: propOr(
-                      TITLE_PADDING_LEFT.other,
-                      deviceType,
-                    )(TITLE_PADDING_LEFT),
-                    t: propOr(
-                      TITLE_PADDING_TOP.other,
-                      deviceType,
-                    )(TITLE_PADDING_TOP),
-                  },
-                  ...title,
-                },
           barmode: 'group',
           autosize: false,
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
