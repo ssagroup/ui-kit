@@ -2,7 +2,12 @@ import { renderToString } from 'react-dom/server';
 import Plot, { PlotParams } from 'react-plotly.js';
 import { useTheme } from '@emotion/react';
 
-import { WidgetCardProps, WithWidgetCard } from '@components/WidgetCard';
+import {
+  WidgetCardProps,
+  WidgetCardTitle,
+  WithWidgetCard,
+} from '@components/WidgetCard';
+import CardHeader from '@components/CardHeader';
 import {
   useFullscreenMode,
   WithFullscreenMode,
@@ -63,54 +68,71 @@ export const CandlestickChartComponent = ({
     });
   }
 
-  const effectiveFeatures =
-    title && !features.includes('header')
-      ? ([...features, 'header'] as CandlestickChartFeatures[])
-      : features;
-
   return (
-    <WithWidgetCard
-      features={effectiveFeatures}
-      cardProps={{
-        title,
-        ...widgetCardProps,
-      }}>
-      <Plot
-        layout={{
-          ...plotlyDefaultLayoutConfig.layout,
-          dragmode: 'zoom',
-          xaxis: { rangeslider: { visible: false } },
-          yaxis: { side: 'right' },
-          margin: {
-            t: 10,
-            b: 40,
-            l: 20,
-            r: 20,
-          },
-          showlegend: false,
-          ...layout,
-        }}
-        css={{ width: '100%', height: '100%' }}
-        useResizeHandler
-        data={plotData}
-        config={{
-          ...plotlyDefaultLayoutConfig.config,
-          modeBarButtons: [
-            extraModeBarButtons,
-            [
-              'zoom2d',
-              'pan2d',
-              'select2d',
-              'zoomIn2d',
-              'zoomOut2d',
-              'autoScale2d',
-              'resetScale2d',
+    <WithWidgetCard features={features} cardProps={{ ...widgetCardProps }}>
+      <div css={{ position: 'relative', width: '100%', height: '100%' }}>
+        {title && (
+          <CardHeader
+            css={{
+              position: 'absolute',
+              top: '10px',
+              left: '10px',
+              width: 'auto',
+              marginBottom: 0,
+              zIndex: 1,
+            }}>
+            <WidgetCardTitle
+              variant="h3"
+              weight="bold"
+              css={{
+                flexDirection: 'row',
+                lineHeight: 1,
+                fontSize: '24px',
+                [theme.mediaQueries.md]: {
+                  fontSize: '24px',
+                },
+              }}>
+              {title}
+            </WidgetCardTitle>
+          </CardHeader>
+        )}
+        <Plot
+          layout={{
+            ...plotlyDefaultLayoutConfig.layout,
+            dragmode: 'zoom',
+            xaxis: { rangeslider: { visible: false } },
+            yaxis: { side: 'right' },
+            margin: {
+              t: 30,
+              b: 40,
+              l: 20,
+              r: 20,
+            },
+            showlegend: false,
+            ...layout,
+          }}
+          css={{ width: '100%', height: '100%' }}
+          useResizeHandler
+          data={plotData}
+          config={{
+            ...plotlyDefaultLayoutConfig.config,
+            modeBarButtons: [
+              extraModeBarButtons,
+              [
+                'zoom2d',
+                'pan2d',
+                'select2d',
+                'zoomIn2d',
+                'zoomOut2d',
+                'autoScale2d',
+                'resetScale2d',
+              ],
             ],
-          ],
-          ...config,
-        }}
-        {...restPlotParams}
-      />
+            ...config,
+          }}
+          {...restPlotParams}
+        />
+      </div>
     </WithWidgetCard>
   );
 };
