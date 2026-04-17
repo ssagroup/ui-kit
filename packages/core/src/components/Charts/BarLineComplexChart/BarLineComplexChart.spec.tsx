@@ -30,7 +30,7 @@ jest.mock('react-plotly.js', () => ({
 
 describe('BarLineComplexChart', () => {
   it('Should render with title', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <BarLineComplexChart
         data={mockData}
         width="670px"
@@ -41,10 +41,8 @@ describe('BarLineComplexChart', () => {
       />,
     );
 
-    const chart = getByTestId('plotly-chart');
-    const layout = JSON.parse(chart.getAttribute('data-layout') || '{}');
-
-    expect(layout.title?.text).toBe('Bar & Line Complex Chart');
+    // Title is rendered as a DOM overlay above the Plotly canvas, not via layout.title
+    expect(getByText('Bar & Line Complex Chart')).toBeInTheDocument();
   });
 
   describe('Horizontal orientation', () => {
