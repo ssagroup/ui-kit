@@ -206,6 +206,22 @@ export const MultilineDisabled: StoryObj<typeof TextField> = (args: Args) => {
 };
 MultilineDisabled.args = {};
 
+export const MultilineNoResize: StoryObj<typeof TextField> = (args: Args) => {
+  return (
+    <TextField
+      multirow
+      rows={6}
+      label="Textarea (resize disabled)"
+      placeholder="Textarea"
+      name="textarea-no-resize"
+      helperText="Resize handle is disabled via CSS"
+      register={args.register}
+      css={{ resize: 'none' }}
+    />
+  );
+};
+MultilineNoResize.args = {};
+
 export const Focused: StoryObj<typeof TextField> = (args: Args) => {
   return <TextField {...args} />;
 };
