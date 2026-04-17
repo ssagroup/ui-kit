@@ -56,6 +56,8 @@ export const TextareaBase = styled('textarea', {
   color: ${({ theme }) => theme.colors.greyDarker};
 
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   min-height: 114px;
   padding: 14px;
 
