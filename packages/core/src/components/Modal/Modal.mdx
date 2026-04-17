@@ -5,6 +5,18 @@ import * as ModalStories from './Modal.stories';
 
 # Modal
 
+Overlay dialog system for focused tasks and interruptive flows (confirmations, forms, detail views).
+The modal uses a **compound API**: `Modal` (state/context root), `ModalOpenButton` (trigger),
+`ModalContent` (dialog body), and `ModalDismissButton` (close action).
+
+### Rendering behavior
+
+- `ModalContent` renders only when modal is open.
+- By default it renders **in place** (inside parent DOM tree).
+- Set `usePortal` to render into `document.body` via React portal.
+- Use `usePortal` inside constrained parents (for example Drawer) when you want
+  full-viewport centering and stacking outside parent overflow/transform rules.
+
 ## Default Usage
 
 The Modal component provides a flexible overlay system for displaying content above the main application interface. It consists of several components that work together to create a complete modal experience with built-in state management and accessibility features:
