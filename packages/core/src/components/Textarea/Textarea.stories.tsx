@@ -49,6 +49,81 @@ Basic.args = {
 };
 Basic.storyName = 'Textarea';
 
+export const VerticalResize: StoryObj<typeof Textarea> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+
+VerticalResize.storyName = 'Resize — Vertical';
+VerticalResize.args = {
+  placeholder: 'Textarea',
+  title: 'Textarea title',
+  name: 'textarea',
+  css: { resize: 'vertical' },
+  validationSchema: {
+    required: 'Required',
+  },
+};
+VerticalResize.parameters = {
+  docs: {
+    description: {
+      story:
+        'Vertical-only resize. Pass `css={{ resize: "vertical" }}` to restrict the user to resizing only the height.',
+    },
+  },
+};
+
+export const HorizontalResize: StoryObj<typeof Textarea> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+
+HorizontalResize.storyName = 'Resize — Horizontal';
+HorizontalResize.args = {
+  placeholder: 'Textarea',
+  title: 'Textarea title',
+  name: 'textarea',
+  css: { resize: 'horizontal' },
+  validationSchema: {
+    required: 'Required',
+  },
+};
+HorizontalResize.parameters = {
+  docs: {
+    description: {
+      story:
+        'Horizontal-only resize. Pass `css={{ resize: "horizontal" }}` to restrict the user to resizing only the width.',
+    },
+  },
+};
+
+export const ResizeDisabled: StoryObj<typeof Textarea> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+
+ResizeDisabled.storyName = 'Resize — Disabled';
+ResizeDisabled.args = {
+  placeholder: 'Textarea',
+  title: 'Textarea title',
+  name: 'textarea',
+  css: { resize: 'none' },
+  validationSchema: {
+    required: 'Required',
+  },
+};
+ResizeDisabled.parameters = {
+  docs: {
+    description: {
+      story:
+        'Resize fully disabled. Pass `css={{ resize: "none" }}` to remove the resize handle entirely.',
+    },
+  },
+};
+
 export const Focused: StoryObj<typeof Textarea> = (args: Args) => {
   const { register } = useForm<FieldValues>();
 

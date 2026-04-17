@@ -57,6 +57,7 @@ export const TextareaBase = styled('textarea', {
 
   width: 100%;
   max-width: 100%;
+  max-height: 100%;
   box-sizing: border-box;
   min-height: 114px;
   padding: 14px;

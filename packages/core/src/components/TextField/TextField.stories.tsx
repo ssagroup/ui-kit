@@ -191,6 +191,60 @@ export const Multiline: StoryObj<typeof TextField> = (args: Args) => {
 };
 Multiline.args = {};
 
+export const MultilineResizeVertical: StoryObj<typeof TextField> = (
+  args: Args,
+) => {
+  return (
+    <TextField
+      multirow
+      rows={10}
+      label="Textarea (vertical resize)"
+      placeholder="Textarea"
+      name="textarea"
+      helperText='Resize is limited to vertical only via css={{ resize: "vertical" }}'
+      register={args.register}
+      css={{ resize: 'vertical' }}
+    />
+  );
+};
+MultilineResizeVertical.args = {};
+MultilineResizeVertical.storyName = 'Multiline — Resize Vertical';
+MultilineResizeVertical.parameters = {
+  docs: {
+    description: {
+      story:
+        'Vertical-only resize. Pass `css={{ resize: "vertical" }}` to restrict the user to resizing only the height.',
+    },
+  },
+};
+
+export const MultilineResizeHorizontal: StoryObj<typeof TextField> = (
+  args: Args,
+) => {
+  return (
+    <TextField
+      multirow
+      rows={10}
+      label="Textarea (horizontal resize)"
+      placeholder="Textarea"
+      name="textarea"
+      helperText='Resize is limited to horizontal only via css={{ resize: "horizontal" }}'
+      register={args.register}
+      css={{ resize: 'horizontal' }}
+    />
+  );
+};
+MultilineResizeHorizontal.args = {};
+MultilineResizeHorizontal.storyName = 'Multiline — Resize Horizontal';
+MultilineResizeHorizontal.parameters = {
+  docs: {
+    description: {
+      story:
+        'Horizontal-only resize. Pass `css={{ resize: "horizontal" }}` to restrict the user to resizing only the width. ',
+    },
+  },
+};
+
 export const MultilineDisabled: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
@@ -214,13 +268,22 @@ export const MultilineNoResize: StoryObj<typeof TextField> = (args: Args) => {
       label="Textarea (resize disabled)"
       placeholder="Textarea"
       name="textarea-no-resize"
-      helperText="Resize handle is disabled via CSS"
+      helperText='Resize handle is disabled via css={{ resize: "none" }}'
       register={args.register}
       css={{ resize: 'none' }}
     />
   );
 };
 MultilineNoResize.args = {};
+MultilineNoResize.storyName = 'Multiline — No Resize';
+MultilineNoResize.parameters = {
+  docs: {
+    description: {
+      story:
+        'Resize fully disabled. Pass `css={{ resize: "none" }}` to remove the resize handle entirely.',
+    },
+  },
+};
 
 export const Focused: StoryObj<typeof TextField> = (args: Args) => {
   return <TextField {...args} />;
