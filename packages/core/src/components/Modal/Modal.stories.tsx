@@ -196,3 +196,11 @@ export const InsideDrawer: StoryObj<typeof Modal> = () => {
   );
 };
 InsideDrawer.args = {};
+InsideDrawer.parameters = {
+  docs: {
+    description: {
+      story:
+        'Uses `usePortal` on `ModalContent` to render the modal in `document.body`, so it is not constrained by Drawer width/overflow and stays centered in the full viewport.',
+    },
+  },
+};

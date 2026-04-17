@@ -101,6 +101,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       register,
       setCountChar,
       status = 'basic',
+      ...rest
     }: TextareaProps,
     ref?: React.ForwardedRef<HTMLTextAreaElement | null>,
   ) {
@@ -126,6 +127,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         onPaste={onPaste}
         title={title}
         status={status}
+        {...rest}
         {...registerResult}
         onChange={callAll(setCountChar, onChange)}
         ref={useMergeRefs([registerResult?.ref, ref])}
