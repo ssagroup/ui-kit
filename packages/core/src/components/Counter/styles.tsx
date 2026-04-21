@@ -23,7 +23,7 @@ export const variantStyles: VariantStyle = {
 };
 
 export const sizeStyles: CounterSizes = {
-  tiny: css`
+  dot: css`
     width: 8px;
     height: 8px;
   `,

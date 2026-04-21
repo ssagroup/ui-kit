@@ -16,15 +16,15 @@ export type VariantStyle = {
 };
 
 /**
- * Extends `MainSizes` with a `tiny` slot used internally when `count` is
+ * Extends `MainSizes` with a `dot` slot used internally when `count` is
  * undefined — renders a small dot with no label as a presence indicator.
  */
-export type CounterSizes = MainSizes & { tiny: SerializedStyles };
+export type CounterSizes = MainSizes & { dot: SerializedStyles };
 
 export type CounterProps = {
   /**
    * The numeric value to display. Values above 99 are clamped to `"99+"`.
-   * When omitted, the counter renders as a tiny dot (no label).
+   * When omitted, the counter renders as a dot with no label.
    */
   count?: number;
   /**
@@ -34,7 +34,7 @@ export type CounterProps = {
   variant?: CounterVariants;
   /**
    * Size of the counter.
-   * Ignored when `count` is undefined — the component uses `tiny` automatically.
+   * Ignored when `count` is undefined — the component uses `dot` automatically.
    * @default 'medium'
    */
   size?: keyof MainSizes;
