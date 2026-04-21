@@ -76,7 +76,7 @@ export const WithoutCount = {
     docs: {
       description: {
         story:
-          'When `count` is omitted the counter collapses to a tiny dot regardless of `size`. Useful as a presence or notification indicator with no number.',
+          'When `count` is omitted the counter collapses to a dot (`dot` size) regardless of the `size` prop. Useful as a presence or notification indicator with no number.',
       },
     },
   },

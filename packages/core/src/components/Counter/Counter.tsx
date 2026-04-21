@@ -15,7 +15,7 @@ const MAX_COUNT = 99;
  *
  * ### Sizing
  * Accepts `'small' | 'medium' | 'large'` via the `size` prop (default `'medium'`).
- * When `count` is omitted the counter shrinks to a tiny dot (`tiny` size) — useful
+ * When `count` is omitted the counter shrinks to a small dot (`dot` size) — useful
  * as a presence indicator with no number shown.
  *
  * ### Color
@@ -81,7 +81,7 @@ export const Counter = ({
   const label = !isEmpty && count > MAX_COUNT ? `${MAX_COUNT}+` : count;
 
   const appliedVariantStyle = variantStyles[variant](theme);
-  const appliedSizeStyle = sizeStyles[!isEmpty ? size : 'tiny'];
+  const appliedSizeStyle = sizeStyles[!isEmpty ? size : 'dot'];
 
   const colorOverride = color ? makeColorOverride(theme, color) : undefined;
 
