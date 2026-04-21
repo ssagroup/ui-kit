@@ -109,6 +109,9 @@ export type * from './Typography/types';
 export { default as Badge } from './Badge';
 export type * from './Badge/types';
 
+export * from './Counter';
+export type * from './Counter/types';
+
 export { default as Tag } from './Tag';
 export * from './Tag';
 export type * from './Tag/types';
