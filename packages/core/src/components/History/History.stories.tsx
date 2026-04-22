@@ -20,6 +20,9 @@ const meta = {
     lineColor: {
       control: 'color',
     },
+    lineWidth: {
+      control: { type: 'number', min: 1, step: 1 },
+    },
     dateWidth: {
       control: { type: 'number' },
     },
@@ -235,6 +238,7 @@ const itemsArr = [
 export const Default: StoryObj = ({
   defaultColor,
   lineColor,
+  lineWidth,
   dateWidth,
   circleSize,
 }: HistoryProps) => (
@@ -242,6 +246,7 @@ export const Default: StoryObj = ({
     <History
       defaultColor={defaultColor}
       lineColor={lineColor}
+      lineWidth={lineWidth}
       dateWidth={dateWidth}
       circleSize={circleSize}
       items={itemsArr}
@@ -252,12 +257,14 @@ export const Default: StoryObj = ({
 Default.args = {
   dateWidth: 120,
   circleSize: 12,
+  lineWidth: 2,
 };
 Default.storyName = 'History';
 
 export const CustomConnectorColor: StoryObj = ({
   defaultColor,
   lineColor,
+  lineWidth,
   dateWidth,
   circleSize,
 }: HistoryProps) => (
@@ -265,6 +272,7 @@ export const CustomConnectorColor: StoryObj = ({
     <History
       defaultColor={defaultColor}
       lineColor={lineColor}
+      lineWidth={lineWidth}
       dateWidth={dateWidth}
       circleSize={circleSize}
       items={itemsArr}
@@ -275,6 +283,7 @@ export const CustomConnectorColor: StoryObj = ({
 CustomConnectorColor.args = {
   dateWidth: 120,
   circleSize: 12,
+  lineWidth: 2,
   lineColor: ORANGE,
 };
 CustomConnectorColor.storyName = 'Custom Connector Color';
@@ -283,6 +292,40 @@ CustomConnectorColor.parameters = {
     description: {
       story:
         'Use the `lineColor` prop to override the default connector line color. By default the connector uses `theme.colors.greyFocused`.',
+    },
+  },
+};
+
+export const CustomConnectorWidth: StoryObj = ({
+  defaultColor,
+  lineColor,
+  lineWidth,
+  dateWidth,
+  circleSize,
+}: HistoryProps) => (
+  <div style={{ width: 560, padding: 24 }}>
+    <History
+      defaultColor={defaultColor}
+      lineColor={lineColor}
+      lineWidth={lineWidth}
+      dateWidth={dateWidth}
+      circleSize={circleSize}
+      items={itemsArr}
+    />
+  </div>
+);
+
+CustomConnectorWidth.args = {
+  dateWidth: 120,
+  circleSize: 12,
+  lineWidth: 4,
+};
+CustomConnectorWidth.storyName = 'Custom Connector Width';
+CustomConnectorWidth.parameters = {
+  docs: {
+    description: {
+      story:
+        'Use the `lineWidth` prop to control the connector line thickness in pixels. Defaults to `2`.',
     },
   },
 };

@@ -15,6 +15,7 @@ import {
 
 const DEFAULT_CIRCLE_SIZE = 12;
 const DEFAULT_DATE_WIDTH = 120;
+const DEFAULT_LINE_WIDTH = 2;
 const LEFT_COLUMN_MARGIN_RIGHT = 16;
 
 /**
@@ -28,6 +29,7 @@ const LEFT_COLUMN_MARGIN_RIGHT = 16;
  * - `defaultColor` is used when `item.color` is not provided
  * - fallback default marker color: `theme.palette.primary.main`
  * - fallback connector color: `theme.colors.greyFocused`
+ * - `lineWidth` controls the connector line thickness in pixels (default `2`)
  *
  * ### Alignment behavior
  * The marker is vertically aligned to the first text line and adapts when
@@ -50,6 +52,7 @@ export const History = ({
   items,
   defaultColor,
   lineColor,
+  lineWidth = DEFAULT_LINE_WIDTH,
   dateWidth = DEFAULT_DATE_WIDTH,
   circleSize = DEFAULT_CIRCLE_SIZE,
   sx,
@@ -81,6 +84,7 @@ export const History = ({
                     resolvedLineColor,
                     circleTopOffset,
                     circleSize,
+                    lineWidth,
                   )}
                 />
               )}
