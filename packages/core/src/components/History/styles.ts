@@ -41,7 +41,7 @@ export const connector = (
   transform: translateX(-50%);
   top: ${circleTopOffset + circleSize / 2}px;
   bottom: -${circleTopOffset + circleSize / 2}px;
-  width: 1px;
+  width: 2px;
   background-color: ${color};
 `;
 

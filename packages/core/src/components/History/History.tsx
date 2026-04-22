@@ -27,7 +27,7 @@ const LEFT_COLUMN_MARGIN_RIGHT = 16;
  * - `item.color` overrides the marker color for a specific row
  * - `defaultColor` is used when `item.color` is not provided
  * - fallback default marker color: `theme.palette.primary.main`
- * - fallback connector color: `theme.colors.greyLighter`
+ * - fallback connector color: `theme.colors.greyFocused`
  *
  * ### Alignment behavior
  * The marker is vertically aligned to the first text line and adapts when
@@ -57,7 +57,7 @@ export const History = ({
   const theme = useTheme();
   const resolvedDefaultColor =
     defaultColor ?? (theme.palette.primary.main as string);
-  const resolvedLineColor = lineColor ?? (theme.colors.greyLighter as string);
+  const resolvedLineColor = lineColor ?? (theme.colors.greyFocused as string);
   const circleTopOffset = Math.max(
     0,
     FIRST_LINE_TOP_PADDING + (FIRST_LINE_HEIGHT - circleSize) / 2,
