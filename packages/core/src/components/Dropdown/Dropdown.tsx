@@ -208,7 +208,8 @@ const Dropdown = <T extends DropdownOptionProps>({
   }, [isOpen]);
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
-
+  const some = 2;
+  console.log(some);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const items = (childrenArray as React.ReactElement<any>[]).map(
     (child, index) => {
