@@ -38,9 +38,14 @@ export interface HistoryProps {
   defaultColor?: string;
   /**
    * Connector line color between markers.
-   * Falls back to `theme.colors.greyLighter`.
+   * Falls back to `theme.colors.greyFocused`.
    */
   lineColor?: string;
+  /**
+   * Connector line width in pixels.
+   * @default 2
+   */
+  lineWidth?: number;
   /**
    * Width of the date column in pixels.
    * @default 120

@@ -35,13 +35,14 @@ export const connector = (
   color: string,
   circleTopOffset: number,
   circleSize: number,
+  lineWidth: number,
 ) => css`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   top: ${circleTopOffset + circleSize / 2}px;
   bottom: -${circleTopOffset + circleSize / 2}px;
-  width: 2px;
+  width: ${lineWidth}px;
   background-color: ${color};
 `;
 
