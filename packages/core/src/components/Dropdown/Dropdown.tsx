@@ -206,7 +206,7 @@ const Dropdown = <T extends DropdownOptionProps>({
     const spaceBelow = window.innerHeight - rect.bottom;
     setPlacement(spaceBelow < listHeight ? 'top' : 'bottom');
   }, [isOpen]);
-
+  console.log('test');
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
