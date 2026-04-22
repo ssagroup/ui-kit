@@ -7,6 +7,6 @@ export const baseConfig: Partial<CustomProjectConfig> = {
   apiKey: process.env.LOST_PIXEL_API_KEY,
   shotConcurrency: 10,
   compareConcurrency: 20,
-  waitBeforeScreenshot: 5000,
+  waitBeforeScreenshot: 6000,
   threshold: 0.02,
 };
