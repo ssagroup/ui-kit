@@ -116,7 +116,7 @@ const DropdownOptions = ({
   const options = (childrenArray as React.ReactElement<any>[]).map((child) => {
     const isActive = activeItem?.value === child.props.value;
     const avatar = child.props.avatar;
-
+    console.log(isActive);
     return React.cloneElement(
       child,
       {
