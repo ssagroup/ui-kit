@@ -1,4 +1,4 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as IconsStories from './Icons.stories';
 
 <Meta of={IconsStories} />
@@ -24,4 +24,9 @@ The grid below lists all available icon names. New icons added to the library ap
 <Canvas />
 <Controls />
 
-<Stories includePrimary={false} />
+## Color / Fill
+
+The `color` prop accepts any valid CSS color value and controls the fill of the icon paths. The default is `#000` (black). Use the color picker below to explore different fills across the full icon set.
+
+<Canvas of={IconsStories.CustomColor} />
+<Controls of={IconsStories.CustomColor} />

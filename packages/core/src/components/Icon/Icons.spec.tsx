@@ -7,13 +7,15 @@ import { screen } from '../../../customTest';
 const renderIcon = async (
   icon: keyof MapIconsType,
   size?: number,
+  iconName?: string,
   css?: SerializedStyles,
 ) => {
-  render(<Icon name={icon} size={size} color="#fff" css={css} />);
+  const iconTitle = icon.replaceAll('-', ' ');
+  render(
+    <Icon name={icon} size={size} tooltip={iconTitle} color="#fff" css={css} />,
+  );
 
-  const iconTitle = new RegExp(icon.replaceAll('-', ' '), 'i');
-
-  const titleEl = await screen.findByTitle(iconTitle);
+  const titleEl = await screen.findByTitle(new RegExp(iconTitle, 'i'));
   const svg = titleEl.closest('svg') as unknown as HTMLElement;
   const element =
     svg.querySelector('path') ||
@@ -51,6 +53,7 @@ describe('Icons', () => {
       const [icon] = await renderIcon(
         iconName as keyof MapIconsType,
         undefined,
+        iconName,
         css`
           background-color: magenta;
         `,
