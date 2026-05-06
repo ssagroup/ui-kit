@@ -12,6 +12,7 @@ module.exports = () => {
       '@themes': path.resolve(__dirname, './src/themes'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@global-types': path.resolve(__dirname, './src/types'),
+      '@utils': path.resolve(__dirname, './src/utils'),
     },
     // Override externals to bundle @nivo packages
     // This fixes the "ResponsiveWrapper is an object" issue where @nivo's

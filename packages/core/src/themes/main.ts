@@ -50,9 +50,11 @@ const main: Theme = {
     redLighter40: 'rgba(242, 136, 142, 0.4)', // #f2888e
     red: 'rgba(235, 117, 86, 1)', // #eb7556
     red6: 'rgba(235, 117, 86, 0.06)', // #eb7556
+    red6RGB: 'rgb(254, 245, 246)', // #FEF5F6
     redDark: 'rgba(229, 53, 14, 1)', // #e5350e
     red40: 'rgba(235, 117, 86, 0.4)', // #eb7556
     greenLighter: 'rgba(137, 217, 150, 1)', // #89d996
+    greenLighterRGB: 'rgb(246, 252, 247)', // #F6FCF7
     greenLighter6: 'rgba(137, 217, 150, 0.06)', // #89d996
     greenLighter20: 'rgba(137, 217, 150, 0.2)', // #89d996
     greenLighter40: 'rgba(137, 217, 150, 0.4)', // #89d996
@@ -76,6 +78,7 @@ const main: Theme = {
     yellow20: 'rgba(237, 153, 93, 0.2)', // #ed995d
     yellowLighter: 'rgba(237, 186, 93, 1)', // #edba5d
     yellowLighter20: 'rgba(237, 186, 93, 0.2)', // #edba5d
+    yellowLighter20RGB: 'rgb(254, 247, 242)', // #FEF7F2
     yellowLighter40: 'rgba(237, 186, 93, 0.4)', // #edba5d
     yellowWarm: 'rgba(237, 223, 93, 1)', // #eddf5d
     yellowWarm20: 'rgba(237, 223, 93, 0.2)', // #eddf5d
@@ -95,6 +98,7 @@ const main: Theme = {
     purpleDark40: 'rgba(156, 122, 235, 0.4)', // #9c7aeb
     blue: 'rgba(65, 120, 225, 1)', // #4178e1
     blue6: 'rgba(65, 120, 225, 0.06)', // #4178e1
+    blue6RGB: 'rgb(244, 247, 252)', // #F4F7FC
     blue20: 'rgba(65, 120, 225, 0.2)', // #4178e1
     blueCool: 'rgba(108, 148, 247, 1)', // #6c94f7
     blueDark: 'rgba(36, 101, 227, 1)', // #2465e3

@@ -1,0 +1,260 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as AlertStories from './Alert.stories';
+
+<Meta of={AlertStories} />
+
+# Alert
+
+Imperative, portal-based notification banners for system feedback messages.
+
+`Alert` uses an **Observer pattern**: mount the component once near your app root, then call `showAlert(...)` from anywhere — event handlers, async callbacks, API layers — with no prop drilling required.
+
+---
+
+## Setup
+
+Mount `<Alert>` once, high up in your component tree (app shell, layout root, etc.).
+It renders nothing visible on its own and only becomes active when `showAlert` is called.
+
+```tsx
+import { Alert, NotificationPositions } from '@ssa-ui-kit/core';
+
+function AppRoot() {
+  return (
+    <>
+      <Alert position={NotificationPositions.rightTop} withShadow />
+      <App />
+    </>
+  );
+}
+```
+
+---
+
+## Triggering alerts
+
+Import `showAlert` from anywhere in your app and call it with a `DynamicAlertParams` object.
+
+```tsx
+import { showAlert, AlertVariants } from '@ssa-ui-kit/core';
+
+// Minimal — only variant is required
+showAlert({ variant: AlertVariants.success });
+
+// Full
+showAlert({
+  variant: AlertVariants.error,
+  title: 'Upload failed',
+  description: 'The file exceeds the 10 MB limit. Please choose a smaller file.',
+  cancelText: 'Dismiss',
+  submitText: 'Retry',
+  onSubmit: () => retryUpload(),
+  onClose: () => trackDismiss('upload-error'),
+});
+```
+
+### `DynamicAlertParams`
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `variant` | `AlertVariants` | ✓ | Visual style and icon for this alert |
+| `title` | `string` | — | Bold heading text |
+| `description` | `string` | — | Supporting body text. When omitted the alert renders in **collapsed** (single-line) mode |
+| `cancelText` | `string` | — | Dismiss button label. Overrides the component-level default. Button is hidden when this or `onClose` is absent |
+| `submitText` | `string` | — | Confirm button label. Overrides the component-level default. Button is hidden when this or `onSubmit` is absent |
+| `size` | `NotificationSizes` | — | Card width for this individual alert. Overrides the component-level default |
+| `onClose` | `() => void` | — | Called when the alert is dismissed. **Required for the cancel button to appear** |
+| `onSubmit` | `() => void` | — | Called when the confirm button is clicked. **Required for the submit button to appear** |
+
+> **Action buttons are opt-in.** A button only renders when both its label text *and* its callback are provided. To show neither button, omit `onClose` and `onSubmit` entirely.
+
+---
+
+## Layouts
+
+Alerts adapt their layout automatically based on content:
+
+**Expanded** — when `description` is provided:
+```
+[icon]  Headline                           [×]
+        You can insert a description here.
+        Cancel   Submit
+```
+
+**Collapsed** — when only `title` is provided:
+```
+[icon]  Headline              Cancel  Submit  [×]
+```
+
+---
+
+## Variants
+
+Each variant maps to a semantic icon and color from the theme.
+
+| Value | Icon | Use case |
+|---|---|---|
+| `AlertVariants.success` | `check-circle` | Confirmation, saved state, completed action |
+| `AlertVariants.warning` | `attention-circle` | Potential issue, action required |
+| `AlertVariants.error` | `attention-circle` | Failure, destructive outcome, blocked action |
+| `AlertVariants.hint` | `information` | Informational guidance, tips |
+| `AlertVariants.neutral` | `check-circle` | Generic notifications without semantic weight |
+| `AlertVariants.default` | `check-circle` | Fallback, lowest visual emphasis |
+
+```tsx
+showAlert({ variant: AlertVariants.success, title: 'Profile saved' });
+showAlert({ variant: AlertVariants.error, title: 'Connection lost', description: 'Reconnecting…' });
+showAlert({ variant: AlertVariants.hint, title: 'Tip', description: 'Press ⌘K to open the command palette.' });
+```
+
+---
+
+## Positions
+
+Six fixed positions control where the alert stack appears in the viewport.
+New alerts are **prepended** for `*-top` positions (newest on top) and **appended** for `*-bottom` positions (newest at bottom).
+
+| Value | Location |
+|---|---|
+| `NotificationPositions.rightTop` | Top-right corner **(default)** |
+| `NotificationPositions.rightBottom` | Bottom-right corner |
+| `NotificationPositions.leftTop` | Top-left corner |
+| `NotificationPositions.leftBottom` | Bottom-left corner |
+| `NotificationPositions.centerTop` | Centered at the top |
+| `NotificationPositions.centerBottom` | Centered at the bottom |
+
+Slide-in animation direction follows the position:
+`right-*` → from right · `left-*` → from left · `center-top` → from top · `center-bottom` → from bottom.
+
+---
+
+## Sizes
+
+Controls the **width** of every alert card rendered by this `<Alert>` instance.
+Individual alerts can override this via `size` in `showAlert`.
+
+| Value | Width |
+|---|---|
+| `NotificationSizes.small` | 400 px **(default)** |
+| `NotificationSizes.large` | 760 px |
+
+Both sizes include `max-width: calc(100vw - 32px)`, so cards shrink gracefully on narrow screens without overflowing the viewport.
+Text wraps automatically — no truncation.
+
+---
+
+## `withBorder`, `withShadow`, `inheritMainColor`
+
+```tsx
+<Alert withShadow withBorder inheritMainColor />
+```
+
+| Prop | Default | Effect |
+|---|---|---|
+| `withShadow` | `true` | Drop shadow on each card |
+| `withBorder` | `false` | 1 px border using the variant's accent color |
+| `inheritMainColor` | `false` | Close icon (×) color inherits the variant's accent color |
+
+---
+
+## Stack limit — `maxAmount`
+
+Cap how many alerts are visible at once. When a new alert arrives and the stack is already full,
+the oldest one is silently dropped to make room.
+
+```tsx
+<Alert maxAmount={3} position={NotificationPositions.rightTop} />
+```
+
+Trimming direction matches the stacking order:
+
+| Position | Newest appears at | Oldest dropped from |
+|---|---|---|
+| `*-top` | Top of stack | Bottom of stack |
+| `*-bottom` | Bottom of stack | Top of stack |
+
+When `maxAmount` is omitted there is no limit.
+
+---
+
+## Portal target
+
+By default all alerts portal into `document.body`.
+Pass a `containerSelector` to mount into a different element:
+
+```tsx
+<Alert containerSelector="#notification-panel" position={NotificationPositions.rightTop} />
+```
+
+Falls back to `document.body` when the selector matches nothing.
+
+---
+
+## Style customization
+
+The `styles` prop accepts an `AlertStyleOverrides` object merged **after** all default and variant-derived styles — overrides always win. Use it to restyle any part of the card without modifying the global theme.
+
+### CSS slots
+
+| Slot | Targets |
+|---|---|
+| `root` | Card wrapper — background, border-radius, padding, box-shadow, border |
+| `icon` | Status icon wrapper div |
+| `title` | Title element |
+| `description` | Description paragraph |
+| `actions` | Actions row wrapper div |
+| `actionButton` | Cancel and submit buttons |
+| `closeButton` | Close (×) button wrapper |
+
+### Color shorthands
+
+These two exist because `<Icon>` receives its fill via a prop, not CSS inheritance:
+
+| Key | Targets |
+|---|---|
+| `iconColor` | Fill color of the status icon |
+| `closeIconColor` | Fill color of the close (×) icon |
+
+Passing `background: 'navy'` inside `root` resets any tint correctly — the CSS `background` shorthand clears both `background-color` and `background-image` sub-properties.
+
+### Examples
+
+**Dark theme**
+
+```tsx
+<Alert
+  styles={{
+    root:           { background: '#1e1e2e', borderRadius: 6 },
+    title:          { color: '#e2e8f0' },
+    description:    { color: 'rgba(226, 232, 240, 0.6)' },
+    actionButton:   { color: '#a78bfa' },
+    iconColor:      '#a78bfa',
+    closeIconColor: 'rgba(226, 232, 240, 0.45)',
+  }}
+/>
+```
+
+**Brand override**
+
+```tsx
+<Alert
+  withBorder
+  styles={{
+    root:           { background: '#f0f5ff' },
+    title:          { color: '#1e3a8a', fontWeight: 700 },
+    description:    { color: '#1d4ed8' },
+    actionButton:   { color: '#2563eb', fontWeight: 600 },
+    iconColor:      '#2563eb',
+    closeIconColor: '#2563eb',
+  }}
+/>
+```
+
+---
+
+## Full `<Alert>` props reference
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />

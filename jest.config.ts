@@ -114,6 +114,11 @@ const config: JestConfigWithTsJest = {
         '^@components$': '<rootDir>/packages/core/src/components/index',
         '^@components/Charts/utils/nivoReact19Compat$':
           '<rootDir>/__mocks__/@components-charts-utils.ts',
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
+        ],
         '^d3-color$': '<rootDir>/__mocks__/d3-color.ts',
         '^@nivo/core$': '<rootDir>/__mocks__/@nivo-charts.ts',
         '^@nivo/pie$': '<rootDir>/__mocks__/@nivo-charts.ts',
@@ -129,6 +134,11 @@ const config: JestConfigWithTsJest = {
         '^@components$': '<rootDir>/packages/core/src/components/index',
         '^@components/Charts/utils/nivoReact19Compat$':
           '<rootDir>/__mocks__/@components-charts-utils.ts',
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
+        ],
         '^@hooks/(.*)$': [
           '<rootDir>/packages/hooks/src/hooks/$1',
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
@@ -174,6 +184,11 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/core/src/contexts/$1',
           '<rootDir>/packages/core/src/contexts/$1.ts',
           '<rootDir>/packages/core/src/contexts/$1.tsx',
+        ],
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
         ],
         '^@storybook-assets/(.*)$': [
           '<rootDir>/packages/core/.storybook/assets/$1',
@@ -243,6 +258,11 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
           '<rootDir>/packages/hooks/src/hooks/$1.tsx',
         ],
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
+        ],
         '^@ssa-ui-kit/core$': '<rootDir>/packages/core/src/index.ts',
         '^@ssa-ui-kit/hooks$': '<rootDir>/packages/hooks/src/index.ts',
         '^@ssa-ui-kit/utils$': '<rootDir>/packages/utils/src/index.ts',
@@ -294,6 +314,11 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
           '<rootDir>/packages/hooks/src/hooks/$1.tsx',
         ],
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
+        ],
         '^@ssa-ui-kit/core$': '<rootDir>/packages/core/src/index.ts',
         '^@ssa-ui-kit/widgets$': '<rootDir>/packages/widgets/src/index.ts',
         '^@ssa-ui-kit/hooks$': '<rootDir>/packages/hooks/src/index.ts',
@@ -338,6 +363,11 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
           '<rootDir>/packages/hooks/src/hooks/$1.tsx',
         ],
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
+        ],
         '^@ssa-ui-kit/core$': '<rootDir>/packages/core/src/index.ts',
         '^@ssa-ui-kit/hooks$': '<rootDir>/packages/hooks/src/index.ts',
         '^@ssa-ui-kit/utils$': '<rootDir>/packages/utils/src/index.ts',
@@ -373,6 +403,11 @@ const config: JestConfigWithTsJest = {
           '<rootDir>/packages/hooks/src/hooks/$1',
           '<rootDir>/packages/hooks/src/hooks/$1.ts',
           '<rootDir>/packages/hooks/src/hooks/$1.tsx',
+        ],
+        '^@utils/(.*)$': [
+          '<rootDir>/packages/core/src/utils/$1',
+          '<rootDir>/packages/core/src/utils/$1.ts',
+          '<rootDir>/packages/core/src/utils/$1.tsx',
         ],
         '^@ssa-ui-kit/core$': '<rootDir>/packages/core/src/index.ts',
         '^@ssa-ui-kit/widgets$': '<rootDir>/packages/widgets/src/index.ts',

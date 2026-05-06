@@ -214,6 +214,13 @@ export * from './NotificationCard';
 export * from './NotificationMenu';
 
 // ============================================================================
+// Notification Components
+// ============================================================================
+// Alert, Toast, and Notification banners (Observer-driven, portal-based)
+
+export * from './NotificationComponents';
+
+// ============================================================================
 // Specialized Components
 // ============================================================================
 // Domain-specific components and composite widgets
