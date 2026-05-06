@@ -125,3 +125,4 @@ export * as EmailOutlined from './EmailOutlined';
 export * as LockOutlined from './LockOutlined';
 export * as AddFolder from './AddFolder';
 export * as MoveFolder from './MoveFolder';
+export * as AttentionCircle from './AttentionCircle';

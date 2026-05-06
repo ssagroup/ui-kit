@@ -16,7 +16,8 @@
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
       "@global-types/*": ["./src/types/*"],
-      "@storybook-assets/*": ["./.storybook/assets/*"]
+      "@storybook-assets/*": ["./.storybook/assets/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": [
