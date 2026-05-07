@@ -12,7 +12,7 @@
  * - **`renderProp`** for fully custom inner content
  */
 
-import { FC, JSX, useEffect, useRef, useState } from 'react';
+import { FC, JSX } from 'react';
 
 import { useTheme } from '@emotion/react';
 
@@ -24,6 +24,7 @@ import {
 import { ColorsKeys } from '@global-types/emotion';
 
 import { darkenColor, getContrastColor, isColorDark } from '@utils/colorUtils';
+import { useAutoDismiss } from '../hooks/useAutoDismiss';
 import * as styles from './styles';
 import { ToastVariants } from './types';
 
@@ -133,36 +134,13 @@ export const ToastItem: FC<ToastItemProps> = ({
 
   // ─── Auto-dismiss with hover-pause ──────────────────────────────────────────
 
-  const [isPaused, setIsPaused] = useState(false);
-  // Tracks remaining ms so hover-resume restarts from where it was, not from full timeout
-  const remainingRef = useRef(timeout);
-  const startTimeRef = useRef(0);
-
-  useEffect(() => {
-    if (!timeout || isPaused) return;
-
-    startTimeRef.current = Date.now();
-    const timer = setTimeout(() => {
+  const { isPaused, handleMouseEnter, handleMouseLeave } = useAutoDismiss(
+    timeout,
+    () => {
       onRemove(id);
       onClose?.();
-    }, remainingRef.current);
-
-    return () => clearTimeout(timer);
-  }, [isPaused]);
-
-  const handleMouseEnter = () => {
-    if (!timeout) return;
-    const elapsed = Date.now() - startTimeRef.current;
-    remainingRef.current = Math.max(
-      0,
-      (remainingRef.current ?? timeout) - elapsed,
-    );
-    setIsPaused(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-  };
+    },
+  );
 
   // ─── Dismiss helpers ────────────────────────────────────────────────────────
 

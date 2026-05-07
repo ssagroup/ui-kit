@@ -1,0 +1,318 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as NotificationStories from './Notification.stories';
+
+<Meta of={NotificationStories} />
+
+# Notification
+
+Persistent, social-style notification cards — the kind you'd find in an inbox or activity feed.
+
+`Notification` uses the same **Observer pattern** as `Alert` and `Toast`: mount the component once near your app root, then call `showNotification(...)` from anywhere — event handlers, async callbacks, server events — with no prop drilling required.
+
+The key difference from `Toast` is that notifications are **persistent by default** — they stay visible until the user closes them (or until a per-notification `timeout` is set). They also support a pre-formatted `date` string and a flexible left `icon` (named string, custom `ReactNode`, or default `"user"`).
+
+---
+
+## Setup
+
+Mount `<Notification>` once, high up in your component tree (app shell, layout root, etc.).
+It renders nothing visible on its own and only activates when `showNotification` is called.
+
+```tsx
+import { Notification, NotificationPositions } from '@ssa-ui-kit/core';
+
+function AppRoot() {
+  return (
+    <>
+      <Notification position={NotificationPositions.rightBottom} withShadow />
+      <App />
+    </>
+  );
+}
+```
+
+---
+
+## Triggering notifications
+
+Import `showNotification` from anywhere and call it with a `DynamicNotificationParams` object.
+
+```tsx
+import { showNotification, NotificationVariants } from '@ssa-ui-kit/core';
+
+// Minimal
+showNotification({ variant: NotificationVariants.default, title: 'John Doe' });
+
+// With avatar and timestamp
+showNotification({
+  variant: NotificationVariants.neutral,
+  title: 'Jane Smith',
+  date: '5 minutes ago',
+  description: 'Left a comment on your post.',
+  icon: <img src={avatarUrl} alt="Jane" style={{ width: 36, height: 36, borderRadius: '50%' }} />,
+});
+
+// With auto-dismiss override
+showNotification({
+  variant: NotificationVariants.dark,
+  title: 'System',
+  date: 'Just now',
+  description: 'Deployment completed successfully.',
+  timeout: 5000,
+});
+```
+
+### `DynamicNotificationParams`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `variant` | `NotificationVariants` | **required** | Visual style for this notification |
+| `title` | `string` | — | Bold heading text (typically the sender name) |
+| `date` | `string` | — | Pre-formatted timestamp string, e.g. `"11 days ago"`. Rendered as-is — no internal date formatting |
+| `description` | `string` | — | Body text. When provided the card renders in **expanded** layout |
+| `icon` | `string` or `ReactNode` | `"user"` | Left column icon. See [Icon](#icon--left-column) |
+| `color` | `ColorsKeys` or `string` | — | Solid background color. Auto-derives text, icon, and border colors for contrast. Overrides the variant token colors |
+| `timeout` | `number` or `undefined` | component default | Auto-dismiss duration in ms for this notification. `undefined` keeps it persistent |
+| `cancelText` | `string` | component default | Dismiss button label. Button only renders when this **and** `onClose` are both provided |
+| `submitText` | `string` | component default | Confirm button label. Button only renders when this **and** `onSubmit` are both provided |
+| `size` | `NotificationSizes` | component default | Card width for this individual notification |
+| `onClose` | `() => void` | — | Called when the notification is dismissed. Required for the cancel button to appear |
+| `onSubmit` | `() => void` | — | Called when the confirm button is clicked. Required for the submit button to appear |
+
+> **Action buttons are opt-in.** A button only renders when both its label text *and* its callback are provided.
+
+---
+
+## Layouts
+
+Notifications adapt their layout based on content:
+
+**Expanded** — when `description` is provided:
+```
+[icon]  Name Surname        11 days ago  [×]
+        You can insert a description here.
+        Dismiss   View
+```
+
+**Collapsed** — title and date only:
+```
+[icon]  Name Surname        11 days ago  [×]
+```
+
+---
+
+## Icon — left column
+
+The `icon` prop accepts three forms:
+
+```tsx
+// 1. Named icon string — rendered via <Icon> with auto-contrast color
+showNotification({ variant: NotificationVariants.default, title: 'Alert', icon: 'bell' });
+
+// 2. Custom ReactNode — rendered as-is, sizing and colors fully controlled by consumer
+showNotification({
+  variant: NotificationVariants.neutral,
+  title: 'Jane Doe',
+  icon: (
+    <img
+      src={avatarUrl}
+      alt="Jane"
+      style={{ width: 36, height: 36, borderRadius: '50%' }}
+    />
+  ),
+});
+
+// 3. Omitted — falls back to the "user" icon
+showNotification({ variant: NotificationVariants.default, title: 'System' });
+```
+
+**Icon size** (for named icon strings): `36px` for `small` cards, `46px` for `large` cards.
+For custom `ReactNode` icons, sizing is entirely the consumer's responsibility.
+
+---
+
+## Auto-dismiss — `timeout`
+
+Notifications are **persistent by default** — unlike `Toast`, the component-level `timeout` defaults to `undefined`.
+Pass a `timeout` to enable auto-dismiss for all notifications in this stack, or override per-notification via `showNotification`.
+
+```tsx
+// Component-level default — every notification auto-dismisses after 6 s
+<Notification timeout={6000} />
+
+// Disable auto-dismiss for a specific notification (overrides component default)
+showNotification({ variant: NotificationVariants.default, title: 'John', timeout: undefined });
+
+// Override timeout for a specific notification
+showNotification({ variant: NotificationVariants.dark, title: 'System', timeout: 3000 });
+```
+
+**Hover to pause** — when the user hovers over a notification with an active timer, the timer pauses and resumes when they move away.
+
+**Timeout precedence:**
+
+| Source | Wins when |
+|---|---|
+| `showNotification({ timeout })` | always (per-notification overrides everything) |
+| `<Notification timeout={…} />` | no per-notification override present |
+| `undefined` (persistent) | neither provided |
+
+---
+
+## Variants
+
+| Value | Background | Use case |
+|---|---|---|
+| `NotificationVariants.default` | Light grey | General notifications, inbox items |
+| `NotificationVariants.neutral` | White | Clean, minimal look |
+| `NotificationVariants.dark` | Dark grey | High-contrast, prominent items |
+
+```tsx
+showNotification({ variant: NotificationVariants.default, title: 'Jane Smith', date: '2m ago' });
+showNotification({ variant: NotificationVariants.dark,    title: 'System',     date: 'Just now' });
+```
+
+---
+
+## Custom color — `color` prop
+
+Pass a single `color` to override the variant background with a solid color.
+Text, icon tint, and border are **auto-derived** using WCAG luminance:
+
+| Background | Text / close icon | Icon (named) | Border |
+|---|---|---|---|
+| Dark (L < 0.18) | White | White | 35%-darkened shade |
+| Light | `greyDarker` | 35%-darkened shade | 35%-darkened shade |
+
+```tsx
+// Theme color key
+showNotification({ variant: NotificationVariants.default, color: 'purple', title: 'System' });
+
+// Any CSS color
+showNotification({ variant: NotificationVariants.default, color: '#f59e0b', title: 'Warning' });
+```
+
+When `color` is set the variant token colors (background, icon tint, border) are fully ignored.
+
+> **Custom ReactNode icons** are not tinted — their appearance is entirely up to the consumer.
+
+---
+
+## Style overrides — `styles` prop
+
+Pass a `NotificationStyleOverrides` object to `<Notification>` to customize individual parts of every card in this stack, without touching the global theme.
+
+```tsx
+<Notification
+  styles={{
+    root:        { borderRadius: 4, background: '#f5f3ff', border: '2px solid #6366f1' },
+    title:       { color: '#4338ca', fontWeight: 700 },
+    date:        { color: '#a5b4fc' },
+    description: { color: '#4b5563' },
+    iconColor:   '#6366f1',
+  }}
+/>
+```
+
+### Available slots
+
+| Slot | Type | Targets |
+|---|---|---|
+| `root` | `CSSObject` | Card wrapper — background, border-radius, padding, shadow, border |
+| `icon` | `CSSObject` | Icon column wrapper `<div>` |
+| `iconColor` | `string` | Fill color for named icon (no effect on custom `ReactNode`) |
+| `title` | `CSSObject` | Title `<span>` |
+| `date` | `CSSObject` | Date `<span>` |
+| `description` | `CSSObject` | Description `<p>` |
+| `actions` | `CSSObject` | Actions row `<div>` |
+| `actionButton` | `CSSObject` | Cancel and submit `<button>` elements |
+| `closeButton` | `CSSObject` | Close (×) `<button>` wrapper |
+| `closeIconColor` | `string` | Fill color for the × icon |
+
+Slot styles are applied **after** all default styles, so you only need to specify properties you want to override.
+
+---
+
+## Positions
+
+Six fixed positions control where the notification stack appears in the viewport.
+Default is **`rightBottom`** (bottom-right corner).
+
+| Value | Location |
+|---|---|
+| `NotificationPositions.rightBottom` | Bottom-right corner **(default)** |
+| `NotificationPositions.rightTop` | Top-right corner |
+| `NotificationPositions.leftBottom` | Bottom-left corner |
+| `NotificationPositions.leftTop` | Top-left corner |
+| `NotificationPositions.centerBottom` | Centered at the bottom |
+| `NotificationPositions.centerTop` | Centered at the top |
+
+New notifications are **prepended** for `*-top` positions (newest on top) and **appended** for `*-bottom` positions (newest at bottom).
+Slide-in animation direction follows the position: `right-*` → from right · `left-*` → from left · `center-top` → from top · `center-bottom` → from bottom.
+
+---
+
+## Sizes
+
+Controls the **width** of every notification card rendered by this `<Notification>` instance.
+Individual notifications can override this via `size` in `showNotification`.
+
+| Value | Width |
+|---|---|
+| `NotificationSizes.small` | 400 px **(default)** |
+| `NotificationSizes.large` | 760 px |
+
+Both sizes include `max-width: calc(100vw - 32px)`, so cards shrink gracefully on narrow screens.
+
+---
+
+## Stack limit — `maxAmount`
+
+Cap how many notifications are visible at once. When a new notification arrives and the stack is full,
+the oldest one is silently dropped.
+
+```tsx
+<Notification maxAmount={5} position={NotificationPositions.rightBottom} />
+```
+
+| Position | Newest appears at | Oldest dropped from |
+|---|---|---|
+| `*-top` | Top of stack | Bottom of stack |
+| `*-bottom` | Bottom of stack | Top of stack |
+
+When `maxAmount` is omitted there is no limit.
+
+---
+
+## `withBorder`, `withShadow`
+
+```tsx
+<Notification withShadow withBorder />
+```
+
+| Prop | Default | Effect |
+|---|---|---|
+| `withShadow` | `true` | Drop shadow on each card |
+| `withBorder` | `false` | 1 px border using the variant's border color (or darkened `color` shade when `color` is set) |
+
+---
+
+## Portal target
+
+By default all notifications portal into `document.body`.
+Pass a `containerSelector` to mount into a different element:
+
+```tsx
+<Notification containerSelector="#notification-region" position={NotificationPositions.rightBottom} />
+```
+
+Falls back to `document.body` when the selector matches nothing.
+
+---
+
+## Full `<Notification>` props reference
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
