@@ -1,4 +1,4 @@
-import { FC, useEffect, useId, useRef, useState } from 'react';
+import { FC, useEffect, useEffectEvent, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -93,40 +93,31 @@ const Alert: FC<AlertProps> = ({
   // overwriting the other's observer subscription.
   const instanceId = useId();
 
-  // useRef keeps the subscription callback stable (created once in useEffect)
-  // while still reading the *current* prop values on every dispatch.
-  // Without refs, the callback would close over stale values from the first render,
-  // and re-subscribing on every change would risk duplicate or missed events.
-  const positionRef = useRef(position);
-  positionRef.current = position;
+  // useEffectEvent gives us a stable function reference that always reads the
+  // latest prop values — no manual refs needed. The effect subscribes once and
+  // never re-runs, while the handler always sees fresh position, maxAmount, etc.
+  const handleDispatch = useEffectEvent((params: DynamicAlertParams) => {
+    const newAlert: ActiveAlert = { ...params, id: generateAlertId() };
 
-  const maxAmountRef = useRef(maxAmount);
-  maxAmountRef.current = maxAmount;
+    setAlerts((prev) => {
+      const isTop = position.includes('top');
+      // top-*:    prepend so newest is at index 0 (top of the visual stack)
+      // bottom-*: append  so newest is at the end   (bottom of the visual stack)
+      const next = isTop ? [newAlert, ...prev] : [...prev, newAlert];
+
+      if (maxAmount && next.length > maxAmount) {
+        // top-*:    oldest is at the end   → keep the first  `maxAmount` entries
+        // bottom-*: oldest is at the start → keep the last   `maxAmount` entries
+        return isTop ? next.slice(0, maxAmount) : next.slice(-maxAmount);
+      }
+
+      return next;
+    });
+  });
 
   useEffect(() => {
-    alertObserver.subscribe(instanceId, (params: DynamicAlertParams) => {
-      const newAlert: ActiveAlert = { ...params, id: generateAlertId() };
-
-      setAlerts((prev) => {
-        const isTop = positionRef.current.includes('top');
-        // top-*:    prepend so newest is at index 0 (top of the visual stack)
-        // bottom-*: append  so newest is at the end   (bottom of the visual stack)
-        const next = isTop ? [newAlert, ...prev] : [...prev, newAlert];
-
-        const limit = maxAmountRef.current;
-        if (limit && next.length > limit) {
-          // top-*:    oldest is at the end   → keep the first  `limit` entries
-          // bottom-*: oldest is at the start → keep the last   `limit` entries
-          return isTop ? next.slice(0, limit) : next.slice(-limit);
-        }
-
-        return next;
-      });
-    });
-
-    return () => {
-      alertObserver.unsubscribe(instanceId);
-    };
+    alertObserver.subscribe(instanceId, handleDispatch);
+    return () => alertObserver.unsubscribe(instanceId);
   }, []);
 
   const removeAlert = (id: string) => {
@@ -157,6 +148,7 @@ const Alert: FC<AlertProps> = ({
           styleOverrides={styles}
           id={alert.id}
           variant={alert.variant}
+          color={alert.color}
           title={alert.title}
           description={alert.description}
           onClose={alert.onClose}

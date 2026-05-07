@@ -169,6 +169,44 @@ describe('AlertItem', () => {
     });
   });
 
+  describe('color prop', () => {
+    it('renders without throwing when a hex color is provided', () => {
+      expect(() => setup({ title: 'Title', color: '#1e293b' })).not.toThrow();
+    });
+
+    it('renders without throwing when a theme color key is provided', () => {
+      expect(() => setup({ title: 'Title', color: 'purple' })).not.toThrow();
+    });
+
+    it('still renders title and description when color is set', () => {
+      const { getByText } = setup({
+        title: 'Branded',
+        description: 'Custom color alert.',
+        color: '#f59e0b',
+      });
+      expect(getByText('Branded')).toBeInTheDocument();
+      expect(getByText('Custom color alert.')).toBeInTheDocument();
+    });
+
+    it('still renders action buttons when color is set', () => {
+      const { getByText } = setup({
+        title: 'Title',
+        color: '#1e293b',
+        onClose: jest.fn(),
+        onSubmit: jest.fn(),
+      });
+      expect(getByText('Cancel')).toBeInTheDocument();
+      expect(getByText('Submit')).toBeInTheDocument();
+    });
+
+    it('renders the close button when color is set', () => {
+      const { getAllByRole } = setup({ title: 'Title', color: '#1e293b' });
+      expect(
+        getAllByRole('button', { name: /close alert/i }).length,
+      ).toBeGreaterThanOrEqual(1);
+    });
+  });
+
   describe('expanded vs collapsed layout', () => {
     it('shows cancel/submit in the content column in expanded layout', () => {
       const { getByText } = setup({

@@ -368,6 +368,145 @@ export const CustomStyles: Story = {
   },
 };
 
+// ─── Custom Color ─────────────────────────────────────────────────────────────
+
+interface ColorPreset {
+  label: string;
+  color: string;
+  note?: string;
+}
+
+const COLOR_PRESETS: ColorPreset[] = [
+  {
+    label: 'purple — theme, dark bg',
+    color: 'purple',
+    note: 'Dark background → white text/icons, darkened-purple border',
+  },
+  {
+    label: 'greenLighter — theme, light bg',
+    color: 'greenLighter',
+    note: 'Light background → dark text, darkened-green icon & border',
+  },
+  {
+    label: 'turquoiseLighter — theme, light bg',
+    color: 'turquoiseLighter',
+    note: 'Light background → dark text, darkened-teal accent',
+  },
+  {
+    label: '#1e293b — custom CSS, dark bg',
+    color: '#1e293b',
+    note: 'Arbitrary dark hex → white text/icons, darkened border',
+  },
+  {
+    label: '#f59e0b — custom CSS, light bg',
+    color: '#f59e0b',
+    note: 'Amber hex → dark text, darkened amber border',
+  },
+];
+
+export const CustomColor: Story = {
+  render: (args) => (
+    <div
+      css={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 40,
+        padding: '32px 24px',
+        maxWidth: 900,
+      }}>
+      <Alert {...args} />
+
+      {COLOR_PRESETS.map((preset) => (
+        <section key={preset.label}>
+          <div css={{ marginBottom: 12 }}>
+            <p
+              css={{
+                margin: '0 0 2px',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                color: '#6b7280',
+              }}>
+              {preset.label}
+            </p>
+            {preset.note && (
+              <p css={{ margin: 0, fontSize: 11, color: '#9ca3af' }}>
+                {preset.note}
+              </p>
+            )}
+          </div>
+
+          <div css={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {/* Expanded */}
+            <AlertItem
+              {...staticItemBase}
+              variant={AlertVariants.success}
+              color={preset.color}
+              title="Headline"
+              description={SAMPLE_DESCRIPTION}
+              withShadow
+              withBorder
+            />
+            {/* Collapsed */}
+            <AlertItem
+              {...staticItemBase}
+              variant={AlertVariants.hint}
+              color={preset.color}
+              title="Headline"
+              withShadow
+            />
+          </div>
+        </section>
+      ))}
+
+      <div
+        css={{
+          borderTop: '1px solid #e5e7eb',
+          paddingTop: 24,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 12,
+        }}>
+        <p css={{ margin: 0, fontSize: 13, color: '#6b7280' }}>
+          Fire live alerts with each color preset.
+        </p>
+        <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          {COLOR_PRESETS.map((preset) => (
+            <Button
+              key={preset.label}
+              variant="secondary"
+              size="small"
+              onClick={() =>
+                showAlert({
+                  variant: AlertVariants.success,
+                  color: preset.color,
+                  title: 'Headline',
+                  description: SAMPLE_DESCRIPTION,
+                  onClose: () => {},
+                })
+              }>
+              {preset.color}
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Demonstrates the `color` prop auto-contrast system. ' +
+          'Two **dark** backgrounds (`purple`, `#1e293b`) produce white text and icons. ' +
+          'Three **light** backgrounds (`greenLighter`, `turquoiseLighter`, `#f59e0b`) produce dark text with a darkened accent for the icon and border. ' +
+          'The `variant` prop is still required (it picks the icon shape) but its token colors are fully overridden by `color`.',
+      },
+    },
+  },
+};
+
 // ─── Max Amount ───────────────────────────────────────────────────────────────
 
 const VARIANTS = Object.values(AlertVariants);

@@ -4,6 +4,7 @@ import {
   GlobalSharedProps,
   DynamicProps,
 } from '@components/NotificationComponents/types';
+import { ColorsKeys } from '@global-types/emotion';
 
 export enum AlertVariants {
   success = 'success',
@@ -61,6 +62,15 @@ export interface AlertStyleOverrides {
 }
 
 export interface AlertProps extends GlobalSharedProps {
+  /**
+   * When set, overrides the variant's background with a solid color and
+   * auto-derives text, icon, and border colors for contrast.
+   * Accepts a theme color key (e.g. `'purple'`) or any CSS color string
+   * (e.g. `'#1e293b'`, `'rgba(30,41,59,1)'`).
+   * When provided, `inheritMainColor` is ignored.
+   */
+  color?: ColorsKeys | string;
+  /** When true, border and close icon use the variant accent color. Ignored when `color` is set. */
   inheritMainColor?: boolean;
   /** Per-slot style overrides. Applied after all default styles. */
   styles?: AlertStyleOverrides;
@@ -68,4 +78,11 @@ export interface AlertProps extends GlobalSharedProps {
 
 export interface DynamicAlertParams extends DynamicProps {
   variant: AlertVariants;
+  /**
+   * Solid background color for this specific alert.
+   * Auto-derives text, icon, and border colors for contrast.
+   * Accepts a theme color key or any CSS color string.
+   * When provided, `inheritMainColor` is ignored.
+   */
+  color?: ColorsKeys | string;
 }
