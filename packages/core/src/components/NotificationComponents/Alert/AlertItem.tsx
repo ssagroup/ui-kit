@@ -7,6 +7,8 @@ import {
   NotificationPositions,
   NotificationSizes,
 } from '@components/NotificationComponents/types';
+import { ColorsKeys } from '@global-types/emotion';
+import { darkenColor, getContrastColor, isColorDark } from '@utils/colorUtils';
 
 import { AlertStyleOverrides, AlertVariants } from './types';
 import * as styles from './styles';
@@ -32,6 +34,12 @@ import * as styles from './styles';
 export interface AlertItemProps {
   id: string;
   variant: AlertVariants;
+  /**
+   * Solid background color. When provided, the variant tokens are ignored and
+   * text/icon/border colors are auto-derived for contrast via `colorUtils`.
+   * Accepts a theme color key or any CSS color string.
+   */
+  color?: ColorsKeys | string;
   title?: string;
   description?: string;
   cancelText: string;
@@ -39,6 +47,7 @@ export interface AlertItemProps {
   size: NotificationSizes;
   withShadow?: boolean;
   withBorder?: boolean;
+  /** Ignored when `color` is set — color fully drives all derived colors. */
   inheritMainColor?: boolean;
   animationDuration: number;
   position: NotificationPositions;
@@ -51,6 +60,7 @@ export interface AlertItemProps {
 export const AlertItem: FC<AlertItemProps> = ({
   id,
   variant,
+  color,
   title,
   description,
   cancelText,
@@ -69,6 +79,47 @@ export const AlertItem: FC<AlertItemProps> = ({
   const theme = useTheme();
   const tokens = styles.getVariantTokens(theme, variant);
 
+  // ─── Color resolution ───────────────────────────────────────────────────────
+
+  // Resolve theme key → actual CSS color; fall back to raw CSS string
+  const resolvedColor: string | undefined = color
+    ? (theme.colors[color as ColorsKeys] ?? (color as string))
+    : undefined;
+
+  const bg = resolvedColor ?? tokens.tintBg;
+
+  // When `color` is passed, auto-derive all derived colors; otherwise use variant tokens
+  const dark = resolvedColor ? isColorDark(resolvedColor) : false;
+  const textColor: string | undefined = resolvedColor
+    ? getContrastColor(
+        resolvedColor,
+        theme.colors.greyDarker!,
+        theme.colors.white!,
+      )
+    : undefined;
+  const iconColor = resolvedColor
+    ? dark
+      ? theme.colors.white!
+      : darkenColor(resolvedColor)
+    : tokens.iconColor;
+  const borderColor = resolvedColor
+    ? darkenColor(resolvedColor)
+    : tokens.accentColor;
+  const closeIconColor = resolvedColor
+    ? dark
+      ? theme.colors.white
+      : theme.colors.greyDarker60!
+    : inheritMainColor
+      ? tokens.accentColor
+      : theme.colors.greyDarker60;
+
+  // styleOverrides can still pin specific colors on top of everything above
+  const resolvedIconColor = styleOverrides?.iconColor ?? iconColor;
+  const resolvedCloseIconColor =
+    styleOverrides?.closeIconColor ?? closeIconColor;
+
+  // ─── Handlers ───────────────────────────────────────────────────────────────
+
   const handleClose = () => {
     onRemove(id);
     onClose?.();
@@ -79,21 +130,18 @@ export const AlertItem: FC<AlertItemProps> = ({
     onSubmit?.();
   };
 
-  const resolvedIconColor = styleOverrides?.iconColor ?? tokens.iconColor;
-  const resolvedCloseIconColor =
-    styleOverrides?.closeIconColor ??
-    (inheritMainColor ? tokens.accentColor : theme.colors.greyDarker60);
-
   const hasDescription = !!description;
+
+  // ─── Render ─────────────────────────────────────────────────────────────────
 
   return (
     <div
       css={[
-        styles.itemWrapperStyles(tokens.tintBg, hasDescription),
+        styles.itemWrapperStyles(bg, hasDescription),
         styles.itemSizeStyles[size],
         styles.itemAnimationStyles(position, animationDuration),
         withShadow && styles.shadowStyles(theme),
-        withBorder && styles.borderStyles(tokens.accentColor),
+        withBorder && styles.borderStyles(borderColor),
         styleOverrides?.root,
       ]}>
       <div css={[styles.iconColStyles, styleOverrides?.icon]}>
@@ -109,7 +157,10 @@ export const AlertItem: FC<AlertItemProps> = ({
           <div css={styles.expandedHeaderRowStyles}>
             {title && (
               <span
-                css={[styles.titleTextStyles(theme), styleOverrides?.title]}>
+                css={[
+                  styles.titleTextStyles(theme, textColor),
+                  styleOverrides?.title,
+                ]}>
                 {title}
               </span>
             )}
@@ -124,7 +175,7 @@ export const AlertItem: FC<AlertItemProps> = ({
 
           <p
             css={[
-              styles.descriptionStyles(theme),
+              styles.descriptionStyles(theme, textColor),
               styleOverrides?.description,
             ]}>
             {description}
@@ -135,7 +186,7 @@ export const AlertItem: FC<AlertItemProps> = ({
               <button
                 type="button"
                 css={[
-                  styles.actionBtnStyles(theme),
+                  styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleClose}>
@@ -146,7 +197,7 @@ export const AlertItem: FC<AlertItemProps> = ({
               <button
                 type="button"
                 css={[
-                  styles.actionBtnStyles(theme),
+                  styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleSubmit}>
@@ -160,7 +211,7 @@ export const AlertItem: FC<AlertItemProps> = ({
           {title && (
             <span
               css={[
-                styles.titleTextStyles(theme),
+                styles.titleTextStyles(theme, textColor),
                 styles.collapsedTitleStyles,
                 styleOverrides?.title,
               ]}>
@@ -173,7 +224,7 @@ export const AlertItem: FC<AlertItemProps> = ({
               <button
                 type="button"
                 css={[
-                  styles.actionBtnStyles(theme),
+                  styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleClose}>
@@ -184,7 +235,7 @@ export const AlertItem: FC<AlertItemProps> = ({
               <button
                 type="button"
                 css={[
-                  styles.actionBtnStyles(theme),
+                  styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleSubmit}>

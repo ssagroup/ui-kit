@@ -58,6 +58,7 @@ showAlert({
 | Prop | Type | Required | Description |
 |---|---|---|---|
 | `variant` | `AlertVariants` | ✓ | Visual style and icon for this alert |
+| `color` | `ColorsKeys \| string` | — | Solid background color. Auto-derives text, icon, and border colors for contrast. Overrides all variant token colors. Accepts a theme key (`'purple'`) or any CSS color (`'#1e293b'`) |
 | `title` | `string` | — | Bold heading text |
 | `description` | `string` | — | Supporting body text. When omitted the alert renders in **collapsed** (single-line) mode |
 | `cancelText` | `string` | — | Dismiss button label. Overrides the component-level default. Button is hidden when this or `onClose` is absent |
@@ -143,6 +144,31 @@ Text wraps automatically — no truncation.
 
 ---
 
+## Custom color — `color` prop
+
+Pass a single `color` to override the variant background with a solid color.
+Text, icon, and border colors are **auto-derived** using WCAG luminance so they are always readable:
+
+| Background | Text / close icon | Status icon | Border |
+|---|---|---|---|
+| Dark (L < 0.18) | White | White | 35%-darkened shade |
+| Light | `greyDarker` | 35%-darkened shade | 35%-darkened shade |
+
+```tsx
+// Theme key
+showAlert({ variant: AlertVariants.success, color: 'purple', title: 'Deployed!' });
+
+// Any CSS color
+showAlert({ variant: AlertVariants.error, color: '#1e293b', title: 'Build failed' });
+showAlert({ variant: AlertVariants.hint, color: '#f59e0b', title: 'Review required' });
+```
+
+The `variant` prop is still required — it selects the icon shape. Its token colors (background tint, accent, etc.) are fully ignored when `color` is set.
+
+`inheritMainColor` is also ignored when `color` is provided.
+
+---
+
 ## `withBorder`, `withShadow`, `inheritMainColor`
 
 ```tsx
@@ -152,8 +178,8 @@ Text wraps automatically — no truncation.
 | Prop | Default | Effect |
 |---|---|---|
 | `withShadow` | `true` | Drop shadow on each card |
-| `withBorder` | `false` | 1 px border using the variant's accent color |
-| `inheritMainColor` | `false` | Close icon (×) color inherits the variant's accent color |
+| `withBorder` | `false` | 1 px border using the variant's accent color (or darkened `color` when `color` is set) |
+| `inheritMainColor` | `false` | Close icon (×) color inherits the variant accent color. Ignored when `color` is set |
 
 ---
 

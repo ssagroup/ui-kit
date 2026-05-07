@@ -1,0 +1,307 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ToastStories from './Toast.stories';
+
+<Meta of={ToastStories} />
+
+# Toast
+
+Lightweight, auto-dismissing notifications for transient feedback.
+
+`Toast` uses the same **Observer pattern** as `Alert`: mount the component once near your app root, then call `showToast(...)` from anywhere — event handlers, async callbacks, API layers — with no prop drilling required.
+
+The key difference from `Alert` is that toasts **auto-dismiss** after a configurable `timeout` and are designed for low-priority, non-blocking feedback.
+
+---
+
+## Setup
+
+Mount `<Toast>` once, high up in your component tree (app shell, layout root, etc.).
+It renders nothing visible on its own and only activates when `showToast` is called.
+
+```tsx
+import { Toast, NotificationPositions } from '@ssa-ui-kit/core';
+
+function AppRoot() {
+  return (
+    <>
+      <Toast position={NotificationPositions.rightBottom} withShadow />
+      <App />
+    </>
+  );
+}
+```
+
+---
+
+## Triggering toasts
+
+Import `showToast` from anywhere in your app and call it with a `DynamicToastParams` object.
+
+```tsx
+import { showToast, ToastVariants } from '@ssa-ui-kit/core';
+
+// Minimal
+showToast({ variant: ToastVariants.default, title: 'File saved!' });
+
+// With description and progress bar
+showToast({
+  variant: ToastVariants.default,
+  title: 'Uploading…',
+  description: 'report.pdf — 1.4 MB / 2.3 MB',
+  withProgress: true,
+  timeout: 8000,
+});
+
+// Persistent — no auto-dismiss
+showToast({
+  variant: ToastVariants.neutral,
+  title: 'Background sync running',
+  timeout: undefined,
+  onClose: () => cancelSync(),
+});
+```
+
+### `DynamicToastParams`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `variant` | `ToastVariants` | **required** | Visual style for this toast |
+| `title` | `string` | — | Bold heading text |
+| `description` | `string` | — | Body text. When provided the toast renders in **expanded** layout |
+| `color` | `ColorsKeys` or `string` | — | Solid background color. Auto-derives text, icon, and border colors for contrast. Overrides the variant token colors |
+| `renderProp` | `(close) => ReactElement` | — | Fully replaces inner content. The outer card wrapper and progress bar still render. Receives a `close` callback |
+| `timeout` | `number` or `undefined` | component default | Auto-dismiss duration in ms for this toast. `undefined` disables auto-dismiss |
+| `withProgress` | `boolean` | component default | Show a draining progress bar for this toast. Has no effect when `timeout` is `undefined` |
+| `progressColor` | `ColorsKeys` or `string` | component default | Progress bar color for this toast |
+| `cancelText` | `string` | component default | Dismiss button label. Button only renders when this **and** `onClose` are both provided |
+| `submitText` | `string` | component default | Confirm button label. Button only renders when this **and** `onSubmit` are both provided |
+| `size` | `NotificationSizes` | component default | Card width for this individual toast |
+| `onClose` | `() => void` | — | Called when the toast is dismissed. Required for the cancel button to appear |
+| `onSubmit` | `() => void` | — | Called when the confirm button is clicked. Required for the submit button to appear |
+
+> **Action buttons are opt-in.** A button only renders when both its label text *and* its callback are provided.
+
+---
+
+## Layouts
+
+Toasts adapt their layout based on content:
+
+**Expanded** — when `description` is provided:
+```
+[✓]  Headline                           [×]
+     You can insert a description here.
+     Cancel   Submit
+```
+
+**Collapsed** — title only:
+```
+[✓]  Headline              Cancel  Submit  [×]
+```
+
+---
+
+## Auto-dismiss
+
+Toasts automatically dismiss after `timeout` milliseconds (default: **4000 ms**).
+
+```tsx
+// Custom timeout for this toast only
+showToast({ variant: ToastVariants.default, title: 'Saved!', timeout: 2000 });
+
+// Disable auto-dismiss for this toast only
+showToast({ variant: ToastVariants.neutral, title: 'Running…', timeout: undefined });
+```
+
+**Hover to pause** — when the user hovers over a toast the timer pauses and resumes when they move away. The progress bar animation pauses in sync.
+
+**Timeout precedence:**
+
+| Source | Wins when |
+|---|---|
+| `showToast({ timeout })` | always (per-toast overrides everything) |
+| `<Toast timeout={…} />` | no per-toast override present |
+| 4000 ms | neither provided |
+
+Setting `timeout: undefined` at the component level makes **all** toasts in that stack persistent by default (per-toast `timeout` can still override back to a number).
+
+---
+
+## Progress bar — `withProgress`
+
+An animated bar drains across the bottom of the card over the toast's lifetime.
+
+```tsx
+// Component-level default — every toast shows a progress bar
+<Toast withProgress timeout={6000} />
+
+// Enable for a specific toast only
+showToast({ variant: ToastVariants.default, title: 'Uploading…', withProgress: true });
+
+// Disable for a specific toast (overrides component default)
+showToast({ variant: ToastVariants.dark, title: 'Done!', withProgress: false });
+```
+
+The progress bar is **always suppressed** when the effective `timeout` is `undefined` — even if `withProgress` is `true`.
+
+### Progress bar color — `progressColor`
+
+```tsx
+// Component-level default
+<Toast progressColor="purple" />
+
+// Per-toast override
+showToast({ variant: ToastVariants.default, title: 'Upload', withProgress: true, progressColor: '#6366f1' });
+```
+
+**Precedence (highest → lowest):**
+1. Per-toast `progressColor` from `showToast`
+2. Automatic darkened shade of the `color` prop (when `color` is set)
+3. Component-level `progressColor` from `<Toast>`
+4. Theme `blueNotification` (built-in default)
+
+---
+
+## Variants
+
+| Value | Background | Use case |
+|---|---|---|
+| `ToastVariants.default` | Light grey | General feedback, lowest emphasis |
+| `ToastVariants.neutral` | White | Neutral, clean look |
+| `ToastVariants.dark` | Dark grey | High-contrast, prominent feedback |
+
+```tsx
+showToast({ variant: ToastVariants.default, title: 'Settings saved' });
+showToast({ variant: ToastVariants.dark,    title: 'Deployment started' });
+```
+
+---
+
+## Custom color — `color` prop
+
+Pass a single `color` to override the variant background with a solid color.
+Text, icon, and border colors are **auto-derived** using WCAG luminance so they are always readable:
+
+| Background | Text / close icon | Status icon | Border / progress bar |
+|---|---|---|---|
+| Dark (L < 0.18) | White | White | 35%-darkened shade |
+| Light | `greyDarker` | 35%-darkened shade | 35%-darkened shade |
+
+```tsx
+// Theme key
+showToast({ variant: ToastVariants.default, color: 'purple', title: 'Deployed!' });
+
+// Any CSS color
+showToast({ variant: ToastVariants.default, color: '#f59e0b', title: 'Review required' });
+```
+
+When `color` is provided the variant token colors (background, icon, border) are fully ignored.
+
+---
+
+## Custom content — `renderProp`
+
+When `renderProp` is provided it **fully replaces the inner content** of the toast card.
+The outer card wrapper (background, border-radius, shadow, border) and the progress bar still render.
+
+The prop receives a `close` callback so custom content can dismiss the toast programmatically.
+
+```tsx
+showToast({
+  variant: ToastVariants.default,
+  renderProp: (close) => (
+    <div style={{ padding: '14px 16px' }}>
+      <p>Custom content here</p>
+      <button onClick={close}>Dismiss</button>
+    </div>
+  ),
+});
+```
+
+Typical use cases: upload progress bars, update prompts with multiple action buttons, rich media toasts.
+
+---
+
+## Positions
+
+Six fixed positions control where the toast stack appears in the viewport.
+Default is **`rightBottom`** (bottom-right corner).
+
+| Value | Location |
+|---|---|
+| `NotificationPositions.rightBottom` | Bottom-right corner **(default)** |
+| `NotificationPositions.rightTop` | Top-right corner |
+| `NotificationPositions.leftBottom` | Bottom-left corner |
+| `NotificationPositions.leftTop` | Top-left corner |
+| `NotificationPositions.centerBottom` | Centered at the bottom |
+| `NotificationPositions.centerTop` | Centered at the top |
+
+New toasts are **prepended** for `*-top` positions (newest on top) and **appended** for `*-bottom` positions (newest at bottom).
+Slide-in animation direction follows the position: `right-*` → from right · `left-*` → from left · `center-top` → from top · `center-bottom` → from bottom.
+
+---
+
+## Sizes
+
+Controls the **width** of every toast card rendered by this `<Toast>` instance.
+Individual toasts can override this via `size` in `showToast`.
+
+| Value | Width |
+|---|---|
+| `NotificationSizes.small` | 400 px **(default)** |
+| `NotificationSizes.large` | 760 px |
+
+Both sizes include `max-width: calc(100vw - 32px)`, so cards shrink gracefully on narrow screens.
+
+---
+
+## Stack limit — `maxAmount`
+
+Cap how many toasts are visible at once. When a new toast arrives and the stack is full,
+the oldest one is silently dropped.
+
+```tsx
+<Toast maxAmount={5} position={NotificationPositions.rightBottom} />
+```
+
+| Position | Newest appears at | Oldest dropped from |
+|---|---|---|
+| `*-top` | Top of stack | Bottom of stack |
+| `*-bottom` | Bottom of stack | Top of stack |
+
+When `maxAmount` is omitted there is no limit.
+
+---
+
+## `withBorder`, `withShadow`
+
+```tsx
+<Toast withShadow withBorder />
+```
+
+| Prop | Default | Effect |
+|---|---|---|
+| `withShadow` | `true` | Drop shadow on each card |
+| `withBorder` | `false` | 1 px border using the variant's border color (or darkened `color` shade when `color` is set) |
+
+---
+
+## Portal target
+
+By default all toasts portal into `document.body`.
+Pass a `containerSelector` to mount into a different element:
+
+```tsx
+<Toast containerSelector="#toast-region" position={NotificationPositions.rightBottom} />
+```
+
+Falls back to `document.body` when the selector matches nothing.
+
+---
+
+## Full `<Toast>` props reference
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
