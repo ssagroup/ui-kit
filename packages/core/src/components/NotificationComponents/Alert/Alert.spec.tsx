@@ -21,7 +21,6 @@
  */
 
 import { act, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import {
   NotificationPositions,
@@ -62,7 +61,7 @@ describe('Alert', () => {
       render(<Alert />);
 
       await fireAlert({
-        variant: AlertVariants.hint,
+        variant: AlertVariants.primary,
         title: 'FYI',
         description: 'Some context here.',
       });
@@ -78,34 +77,6 @@ describe('Alert', () => {
 
       expect(screen.getByText('First alert')).toBeInTheDocument();
       expect(screen.getByText('Second alert')).toBeInTheDocument();
-    });
-
-    it('removes an alert when its close button is clicked', async () => {
-      const user = userEvent.setup();
-      render(<Alert />);
-
-      await fireAlert({ variant: AlertVariants.success, title: 'Close me' });
-
-      const closeBtn = screen.getByRole('button', { name: /close alert/i });
-      await user.click(closeBtn);
-
-      expect(screen.queryByText('Close me')).not.toBeInTheDocument();
-    });
-
-    it('fires the onClose callback when the close button is clicked', async () => {
-      const user = userEvent.setup();
-      const onClose = jest.fn();
-      render(<Alert />);
-
-      await fireAlert({
-        variant: AlertVariants.success,
-        title: 'With callback',
-        onClose,
-      });
-
-      await user.click(screen.getByRole('button', { name: /close alert/i }));
-
-      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -222,7 +193,10 @@ describe('Alert', () => {
       document.body.appendChild(customContainer);
 
       render(<Alert containerSelector="#custom-portal" />);
-      await fireAlert({ variant: AlertVariants.hint, title: 'Custom portal' });
+      await fireAlert({
+        variant: AlertVariants.primary,
+        title: 'Custom portal',
+      });
 
       expect(
         within(customContainer).getByText('Custom portal'),

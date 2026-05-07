@@ -37,8 +37,8 @@ export const getVariantTokens = (
   variant: ToastVariants,
 ): ToastVariantTokens => {
   const map: Record<ToastVariants, ToastVariantTokens> = {
-    [ToastVariants.default]: {
-      bg: theme.colors.greyLighter!,
+    [ToastVariants.secondary]: {
+      bg: theme.palette.secondary.light,
       iconColor: theme.colors.greyDarker60!,
       borderColor: theme.colors.greyFocused!,
       textColor: theme.colors.greyDarker!,
@@ -109,6 +109,7 @@ export const actionBtnStyles = (textColor: string) => css`
   font-size: 13px;
   font-weight: 500;
   line-height: 18px;
+  height: max-content;
   letter-spacing: 0.2px;
   color: ${textColor};
   opacity: 0.75;

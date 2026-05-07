@@ -343,7 +343,7 @@ export const CustomStyles: Story = {
             {/* Collapsed layout */}
             <AlertItem
               {...staticItemBase}
-              variant={AlertVariants.hint}
+              variant={AlertVariants.primary}
               title="Headline"
               withShadow
               withBorder={preset.withBorder}
@@ -451,7 +451,7 @@ export const CustomColor: Story = {
             {/* Collapsed */}
             <AlertItem
               {...staticItemBase}
-              variant={AlertVariants.hint}
+              variant={AlertVariants.primary}
               color={preset.color}
               title="Headline"
               withShadow

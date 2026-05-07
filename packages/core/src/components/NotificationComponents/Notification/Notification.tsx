@@ -143,13 +143,8 @@ const Notification: FC<NotificationProps> = (props) => {
       {notifications.map((notification) => (
         <NotificationItem
           key={notification.id}
-          id={notification.id}
-          variant={notification.variant ?? NotificationVariants.default}
-          color={notification.color}
-          date={notification.date}
-          icon={notification.icon}
-          title={notification.title}
-          description={notification.description}
+          {...notification}
+          variant={notification.variant ?? NotificationVariants.secondary}
           size={notification.size ?? size}
           cancelText={notification.cancelText ?? cancelText}
           submitText={notification.submitText ?? submitText}
@@ -158,8 +153,6 @@ const Notification: FC<NotificationProps> = (props) => {
           animationDuration={animationDuration}
           position={position}
           timeout={notification.resolvedTimeout}
-          onClose={notification.onClose}
-          onSubmit={notification.onSubmit}
           onRemove={removeNotification}
           styleOverrides={styles}
         />

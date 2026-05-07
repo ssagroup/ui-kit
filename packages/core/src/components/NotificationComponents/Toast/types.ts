@@ -7,7 +7,7 @@ import {
 import { ColorsKeys } from '@global-types/emotion';
 
 export enum ToastVariants {
-  default = 'default',
+  secondary = 'secondary',
   neutral = 'neutral',
   dark = 'dark',
 }

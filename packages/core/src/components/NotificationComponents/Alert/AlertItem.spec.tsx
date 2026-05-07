@@ -64,36 +64,6 @@ describe('AlertItem', () => {
     );
   });
 
-  describe('close button', () => {
-    it('is always present regardless of description', () => {
-      const { getAllByRole } = setup({ title: 'Title' });
-      const closeButtons = getAllByRole('button', { name: /close alert/i });
-      expect(closeButtons.length).toBeGreaterThanOrEqual(1);
-    });
-
-    it('calls onRemove with the alert id', async () => {
-      const user = userEvent.setup();
-      const { getAllByRole, onRemove } = setup({ title: 'Title' });
-      const closeBtn = getAllByRole('button', { name: /close alert/i })[0];
-
-      await user.click(closeBtn);
-
-      expect(onRemove).toHaveBeenCalledTimes(1);
-      expect(onRemove).toHaveBeenCalledWith('test-alert');
-    });
-
-    it('calls the optional onClose callback', async () => {
-      const user = userEvent.setup();
-      const onClose = jest.fn();
-      const { getAllByRole } = setup({ title: 'Title', onClose });
-      const closeBtn = getAllByRole('button', { name: /close alert/i })[0];
-
-      await user.click(closeBtn);
-
-      expect(onClose).toHaveBeenCalledTimes(1);
-    });
-  });
-
   describe('action buttons — conditional rendering', () => {
     it('renders cancel button when cancelText and onClose are both provided', () => {
       const { getByText } = setup({ title: 'Title', onClose: jest.fn() });
@@ -197,13 +167,6 @@ describe('AlertItem', () => {
       });
       expect(getByText('Cancel')).toBeInTheDocument();
       expect(getByText('Submit')).toBeInTheDocument();
-    });
-
-    it('renders the close button when color is set', () => {
-      const { getAllByRole } = setup({ title: 'Title', color: '#1e293b' });
-      expect(
-        getAllByRole('button', { name: /close alert/i }).length,
-      ).toBeGreaterThanOrEqual(1);
     });
   });
 

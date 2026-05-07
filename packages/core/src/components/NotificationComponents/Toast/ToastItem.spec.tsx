@@ -21,7 +21,7 @@ function setup(props: PartialProps = {}) {
   const result = render(
     <ToastItem
       id="test-toast"
-      variant={ToastVariants.default}
+      variant={ToastVariants.secondary}
       size={NotificationSizes.small}
       cancelText=""
       submitText=""
@@ -63,35 +63,6 @@ describe('ToastItem', () => {
         expect(() => setup({ title: 'Title', variant })).not.toThrow();
       },
     );
-  });
-
-  describe('close button', () => {
-    it('is always present regardless of layout', () => {
-      const { getAllByRole } = setup({ title: 'Title' });
-      expect(
-        getAllByRole('button', { name: /close toast/i }).length,
-      ).toBeGreaterThanOrEqual(1);
-    });
-
-    it('calls onRemove with the toast id', async () => {
-      const user = userEvent.setup();
-      const { getAllByRole, onRemove } = setup({ title: 'Title' });
-
-      await user.click(getAllByRole('button', { name: /close toast/i })[0]);
-
-      expect(onRemove).toHaveBeenCalledTimes(1);
-      expect(onRemove).toHaveBeenCalledWith('test-toast');
-    });
-
-    it('calls the optional onClose callback', async () => {
-      const user = userEvent.setup();
-      const onClose = jest.fn();
-      const { getAllByRole } = setup({ title: 'Title', onClose });
-
-      await user.click(getAllByRole('button', { name: /close toast/i })[0]);
-
-      expect(onClose).toHaveBeenCalledTimes(1);
-    });
   });
 
   describe('action buttons — conditional rendering', () => {

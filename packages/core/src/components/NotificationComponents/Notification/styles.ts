@@ -29,8 +29,8 @@ export const getVariantTokens = (
   variant: NotificationVariants,
 ): NotificationVariantTokens => {
   const map: Record<NotificationVariants, NotificationVariantTokens> = {
-    [NotificationVariants.default]: {
-      bg: theme.colors.greyLighter!,
+    [NotificationVariants.secondary]: {
+      bg: theme.palette.secondary.light,
       iconColor: theme.colors.greyDarker60!,
       borderColor: theme.colors.greyFocused!,
       textColor: theme.colors.greyDarker!,
@@ -136,6 +136,7 @@ export const actionBtnStyles = (textColor: string) => css`
   font-size: 13px;
   font-weight: 500;
   line-height: 18px;
+  height: max-content;
   letter-spacing: 0.2px;
   color: ${textColor};
   opacity: 0.75;

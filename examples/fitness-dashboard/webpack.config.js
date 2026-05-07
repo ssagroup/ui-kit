@@ -234,6 +234,7 @@ const config = {
       '@themes': path.resolve(__dirname, '../../packages/core/src/themes'),
       '@styles': path.resolve(__dirname, '../../packages/core/src/styles'),
       '@global-types': path.resolve(__dirname, '../../packages/core/src/types'),
+      '@utils': path.resolve(__dirname, '../../packages/core/src/utils'),
       // Hooks package internal aliases - for hooks package's own @hooks/* imports
       // This needs to be after the local @hooks to avoid conflicts when possible
       // But hooks package uses @hooks/* internally, so we need this

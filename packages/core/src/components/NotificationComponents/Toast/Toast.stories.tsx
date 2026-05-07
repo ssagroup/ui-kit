@@ -173,7 +173,7 @@ export const Default: Story = {
         }}>
         {(
           [
-            ToastVariants.default,
+            ToastVariants.secondary,
             ToastVariants.neutral,
             ToastVariants.dark,
           ] as const
@@ -247,7 +247,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              ToastVariants.default,
+              ToastVariants.secondary,
               ToastVariants.neutral,
               ToastVariants.dark,
             ] as const
@@ -272,7 +272,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              ToastVariants.default,
+              ToastVariants.secondary,
               ToastVariants.neutral,
               ToastVariants.dark,
             ] as const
@@ -291,7 +291,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              ToastVariants.default,
+              ToastVariants.secondary,
               ToastVariants.neutral,
               ToastVariants.dark,
             ] as const
@@ -317,7 +317,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              ToastVariants.default,
+              ToastVariants.secondary,
               ToastVariants.neutral,
               ToastVariants.dark,
             ] as const
@@ -397,7 +397,7 @@ export const CustomColor: Story = {
               {/* Expanded with progress bar */}
               <ToastItem
                 {...staticBase}
-                variant={ToastVariants.default}
+                variant={ToastVariants.secondary}
                 color={preset.color}
                 progressColor={preset.progressColor}
                 title="Headline"
@@ -410,7 +410,7 @@ export const CustomColor: Story = {
               {/* Collapsed */}
               <ToastItem
                 {...staticBase}
-                variant={ToastVariants.default}
+                variant={ToastVariants.secondary}
                 color={preset.color}
                 progressColor={preset.progressColor}
                 title="Headline"
@@ -442,7 +442,7 @@ export const CustomColor: Story = {
               size="small"
               onClick={() =>
                 showToast({
-                  variant: ToastVariants.default,
+                  variant: ToastVariants.secondary,
                   color: preset.color,
                   progressColor: preset.progressColor,
                   title: 'Headline',
@@ -519,7 +519,7 @@ export const Persistent: Story = {
       <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {(
           [
-            ToastVariants.default,
+            ToastVariants.secondary,
             ToastVariants.neutral,
             ToastVariants.dark,
           ] as const
@@ -707,7 +707,7 @@ export const RenderProp: Story = {
             </p>
             <ToastItem
               id="preview"
-              variant={ToastVariants.default}
+              variant={ToastVariants.secondary}
               size={NotificationSizes.small}
               cancelText=""
               submitText=""
@@ -743,7 +743,7 @@ export const RenderProp: Story = {
               size="small"
               onClick={() =>
                 showToast({
-                  variant: ToastVariants.default,
+                  variant: ToastVariants.secondary,
                   renderProp: preset.render,
                 })
               }>
