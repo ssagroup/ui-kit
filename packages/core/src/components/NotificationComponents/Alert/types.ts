@@ -10,9 +10,9 @@ export enum AlertVariants {
   success = 'success',
   warning = 'warning',
   error = 'error',
-  hint = 'hint',
+  primary = 'primary',
   neutral = 'neutral',
-  default = 'default',
+  secondary = 'secondary',
 }
 
 /**

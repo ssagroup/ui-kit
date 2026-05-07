@@ -35,7 +35,8 @@
       "@contexts/*": ["./src/contexts/*"],
       "@themes/*": ["./src/themes/*"],
       "@styles/*": ["./src/styles/*"],
-      "@global-types/*": ["./src/types/*"]
+      "@global-types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
 

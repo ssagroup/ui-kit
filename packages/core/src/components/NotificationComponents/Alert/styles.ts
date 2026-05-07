@@ -40,34 +40,34 @@ export const getVariantTokens = (
 ): VariantTokens => {
   const map: Record<AlertVariants, VariantTokens> = {
     [AlertVariants.success]: {
-      iconColor: theme.colors.green!,
-      accentColor: theme.colors.greenLighter!,
-      tintBg: theme.colors.greenLighterRGB!,
+      iconColor: theme.palette.success.main,
+      accentColor: theme.palette.success.main,
+      tintBg: `color-mix(in srgb, ${theme.palette.success.light} 8%, white)`,
     },
     [AlertVariants.warning]: {
-      iconColor: theme.colors.yellow!,
-      accentColor: theme.colors.yellowLighter!,
-      tintBg: theme.colors.yellowLighter20RGB!,
+      iconColor: theme.palette.warning.main,
+      accentColor: theme.palette.warning.main,
+      tintBg: `color-mix(in srgb, ${theme.palette.warning.main} 8%, white)`,
     },
     [AlertVariants.error]: {
-      iconColor: theme.colors.red!,
-      accentColor: theme.colors.redLighter!,
-      tintBg: theme.colors.red6RGB!,
+      iconColor: theme.palette.error.main,
+      accentColor: theme.palette.error.main,
+      tintBg: `color-mix(in srgb, ${theme.palette.error.light} 8%, white)`,
     },
-    [AlertVariants.hint]: {
-      iconColor: theme.colors.blueNotification!,
-      accentColor: theme.colors.blueLighter!,
-      tintBg: theme.colors.blue6RGB!,
+    [AlertVariants.primary]: {
+      iconColor: theme.palette.primary.main,
+      accentColor: theme.palette.primary.main,
+      tintBg: `color-mix(in srgb, ${theme.palette.primary.light} 8%, white)`,
     },
     [AlertVariants.neutral]: {
       iconColor: theme.colors.greyDarker60!,
       accentColor: theme.colors.grey!,
       tintBg: theme.colors.white!,
     },
-    [AlertVariants.default]: {
-      iconColor: theme.colors.greyDarker40!,
-      accentColor: theme.colors.greyOutline!,
-      tintBg: theme.colors.greyLighter!,
+    [AlertVariants.secondary]: {
+      iconColor: theme.colors.greyDarker60!,
+      accentColor: theme.colors.grey!,
+      tintBg: theme.palette.secondary.light,
     },
   };
 
@@ -78,9 +78,9 @@ export const variantIcons: Record<AlertVariants, keyof MapIconsType> = {
   [AlertVariants.success]: 'check-circle',
   [AlertVariants.warning]: 'attention-circle',
   [AlertVariants.error]: 'attention-circle',
-  [AlertVariants.hint]: 'information',
+  [AlertVariants.primary]: 'information',
   [AlertVariants.neutral]: 'check-circle',
-  [AlertVariants.default]: 'check-circle',
+  [AlertVariants.secondary]: 'check-circle',
 };
 
 // ─── Item wrapper ─────────────────────────────────────────────────────────────
@@ -126,6 +126,7 @@ export const actionBtnStyles = (theme: Theme, textColor?: string) => css`
   padding: 0;
   cursor: pointer;
   font-size: 13px;
+  height: max-content;
   font-weight: 500;
   line-height: 18px;
   letter-spacing: 0.2px;

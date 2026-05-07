@@ -72,6 +72,7 @@ const config: StorybookConfig = {
           '@themes': resolve(__dirname, '../../core/src/themes'),
           '@styles': resolve(__dirname, '../../core/src/styles'),
           '@global-types': resolve(__dirname, '../../core/src/types'),
+          '@utils': resolve(__dirname, '../../core/src/utils'),
           '@shared': resolve(__dirname, '../src/shared'),
           // Hooks package internal aliases
           '@hooks/useWindowResize': resolve(

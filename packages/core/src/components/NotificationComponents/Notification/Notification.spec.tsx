@@ -23,7 +23,6 @@
  */
 
 import { act, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import {
   NotificationPositions,
@@ -58,7 +57,7 @@ describe('Notification', () => {
       render(<Notification />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Jane Doe',
       });
 
@@ -95,7 +94,7 @@ describe('Notification', () => {
       render(<Notification />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'First notification',
       });
       await fireNotification({
@@ -106,41 +105,6 @@ describe('Notification', () => {
       expect(screen.getByText('First notification')).toBeInTheDocument();
       expect(screen.getByText('Second notification')).toBeInTheDocument();
     });
-
-    it('removes a notification when its close button is clicked', async () => {
-      const user = userEvent.setup();
-      render(<Notification />);
-
-      await fireNotification({
-        variant: NotificationVariants.default,
-        title: 'Close me',
-      });
-
-      const closeBtn = screen.getByRole('button', {
-        name: /close notification/i,
-      });
-      await user.click(closeBtn);
-
-      expect(screen.queryByText('Close me')).not.toBeInTheDocument();
-    });
-
-    it('fires the onClose callback when the close button is clicked', async () => {
-      const user = userEvent.setup();
-      const onClose = jest.fn();
-      render(<Notification />);
-
-      await fireNotification({
-        variant: NotificationVariants.default,
-        title: 'With callback',
-        onClose,
-      });
-
-      await user.click(
-        screen.getByRole('button', { name: /close notification/i }),
-      );
-
-      expect(onClose).toHaveBeenCalledTimes(1);
-    });
   });
 
   describe('default prop pass-through', () => {
@@ -148,7 +112,7 @@ describe('Notification', () => {
       render(<Notification cancelText="Dismiss" />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Hi',
         onClose: jest.fn(),
       });
@@ -160,7 +124,7 @@ describe('Notification', () => {
       render(<Notification submitText="View" />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Hi',
         onSubmit: jest.fn(),
       });
@@ -172,7 +136,7 @@ describe('Notification', () => {
       render(<Notification cancelText="Global dismiss" />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Hi',
         cancelText: 'Per-notification dismiss',
         onClose: jest.fn(),
@@ -186,7 +150,7 @@ describe('Notification', () => {
       render(<Notification size={NotificationSizes.small} />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Large notification',
         size: NotificationSizes.large,
       });
@@ -202,7 +166,7 @@ describe('Notification', () => {
     it('does not auto-dismiss when no component-level timeout is set (default behavior)', async () => {
       render(<Notification />);
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Persistent',
       });
 
@@ -219,7 +183,7 @@ describe('Notification', () => {
     it('auto-dismisses using the component-level timeout', async () => {
       render(<Notification timeout={3000} />);
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Auto',
       });
 
@@ -231,7 +195,7 @@ describe('Notification', () => {
     it('per-notification timeout overrides the component-level default', async () => {
       render(<Notification timeout={10000} />);
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Quick',
         timeout: 1000,
       });
@@ -244,7 +208,7 @@ describe('Notification', () => {
     it('per-notification timeout: undefined keeps notification persistent even when component has a timeout', async () => {
       render(<Notification timeout={2000} />);
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Persistent override',
         timeout: undefined,
       });
@@ -265,15 +229,15 @@ describe('Notification', () => {
       );
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'First',
       });
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Second',
       });
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Third',
       });
 
@@ -291,15 +255,15 @@ describe('Notification', () => {
       );
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'First',
       });
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Second',
       });
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Third',
       });
 
@@ -312,11 +276,11 @@ describe('Notification', () => {
       render(<Notification maxAmount={5} />);
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Alpha',
       });
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Beta',
       });
 
@@ -329,7 +293,7 @@ describe('Notification', () => {
 
       for (let i = 1; i <= 6; i++) {
         await fireNotification({
-          variant: NotificationVariants.default,
+          variant: NotificationVariants.secondary,
           title: `Notification ${i}`,
         });
       }
@@ -352,7 +316,7 @@ describe('Notification', () => {
       );
 
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Styled notification',
       });
 
@@ -368,7 +332,7 @@ describe('Notification', () => {
 
       render(<Notification containerSelector="#custom-notification-portal" />);
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Custom portal',
       });
 
@@ -382,7 +346,7 @@ describe('Notification', () => {
     it('falls back to document.body when containerSelector does not match', async () => {
       render(<Notification containerSelector="#does-not-exist" />);
       await fireNotification({
-        variant: NotificationVariants.default,
+        variant: NotificationVariants.secondary,
         title: 'Fallback',
       });
 

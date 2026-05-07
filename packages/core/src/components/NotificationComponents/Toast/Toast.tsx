@@ -150,11 +150,8 @@ const Toast: FC<ToastProps> = (props) => {
       {toasts.map((toast) => (
         <ToastItem
           key={toast.id}
-          id={toast.id}
-          variant={toast.variant ?? ToastVariants.default}
-          color={toast.color}
-          title={toast.title}
-          description={toast.description}
+          {...toast}
+          variant={toast.variant ?? ToastVariants.secondary}
           size={toast.size ?? size}
           cancelText={toast.cancelText ?? cancelText}
           submitText={toast.submitText ?? submitText}
@@ -165,10 +162,7 @@ const Toast: FC<ToastProps> = (props) => {
           timeout={toast.resolvedTimeout}
           withProgress={toast.resolvedWithProgress}
           progressColor={toast.resolvedProgressColor}
-          onClose={toast.onClose}
-          onSubmit={toast.onSubmit}
           onRemove={removeToast}
-          renderProp={toast.renderProp}
         />
       ))}
     </div>,

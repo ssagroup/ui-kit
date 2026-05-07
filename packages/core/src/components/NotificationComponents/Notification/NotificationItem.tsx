@@ -37,6 +37,7 @@ import { useAutoDismiss } from '../hooks/useAutoDismiss';
 import * as styles from './styles';
 import { NotificationStyleOverrides, NotificationVariants } from './types';
 import { MapIconsType } from '@components';
+import Button from '@components/Button';
 
 export interface NotificationItemProps {
   id: string;
@@ -213,13 +214,14 @@ export const NotificationItem: FC<NotificationItemProps> = ({
               {date}
             </span>
           )}
-          <button
-            type="button"
+          <Icon
+            name="cross"
             css={[styles.closeBtnStyles, styleOverrides?.closeButton]}
             onClick={handleClose}
-            aria-label="Close notification">
-            <Icon name="cross" size={12} color={resolvedCloseIconColor} />
-          </button>
+            aria-label="Close notification"
+            size={18}
+            color={resolvedCloseIconColor}
+          />
         </div>
 
         {/* Description */}
@@ -237,26 +239,26 @@ export const NotificationItem: FC<NotificationItemProps> = ({
         {((cancelText && onClose) || (submitText && onSubmit)) && (
           <div css={[styles.actionsRowStyles, styleOverrides?.actions]}>
             {cancelText && onClose && (
-              <button
-                type="button"
+              <Button
+                variant="tertiary"
                 css={[
                   styles.actionBtnStyles(textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleClose}>
                 {cancelText}
-              </button>
+              </Button>
             )}
             {submitText && onSubmit && (
-              <button
-                type="button"
+              <Button
+                variant="tertiary"
                 css={[
                   styles.actionBtnStyles(textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleSubmit}>
                 {submitText}
-              </button>
+              </Button>
             )}
           </div>
         )}

@@ -113,6 +113,7 @@ const config: StorybookConfig = {
           '@themes': resolve(__dirname, '../../core/src/themes'),
           '@styles': resolve(__dirname, '../../core/src/styles'),
           '@global-types': resolve(__dirname, '../../core/src/types'),
+          '@utils': resolve(__dirname, '../../core/src/utils'),
           // Widgets-specific component aliases (widgets uses @components for its own components)
           '@components/AccountBalance': resolve(
             __dirname,

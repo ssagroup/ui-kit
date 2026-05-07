@@ -216,7 +216,7 @@ export const Default: Story = {
       <div css={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
         {(
           [
-            NotificationVariants.default,
+            NotificationVariants.secondary,
             NotificationVariants.neutral,
             NotificationVariants.dark,
           ] as const
@@ -288,7 +288,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              NotificationVariants.default,
+              NotificationVariants.secondary,
               NotificationVariants.neutral,
               NotificationVariants.dark,
             ] as const
@@ -318,7 +318,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              NotificationVariants.default,
+              NotificationVariants.secondary,
               NotificationVariants.neutral,
               NotificationVariants.dark,
             ] as const
@@ -344,7 +344,7 @@ export const Default: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              NotificationVariants.default,
+              NotificationVariants.secondary,
               NotificationVariants.neutral,
               NotificationVariants.dark,
             ] as const
@@ -422,7 +422,7 @@ export const CustomColor: Story = {
               {/* Expanded with date + description */}
               <NotificationItem
                 {...staticBase}
-                variant={NotificationVariants.default}
+                variant={NotificationVariants.secondary}
                 color={preset.color}
                 title="Name Surname"
                 date={SAMPLE_DATE}
@@ -437,7 +437,7 @@ export const CustomColor: Story = {
               {/* Collapsed — title + date only */}
               <NotificationItem
                 {...staticBase}
-                variant={NotificationVariants.default}
+                variant={NotificationVariants.secondary}
                 color={preset.color}
                 title="Name Surname"
                 date={SAMPLE_DATE}
@@ -469,7 +469,7 @@ export const CustomColor: Story = {
           <div css={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <NotificationItem
               {...staticBase}
-              variant={NotificationVariants.default}
+              variant={NotificationVariants.secondary}
               color="purple"
               icon="comments"
               title="New message"
@@ -480,7 +480,7 @@ export const CustomColor: Story = {
             />
             <NotificationItem
               {...staticBase}
-              variant={NotificationVariants.default}
+              variant={NotificationVariants.secondary}
               color="#f59e0b"
               icon="comments"
               title="New message"
@@ -512,7 +512,7 @@ export const CustomColor: Story = {
           <div css={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <NotificationItem
               {...staticBase}
-              variant={NotificationVariants.default}
+              variant={NotificationVariants.secondary}
               color="greenLighter"
               icon={
                 <div
@@ -545,7 +545,7 @@ export const CustomColor: Story = {
             />
             <NotificationItem
               {...staticBase}
-              variant={NotificationVariants.default}
+              variant={NotificationVariants.secondary}
               color="#1e293b"
               icon={
                 <div
@@ -597,7 +597,7 @@ export const CustomColor: Story = {
               size="small"
               onClick={() =>
                 showNotification({
-                  variant: NotificationVariants.default,
+                  variant: NotificationVariants.secondary,
                   color: preset.color,
                   title: 'Name Surname',
                   date: SAMPLE_DATE,
@@ -620,7 +620,7 @@ export const CustomColor: Story = {
             size="small"
             onClick={() =>
               showNotification({
-                variant: NotificationVariants.default,
+                variant: NotificationVariants.secondary,
                 color: 'purple',
                 icon: 'comments',
                 title: 'New message',
@@ -635,7 +635,7 @@ export const CustomColor: Story = {
             size="small"
             onClick={() =>
               showNotification({
-                variant: NotificationVariants.default,
+                variant: NotificationVariants.secondary,
                 color: '#f59e0b',
                 icon: 'comments',
                 title: 'New message',
@@ -653,7 +653,7 @@ export const CustomColor: Story = {
             size="small"
             onClick={() =>
               showNotification({
-                variant: NotificationVariants.default,
+                variant: NotificationVariants.secondary,
                 color: 'greenLighter',
                 icon: (
                   <div
@@ -689,7 +689,7 @@ export const CustomColor: Story = {
             size="small"
             onClick={() =>
               showNotification({
-                variant: NotificationVariants.default,
+                variant: NotificationVariants.secondary,
                 color: '#1e293b',
                 icon: (
                   <div
@@ -780,7 +780,7 @@ export const CustomStyles: Story = {
               {/* Expanded with date + description + action buttons */}
               <NotificationItem
                 {...staticBase}
-                variant={NotificationVariants.default}
+                variant={NotificationVariants.secondary}
                 styleOverrides={preset.overrides}
                 title="Name Surname"
                 date={SAMPLE_DATE}
@@ -793,7 +793,7 @@ export const CustomStyles: Story = {
               {/* Collapsed — title + date only */}
               <NotificationItem
                 {...staticBase}
-                variant={NotificationVariants.default}
+                variant={NotificationVariants.secondary}
                 styleOverrides={preset.overrides}
                 title="Name Surname"
                 date={SAMPLE_DATE}
@@ -827,7 +827,7 @@ export const CustomStyles: Story = {
               size="small"
               onClick={() =>
                 showNotification({
-                  variant: NotificationVariants.default,
+                  variant: NotificationVariants.secondary,
                   title: 'Name Surname',
                   date: SAMPLE_DATE,
                   description: SAMPLE_DESCRIPTION,
@@ -925,7 +925,7 @@ export const AutoDismiss: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              NotificationVariants.default,
+              NotificationVariants.secondary,
               NotificationVariants.neutral,
               NotificationVariants.dark,
             ] as const
@@ -971,7 +971,7 @@ export const AutoDismiss: Story = {
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {(
             [
-              NotificationVariants.default,
+              NotificationVariants.secondary,
               NotificationVariants.neutral,
               NotificationVariants.dark,
             ] as const

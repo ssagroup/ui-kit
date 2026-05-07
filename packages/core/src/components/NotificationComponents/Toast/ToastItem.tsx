@@ -27,6 +27,7 @@ import { darkenColor, getContrastColor, isColorDark } from '@utils/colorUtils';
 import { useAutoDismiss } from '../hooks/useAutoDismiss';
 import * as styles from './styles';
 import { ToastVariants } from './types';
+import Button from '@components/Button';
 
 // Default timeout used by the component (4 s) — defined in Toast.tsx as prop
 // default, but ToastItem also needs to know it has a timer active.
@@ -186,33 +187,35 @@ export const ToastItem: FC<ToastItemProps> = ({
                 {title && (
                   <span css={styles.titleTextStyles(textColor)}>{title}</span>
                 )}
-                <button
-                  type="button"
-                  css={styles.closeBtnStyles}
+
+                <Icon
+                  name="cross"
+                  size={18}
                   onClick={handleClose}
-                  aria-label="Close toast">
-                  <Icon name="cross" size={12} color={resolvedCloseIconColor} />
-                </button>
+                  aria-label="Close toast"
+                  color={resolvedCloseIconColor}
+                  css={styles.closeBtnStyles}
+                />
               </div>
 
               <p css={styles.descriptionStyles(textColor)}>{description}</p>
 
               <div css={styles.actionsRowStyles}>
                 {cancelText && onClose && (
-                  <button
-                    type="button"
+                  <Button
+                    variant="tertiary"
                     css={styles.actionBtnStyles(textColor)}
                     onClick={handleClose}>
                     {cancelText}
-                  </button>
+                  </Button>
                 )}
                 {submitText && onSubmit && (
-                  <button
-                    type="button"
+                  <Button
+                    variant="tertiary"
                     css={styles.actionBtnStyles(textColor)}
                     onClick={handleSubmit}>
                     {submitText}
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
@@ -230,30 +233,31 @@ export const ToastItem: FC<ToastItemProps> = ({
 
               <div css={styles.actionsRowStyles}>
                 {cancelText && onClose && (
-                  <button
-                    type="button"
+                  <Button
+                    variant="tertiary"
                     css={styles.actionBtnStyles(textColor)}
                     onClick={handleClose}>
                     {cancelText}
-                  </button>
+                  </Button>
                 )}
                 {submitText && onSubmit && (
-                  <button
-                    type="button"
+                  <Button
+                    variant="tertiary"
                     css={styles.actionBtnStyles(textColor)}
                     onClick={handleSubmit}>
                     {submitText}
-                  </button>
+                  </Button>
                 )}
               </div>
 
-              <button
-                type="button"
-                css={styles.closeBtnStyles}
+              <Icon
+                name="cross"
+                size={18}
                 onClick={handleClose}
-                aria-label="Close toast">
-                <Icon name="cross" size={12} color={resolvedCloseIconColor} />
-              </button>
+                aria-label="Close toast"
+                color={resolvedCloseIconColor}
+                css={styles.closeBtnStyles}
+              />
             </>
           )}
         </>

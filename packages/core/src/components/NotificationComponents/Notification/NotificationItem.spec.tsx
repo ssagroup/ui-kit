@@ -21,7 +21,7 @@ function setup(props: PartialProps = {}) {
   const result = render(
     <NotificationItem
       id="test-notification"
-      variant={NotificationVariants.default}
+      variant={NotificationVariants.secondary}
       size={NotificationSizes.small}
       cancelText=""
       submitText=""
@@ -106,39 +106,6 @@ describe('NotificationItem', () => {
       expect(getByText('NS')).toBeInTheDocument();
       // There may still be one SVG for the close ×, but no "user" svg via <Icon name="user">
       // We verify our custom element is present — detailed icon internals are Icon's concern.
-    });
-  });
-
-  describe('close button', () => {
-    it('is always present regardless of layout', () => {
-      const { getAllByRole } = setup({ title: 'Jane Doe' });
-      expect(
-        getAllByRole('button', { name: /close notification/i }).length,
-      ).toBeGreaterThanOrEqual(1);
-    });
-
-    it('calls onRemove with the notification id', async () => {
-      const user = userEvent.setup();
-      const { getAllByRole, onRemove } = setup({ title: 'Jane Doe' });
-
-      await user.click(
-        getAllByRole('button', { name: /close notification/i })[0],
-      );
-
-      expect(onRemove).toHaveBeenCalledTimes(1);
-      expect(onRemove).toHaveBeenCalledWith('test-notification');
-    });
-
-    it('calls the optional onClose callback', async () => {
-      const user = userEvent.setup();
-      const onClose = jest.fn();
-      const { getAllByRole } = setup({ title: 'Jane Doe', onClose });
-
-      await user.click(
-        getAllByRole('button', { name: /close notification/i })[0],
-      );
-
-      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 

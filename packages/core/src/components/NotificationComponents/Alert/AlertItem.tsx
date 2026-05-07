@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { useTheme } from '@emotion/react';
 
 import Icon from '@components/Icon';
+import Button from '@components/Button';
 import {
   NotificationPositions,
   NotificationSizes,
@@ -164,13 +165,14 @@ export const AlertItem: FC<AlertItemProps> = ({
                 {title}
               </span>
             )}
-            <button
-              type="button"
+            <Icon
+              name="cross"
+              size={18}
+              color={resolvedCloseIconColor}
               css={[styles.closeBtnStyles, styleOverrides?.closeButton]}
               onClick={handleClose}
-              aria-label="Close alert">
-              <Icon name="cross" size={12} color={resolvedCloseIconColor} />
-            </button>
+              aria-label="Close alert"
+            />
           </div>
 
           <p
@@ -183,26 +185,26 @@ export const AlertItem: FC<AlertItemProps> = ({
 
           <div css={[styles.actionsRowStyles, styleOverrides?.actions]}>
             {cancelText && onClose && (
-              <button
-                type="button"
+              <Button
+                variant="tertiary"
                 css={[
                   styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleClose}>
                 {cancelText}
-              </button>
+              </Button>
             )}
             {submitText && onSubmit && (
-              <button
-                type="button"
+              <Button
+                variant="tertiary"
                 css={[
                   styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleSubmit}>
                 {submitText}
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -221,36 +223,37 @@ export const AlertItem: FC<AlertItemProps> = ({
 
           <div css={[styles.actionsRowStyles, styleOverrides?.actions]}>
             {cancelText && onClose && (
-              <button
-                type="button"
+              <Button
+                variant="tertiary"
                 css={[
                   styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleClose}>
                 {cancelText}
-              </button>
+              </Button>
             )}
             {submitText && onSubmit && (
-              <button
-                type="button"
+              <Button
+                variant="tertiary"
                 css={[
                   styles.actionBtnStyles(theme, textColor),
                   styleOverrides?.actionButton,
                 ]}
                 onClick={handleSubmit}>
                 {submitText}
-              </button>
+              </Button>
             )}
           </div>
 
-          <button
-            type="button"
+          <Icon
+            name="cross"
+            size={18}
+            color={resolvedCloseIconColor}
             css={[styles.closeBtnStyles, styleOverrides?.closeButton]}
             onClick={handleClose}
-            aria-label="Close alert">
-            <Icon name="cross" size={12} color={resolvedCloseIconColor} />
-          </button>
+            aria-label="Close alert"
+          />
         </>
       )}
     </div>

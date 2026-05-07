@@ -8,7 +8,7 @@ import {
 import { ColorsKeys } from '@global-types/emotion';
 
 export enum NotificationVariants {
-  default = 'default',
+  secondary = 'secondary',
   neutral = 'neutral',
   dark = 'dark',
 }

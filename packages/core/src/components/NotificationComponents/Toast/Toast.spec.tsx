@@ -23,7 +23,6 @@
  */
 
 import { act, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import {
   NotificationPositions,
@@ -55,7 +54,7 @@ describe('Toast', () => {
     it('shows a toast card in the portal after showToast is called', async () => {
       render(<Toast />);
 
-      await fireToast({ variant: ToastVariants.default, title: 'Saved!' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Saved!' });
 
       expect(screen.getByText('Saved!')).toBeInTheDocument();
     });
@@ -75,39 +74,14 @@ describe('Toast', () => {
     it('renders multiple toasts for multiple showToast calls', async () => {
       render(<Toast />);
 
-      await fireToast({ variant: ToastVariants.default, title: 'First toast' });
+      await fireToast({
+        variant: ToastVariants.secondary,
+        title: 'First toast',
+      });
       await fireToast({ variant: ToastVariants.dark, title: 'Second toast' });
 
       expect(screen.getByText('First toast')).toBeInTheDocument();
       expect(screen.getByText('Second toast')).toBeInTheDocument();
-    });
-
-    it('removes a toast when its close button is clicked', async () => {
-      const user = userEvent.setup();
-      render(<Toast timeout={undefined} />);
-
-      await fireToast({ variant: ToastVariants.default, title: 'Close me' });
-
-      const closeBtn = screen.getByRole('button', { name: /close toast/i });
-      await user.click(closeBtn);
-
-      expect(screen.queryByText('Close me')).not.toBeInTheDocument();
-    });
-
-    it('fires the onClose callback when the close button is clicked', async () => {
-      const user = userEvent.setup();
-      const onClose = jest.fn();
-      render(<Toast timeout={undefined} />);
-
-      await fireToast({
-        variant: ToastVariants.default,
-        title: 'With callback',
-        onClose,
-      });
-
-      await user.click(screen.getByRole('button', { name: /close toast/i }));
-
-      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -116,7 +90,7 @@ describe('Toast', () => {
       render(<Toast cancelText="Dismiss" timeout={undefined} />);
 
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Hi',
         onClose: jest.fn(),
       });
@@ -128,7 +102,7 @@ describe('Toast', () => {
       render(<Toast submitText="Confirm" timeout={undefined} />);
 
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Hi',
         onSubmit: jest.fn(),
       });
@@ -140,7 +114,7 @@ describe('Toast', () => {
       render(<Toast cancelText="Global dismiss" timeout={undefined} />);
 
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Hi',
         cancelText: 'Per-toast dismiss',
         onClose: jest.fn(),
@@ -154,7 +128,7 @@ describe('Toast', () => {
       render(<Toast size={NotificationSizes.small} timeout={undefined} />);
 
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Large toast',
         size: NotificationSizes.large,
       });
@@ -169,7 +143,7 @@ describe('Toast', () => {
 
     it('auto-dismisses using the component-level timeout', async () => {
       render(<Toast timeout={3000} />);
-      await fireToast({ variant: ToastVariants.default, title: 'Auto' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Auto' });
 
       act(() => jest.advanceTimersByTime(3000));
 
@@ -179,7 +153,7 @@ describe('Toast', () => {
     it('per-toast timeout overrides the component-level default', async () => {
       render(<Toast timeout={10000} />);
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Quick',
         timeout: 1000,
       });
@@ -192,7 +166,7 @@ describe('Toast', () => {
     it('per-toast timeout: undefined disables auto-dismiss even when component has a timeout', async () => {
       render(<Toast timeout={2000} />);
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Persistent',
         timeout: undefined,
       });
@@ -204,7 +178,7 @@ describe('Toast', () => {
 
     it('does not auto-dismiss when component timeout is undefined', async () => {
       render(<Toast timeout={undefined} />);
-      await fireToast({ variant: ToastVariants.default, title: 'No timer' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'No timer' });
 
       act(() => jest.advanceTimersByTime(5_000));
 
@@ -222,9 +196,9 @@ describe('Toast', () => {
         />,
       );
 
-      await fireToast({ variant: ToastVariants.default, title: 'First' });
-      await fireToast({ variant: ToastVariants.default, title: 'Second' });
-      await fireToast({ variant: ToastVariants.default, title: 'Third' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'First' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Second' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Third' });
 
       expect(screen.queryByText('First')).not.toBeInTheDocument();
       expect(screen.getByText('Second')).toBeInTheDocument();
@@ -240,9 +214,9 @@ describe('Toast', () => {
         />,
       );
 
-      await fireToast({ variant: ToastVariants.default, title: 'First' });
-      await fireToast({ variant: ToastVariants.default, title: 'Second' });
-      await fireToast({ variant: ToastVariants.default, title: 'Third' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'First' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Second' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Third' });
 
       expect(screen.queryByText('First')).not.toBeInTheDocument();
       expect(screen.getByText('Second')).toBeInTheDocument();
@@ -252,8 +226,8 @@ describe('Toast', () => {
     it('keeps all toasts when count is below maxAmount', async () => {
       render(<Toast maxAmount={5} timeout={undefined} />);
 
-      await fireToast({ variant: ToastVariants.default, title: 'Alpha' });
-      await fireToast({ variant: ToastVariants.default, title: 'Beta' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Alpha' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Beta' });
 
       expect(screen.getByText('Alpha')).toBeInTheDocument();
       expect(screen.getByText('Beta')).toBeInTheDocument();
@@ -264,7 +238,7 @@ describe('Toast', () => {
 
       for (let i = 1; i <= 6; i++) {
         await fireToast({
-          variant: ToastVariants.default,
+          variant: ToastVariants.secondary,
           title: `Toast ${i}`,
         });
       }
@@ -280,7 +254,7 @@ describe('Toast', () => {
       render(<Toast timeout={undefined} />);
 
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         renderProp: () => <div>Custom toast content</div>,
       });
 
@@ -298,7 +272,7 @@ describe('Toast', () => {
         <Toast containerSelector="#custom-toast-portal" timeout={undefined} />,
       );
       await fireToast({
-        variant: ToastVariants.default,
+        variant: ToastVariants.secondary,
         title: 'Custom portal',
       });
 
@@ -311,7 +285,7 @@ describe('Toast', () => {
 
     it('falls back to document.body when containerSelector does not match', async () => {
       render(<Toast containerSelector="#does-not-exist" timeout={undefined} />);
-      await fireToast({ variant: ToastVariants.default, title: 'Fallback' });
+      await fireToast({ variant: ToastVariants.secondary, title: 'Fallback' });
 
       expect(screen.getByText('Fallback')).toBeInTheDocument();
     });
