@@ -58,17 +58,72 @@ export function isColorDark(color: string): boolean {
   return getRelativeLuminance(rgb) < 0.179;
 }
 
+// ─── HSL conversion helpers ───────────────────────────────────────────────────
+
+/** Converts linearized sRGB [0-255] to [h, s, l] each in [0, 1]. */
+function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+  const rn = r / 255;
+  const gn = g / 255;
+  const bn = b / 255;
+
+  const max = Math.max(rn, gn, bn);
+  const min = Math.min(rn, gn, bn);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    if (max === rn) h = ((gn - bn) / d + (gn < bn ? 6 : 0)) / 6;
+    else if (max === gn) h = ((bn - rn) / d + 2) / 6;
+    else h = ((rn - gn) / d + 4) / 6;
+  }
+
+  return [h, s, l];
+}
+
+function hue2rgb(p: number, q: number, t: number): number {
+  const tt = ((t % 1) + 1) % 1; // normalize to [0, 1]
+  if (tt < 1 / 6) return p + (q - p) * 6 * tt;
+  if (tt < 1 / 2) return q;
+  if (tt < 2 / 3) return p + (q - p) * (2 / 3 - tt) * 6;
+  return p;
+}
+
+/** Converts [h, s, l] (each in [0, 1]) to [r, g, b] (each in [0-255]). */
+function hslToRgb(h: number, s: number, l: number): [number, number, number] {
+  if (s === 0) {
+    const v = Math.round(l * 255);
+    return [v, v, v];
+  }
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  return [
+    Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+    Math.round(hue2rgb(p, q, h) * 255),
+    Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
+  ];
+}
+
 /**
- * Returns a darkened version of the color by multiplying each RGB channel by
- * `factor` (default 0.65 → 35% darker).
+ * Returns a darkened version of the color by **reducing HSL lightness** by
+ * `amount` (default 0.35 → 35 percentage points darker).
+ *
+ * Converting through HSL preserves the hue and saturation so light pastel
+ * colors (e.g. `greenLighter`) darken to a recognizable mid-shade of the same
+ * hue rather than washing out to grey (which a naïve per-channel multiply does).
  *
  * Falls back to the original string when the color format is not parsable
  * (e.g. CSS named colors, `hsl()`, `color-mix()`).
  */
-export function darkenColor(color: string, factor = 0.65): string {
+export function darkenColor(color: string, amount = 0.35): string {
   const rgb = parseRgb(color);
   if (!rgb) return color;
-  const [r, g, b] = rgb.map((c) => Math.round(c * factor));
+
+  const [h, s, l] = rgbToHsl(...rgb);
+  const [r, g, b] = hslToRgb(h, s, Math.max(0, l - amount));
   return `rgb(${r}, ${g}, ${b})`;
 }
 
