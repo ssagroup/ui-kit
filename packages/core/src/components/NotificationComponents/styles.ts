@@ -10,6 +10,8 @@
 
 import { css, keyframes, SerializedStyles, Theme } from '@emotion/react';
 
+import type { MapIconsType } from '@components';
+
 import {
   NotificationPositions,
   NotificationSizes,
@@ -184,3 +186,17 @@ export const closeBtnStyles = css`
     opacity: 1;
   }
 `;
+
+// ─── Semantic variant icons ───────────────────────────────────────────────────
+// Shared icon mapping for the four semantic variants used by both Alert and Toast.
+// Each component spreads this map and adds its own surface-level variants on top.
+
+export const semanticVariantIcons: Record<
+  'success' | 'warning' | 'error' | 'primary',
+  keyof MapIconsType
+> = {
+  success: 'check-circle',
+  warning: 'attention-circle',
+  error: 'attention-circle',
+  primary: 'information',
+};

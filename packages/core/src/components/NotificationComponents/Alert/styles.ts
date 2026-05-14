@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import { MapIconsType } from '@components';
 
 import { AlertVariants } from './types';
+import { semanticVariantIcons } from '../styles';
 
 // ─── Re-export shared structural styles ──────────────────────────────────────
 // Consuming components (`AlertItem`, `Alert`) import `* as styles from './styles'`
@@ -21,6 +22,7 @@ export {
   collapsedTitleStyles,
   actionsRowStyles,
   closeBtnStyles,
+  semanticVariantIcons,
 } from '../styles';
 
 // ─── Variant color tokens ────────────────────────────────────────────────────
@@ -75,10 +77,7 @@ export const getVariantTokens = (
 };
 
 export const variantIcons: Record<AlertVariants, keyof MapIconsType> = {
-  [AlertVariants.success]: 'check-circle',
-  [AlertVariants.warning]: 'attention-circle',
-  [AlertVariants.error]: 'attention-circle',
-  [AlertVariants.primary]: 'information',
+  ...semanticVariantIcons,
   [AlertVariants.neutral]: 'check-circle',
   [AlertVariants.secondary]: 'check-circle',
 };

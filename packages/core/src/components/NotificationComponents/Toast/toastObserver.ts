@@ -30,14 +30,14 @@ export const toastObserver = createObserver<DynamicToastParams>();
  * import { showToast, ToastVariants } from '@ssa-ui-kit/core';
  *
  * // Simple
- * showToast({ variant: ToastVariants.default, title: 'File saved' });
+ * showToast({ variant: ToastVariants.secondary, title: 'File saved' });
  *
- * // With custom color + progress
- * showToast({ variant: ToastVariants.default, title: 'Uploading…', color: 'blue', withProgress: true });
+ * // Semantic variant with progress bar
+ * showToast({ variant: ToastVariants.success, title: 'Uploading…', withProgress: true });
  *
  * // Fully custom content (outer card + progress bar still render)
  * showToast({
- *   variant: ToastVariants.default,
+ *   variant: ToastVariants.secondary,
  *   renderProp: (close) => <MyCard onDismiss={close} />,
  * });
  * ```

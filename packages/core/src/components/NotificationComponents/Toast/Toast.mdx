@@ -41,11 +41,17 @@ Import `showToast` from anywhere in your app and call it with a `DynamicToastPar
 import { showToast, ToastVariants } from '@ssa-ui-kit/core';
 
 // Minimal
-showToast({ variant: ToastVariants.default, title: 'File saved!' });
+showToast({ variant: ToastVariants.secondary, title: 'File saved!' });
+
+// Semantic variants — styled like Alert (tinted bg, matching icon & progress color)
+showToast({ variant: ToastVariants.success, title: 'Changes saved!' });
+showToast({ variant: ToastVariants.error,   title: 'Upload failed', description: 'File exceeds 10 MB.' });
+showToast({ variant: ToastVariants.warning, title: 'Low disk space' });
+showToast({ variant: ToastVariants.primary, title: 'New version available' });
 
 // With description and progress bar
 showToast({
-  variant: ToastVariants.default,
+  variant: ToastVariants.success,
   title: 'Uploading…',
   description: 'report.pdf — 1.4 MB / 2.3 MB',
   withProgress: true,
@@ -107,7 +113,7 @@ Toasts automatically dismiss after `timeout` milliseconds (default: **4000 ms**)
 
 ```tsx
 // Custom timeout for this toast only
-showToast({ variant: ToastVariants.default, title: 'Saved!', timeout: 2000 });
+showToast({ variant: ToastVariants.success, title: 'Saved!', timeout: 2000 });
 
 // Disable auto-dismiss for this toast only
 showToast({ variant: ToastVariants.neutral, title: 'Running…', timeout: undefined });
@@ -136,7 +142,7 @@ An animated bar drains across the bottom of the card over the toast's lifetime.
 <Toast withProgress timeout={6000} />
 
 // Enable for a specific toast only
-showToast({ variant: ToastVariants.default, title: 'Uploading…', withProgress: true });
+showToast({ variant: ToastVariants.warning, title: 'Uploading…', withProgress: true });
 
 // Disable for a specific toast (overrides component default)
 showToast({ variant: ToastVariants.dark, title: 'Done!', withProgress: false });
@@ -151,28 +157,48 @@ The progress bar is **always suppressed** when the effective `timeout` is `undef
 <Toast progressColor="purple" />
 
 // Per-toast override
-showToast({ variant: ToastVariants.default, title: 'Upload', withProgress: true, progressColor: '#6366f1' });
+showToast({ variant: ToastVariants.success, title: 'Upload', withProgress: true, progressColor: '#6366f1' });
 ```
 
 **Precedence (highest → lowest):**
 1. Per-toast `progressColor` from `showToast`
 2. Automatic darkened shade of the `color` prop (when `color` is set)
 3. Component-level `progressColor` from `<Toast>`
-4. Theme `blueNotification` (built-in default)
+4. Variant token — semantic variants (`success`, `warning`, `error`, `primary`) use their accent color; surface variants (`secondary`, `neutral`, `dark`) fall back to theme `blueNotification`
 
 ---
 
 ## Variants
 
+### Semantic variants
+
+Styled identically to the matching `Alert` variant — tinted background, matching status icon, and (when `withProgress` is enabled) a progress bar in the same accent color.
+
+| Value | Background | Icon | Use case |
+|---|---|---|---|
+| `ToastVariants.success` | Green tint | `check-circle` | Successful operation |
+| `ToastVariants.warning` | Amber tint | `attention-circle` | Requires attention |
+| `ToastVariants.error` | Red tint | `attention-circle` | Failed operation |
+| `ToastVariants.primary` | Blue tint | `information` | Informational / brand message |
+
+### Surface variants
+
 | Value | Background | Use case |
 |---|---|---|
-| `ToastVariants.default` | Light grey | General feedback, lowest emphasis |
+| `ToastVariants.secondary` | Light grey | General feedback, lowest emphasis |
 | `ToastVariants.neutral` | White | Neutral, clean look |
 | `ToastVariants.dark` | Dark grey | High-contrast, prominent feedback |
 
 ```tsx
-showToast({ variant: ToastVariants.default, title: 'Settings saved' });
-showToast({ variant: ToastVariants.dark,    title: 'Deployment started' });
+// Semantic
+showToast({ variant: ToastVariants.success, title: 'Profile updated' });
+showToast({ variant: ToastVariants.error,   title: 'Upload failed', description: 'File exceeds 10 MB.' });
+showToast({ variant: ToastVariants.warning, title: 'Session expiring soon' });
+showToast({ variant: ToastVariants.primary, title: 'Tip: use keyboard shortcuts' });
+
+// Surface
+showToast({ variant: ToastVariants.secondary, title: 'Settings saved' });
+showToast({ variant: ToastVariants.dark,      title: 'Deployment started' });
 ```
 
 ---
@@ -189,10 +215,10 @@ Text, icon, and border colors are **auto-derived** using WCAG luminance so they 
 
 ```tsx
 // Theme key
-showToast({ variant: ToastVariants.default, color: 'purple', title: 'Deployed!' });
+showToast({ variant: ToastVariants.secondary, color: 'purple', title: 'Deployed!' });
 
 // Any CSS color
-showToast({ variant: ToastVariants.default, color: '#f59e0b', title: 'Review required' });
+showToast({ variant: ToastVariants.secondary, color: '#f59e0b', title: 'Review required' });
 ```
 
 When `color` is provided the variant token colors (background, icon, border) are fully ignored.
@@ -208,7 +234,7 @@ The prop receives a `close` callback so custom content can dismiss the toast pro
 
 ```tsx
 showToast({
-  variant: ToastVariants.default,
+  variant: ToastVariants.secondary,
   renderProp: (close) => (
     <div style={{ padding: '14px 16px' }}>
       <p>Custom content here</p>

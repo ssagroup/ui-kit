@@ -122,12 +122,12 @@ export const ToastItem: FC<ToastItemProps> = ({
     ? darkenColor(resolvedColor)
     : tokens.borderColor;
 
-  // Precedence: explicit progressColor prop → auto darkened `color` → blueNotification
+  // Precedence: explicit progressColor prop → auto darkened `color` → variant token
+  // Semantic variants (success/warning/error/primary) use their accent color so
+  // the bar matches the status icon; surface variants fall back to blueNotification.
   const resolvedProgressColor =
     progressColor ??
-    (resolvedColor
-      ? darkenColor(resolvedColor)
-      : theme.colors.blueNotification!);
+    (resolvedColor ? darkenColor(resolvedColor) : tokens.progressColor);
 
   const resolvedCloseIconColor = dark
     ? theme.colors.white
@@ -178,7 +178,11 @@ export const ToastItem: FC<ToastItemProps> = ({
       ) : (
         <>
           <div css={styles.iconColStyles}>
-            <Icon name="check-circle" color={accentColor} size={24} />
+            <Icon
+              name={styles.variantIcons[variant]}
+              color={accentColor}
+              size={24}
+            />
           </div>
 
           {hasDescription ? (

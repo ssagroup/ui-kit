@@ -152,6 +152,21 @@ const COLOR_PRESETS: ColorPreset[] = [
 
 // ─── Default ─────────────────────────────────────────────────────────────────
 
+const SEMANTIC_VARIANTS = [
+  ToastVariants.success,
+  ToastVariants.warning,
+  ToastVariants.error,
+  ToastVariants.primary,
+] as const;
+
+const SURFACE_VARIANTS = [
+  ToastVariants.secondary,
+  ToastVariants.neutral,
+  ToastVariants.dark,
+] as const;
+
+const ALL_VARIANTS = [...SEMANTIC_VARIANTS, ...SURFACE_VARIANTS] as const;
+
 export const Default: Story = {
   render: (args) => (
     <div
@@ -171,13 +186,7 @@ export const Default: Story = {
           flexDirection: 'column',
           gap: 32,
         }}>
-        {(
-          [
-            ToastVariants.secondary,
-            ToastVariants.neutral,
-            ToastVariants.dark,
-          ] as const
-        ).map((variant) => (
+        {ALL_VARIANTS.map((variant) => (
           <section key={variant}>
             <p
               css={{
@@ -206,6 +215,16 @@ export const Default: Story = {
                 variant={variant}
                 title="Headline"
                 withShadow
+              />
+              {/* With progress bar */}
+              <ToastItem
+                {...staticBase}
+                variant={variant}
+                title="Headline"
+                description={SAMPLE_DESCRIPTION}
+                withShadow
+                withProgress
+                timeout={6000}
               />
               {/* With action buttons */}
               <ToastItem
@@ -245,13 +264,7 @@ export const Default: Story = {
 
         {/* Expanded — with description */}
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {(
-            [
-              ToastVariants.secondary,
-              ToastVariants.neutral,
-              ToastVariants.dark,
-            ] as const
-          ).map((variant) => (
+          {ALL_VARIANTS.map((variant) => (
             <Button
               key={variant}
               variant="secondary"
@@ -270,13 +283,7 @@ export const Default: Story = {
 
         {/* Collapsed — no description */}
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {(
-            [
-              ToastVariants.secondary,
-              ToastVariants.neutral,
-              ToastVariants.dark,
-            ] as const
-          ).map((variant) => (
+          {ALL_VARIANTS.map((variant) => (
             <Button
               key={`${variant}-collapsed`}
               variant="secondary"
@@ -289,13 +296,7 @@ export const Default: Story = {
 
         {/* With progress bar */}
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {(
-            [
-              ToastVariants.secondary,
-              ToastVariants.neutral,
-              ToastVariants.dark,
-            ] as const
-          ).map((variant) => (
+          {ALL_VARIANTS.map((variant) => (
             <Button
               key={`${variant}-progress`}
               variant="secondary"
@@ -315,13 +316,7 @@ export const Default: Story = {
 
         {/* With action buttons */}
         <div css={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {(
-            [
-              ToastVariants.secondary,
-              ToastVariants.neutral,
-              ToastVariants.dark,
-            ] as const
-          ).map((variant) => (
+          {ALL_VARIANTS.map((variant) => (
             <Button
               key={`${variant}-actions`}
               variant="secondary"
@@ -349,7 +344,8 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          'The **static preview** grid shows all three variants in expanded and collapsed layouts without any portal or timer. ' +
+          'The **static preview** grid shows all seven variants in expanded, collapsed, with-progress, and with-actions layouts. ' +
+          'Semantic variants (`success`, `warning`, `error`, `primary`) mirror Alert styles — tinted background, matching icon and progress bar color. ' +
           'The **trigger buttons** below fire live toasts via the portal — use the Controls panel to adjust `timeout`, `withProgress`, `position`, and more.',
       },
     },
