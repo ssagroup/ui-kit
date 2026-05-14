@@ -27,12 +27,11 @@ import { DynamicToastParams, ToastProps, ToastVariants } from './types';
  * ```tsx
  * import { showToast, ToastVariants } from '@ssa-ui-kit/core';
  *
- * showToast({ variant: ToastVariants.default, title: 'File saved!' });
+ * showToast({ variant: ToastVariants.success, title: 'File saved!' });
  *
  * showToast({
- *   variant: ToastVariants.default,
+ *   variant: ToastVariants.warning,
  *   title: 'Uploading…',
- *   color: 'blue',
  *   timeout: 8000,
  *   withProgress: true,
  * });

@@ -1,7 +1,10 @@
 import { css, keyframes, Theme } from '@emotion/react';
 
+import type { MapIconsType } from '@components';
+
 import { ToastVariants } from './types';
 import { ColorsKeys } from '@global-types/emotion';
+import { semanticVariantIcons } from '@components/NotificationComponents/styles';
 
 // ─── Re-export shared structural styles ──────────────────────────────────────
 
@@ -30,6 +33,13 @@ export interface ToastVariantTokens {
   borderColor: string;
   /** Text color for title / description */
   textColor: string;
+  /**
+   * Progress bar color for this variant.
+   * Semantic variants (success, warning, error, primary) use their accent color
+   * to keep the bar visually consistent with the icon. Surface variants fall
+   * back to the theme's `blueNotification`.
+   */
+  progressColor: string;
 }
 
 export const getVariantTokens = (
@@ -37,27 +47,65 @@ export const getVariantTokens = (
   variant: ToastVariants,
 ): ToastVariantTokens => {
   const map: Record<ToastVariants, ToastVariantTokens> = {
+    [ToastVariants.success]: {
+      bg: `color-mix(in srgb, ${theme.palette.success.light} 8%, white)`,
+      iconColor: theme.palette.success.main,
+      borderColor: theme.palette.success.main,
+      textColor: theme.colors.greyDarker!,
+      progressColor: theme.palette.success.main,
+    },
+    [ToastVariants.warning]: {
+      bg: `color-mix(in srgb, ${theme.palette.warning.main} 8%, white)`,
+      iconColor: theme.palette.warning.main,
+      borderColor: theme.palette.warning.main,
+      textColor: theme.colors.greyDarker!,
+      progressColor: theme.palette.warning.main,
+    },
+    [ToastVariants.error]: {
+      bg: `color-mix(in srgb, ${theme.palette.error.light} 8%, white)`,
+      iconColor: theme.palette.error.main,
+      borderColor: theme.palette.error.main,
+      textColor: theme.colors.greyDarker!,
+      progressColor: theme.palette.error.main,
+    },
+    [ToastVariants.primary]: {
+      bg: `color-mix(in srgb, ${theme.palette.primary.light} 8%, white)`,
+      iconColor: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      textColor: theme.colors.greyDarker!,
+      progressColor: theme.palette.primary.main,
+    },
     [ToastVariants.secondary]: {
       bg: theme.palette.secondary.light,
       iconColor: theme.colors.greyDarker60!,
       borderColor: theme.colors.greyFocused!,
       textColor: theme.colors.greyDarker!,
+      progressColor: theme.colors.blueNotification!,
     },
     [ToastVariants.neutral]: {
       bg: theme.colors.white!,
       iconColor: theme.colors.greyDarker60!,
       borderColor: theme.colors.greyOutline!,
       textColor: theme.colors.greyDarker!,
+      progressColor: theme.colors.blueNotification!,
     },
     [ToastVariants.dark]: {
       bg: theme.colors.greyBackground!,
       iconColor: theme.colors.white!,
       borderColor: theme.colors.greyBackground!,
       textColor: theme.colors.white!,
+      progressColor: theme.colors.blueNotification!,
     },
   };
 
   return map[variant];
+};
+
+export const variantIcons: Record<ToastVariants, keyof MapIconsType> = {
+  ...semanticVariantIcons,
+  [ToastVariants.neutral]: 'check-circle',
+  [ToastVariants.secondary]: 'check-circle',
+  [ToastVariants.dark]: 'check-circle',
 };
 
 // ─── Toast item wrapper ───────────────────────────────────────────────────────

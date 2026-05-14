@@ -249,6 +249,41 @@ describe('Toast', () => {
     });
   });
 
+  describe('semantic variants', () => {
+    it.each([
+      ToastVariants.success,
+      ToastVariants.warning,
+      ToastVariants.error,
+      ToastVariants.primary,
+    ])(
+      'renders variant "%s" with title and description via showToast',
+      async (variant) => {
+        render(<Toast timeout={undefined} />);
+
+        await fireToast({
+          variant,
+          title: `${variant} title`,
+          description: `${variant} description`,
+        });
+
+        expect(screen.getByText(`${variant} title`)).toBeInTheDocument();
+        expect(screen.getByText(`${variant} description`)).toBeInTheDocument();
+      },
+    );
+
+    it('renders a semantic variant with progress bar without throwing', async () => {
+      render(<Toast timeout={4000} withProgress />);
+
+      await fireToast({
+        variant: ToastVariants.success,
+        title: 'All done',
+        withProgress: true,
+      });
+
+      expect(screen.getByText('All done')).toBeInTheDocument();
+    });
+  });
+
   describe('renderProp', () => {
     it('renders custom content from renderProp', async () => {
       render(<Toast timeout={undefined} />);

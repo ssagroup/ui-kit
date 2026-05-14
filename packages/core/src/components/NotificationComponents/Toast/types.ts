@@ -7,6 +7,10 @@ import {
 import { ColorsKeys } from '@global-types/emotion';
 
 export enum ToastVariants {
+  success = 'success',
+  warning = 'warning',
+  error = 'error',
+  primary = 'primary',
   secondary = 'secondary',
   neutral = 'neutral',
   dark = 'dark',
@@ -49,21 +53,28 @@ export interface ToastProps extends GlobalSharedProps {
  *
  * @example
  * ```ts
- * // Minimal
- * showToast({ variant: ToastVariants.default, title: 'Saved!' });
+ * // Minimal — surface variant
+ * showToast({ variant: ToastVariants.secondary, title: 'Saved!' });
  *
- * // With color, custom timeout, and progress bar
+ * // Semantic variant with progress bar
  * showToast({
- *   variant: ToastVariants.default,
+ *   variant: ToastVariants.success,
  *   title: 'Uploading…',
- *   color: 'purple',
  *   timeout: 8000,
+ *   withProgress: true,
+ * });
+ *
+ * // With custom color override
+ * showToast({
+ *   variant: ToastVariants.secondary,
+ *   title: 'Deploying…',
+ *   color: 'purple',
  *   withProgress: true,
  * });
  *
  * // Fully custom content
  * showToast({
- *   variant: ToastVariants.default,
+ *   variant: ToastVariants.secondary,
  *   renderProp: (close) => <MyCustomCard onDismiss={close} />,
  * });
  * ```
