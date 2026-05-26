@@ -40,12 +40,27 @@ export const BalancePieChart = withTheme(
       }
       return isSaved;
     });
+    const isAllValuesZero = data.length > 0 && chartData.length === 0;
     const chartColors = (chartColorPalette || pieChartColors).filter(
       (item, index) => !filteredIndexes.includes(index),
     );
-    if (chartColors.length < chartData.length) {
-      for (let i = 0; i < chartData.length - chartColors.length; i++) {
-        chartColors.push(mainTheme.colors.purpleLighter as string);
+    const chartDataWithZeroFallback = isAllValuesZero
+      ? [{ id: '__zero__', value: 1, label: '__zero__' }]
+      : chartData;
+    const chartColorsWithZeroFallback = isAllValuesZero
+      ? [theme.palette.secondary.dark as string]
+      : chartColors;
+
+    if (chartColorsWithZeroFallback.length < chartDataWithZeroFallback.length) {
+      for (
+        let i = 0;
+        i <
+        chartDataWithZeroFallback.length - chartColorsWithZeroFallback.length;
+        i++
+      ) {
+        chartColorsWithZeroFallback.push(
+          mainTheme.colors.purpleLighter as string,
+        );
       }
     }
 
@@ -63,9 +78,9 @@ export const BalancePieChart = withTheme(
     };
     return (
       <PieChart
-        data={chartData}
+        data={chartDataWithZeroFallback}
         features={Array.from(featuresList)}
-        colors={chartColors}
+        colors={chartColorsWithZeroFallback}
         onFullscreenModeChange={handleFullscreenModeChange}
         animate={false}
         title={<BalancePieChartTitle />}
