@@ -102,4 +102,34 @@ describe('AccountBalance', () => {
     getByText('7 LTC');
     getByText('530.25 USDT');
   });
+
+  it('Renders all-zero data', () => {
+    const zeroData = [
+      {
+        id: 'USDC',
+        label: 'USDC',
+        legendValue: 0,
+        value: 0,
+      },
+      {
+        id: 'USDT',
+        label: 'USDT',
+        legendValue: 0,
+        value: 0,
+      },
+    ];
+
+    const { container, getByText, getByRole } = render(
+      <AccountBalance total="0" currency="USDT" data={zeroData} />,
+    );
+
+    const pieChartWrapper = container.querySelector('.pie-chart-wrapper');
+    expect(pieChartWrapper).toBeInTheDocument();
+
+    getByText('0');
+    getByRole('heading', { name: 'USDC' });
+    getByRole('heading', { name: '0 USDC' });
+    getByRole('heading', { name: 'USDT' });
+    getByRole('heading', { name: '0 USDT' });
+  });
 });
