@@ -1,48 +1,125 @@
-import styled from '@emotion/styled';
-import { CommonProps } from '@global-types/emotion';
+import React from 'react';
+import { useTheme } from '@emotion/react';
+import {
+  blue,
+  blueLight,
+  green,
+  pink,
+  purple,
+  turquoise,
+  yellow,
+  yellowWarm,
+} from '@styles/global';
+import Icon from '@components/Icon';
+import { AvatarProps, AvatarColor } from './types';
+import { AvatarContainer, AvatarText } from './styles';
+
+const COLOR_MAP: Record<AvatarColor, typeof pink> = {
+  pink,
+  yellow,
+  yellowWarm,
+  green,
+  turquoise,
+  purple,
+  blueLight,
+  blue,
+};
+
+const STANDARD_COLORS = new Set<string>(Object.keys(COLOR_MAP));
 
 /**
- * Avatar - Circular image component for user profiles
+ * Avatar - Circular component for displaying user identity.
  *
- * A simple circular avatar component that displays an image with customizable size.
- * The image is displayed with a circular border-radius and centered within the container.
+ * Renders one of three visual states based on the supplied props:
+ * 1. **Custom image** — when `image` is provided, displays the photo inside a circle.
+ * 2. **Colored placeholder** — when `color` and/or `text` are provided, renders a
+ *    gradient circle (using the design-system palette) with up to two initials.
+ * 3. **Default placeholder** — when no props are given, shows the standard user icon.
  *
  * @category Components
  * @subcategory Display
  *
  * @example
  * ```tsx
- * // Basic avatar
- * <Avatar size={40} image="/path/to/avatar.jpg" />
+ * // Standard color + initial letter
+ * <Avatar color="purple" text="J" />
  * ```
  *
  * @example
  * ```tsx
- * // Large avatar
- * <Avatar size={100} image={user.avatarUrl} />
+ * // Custom profile photo
+ * <Avatar image="/users/jane.jpg" />
  * ```
  *
  * @example
  * ```tsx
- * // Avatar with custom styling
- * <Avatar
- *   size={60}
- *   image="/avatar.png"
- *   css={{ border: '2px solid blue' }}
- * />
+ * // Default placeholder (no props)
+ * <Avatar />
  * ```
  *
- * @see {@link UserProfile} - For complete user profile display with avatar
+ * @example
+ * ```tsx
+ * // User-defined hex color + letter
+ * <Avatar color="#F7931A" text="A" />
+ * ```
+ *
+ * @see {@link UserProfile} - For a complete user-profile panel that accepts Avatar as a trigger
  */
-const Avatar = styled.div<{ size: number; image: string } & CommonProps>`
-  border-radius: 100px;
+const Avatar = ({
+  size = 42,
+  color,
+  text,
+  image,
+  className,
+}: AvatarProps) => {
+  const theme = useTheme();
 
-  overflow: hidden;
+  // ── Scenario 3: custom profile image ──────────────────────────────────────
+  if (image) {
+    return (
+      <AvatarContainer
+        size={size}
+        css={{
+          background: `url(${image}) center / cover no-repeat`,
+        }}
+        className={className}
+        data-testid="avatar"
+      />
+    );
+  }
 
-  width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
+  // ── Scenario 1: colored placeholder with optional text ─────────────────────
+  if (color || text) {
+    const colorStyle =
+      color && STANDARD_COLORS.has(color)
+        ? COLOR_MAP[color as AvatarColor](theme)
+        : { background: color ?? theme.colors.grey };
 
-  background: ${({ image }) => `url(${image})`} center / contain no-repeat;
-`;
+    const fontSize = Math.round(size * 0.4);
+
+    return (
+      <AvatarContainer
+        size={size}
+        css={colorStyle}
+        className={className}
+        data-testid="avatar">
+        {text && (
+          <AvatarText fontSize={fontSize}>{text.slice(0, 2)}</AvatarText>
+        )}
+      </AvatarContainer>
+    );
+  }
+
+  // ── Scenario 2: default user-icon placeholder ──────────────────────────────
+  return (
+    <AvatarContainer
+      size={size}
+      css={{ background: theme.colors.greyLighter }}
+      className={className}
+      data-testid="avatar">
+      <Icon name="user" size={Math.round(size * 0.75)} color={theme.colors.grey} />
+    </AvatarContainer>
+  );
+};
 
 export default Avatar;

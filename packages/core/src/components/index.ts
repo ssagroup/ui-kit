@@ -120,6 +120,7 @@ export * from './Chip';
 export type * from './Chip/types';
 
 export { default as Avatar } from './Avatar';
+export type * from './Avatar/types';
 
 export { default as Label } from './Label';
 export type * from './Label/types';
