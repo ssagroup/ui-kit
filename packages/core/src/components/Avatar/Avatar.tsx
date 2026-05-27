@@ -27,6 +27,12 @@ const COLOR_MAP: Record<AvatarColor, typeof pink> = {
 
 const STANDARD_COLORS = new Set<string>(Object.keys(COLOR_MAP));
 
+/** Proportion of the avatar diameter used as the initials font-size. */
+const TEXT_SIZE_RATIO = 0.4;
+
+/** Proportion of the avatar diameter used as the default icon size. */
+const ICON_SIZE_RATIO = 0.75;
+
 /**
  * Avatar - Circular component for displaying user identity.
  *
@@ -90,12 +96,14 @@ const Avatar = ({
 
   // ── Scenario 1: colored placeholder with optional text ─────────────────────
   if (color || text) {
+    // When only text is given (no color), default to grey so the circle is visible.
+    const resolvedColor = color ?? theme.colors.grey;
     const colorStyle =
       color && STANDARD_COLORS.has(color)
         ? COLOR_MAP[color as AvatarColor](theme)
-        : { background: color ?? theme.colors.grey };
+        : { background: resolvedColor };
 
-    const fontSize = Math.round(size * 0.4);
+    const fontSize = Math.round(size * TEXT_SIZE_RATIO);
 
     return (
       <AvatarContainer
@@ -117,7 +125,7 @@ const Avatar = ({
       css={{ background: theme.colors.greyLighter }}
       className={className}
       data-testid="avatar">
-      <Icon name="user" size={Math.round(size * 0.75)} color={theme.colors.grey} />
+      <Icon name="user" size={Math.round(size * ICON_SIZE_RATIO)} color={theme.colors.grey} />
     </AvatarContainer>
   );
 };
