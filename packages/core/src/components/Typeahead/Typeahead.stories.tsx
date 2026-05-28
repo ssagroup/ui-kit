@@ -314,7 +314,7 @@ export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
             key={id}
             value={id}
             label={name}
-            avatar={<Avatar size={20} image={avatar} />}>
+            avatar={<Avatar size="small" image={avatar} />}>
             {name}
           </TypeaheadOption>
         ))}

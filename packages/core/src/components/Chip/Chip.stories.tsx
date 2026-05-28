@@ -147,17 +147,17 @@ export const WithAvatar = () => {
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
       <Chip
         label="Avatar"
-        avatar={<Avatar size={20} image={getStorybookAvatar(0)} />}
+        avatar={<Avatar size="small" image={getStorybookAvatar(0)} />}
       />
       <Chip
         label="Avatar"
         variant="outlined"
-        avatar={<Avatar size={20} image={getStorybookAvatar(1)} />}
+        avatar={<Avatar size="small" image={getStorybookAvatar(1)} />}
       />
       <Chip
         label="Name Surname"
         size="large"
-        avatar={<Avatar size={25} image={getStorybookAvatar(2)} />}
+        avatar={<Avatar size="small" image={getStorybookAvatar(2)} />}
         onDelete={() => {}}
       />
     </Wrapper>

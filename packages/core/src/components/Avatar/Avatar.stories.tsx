@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 import Avatar from './Avatar';
-import { AvatarColor } from './types';
+import { AvatarSizes } from './types';
 
-const STANDARD_COLORS: AvatarColor[] = [
+const STANDARD_COLORS = [
   'pink',
   'yellow',
   'yellowWarm',
@@ -12,7 +12,7 @@ const STANDARD_COLORS: AvatarColor[] = [
   'purple',
   'blueLight',
   'blue',
-];
+] as const;
 
 const meta: Meta<typeof Avatar> = {
   title: 'Components/Avatar',
@@ -32,6 +32,14 @@ const meta: Meta<typeof Avatar> = {
         type: { summary: 'string' },
       },
     },
+    border: {
+      control: { type: 'boolean' },
+      table: { type: { summary: 'boolean' } },
+    },
+    borderColor: {
+      control: { type: 'text' },
+      table: { type: { summary: 'ColorsKeys | string' } },
+    },
     image: {
       control: { type: 'text' },
       table: {
@@ -39,15 +47,16 @@ const meta: Meta<typeof Avatar> = {
       },
     },
     size: {
-      control: { type: 'number', min: 16, max: 128, step: 4 },
+      control: { type: 'inline-radio' },
+      options: Object.values(AvatarSizes),
       table: {
-        type: { summary: 'number' },
-        defaultValue: { summary: '42' },
+        type: { summary: 'small | medium | large' },
+        defaultValue: { summary: AvatarSizes.medium },
       },
     },
   },
   args: {
-    size: 42,
+    size: AvatarSizes.medium,
   },
 };
 
@@ -123,7 +132,7 @@ export const DefaultPlaceholder: Story = {
  */
 export const UserDefinedColorAndLetter: Story = {
   args: {
-    color: '#F7931A',
+    color: 'rgb(247, 147, 26)',
     text: 'AB',
   },
   parameters: {

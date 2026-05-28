@@ -1,16 +1,11 @@
-/**
- * Standard design-system color names supported by Avatar.
- * These map to the gradient color styles defined in `@styles/global`.
- */
-export type AvatarColor =
-  | 'pink'
-  | 'yellow'
-  | 'yellowWarm'
-  | 'green'
-  | 'turquoise'
-  | 'purple'
-  | 'blueLight'
-  | 'blue';
+import { Interpolation, Theme } from '@emotion/react';
+import { ColorsKeys } from '@global-types/emotion';
+
+export enum AvatarSizes {
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
+}
 
 /**
  * Props for the Avatar component.
@@ -37,16 +32,16 @@ export type AvatarColor =
  */
 export interface AvatarProps {
   /**
-   * Diameter of the avatar circle in pixels.
-   * @default 42
+   * Avatar size variant.
+   * @default AvatarSizes.medium
    */
-  size?: number;
+  size?: AvatarSizes;
   /**
    * Background color of the placeholder circle.
-   * Accepts a standard design-system color name (e.g. `'purple'`, `'green'`)
+   * Accepts a `theme.colors` key (e.g. `'purple'`, `'green'`)
    * or any valid CSS color string (e.g. `'#F7931A'`, `'rgb(0,128,0)'`).
    */
-  color?: AvatarColor | string;
+  color?: ColorsKeys | string;
   /**
    * One or two characters displayed inside the colored placeholder.
    * Only the first two characters are rendered.
@@ -57,6 +52,17 @@ export interface AvatarProps {
    * When provided, the image is displayed instead of the placeholder.
    */
   image?: string;
-  /** Optional CSS class name forwarded to the root element. */
-  className?: string;
+  /**
+   * Shows or hides the avatar border.
+   * Defaults to visible for image avatars and hidden otherwise.
+   */
+  border?: boolean;
+  /**
+   * Border color. Accepts a `theme.colors` key or any CSS color string.
+   */
+  borderColor?: ColorsKeys | string;
+  /**
+   * Emotion CSS override applied after all internal styles.
+   */
+  css?: Interpolation<Theme>;
 }

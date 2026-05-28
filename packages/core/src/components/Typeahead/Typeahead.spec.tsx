@@ -276,7 +276,7 @@ describe('Typeahead Component', () => {
           <TypeaheadOption
             value={1}
             label="Test"
-            avatar={<Avatar size={20} image="test.jpg" />}>
+            avatar={<Avatar size="small" image="test.jpg" />}>
             Test
           </TypeaheadOption>
         ),
@@ -302,7 +302,7 @@ describe('Typeahead Component', () => {
           <TypeaheadOption
             value={1}
             label="Test"
-            avatar={<Avatar size={20} image="test.jpg" />}>
+            avatar={<Avatar size="small" image="test.jpg" />}>
             Test
           </TypeaheadOption>
         ),
@@ -325,7 +325,7 @@ describe('Typeahead Component', () => {
                 key={id}
                 value={id}
                 label={name}
-                avatar={<Avatar size={20} image={avatar} />}>
+                avatar={<Avatar size="small" image={avatar} />}>
                 {name}
               </TypeaheadOption>
             ))}

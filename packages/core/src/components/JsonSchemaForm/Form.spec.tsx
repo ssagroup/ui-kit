@@ -128,7 +128,7 @@ describe('Form (rjsf)', () => {
             'ui:widget': 'select',
             'ui:placeholder': 'Select managers...',
             'ui:options': {
-              typeaheadAvatarSize: 24,
+              typeaheadAvatarSize: 'small',
             },
           },
         }}
