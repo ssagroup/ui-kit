@@ -1,2 +1,2 @@
 export { default } from './Avatar';
-export type * from './types';
+export * from './types';

@@ -41,7 +41,7 @@ export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
     <S.AvatarWrapper
       css={isLink ? S.avatarWrapperLinkStyles : undefined}
       {...linkAttributes}>
-      <Avatar size={24} image={avatar!} />
+      <Avatar size="small" image={avatar!} />
       {valueNode}
     </S.AvatarWrapper>
   );

@@ -284,7 +284,7 @@ export const WithAvatars: StoryObj<Args> = {
           key={id}
           value={id}
           label={name}
-          avatar={<Avatar size={20} image={avatar} />}>
+          avatar={<Avatar size="small" image={avatar} />}>
           {name}
         </DropdownOption>
       ))}

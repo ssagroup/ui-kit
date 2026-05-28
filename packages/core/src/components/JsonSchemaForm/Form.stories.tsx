@@ -225,7 +225,7 @@ export const Default: Story = {
         'ui:widget': 'select',
         'ui:placeholder': 'Select managers',
         'ui:options': {
-          typeaheadAvatarSize: 24,
+          typeaheadAvatarSize: 'small',
         },
       },
     },
@@ -560,7 +560,7 @@ export const WithValidation: Story = {
         'ui:widget': 'select',
         'ui:placeholder': 'Select a manager',
         'ui:options': {
-          typeaheadAvatarSize: 24,
+          typeaheadAvatarSize: 'small',
           autoSelect: false,
         },
       },
@@ -568,7 +568,7 @@ export const WithValidation: Story = {
         'ui:widget': 'select',
         'ui:placeholder': 'Select multiple managers',
         'ui:options': {
-          typeaheadAvatarSize: 24,
+          typeaheadAvatarSize: 'small',
           autoSelect: false,
         },
       },

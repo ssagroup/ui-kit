@@ -1,12 +1,13 @@
 import { useTheme } from '@emotion/react';
 import Avatar from '@components/Avatar';
+import { AvatarSizes } from '@components/Avatar/types';
 import Wrapper from '@components/Wrapper';
 import { ImageItemProps } from './types';
 
 export const ImageItem = ({
   children,
   image,
-  avatarSize = 24,
+  avatarSize = AvatarSizes.small,
   link = '',
   openLinkInNewTab = false,
   className,

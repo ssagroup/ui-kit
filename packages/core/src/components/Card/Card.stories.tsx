@@ -116,7 +116,7 @@ export const ItemCard: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
   return (
     <Card noShadow={noShadow}>
       <Wrapper direction="row">
-        <Avatar size={42} image={image} className="lostpixel-ignore" />
+        <Avatar size="medium" image={image} />
 
         <CardContent
           style={{
@@ -154,7 +154,7 @@ export const ItemCardAction: StoryObj<typeof Card> = ({
     <SwitchContextProvider initialState={true}>
       <Card noShadow={noShadow}>
         <Wrapper direction="row">
-          <Avatar size={42} image={image} className="lostpixel-ignore" />
+          <Avatar size="medium" image={image} />
 
           <CardContent
             style={{
@@ -192,7 +192,7 @@ export const ItemCardAvatar: StoryObj<typeof Card> = ({
 
   return (
     <Card noShadow={noShadow}>
-      <Avatar size={64} image={image} className="lostpixel-ignore" />
+      <Avatar size="large" image={image} />
 
       <CardContent>
         <Typography variant="body1">

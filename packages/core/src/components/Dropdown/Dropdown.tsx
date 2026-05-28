@@ -243,7 +243,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   const selectedAvatar =
     rawAvatar != null ? (
       typeof rawAvatar === 'string' ? (
-        <Avatar size={20} image={rawAvatar} />
+        <Avatar size="small" image={rawAvatar} />
       ) : React.isValidElement(rawAvatar) ? (
         (rawAvatar as ReactNode)
       ) : null
