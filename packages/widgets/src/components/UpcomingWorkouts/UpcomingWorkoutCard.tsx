@@ -2,6 +2,7 @@ import { useTheme, css } from '@emotion/react';
 
 import {
   Avatar,
+  AvatarSizes,
   Button,
   Card,
   CardContent,
@@ -28,7 +29,7 @@ export const UpcomingWorkoutCard = ({
   return (
     <Card noShadow>
       <Wrapper direction="row">
-        <Avatar size={42} image={image} />
+        <Avatar size={AvatarSizes.large} image={image} />
 
         <CardContent
           css={css`

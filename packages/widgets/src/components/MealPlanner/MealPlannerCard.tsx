@@ -1,6 +1,12 @@
 import { css } from '@emotion/react';
 
-import { ProgressBar, Typography, Avatar, Wrapper } from '@ssa-ui-kit/core';
+import {
+  AvatarSizes,
+  ProgressBar,
+  Typography,
+  Avatar,
+  Wrapper,
+} from '@ssa-ui-kit/core';
 
 import Marker from './MealPlannerBadge';
 import MealPlannerLegends from './MealPlannerLegends';
@@ -30,7 +36,7 @@ export const MealPlannerCard = ({
       css={{
         marginTop: '5.6px',
       }}>
-      <Avatar size={64} image={image} />
+      <Avatar size={AvatarSizes.large} image={image} />
 
       <div
         css={css`

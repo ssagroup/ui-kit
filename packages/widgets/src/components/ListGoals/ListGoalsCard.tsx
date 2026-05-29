@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 
 import {
   Avatar,
+  AvatarSizes,
   Card,
   CardContent,
   ProgressCircle,
@@ -29,7 +30,11 @@ export const ListGoalsCard = ({
   return (
     <Card noShadow>
       <Wrapper direction="row">
-        <Avatar size={42} image={image} css={{ borderRadius: 0 }} />
+        <Avatar
+          size={AvatarSizes.large}
+          image={image}
+          css={{ borderRadius: 0 }}
+        />
 
         <CardContent
           css={css`
