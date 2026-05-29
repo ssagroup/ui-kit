@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import Button from '@components/Button';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 import Dropdown from './Dropdown';
 import { DropdownProps } from './types';
@@ -284,7 +284,9 @@ export const WithAvatars: StoryObj<Args> = {
           key={id}
           value={id}
           label={name}
-          avatar={<Avatar size="small" image={avatar} />}>
+          avatar={
+            <Avatar size={AvatarSizes.small} image={avatar} border={false} />
+          }>
           {name}
         </DropdownOption>
       ))}

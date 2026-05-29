@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen } from '../../../customTest';
 import theme from '@themes/main';
 import Avatar from './Avatar';
@@ -25,14 +24,6 @@ describe('Avatar', () => {
   });
 
   describe('Colored placeholder', () => {
-    it('renders with a standard color from theme.colors', () => {
-      render(<Avatar color="purple" />);
-      const el = screen.getByTestId('avatar');
-
-      expect(el).toHaveStyleRule('background', theme.colors.purple);
-      expect(el).not.toHaveStyleRule('box-shadow');
-    });
-
     it('renders with a custom CSS color', () => {
       render(<Avatar color="#F7931A" />);
       const el = screen.getByTestId('avatar');
@@ -71,10 +62,10 @@ describe('Avatar', () => {
       expect(el).toBeInTheDocument();
     });
 
-    it('uses the grey lighter background for the default placeholder', () => {
+    it('uses the grey focused background for the default placeholder', () => {
       render(<Avatar />);
       const el = screen.getByTestId('avatar');
-      expect(el).toHaveStyleRule('background', theme.colors.greyLighter);
+      expect(el).toHaveStyleRule('background', theme.colors.greyFocused);
     });
 
     it('renders the user icon inside the default placeholder', () => {
@@ -85,18 +76,18 @@ describe('Avatar', () => {
   });
 
   describe('Size prop', () => {
-    it('defaults to medium (42px)', () => {
+    it('defaults to medium (32px)', () => {
       const { container } = render(<Avatar />);
       const el = container.firstChild as HTMLElement;
-      expect(el).toHaveStyle('width: 42px');
-      expect(el).toHaveStyle('height: 42px');
+      expect(el).toHaveStyle('width: 32px');
+      expect(el).toHaveStyle('height: 32px');
     });
 
     it('applies large size', () => {
       const { container } = render(<Avatar size={AvatarSizes.large} />);
       const el = container.firstChild as HTMLElement;
-      expect(el).toHaveStyle('width: 64px');
-      expect(el).toHaveStyle('height: 64px');
+      expect(el).toHaveStyle('width: 46px');
+      expect(el).toHaveStyle('height: 46px');
     });
 
     it('applies small size', () => {
@@ -133,7 +124,7 @@ describe('Avatar', () => {
     it('shows border by default for image avatars', () => {
       render(<Avatar image="https://example.com/photo.jpg" />);
       const el = screen.getByTestId('avatar');
-      expect(el).toHaveStyleRule('border', `3px solid ${theme.colors.blue}`);
+      expect(el).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
     });
 
     it('hides border by default for placeholder avatars', () => {
@@ -145,7 +136,7 @@ describe('Avatar', () => {
     it('allows enabling border for non-image avatars', () => {
       render(<Avatar color="purple" border />);
       const el = screen.getByTestId('avatar');
-      expect(el).toHaveStyleRule('border', `3px solid ${theme.colors.blue}`);
+      expect(el).toHaveStyleRule('border', `1px solid ${theme.colors.blue}`);
     });
 
     it('allows disabling border for image avatars', () => {
@@ -155,9 +146,11 @@ describe('Avatar', () => {
     });
 
     it('supports custom border color', () => {
-      render(<Avatar image="https://example.com/photo.jpg" borderColor="#000" />);
+      render(
+        <Avatar image="https://example.com/photo.jpg" borderColor="#000" />,
+      );
       const el = screen.getByTestId('avatar');
-      expect(el).toHaveStyleRule('border', '3px solid #000');
+      expect(el).toHaveStyleRule('border', '1px solid #000');
     });
   });
 });

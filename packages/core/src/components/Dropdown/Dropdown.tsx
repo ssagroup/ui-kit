@@ -13,7 +13,7 @@ import { useClickOutside } from '@ssa-ui-kit/hooks';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
@@ -243,7 +243,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   const selectedAvatar =
     rawAvatar != null ? (
       typeof rawAvatar === 'string' ? (
-        <Avatar size="small" image={rawAvatar} />
+        <Avatar size={AvatarSizes.small} image={rawAvatar} border={false} />
       ) : React.isValidElement(rawAvatar) ? (
         (rawAvatar as ReactNode)
       ) : null

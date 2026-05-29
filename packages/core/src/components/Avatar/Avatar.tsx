@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '@emotion/react';
 import { ColorsKeys } from '@global-types/emotion';
 import { MainSizes } from '@global-types/global';
@@ -8,14 +7,14 @@ import { AvatarContainer, AvatarText } from './styles';
 
 const SIZE_MAP: Record<AvatarSizes, number> = {
   [AvatarSizes.small]: 24,
-  [AvatarSizes.medium]: 42,
-  [AvatarSizes.large]: 64,
+  [AvatarSizes.medium]: 32,
+  [AvatarSizes.large]: 46,
 };
 
 const BORDER_WIDTH_MAP: Record<keyof MainSizes, number> = {
-  small: 2,
-  medium: 3,
-  large: 4,
+  small: 1,
+  medium: 1,
+  large: 2,
 };
 
 /** Proportion of the avatar diameter used as the initials font-size. */
@@ -98,6 +97,7 @@ const Avatar = ({
     : undefined;
 
   // ── Scenario 3: custom profile image ──────────────────────────────────────
+
   if (image) {
     return (
       <AvatarContainer
@@ -114,36 +114,24 @@ const Avatar = ({
     );
   }
 
-  // ── Scenario 1: colored placeholder with optional text ─────────────────────
-  if (color || text) {
-    // When only text is given (no color), default to grey so the circle is visible.
-    const resolvedColor =
-      resolveThemeColor(color, theme.colors) ?? theme.colors.grey;
-    const fontSize = Math.round(sizePx * TEXT_SIZE_RATIO);
+  const resolvedColor =
+    resolveThemeColor(color, theme.colors) ?? theme.colors.greyFocused;
+  const fontSize = Math.round(sizePx * TEXT_SIZE_RATIO);
 
-    return (
-      <AvatarContainer
-        size={sizePx}
-        css={[{ background: resolvedColor }, borderStyle, css]}
-        data-testid="avatar">
-        {text && (
-          <AvatarText fontSize={fontSize}>{text.slice(0, 2)}</AvatarText>
-        )}
-      </AvatarContainer>
-    );
-  }
-
-  // ── Scenario 2: default user-icon placeholder ──────────────────────────────
   return (
     <AvatarContainer
       size={sizePx}
-      css={[{ background: theme.colors.greyLighter }, borderStyle, css]}
+      css={[{ background: resolvedColor }, borderStyle, css]}
       data-testid="avatar">
-      <Icon
-        name="user"
-        size={Math.round(sizePx * ICON_SIZE_RATIO)}
-        color={theme.colors.grey}
-      />
+      {text ? (
+        <AvatarText fontSize={fontSize}>{text.slice(0, 2)}</AvatarText>
+      ) : (
+        <Icon
+          name="user"
+          size={Math.round(sizePx * ICON_SIZE_RATIO)}
+          color={theme.colors.white}
+        />
+      )}
     </AvatarContainer>
   );
 };

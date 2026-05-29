@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Chip } from './Chip';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 
@@ -147,17 +147,23 @@ export const WithAvatar = () => {
     <Wrapper css={{ gap: '12px', flexWrap: 'wrap' }}>
       <Chip
         label="Avatar"
-        avatar={<Avatar size="small" image={getStorybookAvatar(0)} />}
+        avatar={
+          <Avatar size={AvatarSizes.small} image={getStorybookAvatar(0)} />
+        }
       />
       <Chip
         label="Avatar"
         variant="outlined"
-        avatar={<Avatar size="small" image={getStorybookAvatar(1)} />}
+        avatar={
+          <Avatar size={AvatarSizes.small} image={getStorybookAvatar(1)} />
+        }
       />
       <Chip
         label="Name Surname"
         size="large"
-        avatar={<Avatar size="small" image={getStorybookAvatar(2)} />}
+        avatar={
+          <Avatar size={AvatarSizes.small} image={getStorybookAvatar(2)} />
+        }
         onDelete={() => {}}
       />
     </Wrapper>
