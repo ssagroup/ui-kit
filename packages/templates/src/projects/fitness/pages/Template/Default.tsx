@@ -87,6 +87,7 @@ const Default = (Component: React.ComponentType<any>) => {
           <label htmlFor="aside">
             <Avatar
               size={AvatarSizes.medium}
+              border={false}
               image={
                 'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fface%2Fface_46.png?alt=media&token=aaa3a75c-4779-4887-b011-352f8dd6c214'
               }

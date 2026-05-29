@@ -5,6 +5,8 @@ export interface MealPlannerCardProps {
   carbs: number;
   protein: number;
   fat: number;
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
 }
 
 export type MealPlannerData = MealPlannerCardProps & { id: number };
@@ -18,4 +20,6 @@ export interface MealPlannerProps {
   data: {
     [mealName: string]: MealPlannerItem;
   };
+  /** Shows a border around the avatar in each meal card. @default false */
+  avatarBorder?: boolean;
 }

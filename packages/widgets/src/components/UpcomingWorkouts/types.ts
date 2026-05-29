@@ -4,6 +4,8 @@ export interface UpcomingWorkoutCardProps {
   workoutTime: string;
   renderDetails: () => React.ReactNode;
   onClick?: () => void;
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
 }
 
 export type Workout = {
@@ -20,4 +22,6 @@ export type Workout = {
 
 export interface UpcomingWorkoutsProps {
   workouts: Array<Workout>;
+  /** Shows a border around the avatar in each workout card. @default false */
+  avatarBorder?: boolean;
 }

@@ -26,10 +26,18 @@ const container = (theme: Theme) => css`
     }
   }
 `;
+interface UserCardCredentialsProps extends Partial<
+  Pick<User, 'name' | 'email'>
+> {
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
+}
+
 const UserCardCredentials = ({
   name,
   email,
-}: Partial<Pick<User, 'name' | 'email'>>) => (
+  avatarBorder = false,
+}: UserCardCredentialsProps) => (
   <div css={container}>
     <div
       css={css`
@@ -41,6 +49,7 @@ const UserCardCredentials = ({
         image={
           'https://firebasestorage.googleapis.com/v0/b/admin-themes.appspot.com/o/img%2Fface%2Fface_46.png?alt=media&token=aaa3a75c-4779-4887-b011-352f8dd6c214'
         }
+        border={avatarBorder}
       />
       <div
         css={css`

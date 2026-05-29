@@ -22,7 +22,7 @@ const CustomOption = styled(DropdownOption)`
   font-size: 11px;
 `;
 
-export const MealPlanner = ({ data }: MealPlannerProps) => {
+export const MealPlanner = ({ data, avatarBorder }: MealPlannerProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [options, setOptions] = useState<DropdownOptionProps[]>([]);
 
@@ -90,7 +90,11 @@ export const MealPlanner = ({ data }: MealPlannerProps) => {
           {selectedOption &&
             data[selectedOption].data.map(
               ({ id, ...props }: MealPlannerData) => (
-                <MealPlannerCard key={id} {...props} />
+                <MealPlannerCard
+                  key={id}
+                  {...props}
+                  avatarBorder={avatarBorder}
+                />
               ),
             )}
         </CardContent>

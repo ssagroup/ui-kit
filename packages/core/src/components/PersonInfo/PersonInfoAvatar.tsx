@@ -17,6 +17,7 @@ export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
   styles,
   link,
   openLinkInNewTab,
+  avatarBorder = false,
 }) => {
   const hasAvatar = Boolean(avatar);
   const hasValue = Boolean(value);
@@ -41,7 +42,7 @@ export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
     <S.AvatarWrapper
       css={isLink ? S.avatarWrapperLinkStyles : undefined}
       {...linkAttributes}>
-      <Avatar size={AvatarSizes.small} image={avatar!} border={false} />
+      <Avatar size={AvatarSizes.small} image={avatar!} border={avatarBorder} />
       {valueNode}
     </S.AvatarWrapper>
   );

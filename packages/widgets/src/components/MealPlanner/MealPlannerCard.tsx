@@ -28,6 +28,7 @@ export const MealPlannerCard = ({
   carbs,
   protein,
   fat,
+  avatarBorder = false,
 }: MealPlannerCardProps) => {
   const listItems = { carbs, protein, fat };
 
@@ -36,7 +37,7 @@ export const MealPlannerCard = ({
       css={{
         marginTop: '5.6px',
       }}>
-      <Avatar size={AvatarSizes.large} image={image} />
+      <Avatar size={AvatarSizes.large} image={image} border={avatarBorder} />
 
       <div
         css={css`

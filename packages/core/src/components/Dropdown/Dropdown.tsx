@@ -135,6 +135,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   className,
   placeholder = 'Select something',
   maxHeight = 200,
+  avatarBorder = false,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
   const { dropdownPosition = DropdownPositions.auto } = componentProps ?? {};
@@ -243,7 +244,11 @@ const Dropdown = <T extends DropdownOptionProps>({
   const selectedAvatar =
     rawAvatar != null ? (
       typeof rawAvatar === 'string' ? (
-        <Avatar size={AvatarSizes.small} image={rawAvatar} border={false} />
+        <Avatar
+          size={AvatarSizes.small}
+          image={rawAvatar}
+          border={avatarBorder}
+        />
       ) : React.isValidElement(rawAvatar) ? (
         (rawAvatar as ReactNode)
       ) : null

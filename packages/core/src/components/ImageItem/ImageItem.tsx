@@ -8,6 +8,7 @@ export const ImageItem = ({
   children,
   image,
   avatarSize = AvatarSizes.small,
+  avatarBorder = false,
   link = '',
   openLinkInNewTab = false,
   className,
@@ -27,7 +28,7 @@ export const ImageItem = ({
       className={className}
       data-testid="image-item"
       {...additionalProps}>
-      <Avatar size={avatarSize} image={image} border={false} />
+      <Avatar size={avatarSize} image={image} border={avatarBorder} />
       <span
         css={{
           color: theme.colors.greyDarker,

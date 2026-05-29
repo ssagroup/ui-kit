@@ -6,7 +6,10 @@ import { UpcomingWorkoutCard } from './UpcomingWorkoutCard';
 
 import { UpcomingWorkoutsProps } from './types';
 
-export const UpcomingWorkouts = ({ workouts }: UpcomingWorkoutsProps) => (
+export const UpcomingWorkouts = ({
+  workouts,
+  avatarBorder,
+}: UpcomingWorkoutsProps) => (
   <CardList
     title="Upcoming Workout"
     items={workouts}
@@ -16,6 +19,7 @@ export const UpcomingWorkouts = ({ workouts }: UpcomingWorkoutsProps) => (
         title={workout.title}
         workoutTime={workout.workoutTime}
         onClick={workout.handleClick}
+        avatarBorder={avatarBorder}
         renderDetails={() => (
           <Fragment>
             <strong>{workout.details.exercises}</strong> Exercises |{' '}
