@@ -116,6 +116,11 @@ export interface DropdownProps<
    * @default 200
    */
   maxHeight?: number;
+  /**
+   * Shows a border around the avatar in the selected-item display.
+   * @default false
+   */
+  avatarBorder?: boolean;
 
   /**
    * Props object for sub-components

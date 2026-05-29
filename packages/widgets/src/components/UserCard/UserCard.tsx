@@ -18,7 +18,13 @@ const container = (theme: Theme) => css`
   }
 `;
 
-const UserCard = ({ user }: { user: User | null }) => (
+interface UserCardProps {
+  user: User | null;
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
+}
+
+const UserCard = ({ user, avatarBorder }: UserCardProps) => (
   <Fragment>
     <div css={container}>
       <div
@@ -36,7 +42,11 @@ const UserCard = ({ user }: { user: User | null }) => (
         </label>
       </div>
 
-      <UserCardCredentials name={user?.name} email={user?.email} />
+      <UserCardCredentials
+        name={user?.name}
+        email={user?.email}
+        avatarBorder={avatarBorder}
+      />
     </div>
 
     <UserCardBMI weight={user?.weight} height={user?.height} age={user?.age} />

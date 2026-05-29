@@ -96,6 +96,8 @@ export interface PersonInfoProps extends CommonProps {
   link?: string;
   /** When link is set, open in new tab and use rel="noreferrer". */
   openLinkInNewTab?: boolean;
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
 }
 
 /**
@@ -108,6 +110,8 @@ export interface PersonInfoAvatarProps {
   styles?: PersonInfoStyles;
   link?: string;
   openLinkInNewTab?: boolean;
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
 }
 
 /**

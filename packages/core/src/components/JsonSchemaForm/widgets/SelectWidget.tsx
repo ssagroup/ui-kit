@@ -27,8 +27,9 @@ const getAvatarNode = <S extends StrictRJSFSchema>(
   if (!avatar) return;
 
   const avatarSize = uiOptions.typeaheadAvatarSize ?? DEFAULT_AVATAR_SIZE;
+  const avatarBorder = uiOptions.typeaheadAvatarBorder ?? false;
 
-  return <Avatar size={avatarSize} image={avatar} border={false} />;
+  return <Avatar size={avatarSize} image={avatar} border={avatarBorder} />;
 };
 
 export const SelectWidget = <

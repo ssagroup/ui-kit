@@ -24,12 +24,13 @@ export const UpcomingWorkoutCard = ({
   workoutTime,
   renderDetails,
   onClick,
+  avatarBorder = false,
 }: UpcomingWorkoutCardProps) => {
   const theme = useTheme();
   return (
     <Card noShadow>
       <Wrapper direction="row">
-        <Avatar size={AvatarSizes.large} image={image} />
+        <Avatar size={AvatarSizes.large} image={image} border={avatarBorder} />
 
         <CardContent
           css={css`

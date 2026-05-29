@@ -6,4 +6,6 @@ export type SelectOptionSchemaExtension = {
 
 export type SelectWidgetUiOptions = {
   typeaheadAvatarSize?: AvatarSizes;
+  /** Shows a border around avatars in the typeahead list. @default false */
+  typeaheadAvatarBorder?: boolean;
 };

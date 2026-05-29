@@ -8,7 +8,7 @@ import { ListGoalsProps } from './types';
  *
  * UI Component that uses CardList to render a list of goals
  */
-export const ListGoals = ({ goals }: ListGoalsProps) => {
+export const ListGoals = ({ goals, avatarBorder }: ListGoalsProps) => {
   return (
     <CardList
       title="Goals"
@@ -22,6 +22,7 @@ export const ListGoals = ({ goals }: ListGoalsProps) => {
             currentValue: goal.completion,
             color: goal.color,
           }}
+          avatarBorder={avatarBorder}
         />
       )}
     />

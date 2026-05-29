@@ -18,6 +18,7 @@ export const ListGoalsCard = ({
   title,
   details,
   progressProps,
+  avatarBorder = false,
 }: ItemCardProps) => {
   const {
     size = 50,
@@ -33,6 +34,7 @@ export const ListGoalsCard = ({
         <Avatar
           size={AvatarSizes.large}
           image={image}
+          border={avatarBorder}
           css={{ borderRadius: 0 }}
         />
 

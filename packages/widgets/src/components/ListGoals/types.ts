@@ -11,6 +11,8 @@ export type Goal = {
 
 export interface ListGoalsProps {
   goals: Array<Goal>;
+  /** Shows a border around the avatar in each goal card. @default false */
+  avatarBorder?: boolean;
 }
 
 export type ProgressProps = Partial<
@@ -22,4 +24,6 @@ export interface ItemCardProps {
   title: string;
   details: string;
   progressProps: ProgressProps;
+  /** Shows a border around the avatar. @default false */
+  avatarBorder?: boolean;
 }
