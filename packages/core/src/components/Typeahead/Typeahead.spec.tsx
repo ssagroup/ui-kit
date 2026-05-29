@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, within } from '../../../customTest';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import { Typeahead } from './Typeahead';
 import { TypeaheadOption } from '@components';
 import { highlightInputMatch } from './utils';
@@ -276,7 +276,7 @@ describe('Typeahead Component', () => {
           <TypeaheadOption
             value={1}
             label="Test"
-            avatar={<Avatar size="small" image="test.jpg" />}>
+            avatar={<Avatar size={AvatarSizes.small} image="test.jpg" />}>
             Test
           </TypeaheadOption>
         ),
@@ -302,7 +302,7 @@ describe('Typeahead Component', () => {
           <TypeaheadOption
             value={1}
             label="Test"
-            avatar={<Avatar size="small" image="test.jpg" />}>
+            avatar={<Avatar size={AvatarSizes.small} image="test.jpg" />}>
             Test
           </TypeaheadOption>
         ),
@@ -325,7 +325,7 @@ describe('Typeahead Component', () => {
                 key={id}
                 value={id}
                 label={name}
-                avatar={<Avatar size="small" image={avatar} />}>
+                avatar={<Avatar size={AvatarSizes.small} image={avatar} />}>
                 {name}
               </TypeaheadOption>
             ))}

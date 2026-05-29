@@ -5,7 +5,7 @@
  * Uses styles.avatarName when avatar present, styles.value when only value. Used only by PersonInfo.
  */
 import React from 'react';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import * as S from './styles';
 import { PersonInfoAvatarProps } from './types';
 import { PersonInfoValue } from './PersonInfoValue';
@@ -41,7 +41,7 @@ export const PersonInfoAvatar: React.FC<PersonInfoAvatarProps> = ({
     <S.AvatarWrapper
       css={isLink ? S.avatarWrapperLinkStyles : undefined}
       {...linkAttributes}>
-      <Avatar size="small" image={avatar!} />
+      <Avatar size={AvatarSizes.small} image={avatar!} border={false} />
       {valueNode}
     </S.AvatarWrapper>
   );

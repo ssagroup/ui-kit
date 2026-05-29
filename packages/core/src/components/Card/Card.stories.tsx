@@ -7,7 +7,7 @@ import Button from '@components/Button';
 import ProgressCircle from '@components/ProgressCircle';
 import CardHeader from '@components/CardHeader';
 import CardContent from '@components/CardContent';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import Wrapper from '@components/Wrapper';
 
 import Card from './index';
@@ -116,7 +116,7 @@ export const ItemCard: StoryObj<typeof Card> = ({ noShadow }: CardProps) => {
   return (
     <Card noShadow={noShadow}>
       <Wrapper direction="row">
-        <Avatar size="medium" image={image} />
+        <Avatar size={AvatarSizes.medium} image={image} />
 
         <CardContent
           style={{
@@ -154,7 +154,7 @@ export const ItemCardAction: StoryObj<typeof Card> = ({
     <SwitchContextProvider initialState={true}>
       <Card noShadow={noShadow}>
         <Wrapper direction="row">
-          <Avatar size="medium" image={image} />
+          <Avatar size={AvatarSizes.medium} image={image} />
 
           <CardContent
             style={{
@@ -192,7 +192,7 @@ export const ItemCardAvatar: StoryObj<typeof Card> = ({
 
   return (
     <Card noShadow={noShadow}>
-      <Avatar size="large" image={image} />
+      <Avatar size={AvatarSizes.large} image={image} />
 
       <CardContent>
         <Typography variant="body1">

@@ -19,6 +19,7 @@ export const ImageItem = ({
         target: openLinkInNewTab ? '_blank' : undefined,
       }
     : {};
+
   return (
     <Wrapper
       css={{ gap: 8, textDecoration: 'none' }}
@@ -26,7 +27,7 @@ export const ImageItem = ({
       className={className}
       data-testid="image-item"
       {...additionalProps}>
-      <Avatar size={avatarSize} image={image} />
+      <Avatar size={avatarSize} image={image} border={false} />
       <span
         css={{
           color: theme.colors.greyDarker,

@@ -9,7 +9,7 @@ import {
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/css';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import Avatar from '@components/Avatar';
+import Avatar, { AvatarSizes } from '@components/Avatar';
 import Icon from '@components/Icon';
 import { IconProps } from '@components/Icon/types';
 import Button from '@components/Button';
@@ -314,7 +314,7 @@ export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
             key={id}
             value={id}
             label={name}
-            avatar={<Avatar size="small" image={avatar} />}>
+            avatar={<Avatar size={AvatarSizes.small} image={avatar} />}>
             {name}
           </TypeaheadOption>
         ))}
