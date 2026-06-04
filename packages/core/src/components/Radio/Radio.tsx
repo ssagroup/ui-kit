@@ -60,7 +60,6 @@ import { RadioProps } from './types';
  *     default: '#ff0000',
  *     hovered: '#cc0000',
  *     disabled: '#cccccc',
- *     focusShadow: 'rgba(255,0,0,0.25)',
  *   }}
  *   onChange={handleChange}
  * />
@@ -96,30 +95,25 @@ const Radio = ({
   let defaultColor: string;
   let hoveredColor: string;
   let disabledColor: string;
-  let focusShadowColor: string | undefined;
 
   if (color === 'primary') {
     defaultColor = theme.palette.primary.main;
     hoveredColor = theme.palette.primary.dark;
     disabledColor = theme.colors.greyFocused40 as string;
-    focusShadowColor = theme.colors.blue20;
   } else if (color === 'success') {
     defaultColor = theme.palette.success.main;
     hoveredColor = theme.palette.success.dark;
     disabledColor = theme.colors.greyFocused40 as string;
-    focusShadowColor = theme.colors.green40;
   } else {
     defaultColor = colors?.default || theme.palette.primary.main;
     hoveredColor = colors?.hovered || theme.palette.primary.dark;
     disabledColor = colors?.disabled || (theme.colors.greyFocused40 as string);
-    focusShadowColor = colors?.focusShadow;
   }
 
   return (
     <RadioBase
       htmlFor={radioId}
       className={className}
-      focusShadowColor={focusShadowColor}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <input
