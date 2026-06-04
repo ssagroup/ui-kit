@@ -432,26 +432,26 @@ exports[`Form (rjsf) Render form 1`] = `
   -ms-flex-align: center;
   align-items: center;
   cursor: pointer;
-  gap: 5px;
+  gap: 8px;
+}
+
+.emotion-45 span {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .emotion-45:has(input:disabled) {
   cursor: default;
 }
 
+.emotion-45:has(input:disabled) span {
+  color: rgba(195, 197, 204, 1);
+}
+
 .emotion-45 svg {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-}
-
-.emotion-45 input:focus+svg {
-  -webkit-filter: drop-shadow(
-        -4px 4px 10px rgba(65, 120, 225, 0.2)
-      );
-  filter: drop-shadow(
-        -4px 4px 10px rgba(65, 120, 225, 0.2)
-      );
 }
 
 .emotion-45 input {
@@ -463,11 +463,6 @@ exports[`Form (rjsf) Render form 1`] = `
   padding: 0;
   position: absolute;
   width: 1px;
-}
-
-.emotion-45 span {
-  font-size: 14px;
-  font-weight: 100;
 }
 
 .emotion-49 {

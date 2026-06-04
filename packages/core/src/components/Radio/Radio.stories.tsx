@@ -91,3 +91,49 @@ export const Colors = () => (
     ))}
   </Fragment>
 );
+
+const customColors = {
+  default: '#9333ea',
+  hovered: '#6b21a8',
+  disabled: '#dcdcdc',
+};
+
+export const CustomColors = () => (
+  <Fragment>
+    <Typography variant="h6" css={{ marginTop: 16 }}>
+      Custom (purple)
+    </Typography>
+    <div css={{ display: 'flex', gap: 24 }}>
+      <Radio
+        id="custom-unchecked"
+        name="custom-group"
+        value="unchecked"
+        text="Unchecked"
+        color="custom"
+        colors={customColors}
+        onChange={() => {}}
+      />
+      <Radio
+        id="custom-checked"
+        name="custom-group"
+        value="checked"
+        text="Checked"
+        color="custom"
+        colors={customColors}
+        isChecked
+        onChange={() => {}}
+      />
+      <Radio
+        id="custom-disabled"
+        name="custom-group"
+        value="disabled"
+        text="Disabled"
+        color="custom"
+        colors={customColors}
+        isDisabled
+        onChange={() => {}}
+      />
+    </div>
+  </Fragment>
+);
+CustomColors.storyName = 'Custom Colors';

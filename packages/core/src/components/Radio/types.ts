@@ -49,7 +49,6 @@
  *     default: '#ff0000',
  *     hovered: '#cc0000',
  *     disabled: '#cccccc',
- *     focusShadow: 'rgba(255, 0, 0, 0.25)',
  *   }}
  *   onChange={(value) => handleChange(value)}
  * />
@@ -130,7 +129,5 @@ export interface RadioProps {
     hovered?: string;
     /** Disabled state icon color */
     disabled?: string;
-    /** Focus ring drop-shadow color */
-    focusShadow?: string;
   };
 }

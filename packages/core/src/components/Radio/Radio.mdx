@@ -102,11 +102,11 @@ Use radio buttons without text labels when the context is clear:
 The `color` prop controls the icon and focus-ring colors. Colors are sourced
 from `theme.palette` for consistency with Button, Checkbox, and Chip.
 
-| Value | Palette key | Resting / Checked | Hover | Focus shadow |
-|-------|-------------|-------------------|-------|--------------|
-| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.dark` | `blue20` |
-| `success` | `palette.success` | `success.main` | `success.dark` | `green40` |
-| `custom` | — | via `colors.default` | via `colors.hovered` | via `colors.focusShadow` |
+| Value | Palette key | Resting / Checked | Hover |
+|-------|-------------|-------------------|-------|
+| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.dark` |
+| `success` | `palette.success` | `success.main` | `success.dark` |
+| `custom` | — | via `colors.default` | via `colors.hovered` |
 
 ```tsx
 // Default — primary (blue)
@@ -131,7 +131,6 @@ from `theme.palette` for consistency with Button, Checkbox, and Chip.
     default: '#ff0000',
     hovered: '#cc0000',
     disabled: '#cccccc',
-    focusShadow: 'rgba(255, 0, 0, 0.25)',
   }}
   onChange={handleChange}
 />

@@ -1,26 +1,28 @@
 import styled from '@emotion/styled';
 import Label from '@components/Label';
 
-export const RadioBase = styled(Label)<{ focusShadowColor?: string }>`
+export const RadioBase = styled(Label)`
   display: inline-flex;
   flex-grow: 0;
   align-items: center;
   cursor: pointer;
-  gap: 5px;
+  gap: 8px;
+
+  span {
+    font-size: 14px;
+    font-weight: 500;
+  }
 
   &:has(input:disabled) {
     cursor: default;
   }
 
-  svg {
-    flex-shrink: 0;
+  &:has(input:disabled) span {
+    color: ${({ theme }) => theme.colors.grey};
   }
 
-  input:focus + svg {
-    filter: drop-shadow(
-      ${({ theme, focusShadowColor }) =>
-        `-4px 4px 10px ${focusShadowColor || theme.colors.blue20}`}
-    );
+  svg {
+    flex-shrink: 0;
   }
 
   input {
@@ -32,10 +34,5 @@ export const RadioBase = styled(Label)<{ focusShadowColor?: string }>`
     padding: 0;
     position: absolute;
     width: 1px;
-  }
-
-  span {
-    font-size: 14px;
-    font-weight: 100;
   }
 `;

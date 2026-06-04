@@ -492,7 +492,6 @@ const meta = {
                   default: '#4ECDC4',
                   hovered: '#45B8B0',
                   disabled: '#CCCCCC',
-                  focusShadow: '#4ECDC4',
                 }}
                 isChecked={radioValue === 'custom'}
                 onChange={(value) => setRadioValue(value)}
