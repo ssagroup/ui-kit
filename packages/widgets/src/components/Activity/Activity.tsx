@@ -9,6 +9,7 @@ import {
   Wrapper,
   DropdownOptionProps,
 } from '@ssa-ui-kit/core';
+import { isNill } from '@ssa-ui-kit/utils';
 
 import { ActivityResp } from './types';
 import { contentWrapper } from './styles';
@@ -22,7 +23,7 @@ export const Activity = ({ data }: { data: ActivityResp }) => {
   const [options, setOptions] = useState<DropdownOptionProps[]>([]);
 
   useEffect(() => {
-    if (data == null || typeof data !== 'object') {
+    if (isNill(data) || typeof data !== 'object') {
       return;
     }
 

@@ -12,6 +12,7 @@ import {
   useHover,
   safePolygon,
 } from '@floating-ui/react';
+import { isNill } from '@ssa-ui-kit/utils';
 import { PopoverOptions, UsePopover } from '../types';
 
 /**
@@ -74,7 +75,7 @@ export const usePopover: UsePopover = ({
 
   const click = useClick(context, {
     enabled:
-      controlledOpen == null && ['click', 'both'].includes(interactionsEnabled),
+      isNill(controlledOpen) && ['click', 'both'].includes(interactionsEnabled),
     keyboardHandlers,
   });
   const isControlled = controlledOpen !== undefined;
@@ -89,7 +90,7 @@ export const usePopover: UsePopover = ({
   const role = useRole(context);
   const hover = useHover(context, {
     enabled:
-      controlledOpen == null && ['hover', 'both'].includes(interactionsEnabled),
+      isNill(controlledOpen) && ['hover', 'both'].includes(interactionsEnabled),
     handleClose: safePolygon(),
   });
 

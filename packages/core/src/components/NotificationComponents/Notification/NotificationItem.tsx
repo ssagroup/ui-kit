@@ -24,6 +24,7 @@
 import { FC, ReactNode } from 'react';
 
 import { useTheme } from '@emotion/react';
+import { isNill } from '@ssa-ui-kit/utils';
 
 import Icon from '@components/Icon';
 import {
@@ -166,7 +167,7 @@ export const NotificationItem: FC<NotificationItemProps> = ({
         color={resolvedIconColor}
         size={iconSize}
       />
-    ) : icon != null ? (
+    ) : !isNill(icon) ? (
       icon
     ) : (
       <Icon name="user" color={resolvedIconColor} size={iconSize} />

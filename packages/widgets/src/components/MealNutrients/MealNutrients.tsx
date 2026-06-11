@@ -8,6 +8,7 @@ import {
   Dropdown,
   DropdownOption,
 } from '@ssa-ui-kit/core';
+import { isNill } from '@ssa-ui-kit/utils';
 
 import { MealNutrientsLineChart } from './MealNutrientsLineChart';
 import useChartConfig from './useChartConfig';
@@ -33,7 +34,7 @@ export const MealNutrients = ({
   );
 
   useEffect(() => {
-    if (options?.length > 0 && selectedOption == null) {
+    if (options?.length > 0 && isNill(selectedOption)) {
       handleChange(options[0]);
     }
   }, [options]);

@@ -1,4 +1,5 @@
 export { callAll } from './utils/CallAll';
+export * from './utils/isNill';
 export { throttle } from './utils/throttle';
 export * from './utils/debounce';
 export * as dateFormatters from './utils/dates/dateFormatters';

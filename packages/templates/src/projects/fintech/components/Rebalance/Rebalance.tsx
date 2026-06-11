@@ -4,6 +4,7 @@ import { useTheme } from '@emotion/react';
 import { usePlotlyDefaultConfig, useTimestamp } from '@fintech/hooks';
 import { useAppLayout } from '@fintech/pages/AppLayout/useAppLayoutContext';
 import { isShortPeriod } from '@fintech/utils';
+import { isNill } from '@ssa-ui-kit/utils';
 import {
   PlotlyGraphWrapper,
   PlotTooltip,
@@ -130,7 +131,7 @@ export const Rebalance = ({
               showarrow: false,
               yshift: isFullscreenMode ? 50 : 37,
               text:
-                rebalanceData == null || rebalanceData.length === 0
+                isNill(rebalanceData) || rebalanceData.length === 0
                   ? undefined
                   : currency,
             },

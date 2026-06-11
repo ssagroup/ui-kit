@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { isNill } from '@ssa-ui-kit/utils';
 import { ContextType } from '../types';
 
 /**
@@ -31,7 +32,7 @@ export const PopoverContext = React.createContext<ContextType>(
 export const usePopoverContext = () => {
   const context = React.useContext(PopoverContext);
 
-  if (context == null) {
+  if (isNill(context)) {
     throw new Error('Popover components must be wrapped in <Popover />');
   }
 

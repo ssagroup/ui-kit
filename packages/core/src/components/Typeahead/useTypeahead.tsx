@@ -2,6 +2,7 @@ import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useController, useForm, useFormContext } from 'react-hook-form';
 import { OpenChangeReason } from '@floating-ui/react';
 import { useElementSize, useUncontrolled } from '@ssa-ui-kit/hooks';
+import { isNill } from '@ssa-ui-kit/utils';
 import {
   TypeaheadOptionProps,
   TypeaheadValue,
@@ -125,7 +126,7 @@ export const useTypeahead = ({
 
   const inputValue = useMemo(() => {
     if (isMultiple) return rawInput ?? '';
-    if (rawInput != null) return rawInput;
+    if (!isNill(rawInput)) return rawInput;
     return selectedItems.length === 1
       ? (optionsWithKey[selectedItems[0]]?.label?.toString() ??
           String(selectedItems[0] ?? ''))
@@ -170,7 +171,11 @@ export const useTypeahead = ({
           }
         },
         children:
-          renderOption?.({ value: id || value, input: inputValue, label }) ??
+          renderOption?.({
+            value: id || value,
+            input: inputValue as string,
+            label,
+          }) ??
           childElement.props.children ??
           label ??
           value,
@@ -207,7 +212,7 @@ export const useTypeahead = ({
     shouldClose = true,
     resetInput = true,
   }: HandleChangeParams) => {
-    if (isDisabled || value == null) return;
+    if (isDisabled || isNill(value)) return;
 
     const alreadySelected = selectedItems.includes(value);
     const updatedSelected = isMultiple

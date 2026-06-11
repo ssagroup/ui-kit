@@ -1,4 +1,4 @@
-import { path } from '@ssa-ui-kit/utils';
+import { isNill, path } from '@ssa-ui-kit/utils';
 import { IconProps, MapIconsType, SVGProps } from '../types';
 import * as Icons from './all';
 import { iconsList } from './iconsList';
@@ -21,7 +21,7 @@ const iconsMap: MapIconsType = iconsList.reduce((res, name, index) => {
 const IconMapComponent = ({ name, color, ...props }: IconProps) => {
   const Component = iconsMap[name];
 
-  if (Component == null) {
+  if (isNill(Component)) {
     return null;
   }
 

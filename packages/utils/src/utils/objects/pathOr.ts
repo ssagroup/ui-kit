@@ -1,3 +1,4 @@
+import { isNill } from '../isNill';
 import { path as originalPath } from './path';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -8,8 +9,6 @@ export const pathOr =
   ) =>
   (obj: T): R => {
     const result = originalPath(path)(obj);
-    return result === null || result === undefined
-      ? defaultValue
-      : (result as R);
+    return isNill(result) ? defaultValue : (result as R);
   };
 /* eslint-enable @typescript-eslint/no-explicit-any */

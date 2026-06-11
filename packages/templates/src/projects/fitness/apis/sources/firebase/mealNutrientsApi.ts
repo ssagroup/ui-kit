@@ -1,4 +1,5 @@
 import { OptionType } from '@ssa-ui-kit/widgets';
+import { isNill } from '@ssa-ui-kit/utils';
 import getFirebase from './initFirebase';
 
 interface RespOption extends OptionType {
@@ -7,7 +8,7 @@ interface RespOption extends OptionType {
 
 export const mealNutrients = {
   async get(timePeriodId: string) {
-    if (timePeriodId == null) {
+    if (isNill(timePeriodId)) {
       throw new Error('No id provided');
     }
     const {

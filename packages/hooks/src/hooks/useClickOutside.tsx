@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { isNill } from '@ssa-ui-kit/utils';
 
 type UseClickOutsideType = (
   ref: React.RefObject<HTMLElement | null>,
@@ -11,7 +12,7 @@ export const useClickOutside: UseClickOutsideType = (ref, onClickOutside) => {
   useEffect(() => {
     const handler = (e: Event) => {
       if (
-        ref.current == null ||
+        isNill(ref.current) ||
         ref.current.contains(e.target as HTMLElement)
       ) {
         return;
