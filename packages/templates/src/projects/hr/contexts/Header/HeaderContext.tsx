@@ -1,5 +1,6 @@
 import { createContext, useRef, createRef } from 'react';
 import { createPortal } from 'react-dom';
+import { isNill } from '@ssa-ui-kit/utils';
 import { HeaderContextContent, HeaderContentRef } from './types';
 
 export const HeaderContext = createContext<HeaderContextContent>({
@@ -13,7 +14,7 @@ export const HeaderProvider = ({ children }: { children: React.ReactNode }) => {
   const headerContentRef = useRef<HeaderContentRef>(null);
 
   const renderHeaderContent = (content: React.ReactNode) => {
-    if (headerContentRef.current == null) {
+    if (isNill(headerContentRef.current)) {
       return null;
     }
     return createPortal(content, headerContentRef.current);

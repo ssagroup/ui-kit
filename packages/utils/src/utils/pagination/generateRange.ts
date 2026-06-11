@@ -1,3 +1,4 @@
+import { isNill } from '../isNill';
 import { GenerateRangeFn } from './types';
 
 /**
@@ -37,7 +38,7 @@ const fill = (range: number[], minValue: number, maxValue: number) => {
 };
 
 const generateRange: GenerateRangeFn = (pagesCount, selectedPage) => {
-  if (pagesCount == null || !Number.isInteger(pagesCount)) {
+  if (isNill(pagesCount) || !Number.isInteger(pagesCount)) {
     throw new Error('Pages count should be an integer');
   }
 
@@ -51,11 +52,14 @@ const generateRange: GenerateRangeFn = (pagesCount, selectedPage) => {
     return range;
   }
 
-  if (selectedPage != null && !Number.isInteger(selectedPage)) {
+  if (!isNill(selectedPage) && !Number.isInteger(selectedPage)) {
     throw new Error('Selected page should be an integer');
   }
 
-  if (selectedPage != null && (selectedPage < 1 || selectedPage > pagesCount)) {
+  if (
+    !isNill(selectedPage) &&
+    (selectedPage < 1 || selectedPage > pagesCount)
+  ) {
     throw new Error(`Selected page ${selectedPage} is out of range`);
   }
 

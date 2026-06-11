@@ -10,6 +10,7 @@ import {
   DropdownOption,
   DropdownOptionProps,
 } from '@ssa-ui-kit/core';
+import { isNill } from '@ssa-ui-kit/utils';
 
 import { MealPlannerCard } from './MealPlannerCard';
 
@@ -33,7 +34,7 @@ export const MealPlanner = ({ data, avatarBorder }: MealPlannerProps) => {
   };
 
   useEffect(() => {
-    if (data == null || typeof data !== 'object') {
+    if (isNill(data) || typeof data !== 'object') {
       return;
     }
 
@@ -50,7 +51,7 @@ export const MealPlanner = ({ data, avatarBorder }: MealPlannerProps) => {
   }, [data]);
 
   useEffect(() => {
-    if (options?.length > 0 && selectedOption == null) {
+    if (options?.length > 0 && isNill(selectedOption)) {
       handleChange(options[0]);
     }
   }, [options]);

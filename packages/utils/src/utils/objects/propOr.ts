@@ -1,3 +1,4 @@
+import { isNill } from '../isNill';
 import { prop } from './prop';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -8,6 +9,6 @@ export const propOr =
   ) =>
   (obj: T): R => {
     const result = prop(propName)(obj);
-    return result === null || result === undefined ? defaultValue : result;
+    return isNill(result) ? defaultValue : result;
   };
 /* eslint-enable @typescript-eslint/no-explicit-any */

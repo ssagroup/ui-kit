@@ -5,6 +5,7 @@ import {
   WithVisibleMD,
   WithVisibleSM,
 } from '@ssa-ui-kit/core';
+import { isNill } from '@ssa-ui-kit/utils';
 import { useHeader } from '@fintech/contexts';
 import { isTruthy } from '@fintech/utils';
 
@@ -50,12 +51,11 @@ export const NotificationFilters = ({
       : null,
   ].filter(isTruthy);
 
-  const selectedItem =
-    selectedItemId != null
-      ? selectedItemId === UNREAD_FILTER_ID
-        ? items[0]
-        : items[1]
-      : undefined;
+  const selectedItem = !isNill(selectedItemId)
+    ? selectedItemId === UNREAD_FILTER_ID
+      ? items[0]
+      : items[1]
+    : undefined;
 
   return (
     <>

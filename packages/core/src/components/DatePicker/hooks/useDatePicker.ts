@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
+import { isNill } from '@ssa-ui-kit/utils';
 import { useDatePickerMask } from './useDatePickerMask';
 import {
   DATE_MAX,
@@ -56,7 +57,7 @@ const CONFIG = {
 };
 
 const getNumberAtIndex = (parts: number[], index: number, fallback: number) =>
-  index >= 0 && parts[index] != null ? parts[index] : fallback;
+  index >= 0 && !isNill(parts[index]) ? parts[index] : fallback;
 
 export const useDatePicker = ({
   dateMin,

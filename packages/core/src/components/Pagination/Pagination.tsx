@@ -1,6 +1,7 @@
 import { KeyboardEvent, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { usePaginationRange } from '@ssa-ui-kit/hooks';
+import { isNill } from '@ssa-ui-kit/utils';
 import { InputProps } from '@components/Input/types';
 import Wrapper from '@components/Wrapper';
 import { ArrowButton } from './ArrowButton';
@@ -165,9 +166,9 @@ const Pagination = ({
           }}
           isDisabled={
             isDisabled ||
-            pagesCount == null ||
+            isNill(pagesCount) ||
             pagesCount <= 1 ||
-            page == null ||
+            isNill(page) ||
             page === 1
           }
           css={{ marginRight: '12px' }}
@@ -187,9 +188,9 @@ const Pagination = ({
           }}
           isDisabled={
             isDisabled ||
-            pagesCount == null ||
+            isNill(pagesCount) ||
             pagesCount <= 1 ||
-            page == null ||
+            isNill(page) ||
             page === pagesCount
           }
           css={{ marginLeft: '7px' }}

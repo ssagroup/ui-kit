@@ -9,6 +9,7 @@ import React, {
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
+import { isNill } from '@ssa-ui-kit/utils';
 
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
@@ -241,28 +242,26 @@ const Dropdown = <T extends DropdownOptionProps>({
   const rawAvatar =
     activeItem && (activeItem as Record<string, unknown>).avatar;
 
-  const selectedAvatar =
-    rawAvatar != null ? (
-      typeof rawAvatar === 'string' ? (
-        <Avatar
-          size={AvatarSizes.small}
-          image={rawAvatar}
-          border={avatarBorder}
-        />
-      ) : React.isValidElement(rawAvatar) ? (
-        (rawAvatar as ReactNode)
-      ) : null
-    ) : null;
+  const selectedAvatar = !isNill(rawAvatar) ? (
+    typeof rawAvatar === 'string' ? (
+      <Avatar
+        size={AvatarSizes.small}
+        image={rawAvatar}
+        border={avatarBorder}
+      />
+    ) : React.isValidElement(rawAvatar) ? (
+      (rawAvatar as ReactNode)
+    ) : null
+  ) : null;
 
-  const toggleContent =
-    selectedAvatar != null ? (
-      <SelectedContent>
-        {selectedAvatar as ReactNode}
-        <span style={{ minWidth: 0 }}>{value}</span>
-      </SelectedContent>
-    ) : (
-      value
-    );
+  const toggleContent = !isNill(selectedAvatar) ? (
+    <SelectedContent>
+      {selectedAvatar as ReactNode}
+      <span style={{ minWidth: 0 }}>{value}</span>
+    </SelectedContent>
+  ) : (
+    value
+  );
 
   return (
     <DropdownContext.Provider value={contextValue}>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { isNill } from '@ssa-ui-kit/utils';
 import { useWindowSize } from '@hooks/useWindowResize';
 
 const FONT_SIZE_REG_EXP = /(\d+\.?\d+)(\S+)/;
@@ -31,7 +32,7 @@ export const useTextSizeDecrease = (maxAttempts = 5, step = 1) => {
   const { width } = useWindowSize();
 
   const checkAndResize = () => {
-    if (textContainerRef.current == null) {
+    if (isNill(textContainerRef.current)) {
       return;
     }
 

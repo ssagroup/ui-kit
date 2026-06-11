@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@ssa-ui-kit/core';
 
-import { throttle } from '@ssa-ui-kit/utils';
+import { isNill, throttle } from '@ssa-ui-kit/utils';
 
 import { HeartRateProps } from './types';
 import { HeartRateLineChart } from './HeartRateLineChart';
@@ -103,7 +103,7 @@ export const HeartRate = ({
             onMouseMove={onBpmValueChange}
           />
         </div>
-        {bpmValue != null ? <BPM value={bpmValue} /> : null}
+        {!isNill(bpmValue) ? <BPM value={bpmValue} /> : null}
       </CardContent>
     </Card>
   );

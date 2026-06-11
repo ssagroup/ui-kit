@@ -5,6 +5,7 @@ import {
   useNumberFormat,
 } from '@react-input/number-format';
 import { useUncontrolled } from '@ssa-ui-kit/hooks';
+import { isNill } from '@ssa-ui-kit/utils';
 
 import { Field, Input } from '@components';
 import { InputProps } from '@components/Input/types';
@@ -37,9 +38,10 @@ export const NumberField = ({
   ...inputProps
 }: NumberFieldProps) => {
   const { disabled } = inputProps;
-  const formattedValue = value == null ? value : format(value, numberFormat);
-  const formattedDefaultValue =
-    defaultValue == null ? defaultValue : format(defaultValue, numberFormat);
+  const formattedValue = isNill(value) ? value : format(value, numberFormat);
+  const formattedDefaultValue = isNill(defaultValue)
+    ? defaultValue
+    : format(defaultValue, numberFormat);
 
   const [_value, setValue] = useUncontrolled({
     value: formattedValue,

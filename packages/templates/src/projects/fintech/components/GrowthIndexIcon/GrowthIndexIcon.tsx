@@ -1,5 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { Icon } from '@ssa-ui-kit/core';
+import { isNill } from '@ssa-ui-kit/utils';
 import { GrowthIndexIconProps } from './types';
 
 export const GrowthIndexIcon = ({
@@ -8,7 +9,7 @@ export const GrowthIndexIcon = ({
 }: GrowthIndexIconProps) => {
   const theme = useTheme();
   return (
-    isIncreasing != null && (
+    !isNill(isIncreasing) && (
       <Icon
         size={size}
         name={`arrow-${isIncreasing ? 'up' : 'down'}`}
