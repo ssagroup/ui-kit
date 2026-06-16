@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { offset } from '@floating-ui/react';
+import { offset, flip } from '@floating-ui/react';
 import { useTheme } from '@emotion/react';
 import { useWindowSize } from '@ssa-ui-kit/hooks';
 import {
@@ -8,69 +8,42 @@ import {
   PopoverDescription,
   PopoverHeading,
   PopoverTrigger,
+  usePopoverContext,
 } from '@components/Popover';
 import { useCollapsibleNavBarContext } from '../CollapsibleNavBarContext';
 
-export const CollapsibleNavBarPopover = ({
-  triggerIcon,
+const SubMenuContent = ({
   title,
   content,
 }: {
-  triggerIcon: React.ReactElement;
   title: string;
   content?: React.ReactElement;
 }) => {
   const theme = useTheme();
   const { theme: navBarTheme } = useCollapsibleNavBarContext();
-  const [open, setOpen] = useState(false);
-
-  const onOpenChange = (open: boolean) => {
-    setOpen(open);
-  };
-
-  const { width } = useWindowSize();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [width]);
+  const { placement } = usePopoverContext();
+  // When flip switches alignment to "-end" there's no room below the trigger,
+  // so the list renders above the heading instead of the heading drifting with it.
+  const isFlippedUp = placement.endsWith('-end');
 
   return (
-    <Popover
-      floatingOptions={{
-        onOpenChange,
-        open,
-        middleware: [
-          offset({
-            mainAxis: 37,
-          }),
-        ],
+    <PopoverContent
+      css={{
+        [theme.mediaQueries.xs]: {
+          display: 'none',
+        },
+        [theme.mediaQueries.md]: {
+          display: 'block',
+        },
+        zIndex: 20,
       }}
-      placement="right-start"
-      interactionsEnabled="both">
-      <PopoverTrigger
-        variant="tertiary"
-        dataTestId="collapsible-nav-bar-trigger-button"
+      isFocusManagerDisabled={true}>
+      <div
         css={{
-          height: 'auto',
-          padding: 0,
-          margin: 0,
-          cursor: 'pointer',
-          backgroundColor: 'unset',
-          borderRadius: 0,
-        }}
-        startIcon={triggerIcon}
-      />
-      <PopoverContent
-        css={{
-          [theme.mediaQueries.xs]: {
-            display: 'none',
-          },
-          [theme.mediaQueries.md]: {
-            display: 'block',
-          },
-          zIndex: 20,
-        }}
-        isFocusManagerDisabled={true}>
+          display: 'flex',
+          flexDirection: isFlippedUp ? 'column-reverse' : 'column',
+          gap: 1,
+        }}>
         <PopoverHeading
           css={{
             color:
@@ -83,7 +56,6 @@ export const CollapsibleNavBarPopover = ({
               navBarTheme === 'default' ? theme.colors.greyGraphite : '#F4F5F9',
             borderRadius: 5,
             cursor: 'default',
-            marginBottom: 1,
             width: 'auto',
             whiteSpace: 'nowrap',
             '&::before': {
@@ -97,7 +69,7 @@ export const CollapsibleNavBarPopover = ({
               position: 'absolute',
               width: 9,
               height: 9,
-              top: 7,
+              ...(isFlippedUp ? { bottom: 7 } : { top: 7 }),
               left: -4,
               transform: 'rotate(45deg)',
               zIndex: -1,
@@ -141,7 +113,63 @@ export const CollapsibleNavBarPopover = ({
           }}>
           {content}
         </PopoverDescription>
-      </PopoverContent>
+      </div>
+    </PopoverContent>
+  );
+};
+
+export const CollapsibleNavBarPopover = ({
+  triggerIcon,
+  title,
+  content,
+}: {
+  triggerIcon: React.ReactElement;
+  title: string;
+  content?: React.ReactElement;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
+  };
+
+  const { width } = useWindowSize();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [width]);
+
+  return (
+    <Popover
+      floatingOptions={{
+        onOpenChange,
+        open,
+        middleware: [
+          offset({
+            mainAxis: 37,
+          }),
+          flip({
+            crossAxis: true,
+            padding: 5,
+          }),
+        ],
+      }}
+      placement="right-start"
+      interactionsEnabled="both">
+      <PopoverTrigger
+        variant="tertiary"
+        dataTestId="collapsible-nav-bar-trigger-button"
+        css={{
+          height: 'auto',
+          padding: 0,
+          margin: 0,
+          cursor: 'pointer',
+          backgroundColor: 'unset',
+          borderRadius: 0,
+        }}
+        startIcon={triggerIcon}
+      />
+      <SubMenuContent title={title} content={content} />
     </Popover>
   );
 };
