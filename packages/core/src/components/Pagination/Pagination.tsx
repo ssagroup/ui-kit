@@ -105,6 +105,7 @@ const Pagination = ({
   isRowPerPageVisible = false,
   rowPerPageProps,
   manualPageNumberProps,
+  renderPageCount,
 }: PaginationProps) => {
   const theme = useTheme();
   const { page, setPage } = usePaginationContext();
@@ -130,7 +131,7 @@ const Pagination = ({
       aria-label={ariaLabel || 'Pagination'}>
       {isRowPerPageVisible && <RowsPerPageDropdown {...rowPerPageProps} />}
       {isPageSettingVisible && (
-        <Wrapper css={{ width: 'auto', marginRight: 5 }}>
+        <Wrapper css={{ width: 'auto', gap: 16 }}>
           <S.PageNumberInput
             name="page-number"
             placeholder={pageNumberPlaceholder}
@@ -143,20 +144,22 @@ const Pagination = ({
             }}
             {...manualPageNumberProps}
           />
-          {isPageFromCountVisible && (
-            <span
-              css={{
-                textWrap: 'nowrap',
-                fontSize: 14,
-                marginLeft: 16,
-                color: theme.colors.greyDarker,
-              }}>
-              {page || 0} / {pagesCount}
-            </span>
-          )}
+          {isPageFromCountVisible &&
+            (renderPageCount ? (
+              renderPageCount(page || 0, pagesCount)
+            ) : (
+              <span
+                css={{
+                  textWrap: 'nowrap',
+                  fontSize: 14,
+                  color: theme.colors.greyDarker,
+                }}>
+                {page || 0} / {pagesCount}
+              </span>
+            ))}
         </Wrapper>
       )}
-      <Wrapper>
+      <Wrapper css={{ width: 'auto', gap: 16 }}>
         <ArrowButton
           direction="left"
           onClick={() => {
@@ -171,7 +174,6 @@ const Pagination = ({
             isNill(page) ||
             page === 1
           }
-          css={{ marginRight: '12px' }}
         />
         <PaginationButtons
           range={range}
@@ -193,7 +195,6 @@ const Pagination = ({
             isNill(page) ||
             page === pagesCount
           }
-          css={{ marginLeft: '7px' }}
         />
       </Wrapper>
     </S.PaginationNav>

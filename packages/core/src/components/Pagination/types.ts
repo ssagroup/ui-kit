@@ -114,6 +114,15 @@ export interface PaginationProps extends CommonProps {
    * @default 'The value is out of range'
    */
   errorTooltip?: string;
+
+  /**
+   * Custom renderer for the page count indicator shown next to the manual
+   * page input (only when `isPageSettingVisible` and `isPageFromCountVisible`).
+   * Receives the current page and total page count and returns custom JSX,
+   * allowing wording such as `Pages 1 out of 300`.
+   * @default `${current} / ${total}`
+   */
+  renderPageCount?: (current: number, total: number) => React.ReactNode;
 }
 
 /**

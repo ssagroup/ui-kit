@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTheme } from '@emotion/react';
 import Button from '@components/Button';
 
-import { pageBtnStyles, selectedPageBtnStyles } from './styles';
+import { breakStyles, pageBtnStyles, selectedPageBtnStyles } from './styles';
 import { PaginationButtonsProps, PageButtonProps } from './types';
 
 /**
@@ -13,7 +13,7 @@ import { PaginationButtonsProps, PageButtonProps } from './types';
  *
  * @internal
  */
-const Break = () => <span css={{ cursor: 'default' }}>...</span>;
+const Break = () => <span css={breakStyles}>...</span>;
 
 /**
  * PageButton - Individual page number button
@@ -97,19 +97,21 @@ export const PaginationButtons = ({
   isDisabled,
 }: PaginationButtonsProps) => {
   return (
-    Array.isArray(range) &&
-    range.map((page, index) => {
-      return page === -1 ? (
-        <Break key={index} />
-      ) : (
-        <PageButton
-          key={index}
-          page={page}
-          isSelected={page === selectedPage}
-          onClick={() => onClick(page)}
-          isDisabled={isDisabled}
-        />
-      );
-    })
+    <div css={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+      {Array.isArray(range) &&
+        range.map((page, index) => {
+          return page === -1 ? (
+            <Break key={index} />
+          ) : (
+            <PageButton
+              key={index}
+              page={page}
+              isSelected={page === selectedPage}
+              onClick={() => onClick(page)}
+              isDisabled={isDisabled}
+            />
+          );
+        })}
+    </div>
   );
 };

@@ -99,6 +99,7 @@ const main: Theme = {
     blue: 'rgba(65, 120, 225, 1)', // #4178e1
     blue6: 'rgba(65, 120, 225, 0.06)', // #4178e1
     blue6RGB: 'rgb(244, 247, 252)', // #F4F7FC
+    blue12: 'rgba(65, 120, 225, 0.12)', // #4178e1
     blue20: 'rgba(65, 120, 225, 0.2)', // #4178e1
     blueCool: 'rgba(108, 148, 247, 1)', // #6c94f7
     blueDark: 'rgba(36, 101, 227, 1)', // #2465e3
