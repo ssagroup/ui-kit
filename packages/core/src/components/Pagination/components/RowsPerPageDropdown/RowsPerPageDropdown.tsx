@@ -67,13 +67,21 @@ export const RowsPerPageDropdown = ({
   };
 
   return (
-    <Wrapper css={{ width: 'auto', ul: { width: 'auto' } }}>
+    <Wrapper
+      css={{
+        width: 'auto',
+        gap: 8,
+        ul: { width: 'auto' },
+        li: { height: 40, padding: '8px 12px' },
+        'li[aria-selected="true"]': { background: theme.colors.blue12 },
+      }}>
       <Typography
         variant="subtitle"
         css={{
           fontSize: 14,
           lineHeight: 1,
           textWrap: 'nowrap',
+          color: theme.colors.greyDarker,
         }}>
         {rowsPerPageText}:
       </Typography>
@@ -83,13 +91,11 @@ export const RowsPerPageDropdown = ({
         dropdownProps={{
           toggleButton: {
             css: {
-              marginLeft: 5,
-              marginRight: 15,
               border: 'none',
               background: 'transparent',
               borderRadius: 6,
               color: theme.colors.greyDarker,
-              gap: 5,
+              gap: 4,
               padding: 3,
               '&:focus': {
                 color: theme.colors.greyDarker,

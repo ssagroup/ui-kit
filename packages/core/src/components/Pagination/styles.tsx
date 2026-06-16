@@ -2,99 +2,102 @@ import Input from '@components/Input';
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-const baseBtnStyles = (theme: Theme) => css`
-  height: 30px;
-  border-radius: 6px;
+/** Square 26x26 cell shared by page/selected/arrow buttons (design "Number" atom). */
+const baseBtnStyles = {
+  width: 26,
+  height: 26,
+  padding: 0,
+  borderRadius: 6,
+  justifyContent: 'center',
 
-  ${theme.mediaQueries.md} {
-    height: 25px;
-  }
+  fontSize: 14,
+  fontWeight: 500,
+  letterSpacing: 0,
+  lineHeight: '18px',
+};
 
-  &:disabled {
-    cursor: default;
-  }
-`;
+/** Shared by every `&:disabled` block below so it survives merging into one object. */
+const disabledCursor = {
+  cursor: 'default',
+};
 
-export const pageBtnStyles = (theme: Theme) => css`
-  ${baseBtnStyles(theme)}
+export const pageBtnStyles = (theme: Theme) =>
+  css({
+    ...baseBtnStyles,
 
-  background: unset;
-  box-shadow: unset;
-  color: ${theme.colors.greyDarker};
-  padding: 0 11px;
+    background: 'transparent',
+    boxShadow: 'unset',
+    color: theme.colors.greyDarker,
 
-  ${theme.mediaQueries.md} {
-    padding: 0 9px;
-  }
+    '&:disabled': {
+      ...disabledCursor,
+      background: theme.palette.secondary.main,
+      color: theme.colors.grey,
+      boxShadow: 'unset',
+    },
 
-  &:disabled {
-    background: unset;
-    box-shadow: unset;
-  }
+    '&:not(:disabled):hover, &:not(:disabled):active, &:not(:disabled):focus': {
+      background: theme.palette.secondary.light,
+      boxShadow: 'unset',
+    },
+  });
 
-  &:not(:disabled):hover,
-  &:not(:disabled):active,
-  &:not(:disabled):focus {
-    background: ${theme.colors.greyLighter};
-    box-shadow: unset;
-  }
-`;
+export const selectedPageBtnStyles = (theme: Theme) =>
+  css({
+    ...baseBtnStyles,
 
-const selectedBtnBg = (theme: Theme) => css`
-  background: ${theme.palette.primary.main};
+    background: theme.palette.primary.main,
+    color: theme.colors.white,
 
-  &:disabled {
-    background: ${theme.palette.primary.main};
-  }
-`;
+    '&:disabled': {
+      ...disabledCursor,
+      background: theme.palette.primary.main,
+    },
 
-export const selectedPageBtnStyles = (theme: Theme) => css`
-  ${baseBtnStyles(theme)}
+    '&:hover, &:active, &:focus': {
+      background: theme.palette.primary.dark,
+    },
 
-  ${selectedBtnBg(theme)}
+    '&:not(:disabled):hover': {
+      cursor: 'default',
+    },
+  });
 
-  color: ${theme.colors.white};
-  margin: 0 3px;
-  padding: 0 13px;
+export const arrowBtnStyles = css({
+  ...baseBtnStyles,
 
-  ${theme.mediaQueries.md} {
-    padding: 0 10px;
-  }
+  background: 'transparent',
 
-  &:hover,
-  &:active,
-  &:focus {
-    ${selectedBtnBg(theme)}
-  }
+  '&:disabled': {
+    ...disabledCursor,
+    background: 'transparent',
+  },
 
-  &:not(:disabled):hover {
-    box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.3);
-    cursor: default;
-  }
-`;
+  '&:not(:disabled):hover': {
+    cursor: 'pointer',
+  },
+});
 
-export const arrowBtnStyles = (theme: Theme) => css`
-  ${baseBtnStyles(theme)}
+/** Ellipsis ("...") cell rendered between page-number breaks; sized to match a Number cell. */
+export const breakStyles = (theme: Theme) =>
+  css({
+    ...baseBtnStyles,
 
-  padding: 0 8px;
-  background: ${theme.colors.white};
-
-  &:disabled {
-    background: unset;
-  }
-
-  &:not(:disabled):hover {
-    box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-  }
-`;
+    display: 'inline-flex',
+    alignItems: 'center',
+    background: 'transparent',
+    color: theme.colors.greyDarker,
+    cursor: 'default',
+  });
 
 export const PaginationNav = styled.nav`
   display: flex;
+  align-items: center;
+  gap: 38px;
 `;
 
 export const PageNumberInput = styled(Input)`
-  width: 65px;
+  width: 80px;
   -moz-appearance: textfield;
   appearance: textfield;
   &::-webkit-outer-spin-button,

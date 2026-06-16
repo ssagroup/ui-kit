@@ -104,6 +104,7 @@ type Colors = MakeColors<
     'blue',
     'blue6',
     'blue6RGB',
+    'blue12',
     'blue20',
     'blueCool',
     'blueDark',

@@ -49,8 +49,8 @@ export const ArrowButton = ({
       startIcon={
         <Icon
           name={`carrot-${direction}`}
-          size={12}
-          color={theme.colors.greyDisabled}
+          size={18}
+          color={theme.colors.greyDarker80}
         />
       }
       variant="tertiary"
@@ -58,7 +58,7 @@ export const ArrowButton = ({
       isDisabled={isDisabled}
       size="small"
       className={className}
-      css={arrowBtnStyles(theme)}
+      css={arrowBtnStyles}
       aria-label={`Go to ${direction === 'left' ? 'previous' : 'next'} page`}
     />
   );

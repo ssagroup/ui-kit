@@ -43,7 +43,7 @@ const testCases = {
 
 const checkPages = (range: number[], selected?: number) => {
   const navigation = screen.getByRole('navigation');
-  const buttonsWrapper = navigation.querySelector('div') as HTMLDivElement;
+  const pagerWrapper = navigation.querySelector('div') as HTMLDivElement;
   const withinNavigation = within(navigation);
 
   const prevPageBtn = within(
@@ -55,7 +55,10 @@ const checkPages = (range: number[], selected?: number) => {
   );
   nextPageBtn.getByTitle('Carrot right');
 
-  const buttonsAndBreaks = Array.from(buttonsWrapper.children).slice(1, -1);
+  // Pager group: [prevArrow, numbersWrapper, nextArrow]; page buttons and
+  // ellipsis breaks live inside the numbers wrapper.
+  const numbersWrapper = pagerWrapper.children[1] as HTMLElement;
+  const buttonsAndBreaks = Array.from(numbersWrapper.children);
 
   for (let i = 0; i < range.length; ++i) {
     const page = range[i];
@@ -215,6 +218,43 @@ describe('Pagination', () => {
     expect(navEl).not.toBeInTheDocument();
     expect(document.body.children.length).toBe(1);
     expect(document.body.children[0]?.tagName).toBe('DIV');
+  });
+
+  it('Renders the default "current / total" page count', () => {
+    setup(<Pagination pagesCount={3} isPageSettingVisible />, 1);
+
+    expect(screen.getByText('1 / 3')).toBeInTheDocument();
+  });
+
+  it('Renders a custom page count via renderPageCount', () => {
+    setup(
+      <Pagination
+        pagesCount={300}
+        isPageSettingVisible
+        renderPageCount={(current, total) => (
+          <span>
+            Pages {current} out of {total}
+          </span>
+        )}
+      />,
+      1,
+    );
+
+    expect(screen.getByText('Pages 1 out of 300')).toBeInTheDocument();
+    expect(screen.queryByText('1 / 300')).not.toBeInTheDocument();
+  });
+
+  it('Hides the page count when isPageFromCountVisible is false', () => {
+    setup(
+      <Pagination
+        pagesCount={3}
+        isPageSettingVisible
+        isPageFromCountVisible={false}
+      />,
+      1,
+    );
+
+    expect(screen.queryByText('1 / 3')).not.toBeInTheDocument();
   });
 
   it('Renders in a disabled state', () => {
