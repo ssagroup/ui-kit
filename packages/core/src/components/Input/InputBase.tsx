@@ -17,18 +17,18 @@ export const InputBase = styled.input<{ showBorders: boolean }>`
   height: 44px;
   padding: 14px;
 
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.875rem;
-  line-height: 1rem;
+  line-height: 18px;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.greyDarker60};
+    color: ${({ theme }) => theme.colors.greyDarker80};
   }
 
   &:disabled {
     color: ${({ theme }) => `${theme.colors.grey}`};
 
-    background: ${({ theme }) => theme.colors.greyLighter};
+    background: ${({ theme }) => theme.palette.secondary.light};
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.grey};

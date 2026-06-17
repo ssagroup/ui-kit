@@ -6,16 +6,16 @@ type TextareaStatus = 'basic' | 'error' | 'success' | 'custom';
 const statusToPalette = (status: TextareaStatus) =>
   status === 'custom' ? 'basic' : status;
 
-type BoxShadowState = 'rest' | 'hover' | 'focus';
+type BorderState = 'rest' | 'hover' | 'focus';
 
-function getStatusBoxShadow(
+function getStatusBorderColor(
   theme: Theme,
   status: TextareaStatus,
-  state: BoxShadowState,
+  state: BorderState,
 ): string {
   const palette = statusToPalette(status);
 
-  const colorMap: Record<string, Record<BoxShadowState, string>> = {
+  const colorMap: Record<string, Record<BorderState, string>> = {
     error: {
       rest: theme.palette.error.light,
       hover: theme.palette.error.main,
@@ -28,15 +28,14 @@ function getStatusBoxShadow(
     },
     default: {
       rest: theme.colors.grey ?? '',
-      hover: theme.colors.greyDarker60 ?? theme.colors.grey ?? '',
-      focus: theme.palette.primary.main ?? theme.colors.grey ?? '',
+      hover: theme.colors.greyDarker80 ?? theme.colors.grey ?? '',
+      focus: theme.palette.primary.light ?? theme.colors.grey ?? '',
     },
   };
 
   const colors = colorMap[palette] ?? colorMap.default;
-  const color = colors[state];
 
-  return `inset 0 0 1.5px 0 ${color}`;
+  return colors[state];
 }
 
 export const TextareaBase = styled('textarea', {
@@ -49,9 +48,8 @@ export const TextareaBase = styled('textarea', {
   background-origin: border-box;
   background-clip: padding-box, border-box;
 
-  border: none;
-  box-shadow: ${({ theme, status = 'basic' }) =>
-    getStatusBoxShadow(theme, status, 'rest')};
+  border: ${({ theme, status = 'basic' }) =>
+    `1px solid ${getStatusBorderColor(theme, status, 'rest')}`};
 
   color: ${({ theme }) => theme.colors.greyDarker};
 
@@ -62,12 +60,12 @@ export const TextareaBase = styled('textarea', {
   min-height: 114px;
   padding: 14px;
 
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.875rem;
-  line-height: 1rem;
+  line-height: 18px;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.greyDarker60};
+    color: ${({ theme }) => theme.colors.greyDarker80};
   }
 
   /* no hover/focus border change when read-only; no pointer cursor */
@@ -77,8 +75,8 @@ export const TextareaBase = styled('textarea', {
 
   &:disabled {
     color: ${({ theme }) => `${theme.colors.grey}`};
-    box-shadow: ${({ theme }) => `inset 0 0 1.5px 0 ${theme.colors.grey}`};
-    background: ${({ theme }) => theme.colors.greyLighter};
+    border: ${({ theme }) => `1px solid ${theme.colors.grey}`};
+    background: ${({ theme }) => theme.palette.secondary.light};
     resize: none;
 
     &::placeholder {
@@ -87,13 +85,13 @@ export const TextareaBase = styled('textarea', {
   }
 
   &:hover:not(:disabled, [readonly]) {
-    box-shadow: ${({ theme, status = 'basic' }) =>
-      getStatusBoxShadow(theme, status, 'hover')};
+    border-color: ${({ theme, status = 'basic' }) =>
+      getStatusBorderColor(theme, status, 'hover')};
   }
 
   /* same specificity as :hover so focus wins when both apply (stay blue/green/red on hover) */
   &:focus:not(:disabled, [readonly]) {
-    box-shadow: ${({ theme, status = 'basic' }) =>
-      getStatusBoxShadow(theme, status, 'focus')};
+    border-color: ${({ theme, status = 'basic' }) =>
+      getStatusBorderColor(theme, status, 'focus')};
   }
 `;

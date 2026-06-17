@@ -8,9 +8,12 @@ const FormHelperText = ({
   children,
   ...rest
 }: FormHelperTextProps) => {
-  status = disabled ? 'basic' : status;
   return (
-    <FormHelperTextBase role={role} status={status} {...rest}>
+    <FormHelperTextBase
+      role={role}
+      status={status}
+      isDisabled={disabled}
+      {...rest}>
       {children}
     </FormHelperTextBase>
   );

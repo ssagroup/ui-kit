@@ -27,6 +27,11 @@ export default {
         disable: true,
       },
     },
+    startElement: {
+      control: {
+        disable: true,
+      },
+    },
     endElement: {
       control: {
         disable: true,
@@ -64,7 +69,7 @@ const mockError: FieldError = {
 };
 
 export const Basic: StoryObj<typeof TextField> = (args: Args) => {
-  return <TextField {...args} register={args.register} />;
+  return <TextField {...args} />;
 };
 Basic.args = {
   placeholder: 'Field',
@@ -77,77 +82,52 @@ Basic.args = {
 };
 
 export const WithError: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      placeholder="Field error"
-      label="Field"
-      name="field2"
-      register={args.register}
-      validationSchema={{
-        required: 'Required',
-      }}
-      errors={mockError}
-    />
-  );
+  return <TextField {...args} errors={mockError} />;
 };
-WithError.args = {};
+WithError.args = {
+  placeholder: 'Field error',
+  label: 'Field',
+  name: 'field2',
+};
 
 export const WithSuccess: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      placeholder="Field success"
-      label="Field"
-      name="field3"
-      register={args.register}
-      validationSchema={{
-        required: 'Required',
-      }}
-      success={true}
-      helperText="some nice text"
-    />
-  );
+  return <TextField {...args} />;
 };
-WithSuccess.args = {};
+WithSuccess.args = {
+  placeholder: 'Field success',
+  label: 'Field',
+  name: 'field3',
+  success: true,
+  helperText: 'some nice text',
+};
 
 export const Disabled: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      placeholder="Field disabled"
-      label="Field"
-      name="field4"
-      register={args.register}
-      helperText="some nice text"
-      disabled={true}
-      endElement={<Icon name="visible" size={16} />}
-    />
-  );
+  return <TextField {...args} endElement={<Icon name="visible" size={16} />} />;
 };
-Disabled.args = {};
+Disabled.args = {
+  placeholder: 'Field disabled',
+  label: 'Field',
+  name: 'field4',
+  helperText: 'some nice text',
+  disabled: true,
+};
 
 export const WithStatusDisabled: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      placeholder="Field success disabled"
-      label="Field"
-      name="field5"
-      register={args.register}
-      helperText="some nice text"
-      disabled={true}
-      success={true}
-    />
-  );
+  return <TextField {...args} />;
 };
-WithStatusDisabled.args = {};
+WithStatusDisabled.args = {
+  placeholder: 'Field success disabled',
+  label: 'Field',
+  name: 'field5',
+  helperText: 'some nice text',
+  disabled: true,
+  success: true,
+};
 
 export const WithAction: StoryObj<typeof TextField> = (args: Args) => {
   return (
     <TextField
-      type="password"
-      placeholder="Field"
-      label="Field"
-      name="field6"
-      register={args.register}
-      helperText="some nice text"
+      {...args}
       endElement={
         <button
           type="submit"
@@ -161,53 +141,106 @@ export const WithAction: StoryObj<typeof TextField> = (args: Args) => {
     />
   );
 };
-WithAction.args = {};
+WithAction.args = {
+  type: 'password',
+  placeholder: 'Field',
+  label: 'Field',
+  name: 'field6',
+  helperText: 'some nice text',
+};
 
-export const MultilineSimple: StoryObj<typeof TextField> = (args: Args) => {
+export const WithStartIcon: StoryObj<typeof TextField> = (args: Args) => {
   return (
-    <TextField
-      multirow
-      rows={10}
-      placeholder="Textarea"
-      name="textarea"
-      register={args.register}
-    />
+    <TextField {...args} startElement={<Icon name="search" size={16} />} />
   );
 };
-MultilineSimple.args = {};
-
-export const Multiline: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      multirow
-      maxLength={100}
-      label="Textarea"
-      placeholder="Textarea"
-      name="textarea"
-      helperText="some nice text"
-      register={args.register}
-    />
-  );
+WithStartIcon.args = {
+  placeholder: 'Search',
+  label: 'Field',
+  name: 'field-start-icon',
+  helperText: 'some nice text',
 };
-Multiline.args = {};
 
-export const MultilineResizeVertical: StoryObj<typeof TextField> = (
+export const WithStartAndEndIcons: StoryObj<typeof TextField> = (
   args: Args,
 ) => {
   return (
     <TextField
-      multirow
-      rows={10}
-      label="Textarea (vertical resize)"
-      placeholder="Textarea"
-      name="textarea"
-      helperText='Resize is limited to vertical only via css={{ resize: "vertical" }}'
-      register={args.register}
-      css={{ resize: 'vertical' }}
+      {...args}
+      startElement={<Icon name="user" size={16} />}
+      endElement={<Icon name="visible" size={16} />}
     />
   );
 };
-MultilineResizeVertical.args = {};
+WithStartAndEndIcons.args = {
+  placeholder: 'Placeholder',
+  label: 'Field',
+  name: 'field-start-end-icons',
+  helperText: 'some nice text',
+};
+
+export const MultilineSimple: StoryObj<typeof TextField> = (args: Args) => {
+  return <TextField {...args} />;
+};
+MultilineSimple.args = {
+  multirow: true,
+  rows: 10,
+  placeholder: 'Textarea',
+  name: 'textarea-simple',
+};
+
+export const Multiline: StoryObj<typeof TextField> = (args: Args) => {
+  return <TextField {...args} />;
+};
+Multiline.args = {
+  multirow: true,
+  maxLength: 100,
+  label: 'Textarea',
+  placeholder: 'Textarea',
+  name: 'textarea',
+  helperText: 'some nice text',
+};
+
+export const MultilineWithError: StoryObj<typeof TextField> = (args: Args) => {
+  return <TextField {...args} errors={mockError} />;
+};
+MultilineWithError.args = {
+  multirow: true,
+  maxLength: 100,
+  label: 'Textarea',
+  placeholder: 'Textarea',
+  name: 'textarea-error',
+};
+
+export const MultilineWithSuccess: StoryObj<typeof TextField> = (
+  args: Args,
+) => {
+  return <TextField {...args} />;
+};
+MultilineWithSuccess.args = {
+  multirow: true,
+  maxLength: 100,
+  label: 'Textarea',
+  placeholder: 'Textarea',
+  name: 'textarea-success',
+  success: true,
+  helperText: 'some nice text',
+};
+
+export const MultilineResizeVertical: StoryObj<typeof TextField> = (
+  args: Args,
+) => {
+  return <TextField {...args} css={{ resize: 'vertical' }} />;
+};
+MultilineResizeVertical.args = {
+  multirow: true,
+  rows: 10,
+  label: 'Textarea (vertical resize)',
+  placeholder: 'Textarea',
+  name: 'textarea-resize-vertical',
+  helperText:
+    'Resize is limited to vertical only via css={{ resize: "vertical" }}',
+};
 MultilineResizeVertical.storyName = 'Multiline — Resize Vertical';
 MultilineResizeVertical.parameters = {
   docs: {
@@ -221,20 +254,17 @@ MultilineResizeVertical.parameters = {
 export const MultilineResizeHorizontal: StoryObj<typeof TextField> = (
   args: Args,
 ) => {
-  return (
-    <TextField
-      multirow
-      rows={10}
-      label="Textarea (horizontal resize)"
-      placeholder="Textarea"
-      name="textarea"
-      helperText='Resize is limited to horizontal only via css={{ resize: "horizontal" }}'
-      register={args.register}
-      css={{ resize: 'horizontal' }}
-    />
-  );
+  return <TextField {...args} css={{ resize: 'horizontal' }} />;
 };
-MultilineResizeHorizontal.args = {};
+MultilineResizeHorizontal.args = {
+  multirow: true,
+  rows: 10,
+  label: 'Textarea (horizontal resize)',
+  placeholder: 'Textarea',
+  name: 'textarea-resize-horizontal',
+  helperText:
+    'Resize is limited to horizontal only via css={{ resize: "horizontal" }}',
+};
 MultilineResizeHorizontal.storyName = 'Multiline — Resize Horizontal';
 MultilineResizeHorizontal.parameters = {
   docs: {
@@ -246,35 +276,28 @@ MultilineResizeHorizontal.parameters = {
 };
 
 export const MultilineDisabled: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      multirow
-      disabled
-      label="Textarea"
-      placeholder="Textarea"
-      name="textarea"
-      helperText="some nice text"
-      register={args.register}
-    />
-  );
+  return <TextField {...args} />;
 };
-MultilineDisabled.args = {};
+MultilineDisabled.args = {
+  multirow: true,
+  disabled: true,
+  label: 'Textarea',
+  placeholder: 'Textarea',
+  name: 'textarea-disabled',
+  helperText: 'some nice text',
+};
 
 export const MultilineNoResize: StoryObj<typeof TextField> = (args: Args) => {
-  return (
-    <TextField
-      multirow
-      rows={6}
-      label="Textarea (resize disabled)"
-      placeholder="Textarea"
-      name="textarea-no-resize"
-      helperText='Resize handle is disabled via css={{ resize: "none" }}'
-      register={args.register}
-      css={{ resize: 'none' }}
-    />
-  );
+  return <TextField {...args} css={{ resize: 'none' }} />;
 };
-MultilineNoResize.args = {};
+MultilineNoResize.args = {
+  multirow: true,
+  rows: 6,
+  label: 'Textarea (resize disabled)',
+  placeholder: 'Textarea',
+  name: 'textarea-no-resize',
+  helperText: 'Resize handle is disabled via css={{ resize: "none" }}',
+};
 MultilineNoResize.storyName = 'Multiline — No Resize';
 MultilineNoResize.parameters = {
   docs: {

@@ -98,7 +98,7 @@ describe('TextField', () => {
     expect(input).toHaveProperty('disabled', true);
   });
 
-  it('Render input with status of success', async () => {
+  it('Render input with status of success without status icon', () => {
     render(
       <TextField
         placeholder="Field"
@@ -110,13 +110,13 @@ describe('TextField', () => {
     );
 
     const input = screen.getByLabelText(/Field/i);
-    const icon = await screen.findByTitle('Check');
+    const icon = screen.queryByTitle('Check');
 
     expect(input).toBeInTheDocument();
-    expect(icon).toBeInTheDocument();
+    expect(icon).not.toBeInTheDocument();
   });
 
-  it('Render input with status of error', async () => {
+  it('Render input with status of error without status icon', () => {
     render(
       <TextField
         placeholder="Field"
@@ -132,11 +132,11 @@ describe('TextField', () => {
 
     const input = screen.getByLabelText(/Field/i);
     const errorText = screen.getByRole('status');
-    const icon = await screen.findByTitle('Union');
+    const icon = screen.queryByTitle('Union');
 
     expect(input).toBeInTheDocument();
     expect(errorText).toBeInTheDocument();
-    expect(icon).toBeInTheDocument();
+    expect(icon).not.toBeInTheDocument();
   });
 
   it('Render input without status icon when with an append element', async () => {
