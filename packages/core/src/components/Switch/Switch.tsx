@@ -15,8 +15,10 @@ import { SwitchProps } from './types';
  * Checkbox, and Radio. Pass `color="custom"` together with the `colors`
  * object to supply arbitrary CSS color values.
  *
- * The off state always shows a neutral grey background. The disabled state
- * always uses `greyFocused40`, regardless of color variant.
+ * The off state always shows a neutral grey background (`greyFocused`).
+ * The disabled state always uses `greySelectedMenuItem`, regardless of color variant.
+ * Hovering the on state darkens it: palette variants swap to their `palette.*.dark`
+ * token; custom colors get a `rgba(0,0,0,0.15)` overlay so the knob stays unaffected.
  *
  * @category Form Controls
  * @subcategory Input
@@ -78,13 +80,16 @@ const Switch = ({
   const { isOn, toggle } = useSwitchContext();
 
   let onColor: string;
+  let hoverColor: string | undefined;
   let offOutlineColor: string;
 
   if (color === 'primary') {
     onColor = theme.palette.primary.main;
+    hoverColor = theme.palette.primary.dark;
     offOutlineColor = theme.palette.primary.light;
   } else if (color === 'success') {
     onColor = theme.palette.success.main;
+    hoverColor = theme.palette.success.dark;
     offOutlineColor = theme.palette.success.light;
   } else {
     onColor = colors?.on || theme.palette.primary.main;
@@ -101,6 +106,7 @@ const Switch = ({
       disabled={isDisabled}
       onClick={() => !isDisabled && toggle()}
       onColor={onColor}
+      hoverColor={hoverColor}
       offOutlineColor={offOutlineColor}
     />
   );

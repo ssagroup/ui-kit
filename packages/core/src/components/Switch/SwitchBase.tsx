@@ -2,10 +2,15 @@ import styled from '@emotion/styled';
 
 interface SwitchBaseProps {
   onColor: string;
+  /** Explicit hover background for palette variants. When omitted, a ::after overlay darkens the track instead, leaving the knob unaffected. */
+  hoverColor?: string;
   offOutlineColor: string;
 }
 
-const SwitchBase = styled.button<SwitchBaseProps>`
+const SwitchBase = styled('button', {
+  shouldForwardProp: (prop) =>
+    prop !== 'onColor' && prop !== 'hoverColor' && prop !== 'offOutlineColor',
+})<SwitchBaseProps>`
   width: 44px;
   height: 24px;
   border: 0;
@@ -24,9 +29,8 @@ const SwitchBase = styled.button<SwitchBaseProps>`
     right: 5px;
     bottom: calc(50% - 7px);
     background-color: ${({ theme }) => theme.colors.white};
-
+    z-index: 1;
     transition: 0.4s;
-
     border-radius: 50%;
   }
 
@@ -34,8 +38,26 @@ const SwitchBase = styled.button<SwitchBaseProps>`
     background: ${({ theme }) => theme.colors.greyFocused};
   }
 
+  &:not(:disabled)[aria-checked='true']:hover {
+    ${({ hoverColor }) => (hoverColor ? `background: ${hoverColor};` : '')}
+  }
+
+  ${({ hoverColor }) =>
+    !hoverColor
+      ? `
+        &:not(:disabled)[aria-checked='true']:hover::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 50px;
+          background: rgba(0, 0, 0, 0.15);
+          pointer-events: none;
+        }
+      `
+      : ''}
+
   &:disabled {
-    background: ${({ theme }) => theme.colors.greyFocused40};
+    background: ${({ theme }) => theme.colors.greySelectedMenuItem};
     cursor: auto;
   }
 

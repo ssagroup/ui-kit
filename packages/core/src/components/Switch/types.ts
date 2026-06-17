@@ -7,13 +7,16 @@
  * Colors are driven by `theme.palette` for consistency with Button, Checkbox,
  * and Radio:
  * - `primary` (default) — blue; uses `palette.primary.main` for the on-state
- *   background, `palette.primary.light` for the off-state focus outline.
+ *   background, `palette.primary.dark` on hover, `palette.primary.light` for
+ *   the off-state focus outline.
  * - `success` — green; uses `palette.success.main` for the on-state background,
- *   `palette.success.light` for the off-state focus outline.
+ *   `palette.success.dark` on hover, `palette.success.light` for the off-state
+ *   focus outline.
  * - `custom` — no built-in color; supply exact values via the `colors` prop.
+ *   On hover, a `rgba(0,0,0,0.15)` overlay darkens the track; the knob is unaffected.
  *
- * The off state always uses a neutral grey background regardless of variant.
- * Disabled state always uses `greyFocused40` (semi-transparent grey, same for all variants).
+ * The off state always uses a neutral grey background (`greyFocused`) regardless
+ * of variant. Disabled state always uses `greySelectedMenuItem` (same for all variants).
  *
  * @example
  * ```tsx
@@ -55,7 +58,7 @@ export interface SwitchProps {
 
   /**
    * Whether the switch is disabled
-   * Disabled switches cannot be toggled and appear visually muted
+   * Disabled switches cannot be toggled; background becomes `greySelectedMenuItem`
    * @default false
    */
   isDisabled?: boolean;

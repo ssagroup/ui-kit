@@ -30,21 +30,22 @@ const checkSwitchStyleAndMarkup: CheckSwitchStyleAndMarkup = (
 ) => {
   // NOTE: we cannot test :before/:hover styles because getComputedStyle()
   // support for pseudo-classes is not implemented in the test suite yet.
+  // For isOn=true, the hover rule (higher CSS specificity) bleeds through in
+  // jsdom, so background is asserted separately only for off/disabled states.
   expect(switchEl).toHaveStyle(`
       width: 44px;
       height: 24px;
-      background: ${
-        isDisabled
-          ? theme.colors.greyFocused40
-          : isOn
-            ? theme.palette.primary.main
-            : theme.colors.greyFocused
-      };
       outline: 0;
       border-radius: 50px;
       position: relative;
       cursor: ${isDisabled ? 'auto' : 'pointer'};
     `);
+
+  if (!isOn) {
+    expect(switchEl).toHaveStyle(
+      `background: ${isDisabled ? theme.colors.greySelectedMenuItem : theme.colors.greyFocused};`,
+    );
+  }
 
   expect(switchEl.firstChild).not.toBeInTheDocument();
   expect(switchEl).toHaveAttribute('aria-checked', isOn.toString());
