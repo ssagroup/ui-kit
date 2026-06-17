@@ -109,7 +109,9 @@ const TextField = ({
 
   return (
     <>
-      <Label htmlFor={`formElement-${name}`}>{label}</Label>
+      <Label htmlFor={`formElement-${name}`} isDisabled={disabled}>
+        {label}
+      </Label>
 
       {multirow ? (
         <Textarea
@@ -126,6 +128,7 @@ const TextField = ({
           status={status}
           disabled={disabled}
           maxLength={maxLength}
+          showStatusIcon={false}
           onKeyUp={handleInputKeyUp}
           {...props}
         />

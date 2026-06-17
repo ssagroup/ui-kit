@@ -6,7 +6,7 @@ export const LabelBase = styled.label<{ isDisabled?: boolean }>`
   flex: 1;
   font-weight: 500;
   font-size: 1rem;
-  line-height: 22px;
+  line-height: 18px;
 
   color: ${({ theme, isDisabled }) =>
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};

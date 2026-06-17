@@ -10,7 +10,7 @@ export const basic = (theme: Theme) =>
         borderColor: theme.colors.greyDarker80,
       },
       '&:focus': {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.primary.light,
       },
     },
   });
@@ -38,9 +38,6 @@ export const success = (theme: Theme) =>
       '&:focus': {
         borderColor: theme.palette.success.dark,
       },
-    },
-    svg: {
-      stroke: theme.palette.success.main,
     },
   });
 
