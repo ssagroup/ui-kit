@@ -25,17 +25,17 @@ function BasicSwitch() {
 
 ### Color Variants
 
-The `color` prop controls the on-state background, hover/focus shadow, and the
+The `color` prop controls the on-state background, hover color, and the
 off-state focus outline. Colors are sourced from `theme.palette`.
 
-| Value | Palette key | On background | Off outline |
-|-------|-------------|---------------|-------------|
-| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.light` |
-| `success` | `palette.success` | `success.main` | `success.light` |
-| `custom` | — | via `colors.on` | via `colors.offOutline` |
+| Value | Palette key | On background | On hover | Off outline |
+|-------|-------------|---------------|----------|-------------|
+| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.dark` | `primary.light` |
+| `success` | `palette.success` | `success.main` | `success.dark` | `success.light` |
+| `custom` | — | via `colors.on` | `rgba(0,0,0,0.15)` overlay | via `colors.offOutline` |
 
-The off state (unchecked) always shows a neutral grey background regardless of
-color variant. The disabled state always uses `greyFocused40` (same for all variants).
+The off state always shows a neutral grey background (`greyFocused`) regardless
+of color variant. The disabled state always uses `greySelectedMenuItem` (same for all variants).
 
 ```tsx
 // Default — primary (blue)
@@ -60,8 +60,8 @@ color variant. The disabled state always uses `greyFocused40` (same for all vari
 
 ### Disabled State
 
-Disabled switches show a muted grey background in both on and off positions
-and cannot be toggled:
+Disabled switches show a solid `greySelectedMenuItem` background in both on
+and off positions and cannot be toggled:
 
 ```tsx
 <SwitchContextProvider initialState={true}>
