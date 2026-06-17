@@ -45,8 +45,6 @@ export const TextareaBase = styled('textarea', {
 
   background: ${({ theme }) => theme.colors.white};
   border-radius: 12px;
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
 
   border: ${({ theme, status = 'basic' }) =>
     `1px solid ${getStatusBorderColor(theme, status, 'rest')}`};
