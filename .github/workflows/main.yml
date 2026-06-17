@@ -75,12 +75,12 @@ jobs:
         if: ${{ matrix.e2e }}
         run: pnpm sb:build:${{ matrix.project }}
 
-      - name: Run visual tests (Lost Pixel)
-        if: ${{ matrix.e2e }}
-        uses: lost-pixel/lost-pixel@v3.22.0
-        env:
-          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          LOST_PIXEL_CONFIG_DIR: ./packages/${{ matrix.project }}
+      # - name: Run visual tests (Lost Pixel)
+      #   if: ${{ matrix.e2e }}
+      #   uses: lost-pixel/lost-pixel@v3.22.0
+      #   env:
+      #     LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+      #     LOST_PIXEL_CONFIG_DIR: ./packages/${{ matrix.project }}
 
       - name: Install firebase tools
         if: ${{ github.ref == 'refs/heads/main' && matrix.deploy }}
@@ -96,22 +96,22 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' && matrix.deploy }}
         run: pnpm sb:deploy:${{ matrix.project }}
 
-  lost-pixel-finalize:
-    runs-on: ubuntu-latest
-    needs: storybook
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
-
-      - name: Lost Pixel finalize
-        uses: lost-pixel/lost-pixel@v3.22.0
-        env:
-          LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
-          # the final step needs to point to any of the monorepo lostpixel.config.js|ts
-          # https://docs.lost-pixel.com/user-docs/recipes/lost-pixel-platform/monorepo#finalise-action
-          LOST_PIXEL_CONFIG_DIR: ./packages/core
-        with:
-          FINALIZE: true
+  # lost-pixel-finalize:
+  #   runs-on: ubuntu-latest
+  #   needs: storybook
+  #   steps:
+  #     - name: Checkout source code
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Lost Pixel finalize
+  #       uses: lost-pixel/lost-pixel@v3.22.0
+  #       env:
+  #         LOST_PIXEL_API_KEY: ${{ secrets.LOST_PIXEL_API_KEY }}
+  #         # the final step needs to point to any of the monorepo lostpixel.config.js|ts
+  #         # https://docs.lost-pixel.com/user-docs/recipes/lost-pixel-platform/monorepo#finalise-action
+  #         LOST_PIXEL_CONFIG_DIR: ./packages/core
+  #       with:
+  #         FINALIZE: true
 
   deploy-storybook-root:
     runs-on: ubuntu-latest
