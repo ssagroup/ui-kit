@@ -1,0 +1,8 @@
+{
+  "outputDirectory": "storybook-static",
+  "functions": {
+    "api/mcp.ts": {
+      "maxDuration": 30
+    }
+  }
+}
