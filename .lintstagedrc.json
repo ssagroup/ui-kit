@@ -1,5 +1,4 @@
 {
-  "*": ["pnpm spellcheck"],
   "*.{ts,js}": "pnpm lint",
   "*.{tsx}": ["pnpm lint", "pnpm lint:styles"]
 }

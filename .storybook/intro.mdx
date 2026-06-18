@@ -6,4 +6,51 @@ SSA UI kit is an open-source React-based library that accelerates frontend devel
 
 [Source code](https://github.com/ssagroup/ui-kit)
 
+## AI Assistant Integration (MCP)
+
+This Storybook exposes an [MCP](https://modelcontextprotocol.io) server that lets your AI coding assistant look up components and their variants before generating code — so it reuses existing components correctly instead of guessing.
+
+**Available tools:**
+- `list_components` — lists every component across all packages with their story variants
+- `get_component_docs` — fetches docs and story links for a specific component by name
+
+### Connecting your editor
+
+**Claude Code** — add to `~/.claude/claude_desktop_config.json` or your project's `.claude/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "ssa-ui-kit": {
+      "type": "http",
+      "url": "https://uikit.ssa.group/api/mcp"
+    }
+  }
+}
+```
+
+**Cursor** — add to `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "ssa-ui-kit": {
+      "url": "https://uikit.ssa.group/api/mcp"
+    }
+  }
+}
+```
+
+**Windsurf** — add to `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "ssa-ui-kit": {
+      "serverUrl": "https://uikit.ssa.group/api/mcp"
+    }
+  }
+}
+```
+
 <Meta title="Welcome!" />
