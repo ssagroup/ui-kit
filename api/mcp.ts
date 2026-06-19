@@ -47,7 +47,9 @@ async function fetchJson<T>(url: string): Promise<T | null> {
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
     if (!res.ok) return null;
-    return res.json() as Promise<T>;
+    const contentType = res.headers.get('content-type') ?? '';
+    if (!contentType.includes('application/json')) return null;
+    return (await res.json()) as T;
   } catch {
     return null;
   }
