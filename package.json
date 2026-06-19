@@ -89,6 +89,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.17",
     "@storybook/addon-docs": "9.1.17",
     "@storybook/addon-links": "9.1.17",
+    "@storybook/addon-mcp": "^0.6.0",
     "@storybook/addon-webpack5-compiler-babel": "3.0.6",
     "@storybook/react-webpack5": "9.1.17",
     "@svgr/webpack": "8.1.0",

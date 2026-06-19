@@ -15,6 +15,7 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-docs',
     'storybook-addon-pseudo-states',
+    '@storybook/addon-mcp',
   ],
   framework: {
     name: '@storybook/react-webpack5',
