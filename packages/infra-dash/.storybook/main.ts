@@ -25,8 +25,8 @@ const config: StorybookConfig = {
     options: {},
   },
   typescript: {
-    check: false,
-    checkOptions: {},
+    check: true,
+    checkOptions: { typescript: { configFile: './tsconfig.storybook.json' } },
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       compilerOptions: {

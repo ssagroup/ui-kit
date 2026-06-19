@@ -1,4 +1,5 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import {
   Configuration,
@@ -7,8 +8,11 @@ import {
   ProvidePlugin,
 } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
-import initWebpackConfig from '../webpack.config';
-import initBabelConfig from '../../../babel.config';
+import initWebpackConfig from '../webpack.config.js';
+import initBabelConfig from '../../../babel.config.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 import webpack from 'webpack';
 
 const appWebpackConfig: Configuration = initWebpackConfig();
@@ -26,7 +30,7 @@ const config: StorybookConfig = {
   },
   typescript: {
     check: true,
-    checkOptions: {},
+    checkOptions: { typescript: { configFile: './tsconfig.storybook.json' } },
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       compilerOptions: {
