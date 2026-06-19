@@ -52,6 +52,7 @@
     "src/**/*.stories.tsx",
     "src/**/*.stories.ts",
     "src/**/*.stories-extra.tsx",
-    "src/**/*.stories-extra.ts"
+    "src/**/*.stories-extra.ts",
+    "src/**/stories/**"
   ]
 }
