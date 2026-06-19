@@ -34,6 +34,7 @@ const esm = [
   '@nivo/scales',
   '@rjsf/core',
   '@rjsf/utils',
+  'storybook',
 ];
 
 type ProjectConfig = Exclude<

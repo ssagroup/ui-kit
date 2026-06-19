@@ -1,9 +1,13 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { Configuration } from 'webpack';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 import type { StorybookConfig } from '@storybook/react-webpack5';
-import initWebpackConfig from '../webpack.config';
-import initBabelConfig from '../../../babel.config';
+import initWebpackConfig from '../webpack.config.js';
+import initBabelConfig from '../../../babel.config.js';
 import webpack from 'webpack';
 
 const appWebpackConfig = initWebpackConfig();

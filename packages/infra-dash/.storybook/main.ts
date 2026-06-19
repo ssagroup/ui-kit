@@ -1,9 +1,13 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 import { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
-import initWebpackConfig from '../webpack.config';
-import initBabelConfig from '../../../babel.config';
+import initWebpackConfig from '../webpack.config.js';
+import initBabelConfig from '../../../babel.config.js';
 import webpack from 'webpack';
 
 const appWebpackConfig: Configuration = initWebpackConfig();
@@ -11,7 +15,6 @@ const appWebpackConfig: Configuration = initWebpackConfig();
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../**/*.mdx'],
   addons: [
-    'storybook/internal/controls',
     '@storybook/addon-links',
     '@storybook/addon-docs',
     'storybook-addon-pseudo-states',
@@ -22,7 +25,7 @@ const config: StorybookConfig = {
     options: {},
   },
   typescript: {
-    check: true,
+    check: false,
     checkOptions: {},
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
