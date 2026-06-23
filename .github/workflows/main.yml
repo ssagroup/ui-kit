@@ -38,24 +38,31 @@ jobs:
   storybook:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - project: 'core'
             e2e: true
             deploy: true
+            chromatic: true
           - project: 'widgets'
             e2e: true
             deploy: true
+            chromatic: true
           - project: 'templates'
             # templates does not have e2e tests
             e2e: false
             deploy: false
+            chromatic: true
           - project: 'infra-dash'
             e2e: false
             deploy: true
+            chromatic: true
     steps:
       - name: Checkout source code (${{ github.ref }})
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install
@@ -72,8 +79,16 @@ jobs:
         run: pnpm test:${{ matrix.project }}:e2e
 
       - name: Build Storybook
-        if: ${{ matrix.e2e }}
+        if: ${{ matrix.chromatic }}
         run: pnpm sb:build:${{ matrix.project }}
+
+      - name: Publish to Chromatic
+        if: ${{ matrix.chromatic }}
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: packages/${{ matrix.project }}/storybook-static
+          exitZeroOnChanges: true
 
       # - name: Run visual tests (Lost Pixel)
       #   if: ${{ matrix.e2e }}

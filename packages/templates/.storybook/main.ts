@@ -1,19 +1,14 @@
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-  Configuration,
-  DefinePlugin,
-  NormalModuleReplacementPlugin,
-  ProvidePlugin,
-} from 'webpack';
+import type { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config.js';
 import initBabelConfig from '../../../babel.config.js';
+import webpack from 'webpack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-import webpack from 'webpack';
 
 const appWebpackConfig: Configuration = initWebpackConfig();
 
@@ -217,7 +212,7 @@ const config: StorybookConfig = {
           },
         ),
         // Define process.env for Firebase which expects Node.js environment variables
-        new DefinePlugin({
+        new webpack.DefinePlugin({
           'process.env': JSON.stringify({
             NODE_ENV: process.env.NODE_ENV || 'development',
             STORYBOOK_FIREBASE_API_KEY:
@@ -236,18 +231,9 @@ const config: StorybookConfig = {
         }),
         // Provide a minimal process object for gRPC-js which accesses process directly
         // This creates a global process variable that gRPC-js can access
-        new ProvidePlugin({
+        new webpack.ProvidePlugin({
           process: 'process/browser',
         }),
-        // Safety net: if the Node.js CJS build somehow gets imported directly, redirect to the browser CJS build
-        // With 'browser' in conditionNames above this should never trigger, but kept as a guard
-        new NormalModuleReplacementPlugin(
-          /@firebase\/firestore\/dist\/index\.node\.cjs\.js/,
-          resolve(
-            __dirname,
-            '../../../node_modules/@firebase/firestore/dist/index.cjs.js',
-          ),
-        ),
       ],
     };
 
