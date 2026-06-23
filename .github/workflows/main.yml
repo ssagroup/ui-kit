@@ -83,11 +83,11 @@ jobs:
         run: pnpm test:${{ matrix.project }}:e2e
 
       - name: Build Storybook
-        if: ${{ matrix.chromatic }}
+        if: ${{ matrix.chromatic && github.event_name == 'pull_request' }}
         run: pnpm sb:build:${{ matrix.project }}
 
       - name: Publish to Chromatic
-        if: ${{ matrix.chromatic }}
+        if: ${{ matrix.chromatic && github.event_name == 'pull_request' }}
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

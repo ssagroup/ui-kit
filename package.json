@@ -129,7 +129,6 @@
     "jsdom-testing-mocks": "1.16.0",
     "lint-staged": "15.5.2",
     "chromatic": "11.27.0",
-    "lost-pixel": "3.22.0",
     "postcss-styled-syntax": "0.7.1",
     "prettier": "3.7.4",
     "ramda": "0.30.1",
