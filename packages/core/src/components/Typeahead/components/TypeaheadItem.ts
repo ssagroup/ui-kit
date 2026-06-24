@@ -8,8 +8,8 @@ export const TypeaheadItemImage = styled.img`
 `;
 
 export const TypeaheadItemIcon = styled(Icon)`
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   margin-right: 6px;
   vertical-align: middle;

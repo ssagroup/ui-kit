@@ -54,7 +54,7 @@ export const MultipleTrigger = () => {
                   <Icon
                     name="cross"
                     tooltip="Remove"
-                    size={14}
+                    size={12}
                     color={
                       context.isDisabled
                         ? theme.colors.grey

@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsxImportSource": "@emotion/react",
+    "moduleResolution": "bundler",
     "emitDeclarationOnly": false,
     "typeRoots": [
       "./src/types",
@@ -26,7 +27,8 @@
     "./jest-setup.ts",
     "./customTest.tsx",
     "./src/types/svg.d.ts",
-    ".storybook/*.tsx"
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
   ],
   "exclude": ["dist/**/*"]
 }
