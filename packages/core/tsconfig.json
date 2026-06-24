@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsxImportSource": "@emotion/react",
+    "moduleResolution": "bundler",
     "emitDeclarationOnly": false,
     "typeRoots": [
       "./src/types",

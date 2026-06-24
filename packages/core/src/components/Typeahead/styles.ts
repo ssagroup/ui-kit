@@ -10,7 +10,7 @@ import { TypeaheadItemProps } from './types';
 // TODO: automatically calculate max-height
 // https://github.com/ssagroup/ui-kit/issues/385
 export const TypeaheadOptionsBase = styled.ul`
-  padding: 0;
+  padding: 4px;
   margin: 0;
   list-style: none;
   background: ${({ theme }) => theme.colors.white};
@@ -29,17 +29,18 @@ export const TypeaheadOption = styled.li<TypeaheadItemProps>`
   border: none;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   gap: 8px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   min-height: 40px;
-  line-height: 20px;
+  line-height: 18px;
   justify-content: space-between;
   overflow: hidden;
   text-overflow: ellipsis;
   background: ${({ isActive, theme }) =>
-    isActive ? theme.colors.blueRoyal12 : 'none'};
+    isActive ? theme.colors.blue12 : 'none'};
   &:hover {
-    background: ${({ theme }) => theme.colors.blueRoyal12};
+    background: ${({ theme }) => theme.colors.blue12};
   }
 `;
 
@@ -69,7 +70,7 @@ export const TypeaheadInputPlaceholder = (theme: Theme) => css`
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1rem;
-  color: ${theme.colors.greyDarker60};
+  color: ${theme.colors.greyDarker80};
   &:disabled:hover {
     cursor: default;
   }
@@ -105,10 +106,11 @@ export const TypeaheadItem = styled.div<{
   color: ${({ theme, isDisabled }) =>
     isDisabled ? theme.colors.grey : theme.colors.greyDarker};
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 16px;
   min-height: 20px;
   align-items: center;
-  padding: 6px;
+  padding: 4px 8px 4px 12px;
   user-select: none;
   overflow: hidden;
 `;
@@ -129,7 +131,7 @@ export const TypeaheadItemLabel = styled.div<{
       : isCustomValue
         ? theme.palette.primary.main
         : theme.colors.greyDarker};
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -142,7 +144,7 @@ export const TypeaheadItemCross = styled(Button)<{
   isCustomValue?: boolean;
 }>`
   background: none;
-  padding: 0 5px 0 0;
+  padding: 0;
   height: auto;
 
   &:active,
@@ -163,6 +165,7 @@ export const TypeaheadInputsGroupWrapper = styled(Wrapper)<{
 }>`
   position: relative;
   flex: 1 1 0;
+  min-height: 32px;
   min-width: ${({ isOpen }) => (isOpen ? '50px' : 'auto')};
   flex-direction: column !important;
 `;
@@ -184,7 +187,7 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   height: auto;
   background: ${({ theme }) => theme.colors.white};
   gap: 8px;
-  padding: 5px 28px 5px 8px;
+  padding: 5px 28px 5px 14px;
   width: 100%;
   flex-wrap: wrap;
   border-color: ${({ isOpen, theme, status }) =>
@@ -193,14 +196,14 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
       ? theme.palette.error.dark
       : status === 'success'
         ? theme.palette.success.dark
-        : theme.palette.primary.main)};
+        : theme.palette.primary.light)};
   background: ${({ isDisabled, theme }) =>
-    isDisabled ? theme.colors.greyLighter : theme.colors.white};
+    isDisabled ? theme.palette.secondary.light : theme.colors.white};
   &:active,
   &:focus,
   &:hover {
     background: ${({ isDisabled, theme }) =>
-      isDisabled ? theme.colors.greyLighter : theme.colors.white};
+      isDisabled ? theme.palette.secondary.light : theme.colors.white};
     box-shadow: none;
   }
   &:hover {
@@ -221,7 +224,7 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
         ? theme.palette.error.dark
         : status === 'success'
           ? theme.palette.success.dark
-          : theme.palette.primary.main};
+          : theme.palette.primary.light};
     ${({ isDisabled, theme }) =>
       isDisabled && {
         borderColor: theme.colors.grey,
