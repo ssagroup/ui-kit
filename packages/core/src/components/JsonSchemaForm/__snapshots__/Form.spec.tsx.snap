@@ -630,7 +630,7 @@ exports[`Form (rjsf) Render form 1`] = `
   height: auto;
   background: rgba(255, 255, 255, 1);
   gap: 8px;
-  padding: 5px 28px 5px 8px;
+  padding: 5px 28px 5px 14px;
   width: 100%;
   -webkit-box-flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
@@ -669,7 +669,7 @@ exports[`Form (rjsf) Render form 1`] = `
 
 .emotion-56:focus,
 .emotion-56:active {
-  border-color: rgb(65, 120, 225);
+  border-color: rgb(117, 153, 222);
 }
 
 .emotion-57 {
@@ -691,6 +691,7 @@ exports[`Form (rjsf) Render form 1`] = `
   -webkit-flex: 1 1 0;
   -ms-flex: 1 1 0;
   flex: 1 1 0;
+  min-height: 32px;
   min-width: auto;
   -webkit-flex-direction: column!important;
   -ms-flex-direction: column!important;
@@ -811,7 +812,7 @@ exports[`Form (rjsf) Render form 1`] = `
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1rem;
-  color: rgba(43, 45, 49, 0.6);
+  color: rgba(43, 45, 49, 0.8);
 }
 
 .emotion-63:disabled:hover {
@@ -866,13 +867,14 @@ exports[`Form (rjsf) Render form 1`] = `
   border: 1px solid rgba(195, 197, 204, 1);
   color: rgba(43, 45, 49, 1);
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 16px;
   min-height: 20px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 6px;
+  padding: 4px 8px 4px 12px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -882,7 +884,7 @@ exports[`Form (rjsf) Render form 1`] = `
 
 .emotion-70 {
   color: rgba(43, 45, 49, 1);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   display: -webkit-box;
   display: -webkit-flex;
@@ -920,7 +922,7 @@ exports[`Form (rjsf) Render form 1`] = `
   padding: 0 16px;
   background: transparent;
   background: none;
-  padding: 0 5px 0 0;
+  padding: 0;
   height: auto;
 }
 
@@ -2014,9 +2016,9 @@ exports[`Form (rjsf) Render form 1`] = `
                       <svg
                         class="emotion-73"
                         fill="none"
-                        height="14px"
+                        height="12px"
                         viewBox="0 0 8 8"
-                        width="14px"
+                        width="12px"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
@@ -2060,9 +2062,9 @@ exports[`Form (rjsf) Render form 1`] = `
                       <svg
                         class="emotion-73"
                         fill="none"
-                        height="14px"
+                        height="12px"
                         viewBox="0 0 8 8"
-                        width="14px"
+                        width="12px"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
@@ -2208,9 +2210,9 @@ exports[`Form (rjsf) Render form 1`] = `
                       <svg
                         class="emotion-73"
                         fill="none"
-                        height="14px"
+                        height="12px"
                         viewBox="0 0 8 8"
-                        width="14px"
+                        width="12px"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
@@ -2264,9 +2266,9 @@ exports[`Form (rjsf) Render form 1`] = `
                       <svg
                         class="emotion-73"
                         fill="none"
-                        height="14px"
+                        height="12px"
                         viewBox="0 0 8 8"
-                        width="14px"
+                        width="12px"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                       >

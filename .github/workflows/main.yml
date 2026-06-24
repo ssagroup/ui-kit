@@ -87,12 +87,13 @@ jobs:
         run: pnpm sb:build:${{ matrix.project }}
 
       - name: Publish to Chromatic
-        if: ${{ matrix.chromatic && github.event_name == 'pull_request' }}
+        if: ${{ matrix.chromatic }}
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           storybookBuildDir: packages/${{ matrix.project }}/storybook-static
           exitZeroOnChanges: true
+          skip: ${{ github.event_name != 'pull_request' }}
 
       # - name: Run visual tests (Lost Pixel)
       #   if: ${{ matrix.e2e }}
