@@ -92,4 +92,8 @@ export const TextareaBase = styled('textarea', {
     border-color: ${({ theme, status = 'basic' }) =>
       getStatusBorderColor(theme, status, 'focus')};
   }
+
+  &:focus:not(:disabled, [readonly])::placeholder {
+    color: ${({ theme }) => theme.colors.greyDarker60};
+  }
 `;
