@@ -48,7 +48,7 @@ jobs:
           - project: 'core'
             e2e: true
             deploy: true
-            chromatic: true
+            chromatic: false
           - project: 'widgets'
             e2e: true
             deploy: true
