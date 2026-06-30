@@ -1,0 +1,89 @@
+- main [ref=e2]:
+  - generic:
+    - button "Collapse Sidebar":
+      - img
+    - button "Open Search":
+      - img
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "SSA UI Kit docs POC" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: SSA UI Kit
+          - generic [ref=e8]: docs POC
+        - button "Collapse Sidebar" [ref=e9]:
+          - img [ref=e10]
+      - button "Search ⌘ K" [ref=e12]:
+        - img [ref=e13]
+        - text: Search
+        - generic [ref=e16]:
+          - generic [ref=e17]: ⌘
+          - generic [ref=e18]: K
+    - generic [ref=e21]:
+      - link "Storybook" [ref=e22] [cursor=pointer]:
+        - /url: https://ui-kit-core.web.app
+        - img [ref=e23]
+        - text: Storybook
+      - link "GitHub" [ref=e27] [cursor=pointer]:
+        - /url: https://github.com/ssa-group
+        - img [ref=e28]
+        - text: GitHub
+      - link "Introduction" [ref=e32] [cursor=pointer]:
+        - /url: /docs
+      - link "Button" [ref=e33] [cursor=pointer]:
+        - /url: /docs/button
+      - link "Typeahead" [ref=e34] [cursor=pointer]:
+        - /url: /docs/typeahead
+    - button "Toggle Theme" [ref=e37]:
+      - img [ref=e38]
+      - img [ref=e44]
+  - generic [ref=e46]:
+    - button "0 Typeahead" [ref=e48]:
+      - progressbar [ref=e49]
+      - generic [ref=e53]: Typeahead
+      - img [ref=e54]
+    - article [ref=e56]:
+      - heading "Typeahead" [level=1] [ref=e57]
+      - paragraph [ref=e58]: Advanced autocomplete with search-as-you-type, single/multi select, and react-hook-form integration.
+      - generic [ref=e59]:
+        - paragraph [ref=e60]:
+          - code [ref=e61]: Typeahead
+          - text: is an advanced autocomplete with search-as-you-type filtering, single and multiple selection, custom option rendering, and built-in
+          - link "react-hook-form" [ref=e62] [cursor=pointer]:
+            - /url: https://react-hook-form.com
+          - text: integration. It must be rendered inside a
+          - code [ref=e63]: FormProvider
+          - text: .
+        - paragraph [ref=e64]:
+          - text: This page is here to prove a
+          - strong [ref=e65]: stateful, form-integrated
+          - text: component previews just as cleanly as a simple one — the demo below is fully interactive.
+        - heading "Example Link to section" [level=2] [ref=e66]:
+          - link "Example" [ref=e67] [cursor=pointer]:
+            - /url: "#example"
+          - img "Link to section" [ref=e68]
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - button "preview" [ref=e73]
+            - button "code" [ref=e74]
+          - generic [ref=e76]: Loading preview…
+        - heading "Notes Link to section" [level=2] [ref=e77]:
+          - link "Notes" [ref=e78] [cursor=pointer]:
+            - /url: "#notes"
+          - img "Link to section" [ref=e79]
+        - list [ref=e82]:
+          - listitem [ref=e83]:
+            - text: The component reads/writes form state through the surrounding
+            - code [ref=e84]: FormProvider
+            - text: ", so validation and submission work without extra wiring."
+          - listitem [ref=e85]:
+            - code [ref=e86]: renderOption
+            - text: lets you customize how each option is displayed — here
+            - code [ref=e87]: highlightInputMatch
+            - text: bolds the matched substring as you type.
+      - link "Button Interactive button component for user actions, with variants driven by the theme palette." [ref=e89] [cursor=pointer]:
+        - /url: /docs/button
+        - generic [ref=e90]:
+          - img [ref=e91]
+          - paragraph [ref=e93]: Button
+        - paragraph [ref=e94]: Interactive button component for user actions, with variants driven by the theme palette.

@@ -1,0 +1,52 @@
+/* Manrope is the SSA UI Kit brand font; the components inject it globally via
+   @emotion/css injectGlobal, but we load it up front so previews look correct.
+   @import rules must precede everything else. */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* Tailwind v4 needs to scan Fumadocs UI for the classes it uses. */
+@source '../node_modules/fumadocs-ui/dist/**/*.js';
+
+/* ---- Landing page motion (subtle, respects reduced-motion) ---- */
+
+@keyframes fd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fd-aurora {
+  0% {
+    transform: translate(-8%, -6%) scale(1);
+  }
+  50% {
+    transform: translate(8%, 6%) scale(1.15);
+  }
+  100% {
+    transform: translate(-8%, -6%) scale(1);
+  }
+}
+
+.fd-rise {
+  opacity: 0;
+  animation: fd-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fd-aurora {
+  animation: fd-aurora 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-rise,
+  .fd-aurora {
+    animation: none;
+    opacity: 1;
+  }
+}

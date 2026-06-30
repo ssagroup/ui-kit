@@ -1,0 +1,50 @@
+---
+title: Introduction
+description: A shadcn-style documentation site for the SSA UI Kit, built with Fumadocs.
+---
+
+This is a **proof of concept** for documenting the SSA UI Kit the way
+[shadcn/ui](https://ui.shadcn.com) documents its components — narrative pages,
+instant search, dark mode, and **live, interactive examples** rendered from the
+real `@ssa-ui-kit/core` package.
+
+Storybook is **not** going away — it stays as the playground and
+visual-regression fallback. This site is the human-facing "read the docs"
+surface that Storybook isn't great at.
+
+## What this POC proves
+
+<Cards>
+  <Card title="Real components, not screenshots" href="/docs/button">
+    Examples import `@ssa-ui-kit/core` directly and render with the live Emotion
+    theme — change the library, the docs update.
+  </Card>
+  <Card title="Stateful components work too" href="/docs/typeahead">
+    The Typeahead demo runs the full react-hook-form integration inline.
+  </Card>
+</Cards>
+
+## How a component page is built
+
+Each live example is one entry in a registry plus one `<ComponentPreview />`
+tag in the MDX. The registry maps a name to a client-only example module:
+
+```tsx
+// registry/index.tsx
+'button-demo': dynamic(() => import('./examples/button-demo'), { ssr: false }),
+```
+
+Then the page renders `<ComponentPreview name="button-demo">` with a fenced
+code block as its child — the rendered example shows in the **Preview** tab and
+the code block shows in the **Code** tab.
+
+## Key finding from the POC
+
+`@ssa-ui-kit/core` ships as a single **UMD bundle** that pulls in browser-only
+chart libraries (plotly, nivo) at import time. That means it **cannot be
+server-rendered as-is**, so previews load **client-side** via
+`next/dynamic({ ssr: false })` — exactly the trade-off shadcn/ui makes.
+
+For a full rollout we'd recommend shipping the library as **ESM with per-component
+subpath exports** so individual components (like `Button`) can be tree-shaken and
+server-rendered without dragging in the charting stack.

@@ -1,0 +1,55 @@
+---
+title: Button
+description: Interactive button component for user actions, with variants driven by the theme palette.
+---
+
+The `Button` is the primary call-to-action component. Solid variant colors are
+driven entirely by `theme.palette` — override a palette entry in a custom theme
+to restyle a variant without touching other components.
+
+## Examples
+
+<ComponentPreview name="button-demo">
+```tsx
+import { Button } from '@ssa-ui-kit/core';
+
+export function Example() {
+  return (
+    <>
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="success">Success</Button>
+      <Button variant="warning">Warning</Button>
+      <Button variant="error">Error</Button>
+      <Button>Custom</Button>
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Variants
+
+| Variant     | Use case                                    |
+| ----------- | ------------------------------------------- |
+| `custom`    | Low-emphasis actions (default, transparent) |
+| `primary`   | High-emphasis primary action                |
+| `secondary` | Medium-emphasis action                      |
+| `success`   | Confirmation / positive actions             |
+| `warning`   | Caution actions                             |
+| `error`     | Destructive actions                         |
+
+## Sizes
+
+`size` accepts `small` (default), `medium`, and `large`. Pass `block` to make the
+button span the full width of its container.
+
+## Installation
+
+```bash
+pnpm add @ssa-ui-kit/core
+```
+
+`@ssa-ui-kit/core` requires `@emotion/react`, `@emotion/styled`, and
+`@emotion/css` as peer dependencies, and components must be wrapped in an Emotion
+`ThemeProvider` with the kit's `mainTheme`.
