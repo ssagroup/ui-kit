@@ -1926,7 +1926,7 @@ exports[`Form (rjsf) Render form 1`] = `
                     readonly=""
                     tabindex="-1"
                     type="text"
-                    value="Option 2"
+                    value=""
                   />
                   <button
                     class="emotion-64"
