@@ -16,10 +16,8 @@ permissions:
   checks: write
 
 jobs:
-  lint-build-test:
+  lint:
     runs-on: ubuntu-latest
-    env:
-      NODE_OPTIONS: '--max_old_space_size=8192'
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -33,14 +31,52 @@ jobs:
       - name: Lint styles
         run: pnpm lint:styles
 
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: '--max_old_space_size=8192'
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (pnpm)
+        uses: ./.github/actions/pnpm-install
+
+      - name: Restore Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
       - name: Build all packages
         run: pnpm build:all
 
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages-dist
+          path: packages/*/dist
+          retention-days: 1
+
+  test:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: '--max_old_space_size=8192'
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (pnpm)
+        uses: ./.github/actions/pnpm-install
+
       - name: Run unit tests (coverage)
-        run: pnpm test:coverage
+        run: pnpm test:coverage:ci
 
   storybook:
     runs-on: ubuntu-latest
+    needs: [build]
     strategy:
       fail-fast: false
       matrix:
@@ -71,8 +107,11 @@ jobs:
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install
 
-      - name: Build all packages
-        run: pnpm build:all
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: packages-dist
+          path: .
 
       - name: Install Chromium
         if: ${{ matrix.e2e }}
@@ -135,6 +174,7 @@ jobs:
 
   deploy-storybook-root:
     runs-on: ubuntu-latest
+    needs: [build]
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout source code
@@ -143,8 +183,11 @@ jobs:
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install
 
-      - name: Build all packages
-        run: pnpm build:all
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: packages-dist
+          path: .
 
       - name: Install Vercel CLI
         run: pnpm i -g vercel@latest
@@ -165,6 +208,7 @@ jobs:
 
   deploy-fitness-dashboard:
     runs-on: ubuntu-latest
+    needs: [build]
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout source code
@@ -173,11 +217,14 @@ jobs:
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: packages-dist
+          path: .
+
       - name: Install firebase tools
         run: npm install -g firebase-tools@14.11.0
-
-      - name: Build all packages
-        run: pnpm build:all
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2

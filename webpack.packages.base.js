@@ -1,4 +1,5 @@
 const nodeExternals = require('webpack-node-externals');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const R = require('ramda');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -13,7 +14,10 @@ const baseConfig = {
       type: 'umd',
     },
   },
-  devtool: isProduction ? 'source-map' : 'eval',
+  devtool: isProduction ? false : 'eval',
+  cache: {
+    type: 'filesystem',
+  },
   optimization: {
     minimize: false,
   },
@@ -25,6 +29,7 @@ const baseConfig = {
         exclude: ['/node_modules/'],
         options: {
           configFile: '../../babel.config.js',
+          cacheDirectory: true,
         },
       },
       {
@@ -66,6 +71,7 @@ module.exports = ({
   externals = null,
   alias = {},
   extraConfig = {},
+  tsConfigPath = './tsconfig.build.json',
 }) => {
   let config = R.compose(
     R.mergeLeft(extraConfig),
@@ -73,6 +79,11 @@ module.exports = ({
       R.always(isNotNilOrEmpty(externals)),
       R.assoc('externals', externals),
     ),
+    R.assoc('plugins', [
+      new ForkTsCheckerWebpackPlugin({
+        typescript: { configFile: tsConfigPath },
+      }),
+    ]),
     R.assoc('mode', isProduction ? 'production' : 'development'),
     R.assocPath(['resolve', 'alias'], alias),
     R.assocPath(['output', 'path'], outputPath),

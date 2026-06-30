@@ -9,6 +9,7 @@ module.exports = () => {
       '@src': path.resolve(__dirname, './src'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
     },
+    tsConfigPath: './tsconfig.json',
   });
 
   return currentConfig;
