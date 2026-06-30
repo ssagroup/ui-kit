@@ -194,7 +194,8 @@ export const useTypeahead = ({
         childElement.props.label ?? childElement.props.value
       ).toString();
       if (labelText.toLowerCase().startsWith(needle)) {
-        return inputValue + labelText.slice(inputValue.length);
+        const suggestion = inputValue + labelText.slice(inputValue.length);
+        return suggestion !== inputValue ? suggestion : '';
       }
     }
     return '';
