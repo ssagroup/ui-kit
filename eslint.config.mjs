@@ -26,6 +26,10 @@ export default tseslint.config(
       '**/*.mdx',
       '!**/babel.config.js',
       '!**/.storybook',
+      // apps/docs is a Next.js app with its own lint config — exclude from root
+      'apps/docs/**',
+      // .remember is a session-tooling scratch directory, not source code
+      '.remember/**',
     ],
   },
   {

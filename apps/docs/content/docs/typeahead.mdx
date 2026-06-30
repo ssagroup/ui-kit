@@ -1,0 +1,55 @@
+---
+title: Typeahead
+description: Advanced autocomplete with search-as-you-type, single/multi select, and react-hook-form integration.
+---
+
+`Typeahead` is an advanced autocomplete with search-as-you-type filtering,
+single and multiple selection, custom option rendering, and built-in
+[react-hook-form](https://react-hook-form.com) integration. It must be rendered
+inside a `FormProvider`.
+
+This page is here to prove a **stateful, form-integrated** component previews
+just as cleanly as a simple one — the demo below is fully interactive.
+
+## Example
+
+<ComponentPreview name="typeahead-demo">
+```tsx
+import { FormProvider, useForm } from 'react-hook-form';
+import { Typeahead, TypeaheadOption, highlightInputMatch } from '@ssa-ui-kit/core';
+
+const items = [
+  { id: 1, value: 'TypeScript' },
+  { id: 2, value: 'JavaScript' },
+  { id: 3, value: 'Rust' },
+];
+
+export function Example() {
+  const methods = useForm();
+  return (
+    <FormProvider {...methods}>
+      <Typeahead
+        name="language"
+        label="Language"
+        helperText="Start typing to filter"
+        defaultSelectedItems={[items[0].id]}
+        renderOption={({ label, input }) => highlightInputMatch(label, input)}
+      >
+        {items.map(({ value, id }) => (
+          <TypeaheadOption key={id} value={id} label={String(value)}>
+            {value}
+          </TypeaheadOption>
+        ))}
+      </Typeahead>
+    </FormProvider>
+  );
+}
+```
+</ComponentPreview>
+
+## Notes
+
+- The component reads/writes form state through the surrounding `FormProvider`,
+  so validation and submission work without extra wiring.
+- `renderOption` lets you customize how each option is displayed — here
+  `highlightInputMatch` bolds the matched substring as you type.

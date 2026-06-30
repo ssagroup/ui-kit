@@ -206,6 +206,29 @@ jobs:
       - name: Rename Git folder back
         run: mv .git2 .git
 
+  deploy-docs:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (pnpm)
+        uses: ./.github/actions/pnpm-install
+
+      - name: Build all packages
+        run: pnpm build:all
+
+      - name: Install Vercel CLI
+        run: pnpm i -g vercel@latest
+
+      - name: Deploy docs site
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_DOCS_TOKEN }}
+        run: vercel deploy --prod --yes --token=${{ env.VERCEL_TOKEN }}
+
   deploy-fitness-dashboard:
     runs-on: ubuntu-latest
     needs: [build]

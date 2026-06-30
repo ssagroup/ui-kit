@@ -1,0 +1,147 @@
+- main [ref=e2]:
+  - generic:
+    - button "Collapse Sidebar":
+      - img
+    - button "Open Search":
+      - img
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "SSA UI Kit docs POC" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: SSA UI Kit
+          - generic [ref=e8]: docs POC
+        - button "Collapse Sidebar" [ref=e9]:
+          - img [ref=e10]
+      - button "Search ⌘ K" [ref=e12]:
+        - img [ref=e13]
+        - text: Search
+        - generic [ref=e16]:
+          - generic [ref=e17]: ⌘
+          - generic [ref=e18]: K
+    - generic [ref=e21]:
+      - link "Storybook" [ref=e22] [cursor=pointer]:
+        - /url: https://ui-kit-core.web.app
+        - img [ref=e23]
+        - text: Storybook
+      - link "GitHub" [ref=e27] [cursor=pointer]:
+        - /url: https://github.com/ssa-group
+        - img [ref=e28]
+        - text: GitHub
+      - link "Introduction" [ref=e32] [cursor=pointer]:
+        - /url: /docs
+      - link "Button" [ref=e33] [cursor=pointer]:
+        - /url: /docs/button
+      - link "Typeahead" [ref=e34] [cursor=pointer]:
+        - /url: /docs/typeahead
+    - button "Toggle Theme" [ref=e37]:
+      - img [ref=e38]
+      - img [ref=e44]
+  - generic [ref=e46]:
+    - button "0 Button" [ref=e48]:
+      - progressbar [ref=e49]
+      - generic [ref=e53]: Button
+      - img [ref=e54]
+    - article [ref=e56]:
+      - heading "Button" [level=1] [ref=e57]
+      - paragraph [ref=e58]: Interactive button component for user actions, with variants driven by the theme palette.
+      - generic [ref=e59]:
+        - paragraph [ref=e60]:
+          - text: The
+          - code [ref=e61]: Button
+          - text: is the primary call-to-action component. Solid variant colors are driven entirely by
+          - code [ref=e62]: theme.palette
+          - text: — override a palette entry in a custom theme to restyle a variant without touching other components.
+        - heading "Examples Link to section" [level=2] [ref=e63]:
+          - link "Examples" [ref=e64] [cursor=pointer]:
+            - /url: "#examples"
+          - img "Link to section" [ref=e65]
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - button "preview" [ref=e70]
+            - button "code" [ref=e71]
+          - generic [ref=e73]: Loading preview…
+        - heading "Variants Link to section" [level=2] [ref=e74]:
+          - link "Variants" [ref=e75] [cursor=pointer]:
+            - /url: "#variants"
+          - img "Link to section" [ref=e76]
+        - table [ref=e80]:
+          - rowgroup [ref=e81]:
+            - row "Variant Use case" [ref=e82]:
+              - columnheader "Variant" [ref=e83]
+              - columnheader "Use case" [ref=e84]
+          - rowgroup [ref=e85]:
+            - row "custom Low-emphasis actions (default, transparent)" [ref=e86]:
+              - cell "custom" [ref=e87]:
+                - code [ref=e88]: custom
+              - cell "Low-emphasis actions (default, transparent)" [ref=e89]
+            - row "primary High-emphasis primary action" [ref=e90]:
+              - cell "primary" [ref=e91]:
+                - code [ref=e92]: primary
+              - cell "High-emphasis primary action" [ref=e93]
+            - row "secondary Medium-emphasis action" [ref=e94]:
+              - cell "secondary" [ref=e95]:
+                - code [ref=e96]: secondary
+              - cell "Medium-emphasis action" [ref=e97]
+            - row "success Confirmation / positive actions" [ref=e98]:
+              - cell "success" [ref=e99]:
+                - code [ref=e100]: success
+              - cell "Confirmation / positive actions" [ref=e101]
+            - row "warning Caution actions" [ref=e102]:
+              - cell "warning" [ref=e103]:
+                - code [ref=e104]: warning
+              - cell "Caution actions" [ref=e105]
+            - row "error Destructive actions" [ref=e106]:
+              - cell "error" [ref=e107]:
+                - code [ref=e108]: error
+              - cell "Destructive actions" [ref=e109]
+        - heading "Sizes Link to section" [level=2] [ref=e110]:
+          - link "Sizes" [ref=e111] [cursor=pointer]:
+            - /url: "#sizes"
+          - img "Link to section" [ref=e112]
+        - paragraph [ref=e115]:
+          - code [ref=e116]: size
+          - text: accepts
+          - code [ref=e117]: small
+          - text: (default),
+          - code [ref=e118]: medium
+          - text: ", and"
+          - code [ref=e119]: large
+          - text: . Pass
+          - code [ref=e120]: block
+          - text: to make the button span the full width of its container.
+        - heading "Installation Link to section" [level=2] [ref=e121]:
+          - link "Installation" [ref=e122] [cursor=pointer]:
+            - /url: "#installation"
+          - img "Link to section" [ref=e123]
+        - figure [ref=e126]:
+          - button "Copy Text" [ref=e128]:
+            - img [ref=e129]
+          - code [ref=e134]:
+            - generic [ref=e135]: pnpm add @ssa-ui-kit/core
+        - paragraph [ref=e136]:
+          - code [ref=e137]: "@ssa-ui-kit/core"
+          - text: requires
+          - code [ref=e138]: "@emotion/react"
+          - text: ","
+          - code [ref=e139]: "@emotion/styled"
+          - text: ", and"
+          - code [ref=e140]: "@emotion/css"
+          - text: as peer dependencies, and components must be wrapped in an Emotion
+          - code [ref=e141]: ThemeProvider
+          - text: with the kit's
+          - code [ref=e142]: mainTheme
+          - text: .
+      - generic [ref=e143]:
+        - link "Introduction A shadcn-style documentation site for the SSA UI Kit, built with Fumadocs." [ref=e144] [cursor=pointer]:
+          - /url: /docs
+          - generic [ref=e145]:
+            - img [ref=e146]
+            - paragraph [ref=e148]: Introduction
+          - paragraph [ref=e149]: A shadcn-style documentation site for the SSA UI Kit, built with Fumadocs.
+        - link "Typeahead Advanced autocomplete with search-as-you-type, single/multi select, and react-hook-form integration." [ref=e150] [cursor=pointer]:
+          - /url: /docs/typeahead
+          - generic [ref=e151]:
+            - img [ref=e152]
+            - paragraph [ref=e154]: Typeahead
+          - paragraph [ref=e155]: Advanced autocomplete with search-as-you-type, single/multi select, and react-hook-form integration.

@@ -1,0 +1,34 @@
+{
+  "name": "@ssa-ui-kit/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "POC: shadcn-style documentation site for SSA UI Kit, built with Fumadocs + Next.js",
+  "scripts": {
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start -p 4000",
+    "postinstall": "fumadocs-mdx"
+  },
+  "dependencies": {
+    "@ssa-ui-kit/core": "workspace:*",
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "fumadocs-core": "^15.0.0",
+    "fumadocs-mdx": "^11.0.0",
+    "fumadocs-ui": "^15.0.0",
+    "next": "^15.3.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.46.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.6.0"
+  }
+}
