@@ -111,7 +111,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: packages-dist
-          path: .
+          path: packages
 
       - name: Install Chromium
         if: ${{ matrix.e2e }}
@@ -187,7 +187,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: packages-dist
-          path: .
+          path: packages
 
       - name: Install Vercel CLI
         run: pnpm i -g vercel@latest
@@ -221,7 +221,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: packages-dist
-          path: .
+          path: packages
 
       - name: Install firebase tools
         run: npm install -g firebase-tools@14.11.0
