@@ -1,0 +1,39 @@
+
+> @ssa-ui-kit/templates@3.15.1 build /home/runner/work/ui-kit/ui-kit/packages/templates
+> webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
+
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+asset [1m[33m809.index.js[39m[22m [1m[33m1.16 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (id hint: vendors)
+asset [1m[33mindex.js[39m[22m [1m[33m391 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main)
+asset [1m[32m733.index.js[39m[22m 1.69 KiB [1m[32m[emitted][39m[22m
+orphan modules 2.09 MiB [1m[33m[orphan][39m[22m 375 modules
+runtime modules 7.07 KiB 10 modules
+built modules 2.08 MiB [1m[33m[built][39m[22m
+  modules by path [1m../../node_modules/.pnpm/[39m[22m 1.16 MiB
+    modules by path [1m../../node_modules/.pnpm/firebase@11.10.0/node_modules/firebase/[39m[22m 1.01 MiB
+      [1m../../node_modules/.pnpm/firebase@11.10.0/node_modules/firebase/firestore/dist/e...(truncated)[39m[22m 1 MiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+      [1m../../node_modules/.pnpm/firebase@11.10.0/node_modules/firebase/app/dist/es...(truncated)[39m[22m 812 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m../../node_modules/.pnpm/@firebase+app@0.13.2/node_modules/@firebase/app/dist/es...(truncated)[39m[22m 53.8 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m../../node_modules/.pnpm/@firebase+component@0.6.18/node_modules/@firebase/compo...(truncated)[39m[22m 16.2 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m../../node_modules/.pnpm/@firebase+util@1.12.1/node_modules/@firebase/util/dist/...(truncated)[39m[22m 79.5 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m../../node_modules/.pnpm/@firebase+logger@0.4.4/node_modules/@firebase/logger/di...(truncated)[39m[22m 7.16 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  modules by path [1m./src/[39m[22m 946 KiB
+    [1m./src/index.ts + 226 modules[39m[22m 945 KiB [1m[31m[not cacheable][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m./src/projects/fitness/apis/sources/firebase/init/firestore.ts + 1 modules[39m[22m 769 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+
+[1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  index.js (391 KiB)
+  809.index.js (1.16 MiB)[39m[22m
+
+[1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  main (391 KiB)
+      index.js
+[39m[22m
+
+webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 4677 ms
+[1mresolve-tspaths:[22m changed 83 file(s)

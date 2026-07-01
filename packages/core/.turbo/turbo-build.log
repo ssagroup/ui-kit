@@ -1,0 +1,41 @@
+
+> @ssa-ui-kit/core@3.15.1 build /home/runner/work/ui-kit/ui-kit/packages/core
+> webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
+
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+asset [1m[33mindex.js[39m[22m [1m[33m2.35 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main)
+orphan modules 5.32 MiB [1m[33m[orphan][39m[22m 1293 modules
+runtime modules 1.25 KiB 6 modules
+built modules 5.33 MiB [1m[33m[built][39m[22m
+  [1m./src/index.ts + 992 modules[39m[22m 5.16 MiB [1m[31m[not cacheable][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/omit.js[39m[22m 1.59 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/cloneDeep.js[39m[22m 679 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/startCase.js[39m[22m 714 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/merge.js[39m[22m 1.19 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/isFunction.js[39m[22m 993 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/isArray.js[39m[22m 488 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/isPlainObject.js[39m[22m 1.61 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/_copyObject.js[39m[22m 1.02 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/get.js[39m[22m 884 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/_castPath.js[39m[22m 569 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  + 214 modules
+
+[1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  index.js (2.35 MiB)[39m[22m
+
+[1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  main (2.35 MiB)
+      index.js
+[39m[22m
+
+[1m[33mWARNING[39m[22m in [1mwebpack performance recommendations: 
+You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
+
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 11250 ms
+[1mresolve-tspaths:[22m changed 344 file(s)
