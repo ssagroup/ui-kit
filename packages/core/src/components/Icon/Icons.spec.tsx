@@ -2,21 +2,17 @@ import { css, SerializedStyles } from '@emotion/react';
 import Icon from '@components/Icon';
 import { iconsList } from '@components/Icon';
 import { MapIconsType } from './types';
-import { screen } from '../../../customTest';
 
-const renderIcon = async (
+const renderIcon = (
   icon: keyof MapIconsType,
   size?: number,
-  iconName?: string,
   css?: SerializedStyles,
 ) => {
-  const iconTitle = icon.replaceAll('-', ' ');
-  render(
-    <Icon name={icon} size={size} tooltip={iconTitle} color="#fff" css={css} />,
+  const { container } = render(
+    <Icon name={icon} size={size} color="#fff" css={css} />,
   );
 
-  const titleEl = await screen.findByTitle(new RegExp(iconTitle, 'i'));
-  const svg = titleEl.closest('svg') as unknown as HTMLElement;
+  const svg = container.querySelector('svg') as unknown as HTMLElement;
   const element =
     svg.querySelector('path') ||
     svg.querySelector('rect') ||
@@ -43,17 +39,16 @@ const checkFillOrStrokeAttrs = (
 
 describe('Icons', () => {
   iconsList.forEach((iconName) => {
-    it(`Renders "${iconName}" icon with attributes`, async () => {
-      const [, path] = await renderIcon(iconName as keyof MapIconsType);
+    it(`Renders "${iconName}" icon with attributes`, () => {
+      const [, path] = renderIcon(iconName as keyof MapIconsType);
 
       checkFillOrStrokeAttrs(path, iconName);
     });
 
-    it(`Renders "${iconName}" icon with custom styles`, async () => {
-      const [icon] = await renderIcon(
+    it(`Renders "${iconName}" icon with custom styles`, () => {
+      const [icon] = renderIcon(
         iconName as keyof MapIconsType,
         undefined,
-        iconName,
         css`
           background-color: magenta;
         `,
@@ -64,8 +59,8 @@ describe('Icons', () => {
       `);
     });
 
-    it(`Renders "${iconName}" icon with the default size`, async () => {
-      const [icon] = await renderIcon(iconName as keyof MapIconsType);
+    it(`Renders "${iconName}" icon with the default size`, () => {
+      const [icon] = renderIcon(iconName as keyof MapIconsType);
 
       expect(icon).toBeInTheDocument();
       const width = (icon as unknown as SVGElement).getAttribute('width');
@@ -76,8 +71,8 @@ describe('Icons', () => {
       expect(height).toMatch(sizeRegEx);
     });
 
-    it(`Renders "${iconName}" icon with a custom size`, async () => {
-      const [icon] = await renderIcon(iconName as keyof MapIconsType, 12);
+    it(`Renders "${iconName}" icon with a custom size`, () => {
+      const [icon] = renderIcon(iconName as keyof MapIconsType, 12);
 
       expect(icon).toBeInTheDocument();
 
@@ -88,5 +83,20 @@ describe('Icons', () => {
       }
       expect(icon).toHaveAttribute('height', '12px');
     });
+  });
+
+  it('does not render a tooltip by default', () => {
+    const { container } = render(<Icon name="arrow-up" color="#fff" />);
+
+    expect(container.querySelector('svg title')).not.toBeInTheDocument();
+  });
+
+  it('renders a custom tooltip trigger when tooltip is provided', () => {
+    const { container } = render(
+      <Icon name="arrow-up" color="#fff" tooltip="Arrow Up" />,
+    );
+
+    expect(container.querySelector('svg')).toBeInTheDocument();
+    expect(container.querySelector('svg title')).not.toBeInTheDocument();
   });
 });

@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const AddFolder = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Add Folder',
-  ...props
-}: SVGProps) => (
+export const AddFolder = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -13,7 +8,6 @@ export const AddFolder = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M12.1006 9.79974C12.4869 9.79998 12.8007 10.1136 12.8008 10.4999V13.1992H15.2998L15.4414 13.2138C15.7601 13.2792 15.9998 13.5614 16 13.8994C16 14.286 15.6864 14.5995 15.2998 14.5995H12.8008V17.0995L12.7861 17.2411C12.7208 17.5598 12.4385 17.7995 12.1006 17.7997C11.714 17.7997 11.4004 17.4861 11.4004 17.0995V14.5995H8.7002C8.3136 14.5995 8 14.286 8 13.8994C8.00028 13.513 8.31377 13.1992 8.7002 13.1992H11.4004V10.4999C11.4005 10.1134 11.714 9.79974 12.1006 9.79974Z"
       fill={fill}

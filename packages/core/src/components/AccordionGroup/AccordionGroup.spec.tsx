@@ -29,21 +29,21 @@ const accordions: Array<AccordionTest> = [
     ariaControls: 'first-panel',
     title: 'Basic',
     opened: false,
-    text: 'BasicCarrot upLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
+    text: 'BasicLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
   },
   {
     id: 'second',
     ariaControls: 'second-panel',
     title: 'Advanced',
     opened: true,
-    text: 'AdvancedCarrot downLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
+    text: 'AdvancedLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
   },
   {
     id: 'third',
     ariaControls: 'third-panel',
     title: 'Indicator',
     opened: false,
-    text: 'BasicCarrot upLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
+    text: 'BasicLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, dui in commodo porttitor, neque metus lobortis sem, at suscipit arcu ligula non enim.',
   },
 ];
 
@@ -61,7 +61,10 @@ const componentAccordionTests: ComponentAccordionTests = (
       'aria-controls',
       accordion.ariaControls,
     );
-    expect(accordionEl).toHaveTextContent('BasicCarrot down');
+    expect(accordionEl).toHaveTextContent(accordion.title);
+    expect(
+      within(accordionEl).getByTestId('accordion-title-icon-down'),
+    ).toBeInTheDocument();
   };
 
   describe(describeBlockName, () => {
@@ -179,9 +182,12 @@ const componentAccordionTests: ComponentAccordionTests = (
           'aria-controls',
           accordions[i].ariaControls,
         );
-        expect(accordionTitleEl.textContent).toEqual(
-          `${accordion.title}Carrot ${i === 0 ? 'down' : 'up'}`,
-        );
+        expect(accordionTitleEl).toHaveTextContent(accordion.title);
+        expect(
+          within(accordionTitleEl).getByTestId(
+            i === 0 ? 'accordion-title-icon-down' : 'accordion-title-icon-up',
+          ),
+        ).toBeInTheDocument();
       }
     });
   });

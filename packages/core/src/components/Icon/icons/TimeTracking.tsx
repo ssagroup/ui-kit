@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const TimeTracking = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Time tracking',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const TimeTracking = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M11.6772 14.2247L14.6941 16.5465C14.9163 16.7175 15.2313 16.6713 15.398 16.4433C15.5647 16.2152 15.5197 15.892 15.2974 15.721L12.5043 13.5514V9.16572C12.5043 8.88065 12.2793 8.64976 12.0015 8.64976C11.7237 8.64976 11.4987 8.88065 11.4987 9.16572V13.8093C11.4987 13.9806 11.5685 14.1349 11.6772 14.2247Z"
       fill={fill}

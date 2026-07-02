@@ -14,7 +14,12 @@ interface DropdownArrowProps extends CommonProps {
 
 const DropdownArrow = ({ isUp, ...restProps }: DropdownArrowProps) => (
   <DropdownArrowBase>
-    <Icon {...restProps} name={`carrot-${isUp ? 'up' : 'down'}`} size={12} />
+    <Icon
+      name={`carrot-${isUp ? 'up' : 'down'}`}
+      size={12}
+      data-testid={`dropdown-arrow-${isUp ? 'up' : 'down'}`}
+      {...restProps}
+    />
   </DropdownArrowBase>
 );
 

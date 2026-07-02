@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const NewLine = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'New Line',
-  ...props
-}: SVGProps) => (
+export const NewLine = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const NewLine = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(5, 8)">
       <path d="M12 0V6H5V8.38672L0 5.5L5 2.61328V5H11V0H12Z" fill={fill} />
     </g>

@@ -53,7 +53,7 @@ describe('MultipleDropdown', () => {
       getByRole,
       queryByRole,
       getByTestId,
-      findByTitle,
+      findByTestId,
     } = setup();
 
     expect(mockOnChange).not.toBeCalled();
@@ -66,7 +66,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    findByTitle('Carrot down');
+    findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
     expect(listboxEl).not.toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('MultipleDropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
     expect(dropdownToggleEl).toHaveFocus();
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
-    findByTitle('Carrot up');
+    findByTestId('dropdown-arrow-up');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -112,7 +112,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
     expect(listboxEl).not.toBeInTheDocument();
@@ -127,7 +127,7 @@ describe('MultipleDropdown', () => {
 
     expect(dropdownToggleEl).toHaveFocus();
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
-    await within(dropdownToggleEl).findByTitle('Carrot up');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -167,7 +167,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
 
@@ -187,7 +187,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveFocus();
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
 
-    await within(dropdownToggleEl).findByTitle('Carrot up');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
     // Items list hides when clicked
     await userEvent.click(within(listItemEl).getByRole('button'));
@@ -210,9 +210,8 @@ describe('MultipleDropdown', () => {
     const dropdownEl = getByTestId('dropdown');
     let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
-    expect(dropdownToggleEl).toHaveTextContent(
-      'Strategy: Third Item+1Carrot down',
-    );
+    expect(dropdownToggleEl).toHaveTextContent('Strategy: Third Item+1');
+    within(dropdownToggleEl).getByTestId('dropdown-arrow-down');
 
     await user.click(dropdownToggleEl);
 
@@ -226,7 +225,7 @@ describe('MultipleDropdown', () => {
     expect(mockOnChange).toHaveBeenCalledWith(1, true);
     expect(queryByRole('listbox')).toBeInTheDocument();
 
-    await within(dropdownToggleEl).findByTitle('Carrot up');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
   });
 
   it("Chooses an item when it's clicked [isMultiple = false]", async () => {
@@ -239,7 +238,8 @@ describe('MultipleDropdown', () => {
     const dropdownEl = getByTestId('dropdown');
     let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
-    expect(dropdownToggleEl).toHaveTextContent('Third ItemCarrot down');
+    expect(dropdownToggleEl).toHaveTextContent('Third Item');
+    within(dropdownToggleEl).getByTestId('dropdown-arrow-down');
 
     await user.click(dropdownToggleEl);
 
@@ -253,7 +253,7 @@ describe('MultipleDropdown', () => {
     expect(mockOnChange).toHaveBeenCalledWith(1, true);
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
   });
 
   it('Closes when clicked outside', async () => {
@@ -317,7 +317,8 @@ describe('MultipleDropdown', () => {
     const dropdownToggleEl = within(getByTestId('dropdown')).getByRole(
       'combobox',
     );
-    expect(dropdownToggleEl).toHaveTextContent('StrategyCarrot down');
+    expect(dropdownToggleEl).toHaveTextContent('Strategy');
+    within(dropdownToggleEl).getByTestId('dropdown-arrow-down');
   });
 
   it('Renders in the disabled state', async () => {
@@ -334,7 +335,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
     expect(dropdownToggleEl).toHaveAttribute('disabled');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
@@ -347,7 +348,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).not.toHaveFocus();
     expect(dropdownToggleEl).toHaveTextContent('Select something');
     expect(dropdownToggleEl).toHaveAttribute('disabled');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
   });
 
   it('Closes when changes state to disabled', async () => {

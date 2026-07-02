@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Projects = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Projects',
-  ...props
-}: SVGProps) => (
+export const Projects = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Projects = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(1, 3.34)">
       <path
         fillRule="evenodd"

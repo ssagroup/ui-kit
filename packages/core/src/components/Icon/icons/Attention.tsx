@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Attention = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Attention',
-  ...props
-}: SVGProps) => (
+export const Attention = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -14,7 +9,6 @@ export const Attention = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M10 1.90479L2.85718 6.1905V13.8095L10 18.5715L17.1429 13.8095V6.1905L10 1.90479Z"
       stroke={fill}

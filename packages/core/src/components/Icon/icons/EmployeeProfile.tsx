@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const EmployeeProfile = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Employee Profile',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const EmployeeProfile = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

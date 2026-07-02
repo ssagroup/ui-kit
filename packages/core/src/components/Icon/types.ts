@@ -3,11 +3,11 @@ import { iconsList } from './icons/iconsList';
 
 export interface SVGProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
-  tooltip?: string;
 }
 
 export interface IconProps extends Omit<SVGProps, 'fill'> {
   name: keyof MapIconsType;
+  tooltip?: string;
 }
 
 export type MapIconsType = {

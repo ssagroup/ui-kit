@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const ArrowDown = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Arrow Down',
-  ...props
-}: SVGProps) => (
+export const ArrowDown = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const ArrowDown = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M3.1779 7.07707L3.1779 0.922729"
       stroke={fill}

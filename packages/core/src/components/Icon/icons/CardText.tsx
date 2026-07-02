@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const CardText = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Card Text',
-  ...props
-}: SVGProps) => (
+export const CardText = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const CardText = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M14.5 3C14.7761 3 15 3.22386 15 3.5V12.5C15 12.7761 14.7761 13 14.5 13H1.5C1.22386 13 1 12.7761 1 12.5V3.5C1 3.22386 1.22386 3 1.5 3H14.5ZM1.5 2C0.671573 2 0 2.67157 0 3.5V12.5C0 13.3284 0.671573 14 1.5 14H14.5C15.3284 14 16 13.3284 16 12.5V3.5C16 2.67157 15.3284 2 14.5 2H1.5Z"
       fill={fill}

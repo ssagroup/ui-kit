@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const BoxSelect = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Box Select',
-  ...props
-}: SVGProps) => (
+export const BoxSelect = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const BoxSelect = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2.3, 2.3)">
       <path
         d="M1.7 0C0.761116 0 0 0.761116 0 1.7V3.7C0 4.0866 0.313401 4.4 0.7 4.4C1.0866 4.4 1.4 4.0866 1.4 3.7V1.7C1.4 1.53431 1.53431 1.4 1.7 1.4H3.7C4.0866 1.4 4.4 1.0866 4.4 0.7C4.4 0.313401 4.0866 0 3.7 0H1.7Z"

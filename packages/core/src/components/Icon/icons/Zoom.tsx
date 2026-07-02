@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Zoom = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Zoom',
-  ...props
-}: SVGProps) => (
+export const Zoom = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Zoom = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2.35, 2.35)">
       <path
         d="M4.05 5.14999C4.05 4.54247 4.54249 4.04999 5.15 4.04999H6.15C6.48137 4.04999 6.75 4.31862 6.75 4.64999C6.75 4.98136 6.48137 5.24999 6.15 5.24999H5.25V6.14999C5.25 6.48136 4.98137 6.74999 4.65 6.74999C4.31863 6.74999 4.05 6.48136 4.05 6.14999V5.14999Z"

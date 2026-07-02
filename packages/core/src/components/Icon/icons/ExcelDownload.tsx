@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const ExcelDownload = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Excel download',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const ExcelDownload = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const Responsibilities = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Responsibilities',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const Responsibilities = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(1, 0)">
       <path
         d="M10.3833 20.6562C10.5882 20.6836 10.7976 20.7001 11.0112 20.7002H11.0395L11.0591 20.6992L11.2807 20.6904H11.3061L11.3413 20.6875C11.3777 20.6849 11.4145 20.6792 11.4507 20.6758V22.126C11.7381 22.3049 11.931 22.6219 11.9311 22.9854C11.9311 23.5453 11.4764 23.9998 10.9165 24C10.3568 23.9996 9.90282 23.5452 9.90282 22.9854C9.90301 22.622 10.096 22.3049 10.3833 22.126V20.6562Z"

@@ -46,14 +46,8 @@ const checkPages = (range: number[], selected?: number) => {
   const pagerWrapper = navigation.querySelector('div') as HTMLDivElement;
   const withinNavigation = within(navigation);
 
-  const prevPageBtn = within(
-    withinNavigation.getByRole('button', { name: 'Go to previous page' }),
-  );
-  prevPageBtn.getByTitle('Carrot left');
-  const nextPageBtn = within(
-    withinNavigation.getByRole('button', { name: 'Go to next page' }),
-  );
-  nextPageBtn.getByTitle('Carrot right');
+  withinNavigation.getByRole('button', { name: 'Go to previous page' });
+  withinNavigation.getByRole('button', { name: 'Go to next page' });
 
   // Pager group: [prevArrow, numbersWrapper, nextArrow]; page buttons and
   // ellipsis breaks live inside the numbers wrapper.

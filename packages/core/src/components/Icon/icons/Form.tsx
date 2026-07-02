@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Form = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Clipboard Form',
-  ...props
-}: SVGProps) => (
+export const Form = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -13,7 +8,6 @@ export const Form = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

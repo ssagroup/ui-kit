@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Autoscale = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Autoscale',
-  ...props
-}: SVGProps) => (
+export const Autoscale = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Autoscale = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2.3, 2.3)">
       <path
         d="M0 1.7C0 0.761116 0.761116 0 1.7 0H5.7C6.0866 0 6.4 0.313401 6.4 0.7C6.4 1.0866 6.0866 1.4 5.7 1.4H1.7C1.53431 1.4 1.4 1.53431 1.4 1.7V5.7C1.4 6.0866 1.0866 6.4 0.7 6.4C0.313401 6.4 0 6.0866 0 5.7V1.7Z"

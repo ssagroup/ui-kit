@@ -84,7 +84,7 @@ describe('UserProfile', () => {
 
     await user.click(getByTestId('trigger-button'));
 
-    getByRole('button', { name: 'Log out Leave' });
+    getByRole('button', { name: 'Leave' });
     expect(queryByRole('button', { name: 'Log Out' })).not.toBeInTheDocument();
   });
 

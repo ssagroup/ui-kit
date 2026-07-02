@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const Compensation = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Compensation',
   ...props
 }: SVGProps) => (
   <svg
@@ -14,7 +13,6 @@ export const Compensation = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M19.4883 14.3203C19.4882 15.0953 18.8755 15.7332 18.1074 15.7334C17.3372 15.7334 16.7267 15.0952 16.7266 14.3203C16.7266 13.5454 17.3371 12.9062 18.1074 12.9062C18.8756 12.9064 19.4883 13.5452 19.4883 14.3203Z"
       fill={fill}

@@ -470,6 +470,9 @@ const IconsGrid = (args: Parameters<typeof Icon>[0]) => {
                       (iconName === 'robot' ? args.size * 2 : args.size)
                     }
                     color={args.color}
+                    tooltip={
+                      args.tooltip ? `${args.tooltip} - ${iconName}` : undefined
+                    }
                   />
                   <Typography
                     variant="body1"

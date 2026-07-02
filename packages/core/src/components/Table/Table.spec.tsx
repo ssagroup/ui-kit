@@ -47,12 +47,12 @@ describe('Table', () => {
 
   describe('Sorting Table', () => {
     it('Render table', () => {
-      render(<SortableTable />);
+      const { container } = render(<SortableTable />);
 
       const cells = screen.queryAllByRole('cell');
 
       expect(screen.getByRole('table')).toBeInTheDocument();
-      expect(screen.getByTitle('Arrow Down')).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
       expect(cells.length).toEqual(30);
     });
 

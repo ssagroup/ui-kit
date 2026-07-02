@@ -39,8 +39,8 @@ describe('Inputs', () => {
     expect(input).toHaveProperty('disabled', true);
   });
 
-  it('Render input with status of success', async () => {
-    render(
+  it('Render input with status of success', () => {
+    const { container } = render(
       <Input
         placeholder="Field"
         name="field"
@@ -50,14 +50,14 @@ describe('Inputs', () => {
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
-    const icon = await screen.findByTitle('Check');
+    const icon = container.querySelector('svg');
 
     expect(input).toBeInTheDocument();
     expect(icon).toBeInTheDocument();
   });
 
-  it('Render input with status of error', async () => {
-    render(
+  it('Render input with status of error', () => {
+    const { container } = render(
       <Input
         placeholder="Field"
         name="field"
@@ -70,7 +70,7 @@ describe('Inputs', () => {
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
-    const icon = await screen.findByTitle('Union');
+    const icon = container.querySelector('svg');
 
     expect(input).toBeInTheDocument();
     expect(icon).toBeInTheDocument();

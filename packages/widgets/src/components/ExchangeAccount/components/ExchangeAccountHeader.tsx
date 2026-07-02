@@ -24,7 +24,10 @@ export const ExchangeAccountHeader = ({
     <CardHeader css={S.CardHeader}>
       {children}
       {!disabled && onDelete && (
-        <Button css={S.RemoveButton} onClick={(e) => handleClickDelete(e)}>
+        <Button
+          css={S.RemoveButton}
+          aria-label="Delete"
+          onClick={(e) => handleClickDelete(e)}>
           <Icon name="bin" color={theme.colors.greyDropdownFocused} size={20} />
         </Button>
       )}

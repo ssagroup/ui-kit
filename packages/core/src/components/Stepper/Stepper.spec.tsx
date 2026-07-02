@@ -1,4 +1,4 @@
-import { Matcher, screen, waitFor, within } from '@testing-library/dom';
+import { Matcher, screen, waitFor } from '@testing-library/dom';
 
 import Stepper from './index';
 import Step from '@components/Step';
@@ -8,9 +8,7 @@ const getCheckIcon = async (query: Matcher) => {
   const item = await screen.findByText(query);
   const icon = item.parentNode as HTMLElement;
 
-  const checkIcon = await within(icon).queryByTitle(/check/i);
-
-  return checkIcon;
+  return icon.querySelector('svg');
 };
 
 describe('Stepper', () => {
@@ -40,14 +38,12 @@ describe('Stepper', () => {
       const itemA = await screen.findByText(/itemA/i);
       const iconA = itemA.parentNode as HTMLElement;
 
-      await within(iconA).findByTitle(/check/i);
+      expect(iconA.querySelector('svg')).toBeInTheDocument();
 
       const itemB = await screen.findByText(/itemB/i);
       const iconB = itemB.parentNode as HTMLElement;
 
-      const checkIconB = await within(iconB).queryByTitle(/check/i);
-
-      expect(checkIconB).not.toBeInTheDocument();
+      expect(iconB.querySelector('svg')).not.toBeInTheDocument();
     });
   });
 

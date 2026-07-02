@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Results = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Clipboard Result',
-  ...props
-}: SVGProps) => (
+export const Results = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -13,7 +8,6 @@ export const Results = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M14.6808 10.305C14.9545 10.0319 15.397 10.0323 15.6701 10.3059C15.9432 10.5796 15.9427 11.0221 15.6691 11.2952L11.4172 15.5403C11.1438 15.8132 10.7011 15.8132 10.4279 15.5403L8.30487 13.4173C8.03181 13.144 8.03185 12.7013 8.30487 12.428C8.57824 12.1546 9.02174 12.1546 9.2951 12.428L10.9221 14.055L14.6808 10.305Z"
       fill={fill}

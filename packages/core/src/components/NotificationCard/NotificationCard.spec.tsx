@@ -36,8 +36,8 @@ describe('NotificationCard', () => {
       <NotificationCard {...commonProps} isRead={false} />,
     );
 
-    getByTestId('badge');
-    expect(getByTestId('badge')).toHaveTextContent(/information/i);
+    const badge = getByTestId('badge');
+    expect(badge.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Renders with title and sub-text', () => {

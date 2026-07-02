@@ -46,7 +46,7 @@ describe('Dropdown', () => {
       getByRole,
       queryByRole,
       getByTestId,
-      findByTitle,
+      findByTestId,
     } = setup();
 
     expect(mockOnChange).not.toBeCalled();
@@ -59,7 +59,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    findByTitle('Carrot down');
+    findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
     expect(listboxEl).not.toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('Dropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
     expect(dropdownToggleEl).toHaveFocus();
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
-    findByTitle('Carrot up');
+    findByTestId('dropdown-arrow-up');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -104,7 +104,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
     expect(listboxEl).not.toBeInTheDocument();
@@ -119,7 +119,7 @@ describe('Dropdown', () => {
 
     expect(dropdownToggleEl).toHaveFocus();
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
-    await within(dropdownToggleEl).findByTitle('Carrot up');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -169,7 +169,7 @@ describe('Dropdown', () => {
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
-    await within(dropdownToggleEl).findByTitle('Carrot up');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
     for (let i = 0; i < items.length; ++i) {
       const listItem = items[i];
@@ -220,7 +220,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
 
@@ -240,7 +240,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveFocus();
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'true');
 
-    await within(dropdownToggleEl).findByTitle('Carrot up');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
     // Items list hides when clicked
     await userEvent.click(within(listItemEl).getByRole('button'));
@@ -275,7 +275,7 @@ describe('Dropdown', () => {
     expect(mockOnChange).toHaveBeenCalledWith({ value: items[0].value });
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
   });
 
   it('Closes when clicked outside', async () => {
@@ -340,7 +340,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
     expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
     expect(dropdownToggleEl).toHaveAttribute('disabled');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
@@ -353,7 +353,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).not.toHaveFocus();
     expect(dropdownToggleEl).toHaveTextContent('Select something');
     expect(dropdownToggleEl).toHaveAttribute('disabled');
-    await within(dropdownToggleEl).findByTitle('Carrot down');
+    await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
   });
 
   it('Closes when changes state to disabled', async () => {

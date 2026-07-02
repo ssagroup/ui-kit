@@ -32,7 +32,7 @@ describe('Radio', () => {
     expect(radioEl).not.toHaveAttribute('disabled');
     expect(radioEl).not.toHaveAttribute('required');
 
-    await within(labelEl).findByTitle('Radio on');
+    await within(labelEl).findByTestId('radio-on-icon');
   });
   it('Renders with default values', () => {
     const valueAttr = 'apple';
@@ -55,7 +55,7 @@ describe('Radio', () => {
     expect(radioEl).not.toHaveAttribute('disabled');
     expect(radioEl).not.toHaveAttribute('required');
 
-    within(labelEl).getByTitle('Radio on');
+    within(labelEl).getByTestId('radio-on-icon');
   });
 
   it('Renders in the un-checked state', async () => {
@@ -87,7 +87,7 @@ describe('Radio', () => {
     expect(radioEl).not.toHaveAttribute('disabled');
     expect(radioEl).not.toHaveAttribute('required');
 
-    await within(labelEl).findByTitle('Circle');
+    await within(labelEl).findByTestId('radio-off-icon');
   });
 
   it('Renders in the disabled checked state', async () => {
@@ -121,7 +121,7 @@ describe('Radio', () => {
     expect(radioEl).toHaveAttribute('disabled');
     expect(radioEl).not.toHaveAttribute('required');
 
-    await within(labelEl).findByTitle('Radio on');
+    await within(labelEl).findByTestId('radio-on-icon');
   });
 
   it('Renders in the disabled un-checked state', async () => {
@@ -155,7 +155,7 @@ describe('Radio', () => {
     expect(radioEl).toHaveAttribute('disabled');
     expect(radioEl).not.toHaveAttribute('required');
 
-    await within(labelEl).findByTitle('Circle');
+    await within(labelEl).findByTestId('radio-off-icon');
   });
 
   it('Renders without text', () => {
@@ -208,7 +208,7 @@ describe('Radio', () => {
     expect(radioEl).not.toHaveAttribute('disabled');
     expect(radioEl).toHaveAttribute('required');
 
-    await within(labelEl).findByTitle('Circle');
+    await within(labelEl).findByTestId('radio-off-icon');
   });
 
   it('Renders with custom styles', () => {

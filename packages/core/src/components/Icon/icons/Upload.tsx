@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Upload = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Upload',
-  ...props
-}: SVGProps) => (
+export const Upload = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Upload = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(3.3, 3.3)">
       <path
         d="M16.7002 9.99929C17.0867 9.9993 17.4003 10.313 17.4004 10.6995V16.1995C17.4004 17.1384 16.6391 17.8997 15.7002 17.8997H1.7002C0.761315 17.8997 6.69955e-06 17.1384 0 16.1995V10.6995C0.000133023 10.313 0.313678 9.99929 0.700195 9.99929C1.08671 9.9993 1.40026 10.313 1.40039 10.6995V16.1995C1.4004 16.3652 1.53451 16.4993 1.7002 16.4993H15.7002C15.8659 16.4993 16 16.3652 16 16.1995V10.6995C16.0001 10.313 16.3137 9.99929 16.7002 9.99929Z"

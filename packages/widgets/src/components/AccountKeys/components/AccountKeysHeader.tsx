@@ -21,7 +21,7 @@ export const AccountKeysHeader = ({ children }: AccountKeysHeaderProps) => {
             {title}
           </Typography>
           {onDelete && (
-            <Button css={S.DeleteButton} onClick={onDelete}>
+            <Button css={S.DeleteButton} aria-label="Delete" onClick={onDelete}>
               <Icon
                 name="bin"
                 size={15}

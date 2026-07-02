@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Children = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Children',
-  ...props
-}: SVGProps) => (
+export const Children = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Children = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const NonBillable = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Non Billable',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const NonBillable = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(1.3, 1.3)">
       <path
         fillRule="evenodd"

@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const TechnicalReview = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Clipboard Star',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const TechnicalReview = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

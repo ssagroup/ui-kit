@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Busket = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Busket',
-  ...props
-}: SVGProps) => (
+export const Busket = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Busket = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(1.56, 1.9)">
       <path
         fillRule="evenodd"

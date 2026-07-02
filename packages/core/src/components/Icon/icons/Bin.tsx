@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Bin = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Bin',
-  ...props
-}: SVGProps) => (
+export const Bin = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -13,7 +8,6 @@ export const Bin = ({
     viewBox="0 0 15 15"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M9.14062 11.1328C9.39947 11.1328 9.60938 10.9229 9.60938 10.6641V5.97656C9.60938 5.71772 9.39947 5.50781 9.14062 5.50781C8.88178 5.50781 8.67188 5.71772 8.67188 5.97656V10.6641C8.67188 10.9229 8.88178 11.1328 9.14062 11.1328Z"
       fill={fill}

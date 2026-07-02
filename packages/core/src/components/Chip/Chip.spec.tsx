@@ -181,13 +181,12 @@ describe('Chip', () => {
 
   describe('Icons and Avatars', () => {
     it('Renders with icon', () => {
-      render(<Chip label="With Icon" icon="calendar" />);
+      const { container } = render(<Chip label="With Icon" icon="calendar" />);
 
       const chip = screen.getByText('With Icon');
       expect(chip).toBeInTheDocument();
 
-      const icon = screen.getByTitle(/calendar/i);
-      expect(icon).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
     });
 
     it('Renders with avatar', () => {
@@ -203,10 +202,9 @@ describe('Chip', () => {
     });
 
     it('Does not render icon when showIcon is false', () => {
-      render(<Chip label="No Icon" showIcon={false} />);
+      const { container } = render(<Chip label="No Icon" showIcon={false} />);
 
-      const icon = screen.queryByTitle(/plus/i);
-      expect(icon).not.toBeInTheDocument();
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
   });
 
