@@ -44,6 +44,7 @@ export const ActionMore = ({
       <PopoverTrigger
         variant="tertiary"
         isDisabled={isDisabled}
+        aria-label="More"
         dataTestId="more-trigger-button"
         css={{
           marginLeft: 10,

@@ -22,7 +22,7 @@ test.describe('Industry Specific Widgets - Training - BotsTable', () => {
     await gotoPage(page);
     await page
       .getByRole('row', {
-        name: 'Bot name 6 27.07.23 Kraken Pending ETH/USD -100 USD Arrow Down -15% Arrow Down More vertical',
+        name: 'Bot name 6 27.07.23 Kraken Pending ETH/USD -100 USD -15% Run reason More',
       })
       .getByTestId('more-trigger-button')
       .click();
@@ -37,7 +37,7 @@ test.describe('Industry Specific Widgets - Training - BotsTable', () => {
     await gotoPage(page);
     await page
       .getByRole('row', {
-        name: 'Bot name 6 27.07.23 Kraken Pending ETH/USD -100 USD Arrow Down -15% Arrow Down More vertical',
+        name: 'Bot name 6 27.07.23 Kraken Pending ETH/USD -100 USD -15% Run reason More',
       })
       .getByTestId('run-reason-trigger-button')
       .click();

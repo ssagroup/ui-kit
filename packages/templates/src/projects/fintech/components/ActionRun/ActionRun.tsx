@@ -69,6 +69,7 @@ export const ActionRun = ({
       placement="top-start">
       <PopoverTrigger
         isDisabled={isDisabled}
+        aria-label="Run reason"
         dataTestId="run-reason-trigger-button"
         css={{
           marginLeft: 10,
