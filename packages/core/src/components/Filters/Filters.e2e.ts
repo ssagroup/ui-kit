@@ -12,7 +12,7 @@ const gotoPage = (page: Page) => {
 test('Widgets: Filters should be opened correctly', async ({ page }) => {
   await gotoPage(page);
   await page.setViewportSize(SCREEN_SIZES[1920]);
-  await expect(page.getByText('strategy #3Carrot down')).toBeVisible();
+  await expect(page.getByText('Strategy #3')).toBeVisible();
   await expect(page.getByText('More')).not.toBeVisible();
   const SCREENSHOT_PREFIX = `${WIDGETS_CUSTOM_SHOTS_PATH}widgets-filters--default__`;
   await page.screenshot({
@@ -68,7 +68,7 @@ test('Widgets: Filters - More button count notification should be changed', asyn
   await page.getByRole('button', { name: 'Stopped' }).click();
   await expect(page.getByText('Status: Running+1')).toBeVisible();
 
-  await page.getByText('strategy #3Carrot down').click();
+  await page.getByText('Strategy #3').click();
   await page.getByRole('button', { name: 'strategy #3 checkbox1' }).click();
 
   triggerButton = page.getByTestId('trigger-button');
@@ -94,8 +94,14 @@ test('Widgets: Filters - Filter button should be shown when items not selected',
 
   await page.getByTestId('trigger-button').click();
   /* cSpell:disable */
-  await page.locator('label').filter({ hasText: 'Checkcheckbox1' }).click();
-  await page.locator('label').filter({ hasText: 'Checkcheckbox4' }).click();
+  await page
+    .locator('label')
+    .filter({ hasText: /^checkbox1$/ })
+    .click();
+  await page
+    .locator('label')
+    .filter({ hasText: /^checkbox4$/ })
+    .click();
 
   beforeContent = await triggerButton.evaluate((el) => {
     return window.getComputedStyle(el, ':before').content;
