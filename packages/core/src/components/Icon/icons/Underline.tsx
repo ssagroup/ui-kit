@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Underline = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Underline',
-  ...props
-}: SVGProps) => (
+export const Underline = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Underline = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(6, 5)">
       <path d="M12 14H0V13.567H12V14Z" fill={fill} />
       <path

@@ -48,6 +48,7 @@ export const MultipleTrigger = () => {
                 {optionText}
               </S.TypeaheadItemLabel>
               <S.TypeaheadItemCross
+                data-testid="typeahead-item-remove"
                 isDisabled={context.isDisabled}
                 isCustomValue={isCustomValue}
                 endIcon={

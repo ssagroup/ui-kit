@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const FTE = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'FTE',
-  ...props
-}: SVGProps) => (
+export const FTE = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const FTE = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M11.7973 12.8511C12.1289 12.8512 12.3985 13.1199 12.3986 13.4515V15.3923L14.4558 14.878L14.576 14.8604C14.8552 14.8483 15.1138 15.0334 15.1842 15.315C15.2646 15.6368 15.0688 15.9629 14.7472 16.0435L11.944 16.7445C11.6222 16.8249 11.2962 16.6291 11.2155 16.3074C11.2006 16.2475 11.1977 16.1871 11.2009 16.1285C11.2 16.1153 11.197 16.1019 11.197 16.0884V13.4515C11.1971 13.1199 11.4658 12.8513 11.7973 12.8511Z"
       fill={fill}

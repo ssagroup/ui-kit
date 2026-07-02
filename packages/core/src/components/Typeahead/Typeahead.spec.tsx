@@ -244,10 +244,9 @@ describe('Typeahead Component', () => {
       defaultSelectedItems: [1, 2],
     });
 
-    const removeIcons = screen.getAllByTitle('Remove');
-    const removeButton = removeIcons[0].closest('button');
+    const removeButtons = screen.getAllByTestId('typeahead-item-remove');
 
-    await user.click(removeButton!);
+    await user.click(removeButtons[0]);
 
     expect(mockOnRemoveSelectedClick).toHaveBeenCalledWith(1);
   });

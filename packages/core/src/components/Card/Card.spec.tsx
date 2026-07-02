@@ -31,8 +31,8 @@ describe('Card', () => {
     expect(cardHeader).toHaveStyle('background: inherit');
   });
 
-  it('Render Card with icon header', async () => {
-    render(
+  it('Render Card with icon header', () => {
+    const { container } = render(
       <div>
         <Card>
           <CardHeader icon={<Icon name="calendar" size={57} />}>
@@ -49,7 +49,7 @@ describe('Card', () => {
       </div>,
     );
 
-    const icon = await screen.findByTitle(/calendar/i);
+    const icon = container.querySelector('svg');
 
     expect(icon).toBeInTheDocument();
   });

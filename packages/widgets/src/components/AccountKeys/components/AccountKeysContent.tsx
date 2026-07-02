@@ -33,7 +33,10 @@ export const AccountKeysContent = ({ children }: AccountKeysContentProps) => {
               <span css={S.LetterWrap}>
                 {visible ? secretKey || placeholder : placeholder}
               </span>
-              <Button css={S.VisibleButton} onClick={toggleVisible}>
+              <Button
+                css={S.VisibleButton}
+                aria-label={visible ? 'Hide secret key' : 'Show secret key'}
+                onClick={toggleVisible}>
                 <Icon
                   name={visible ? 'visible' : 'invisible'}
                   size={20}

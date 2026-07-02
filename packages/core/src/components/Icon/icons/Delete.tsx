@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Delete = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Delete',
-  ...props
-}: SVGProps) => (
+export const Delete = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -14,7 +9,6 @@ export const Delete = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M9.76807 10.3282C9.44605 10.3282 9.18591 10.5883 9.18591 10.9103V18.3035C9.18591 18.6255 9.44605 18.8856 9.76807 18.8856C10.0901 18.8856 10.3502 18.6255 10.3502 18.3035V10.9103C10.3502 10.5883 10.0901 10.3282 9.76807 10.3282Z"
       fill={fill}

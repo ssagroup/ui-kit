@@ -19,10 +19,9 @@ describe('PersonInfo', () => {
   });
 
   it('Renders with icon as string', () => {
-    render(<PersonInfo title="Title" icon="user" />);
+    const { container } = render(<PersonInfo title="Title" icon="user" />);
 
-    const icon = screen.getByTitle(/user/i);
-    expect(icon).toBeInTheDocument();
+    expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Renders with icon as ReactNode', () => {

@@ -77,7 +77,11 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
       {...props}>
       <Fragment>
         {title}
-        {isOpened ? <Icon name="carrot-down" /> : <Icon name="carrot-up" />}
+        {isOpened ? (
+          <Icon name="carrot-down" data-testid="accordion-title-icon-down" />
+        ) : (
+          <Icon name="carrot-up" data-testid="accordion-title-icon-up" />
+        )}
       </Fragment>
     </CardHeaderBaseButton>
   );

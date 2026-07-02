@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const CheckCircleInverted = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Check circle inverted',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const CheckCircleInverted = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

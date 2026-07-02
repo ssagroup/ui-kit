@@ -34,7 +34,8 @@ describe('Filters', () => {
     await fireEvent.click(listItemEls[0]);
 
     dropdownToggleEl = within(dropdownElement).getByRole('combobox');
-    expect(dropdownToggleEl).toHaveTextContent('Strategy: checkbox4Carrot up');
+    expect(dropdownToggleEl).toHaveTextContent('Strategy: checkbox4');
+    within(dropdownToggleEl).getByTestId('dropdown-arrow-up');
     expect(logSpy).toHaveBeenCalledWith('>>>Filters onSubmit', {
       exchange: ['binance'],
       pairs: ['btcfdusd'],

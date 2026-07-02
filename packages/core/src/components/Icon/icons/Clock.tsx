@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Clock = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Clock',
-  ...props
-}: SVGProps) => (
+export const Clock = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Clock = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M6.73865 8.0244L6.73805 3.9485C6.73803 3.77453 6.87904 3.63348 7.05301 3.63345C7.22698 3.63343 7.36803 3.77444 7.36805 3.94841L7.36861 7.73391L11.311 6.74833C11.4797 6.70613 11.6508 6.80875 11.6929 6.97752C11.7351 7.1463 11.6325 7.31732 11.4637 7.35952L7.13042 8.44285C6.96164 8.48504 6.79062 8.38243 6.74842 8.21365C6.73727 8.16903 6.73623 8.12426 6.74387 8.08175C6.74045 8.06315 6.73866 8.04398 6.73865 8.0244Z"
       fill={fill}

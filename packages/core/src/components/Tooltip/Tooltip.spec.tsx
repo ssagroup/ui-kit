@@ -1,4 +1,4 @@
-import { waitFor, fireEvent } from '../../../customTest';
+import { fireEvent } from '../../../customTest';
 import { act } from 'react';
 import type { LineSeries, Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
@@ -291,13 +291,13 @@ describe('Tooltip', () => {
   });
 
   describe('ProgressChartTooltip', () => {
-    it('Renders with an icon', async () => {
+    it('Renders with an icon', () => {
       const caption = 'Calories';
       const value = 90;
       const valueFormatted = '90';
       const iconName = 'arrow-up';
 
-      const { getByText, getByRole, findByTitle } = setup(
+      const { getByText, getByRole, container } = setup(
         <ProgressChartTooltip
           caption={caption}
           value={value}
@@ -308,7 +308,7 @@ describe('Tooltip', () => {
 
       getByText(caption);
       getByText(valueFormatted);
-      await findByTitle('Arrow Up');
+      expect(container.querySelector('svg')).toBeInTheDocument();
 
       const progressBar = getByRole('progressbar');
 
@@ -318,12 +318,12 @@ describe('Tooltip', () => {
       expect(progressBar).toHaveStyle('width: 90%');
     });
 
-    it('Renders without an icon', async () => {
+    it('Renders without an icon', () => {
       const caption = 'Calories';
       const value = 80;
       const valueFormatted = '80';
 
-      const { getByText, getByRole, queryByTitle } = setup(
+      const { getByText, getByRole, container } = setup(
         <ProgressChartTooltip
           caption={caption}
           value={value}
@@ -333,9 +333,7 @@ describe('Tooltip', () => {
 
       getByText(caption);
       getByText(valueFormatted);
-      await waitFor(() =>
-        expect(queryByTitle('Arrow Up')).not.toBeInTheDocument(),
-      );
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
 
       const progressBar = getByRole('progressbar');
 
@@ -353,7 +351,7 @@ describe('Tooltip', () => {
         color: 'purple' as keyof MainColors,
       };
 
-      const { getByText, getByRole, queryByTitle } = setup(
+      const { getByText, getByRole, container } = setup(
         <ProgressChartTooltip
           caption={caption}
           value={value}
@@ -364,7 +362,7 @@ describe('Tooltip', () => {
 
       getByText(caption);
       getByText(valueFormatted);
-      expect(queryByTitle('Arrow Up')).not.toBeInTheDocument();
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
 
       const progressBar = getByRole('progressbar');
 

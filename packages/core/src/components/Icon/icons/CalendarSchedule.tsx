@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const CalendarSchedule = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Calendar Schedule',
   ...props
 }: SVGProps) => (
   <svg
@@ -14,7 +13,6 @@ export const CalendarSchedule = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M4.0625 1C4.30412 1 4.5 1.19588 4.5 1.4375V1.875H11.5V1.4375C11.5 1.19588 11.6959 1 11.9375 1C12.1791 1 12.375 1.19588 12.375 1.4375V1.875H13.25C14.2165 1.875 15 2.6585 15 3.625V13.25C15 14.2165 14.2165 15 13.25 15H2.75C1.7835 15 1 14.2165 1 13.25V3.625C1 2.6585 1.7835 1.875 2.75 1.875H3.625V1.4375C3.625 1.19588 3.82088 1 4.0625 1ZM2.75 2.75C2.26675 2.75 1.875 3.14175 1.875 3.625V4.5H14.125V3.625C14.125 3.14175 13.7332 2.75 13.25 2.75H2.75ZM14.125 5.375H1.875V13.25C1.875 13.7332 2.26675 14.125 2.75 14.125H13.25C13.7332 14.125 14.125 13.7332 14.125 13.25V5.375Z"
       fill={fill}

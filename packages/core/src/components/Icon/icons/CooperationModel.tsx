@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const CooperationModel = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Cooperation Model',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const CooperationModel = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(1, 4.5)">
       <path
         fillRule="evenodd"

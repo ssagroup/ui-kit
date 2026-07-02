@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Menu = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Menu',
-  ...props
-}: SVGProps) => (
+export const Menu = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Menu = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(3.1, 5.1)">
       <path
         fillRule="evenodd"

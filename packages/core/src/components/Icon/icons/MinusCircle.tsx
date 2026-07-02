@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const MinusCircle = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Minus circle',
   ...props
 }: SVGProps) => (
   <svg
@@ -14,7 +13,6 @@ export const MinusCircle = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M5.8999 10C5.8999 9.61341 6.2133 9.30001 6.5999 9.30001H13.2666C13.6532 9.30001 13.9666 9.61341 13.9666 10C13.9666 10.3866 13.6532 10.7 13.2666 10.7H6.5999C6.2133 10.7 5.8999 10.3866 5.8999 10Z"
       fill={fill}

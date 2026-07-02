@@ -21,8 +21,8 @@ describe('TradingInfoCard', () => {
     screen.getByText('Title');
   });
 
-  it('Renders with value, title, unit, and icon', async () => {
-    render(
+  it('Renders with value, title, unit, and icon', () => {
+    const { container } = render(
       <TradingInfoCard
         value={'400'}
         unit={'%'}
@@ -35,7 +35,7 @@ describe('TradingInfoCard', () => {
     screen.getByText('%');
     screen.getByText('Title');
 
-    await screen.findByTitle(/Arrow Up/i);
+    expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Renders with an integer value (no tooltip)', async () => {

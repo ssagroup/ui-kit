@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Documents = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Documents',
-  ...props
-}: SVGProps) => (
+export const Documents = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -14,7 +9,6 @@ export const Documents = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M12.5898 16.9014C12.97 16.9014 13.2781 17.2097 13.2783 17.5898C13.2783 17.9701 12.9701 18.2783 12.5898 18.2783H6.68848C6.30824 18.2783 6 17.9701 6 17.5898C6.00017 17.2097 6.30834 16.9014 6.68848 16.9014H12.5898Z"
       fill={fill}

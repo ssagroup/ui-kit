@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const H1 = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'H1',
-  ...props
-}: SVGProps) => (
+export const H1 = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const H1 = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(3, 5)">
       <path
         d="M15.9983 14V1.91528L13.3636 3.50972V1.575L15.9983 0H17.758V14H15.9983Z"

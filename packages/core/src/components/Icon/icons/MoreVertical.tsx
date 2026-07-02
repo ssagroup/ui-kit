@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const MoreVertical = ({
   fill = '#000',
   size = 24,
-  tooltip = 'More vertical',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const MoreVertical = ({
     viewBox="0 0 4 16"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <circle cx="1.66016" cy="2" r="1.5" fill={fill} />
     <circle cx="1.66016" cy="8" r="1.5" fill={fill} />
     <circle cx="1.66016" cy="14" r="1.5" fill={fill} />

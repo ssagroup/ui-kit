@@ -13,7 +13,7 @@ describe('AccountKeys', () => {
     const mockOnClick = jest.fn();
     const { getByRole } = render(<StoryComponent onDelete={mockOnClick} />);
 
-    const deleteButton = getByRole('button', { name: 'Bin' });
+    const deleteButton = getByRole('button', { name: 'Delete' });
     await user.click(deleteButton);
     expect(mockOnClick).toBeCalledTimes(1);
   });
@@ -32,11 +32,11 @@ describe('AccountKeys', () => {
       <StoryComponent onDelete={mockOnClick} />,
     );
 
-    const invisibleIcon = getByRole('button', { name: 'Invisible' });
+    const invisibleIcon = getByRole('button', { name: 'Show secret key' });
     await user.click(invisibleIcon);
     getByText('1234567890');
 
-    const visibleIcon = getByRole('button', { name: 'Visible' });
+    const visibleIcon = getByRole('button', { name: 'Hide secret key' });
     await user.click(visibleIcon);
     getByText('******');
   });

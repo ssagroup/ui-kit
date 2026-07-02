@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const Strikethrough = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Strikethrough',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const Strikethrough = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(6, 5)">
       <path d="M0 7.66785H11.7677V8.13482H0V7.66785Z" fill={fill} />
       <path

@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const RecruitmentTeam = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Recruitment Team',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const RecruitmentTeam = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2.35, 2.35)">
       <path
         fillRule="evenodd"

@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Language = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Language',
-  ...props
-}: SVGProps) => (
+export const Language = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -13,7 +8,6 @@ export const Language = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

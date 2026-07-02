@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Summery = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Clipboard Summary',
-  ...props
-}: SVGProps) => (
+export const Summery = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${size}px`}
@@ -13,7 +8,6 @@ export const Summery = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M9.10939 16.0201C9.35808 15.7598 9.76322 15.7595 10.0117 16.0201C10.2575 16.2781 10.2572 16.6945 10.0117 16.9527L8.64357 18.3883C8.3949 18.6492 7.9899 18.6492 7.74123 18.3883L7.28517 17.9098C7.03921 17.6516 7.03913 17.2353 7.28517 16.9771C7.53386 16.7168 7.939 16.7165 8.18751 16.9771L8.1924 16.982L9.10939 16.0201Z"
       fill={fill}

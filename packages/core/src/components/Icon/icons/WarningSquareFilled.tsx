@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const WarningSquareFilled = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Warning Square Filled',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const WarningSquareFilled = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2, 2)">
       <path
         fillRule="evenodd"

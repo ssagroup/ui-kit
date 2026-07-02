@@ -132,6 +132,7 @@ const Radio = ({
         color={
           isDisabled ? disabledColor : isHovered ? hoveredColor : defaultColor
         }
+        data-testid={isChecked ? 'radio-on-icon' : 'radio-off-icon'}
       />
       {text ? <span data-testid={id}>{text}</span> : null}
     </RadioBase>

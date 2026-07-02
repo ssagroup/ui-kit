@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const ConfirmEmail = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Confirm Email',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const ConfirmEmail = ({
     width={`${size}px`}
     height={`${size}px`}
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M12.5811 9.43434C12.7511 9.2647 13.0263 9.26494 13.196 9.43488C13.3656 9.60482 13.3654 9.8801 13.1954 10.0497L11.4771 11.7651C11.3073 11.9346 11.0322 11.9345 10.8625 11.7648L10.0048 10.9071C9.83505 10.7373 9.83505 10.4621 10.0048 10.2923C10.1746 10.1225 10.4499 10.1225 10.6197 10.2923L11.1437 10.8163C11.1583 10.8309 11.1821 10.8309 11.1967 10.8163L12.5811 9.43434Z"
       fill={fill}

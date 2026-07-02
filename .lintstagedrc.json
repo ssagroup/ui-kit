@@ -1,4 +1,4 @@
 {
-  "*.{ts,js}": "pnpm lint",
-  "*.{tsx}": ["pnpm lint", "pnpm lint:styles"]
+  "*.{ts,js}": "pnpm lint:fix",
+  "*.{tsx}": ["pnpm lint:fix", "pnpm lint:styles:fix"]
 }

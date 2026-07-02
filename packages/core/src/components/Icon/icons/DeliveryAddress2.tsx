@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const DeliveryAddress2 = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Delivery Address 2',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const DeliveryAddress2 = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2.8, 1)">
       <path
         fillRule="evenodd"

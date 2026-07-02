@@ -56,7 +56,7 @@ const testButton = async (spec: TestPropsType) => {
     appendIcon = <Icon name={endIcon} />;
   }
 
-  const { user, getByRole, getByTestId, findByTitle } = setup(
+  const { user, getByRole, getByTestId, container } = setup(
     <Button
       type={type as ButtonProps['type']}
       size={size as ButtonProps['size']}
@@ -85,17 +85,9 @@ const testButton = async (spec: TestPropsType) => {
     expect(mockOnClick).toBeCalled();
   }
 
-  if (startIcon) {
-    const iconTitle = new RegExp(startIcon, 'i');
-    const icon = await findByTitle(iconTitle);
-
-    expect(icon).toBeInTheDocument();
-  }
-  if (endIcon) {
-    const iconTitle = new RegExp(endIcon, 'i');
-    const icon = await findByTitle(iconTitle);
-
-    expect(icon).toBeInTheDocument();
+  const expectedIconCount = (startIcon ? 1 : 0) + (endIcon ? 1 : 0);
+  if (expectedIconCount > 0) {
+    expect(container.querySelectorAll('svg')).toHaveLength(expectedIconCount);
   }
 };
 
@@ -538,8 +530,8 @@ describe('Button', () => {
   });
 
   describe('Icon', () => {
-    it('Renders icon at the start', async () => {
-      const { findByTitle } = render(
+    it('Renders icon at the start', () => {
+      const { container } = render(
         <Button
           startIcon={<Icon name="calendar" />}
           variant="primary"
@@ -547,13 +539,11 @@ describe('Button', () => {
         />,
       );
 
-      const icon = await findByTitle(/calendar/i);
-
-      expect(icon).toBeInTheDocument();
+      expect(container.querySelectorAll('svg')).toHaveLength(1);
     });
 
-    it('Renders icon at the end', async () => {
-      const { findByTitle } = render(
+    it('Renders icon at the end', () => {
+      const { container } = render(
         <Button
           endIcon={<Icon name="calendar" />}
           variant="primary"
@@ -561,13 +551,11 @@ describe('Button', () => {
         />,
       );
 
-      const icon = await findByTitle(/calendar/i);
-
-      expect(icon).toBeInTheDocument();
+      expect(container.querySelectorAll('svg')).toHaveLength(1);
     });
 
-    it('Renders icon on both sides', async () => {
-      const { findByTitle } = render(
+    it('Renders icon on both sides', () => {
+      const { container } = render(
         <Button
           endIcon={<Icon name="carrot-left" />}
           startIcon={<Icon name="carrot-right" />}
@@ -576,20 +564,15 @@ describe('Button', () => {
         />,
       );
 
-      const iconLeft = await findByTitle(/carrot left/i);
-      const iconRight = await findByTitle(/carrot right/i);
-
-      expect(iconLeft).toBeInTheDocument();
-      expect(iconRight).toBeInTheDocument();
+      expect(container.querySelectorAll('svg')).toHaveLength(2);
     });
 
     it('Renders only an icon', () => {
-      const { container, getByTitle } = render(
+      const { container } = render(
         <Button startIcon={<Icon name="archive" />} />,
       );
 
-      const icon = getByTitle(/archive/i);
-      expect(icon).toBeInTheDocument();
+      expect(container.querySelectorAll('svg')).toHaveLength(1);
 
       const spans = container.getElementsByTagName('span');
       expect(spans).toHaveLength(1);

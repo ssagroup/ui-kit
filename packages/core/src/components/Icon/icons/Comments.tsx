@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Comments = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Comments',
-  ...props
-}: SVGProps) => (
+export const Comments = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -14,7 +9,6 @@ export const Comments = ({
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M6.60002 5.90002C6.21343 5.90002 5.90002 6.21343 5.90002 6.60002C5.90002 6.98662 6.21343 7.30002 6.60002 7.30002H17.4C17.7866 7.30002 18.1 6.98662 18.1 6.60002C18.1 6.21343 17.7866 5.90002 17.4 5.90002H6.60002Z"
       fill={fill}

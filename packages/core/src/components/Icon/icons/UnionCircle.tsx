@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const UnionCircle = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Union Circle',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const UnionCircle = ({
     viewBox="0 0 20 20"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M10 18.3337C14.5833 18.3337 18.3333 14.5837 18.3333 10.0003C18.3333 5.41699 14.5833 1.66699 10 1.66699C5.41667 1.66699 1.66667 5.41699 1.66667 10.0003C1.66667 14.5837 5.41667 18.3337 10 18.3337Z"
       stroke={fill}

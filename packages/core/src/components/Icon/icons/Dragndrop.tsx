@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Dragndrop = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Dragndrop',
-  ...props
-}: SVGProps) => (
+export const Dragndrop = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Dragndrop = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(8.4, 20.4) rotate(-90)">
       <path
         d="M1.8 0C0.81 0 0 0.81 0 1.8C0 2.79 0.81 3.6 1.8 3.6C2.79 3.6 3.6 2.79 3.6 1.8C3.6 0.81 2.79 0 1.8 0Z"

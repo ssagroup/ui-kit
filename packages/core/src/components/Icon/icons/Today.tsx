@@ -1,11 +1,6 @@
 import { SVGProps } from '@components/Icon/types';
 
-export const Today = ({
-  fill = '#000',
-  size = 24,
-  tooltip = 'Today',
-  ...props
-}: SVGProps) => (
+export const Today = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
   <svg
     width={`${size}px`}
     height={`${size}px`}
@@ -13,7 +8,6 @@ export const Today = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <title>{tooltip}</title>
     <g transform="translate(2.5, 2)">
       <path
         d="M9.5 8.0752C10.1295 8.0753 10.6396 8.58537 10.6396 9.21484C10.6396 9.84439 10.1295 10.3554 9.5 10.3555C8.8704 10.3555 8.35938 9.84445 8.35938 9.21484C8.35946 8.58531 8.87045 8.0752 9.5 8.0752Z"

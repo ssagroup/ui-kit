@@ -3,7 +3,6 @@ import { SVGProps } from '@components/Icon/types';
 export const EmailOutlined = ({
   fill = '#000',
   size = 24,
-  tooltip = 'Email',
   ...props
 }: SVGProps) => (
   <svg
@@ -13,7 +12,6 @@ export const EmailOutlined = ({
     viewBox="0 0 24 24"
     fill="none"
     {...props}>
-    <title>{tooltip}</title>
     <path
       d="M6 4.7002H18C19.8225 4.7002 21.2998 6.17746 21.2998 8V16C21.2998 17.8225 19.8225 19.2998 18 19.2998H6C4.17746 19.2998 2.7002 17.8225 2.7002 16V8C2.7002 6.17746 4.17746 4.7002 6 4.7002Z"
       stroke={fill}
