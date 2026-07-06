@@ -32,6 +32,13 @@ export const UserInfo = css`
   padding: 10px;
 `;
 
+export const TruncatedText = css`
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 export const LogoutWrapper = (theme: Theme) => css`
   width: 100%;
   padding: 10px 10px 18px 10px;

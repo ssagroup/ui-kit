@@ -67,6 +67,20 @@ export const WithAdditionalInfoComponents: StoryObj<
 
 WithAdditionalInfoComponents.args = {};
 
+export const WithLongNameAndEmail: StoryObj<typeof UserProfile> = () => {
+  const theme = useTheme();
+  return (
+    <UserProfile
+      name="Alexandra Christensen-Montgomery"
+      email="alexandra.christensen-montgomery@extremely-long-company-domain.com"
+      trigger={<Icon size={42} name="user" color={theme.colors.grey} />}
+      onClick={() => alert('Clicked!')}
+    />
+  );
+};
+
+WithLongNameAndEmail.args = {};
+
 export const WithCustomContent: StoryObj<typeof UserProfile> = () => {
   const theme = useTheme();
   return (

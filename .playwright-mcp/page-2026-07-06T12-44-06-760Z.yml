@@ -1,0 +1,10 @@
+- generic [ref=e2]:
+  - button [expanded] [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - dialog "Alexandra Christensen-Montgomery" [ref=e10]:
+    - generic [ref=e11]:
+      - heading "Alexandra Christensen-Montgomery" [level=5] [ref=e12]
+      - generic [ref=e13]: alexandra.christensen-montgomery@extremely-long-company-domain.com
+    - button "Log Out" [active] [ref=e15] [cursor=pointer]:
+      - img [ref=e16]
+      - text: Log Out

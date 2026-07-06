@@ -1,6 +1,9 @@
 import { useTheme } from '@emotion/react';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
+import Tooltip from '@components/Tooltip';
+import TooltipTrigger from '@components/TooltipTrigger';
+import TooltipContent from '@components/TooltipContent';
 import {
   Popover,
   PopoverContent,
@@ -17,6 +20,7 @@ import {
   CustomButton,
   CustomContentWrapper,
   AdditionalInfoWrapper,
+  TruncatedText,
 } from './styles';
 
 /**
@@ -112,15 +116,35 @@ export const UserProfile = ({
       <PopoverTrigger css={ResetBtnStyles}>{trigger}</PopoverTrigger>
       <PopoverContent css={ContentWrapper} className={className}>
         <div css={UserInfo}>
-          <PopoverHeading variant="h5" weight="bold">
-            {name}
-          </PopoverHeading>
-          <PopoverDescription
-            css={{ fontSize: 14, marginTop: 6 }}
-            weight="regular"
-            color={theme.colors.greyDropdownFocused}>
-            {email}
-          </PopoverDescription>
+          <Tooltip
+            enableHover
+            enableClick={false}
+            placement="top"
+            size="small"
+            hoverOpenDelay={1000}>
+            <TooltipTrigger>
+              <PopoverHeading css={TruncatedText} variant="h5" weight="bold">
+                {name}
+              </PopoverHeading>
+            </TooltipTrigger>
+            <TooltipContent>{name}</TooltipContent>
+          </Tooltip>
+          <Tooltip
+            enableHover
+            enableClick={false}
+            placement="top"
+            size="small"
+            hoverOpenDelay={1000}>
+            <TooltipTrigger>
+              <PopoverDescription
+                css={[{ fontSize: 14, marginTop: 6 }, TruncatedText]}
+                weight="regular"
+                color={theme.colors.greyDropdownFocused}>
+                {email}
+              </PopoverDescription>
+            </TooltipTrigger>
+            <TooltipContent>{email}</TooltipContent>
+          </Tooltip>
           {additionalInfo && additionalInfo.length > 0 && (
             <AdditionalInfoWrapper>
               {additionalInfo.map((item, index) => (
