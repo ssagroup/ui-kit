@@ -208,6 +208,7 @@ jobs:
 
   deploy-docs:
     runs-on: ubuntu-latest
+    needs: [build]
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout source code
@@ -216,18 +217,32 @@ jobs:
       - name: Install dependencies (pnpm)
         uses: ./.github/actions/pnpm-install
 
-      - name: Build all packages
-        run: pnpm build:all
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: packages-dist
+          path: packages
 
       - name: Install Vercel CLI
         run: pnpm i -g vercel@latest
+
+      - name: Pull Vercel project settings
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_DOCS_TOKEN }}
+
+      - name: Build docs site (prebuilt output)
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
+        run: vercel build --prod --token=${{ secrets.VERCEL_DOCS_TOKEN }}
 
       - name: Deploy docs site
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_DOCS_TOKEN }}
-        run: vercel deploy --prod --yes --archive=tgz --token=${{ env.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_DOCS_TOKEN }}
 
   deploy-fitness-dashboard:
     runs-on: ubuntu-latest
