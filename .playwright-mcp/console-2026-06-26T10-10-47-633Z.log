@@ -1,2 +1,0 @@
-[     345ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../../node_modules/.pnpm/next@15.5.19_@babel+core@7.26.10_@playwright+test@1.57.0_babel-plugin-macros@3.1.0_reac_4e336a1f7eb5435e89f6ca5093587934/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
-[     435ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4000/favicon.ico:0
