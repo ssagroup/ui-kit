@@ -240,6 +240,7 @@ export default async function handler(
   const server = createServer();
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
+    enableJsonResponse: true,
   });
 
   res.on('close', () => {
