@@ -232,6 +232,9 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_DOCS_TOKEN }}
 
+      - name: Rename Git folder
+        run: mv .git .git2
+
       - name: Build docs site (prebuilt output)
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -243,6 +246,9 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_DOCS_TOKEN }}
+
+      - name: Rename Git folder back
+        run: mv .git2 .git
 
   deploy-fitness-dashboard:
     runs-on: ubuntu-latest
