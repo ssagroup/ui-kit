@@ -237,6 +237,29 @@ export default async function handler(
   req: IncomingMessage & { body?: unknown },
   res: ServerResponse,
 ) {
+  // This transport is stateless (no sessionIdGenerator), so there is no
+  // session to attach a server-push stream to. GET opens a long-lived SSE
+  // stream that only closes when the client disconnects, which on Vercel
+  // just hangs the function until maxDuration kills it (billed as a
+  // Timeout every time). Reject non-POST requests outright instead.
+  if (req.method !== 'POST') {
+    const body = JSON.stringify({
+      jsonrpc: '2.0',
+      error: { code: -32000, message: 'Method not allowed.' },
+      id: null,
+    });
+    // Set Content-Length explicitly: Node omits it for chunked responses,
+    // and on HEAD requests it then suppresses the chunk terminator too,
+    // leaving keep-alive clients waiting forever for a body that never ends.
+    res.writeHead(405, {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+      Allow: 'POST',
+    });
+    res.end(req.method === 'HEAD' ? undefined : body);
+    return;
+  }
+
   const server = createServer();
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
