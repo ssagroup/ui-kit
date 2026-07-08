@@ -1,0 +1,81 @@
+---
+title: Checkbox
+description: Form control for selecting one or more options, with checked, indeterminate, and disabled states.
+---
+
+`Checkbox` supports checked, unchecked, indeterminate, and disabled states,
+and can run controlled (via `externalState`) or uncontrolled (via
+`initialState`). Pass `register` from React Hook Form to wire it into a form.
+
+## Examples
+
+<ComponentPreview name="checkbox-demo">
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@ssa-ui-kit/core';
+
+export function Example() {
+  const [checked, setChecked] = useState(true);
+
+  return (
+    <>
+      <Checkbox
+        id="controlled"
+        text="Controlled checkbox"
+        externalState={checked}
+        onChange={setChecked}
+      />
+      <Checkbox
+        id="success"
+        text="Success variant"
+        color="success"
+        initialState
+      />
+      <Checkbox id="indeterminate" text="Indeterminate" isIndeterminate />
+      <Checkbox id="disabled" text="Disabled" isDisabled initialState />
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Color variants
+
+`color` controls the checked-state and focus colors, sourced from
+`theme.palette`.
+
+| Value                  | Palette key        | Checked fill    |
+| ----------------------- | ------------------- | ---------------- |
+| `primary` *(default)*   | `palette.primary`   | `primary.main`   |
+| `success`               | `palette.success`   | `success.main`   |
+| `custom`                | —                    | bring your own via `className`/`css` |
+
+## Indeterminate state
+
+Set `isIndeterminate` to show a partially-selected state (a minus icon instead
+of a checkmark) — common for a "select all" checkbox controlling a set of
+children.
+
+## Form integration
+
+Pass `register('fieldName')` from React Hook Form, along with `name` and
+`isRequired`, to wire the checkbox into form validation and submission.
+
+## Props
+
+| Prop              | Type                                   | Default          | Description                                                        |
+| ------------------ | --------------------------------------- | ----------------- | -------------------------------------------------------------------- |
+| `text`             | `ReactNode`                             | —                | Label shown next to the checkbox.                                   |
+| `id`               | `string`                                 | auto-generated   | Unique id for the input element.                                    |
+| `name`             | `string`                                 | `''`             | Form field name; required for React Hook Form integration.          |
+| `register`         | `UseFormReturn['register']`             | —                | React Hook Form's `register` function.                              |
+| `onChange`         | `(newState: boolean) => void`           | —                | Called with the new checked state.                                  |
+| `externalState`    | `boolean`                               | —                | Controls the checkbox externally (controlled mode).                 |
+| `initialState`     | `boolean`                                | `false`          | Initial checked state (uncontrolled mode only).                     |
+| `isIndeterminate`  | `boolean`                                | `false`          | Shows a partially-selected (minus) state.                           |
+| `isDisabled`       | `boolean`                                | `false`          | Disables interaction.                                                |
+| `isRequired`       | `boolean`                                | `false`          | Marks the field as required for form validation.                    |
+| `color`            | `'primary' \| 'success' \| 'custom'`    | `'primary'`      | Checked/focus color, sourced from `theme.palette`.                  |
+| `ref`              | `RefObject<HTMLInputElement>`           | —                | Ref to the underlying input element.                                 |
+| `as`               | `ElementType`                            | —                | Render as a different element type (composition).                   |
+| `className`        | `string`                                 | —                | Custom class name.                                                   |

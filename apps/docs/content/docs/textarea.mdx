@@ -1,0 +1,93 @@
+---
+title: Textarea
+description: Multi-line text input with React Hook Form integration, validation, and character-limit support.
+---
+
+`Textarea` is a multi-line counterpart to [`Input`](/docs/input) — same
+validation/status model, but displaying errors and character counts is left
+to you (pair it with `setCountChar` and your own error text, or with `Field`
+for labels/descriptions).
+
+## Examples
+
+<ComponentPreview name="textarea-demo">
+```tsx
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Textarea } from '@ssa-ui-kit/core';
+
+export function Example() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+  const [charCount, setCharCount] = useState(0);
+  const maxLength = 120;
+
+  return (
+    <>
+      <Textarea
+        name="bio"
+        placeholder="Tell us about yourself"
+        register={register}
+        validationSchema={{
+          required: 'Bio is required',
+          maxLength: {
+            value: maxLength,
+            message: `Maximum ${maxLength} characters`,
+          },
+        }}
+        status={errors.bio ? 'error' : 'basic'}
+        rows={4}
+        maxLength={maxLength}
+        setCountChar={(e) =>
+          setCharCount((e.target as HTMLTextAreaElement).value.length)
+        }
+      />
+      <div>
+        {charCount} / {maxLength}
+      </div>
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Status states
+
+`status` accepts `basic` (default), `error`, `success`, and `custom` (same as
+`basic`, no palette styling) — the same border-color model as `Input`, but
+`Textarea` doesn't render its own error message; read `errors` from React Hook
+Form's `formState` and render it yourself.
+
+## Character count
+
+Pass `maxLength` to cap input, and `setCountChar` to receive the change event
+on every keystroke — use it to track and display a character count in your
+own markup (e.g. `{count} / {maxLength}`).
+
+## Composing with Field
+
+For a labeled field with description text, wrap `Textarea` in `Field`
+(`Field.Root` / `Field.Label` / `Field.Control` / `Field.Description`) rather
+than rolling your own label markup.
+
+## Props
+
+| Prop              | Type                                          | Default              | Description                                                              |
+| ------------------- | ------------------------------------------------ | ---------------------- | ------------------------------------------------------------------------------ |
+| `name`            | `string`                                       | —                    | Required. Field name, used for React Hook Form registration.             |
+| `register`        | `UseFormReturn['register']`                   | —                    | React Hook Form's `register` function; optional, but validation needs it. |
+| `placeholder`     | `string`                                       | —                    | Placeholder text shown when empty.                                        |
+| `validationSchema`| `Record<string, unknown>`                     | —                    | React Hook Form validation rules (`required`, `maxLength`, `pattern`, ...). |
+| `status`          | `'basic' \| 'error' \| 'success' \| 'custom'` | `'basic'`            | Visual validation state (border color only — no built-in message).       |
+| `disabled`        | `boolean`                                      | `false`               | Disables the textarea.                                                    |
+| `readOnly`        | `boolean`                                      | `false`               | Focusable and scrollable, but not editable.                               |
+| `rows`            | `number`                                        | `10`                  | Initial visible row count.                                                 |
+| `maxLength`       | `number`                                        | —                    | Maximum character length.                                                  |
+| `setCountChar`    | `(event) => void`                              | —                    | Called on every change — use to track/display a character count.         |
+| `onPaste`         | `ClipboardEventHandler<HTMLTextAreaElement>`  | —                    | Paste event handler.                                                       |
+| `title`           | `string`                                        | —                    | Native `title` attribute — tooltip text on hover.                        |
+| `id`              | `string`                                        | `formElement-${name}` | HTML id, e.g. for a `<label htmlFor>`.                                    |
+| `as`              | `ElementType`                                   | —                    | Render as a different element type (composition).                        |
+| `className`       | `string`                                        | —                    | Custom class name.                                                        |

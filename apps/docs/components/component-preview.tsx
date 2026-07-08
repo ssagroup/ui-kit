@@ -48,7 +48,11 @@ export function ComponentPreview({
       </div>
 
       {tab === 'preview' ? (
-        <div className="flex min-h-[180px] items-center justify-center bg-fd-background p-8">
+        // `not-prose` blocks Fumadocs' per-tag typography rules, but `.prose`
+        // also sets `line-height: 1.75rem` on itself, which still inherits
+        // through `not-prose` — reset it explicitly so fixed-height kit
+        // components (e.g. Badge) don't get their text pushed off-center.
+        <div className="not-prose flex min-h-[180px] items-center justify-center bg-fd-background p-8 [line-height:normal]">
           {Example ? (
             <Example />
           ) : (

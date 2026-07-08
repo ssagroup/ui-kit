@@ -1,4 +1,4 @@
 {
   "title": "Documentation",
-  "pages": ["index", "button", "typeahead", "deployment-status"]
+  "pages": ["index", "avatar", "badge", "button", "checkbox", "chip", "icon-button", "input", "radio-group", "switch", "textarea", "tooltip", "typeahead"]
 }

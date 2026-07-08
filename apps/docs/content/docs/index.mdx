@@ -1,50 +1,103 @@
 ---
 title: Introduction
-description: A shadcn-style documentation site for the SSA UI Kit, built with Fumadocs.
+description: Install and set up the SSA UI Kit, and explore the documented components.
 ---
 
-This is a **proof of concept** for documenting the SSA UI Kit the way
-[shadcn/ui](https://ui.shadcn.com) documents its components — narrative pages,
-instant search, dark mode, and **live, interactive examples** rendered from the
-real `@ssa-ui-kit/core` package.
+The **SSA UI Kit** is SSA Group's shared React component library — buttons,
+forms, tables, navigation, and more, all driven by a single Emotion theme. This
+site documents individual components with live, interactive examples rendered
+from the real `@ssa-ui-kit/core` package; [Storybook](https://ui-kit-core.web.app)
+remains the playground and visual-regression tool.
 
-Storybook is **not** going away — it stays as the playground and
-visual-regression fallback. This site is the human-facing "read the docs"
-surface that Storybook isn't great at.
+## Installation
 
-## What this POC proves
+```bash
+pnpm add @ssa-ui-kit/core
+# or
+npm install @ssa-ui-kit/core
+# or
+yarn add @ssa-ui-kit/core
+```
+
+`@ssa-ui-kit/hooks` is an optional, separate package of shared hooks:
+
+```bash
+pnpm add @ssa-ui-kit/hooks
+```
+
+### Peer dependencies
+
+The kit targets **React 19.x** and requires Emotion and React Hook Form:
+
+```bash
+pnpm add react@19.x react-dom@19.x @emotion/react @emotion/styled react-hook-form
+```
+
+> Using React 18 may cause compatibility issues — upgrade to React 19 first.
+
+### Vite users
+
+If you see `useFormContext() returned null` errors from form components
+(`DatePicker`, `DateRangePicker`, etc.), it's because the UI kit's webpack
+build expects the CommonJS build of `react-hook-form`, while Vite defaults to
+ESM — two different module instances means two different React contexts.
+Alias it in `vite.config.ts`:
+
+```ts
+resolve: {
+  dedupe: ['react', 'react-dom', 'react-hook-form'],
+  alias: {
+    'react-hook-form': path.resolve(
+      __dirname,
+      './node_modules/react-hook-form/dist/index.cjs.js',
+    ),
+  },
+},
+```
+
+Webpack-based projects don't need this. See
+[react-hook-form#8281](https://github.com/react-hook-form/react-hook-form/issues/8281)
+for background.
+
+## Quick start
+
+Wrap your app in `ThemeProvider` from `@emotion/react` with the kit's
+`mainTheme`:
+
+```tsx
+import { ThemeProvider } from '@emotion/react';
+import { mainTheme, Theme as T } from '@ssa-ui-kit/core';
+
+declare module '@emotion/react' {
+  export interface Theme extends T {}
+}
+
+function App() {
+  return <ThemeProvider theme={mainTheme}>{/* your app */}</ThemeProvider>;
+}
+```
+
+The `declare module` block augments Emotion's `Theme` type — required for
+TypeScript projects, and best kept in one shared `types/emotion.d.ts` file.
+
+## A note on server-side rendering
+
+`@ssa-ui-kit/core` currently ships as a single **UMD bundle** that touches
+`window` for its charting dependencies (Plotly, Nivo) at import time, so it
+can't be evaluated during server-side rendering. In Next.js or other SSR
+frameworks, load it dynamically with `ssr: false` — exactly how the live
+examples on this site are rendered.
+
+## Explore components
 
 <Cards>
-  <Card title="Real components, not screenshots" href="/docs/button">
-    Examples import `@ssa-ui-kit/core` directly and render with the live Emotion
-    theme — change the library, the docs update.
+  <Card title="Button" href="/docs/button">
+    Variants driven entirely by the theme palette.
   </Card>
-  <Card title="Stateful components work too" href="/docs/typeahead">
-    The Typeahead demo runs the full react-hook-form integration inline.
+  <Card title="Typeahead" href="/docs/typeahead">
+    Stateful autocomplete with react-hook-form integration.
   </Card>
 </Cards>
 
-## How a component page is built
-
-Each live example is one entry in a registry plus one `<ComponentPreview />`
-tag in the MDX. The registry maps a name to a client-only example module:
-
-```tsx
-// registry/index.tsx
-'button-demo': dynamic(() => import('./examples/button-demo'), { ssr: false }),
-```
-
-Then the page renders `<ComponentPreview name="button-demo">` with a fenced
-code block as its child — the rendered example shows in the **Preview** tab and
-the code block shows in the **Code** tab.
-
-## Key finding from the POC
-
-`@ssa-ui-kit/core` ships as a single **UMD bundle** that pulls in browser-only
-chart libraries (plotly, nivo) at import time. That means it **cannot be
-server-rendered as-is**, so previews load **client-side** via
-`next/dynamic({ ssr: false })` — exactly the trade-off shadcn/ui makes.
-
-For a full rollout we'd recommend shipping the library as **ESM with per-component
-subpath exports** so individual components (like `Button`) can be tree-shaken and
-server-rendered without dragging in the charting stack.
+More components are being documented incrementally — check the sidebar for the
+latest list.

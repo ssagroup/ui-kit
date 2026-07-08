@@ -1,0 +1,102 @@
+---
+title: Tooltip
+description: Compound tooltip system (Tooltip / TooltipTrigger / TooltipContent) built on Floating UI, with hover/click interactions and flexible placement.
+---
+
+`Tooltip` is a compound component — `Tooltip` (root, provides context and
+interaction config), `TooltipTrigger` (wraps the single element that
+activates it), and `TooltipContent` (the floating content, positioned via
+Floating UI). All three are required together.
+
+## Examples
+
+<ComponentPreview name="tooltip-demo">
+```tsx
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  Button,
+} from '@ssa-ui-kit/core';
+
+export function Example() {
+  return (
+    <>
+      <Tooltip placement="top">
+        <TooltipTrigger>
+          <Button>Hover me</Button>
+        </TooltipTrigger>
+        <TooltipContent>Shown on hover</TooltipContent>
+      </Tooltip>
+
+      <Tooltip enableClick enableHover={false} placement="bottom">
+        <TooltipTrigger>
+          <Button variant="secondary">Click me</Button>
+        </TooltipTrigger>
+        <TooltipContent>Shown on click</TooltipContent>
+      </Tooltip>
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Interaction modes
+
+`enableHover` (default `true`) and `enableClick` (default `false`) control how
+the tooltip opens; both can be enabled together. `enableClientPoint` makes the
+tooltip follow the mouse position instead of anchoring to the trigger —
+useful for chart tooltips. `allowHoverContent` keeps the tooltip open while
+the pointer is over the content itself.
+
+## Placement and delay
+
+`placement` sets the preferred side (Floating UI auto-adjusts if there isn't
+room); `offsetOptions` fine-tunes spacing from the trigger.
+`hoverOpenDelay`/`hoverCloseDelay` (ms) help avoid flicker when moving quickly
+between multiple tooltips.
+
+## Size and arrow
+
+`size` accepts `small`, `medium` *(default)*, and `large`. `hasArrow` (default
+`true`) toggles the pointer arrow; `arrowProps` passes extra props to it.
+
+## Controlled
+
+Pass `isOpen` to control visibility externally instead of relying on
+hover/click interactions.
+
+## Props
+
+### Tooltip
+
+| Prop                | Type                          | Default   | Description                                                          |
+| --------------------- | ------------------------------- | ----------- | -------------------------------------------------------------------------- |
+| `children`          | `ReactNode`                    | —         | Required. Must include one `TooltipTrigger` and one `TooltipContent`. |
+| `placement`         | `Placement` (Floating UI)      | —         | Preferred side relative to the trigger; auto-adjusts if space is insufficient. |
+| `enableHover`       | `boolean`                       | `true`    | Opens the tooltip on hover.                                            |
+| `enableClick`       | `boolean`                       | `false`   | Opens the tooltip on click.                                            |
+| `enableClientPoint` | `boolean`                       | `false`   | Follows the mouse position instead of the trigger.                    |
+| `allowHoverContent` | `boolean`                       | `false`   | Keeps the tooltip open when hovering the content itself.              |
+| `offsetOptions`     | `OffsetOptions` (Floating UI)   | —         | Fine-tunes spacing from the trigger.                                   |
+| `hoverOpenDelay`    | `number` (ms)                   | `0`       | Delay before showing on hover.                                         |
+| `hoverCloseDelay`   | `number` (ms)                   | `0`       | Delay before hiding after the pointer leaves.                          |
+| `size`              | `'small' \| 'medium' \| 'large'` | `'medium'` | Size of the tooltip content.                                          |
+| `hasArrow`          | `boolean`                       | `true`    | Shows the pointer arrow.                                               |
+| `arrowProps`        | `TooltipArrowProps`             | —         | Extra props for the arrow element.                                     |
+| `isOpen`            | `boolean`                       | —         | Controls visibility externally when provided.                          |
+
+### TooltipTrigger
+
+| Prop         | Type        | Default | Description                                                    |
+| -------------- | ------------- | --------- | ------------------------------------------------------------------ |
+| `children`   | `ReactNode` | —       | Required. A single valid React element (not a fragment or array). |
+| `className`  | `string`    | —       | Custom class name, merged with the child's own.                |
+
+### TooltipContent
+
+| Prop         | Type            | Default | Description                                               |
+| -------------- | ----------------- | --------- | --------------------------------------------------------------- |
+| `children`   | `ReactNode`      | —       | Required. Tooltip content — text or any React node.        |
+| `className`  | `string`         | —       | Custom class name.                                          |
+| `style`      | `CSSProperties`  | —       | Inline styles, merged after internal positioning styles.   |

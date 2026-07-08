@@ -2,7 +2,7 @@
   "name": "@ssa-ui-kit/docs",
   "version": "0.0.0",
   "private": true,
-  "description": "POC: shadcn-style documentation site for SSA UI Kit, built with Fumadocs + Next.js",
+  "description": "Documentation site for the SSA UI Kit, built with Fumadocs + Next.js",
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "next build",

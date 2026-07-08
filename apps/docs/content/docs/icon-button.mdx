@@ -1,0 +1,70 @@
+---
+title: IconButton
+description: Compact icon-only button for row actions and toolbars, with an optional tooltip.
+---
+
+`IconButton` is a square, icon-only button — good for row actions, toolbars,
+and secondary actions where a text label isn't needed. Pass `title` to show
+the kit's `Tooltip` on hover.
+
+## Examples
+
+<ComponentPreview name="icon-button-demo">
+```tsx
+import { IconButton } from '@ssa-ui-kit/core';
+
+export function Example() {
+  return (
+    <>
+      <IconButton icon="edit" onClick={() => {}} aria-label="Edit" />
+      <IconButton icon="bin" onClick={() => {}} title="Delete" transparent />
+      <IconButton
+        icon="search"
+        onClick={() => {}}
+        aria-label="Search"
+        disabled
+      />
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Icon
+
+`icon` accepts any name from the kit's `Icon` component (e.g. `"edit"`,
+`"bin"`, `"search"`).
+
+## Accessible label
+
+Pass `aria-label` explicitly for screen readers; if omitted, the raw `icon`
+name is used as a fallback. Pass `title` as well (or instead) to also show a
+hover tooltip via the kit's `Tooltip`.
+
+## Background
+
+`transparent` swaps the default theme-grey background for a transparent one —
+useful when the button sits on a card or row that already has its own
+background.
+
+## Custom styling
+
+`styles` lets you override the button, icon color, and icon styles
+independently — `styles.button` merges into the button's Emotion styles,
+`styles.iconColor` overrides the icon color (defaults to
+`theme.colors.greyDarker`), and `styles.icon` passes Emotion styles straight to
+the `Icon`.
+
+## Props
+
+| Prop                | Type                     | Default                 | Description                                                  |
+| --------------------- | -------------------------- | -------------------------- | ------------------------------------------------------------------ |
+| `icon`              | `keyof MapIconsType`     | —                       | Required. Icon name from the kit's `Icon` component.         |
+| `onClick`           | `() => void`             | —                       | Required. Click handler.                                     |
+| `aria-label`        | `string`                 | the raw `icon` name     | Accessible label for screen readers.                          |
+| `title`             | `string`                 | —                       | Tooltip text — shown via the kit's `Tooltip` on hover.       |
+| `disabled`          | `boolean`                | `false`                 | Disables the button and applies disabled styles.              |
+| `transparent`       | `boolean`                | `false`                 | Uses a transparent background instead of the theme grey.      |
+| `styles.button`     | `Interpolation<Theme>`  | —                       | Emotion styles merged with the default button styles.         |
+| `styles.iconColor`  | `string`                 | `theme.colors.greyDarker` | Icon color.                                                 |
+| `styles.icon`       | `Interpolation<Theme>`  | —                       | Emotion styles passed to the `Icon`.                          |

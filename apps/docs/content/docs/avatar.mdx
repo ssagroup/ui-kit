@@ -1,0 +1,64 @@
+---
+title: Avatar
+description: Circular user-identity indicator — a profile photo, colored initials, or a default placeholder icon.
+---
+
+`Avatar` renders one of three states, in priority order: a profile `image`, a
+colored placeholder with up to two `text` initials, or — with no props at
+all — a default user-icon placeholder.
+
+## Examples
+
+<ComponentPreview name="avatar-demo">
+```tsx
+import { Avatar, AvatarSizes } from '@ssa-ui-kit/core';
+
+export function Example() {
+  return (
+    <>
+      <Avatar color="purple" text="J" size={AvatarSizes.small} />
+      <Avatar color="blue" text="AB" />
+      <Avatar color="green" text="K" size={AvatarSizes.large} />
+      <Avatar />
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Profile photo
+
+Pass `image` with a URL to display a photo instead of a placeholder — it
+takes priority over `color`/`text`:
+
+```tsx
+<Avatar image="/users/jane.jpg" />
+```
+
+## Colors and initials
+
+`color` accepts a design-system `theme.colors` key (`purple`, `pink`,
+`yellow`, `yellowWarm`, `green`, `turquoise`, `blueLight`, `blue`) or any CSS
+color string. `text` is truncated to its first two characters.
+
+## Sizes
+
+`size` accepts `small` (24px), `medium` (32px, default), and `large` (46px).
+
+## Border
+
+Image avatars show a border by default; colored/placeholder avatars don't.
+Override either with `border`, and set `borderColor` (a `theme.colors` key or
+CSS color string) to customize it — it defaults to `blue`.
+
+## Props
+
+| Prop          | Type                     | Default                              | Description                                                            |
+| --------------- | -------------------------- | --------------------------------------- | ---------------------------------------------------------------------------- |
+| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'`                       | Avatar diameter (24 / 32 / 46px).                                       |
+| `image`       | `string`                  | —                                     | Profile photo URL — takes priority over `color`/`text`.                |
+| `color`       | `ColorsKeys \| string`   | —                                     | Placeholder background — a `theme.colors` key or any CSS color string. |
+| `text`        | `string`                  | —                                     | Up to two initials shown in the colored placeholder.                    |
+| `border`      | `boolean`                 | `true` for `image`, `false` otherwise | Shows or hides the border.                                              |
+| `borderColor` | `ColorsKeys \| string`   | `'blue'`                              | Border color — a `theme.colors` key or CSS color string.                |
+| `css`         | `Interpolation<Theme>`   | —                                     | Custom Emotion styles, applied after internal styles.                   |

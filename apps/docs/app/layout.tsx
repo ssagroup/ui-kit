@@ -5,11 +5,11 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
-    default: 'SSA UI Kit — Documentation (POC)',
+    default: 'SSA UI Kit — Documentation',
     template: '%s · SSA UI Kit',
   },
   description:
-    'Proof-of-concept documentation site for the SSA UI Kit, built with Fumadocs + Next.js.',
+    'Documentation for the SSA UI Kit — installation, usage, and live component examples.',
 };
 
 export default function Layout({ children }: { children: ReactNode }) {

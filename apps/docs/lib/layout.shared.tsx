@@ -9,23 +9,7 @@ export function baseOptions(): BaseLayoutProps {
       enabled: false,
     },
     nav: {
-      title: (
-        <>
-          <span style={{ fontWeight: 700 }}>SSA UI Kit</span>
-          <span
-            style={{
-              marginLeft: 8,
-              fontSize: 11,
-              padding: '2px 6px',
-              borderRadius: 6,
-              background: 'rgba(99,102,241,0.12)',
-              color: '#6366f1',
-            }}
-          >
-            docs POC
-          </span>
-        </>
-      ),
+      title: <span style={{ fontWeight: 700 }}>SSA UI Kit</span>,
     },
     links: [
       {

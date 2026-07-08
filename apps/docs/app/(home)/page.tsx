@@ -51,7 +51,7 @@ export default function HomePage() {
         </div>
 
         <span className="fd-rise mb-5 inline-flex items-center rounded-full border border-fd-border bg-fd-card/60 px-3 py-1 text-xs text-fd-muted-foreground backdrop-blur">
-          Proof of concept · Fumadocs + Next.js
+          Fumadocs · Next.js
         </span>
         <h1 className="fd-rise mx-auto max-w-3xl text-4xl font-bold tracking-tight [animation-delay:80ms] md:text-6xl">
           SSA UI Kit, documented like a product
@@ -95,7 +95,7 @@ export default function HomePage() {
       {/* Component teasers */}
       <section className="mx-auto w-full max-w-5xl px-4 pb-24">
         <div className="mb-5 flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Documented in this POC</h2>
+          <h2 className="text-lg font-semibold">Documented components</h2>
           <Link
             href="/docs"
             className="text-sm text-fd-muted-foreground hover:text-fd-foreground"

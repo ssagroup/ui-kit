@@ -1,0 +1,68 @@
+---
+title: Switch
+description: Toggle switch for binary on/off states, driven by SwitchContextProvider.
+---
+
+`Switch` is a toggle for binary on/off state. It must be rendered inside a
+`SwitchContextProvider`, which owns the on/off state and gives `Switch` its
+toggle behavior — this keeps the state reusable elsewhere via
+`useSwitchContext`.
+
+## Examples
+
+<ComponentPreview name="switch-demo">
+```tsx
+import { Switch, SwitchContextProvider } from '@ssa-ui-kit/core';
+
+export function Example() {
+  return (
+    <>
+      <SwitchContextProvider initialState={false}>
+        <Switch label="Enable notifications" />
+      </SwitchContextProvider>
+      <SwitchContextProvider initialState={true}>
+        <Switch label="Success variant" color="success" />
+      </SwitchContextProvider>
+      <SwitchContextProvider initialState={true}>
+        <Switch label="Disabled" isDisabled />
+      </SwitchContextProvider>
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Color variants
+
+| Value                | On background   | Hover           | Off-state focus outline |
+| ---------------------- | ----------------- | ----------------- | -------------------------- |
+| `primary` *(default)* | `primary.main`   | `primary.dark`   | `primary.light`            |
+| `success`             | `success.main`   | `success.dark`   | `success.light`            |
+| `custom`              | via `colors.on`  | —                 | via `colors.offOutline`    |
+
+The off state always renders a neutral grey track regardless of `color`; the
+disabled state always uses a muted grey background, for every variant.
+
+## Reading the state elsewhere
+
+`useSwitchContext()` returns `{ isOn, toggle }` from the nearest
+`SwitchContextProvider` — use it to read or drive the switch from a sibling or
+parent component.
+
+## Props
+
+### SwitchContextProvider
+
+| Prop           | Type        | Default | Description                          |
+| ---------------- | ------------- | --------- | --------------------------------------- |
+| `initialState`  | `boolean`   | `false` | Initial on/off state.                |
+| `children`      | `ReactNode` | —       | Required. Typically a `Switch`.      |
+
+### Switch
+
+| Prop         | Type                                    | Default     | Description                                                       |
+| -------------- | ------------------------------------------ | ------------- | ----------------------------------------------------------------------- |
+| `label`       | `string`                                  | —           | Required. Accessible label (`aria-label`).                        |
+| `isDisabled`  | `boolean`                                  | `false`     | Disables toggling; always renders a muted grey background.        |
+| `color`       | `'primary' \| 'success' \| 'custom'`     | `'primary'` | On-state color.                                                     |
+| `colors`      | `{ on?: string; offOutline?: string }`    | —           | Fine-grained overrides, only used when `color="custom"`.          |

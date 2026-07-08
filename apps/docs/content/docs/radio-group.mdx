@@ -1,0 +1,80 @@
+---
+title: RadioGroup
+description: Single-select group of Radio buttons, with shared color and controlled/uncontrolled selection state.
+---
+
+`RadioGroup` orchestrates a set of `Radio` children so only one can be
+selected at a time — it injects `name`, `isChecked`, and `onChange` into every
+`Radio` child automatically. An individual `Radio` can still override the
+group's `color` with its own.
+
+## Examples
+
+<ComponentPreview name="radio-group-demo">
+```tsx
+import { useState } from 'react';
+import { Radio, RadioGroup } from '@ssa-ui-kit/core';
+
+export function Example() {
+  const [selected, setSelected] = useState('apple');
+
+  return (
+    <RadioGroup
+      name="fruit"
+      externalState={selected}
+      onChange={(value) => setSelected(String(value))}
+    >
+      <Radio id="apple" value="apple" text="Apple" />
+      <Radio id="orange" value="orange" text="Orange" />
+      <Radio id="banana" value="banana" text="Banana" isDisabled />
+    </RadioGroup>
+  );
+}
+```
+</ComponentPreview>
+
+## Color variants
+
+`color` on `RadioGroup` applies to every `Radio` child; an individual `Radio`
+can override it with its own `color` prop.
+
+| Value                  | Palette key        | Resting / checked | Hover          |
+| ----------------------- | ------------------- | ------------------- | --------------- |
+| `primary` *(default)*   | `palette.primary`   | `primary.main`      | `primary.dark`  |
+| `success`               | `palette.success`   | `success.main`      | `success.dark`  |
+| `custom`                | —                    | set per-`Radio` via its `colors` prop | — |
+
+## Controlled vs uncontrolled
+
+Pass `externalState` to control the selected value externally; omit it to let
+the group manage selection in its own internal state.
+
+## Props
+
+### RadioGroup
+
+| Prop             | Type                                                | Default     | Description                                                          |
+| ------------------ | ---------------------------------------------------- | ------------- | ------------------------------------------------------------------------ |
+| `name`            | `string`                                             | —           | Required. Shared `name` injected into every `Radio` child.           |
+| `onChange`        | `(value: string \| number) => void`                 | —           | Required. Called with the newly selected value.                      |
+| `externalState`   | `string \| number`                                   | —           | Controls the selected value externally.                              |
+| `isRequired`      | `boolean`                                             | `false`     | Marks the group as required for form validation.                     |
+| `color`           | `'primary' \| 'success' \| 'custom'`                | `'primary'` | Color applied to every `Radio` child, unless overridden per-`Radio`. |
+| `className`       | `string`                                             | —           | Custom class name.                                                    |
+| `children`        | `ReactElement<RadioProps> \| ReactElement<RadioProps>[]` | — | `Radio` elements to render as the group.                              |
+
+### Radio
+
+| Prop           | Type                                                 | Default        | Description                                                              |
+| ---------------- | ------------------------------------------------------ | ---------------- | ---------------------------------------------------------------------------- |
+| `value`         | `string`                                              | —              | Required. Value reported to `onChange` when selected.                    |
+| `id`            | `string`                                              | auto-generated | Unique id for the input element.                                         |
+| `name`          | `string`                                              | `''`           | Group name — set automatically when rendered inside `RadioGroup`.        |
+| `text`          | `string`                                              | —              | Label shown next to the radio.                                           |
+| `isChecked`     | `boolean`                                              | —              | Checked state — set automatically inside `RadioGroup`.                   |
+| `isDisabled`    | `boolean`                                              | `false`        | Disables the radio.                                                       |
+| `isRequired`    | `boolean`                                              | `false`        | Marks the field as required.                                              |
+| `onChange`      | `(value: string) => void`                             | —              | Called with `value` when selected — set automatically inside `RadioGroup`. |
+| `color`         | `'primary' \| 'success' \| 'custom'`                 | `'primary'`    | Overrides the group's color for this radio.                              |
+| `colors`        | `{ default?: string; hovered?: string; disabled?: string }` | — | Fine-grained overrides, only used when `color="custom"`.                 |
+| `className`     | `string`                                              | —              | Custom class name.                                                        |

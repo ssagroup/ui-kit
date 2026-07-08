@@ -1,0 +1,100 @@
+---
+title: Input
+description: Flexible text input with built-in validation, status states, icons, and React Hook Form integration.
+---
+
+`Input` is a text field with visual validation states, optional start/end
+elements (icons or actions), helper text, and character counting. Pass
+`register` from React Hook Form to wire up validation.
+
+## Examples
+
+<ComponentPreview name="input-demo">
+```tsx
+import { Input, Icon } from '@ssa-ui-kit/core';
+import { useForm, type FieldError } from 'react-hook-form';
+
+export function Example() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  return (
+    <Input
+      name="email"
+      type="email"
+      placeholder="Enter your email"
+      register={register}
+      validationSchema={{
+        required: 'Email is required',
+        pattern: {
+          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          message: 'Invalid email address',
+        },
+      }}
+      status={errors.email ? 'error' : 'basic'}
+      errors={errors.email as FieldError | undefined}
+      showHelperText
+      helperText="We'll never share your email"
+      startElement={<Icon name="email" size={16} />}
+    />
+  );
+}
+```
+</ComponentPreview>
+
+## Status states
+
+`status` accepts `basic` (default), `error`, and `success`, each with a
+matching border color and status icon. Pass `errors` — a React Hook Form
+`FieldError` — to surface the validation message when `showHelperText` is set.
+
+## Icons and actions
+
+`startElement` and `endElement` accept any React element — typically an
+`Icon`, but also a button or link, e.g. a password-visibility toggle wired
+through `onEndElementClick`, or a "Resend code" action.
+
+## Helper text and character count
+
+Set `showHelperText` to render `helperText` below the input. Pass `maxLength`
+alongside it to also show a live character count (e.g. `45 / 100`).
+
+## Disabled
+
+Set `disabled` to prevent interaction — the input is visually muted and its
+status icon is hidden.
+
+## Props
+
+| Prop                  | Type                                     | Default    | Description                                                              |
+| --------------------- | ----------------------------------------- | ---------- | ------------------------------------------------------------------------- |
+| `name`                | `string`                                  | —          | Required. Field name, used for React Hook Form registration.              |
+| `register`            | `UseFormReturn['register']`              | —          | React Hook Form's `register` function; enables validation.                |
+| `control`             | `UseFormReturn['control']`               | —          | React Hook Form's `control`, for advanced integrations.                   |
+| `setValue`            | `UseFormReturn['setValue']`              | —          | React Hook Form's `setValue`, for programmatic updates.                   |
+| `type`                | `string`                                  | `'text'`   | HTML input type (`text`, `email`, `password`, `number`, ...).             |
+| `placeholder`         | `string`                                  | —          | Placeholder text shown when empty.                                        |
+| `validationSchema`    | `Record<string, unknown>`                | —          | React Hook Form validation rules (`required`, `pattern`, `minLength`, ...). |
+| `status`              | `'basic' \| 'error' \| 'success' \| 'custom'` | `'basic'`  | Visual validation state.                                                   |
+| `errors`              | `FieldError`                             | —          | React Hook Form field error, used to render the message.                  |
+| `showHelperText`      | `boolean`                                 | `false`    | Show `helperText`, the error message, or a character count below the input. |
+| `helperText`          | `string`                                  | —          | Helper copy shown when `showHelperText` is set and there's no error.      |
+| `maxLength`           | `number`                                  | —          | Max character length; shown as a live count when paired with `showHelperText`. |
+| `showStatusIcon`      | `boolean`                                 | `true`     | Show the error/success icon inside the input.                             |
+| `showBorders`         | `boolean`                                 | `true`     | Show the input's border.                                                   |
+| `startElement`        | `ReactElement`                            | —          | Element rendered before the input (e.g. an `Icon`).                        |
+| `endElement`          | `ReactElement`                            | —          | Element rendered after the input (e.g. an `Icon` or action button).       |
+| `onStartElementClick` | `(event: BaseSyntheticEvent) => void`    | —          | Click handler for `startElement`.                                          |
+| `onEndElementClick`   | `(event: BaseSyntheticEvent) => void`    | —          | Click handler for `endElement`.                                            |
+| `errorTooltip`        | `string`                                  | —          | Tooltip shown on hover over the error icon.                                |
+| `successTooltip`      | `string`                                  | —          | Tooltip shown on hover over the success icon.                             |
+| `disabled`            | `boolean`                                 | `false`    | Disables the input.                                                       |
+| `onKeyUp`             | `KeyboardEventHandler<HTMLInputElement>` | —          | Key-up handler (also used internally for character counting).             |
+| `inputProps`          | `InputHTMLAttributes<HTMLInputElement>`  | —          | Extra props passed straight to the underlying `<input>`.                  |
+| `css`                 | `Interpolation<Theme>`                   | —          | Custom Emotion styles.                                                     |
+| `className`           | `string`                                  | —          | Class name for the input element.                                         |
+| `wrapperClassName`    | `string`                                  | —          | Class name for the wrapper container.                                     |
+| `helperClassName`     | `string`                                  | —          | Class name for the helper-text container.                                 |
+| `as`                  | `ElementType`                             | —          | Render as a different element type (composition).                         |

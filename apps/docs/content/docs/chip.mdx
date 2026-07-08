@@ -1,0 +1,94 @@
+---
+title: Chip
+description: Compact component for tags, labels, and removable items — with icons, avatars, and delete actions.
+---
+
+`Chip` displays a compact piece of information — a tag, filter, or removable
+item. It supports a leading icon or avatar, an optional delete button
+(`onDelete`), and can be made clickable via `onClick`.
+
+## Examples
+
+<ComponentPreview name="chip-demo">
+```tsx
+import { useState } from 'react';
+import { Chip } from '@ssa-ui-kit/core';
+
+export function Example() {
+  const [tags, setTags] = useState(['React', 'TypeScript']);
+
+  return (
+    <>
+      {tags.map((tag) => (
+        <Chip
+          key={tag}
+          label={tag}
+          color="primary"
+          onDelete={() => setTags((prev) => prev.filter((t) => t !== tag))}
+        />
+      ))}
+      <Chip
+        label="Active filter"
+        icon="filter"
+        variant="outlined"
+        color="secondary"
+      />
+      <Chip label="Success" color="success" />
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Variants and colors
+
+`variant` accepts `filled` (default, solid `palette.main` background) and
+`outlined` (`palette.light` background, `palette.main` border, `palette.dark`
+text). `color` reads from `theme.palette`:
+
+| Value                | Notes                                                       |
+| ----------------------- | -------------------------------------------------------------- |
+| `default` *(default)*  | Neutral — white bg (outlined) / `greyLighter` bg (filled)     |
+| `primary`             | Blue, `theme.palette.primary`                                 |
+| `secondary`           | Grey, `theme.palette.secondary` (dark text)                   |
+| `success`             | Green, `theme.palette.success`                                |
+| `error`               | Red, `theme.palette.error`                                     |
+| `warning`             | Orange, `theme.palette.warning`                                |
+
+## Icon and avatar
+
+`icon` shows a leading icon from the kit's `Icon` component (defaults to
+`'plus'` when `showIcon` is true and no icon is given); pass
+`showIcon={false}` to hide it. `avatar` renders instead of the icon when both
+are provided — pass an `Avatar`.
+
+## Delete and click
+
+Pass `onDelete` to show a trailing delete button; users can also press
+Backspace/Delete while the chip is focused. Pass `onClick` (or set
+`clickable`) to make the whole chip interactive with a pointer cursor and
+keyboard support.
+
+## Sizes
+
+`size` accepts `small`, `medium` *(default)*, and `large`.
+
+## Props
+
+| Prop           | Type                                                                       | Default                    | Description                                                       |
+| ---------------- | ----------------------------------------------------------------------------- | ----------------------------- | ---------------------------------------------------------------------- |
+| `label`        | `ReactNode`                                                                 | —                           | Required. Main chip content.                                       |
+| `title`        | `ReactNode`                                                                 | —                           | Optional heading text shown before the label.                      |
+| `variant`      | `'filled' \| 'outlined'`                                                   | `'filled'`                  | Visual style.                                                       |
+| `color`        | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'error' \| 'warning'` | `'default'`                | Palette-driven color theme.                                        |
+| `size`         | `'small' \| 'medium' \| 'large'`                                           | `'medium'`                  | Chip size.                                                          |
+| `disabled`     | `boolean`                                                                   | `false`                      | Disables click and delete interactions.                            |
+| `icon`         | `IconProps['name']`                                                        | `'plus'` when `showIcon`    | Leading icon name.                                                  |
+| `showIcon`     | `boolean`                                                                   | `true`                       | Hides the leading icon entirely when `false`.                       |
+| `avatar`       | `ReactNode`                                                                 | —                           | Rendered instead of the icon, when provided.                        |
+| `onDelete`     | `(event) => void`                                                          | —                           | Shows a delete button; also wired to Backspace/Delete keys.         |
+| `deleteIcon`   | `IconProps['name']`                                                        | `'cross'`                    | Icon used for the delete button.                                    |
+| `onClick`      | `(event) => void`                                                          | —                           | Makes the chip clickable.                                           |
+| `clickable`    | `boolean`                                                                   | —                           | Explicitly marks the chip as clickable without requiring `onClick`. |
+| `className`    | `string`                                                                    | —                           | Custom class name.                                                  |
+| `css`          | `Interpolation<Theme>`                                                     | —                           | Custom Emotion styles.                                              |

@@ -1,0 +1,72 @@
+---
+title: Badge
+description: Small pill-shaped label for statuses, counts, or tags — in a fixed set of design-system colors or any custom color.
+---
+
+`Badge` is a compact, pill-shaped label — typically used for statuses,
+counts, or short tags. `children` can be text or any React node (e.g. an
+`Icon`).
+
+## Examples
+
+<ComponentPreview name="badge-demo">
+```tsx
+import { Badge } from '@ssa-ui-kit/core';
+
+export function Example() {
+  return (
+    <>
+      <Badge color="purple">Purple</Badge>
+      <Badge color="blue">Blue</Badge>
+      <Badge color="green">Green</Badge>
+      <Badge color="pink">Pink</Badge>
+      <Badge color="turquoise" size="small">
+        Small
+      </Badge>
+      <Badge color="yellowWarm" size="large">
+        Large
+      </Badge>
+    </>
+  );
+}
+```
+</ComponentPreview>
+
+## Colors
+
+`color` accepts one of the design-system palette keys below, or any valid CSS
+color string (e.g. `#F7931A`) for a one-off custom background.
+
+| Value                  | Notes                        |
+| ------------------------ | ------------------------------- |
+| `purple` *(default)*    | design-system purple          |
+| `pink`                  | design-system pink            |
+| `yellow`                | design-system yellow          |
+| `yellowWarm`            | design-system warm yellow     |
+| `green`                 | design-system green           |
+| `turquoise`             | design-system turquoise       |
+| `blueLight`             | design-system light blue      |
+| `blue`                  | design-system blue             |
+| any CSS color string    | e.g. `#F7931A`, `rgb(0,128,0)` |
+
+## Sizes
+
+`size` accepts `small`, `medium` *(default)*, and `large` — each with its own
+height, padding, and font size.
+
+## Icons
+
+`children` can be any React node, so an `Icon` works too — pair it with a
+`css` override (e.g. `display: flex; align-items: center; gap: 4px`), since
+the badge is `inline-block` by default and won't align an icon and text on
+its own.
+
+## Props
+
+| Prop        | Type                                                                                   | Default     | Description                                                |
+| ------------- | ----------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------- |
+| `color`     | `'pink' \| 'yellow' \| 'yellowWarm' \| 'green' \| 'turquoise' \| 'purple' \| 'blueLight' \| 'blue' \| string` | `'purple'`  | Background color — a palette key or any CSS color string. |
+| `size`      | `'small' \| 'medium' \| 'large'`                                                          | `'medium'`  | Controls height, padding, and font size.                    |
+| `children`  | `ReactNode`                                                                                | —           | Badge content — text or any React node.                    |
+| `as`        | `ElementType`                                                                              | —           | Render as a different element type (composition).           |
+| `className` | `string`                                                                                   | —           | Custom class name.                                          |
