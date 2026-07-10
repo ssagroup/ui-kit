@@ -25,9 +25,59 @@ const features = [
 
 const components = [
   {
+    name: 'Avatar',
+    href: '/docs/avatar',
+    body: 'Photo, colored initials, or a placeholder icon.',
+  },
+  {
+    name: 'Badge',
+    href: '/docs/badge',
+    body: 'Pill-shaped labels for statuses, counts, or tags.',
+  },
+  {
     name: 'Button',
     href: '/docs/button',
     body: 'Variants driven entirely by the theme palette.',
+  },
+  {
+    name: 'Checkbox',
+    href: '/docs/checkbox',
+    body: 'Checked, indeterminate, and disabled states.',
+  },
+  {
+    name: 'Chip',
+    href: '/docs/chip',
+    body: 'Tags and removable items with icons and avatars.',
+  },
+  {
+    name: 'IconButton',
+    href: '/docs/icon-button',
+    body: 'Icon-only actions for table rows and toolbars.',
+  },
+  {
+    name: 'Input',
+    href: '/docs/input',
+    body: 'Validation, status states, and form integration.',
+  },
+  {
+    name: 'RadioGroup',
+    href: '/docs/radio-group',
+    body: 'Single-select groups with shared color state.',
+  },
+  {
+    name: 'Switch',
+    href: '/docs/switch',
+    body: 'Binary on/off toggle with context-based state.',
+  },
+  {
+    name: 'Textarea',
+    href: '/docs/textarea',
+    body: 'Multi-line input with validation and char limits.',
+  },
+  {
+    name: 'Tooltip',
+    href: '/docs/tooltip',
+    body: 'Hover and click tooltips built on Floating UI.',
   },
   {
     name: 'Typeahead',
@@ -103,7 +153,7 @@ export default function HomePage() {
             View all →
           </Link>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {components.map((c) => (
             <Link
               key={c.name}
