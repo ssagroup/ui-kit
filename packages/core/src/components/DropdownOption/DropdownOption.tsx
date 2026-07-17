@@ -36,8 +36,8 @@ const multipleStyles = ({ theme, isDisabled }: MultipleStylesProps) => {
 const DropdownOption = styled.li<DropdownItemProps>`
   overflow: hidden;
 
-  height: 34px;
-  padding: 8px 16px;
+  height: 40px;
+  padding: 8px 12px;
 
   border: none;
   background: ${({ isActive, theme }) =>

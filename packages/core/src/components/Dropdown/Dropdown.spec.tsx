@@ -433,4 +433,49 @@ describe('Dropdown', () => {
     expect(arrowIcon).toBeInTheDocument();
     expect(arrowIcon).toHaveAttribute('data-testid', 'testArrow');
   });
+
+  it('does not render a label or helper text by default', () => {
+    const { queryByText } = setup();
+
+    expect(queryByText('Manager')).not.toBeInTheDocument();
+  });
+
+  it('renders a label when provided', () => {
+    const { getByText } = setup({ label: 'Manager' });
+
+    expect(getByText('Manager')).toBeInTheDocument();
+  });
+
+  it('renders helper text when provided', () => {
+    const { getByText } = setup({ helperText: 'Pick a manager' });
+
+    expect(getByText('Pick a manager')).toBeInTheDocument();
+  });
+
+  it('renders the error message instead of helper text when errors is provided', () => {
+    const { getByText, queryByText } = setup({
+      helperText: 'Pick a manager',
+      errors: { type: 'required', message: 'Manager is required' },
+    });
+
+    expect(getByText('Manager is required')).toBeInTheDocument();
+    expect(queryByText('Pick a manager')).not.toBeInTheDocument();
+  });
+
+  it('renders no leading icon by default (only the trailing carrot arrow)', () => {
+    const { getByTestId } = setup();
+    const dropdownToggleEl = within(getByTestId('dropdown')).getByRole(
+      'combobox',
+    );
+    expect(dropdownToggleEl.querySelectorAll('svg').length).toBe(1);
+  });
+
+  it('renders the icon prop as a leading icon when no item is selected', () => {
+    const { getByTestId } = setup({ icon: 'carrot-down' });
+    const dropdownToggleEl = within(getByTestId('dropdown')).getByRole(
+      'combobox',
+    );
+    // Leading icon + trailing carrot arrow
+    expect(dropdownToggleEl.querySelectorAll('svg').length).toBe(2);
+  });
 });

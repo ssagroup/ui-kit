@@ -20,6 +20,7 @@ export interface DropdownToggleProps
   colors?: Array<string | undefined>;
   className?: string;
   selectedCount?: number;
+  status?: 'basic' | 'error' | 'success';
 }
 
 export interface MultipleStylesProps {
