@@ -416,7 +416,7 @@ The project is built using:
 
 ## 📖 Documentation
 
-For detailed component documentation, examples, and API references, visit our [Storybook documentation](https://ssagroup.github.io/ui-kit/).
+For detailed component documentation, examples, and API references, visit our [Storybook documentation](https://uikit.ssa.group/).
 
 ## 🤝 Want to contribute?
 
