@@ -272,7 +272,11 @@ const Dropdown = <T extends DropdownOptionProps>({
   const leadingElement = !isNill(selectedAvatar) ? (
     (selectedAvatar as ReactNode)
   ) : icon ? (
-    <Icon name={icon} size={16} />
+    <Icon
+      name={icon}
+      size={16}
+      color={isDisabled ? theme.colors.grey : theme.colors.greyDarker80}
+    />
   ) : null;
 
   const toggleContent = !isNill(leadingElement) ? (
