@@ -410,6 +410,74 @@ export const PositionAuto: StoryObj<Args> = {
 
 PositionAuto.args = { isDisabled: false };
 
+export const WithLabelAndHelperText: StoryObj<Args> = {
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <Dropdown
+        {...args}
+        label="Manager"
+        helperText="Choose the team's manager"
+        selectedItem={items[2]}>
+        {items.slice(0, 5).map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+
+      <Dropdown
+        {...args}
+        label="Manager"
+        icon="user"
+        placeholder="Select a manager">
+        {items.slice(0, 5).map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+
+      <Dropdown
+        {...args}
+        label="Manager"
+        errors={{ type: 'required', message: 'Manager is required' }}>
+        {items.slice(0, 5).map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+
+      <Dropdown
+        {...args}
+        label="Manager"
+        success
+        helperText="Looks good!"
+        selectedItem={items[2]}>
+        {items.slice(0, 5).map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+    </div>
+  ),
+};
+
+WithLabelAndHelperText.args = { isDisabled: false };
+
 export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
   const [selectedIndex, setSelectedIndex] = useState(1);
 

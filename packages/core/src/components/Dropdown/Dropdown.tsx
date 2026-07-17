@@ -15,10 +15,19 @@ import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
 import Avatar, { AvatarSizes } from '@components/Avatar';
+import Icon from '@components/Icon';
+import Label from '@components/Label';
+import FormHelperText from '@components/FormHelperText';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, DropdownPositions, DropdownProps } from './types';
+
+const DropdownFieldWrapper = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
 
 const DropdownBase = styled.div`
   display: inline-block;
@@ -137,8 +146,14 @@ const Dropdown = <T extends DropdownOptionProps>({
   placeholder = 'Select something',
   maxHeight = 200,
   avatarBorder = false,
+  label,
+  helperText,
+  errors,
+  success,
+  icon,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
+  const status = success ? 'success' : errors ? 'error' : 'basic';
   const { dropdownPosition = DropdownPositions.auto } = componentProps ?? {};
 
   const theme = useTheme();
@@ -254,9 +269,15 @@ const Dropdown = <T extends DropdownOptionProps>({
     ) : null
   ) : null;
 
-  const toggleContent = !isNill(selectedAvatar) ? (
+  const leadingElement = !isNill(selectedAvatar) ? (
+    (selectedAvatar as ReactNode)
+  ) : icon ? (
+    <Icon name={icon} size={16} />
+  ) : null;
+
+  const toggleContent = !isNill(leadingElement) ? (
     <SelectedContent>
-      {selectedAvatar as ReactNode}
+      {leadingElement}
       <span style={{ minWidth: 0 }}>{value}</span>
     </SelectedContent>
   ) : (
@@ -264,28 +285,40 @@ const Dropdown = <T extends DropdownOptionProps>({
   );
 
   return (
-    <DropdownContext.Provider value={contextValue}>
-      <DropdownBase
-        {...componentProps?.base}
-        ref={dropdownRef}
-        data-testid="dropdown">
-        <DropdownToggle
-          {...componentProps?.toggleButton}
-          className={className}
-          isOpen={isOpen}
-          disabled={isDisabled}
-          onClick={setIsOpen.bind(null, !isOpen)}
-          onFocus={setIsFocused.bind(null, true)}
-          colors={colors}
-          ariaLabelledby={`dropdown-label-${dropdownId}`}
-          ariaControls={`dropdown-popup-${dropdownId}`}>
-          {toggleContent}
-          <DropdownArrow {...componentProps?.toggleButtonArrow} isUp={isOpen} />
-        </DropdownToggle>
+    <DropdownFieldWrapper>
+      {label ? <Label isDisabled={isDisabled}>{label}</Label> : null}
+      <DropdownContext.Provider value={contextValue}>
+        <DropdownBase
+          {...componentProps?.base}
+          ref={dropdownRef}
+          data-testid="dropdown">
+          <DropdownToggle
+            {...componentProps?.toggleButton}
+            className={className}
+            isOpen={isOpen}
+            disabled={isDisabled}
+            status={status}
+            onClick={setIsOpen.bind(null, !isOpen)}
+            onFocus={setIsFocused.bind(null, true)}
+            colors={colors}
+            ariaLabelledby={`dropdown-label-${dropdownId}`}
+            ariaControls={`dropdown-popup-${dropdownId}`}>
+            {toggleContent}
+            <DropdownArrow
+              {...componentProps?.toggleButtonArrow}
+              isUp={isOpen}
+            />
+          </DropdownToggle>
 
-        {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}
-      </DropdownBase>
-    </DropdownContext.Provider>
+          {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}
+        </DropdownBase>
+      </DropdownContext.Provider>
+      {helperText || errors ? (
+        <FormHelperText role="status" status={status} disabled={isDisabled}>
+          {errors?.message || helperText}
+        </FormHelperText>
+      ) : null}
+    </DropdownFieldWrapper>
   );
 };
 

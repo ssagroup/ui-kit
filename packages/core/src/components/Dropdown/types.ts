@@ -1,4 +1,5 @@
 import React from 'react';
+import type { FieldError } from 'react-hook-form';
 import { Interpolation, Theme } from '@emotion/react';
 import { DropdownOptionProps } from '@components/DropdownOptions';
 import { CommonProps } from '@global-types/emotion';
@@ -121,6 +122,36 @@ export interface DropdownProps<
    * @default false
    */
   avatarBorder?: boolean;
+
+  /**
+   * Label text displayed above the dropdown
+   */
+  label?: string;
+
+  /**
+   * Helper text displayed below the dropdown
+   * Shown when no errors are present
+   */
+  helperText?: string;
+
+  /**
+   * React Hook Form field error object
+   * Used to display validation error messages
+   */
+  errors?: FieldError;
+
+  /**
+   * Whether to display success state styling
+   * When true, status is set to 'success'
+   * @default false
+   */
+  success?: boolean;
+
+  /**
+   * Leading icon shown in the toggle button when no selected item avatar is present.
+   * Ignored once an item with an `avatar` is selected — the avatar always takes priority.
+   */
+  icon?: IconProps['name'];
 
   /**
    * Props object for sub-components

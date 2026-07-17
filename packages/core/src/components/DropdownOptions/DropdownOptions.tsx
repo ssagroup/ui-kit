@@ -18,7 +18,7 @@ const DropdownOptionsBase = styled.ul<{
 
   list-style: none;
 
-  padding: 0;
+  padding: 4px;
 
   ${({ placement = 'bottom' }) =>
     placement === 'top'
@@ -45,7 +45,8 @@ const dropdownOptionButton = css`
   gap: 8px;
   cursor: pointer;
   font: inherit;
-  font-size: 0.813rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   outline: inherit;
   text-align: left;
 

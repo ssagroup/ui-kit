@@ -16,7 +16,7 @@ const DropdownArrow = ({ isUp, ...restProps }: DropdownArrowProps) => (
   <DropdownArrowBase>
     <Icon
       name={`carrot-${isUp ? 'up' : 'down'}`}
-      size={12}
+      size={16}
       data-testid={`dropdown-arrow-${isUp ? 'up' : 'down'}`}
       {...restProps}
     />
