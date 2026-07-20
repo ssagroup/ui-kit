@@ -56,7 +56,7 @@ export const DatePickerMonthsSwitch = () => {
         endIcon={
           <C.Icon
             name="carrot-left"
-            size={14}
+            size={18}
             tooltip="Previous month"
             color={
               isMinMonthReached ? theme.colors.grey : theme.colors.greyDarker
@@ -80,7 +80,7 @@ export const DatePickerMonthsSwitch = () => {
         endIcon={
           <C.Icon
             name="carrot-right"
-            size={14}
+            size={18}
             tooltip="Next month"
             color={
               isMaxMonthReached ? theme.colors.grey : theme.colors.greyDarker

@@ -17,6 +17,9 @@ import type {
  * - **`days`** — `mm/dd/yyyy` (or `dd/mm/yyyy`), day-level selection
  * - **`months`** — `mm/yyyy`, month-level selection
  * - **`years`** — `yyyy`, year-level selection
+ *
+ * With **`showTimePicker`** the granularity drops to `startOf('minute')` instead, so the
+ * selected hours and minutes survive on the emitted **`Date`**.
  */
 export type PickerType = (typeof PICKER_TYPE)[keyof typeof PICKER_TYPE];
 
@@ -27,6 +30,9 @@ export type PickerType = (typeof PICKER_TYPE)[keyof typeof PICKER_TYPE];
  * - **`mm/dd/yyyy`** | **`dd/mm/yyyy`** — day pickers
  * - **`mm/yyyy`** — month picker
  * - **`yyyy`** — year picker
+ *
+ * Always date-only: **`showTimePicker`** appends **` HH:mm`** internally rather than being
+ * spelled out here, so this union stays compatible with **`JsonSchemaForm`** validation.
  */
 export type DatePickerFormat = DateFormat;
 
@@ -148,10 +154,44 @@ export interface DatePickerProps {
   helperText?: string;
 
   /**
+   * Renders the field in its **success** state (green border and helper text).
+   * A validation error always wins, so a field with an error is never shown
+   * as successful.
+   * @default false
+   */
+  success?: boolean;
+
+  /**
    * Whether the trailing calendar icon button is shown.
    * @default true
    */
   showCalendarIcon?: boolean;
+
+  /**
+   * Adds an hours/minutes panel beside the calendar and appends **`HH:mm`** to
+   * the field's format and mask. The emitted **`Date`** keeps its time instead
+   * of being floored to the start of the day.
+   *
+   * Selecting a day no longer closes the popover when this is on — otherwise
+   * the time panel would be unreachable. The popover closes on outside click.
+   * @default false
+   */
+  showTimePicker?: boolean;
+
+  /**
+   * Increment between selectable minutes, in minutes. Must divide 60.
+   * Use **`1`** to match the design's full 0–59 list.
+   * @default 15
+   */
+  minuteStep?: number;
+
+  /**
+   * Whether the trailing **clear** (×) button is shown. It appears only while
+   * the field differs from **`defaultValue`**, and restores that value when
+   * clicked — so with no **`defaultValue`** it simply empties the field.
+   * @default false
+   */
+  showClearButton?: boolean;
 
   /**
    * Last **Date** emitted from **onChange**; used with **`highlightDates`** for range styling
@@ -185,6 +225,7 @@ export interface DatePickerProps {
     trigger?: {
       input?: string;
       calendarIcon?: string;
+      clearButton?: string;
     };
     monthsSwitch?: {
       wrapper?: string;
@@ -196,8 +237,9 @@ export interface DatePickerProps {
   };
 
   /**
-   * Called with the selected **`Date`** (Luxon-normalized to start of day/month/year), or
-   * **undefined** when the field is cleared or invalid.
+   * Called with the selected **`Date`** (Luxon-normalized to start of day/month/year — or to
+   * the start of the **minute** when **`showTimePicker`** is set), or **undefined** when the
+   * field is cleared or invalid.
    */
   onChange?: (date?: Date) => void;
 
@@ -252,8 +294,20 @@ export interface DatePickerProps {
  */
 export interface DatePickerContextProps extends Omit<
   DatePickerProps,
-  'dateMin' | 'dateMax'
+  'dateMin' | 'dateMax' | 'format'
 > {
+  /**
+   * Resolved display format. Unlike the **`format`** prop this may carry a
+   * **` HH:mm`** suffix when **`showTimePicker`** is set, so it is a plain
+   * string rather than the date-only **`DatePickerFormat`** union.
+   */
+  format: string;
+
+  /**
+   * Commits an hour and/or minute onto the selected date, preserving the day.
+   */
+  setTime?: (time: { hour?: number; minute?: number }) => void;
+
   /**
    * Ref applied to the masked **input** (merged: mask ref + forwarded ref from **DatePicker**).
    */
@@ -263,6 +317,18 @@ export interface DatePickerContextProps extends Omit<
    * Whether the calendar popover is open.
    */
   isOpen: boolean;
+
+  /**
+   * Whether the current value differs from **`defaultValue`**. Drives the
+   * clear button's visibility.
+   */
+  isDirty?: boolean;
+
+  /**
+   * Restores **`defaultValue`** (or empties the field when there isn't one),
+   * clearing any validation error and emitting **`onChange`**.
+   */
+  resetToDefault?: () => void;
 
   /**
    * Active calendar surface: days grid, months, or years.

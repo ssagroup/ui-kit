@@ -155,6 +155,15 @@ export interface DateRangePickerProps {
   showCalendarIcon?: boolean;
 
   /**
+   * Shows the trailing **clear** (×) button. It appears only while either
+   * field differs from **`defaultValue`**, and restores the whole range to
+   * that default when clicked — so with no **`defaultValue`** it empties both
+   * fields.
+   * @default false
+   */
+  showClearButton?: boolean;
+
+  /**
    * **days** | **months** | **years** — drives default **format**, mask, and calendar chrome.
    * @default 'days'
    */
@@ -180,6 +189,7 @@ export interface DateRangePickerProps {
       inputTo?: string;
       arrowIcon?: string;
       calendarIcon?: string;
+      clearButton?: string;
     };
     calendar?: string;
     label?: string;
@@ -258,6 +268,18 @@ export interface DateRangePickerContextProps extends Omit<
    * Whether the calendar popover is open.
    */
   isOpen: boolean;
+
+  /**
+   * Whether either field differs from **`defaultValue`**. Drives the clear
+   * button's visibility.
+   */
+  isDirty?: boolean;
+
+  /**
+   * Restores the whole range to **`defaultValue`** (or empties both fields
+   * when there isn't one) and emits **`onChange`**.
+   */
+  resetToDefault?: () => void;
 
   /**
    * **Luxon** date for the calendar header / navigation (current visible month or year).

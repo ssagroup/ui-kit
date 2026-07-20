@@ -13,6 +13,7 @@ const main: Theme = {
     greyLighter20: 'rgba(238, 241, 247, 0.2)', //#eef1f766
     greyLighter40: 'rgba(238, 241, 247, 0.4)', //#eef1f766
     greyLighter60: 'rgba(238, 241, 247, 0.6)', //#eef1f766
+    greyPale16: 'rgba(244, 245, 249, 0.16)', // #f4f5f9 — palette.secondary.light at 16%
     greySelectedMenuItem: 'rgba(222, 225, 236, 1)', //  #dee1ec
     greyFocused: 'rgba(210, 212, 219, 1)', //  #d2d4db
     greyFocused40: 'rgba(210, 212, 219, 0.4)', //  #d2d4db

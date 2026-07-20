@@ -41,6 +41,17 @@ export const registry: Record<string, ComponentType> = {
     ssr: false,
     loading: Loading,
   }),
+  'date-picker-demo': dynamic(() => import('./examples/date-picker-demo'), {
+    ssr: false,
+    loading: Loading,
+  }),
+  'date-range-picker-demo': dynamic(
+    () => import('./examples/date-range-picker-demo'),
+    {
+      ssr: false,
+      loading: Loading,
+    },
+  ),
   'icon-button-demo': dynamic(() => import('./examples/icon-button-demo'), {
     ssr: false,
     loading: Loading,

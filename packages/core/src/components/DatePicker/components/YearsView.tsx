@@ -124,12 +124,18 @@ export const YearsView = () => {
               ? otherDateDT.year < year && year < dateTime.year
               : dateTime.year < year && year < otherDateDT.year;
         }
+        const rangeEdge = S.getRangeEdge({
+          isFirstSelected: isCalendarFirstDateSelected,
+          isSecondSelected: isCalendarSecondDateSelected,
+          isRangeActive: isHighlightEnabled && !!otherDateDT && !!dateTime,
+          mode: highlightDates?.mode,
+        });
+
         return (
           <S.YearsViewCell
             key={`year-${year}`}
-            isCalendarYear={isCalendarYear}
-            isCalendarFirstDateSelected={isCalendarFirstDateSelected}
-            isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+            isCalendarDateSelected={isCalendarYear}
+            rangeEdge={rangeEdge}
             isHighlighted={isHighlightDate}
             {...additionalProps}>
             {year}

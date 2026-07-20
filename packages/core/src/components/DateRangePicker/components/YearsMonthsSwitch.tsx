@@ -70,7 +70,7 @@ export const YearsMonthsSwitch = () => {
         endIcon={
           <C.Icon
             name="carrot-left"
-            size={14}
+            size={18}
             tooltip={`Previous ${rangePickerType === 'days' ? 'month' : 'year'}`}
             color={
               isMinMonthReached ? theme.colors.grey : theme.colors.greyDarker
@@ -93,7 +93,7 @@ export const YearsMonthsSwitch = () => {
         endIcon={
           <C.Icon
             name="carrot-right"
-            size={14}
+            size={18}
             tooltip={`Next ${rangePickerType === 'days' ? 'month' : 'year'}`}
             color={
               isMaxMonthReached ? theme.colors.grey : theme.colors.greyDarker

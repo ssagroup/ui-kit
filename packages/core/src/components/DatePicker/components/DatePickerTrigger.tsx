@@ -17,7 +17,11 @@ export const DatePickerTrigger = () => {
     inputProps,
     disabled,
     helperText,
+    success,
     showCalendarIcon,
+    showClearButton,
+    isDirty,
+    resetToDefault,
     onBlur: handleBlur,
     setIsOpen,
     validationSchema,
@@ -34,9 +38,12 @@ export const DatePickerTrigger = () => {
     formState: { errors },
   } = hookFormResult;
   const fieldError = errors[name];
-  const fieldStatus: InputProps['status'] = fieldError?.message
-    ? 'error'
-    : 'basic';
+  let fieldStatus: InputProps['status'] = 'basic';
+  if (fieldError?.message) {
+    fieldStatus = 'error';
+  } else if (success) {
+    fieldStatus = 'success';
+  }
 
   const toggleOpen = () => {
     setIsOpen((current) => !current);
@@ -86,6 +93,37 @@ export const DatePickerTrigger = () => {
     />
   ) : undefined;
 
+  const clearButton =
+    showClearButton && isDirty && !disabled ? (
+      <C.Button
+        endIcon={
+          <C.Icon name="cross" size={16} color={theme.colors.greyDarker80} />
+        }
+        data-testid={'datepicker-clear-button'}
+        onClick={() => resetToDefault?.()}
+        variant="tertiary"
+        aria-label="Clear date"
+        className={classNames?.trigger?.clearButton}
+        css={{
+          padding: 0,
+          '&:focus::before': {
+            display: 'none',
+          },
+        }}
+      />
+    ) : undefined;
+
+  // Figma groups the trailing actions with a 16px gap; rendering them as a
+  // single `endElement` keeps Input's absolute positioning applying to the
+  // group rather than to each button.
+  const actions =
+    clearButton || calendarButton ? (
+      <C.Wrapper css={{ gap: 16, alignItems: 'center' }}>
+        {clearButton}
+        {calendarButton}
+      </C.Wrapper>
+    ) : undefined;
+
   return (
     <React.Fragment>
       {label && (
@@ -120,7 +158,7 @@ export const DatePickerTrigger = () => {
               text-transform: uppercase;
             }
           `}
-          endElement={calendarButton}
+          endElement={actions}
         />
       </C.PopoverTrigger>
     </React.Fragment>

@@ -1,5 +1,6 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
 import { DateTime } from 'luxon';
+import { getRangeEdge } from '@components/DatePicker/styles';
 import { useRangeHighlighting, useRangeSelection } from '../hooks';
 import * as S from '../styles';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
@@ -34,19 +35,20 @@ export const YearsView = () => {
   const { handleDateHover, getClassNames, isHighlightDate } =
     useRangeHighlighting();
 
-  const { handleRangeSelect, getDateSelectionState } = useRangeSelection({
-    createNewDate: (selectedYear) => {
-      const newYear = currentCalendarViewDT?.set({
-        year: Number(selectedYear),
-      });
-      return newYear?.set(
-        lastFocusedElement === 'from'
-          ? { day: 1, month: 1 }
-          : { day: 31, month: 12 },
-      );
-    },
-    getComparisonFormat: () => 'yyyy',
-  });
+  const { handleRangeSelect, getDateSelectionState, isRangeActive } =
+    useRangeSelection({
+      createNewDate: (selectedYear) => {
+        const newYear = currentCalendarViewDT?.set({
+          year: Number(selectedYear),
+        });
+        return newYear?.set(
+          lastFocusedElement === 'from'
+            ? { day: 1, month: 1 }
+            : { day: 31, month: 12 },
+        );
+      },
+      getComparisonFormat: () => 'yyyy',
+    });
 
   // Reset scroll tracking when calendar closes or calendar type changes away from years
   useEffect(() => {
@@ -154,9 +156,15 @@ export const YearsView = () => {
           <S.YearsViewCell
             key={`year-${year}`}
             className={classNames.join(' ')}
-            isCalendarYear={isCalendarYear}
-            isCalendarFirstDateSelected={isCalendarFirstDateSelected}
-            isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+            isCalendarDateSelected={
+              isCalendarFirstDateSelected || isCalendarSecondDateSelected
+            }
+            rangeEdge={getRangeEdge({
+              isFirstSelected: isCalendarFirstDateSelected,
+              isSecondSelected: isCalendarSecondDateSelected,
+              isRangeActive,
+              mode: 'dateFrom',
+            })}
             isHighlighted={isHighlightDate(currentYearDT)}
             onMouseEnter={() => handleDateHover(currentYearDT)}
             onMouseLeave={() => handleDateHover(null)}

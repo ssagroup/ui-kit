@@ -42,7 +42,7 @@ export const DatePickerHeader = () => {
         justifyContent: 'space-between',
         width: '100%',
         height: 32,
-        marginBottom: 12,
+        marginBottom: 8,
       }}
       className={classNames?.header}
       as={'div'}>
@@ -56,7 +56,7 @@ export const DatePickerHeader = () => {
                   ? 'carrot-down'
                   : 'carrot-up'
               }
-              size={14}
+              size={16}
               tooltip=""
             />
           ) : null
@@ -66,11 +66,11 @@ export const DatePickerHeader = () => {
         data-testid="calendar-type-change-button"
         css={{
           padding: 0,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: 700,
-          lineHeight: '24px',
+          lineHeight: '20px',
           height: 32,
-          gap: 16,
+          gap: 8,
           cursor: pickerType === PICKER_TYPE.YEARS ? 'default' : 'pointer',
           '&:focus::before': {
             display: 'none',

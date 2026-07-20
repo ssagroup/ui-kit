@@ -89,6 +89,71 @@ describe('DateRangePicker', () => {
     expect(inputEl).toHaveValue('01/15/2025');
   });
 
+  it('should not render the clear button unless [showClearButton] is set', () => {
+    const { queryByTestId } = setup({
+      defaultValue: ['01/15/2025', '01/20/2025'],
+    });
+    expect(
+      queryByTestId('daterangepicker-clear-button'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('should reset both dates to the default when the clear button is clicked', async () => {
+    const { user, getByRole, getByTestId, queryByTestId } = setup({
+      showClearButton: true,
+      defaultValue: ['01/15/2025', '01/20/2025'],
+    });
+
+    const fromEl = getByTestId('daterangepicker-input-from');
+    const toEl = getByTestId('daterangepicker-input-to');
+    // Both fields sit on their defaults, so there is nothing to reset yet.
+    expect(
+      queryByTestId('daterangepicker-clear-button'),
+    ).not.toBeInTheDocument();
+
+    // Start a fresh range from the calendar to move off the defaults.
+    await user.click(getByTestId('daterangepicker-button'));
+    await user.click(within(getByRole('dialog')).getByText(10));
+    expect(fromEl).toHaveValue('01/10/2025');
+
+    await user.click(getByTestId('daterangepicker-clear-button'));
+
+    expect(fromEl).toHaveValue('01/15/2025');
+    expect(toEl).toHaveValue('01/20/2025');
+    expect(
+      queryByTestId('daterangepicker-clear-button'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('should clear both dates back to empty when there is no [defaultValue]', async () => {
+    const { user, getByRole, getByTestId, queryByTestId } = setup({
+      showClearButton: true,
+    });
+
+    const fromEl = getByTestId('daterangepicker-input-from');
+    const toEl = getByTestId('daterangepicker-input-to');
+    expect(fromEl).toHaveValue('');
+    // Nothing entered yet, so there is nothing to clear.
+    expect(
+      queryByTestId('daterangepicker-clear-button'),
+    ).not.toBeInTheDocument();
+
+    await user.click(getByTestId('daterangepicker-button'));
+    const dialogEl = getByRole('dialog');
+    await user.click(within(dialogEl).getByText(10));
+    await user.click(within(dialogEl).getByText(20));
+    expect(fromEl).not.toHaveValue('');
+    expect(toEl).not.toHaveValue('');
+
+    await user.click(getByTestId('daterangepicker-clear-button'));
+
+    expect(fromEl).toHaveValue('');
+    expect(toEl).toHaveValue('');
+    expect(
+      queryByTestId('daterangepicker-clear-button'),
+    ).not.toBeInTheDocument();
+  });
+
   it('should select a date range', async () => {
     const {
       getByTestId,

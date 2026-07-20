@@ -23,7 +23,7 @@ export const Header = () => {
         justifyContent: 'space-between',
         width: '100%',
         height: 32,
-        marginBottom: 12,
+        marginBottom: 8,
       }}
       as={'div'}>
       <C.Button
@@ -35,7 +35,7 @@ export const Header = () => {
                   ? 'carrot-down'
                   : 'carrot-up'
               }
-              size={14}
+              size={16}
               tooltip=""
             />
           ) : null
@@ -45,11 +45,11 @@ export const Header = () => {
         data-testid="calendar-type-change-button"
         css={{
           padding: 0,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: 700,
-          lineHeight: '24px',
+          lineHeight: '20px',
           height: 32,
-          gap: 16,
+          gap: 8,
           '&:focus::before': {
             display: 'none',
           },

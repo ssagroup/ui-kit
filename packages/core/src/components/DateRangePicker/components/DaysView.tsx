@@ -1,6 +1,8 @@
 import React, { MouseEventHandler } from 'react';
 import { DateTime } from 'luxon';
+import { useTheme } from '@emotion/react';
 import Wrapper from '@components/Wrapper';
+import { getRangeEdge } from '@components/DatePicker/styles';
 import { DatesListWrapper } from './DatesListWrapper';
 import * as S from '../styles';
 import { getDaysForCalendarMonth, getWeekDays } from '../utils';
@@ -9,6 +11,7 @@ import { useRangeHighlighting, useRangeSelection } from '../hooks';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();
+  const theme = useTheme();
   const { dateMinDT, dateMaxDT, currentCalendarViewDT } =
     useDateRangePickerContext();
   const currentDate = currentCalendarViewDT.toJSDate();
@@ -19,13 +22,14 @@ export const DaysView = () => {
   const { handleDateHover, getClassNames, isHighlightDate } =
     useRangeHighlighting();
 
-  const { handleRangeSelect, getDateSelectionState } = useRangeSelection({
-    createNewDate: (selectedDay) =>
-      currentCalendarViewDT.set({
-        day: Number(selectedDay),
-      }),
-    getComparisonFormat: () => 'D',
-  });
+  const { handleRangeSelect, getDateSelectionState, isRangeActive } =
+    useRangeSelection({
+      createNewDate: (selectedDay) =>
+        currentCalendarViewDT.set({
+          day: Number(selectedDay),
+        }),
+      getComparisonFormat: () => 'D',
+    });
 
   const handleDaySelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
@@ -39,7 +43,7 @@ export const DaysView = () => {
 
   return (
     <React.Fragment>
-      <Wrapper css={{ paddingLeft: 9 }}>
+      <Wrapper>
         {weekDays.map((weekDay, index) => (
           <Wrapper
             key={`week-day-${weekDay}-${index}`}
@@ -49,6 +53,8 @@ export const DaysView = () => {
               justifyContent: 'center',
               fontSize: 12,
               fontWeight: 600,
+              lineHeight: '16px',
+              color: theme.colors.greyDarker80,
               cursor: 'default',
               userSelect: 'none',
             }}>
@@ -56,11 +62,7 @@ export const DaysView = () => {
           </Wrapper>
         ))}
       </Wrapper>
-      <DatesListWrapper
-        css={{
-          paddingLeft: 9,
-        }}
-        onClick={handleDaySelect}>
+      <DatesListWrapper onClick={handleDaySelect}>
         {dates.map((currentDate, index) => {
           const currentDT = DateTime.fromJSDate(currentDate).startOf('day');
           const calendarDate = currentDT.toFormat('D');
@@ -103,8 +105,12 @@ export const DaysView = () => {
               data-day={calendarDate}
               isCalendarDateNow={isCalendarDateNow}
               isCalendarDateSelected={isCalendarDateSelected}
-              isCalendarFirstDateSelected={isCalendarFirstDateSelected}
-              isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+              rangeEdge={getRangeEdge({
+                isFirstSelected: isCalendarFirstDateSelected,
+                isSecondSelected: isCalendarSecondDateSelected,
+                isRangeActive,
+                mode: 'dateFrom',
+              })}
               isHighlighted={isHighlightDate(currentDT)}
               className={classNames.join(' ')}
               onMouseEnter={() => handleDateHover(currentDT)}

@@ -1,0 +1,73 @@
+---
+title: DateRangePicker
+description: Two masked fields sharing one calendar, with range highlighting, an optional ongoing end date, and React Hook Form integration.
+---
+
+`DateRangePicker` renders a **from** and a **to** field sharing a single popover
+calendar. It derives two React Hook Form fields from `name` (`nameFrom` /
+`nameTo`), and `onChange` returns a tuple of `Date`. Render it inside a
+`FormProvider`.
+
+## Examples
+
+<ComponentPreview name="date-range-picker-demo">
+```tsx
+import { DateRangePicker } from '@ssa-ui-kit/core';
+import { useForm, FormProvider } from 'react-hook-form';
+
+export function Example() {
+  const methods = useForm({ defaultValues: {} });
+
+  return (
+    <FormProvider {...methods}>
+      <DateRangePicker
+        name="period"
+        label="Reporting period"
+        showClearButton
+        defaultValue={['02/10/2025', '02/15/2025']}
+        messages={{ description: 'Select a start and end date' }}
+      />
+    </FormProvider>
+  );
+}
+```
+</ComponentPreview>
+
+## Range types
+
+`rangePickerType` selects the density — `days` (default), `months`, or `years` —
+and drives the format and calendar surface, mirroring `DatePicker`'s
+`pickerType`. Bound the span with `dateMin` and `dateMax`.
+
+## Selecting a range
+
+The first click sets the start and the second sets the end. Cells between the
+anchors are highlighted, and hovering previews the range you are about to pick.
+
+By default, choosing an end date **earlier** than the current start restarts the
+selection from that date. Set `allowReverseSelection` to swap the two instead, so
+the earlier date always becomes the start.
+
+## Ongoing ranges
+
+`showPresentOption` adds a **Present** action for ranges with no end date. When
+used, `onChange` receives `null` — not `undefined` — as the second tuple member,
+which distinguishes "ongoing" from "not yet chosen".
+
+## Clear button
+
+`showClearButton` adds a **×** beside the calendar icon. A single button resets
+the **whole range**: it appears only while either field differs from
+`defaultValue`, restores that default when clicked, and rewinds range selection
+so the next click starts fresh. With no `defaultValue` it empties both fields.
+It is off by default.
+
+## Status and messages
+
+`status` accepts `basic`, `error`, and `success`. The `messages` object supplies
+the copy shown beneath the fields — `description`, `success`, and `error`.
+
+<Callout>
+Time selection is currently available on `DatePicker` only. `DateRangePicker`
+has no `showTimePicker` equivalent yet.
+</Callout>

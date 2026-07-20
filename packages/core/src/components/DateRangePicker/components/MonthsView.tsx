@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { MouseEventHandler } from 'react';
+import { getRangeEdge } from '@components/DatePicker/styles';
 import { MONTHS } from '../constants';
 import { useRangeHighlighting, useRangeSelection } from '../hooks';
 import * as S from '../styles';
@@ -22,18 +23,21 @@ export const MonthsView = () => {
   const { handleDateHover, getClassNames, isHighlightDate } =
     useRangeHighlighting();
 
-  const { handleRangeSelect, getDateSelectionState } = useRangeSelection({
-    createNewDate: (selectedMonth) => {
-      const monthNumber = MONTHS.findIndex((month) => month === selectedMonth);
-      const newMonth = currentCalendarViewDT?.set({
-        month: monthNumber + 1,
-      });
-      return newMonth?.set({
-        day: lastFocusedElement === 'from' ? 1 : newMonth.daysInMonth,
-      });
-    },
-    getComparisonFormat: () => 'yyyy-MM',
-  });
+  const { handleRangeSelect, getDateSelectionState, isRangeActive } =
+    useRangeSelection({
+      createNewDate: (selectedMonth) => {
+        const monthNumber = MONTHS.findIndex(
+          (month) => month === selectedMonth,
+        );
+        const newMonth = currentCalendarViewDT?.set({
+          month: monthNumber + 1,
+        });
+        return newMonth?.set({
+          day: lastFocusedElement === 'from' ? 1 : newMonth.daysInMonth,
+        });
+      },
+      getComparisonFormat: () => 'yyyy-MM',
+    });
 
   const handleMonthSelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
@@ -93,8 +97,15 @@ export const MonthsView = () => {
             key={month}
             aria-disabled={isAriaDisabled}
             aria-label={`${month}, ${currentCalendarViewDT?.year}`}
-            isCalendarFirstDateSelected={isCalendarFirstDateSelected}
-            isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+            isCalendarDateSelected={
+              isCalendarFirstDateSelected || isCalendarSecondDateSelected
+            }
+            rangeEdge={getRangeEdge({
+              isFirstSelected: isCalendarFirstDateSelected,
+              isSecondSelected: isCalendarSecondDateSelected,
+              isRangeActive,
+              mode: 'dateFrom',
+            })}
             isHighlighted={isHighlightDate(currentMonthDT)}
             className={classNames.join(' ')}
             onMouseEnter={() => handleDateHover(currentMonthDT)}

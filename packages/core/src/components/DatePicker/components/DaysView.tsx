@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 import { DateTime } from 'luxon';
+import { useTheme } from '@emotion/react';
 import Wrapper from '@components/Wrapper';
 import * as S from '../styles';
 import { getDaysForCalendarMonth, getWeekDays } from '../utils';
@@ -7,6 +8,7 @@ import { useDatePickerContext } from '../useDatePickerContext';
 
 export const DaysView = () => {
   const weekDays = getWeekDays();
+  const theme = useTheme();
   const {
     dateTime,
     calendarViewDateTime,
@@ -14,6 +16,7 @@ export const DaysView = () => {
     dateMaxDT,
     lastChangedDate,
     highlightDates,
+    showTimePicker,
     setCalendarViewDateTime,
     setDateTime,
     setIsOpen,
@@ -38,12 +41,17 @@ export const DaysView = () => {
       setCalendarViewDateTime(newDate);
       setDateTime(newDate);
       safeOnChange?.(newDate);
-      setIsOpen(false);
+
+      // With a time panel open, closing here would make the hours/minutes
+      // unreachable — the popover closes on outside click instead.
+      if (!showTimePicker) {
+        setIsOpen(false);
+      }
     }
   };
   return (
     <React.Fragment>
-      <Wrapper css={{ paddingLeft: 9 }}>
+      <Wrapper>
         {weekDays.map((weekDay, index) => (
           <Wrapper
             key={`week-day-${weekDay}-${index}`}
@@ -53,6 +61,8 @@ export const DaysView = () => {
               justifyContent: 'center',
               fontSize: 12,
               fontWeight: 600,
+              lineHeight: '16px',
+              color: theme.colors.greyDarker80,
               cursor: 'default',
               userSelect: 'none',
             }}>
@@ -60,9 +70,7 @@ export const DaysView = () => {
           </Wrapper>
         ))}
       </Wrapper>
-      <Wrapper
-        css={{ flexWrap: 'wrap', paddingLeft: 9 }}
-        onClick={handleDaySelect}>
+      <Wrapper css={{ flexWrap: 'wrap' }} onClick={handleDaySelect}>
         {dates.map((currentDate, index) => {
           const currentDT = DateTime.fromJSDate(currentDate);
           const calendarDate = currentDT.toFormat('D');
@@ -104,6 +112,13 @@ export const DaysView = () => {
               isAriaDisabled = currentDT > dateMaxDT || !isCalendarMonth;
             }
           }
+          const rangeEdge = S.getRangeEdge({
+            isFirstSelected: isCalendarFirstDateSelected,
+            isSecondSelected: isCalendarSecondDateSelected,
+            isRangeActive: isHighlightEnabled && !!otherDateDT && !!dateTime,
+            mode: highlightDates?.mode,
+          });
+
           return (
             <S.DaysViewCell
               key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}-${index}`}
@@ -111,8 +126,7 @@ export const DaysView = () => {
               aria-label={ariaLabel}
               isCalendarDateNow={isCalendarDateNow}
               isCalendarDateSelected={isCalendarDateSelected}
-              isCalendarFirstDateSelected={isCalendarFirstDateSelected}
-              isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+              rangeEdge={rangeEdge}
               isHighlighted={isHighlightDate}>
               {calendarDay}
             </S.DaysViewCell>

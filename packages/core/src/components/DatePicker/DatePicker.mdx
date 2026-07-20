@@ -144,6 +144,65 @@ function ControlledDatePicker() {
 }
 ```
 
+### Time Selection
+
+Set **`showTimePicker`** to add hours and minutes columns beside the calendar. The
+field's format and mask gain a **` HH:mm`** suffix, and the emitted **`Date`** keeps its
+time instead of being floored to midnight:
+
+```tsx
+<DatePicker
+  name="meeting"
+  label="Meeting starts"
+  showTimePicker
+  defaultValue="01/15/2025 09:30"
+  onChange={(date) => console.log(date.getHours(), date.getMinutes())}
+/>
+```
+
+**`minuteStep`** controls the minutes column and defaults to **15**. Use **`1`** for the
+full 0–59 list:
+
+```tsx
+<DatePicker name="precise" showTimePicker minuteStep={1} />
+```
+
+Two behaviours change when time is enabled:
+
+- Selecting a day **does not close** the popover — otherwise the time columns would be
+  unreachable. It closes on outside click instead.
+- Stored values must include the time (**`01/15/2025 09:30`**). A bare **`01/15/2025`** no
+  longer matches the mask and will not parse.
+
+### Clear Button
+
+Set **`showClearButton`** to add a **×** beside the calendar icon. It appears only while the
+value differs from **`defaultValue`** and restores that value when clicked — so with no
+**`defaultValue`** it simply empties the field:
+
+```tsx
+<DatePicker
+  name="due"
+  label="Due date"
+  showClearButton
+  defaultValue="03/20/2025"
+/>
+```
+
+### Success State
+
+Set **`success`** to render the field in its success state. A validation error always wins,
+so a field with an error is never shown as successful:
+
+```tsx
+<DatePicker
+  name="confirmed"
+  label="Confirmed date"
+  success
+  helperText="Date confirmed"
+/>
+```
+
 ### Disabled State
 
 Disable the date picker when needed:
