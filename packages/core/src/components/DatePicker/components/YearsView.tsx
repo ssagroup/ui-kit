@@ -115,6 +115,8 @@ export const YearsView = () => {
           year.toString() === dateTime?.toFormat('yyyy');
         const isCalendarSecondDateSelected =
           year.toString() === otherDateDT?.toFormat('yyyy');
+        const isCalendarDateSelected =
+          isCalendarFirstDateSelected || isCalendarSecondDateSelected;
 
         let isHighlightDate = false;
 
@@ -134,7 +136,7 @@ export const YearsView = () => {
         return (
           <S.YearsViewCell
             key={`year-${year}`}
-            isCalendarDateSelected={isCalendarYear}
+            isCalendarDateSelected={isCalendarDateSelected}
             rangeEdge={rangeEdge}
             isHighlighted={isHighlightDate}
             {...additionalProps}>

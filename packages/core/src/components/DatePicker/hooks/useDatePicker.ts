@@ -164,11 +164,13 @@ export const useDatePicker = ({
 
     return {
       dateMinDT: toDT(minP),
-      dateMaxDT: toDT(maxP),
+      // With a time component, the max day itself must stay selectable for
+      // any time up to its last minute, not just 00:00.
+      dateMaxDT: showTimePicker ? toDT(maxP).endOf('day') : toDT(maxP),
       dateMinParts: minP,
       dateMaxParts: maxP,
     };
-  }, [dateMin, dateMax, config, formatIndexes]);
+  }, [dateMin, dateMax, config, formatIndexes, showTimePicker]);
 
   const maskInputRef = useDatePickerMask({
     maskOptions: { mask: config.mask, ...maskOptions },

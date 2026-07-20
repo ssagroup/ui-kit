@@ -27,10 +27,14 @@ export const useDatePickerMask = ({
     mask,
     replacement,
     track: ({ data, selectionStart, selectionEnd, value: currentValue }) => {
+      // `showTimePicker` appends a ` __:__` suffix onto the date mask, so
+      // strip it before comparing against the bare date masks below.
+      const dateMask = mask.split(' ')[0];
+
       if (
-        mask === DEFAULT_MASK ||
-        mask === DEFAULT_MONTH_MASK ||
-        mask === DEFAULT_YEAR_MASK
+        dateMask === DEFAULT_MASK ||
+        dateMask === DEFAULT_MONTH_MASK ||
+        dateMask === DEFAULT_YEAR_MASK
       ) {
         const newValue =
           currentValue.slice(0, selectionStart) +
@@ -38,7 +42,7 @@ export const useDatePickerMask = ({
           currentValue.slice(selectionEnd);
 
         const updatedValue = maskFormat(newValue, { mask, replacement });
-        const splittedValue = updatedValue.split('/');
+        const splittedValue = updatedValue.split(' ')[0].split('/');
         const isChecked = processDate(
           {
             day:
