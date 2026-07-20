@@ -118,8 +118,12 @@ export const useRangeSelection = ({
     };
   };
 
+  // A range only has distinct start/end edges once both anchors are set.
+  const isRangeActive = !!(dateTime[0] && dateTime[1]);
+
   return {
     handleRangeSelect,
     getDateSelectionState,
+    isRangeActive,
   };
 };

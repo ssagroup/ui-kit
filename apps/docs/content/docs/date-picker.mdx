@@ -1,0 +1,86 @@
+---
+title: DatePicker
+description: Masked date field with a popover calendar, optional time selection, and React Hook Form integration.
+---
+
+`DatePicker` is a masked text field backed by a popover calendar. The form value
+is the formatted **string**; `onChange` gives you a `Date`. Parsing is done with
+Luxon. The field must be rendered inside a React Hook Form `FormProvider`.
+
+## Examples
+
+<ComponentPreview name="date-picker-demo">
+```tsx
+import { DatePicker } from '@ssa-ui-kit/core';
+import { useForm, FormProvider } from 'react-hook-form';
+
+export function Example() {
+  const methods = useForm({
+    defaultValues: { startDate: '01/15/2025 09:30' },
+  });
+
+  return (
+    <FormProvider {...methods}>
+      <DatePicker
+        name="startDate"
+        label="Meeting starts"
+        showTimePicker
+        showClearButton
+        defaultValue="01/15/2025 09:30"
+        helperText="Pick a day, then an hour and minute"
+      />
+    </FormProvider>
+  );
+}
+```
+</ComponentPreview>
+
+## Picker types and formats
+
+`pickerType` selects the granularity — `days` (default), `months`, or `years` —
+and drives the default `format`, mask, and initial calendar view:
+
+| `pickerType` | Default `format` |
+| --- | --- |
+| `days` | `mm/dd/yyyy` (or `dd/mm/yyyy`) |
+| `months` | `mm/yyyy` |
+| `years` | `yyyy` |
+
+Constrain the selectable span with `dateMin` and `dateMax`, using the same string
+shape as `format`.
+
+## Time selection
+
+Set `showTimePicker` to add hours and minutes columns beside the calendar. The
+format and mask gain a ` HH:mm` suffix, and the emitted `Date` keeps its time
+rather than being floored to midnight. `minuteStep` controls the minutes column
+and defaults to `15`; pass `1` for the full 0–59 list.
+
+```tsx
+<DatePicker name="precise" showTimePicker minuteStep={1} />
+```
+
+Two behaviours change when time is enabled:
+
+- Selecting a day **does not close** the popover — otherwise the time columns
+  would be unreachable. It closes on outside click instead.
+- Stored values must include the time (`01/15/2025 09:30`). A bare
+  `01/15/2025` no longer matches the mask and will not parse.
+
+## Clear button
+
+`showClearButton` adds a **×** beside the calendar icon. It appears only while
+the value differs from `defaultValue` and restores that value when clicked — so
+with no `defaultValue` it simply empties the field. It is off by default.
+
+## Status states
+
+Pass `success` to render the field in its success state, or let a React Hook Form
+validation error drive the error state. An error always wins, so a field with an
+error is never shown as successful. `helperText` appears below the field and
+picks up the matching colour.
+
+## Opening the calendar
+
+`openCalendarMode` decides what opens the popover: `icon` (default), `input`, or
+`both`. Set `showCalendarIcon={false}` to hide the trailing icon entirely.

@@ -17,7 +17,10 @@ export const Trigger = () => {
     status,
     isOpen,
     showCalendarIcon,
+    showClearButton,
     showStatusArea,
+    isDirty,
+    resetToDefault,
     classNames,
     setIsOpen,
     handleToggleOpen,
@@ -74,6 +77,31 @@ export const Trigger = () => {
             datepickerType="to"
             className={classNames?.trigger?.inputTo}
           />
+          {showClearButton && isDirty && !disabled && (
+            <C.Button
+              endIcon={
+                <C.Icon
+                  name="cross"
+                  size={16}
+                  color={theme.colors.greyDarker80}
+                />
+              }
+              data-testid={'daterangepicker-clear-button'}
+              onClick={() => resetToDefault?.()}
+              variant="tertiary"
+              aria-label="Clear dates"
+              className={classNames?.trigger?.clearButton}
+              css={{
+                padding: 0,
+                margin: '0 0 0 10px',
+                height: 'auto',
+                cursor: 'pointer',
+                '&:focus::before': {
+                  display: 'none',
+                },
+              }}
+            />
+          )}
           {showCalendarIcon && (
             <C.PopoverTrigger asChild>
               <C.Button

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
@@ -54,6 +54,8 @@ export const useDateRangePicker = ({
   currentIndex: number;
   currentCalendarViewDT: DateTime;
   isOpen: boolean;
+  isDirty: boolean;
+  resetToDefault: () => void;
   status?: 'error' | 'success' | 'basic';
   inputFromRef: ReturnType<typeof useMergeRefs<HTMLInputElement | null>>;
   inputToRef: ReturnType<typeof useMergeRefs<HTMLInputElement | null>>;
@@ -740,56 +742,57 @@ export const useDateRangePicker = ({
     }
   }, [isOpenState]);
 
-  useEffect(() => {
-    // Only process defaultValue once on mount to avoid re-processing
-    if (Array.isArray(defaultValue) && !defaultValueProcessed.current) {
-      const defaultDateTimeFrom =
-        typeof defaultValue[0] === 'string' &&
-        defaultValue[0].length === expectedDateLength
-          ? DateTime.fromFormat(defaultValue[0], luxonFormat)
-          : undefined;
-      const defaultDateTimeTo =
-        typeof defaultValue[1] === 'string' &&
-        defaultValue[1].length === expectedDateLength
-          ? DateTime.fromFormat(defaultValue[1], luxonFormat)
-          : undefined;
+  /**
+   * Applies **`defaultValue`** to every piece of range state at once. Shared
+   * by the mount effect and the clear button, so resetting lands the picker in
+   * exactly the state it booted in — including the "Present" end date.
+   */
+  const applyDefaultValue = useCallback(() => {
+    const defaultDateTimeFrom =
+      typeof defaultValue?.[0] === 'string' &&
+      defaultValue[0].length === expectedDateLength
+        ? DateTime.fromFormat(defaultValue[0], luxonFormat)
+        : undefined;
+    const defaultDateTimeTo =
+      typeof defaultValue?.[1] === 'string' &&
+      defaultValue[1].length === expectedDateLength
+        ? DateTime.fromFormat(defaultValue[1], luxonFormat)
+        : undefined;
 
-      // Handle null end date (represents "Present")
-      const isEndPresent = defaultValue[1] === null;
-      if (isEndPresent) {
-        setIsEndDatePresent(true);
-      }
+    // Handle null end date (represents "Present")
+    const isEndPresent = defaultValue?.[1] === null;
+    setIsEndDatePresent(isEndPresent);
 
-      const newDateTime: DateTimeTuple = [
-        defaultDateTimeFrom?.isValid
-          ? defaultDateTimeFrom.startOf('day')
+    const newDateTime: DateTimeTuple = [
+      defaultDateTimeFrom?.isValid
+        ? defaultDateTimeFrom.startOf('day')
+        : undefined,
+      isEndPresent
+        ? undefined
+        : defaultDateTimeTo?.isValid
+          ? defaultDateTimeTo.startOf('day')
           : undefined,
-        isEndPresent
-          ? undefined
-          : defaultDateTimeTo?.isValid
-            ? defaultDateTimeTo.startOf('day')
-            : undefined,
-      ];
+    ];
 
-      setDateTime(newDateTime);
-      setLastChangedDate([
-        newDateTime[0]?.toJSDate(),
-        isEndPresent ? null : newDateTime[1]?.toJSDate(),
-      ]);
-      // Sync calendar view with default dates so they're visible when calendar opens
-      setCalendarViewDateTime([
-        newDateTime[0] || newDateTime[1] || undefined,
-        newDateTime[1] || newDateTime[0] || undefined,
-      ]);
-      setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat));
-      // Keep form value empty when "Present" to avoid mask errors
-      // "Present" is displayed via displayValue override in TriggerInput
-      setValue(
-        nameTo,
-        isEndPresent ? '' : newDateTime[1]?.toFormat(luxonFormat),
-      );
-      defaultValueProcessed.current = true;
-    }
+    setDateTime(newDateTime);
+    setLastChangedDate([
+      newDateTime[0]?.toJSDate(),
+      isEndPresent ? null : newDateTime[1]?.toJSDate(),
+    ]);
+    // Sync calendar view with default dates so they're visible when calendar opens
+    setCalendarViewDateTime([
+      newDateTime[0] || newDateTime[1] || undefined,
+      newDateTime[1] || newDateTime[0] || undefined,
+    ]);
+    setValue(nameFrom, newDateTime[0]?.toFormat(luxonFormat) ?? '');
+    // Keep form value empty when "Present" to avoid mask errors
+    // "Present" is displayed via displayValue override in TriggerInput
+    setValue(
+      nameTo,
+      isEndPresent ? '' : (newDateTime[1]?.toFormat(luxonFormat) ?? ''),
+    );
+
+    return newDateTime;
   }, [
     defaultValue,
     expectedDateLength,
@@ -798,8 +801,33 @@ export const useDateRangePicker = ({
     nameTo,
     setCalendarViewDateTime,
     setValue,
-    _name,
   ]);
+
+  // Whether either field has moved away from its default, which is what makes
+  // the clear button meaningful.
+  const isDirty =
+    (inputValueFrom ?? '') !== (defaultValue?.[0] ?? '') ||
+    (inputValueTo ?? '') !==
+      (defaultValue?.[1] === null ? '' : (defaultValue?.[1] ?? ''));
+
+  const resetToDefault = useCallback(() => {
+    const newDateTime = applyDefaultValue();
+    // A reset restarts range selection from the beginning.
+    setRangeSelectionStep(newDateTime[0] && newDateTime[1] ? null : 'start');
+    setLastFocusedElement('from');
+    onChange?.([
+      newDateTime[0]?.toJSDate(),
+      defaultValue?.[1] === null ? null : newDateTime[1]?.toJSDate(),
+    ]);
+  }, [applyDefaultValue, defaultValue, onChange]);
+
+  useEffect(() => {
+    // Only process defaultValue once on mount to avoid re-processing
+    if (Array.isArray(defaultValue) && !defaultValueProcessed.current) {
+      applyDefaultValue();
+      defaultValueProcessed.current = true;
+    }
+  }, [defaultValue, applyDefaultValue]);
 
   return {
     formatIndexes,
@@ -820,6 +848,8 @@ export const useDateRangePicker = ({
     currentIndex,
     currentCalendarViewDT,
     isOpen,
+    isDirty,
+    resetToDefault,
     status,
     inputFromRef: useMergeRefs<HTMLInputElement | null>([
       maskInputRefFrom,

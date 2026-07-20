@@ -50,6 +50,16 @@ const components = [
     body: 'Tags and removable items with icons and avatars.',
   },
   {
+    name: 'DatePicker',
+    href: '/docs/date-picker',
+    body: 'Masked date field with a calendar and optional time.',
+  },
+  {
+    name: 'DateRangePicker',
+    href: '/docs/date-range-picker',
+    body: 'From/to fields sharing one calendar, with range preview.',
+  },
+  {
     name: 'IconButton',
     href: '/docs/icon-button',
     body: 'Icon-only actions for table rows and toolbars.',

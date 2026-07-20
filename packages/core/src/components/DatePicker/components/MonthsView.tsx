@@ -93,14 +93,20 @@ export const MonthsView = () => {
               ? otherDateDT < currentMonthDT && currentMonthDT < dateTime
               : dateTime < currentMonthDT && currentMonthDT < otherDateDT;
         }
+        const rangeEdge = S.getRangeEdge({
+          isFirstSelected: isCalendarFirstDateSelected,
+          isSecondSelected: isCalendarSecondDateSelected,
+          isRangeActive: isHighlightEnabled && !!otherDateDT && !!dateTime,
+          mode: highlightDates?.mode,
+        });
+
         return (
           <S.MonthsViewCell
             key={month}
-            isCalendarMonth={isCalendarMonth}
+            isCalendarDateSelected={isCalendarMonth}
             aria-disabled={isAriaDisabled}
             aria-label={`${month}, ${calendarViewDateTime?.year}`}
-            isCalendarFirstDateSelected={isCalendarFirstDateSelected}
-            isCalendarSecondDateSelected={isCalendarSecondDateSelected}
+            rangeEdge={rangeEdge}
             isHighlighted={isHighlightDate}>
             {month}
           </S.MonthsViewCell>

@@ -3,6 +3,7 @@ export * from './DatePickerCalendar';
 export * from './DatePickerContent';
 export * from './DatePickerMonthsSwitch';
 export * from './DatePickerHeader';
+export * from './DatePickerTimePanel';
 export * from './DaysView';
 export * from './MonthsView';
 export * from './YearsView';

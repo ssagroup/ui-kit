@@ -184,6 +184,22 @@ Display different validation states with custom messages:
 />
 ```
 
+### Clear Button
+
+Set **`showClearButton`** to add a **×** beside the calendar icon. A single button resets the
+**whole range**: it appears only while either field differs from **`defaultValue`**, restores
+that default when clicked, and rewinds range selection so the next click starts a fresh
+range. With no **`defaultValue`** it empties both fields:
+
+```tsx
+<DateRangePicker
+  name="period"
+  label="Reporting period"
+  showClearButton
+  defaultValue={['02/10/2025', '02/15/2025']}
+/>
+```
+
 ### Disabled State
 
 Disable the date range picker when needed:

@@ -29,6 +29,7 @@ export default {
         'label',
         'helperText',
         'allowReverseSelection',
+        'showClearButton',
       ],
     },
   },
@@ -203,6 +204,33 @@ WithDefaultValue.args = {
   ...commonArgs,
   name: 'field5',
   defaultValue: ['02/10/2025', '02/15/2025'],
+};
+
+export const WithClearButton: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+WithClearButton.args = {
+  ...commonArgs,
+  name: 'fieldClear',
+  showClearButton: true,
+  defaultValue: ['02/10/2025', '02/15/2025'],
+};
+
+export const WithClearButtonEmptyStart: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+WithClearButtonEmptyStart.args = {
+  ...commonArgs,
+  name: 'fieldClearEmpty',
+  showClearButton: true,
+  messages: {
+    description:
+      'Starts empty — × appears once a range is picked, and clears it',
+  },
 };
 
 export const WithExternalValue: StoryObj<typeof DateRangePicker> = (

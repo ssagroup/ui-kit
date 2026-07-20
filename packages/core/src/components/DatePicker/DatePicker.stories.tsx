@@ -21,7 +21,16 @@ export default {
   },
   parameters: {
     controls: {
-      include: ['disabled', 'label', 'openCalendarMode', 'helperText'],
+      include: [
+        'disabled',
+        'label',
+        'openCalendarMode',
+        'helperText',
+        'success',
+        'showClearButton',
+        'showTimePicker',
+        'minuteStep',
+      ],
     },
   },
   decorators: [
@@ -91,6 +100,68 @@ Default.args = {
   ...commonArgs,
   name: 'field1',
   helperText: 'some nice text',
+};
+
+export const Success: StoryObj<typeof DatePicker> = (args: DatePickerProps) => {
+  return <DatePicker {...args} />;
+};
+Success.args = {
+  ...commonArgs,
+  name: 'fieldSuccess',
+  success: true,
+  helperText: 'Date confirmed',
+};
+
+export const WithClearButton: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+WithClearButton.args = {
+  ...commonArgs,
+  name: 'fieldClear',
+  showClearButton: true,
+  defaultValue: '03/20/2025',
+  helperText: 'Pick another date, then use × to restore 03/20/2025',
+};
+
+export const WithClearButtonEmptyStart: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+WithClearButtonEmptyStart.args = {
+  ...commonArgs,
+  name: 'fieldClearEmpty',
+  showClearButton: true,
+  helperText: 'Starts empty — × appears once you pick a date, and empties it',
+};
+
+export const WithTimePicker: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+WithTimePicker.args = {
+  ...commonArgs,
+  name: 'fieldTime',
+  showTimePicker: true,
+  defaultValue: '01/15/2025 09:30',
+  helperText: 'Pick a day, then an hour and minute — the popover stays open',
+};
+
+export const WithTimePickerEveryMinute: StoryObj<typeof DatePicker> = (
+  args: DatePickerProps,
+) => {
+  return <DatePicker {...args} />;
+};
+WithTimePickerEveryMinute.args = {
+  ...commonArgs,
+  name: 'fieldTimeAllMinutes',
+  showTimePicker: true,
+  minuteStep: 1,
+  defaultValue: '01/15/2025 10:37',
+  helperText: 'minuteStep={1} — the full 0–59 list, as the design shows',
 };
 
 export const EuropeanFormat: StoryObj<typeof DatePicker> = (

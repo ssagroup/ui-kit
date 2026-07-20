@@ -1,11 +1,7 @@
 import { createContext } from 'react';
 import { DateTime } from 'luxon';
 import { useMergeRefs } from '@floating-ui/react';
-import {
-  DatePickerContextProps,
-  DatePickerProps,
-  DatePickerFormat,
-} from './types';
+import { DatePickerContextProps, DatePickerProps } from './types';
 import {
   DATE_MAX,
   DATE_MIN,
@@ -73,9 +69,9 @@ export const DatePickerProvider = ({
         ...rest,
         ...restHook,
         pickerType: hookPickerType || rest.pickerType || PICKER_TYPE.DAYS,
-        format: (hookFormat ||
-          rest.format ||
-          DEFAULT_MASK_FORMAT) as DatePickerFormat,
+        // Resolved by the hook and may carry a ` HH:mm` suffix, so it is a
+        // plain string rather than the date-only `DatePickerFormat` union.
+        format: hookFormat || rest.format || DEFAULT_MASK_FORMAT,
         formatIndexes,
         inputRef: useMergeRefs([maskInputRef, rest.inputRef]),
         onBlur: handleBlur,

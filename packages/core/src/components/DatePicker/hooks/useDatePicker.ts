@@ -23,6 +23,9 @@ import {
   OUT_OF_RANGE,
   PICKER_TYPE,
   CALENDAR_TYPE,
+  TIME_MASK_SUFFIX,
+  TIME_MASK_FORMAT_SUFFIX,
+  TIME_LENGTH,
 } from '../constants';
 import { CalendarType, DatePickerProps, DatePickerFormat } from '../types';
 
@@ -72,16 +75,42 @@ export const useDatePicker = ({
   onError,
   onChange,
   value: externalValue,
+  showTimePicker = false,
 }: DatePickerProps) => {
   const { clearErrors, setError, setValue } = useFormContext();
   const inputValue = useWatch({ name });
 
-  const config = useMemo(
-    () => CONFIG[pickerType] || CONFIG[PICKER_TYPE.DAYS],
-    [pickerType],
-  );
-  const format = (propFormat || config.format) as DatePickerFormat;
-  const luxonFormat = useMemo(() => format.replace(/mm/gi, 'MM'), [format]);
+  const config = useMemo(() => {
+    const base = CONFIG[pickerType] || CONFIG[PICKER_TYPE.DAYS];
+
+    if (!showTimePicker) return base;
+
+    // Time is layered onto the picker's own config rather than being a fourth
+    // picker type, so `HH:mm` composes with days, months, or years. The unit
+    // moves to 'minute' so emitted values stop being floored to midnight.
+    return {
+      ...base,
+      mask: `${base.mask}${TIME_MASK_SUFFIX}`,
+      length: base.length + TIME_LENGTH,
+      unit: 'minute' as const,
+    };
+  }, [pickerType, showTimePicker]);
+
+  // The date half of the format, kept separate because `formatIndexes` and the
+  // min/max parsing below both split on '/' and would choke on a time suffix.
+  const dateFormat = (propFormat || config.format) as DatePickerFormat;
+  const format = showTimePicker
+    ? `${dateFormat}${TIME_MASK_FORMAT_SUFFIX}`
+    : dateFormat;
+  const luxonFormat = useMemo(() => {
+    // Only the date half may be uppercased — `mm` in `HH:mm` is minutes, and
+    // a blanket /mm/gi replace would turn it into a month token.
+    const luxonDate = dateFormat.replace(/mm/gi, 'MM');
+
+    return showTimePicker
+      ? `${luxonDate}${TIME_MASK_FORMAT_SUFFIX}`
+      : luxonDate;
+  }, [dateFormat, showTimePicker]);
 
   const [isLoading, setLoading] = useState(true);
   const [dateTime, setDateTime] = useState<DateTime | undefined>();
@@ -107,7 +136,7 @@ export const useDatePicker = ({
   const wasOpenRef = useRef<boolean | undefined>(undefined);
 
   const formatIndexes = useMemo(() => {
-    const parts = format
+    const parts = dateFormat
       .split('/')
       .map((p) => p.trim().toLowerCase())
       .filter(Boolean);
@@ -120,7 +149,7 @@ export const useDatePicker = ({
       month: parts.findIndex((p) => p === 'mm'),
       year,
     };
-  }, [format]);
+  }, [dateFormat]);
 
   const { dateMinDT, dateMaxDT, dateMinParts, dateMaxParts } = useMemo(() => {
     const minP = (dateMin || config.min).split('/').map(Number);
@@ -266,6 +295,73 @@ export const useDatePicker = ({
     ],
   );
 
+  // The value the clear button restores. With no `defaultValue` this is the
+  // empty string, so "reset" and "clear" collapse into the same behaviour.
+  const resetValue = defaultValue ?? '';
+
+  // Drives the clear button's visibility: there is nothing to undo while the
+  // field still holds its default.
+  const isDirty = (inputValue ?? '') !== resetValue;
+
+  const resetToDefault = useCallback(() => {
+    const nextDT = resetValue
+      ? DateTime.fromFormat(resetValue, luxonFormat)
+      : undefined;
+    const validDT = nextDT?.isValid ? nextDT : undefined;
+
+    // Keep the processing refs in step with the value we're writing, so the
+    // input-sync effect doesn't re-process a stale string and undo the reset.
+    lastProcessedValueRef.current = resetValue;
+    lastExternalValueRef.current = resetValue;
+
+    clearErrors(name);
+    setValue(name, resetValue);
+    setDateTime(validDT);
+    safeOnChange(validDT);
+    safeOnError(null);
+  }, [
+    resetValue,
+    luxonFormat,
+    name,
+    clearErrors,
+    setValue,
+    safeOnChange,
+    safeOnError,
+  ]);
+
+  /**
+   * Commits an hour/minute pick from the time panel, keeping the currently
+   * selected day. Falls back to the visible calendar day (then today) so a
+   * time can be chosen before a date.
+   */
+  const setTime = useCallback(
+    ({ hour, minute }: { hour?: number; minute?: number }) => {
+      const base = dateTime ?? calendarViewDateTime ?? DateTime.now();
+      const next = base.set({
+        hour: hour ?? base.hour,
+        minute: minute ?? base.minute,
+        second: 0,
+        millisecond: 0,
+      });
+
+      if (!next.isValid || next < dateMinDT || next > dateMaxDT) return;
+
+      clearErrors(name);
+      setDateTime(next);
+      setCalendarViewDateTime(next);
+      safeOnChange(next);
+    },
+    [
+      dateTime,
+      calendarViewDateTime,
+      dateMinDT,
+      dateMaxDT,
+      name,
+      clearErrors,
+      safeOnChange,
+    ],
+  );
+
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     // Force validation on blur - catches incomplete inputs when user leaves the field
     processValue(e.currentTarget.value, true);
@@ -368,7 +464,11 @@ export const useDatePicker = ({
     dateMaxDT,
     dateTime,
     isOpen,
+    isDirty,
     inputValue,
+    resetToDefault,
+    setTime,
+    showTimePicker,
     calendarViewDateTime,
     maskInputRef,
     calendarType,

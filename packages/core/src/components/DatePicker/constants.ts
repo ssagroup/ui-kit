@@ -37,6 +37,20 @@ export const FULL_DATE_LENGTH = 10;
 export const FULL_MONTH_DATE_LENGTH = 7;
 export const FULL_YEAR_DATE_LENGTH = 4;
 
+/**
+ * Time support is layered on top of a date format rather than being a separate
+ * set of formats, so `showTimePicker` works with any picker type without
+ * widening the shared `DateFormat` union (which `JsonSchemaForm` validates
+ * against).
+ */
+export const TIME_MASK_FORMAT_SUFFIX = ' HH:mm';
+export const TIME_MASK_SUFFIX = ' __:__';
+export const TIME_LENGTH = 6;
+export const HOURS_IN_DAY = 24;
+export const MINUTES_IN_HOUR = 60;
+/** 15-minute steps by default; pass `minuteStep={1}` for the Figma-literal list. */
+export const DEFAULT_MINUTE_STEP = 15;
+
 export const PICKER_TYPE = {
   DAYS: 'days',
   MONTHS: 'months',
