@@ -61,9 +61,6 @@ export const MonthsView = () => {
       css={{ flexWrap: 'wrap', paddingTop: 10 }}
       onClick={handleMonthSelect}>
       {MONTHS.map((month, index) => {
-        const isCalendarMonth = calendarViewDateTime
-          ? calendarViewDateTime.month === index + 1
-          : false;
         const currentMonthDT = DateTime.fromObject({
           year: calendarViewDateTime?.year,
           month: index + 1,
@@ -84,6 +81,8 @@ export const MonthsView = () => {
         const isCalendarSecondDateSelected =
           currentMonthDT.toFormat('yyyy-MM') ===
           otherDateDT?.toFormat('yyyy-MM');
+        const isCalendarDateSelected =
+          isCalendarFirstDateSelected || isCalendarSecondDateSelected;
 
         let isHighlightDate = false;
 
@@ -103,7 +102,7 @@ export const MonthsView = () => {
         return (
           <S.MonthsViewCell
             key={month}
-            isCalendarDateSelected={isCalendarMonth}
+            isCalendarDateSelected={isCalendarDateSelected}
             aria-disabled={isAriaDisabled}
             aria-label={`${month}, ${calendarViewDateTime?.year}`}
             rangeEdge={rangeEdge}

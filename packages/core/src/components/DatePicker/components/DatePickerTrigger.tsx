@@ -5,6 +5,7 @@ import { useTheme } from '@emotion/react';
 import * as C from '@components';
 import { InputProps } from '@components/Input/types';
 import { useDatePickerContext } from '../useDatePickerContext';
+import { ClearButton } from './ClearButton';
 
 export const DatePickerTrigger = () => {
   const {
@@ -95,21 +96,11 @@ export const DatePickerTrigger = () => {
 
   const clearButton =
     showClearButton && isDirty && !disabled ? (
-      <C.Button
-        endIcon={
-          <C.Icon name="cross" size={16} color={theme.colors.greyDarker80} />
-        }
-        data-testid={'datepicker-clear-button'}
+      <ClearButton
+        dataTestId="datepicker-clear-button"
         onClick={() => resetToDefault?.()}
-        variant="tertiary"
-        aria-label="Clear date"
+        ariaLabel="Clear date"
         className={classNames?.trigger?.clearButton}
-        css={{
-          padding: 0,
-          '&:focus::before': {
-            display: 'none',
-          },
-        }}
       />
     ) : undefined;
 

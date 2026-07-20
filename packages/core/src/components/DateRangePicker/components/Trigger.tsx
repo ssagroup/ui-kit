@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useTheme } from '@emotion/react';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import * as C from '@components';
+import { ClearButton } from '@components/DatePicker/components/ClearButton';
 import { TriggerInput } from './TriggerInput';
 import { TriggerStatusArea } from './TriggerStatusArea';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
@@ -78,27 +79,15 @@ export const Trigger = () => {
             className={classNames?.trigger?.inputTo}
           />
           {showClearButton && isDirty && !disabled && (
-            <C.Button
-              endIcon={
-                <C.Icon
-                  name="cross"
-                  size={16}
-                  color={theme.colors.greyDarker80}
-                />
-              }
-              data-testid={'daterangepicker-clear-button'}
+            <ClearButton
+              dataTestId="daterangepicker-clear-button"
               onClick={() => resetToDefault?.()}
-              variant="tertiary"
-              aria-label="Clear dates"
+              ariaLabel="Clear dates"
               className={classNames?.trigger?.clearButton}
               css={{
-                padding: 0,
                 margin: '0 0 0 10px',
                 height: 'auto',
                 cursor: 'pointer',
-                '&:focus::before': {
-                  display: 'none',
-                },
               }}
             />
           )}
