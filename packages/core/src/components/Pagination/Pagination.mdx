@@ -21,7 +21,7 @@ const App = () => {
 };
 ```
 
-**Note:** The Pagination component requires the `PaginationContextProvider` to manage page state and navigation.
+**Note:** The Pagination component requires the `PaginationContextProvider` to manage page state and navigation. By default the provider manages `page`/`perPage` internally (uncontrolled), but it can also be controlled by a parent component — see [Controlled Pagination](#controlled-pagination) below.
 
 ## Features
 
@@ -121,6 +121,38 @@ const ManualPageInput = () => {
   );
 };
 ```
+
+### Controlled Pagination
+
+By default `PaginationContextProvider` manages `page`/`perPage` state internally (uncontrolled).
+Pass `page`/`perPage` alongside `onPageChange`/`onPerPageChange` to have it fully controlled by a
+parent component instead — useful when the current page needs to live outside the component tree
+(e.g. driven by a data-fetching hook, a URL query param, or a sibling component).
+
+```tsx
+import { useState } from 'react';
+import { Pagination, PaginationContextProvider } from '@ssa-ui-kit/core';
+
+const ControlledPagination = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+
+  return (
+    <PaginationContextProvider
+      page={page}
+      onPageChange={setPage}
+      perPage={perPage}
+      onPerPageChange={setPerPage}>
+      <Pagination pagesCount={20} isRowPerPageVisible />
+    </PaginationContextProvider>
+  );
+};
+```
+
+**Note:** `page` and `perPage` are controlled independently — pass either one on its own (leaving
+the other uncontrolled) if only one needs to be lifted to the parent. Once a value is passed as
+controlled, keep passing it on every render; switching between controlled and uncontrolled across
+renders logs a warning in development.
 
 <Canvas />
 <Controls />

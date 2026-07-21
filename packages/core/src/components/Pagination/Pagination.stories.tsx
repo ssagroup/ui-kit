@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Pagination, PaginationContextProvider } from './index';
 import { DropdownPositions } from '@components/Dropdown/types';
@@ -86,6 +87,31 @@ export const WithoutPageFromCount: Story = {
 
 WithManualPageSettingAndPerPage.storyName =
   'With records per page and page number setting';
+
+export const Controlled: Story = {
+  name: 'Controlled (page/perPage owned by parent)',
+  decorators: [
+    (Story, { args }) => {
+      const [page, setPage] = useState(1);
+      const [perPage, setPerPage] = useState(10);
+
+      return (
+        <PaginationContextProvider
+          page={page}
+          onPageChange={setPage}
+          perPage={perPage}
+          onPerPageChange={setPerPage}>
+          {Story(args)}
+        </PaginationContextProvider>
+      );
+    },
+  ],
+  args: {
+    pagesCount: 10,
+    isRowPerPageVisible: true,
+    isPageSettingVisible: true,
+  },
+};
 
 export const RowsPerPageAtBottom: Story = {
   name: 'Rows per page — dropdown position auto (near bottom)',

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen, within } from '../../../customTest';
 
@@ -259,5 +260,86 @@ describe('Pagination', () => {
     for (const btnEl of buttonEls) {
       expect(btnEl).toBeDisabled();
     }
+  });
+
+  describe('Controlled mode', () => {
+    it('Reflects the `page` prop and calls `onPageChange` instead of navigating internally', async () => {
+      const onPageChange = jest.fn();
+      const user = userEvent.setup();
+      render(
+        <PaginationContextProvider page={2} onPageChange={onPageChange}>
+          <Pagination pagesCount={3} />
+        </PaginationContextProvider>,
+      );
+
+      screen.getByRole('button', { name: 'Current page 2', current: true });
+
+      await user.click(screen.getByRole('button', { name: 'Go to page 3' }));
+
+      expect(onPageChange).toHaveBeenCalledWith(3);
+      // Page prop hasn't changed, so the displayed page doesn't move on
+      // its own - the parent owns the value.
+      screen.getByRole('button', { name: 'Current page 2', current: true });
+    });
+
+    it('Advances when the parent updates the controlled `page` value', async () => {
+      const user = userEvent.setup();
+      const ControlledPagination = () => {
+        const [page, setPage] = useState(1);
+        return (
+          <PaginationContextProvider page={page} onPageChange={setPage}>
+            <Pagination pagesCount={3} />
+          </PaginationContextProvider>
+        );
+      };
+      render(<ControlledPagination />);
+
+      await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+
+      screen.getByRole('button', { name: 'Current page 2', current: true });
+    });
+
+    it('Reflects the `perPage` prop and calls `onPerPageChange` on the rows per page dropdown', async () => {
+      const onPerPageChange = jest.fn();
+      const user = userEvent.setup();
+      render(
+        <PaginationContextProvider
+          perPage={25}
+          onPerPageChange={onPerPageChange}>
+          <Pagination pagesCount={3} isRowPerPageVisible />
+        </PaginationContextProvider>,
+      );
+
+      await user.click(screen.getByRole('combobox'));
+
+      const listboxEl = screen.getByRole('listbox');
+      await user.click(within(listboxEl).getByRole('button', { name: '50' }));
+
+      expect(onPerPageChange).toHaveBeenCalledWith(50);
+    });
+
+    it('Warns in dev mode when switching between controlled and uncontrolled `page` across renders', () => {
+      jest.spyOn(console, 'error').mockImplementation(() => {
+        /* no-op */
+      });
+
+      const { rerender } = render(
+        <PaginationContextProvider page={1}>
+          <Pagination pagesCount={3} />
+        </PaginationContextProvider>,
+      );
+
+      rerender(
+        <PaginationContextProvider>
+          <Pagination pagesCount={3} />
+        </PaginationContextProvider>,
+      );
+
+      expect(console.error).toHaveBeenCalledWith(
+        expect.stringContaining('"page"'),
+      );
+
+      (console.error as jest.Mock).mockRestore();
+    });
   });
 });

@@ -238,7 +238,17 @@ export interface PaginationContextProps {
  *
  * @example
  * ```tsx
+ * // Uncontrolled - provider manages its own state
  * <PaginationContextProvider selectedPage={1} defaultPerPage={25}>
+ *   <Pagination pagesCount={10} />
+ * </PaginationContextProvider>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Controlled - parent owns page/perPage state
+ * const [page, setPage] = useState(1);
+ * <PaginationContextProvider page={page} onPageChange={setPage}>
  *   <Pagination pagesCount={10} />
  * </PaginationContextProvider>
  * ```
@@ -246,14 +256,46 @@ export interface PaginationContextProps {
 export interface PaginationContextProviderProps {
   /**
    * Initial selected page number (1-indexed)
+   * Ignored once `page` is provided (controlled mode)
    */
   selectedPage?: number;
 
   /**
    * Default number of items per page
+   * Ignored once `perPage` is provided (controlled mode)
    * @default 10
    */
   defaultPerPage?: number;
+
+  /**
+   * Controlled current page number (1-indexed)
+   * When provided, the provider stops managing page state internally and
+   * always reflects this value; pair with `onPageChange` to react to
+   * navigation.
+   */
+  page?: number;
+
+  /**
+   * Controlled number of items per page
+   * When provided, the provider stops managing perPage state internally and
+   * always reflects this value; pair with `onPerPageChange` to react to
+   * changes.
+   */
+  perPage?: number;
+
+  /**
+   * Called whenever the page changes (arrow clicks, page buttons, manual
+   * page input). Required to actually change the page when `page` is
+   * controlled, since the provider no longer updates its own state.
+   */
+  onPageChange?: (page: number) => void;
+
+  /**
+   * Called whenever perPage changes (rows per page dropdown). Required to
+   * actually change perPage when `perPage` is controlled, since the
+   * provider no longer updates its own state.
+   */
+  onPerPageChange?: (perPage: number) => void;
 
   /**
    * Child components that use pagination context

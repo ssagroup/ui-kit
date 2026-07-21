@@ -1,9 +1,10 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import {
   PaginationContextProps,
   PaginationContextProviderProps,
 } from './types';
 import { DEFAULT_PER_PAGE_VALUE } from './constants';
+import { useControllableState } from './hooks';
 
 /**
  * Pagination context
@@ -33,7 +34,17 @@ export const usePaginationContext = () => useContext(PaginationContext);
  *
  * @example
  * ```tsx
+ * // Uncontrolled
  * <PaginationContextProvider selectedPage={1} defaultPerPage={25}>
+ *   <Pagination pagesCount={10} />
+ * </PaginationContextProvider>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Controlled - parent owns page/perPage state
+ * const [page, setPage] = useState(1);
+ * <PaginationContextProvider page={page} onPageChange={setPage}>
  *   <Pagination pagesCount={10} />
  * </PaginationContextProvider>
  * ```
@@ -44,10 +55,25 @@ export const usePaginationContext = () => useContext(PaginationContext);
 export const PaginationContextProvider = ({
   selectedPage,
   defaultPerPage = DEFAULT_PER_PAGE_VALUE,
+  page: controlledPage,
+  perPage: controlledPerPage,
+  onPageChange,
+  onPerPageChange,
   children,
 }: PaginationContextProviderProps) => {
-  const [perPage, setPerPage] = useState<number>(defaultPerPage);
-  const [page, setPage] = useState(selectedPage);
+  const [page, setPage] = useControllableState({
+    value: controlledPage,
+    defaultValue: selectedPage,
+    onChange: onPageChange,
+    name: 'page',
+  });
+  const [perPage, setPerPage] = useControllableState({
+    value: controlledPerPage,
+    defaultValue: defaultPerPage,
+    onChange: onPerPageChange,
+    name: 'perPage',
+  });
+
   return (
     <PaginationContext.Provider value={{ page, perPage, setPage, setPerPage }}>
       {children}
