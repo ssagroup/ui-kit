@@ -5,7 +5,7 @@ import Wrapper from '@components/Wrapper/Wrapper';
 import Dropdown from '@components/Dropdown/Dropdown';
 import { usePaginationContext } from '@components/Pagination/PaginationContext';
 import { RowsPerPageDropdownProps } from './types';
-import { DEFAULT_PER_PAGE_VALUE, ROWS_PER_PAGE_LIST } from '../../constants';
+import { ROWS_PER_PAGE_LIST } from '../../constants';
 
 /**
  * RowsPerPageDropdown - Dropdown component for selecting rows per page
@@ -49,17 +49,17 @@ import { DEFAULT_PER_PAGE_VALUE, ROWS_PER_PAGE_LIST } from '../../constants';
  * - Screen reader friendly
  */
 export const RowsPerPageDropdown = ({
-  selectedItem = DEFAULT_PER_PAGE_VALUE,
+  selectedItem,
   rowsPerPageList = ROWS_PER_PAGE_LIST,
   rowsPerPageText = 'Rows per page',
   dropdownPosition,
   ...rest
 }: RowsPerPageDropdownProps) => {
   const theme = useTheme();
-  const { setPerPage } = usePaginationContext();
+  const { perPage, setPerPage } = usePaginationContext();
 
   const selectedItemForDropdown =
-    rowsPerPageList.find(({ value }) => value === selectedItem) ||
+    rowsPerPageList.find(({ value }) => value === (selectedItem ?? perPage)) ||
     rowsPerPageList[0];
 
   const onChange: Parameters<typeof Dropdown>[0]['onChange'] = ({ value }) => {
