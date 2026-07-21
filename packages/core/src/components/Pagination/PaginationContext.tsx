@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useCallback, useContext } from 'react';
 import {
   PaginationContextProps,
   PaginationContextProviderProps,
@@ -61,13 +61,25 @@ export const PaginationContextProvider = ({
   onPerPageChange,
   children,
 }: PaginationContextProviderProps) => {
-  const [page, setPage] = useControllableState({
+  // `page` can be `undefined` (no page selected yet), but the public
+  // `onPageChange` callback only ever needs to handle real page numbers -
+  // Pagination never navigates to an undefined page.
+  const handlePageChange = useCallback(
+    (value?: number) => {
+      if (value !== undefined) {
+        onPageChange?.(value);
+      }
+    },
+    [onPageChange],
+  );
+
+  const [page, setPage] = useControllableState<number | undefined>({
     value: controlledPage,
     defaultValue: selectedPage,
-    onChange: onPageChange,
+    onChange: handlePageChange,
     name: 'page',
   });
-  const [perPage, setPerPage] = useControllableState({
+  const [perPage, setPerPage] = useControllableState<number>({
     value: controlledPerPage,
     defaultValue: defaultPerPage,
     onChange: onPerPageChange,

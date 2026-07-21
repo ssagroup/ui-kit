@@ -318,6 +318,28 @@ describe('Pagination', () => {
       expect(onPerPageChange).toHaveBeenCalledWith(50);
     });
 
+    it('Updates the rows per page dropdown display when perPage changes from outside the dropdown', async () => {
+      const user = userEvent.setup();
+      const ExternallyDrivenPerPage = () => {
+        const [perPage, setPerPage] = useState(25);
+        return (
+          <PaginationContextProvider
+            perPage={perPage}
+            onPerPageChange={setPerPage}>
+            <button onClick={() => setPerPage(50)}>External set 50</button>
+            <Pagination pagesCount={3} isRowPerPageVisible />
+          </PaginationContextProvider>
+        );
+      };
+      render(<ExternallyDrivenPerPage />);
+
+      expect(screen.getByRole('combobox')).toHaveTextContent('25');
+
+      await user.click(screen.getByRole('button', { name: 'External set 50' }));
+
+      expect(screen.getByRole('combobox')).toHaveTextContent('50');
+    });
+
     it('Warns in dev mode when switching between controlled and uncontrolled `page` across renders', () => {
       jest.spyOn(console, 'error').mockImplementation(() => {
         /* no-op */

@@ -31,6 +31,7 @@ export interface RowsPerPageDropdownProps extends CommonProps {
   /**
    * Currently selected number of rows per page
    * Must match a value in rowsPerPageList
+   * @default the `perPage` value from PaginationContextProvider
    */
   selectedItem?: number;
 
