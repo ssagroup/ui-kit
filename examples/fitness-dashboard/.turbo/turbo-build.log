@@ -6,21 +6,21 @@ Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 assets by status [1m[33m1.22 MiB[39m[22m [1m[33m[big][39m[22m
-  asset [1m[33mmain.0b2b67471424b8b27727.js[39m[22m [1m[33m999 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m [1m[33m[big][39m[22m (name: main) 1 related asset
+  asset [1m[33mmain.92ee5d24007b821cf42a.js[39m[22m [1m[33m1000 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m [1m[33m[big][39m[22m (name: main) 1 related asset
   asset [1m[33m809.e5a9b5cf4b80b5685d01.js[39m[22m [1m[33m253 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m [1m[33m[big][39m[22m (id hint: vendors) 1 related asset
 asset [1m[32mcharts.fa02a29b4dfc794d88fe.js[39m[22m 227 KiB [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m (name: charts) (id hint: vendor) 1 related asset
 asset [1m[32mruntime.3145517c0f8391b38b81.js[39m[22m 3.76 KiB [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m (name: runtime) 1 related asset
 asset [1m[32mindex.html[39m[22m 860 bytes [1m[32m[emitted][39m[22m
 asset [1m[32m177.4c11e65cb9c3665407bd.js[39m[22m 758 bytes [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m 1 related asset
-Entrypoint [1mmain[39m[22m [1m[33m[big][39m[22m 1.2 MiB (3.92 MiB) = [1m[32mruntime.3145517c0f8391b38b81.js[39m[22m 3.76 KiB [1m[32mcharts.fa02a29b4dfc794d88fe.js[39m[22m 227 KiB [1m[32mmain.0b2b67471424b8b27727.js[39m[22m 999 KiB 3 auxiliary assets
-orphan modules 15.9 MiB [1m[33m[orphan][39m[22m 2050 modules
+Entrypoint [1mmain[39m[22m [1m[33m[big][39m[22m 1.2 MiB (3.93 MiB) = [1m[32mruntime.3145517c0f8391b38b81.js[39m[22m 3.76 KiB [1m[32mcharts.fa02a29b4dfc794d88fe.js[39m[22m 227 KiB [1m[32mmain.92ee5d24007b821cf42a.js[39m[22m 1000 KiB 3 auxiliary assets
+orphan modules 15.9 MiB [1m[33m[orphan][39m[22m 2052 modules
 runtime modules 9.43 KiB 13 modules
 cacheable modules 3.81 MiB 283 modules
 
 [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
 This can impact web performance.
 Assets: 
-  main.0b2b67471424b8b27727.js (999 KiB)
+  main.92ee5d24007b821cf42a.js (1000 KiB)
   809.e5a9b5cf4b80b5685d01.js (253 KiB)[39m[22m
 
 [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
@@ -28,7 +28,7 @@ Entrypoints:
   main (1.2 MiB)
       runtime.3145517c0f8391b38b81.js
       charts.fa02a29b4dfc794d88fe.js
-      main.0b2b67471424b8b27727.js
+      main.92ee5d24007b821cf42a.js
 [39m[22m
 
-webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 21174 ms
+webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 26526 ms
