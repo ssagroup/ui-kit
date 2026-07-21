@@ -97,7 +97,7 @@ export const PaginationButtons = ({
   isDisabled,
 }: PaginationButtonsProps) => {
   return (
-    <div css={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+    <div css={{ display: 'flex', alignItems: 'center', gap: 2 }}>
       {Array.isArray(range) &&
         range.map((page, index) => {
           return page === -1 ? (

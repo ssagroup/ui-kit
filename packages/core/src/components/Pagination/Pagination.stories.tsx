@@ -55,6 +55,16 @@ export const LastPageSelected: Story = {
   },
 };
 
+export const ManyPages: Story = {
+  name: 'Large page count (5-digit page numbers)',
+  args: {
+    pagesCount: 11398,
+  },
+  parameters: {
+    selectedPage: 11396,
+  },
+};
+
 export const Disabled: Story = {
   args: {
     pagesCount: 10,
