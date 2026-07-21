@@ -13,7 +13,7 @@ asset [1m[32mruntime.3145517c0f8391b38b81.js[39m[22m 3.76 KiB [1m[32m[emit
 asset [1m[32mindex.html[39m[22m 860 bytes [1m[32m[emitted][39m[22m
 asset [1m[32m177.4c11e65cb9c3665407bd.js[39m[22m 758 bytes [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m [1m[32m[minimized][39m[22m 1 related asset
 Entrypoint [1mmain[39m[22m [1m[33m[big][39m[22m 1.2 MiB (3.93 MiB) = [1m[32mruntime.3145517c0f8391b38b81.js[39m[22m 3.76 KiB [1m[32mcharts.fa02a29b4dfc794d88fe.js[39m[22m 227 KiB [1m[32mmain.92ee5d24007b821cf42a.js[39m[22m 1000 KiB 3 auxiliary assets
-orphan modules 15.9 MiB [1m[33m[orphan][39m[22m 2052 modules
+orphan modules 15.9 MiB [1m[33m[orphan][39m[22m 2054 modules
 runtime modules 9.43 KiB 13 modules
 cacheable modules 3.81 MiB 283 modules
 
@@ -31,4 +31,4 @@ Entrypoints:
       main.92ee5d24007b821cf42a.js
 [39m[22m
 
-webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 26526 ms
+webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 22627 ms

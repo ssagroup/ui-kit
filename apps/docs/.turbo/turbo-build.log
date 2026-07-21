@@ -10,9 +10,9 @@ https://nextjs.org/telemetry
 
    ▲ Next.js 15.5.19
 
-[MDX] updated map file in 367.7522099999999ms
+[MDX] updated map file in 64.73533900000007ms
    Creating an optimized production build ...
- ✓ Compiled successfully in 43s
+ ✓ Compiled successfully in 37.0s
    Skipping linting
    Checking validity of types ...
    Collecting page data ...
@@ -36,7 +36,7 @@ Route (app)                                 Size  First Load JS
 + First Load JS shared by all             103 kB
   ├ chunks/1026-5dcfe6108b8acdb1.js      46.1 kB
   ├ chunks/808d3bc2-829ffcc9fde7ccd9.js  54.2 kB
-  └ other shared chunks (total)          3.12 kB
+  └ other shared chunks (total)          3.13 kB
 
 
 ○  (Static)   prerendered as static content
