@@ -2,11 +2,11 @@ import Input from '@components/Input';
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-/** Square 26x26 cell shared by page/selected/arrow buttons (design "Number" atom). */
+/** 26px-tall cell shared by page/selected/arrow buttons (design "Number" atom); width grows past 26 to fit multi-digit page numbers instead of clipping/overlapping. */
 const baseBtnStyles = {
-  width: 26,
+  minWidth: 26,
   height: 26,
-  padding: 0,
+  padding: '0 4px',
   borderRadius: 6,
   justifyContent: 'center',
 
