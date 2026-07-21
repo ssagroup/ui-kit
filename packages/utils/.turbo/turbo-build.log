@@ -1,5 +1,5 @@
 
-> @ssa-ui-kit/utils@3.16.3 build /home/runner/work/ui-kit/ui-kit/packages/utils
+> @ssa-ui-kit/utils@3.16.4 build /home/runner/work/ui-kit/ui-kit/packages/utils
 > webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
 
 Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
@@ -9,5 +9,5 @@ asset [1m[32mindex.js[39m[22m 10.5 KiB [1m[32m[emitted][39m[22m (name: m
 orphan modules 7.3 KiB [1m[33m[orphan][39m[22m 20 modules
 runtime modules 670 bytes 3 modules
 [1m./src/index.ts + 17 modules[39m[22m 7.71 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 1368 ms
+webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 1116 ms
 [1mresolve-tspaths:[22m changed 0 file(s)
