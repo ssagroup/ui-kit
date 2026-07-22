@@ -61,8 +61,10 @@ export * from './SearchBox';
 export type * from './SearchBox/types';
 
 export { default as FileUpload } from './FileUpload';
-export { FileUploadItem } from './FileUpload';
 export type * from './FileUpload/types';
+
+export { default as FileAttachment } from './FileAttachment';
+export type * from './FileAttachment/types';
 
 // ============================================================================
 // Form Structure
