@@ -4,8 +4,12 @@ import Button from '@components/Button';
 import FormHelperText from '@components/FormHelperText';
 import Label from '@components/Label';
 import Icon from '@components/Icon';
-import FileUploadItem from './FileUploadItem';
-import { FileUploadProps, FileRejectionReason } from './types';
+import FileAttachment from '@components/FileAttachment';
+import {
+  FileUploadProps,
+  FileRejectionReason,
+  FileUploadProgress,
+} from './types';
 import * as S from './styles';
 
 const normalizeValue = (value?: File | File[]): File[] => {
@@ -19,12 +23,22 @@ const formatBytes = (bytes: number): string => {
   return `${Math.round(bytes / (1024 * 1024))} MB`;
 };
 
+const getFileProgress = (
+  file: File,
+  uploadProgress?: FileUploadProgress,
+): number | undefined => {
+  if (uploadProgress === undefined) return undefined;
+  if (typeof uploadProgress === 'number') return uploadProgress;
+  return uploadProgress.find((entry) => entry.name === file.name)?.progress;
+};
+
 /**
  * FileUpload - File input component with optional drag-and-drop support
  *
  * Supports single and multi-file selection with built-in validation for
  * file formats and size. In multi-file mode, selected files are listed
- * below the input with individual remove controls.
+ * below the input with individual remove controls. Single-file mode can opt
+ * into the same list treatment via `showFileAttachment`.
  *
  * @example
  * ```tsx
@@ -52,6 +66,36 @@ const formatBytes = (bytes: number): string => {
  *   onChange={setFiles}
  * />
  * ```
+ *
+ * @example
+ * ```tsx
+ * // Multi-file with per-file upload progress, driven by the consumer's own
+ * // upload requests — FileUpload only handles local selection, so it has no
+ * // progress data of its own.
+ * <FileUpload
+ *   isMultiFile
+ *   value={files}
+ *   onChange={setFiles}
+ *   uploadProgress={[
+ *     { name: 'report.pdf', progress: 50 },
+ *     { name: 'photo.png', progress: 100 },
+ *   ]}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Single file, shown as a FileAttachment card below the input (icon,
+ * // size, delete button, image preview) instead of inline text next to the
+ * // button. `uploadProgress` here can just be a single number, since there's
+ * // only ever one file.
+ * <FileUpload
+ *   showFileAttachment
+ *   value={file}
+ *   onChange={(files) => setFile(files[0])}
+ *   uploadProgress={70}
+ * />
+ * ```
  */
 const FileUpload = ({
   label,
@@ -68,6 +112,8 @@ const FileUpload = ({
   maxFiles,
   withDropArea = false,
   uploadedSectionTitle,
+  uploadProgress,
+  showFileAttachment = false,
   value,
   onChange,
   onFileRejected,
@@ -163,8 +209,9 @@ const FileUpload = ({
   const acceptAttr = allowedFormats?.map((f) => `.${f}`).join(',');
   const hasError = !!error;
 
-  const inlineFileName = !isMultiFile && files[0]?.name;
-  const showUploadedFiles = isMultiFile && files.length > 0;
+  const inlineFileName = !isMultiFile && !showFileAttachment && files[0]?.name;
+  const attachmentFiles =
+    isMultiFile || (showFileAttachment && !withDropArea) ? files : [];
 
   return (
     <div css={[S.wrapper, css]} className={className}>
@@ -278,17 +325,18 @@ const FileUpload = ({
         </FormHelperText>
       )}
 
-      {showUploadedFiles && (
+      {attachmentFiles.length > 0 && (
         <div css={S.filesList}>
           {uploadedSectionTitle && (
             <span css={S.filesListTitle(theme)}>{uploadedSectionTitle}</span>
           )}
-          {files.map((file, index) => (
-            <FileUploadItem
+          {attachmentFiles.map((file, index) => (
+            <FileAttachment
               key={`${file.name}-${index}`}
-              file={file}
-              onRemove={handleRemove}
-              disabled={disabled}
+              file={{ name: file.name, size: file.size, content: file }}
+              progress={getFileProgress(file, uploadProgress)}
+              onRemove={() => handleRemove(file)}
+              isDisabled={disabled}
             />
           ))}
         </div>

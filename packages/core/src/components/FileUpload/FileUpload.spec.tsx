@@ -117,6 +117,67 @@ describe('FileUpload', () => {
     });
   });
 
+  // ─── showFileAttachment (single-file) ───────────────────────────────────────
+
+  describe('showFileAttachment', () => {
+    it('shows the selected file as a card below the input, not inline', async () => {
+      render(
+        <FileUpload
+          showFileAttachment
+          placeholder="No file selected"
+          onChange={jest.fn()}
+        />,
+      );
+
+      await userEvent.upload(getFileInput(), makePdf('report.pdf'));
+
+      expect(screen.getByText('report.pdf')).toBeInTheDocument();
+      // Input row keeps showing the placeholder instead of the filename
+      expect(screen.getByText('No file selected')).toBeInTheDocument();
+    });
+
+    it('removes the file via the card delete button', async () => {
+      const onChange = jest.fn();
+      render(<FileUpload showFileAttachment onChange={onChange} />);
+
+      await userEvent.upload(getFileInput(), makePdf('report.pdf'));
+      await userEvent.click(screen.getByLabelText('Remove report.pdf'));
+
+      expect(screen.queryByText('report.pdf')).not.toBeInTheDocument();
+      expect(onChange).toHaveBeenLastCalledWith([]);
+    });
+
+    it('applies uploadProgress to the single-file card', async () => {
+      render(
+        <FileUpload
+          showFileAttachment
+          uploadProgress={65}
+          onChange={jest.fn()}
+        />,
+      );
+
+      await userEvent.upload(getFileInput(), makePdf('report.pdf'));
+
+      expect(screen.getByText('65%')).toBeInTheDocument();
+    });
+
+    it('is ignored when withDropArea is set, keeping the drop zone’s own selected-file view', async () => {
+      render(
+        <FileUpload showFileAttachment withDropArea onChange={jest.fn()} />,
+      );
+
+      await userEvent.upload(getFileInput(), makePdf('report.pdf'));
+
+      // The drop zone's own (static-label) remove control is present...
+      expect(screen.getByLabelText('Remove file')).toBeInTheDocument();
+      // ...but not an additional FileAttachment card/delete button
+      // (FileAttachment's delete button label includes the file name).
+      expect(
+        screen.queryByLabelText('Remove report.pdf'),
+      ).not.toBeInTheDocument();
+    });
+  });
+
   // ─── Multi-file ─────────────────────────────────────────────────────────────
 
   describe('multi-file mode', () => {
@@ -202,6 +263,45 @@ describe('FileUpload', () => {
       ][0] as File[];
       expect(lastCall).toHaveLength(1);
       expect(lastCall[0].name).toBe('keep.pdf');
+    });
+
+    it('does not show any progress copy when uploadProgress is not provided', async () => {
+      render(<FileUpload isMultiFile onChange={jest.fn()} />);
+
+      await userEvent.upload(getFileInput(), makePdf('one.pdf'));
+
+      expect(screen.queryByText(/%/)).not.toBeInTheDocument();
+    });
+
+    it('applies a single uploadProgress number to every file', async () => {
+      render(
+        <FileUpload isMultiFile onChange={jest.fn()} uploadProgress={40} />,
+      );
+
+      await userEvent.upload(getFileInput(), [
+        makePdf('one.pdf'),
+        makePdf('two.pdf'),
+      ]);
+
+      expect(screen.getAllByText('40%')).toHaveLength(2);
+    });
+
+    it('matches per-file progress by name, leaving unmatched files without progress', async () => {
+      render(
+        <FileUpload
+          isMultiFile
+          onChange={jest.fn()}
+          uploadProgress={[{ name: 'one.pdf', progress: 75 }]}
+        />,
+      );
+
+      await userEvent.upload(getFileInput(), [
+        makePdf('one.pdf'),
+        makePdf('two.pdf'),
+      ]);
+
+      expect(screen.getByText('75%')).toBeInTheDocument();
+      expect(screen.queryAllByText(/%/)).toHaveLength(1);
     });
   });
 

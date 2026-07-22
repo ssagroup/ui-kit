@@ -60,7 +60,17 @@ const meta = {
     uploadedSectionTitle: {
       control: 'text',
       description:
-        'Title rendered above the uploaded files list (multi-file mode only).',
+        'Title rendered above the uploaded files list — the multi-file list, or the single-file card when `showFileAttachment` is set.',
+    },
+    uploadProgress: {
+      control: { disable: true },
+      description:
+        "Upload progress for the file(s) shown as FileAttachment cards (multi-file list, or single-file with `showFileAttachment`) — a single number applied to every file, or a `{ name, progress }[]` matched by file name. FileUpload only handles local selection, so this must come from the consumer's own upload. Files with no matching progress show just their size.",
+    },
+    showFileAttachment: {
+      control: 'boolean',
+      description:
+        'Single-file mode only (ignored when `withDropArea` is set — its own selected-file view already covers this): show the selected file as a FileAttachment card below the input, instead of inline text next to the button. The input row then always shows `placeholder`, matching multi-file mode.',
     },
     allowedFormats: {
       control: { disable: true },
@@ -80,6 +90,7 @@ const meta = {
     disabled: false,
     isMultiFile: false,
     withDropArea: false,
+    showFileAttachment: false,
   },
   parameters: {
     docs: {
@@ -90,6 +101,8 @@ File input component supporting single and multi-file selection with optional dr
 **Controlled** — always pass \`value\` + \`onChange\` to manage selected files from the parent.
 
 **Validation** — use \`allowedFormats\` and \`maxFileSize\` to silently reject invalid files. Subscribe to \`onFileRejected\` to react to each rejection (e.g. display a toast).
+
+**FileAttachment cards** — multi-file mode always lists selected files as \`FileAttachment\` cards below the input. Single-file mode can opt into the same treatment via \`showFileAttachment\` (ignored when \`withDropArea\` is set). Both accept \`uploadProgress\` and \`uploadedSectionTitle\`; FileUpload only handles local selection, so progress must come from the consumer's own upload.
         `,
       },
     },
@@ -207,6 +220,33 @@ Disabled.parameters = {
   },
 };
 
+// ─── Single-file with attachment card ──────────────────────────────────────────
+
+export const WithFileAttachment: Story = (args: Args) => {
+  const [files, setFiles] = useState<File[]>([]);
+  return (
+    <FileUpload
+      {...args}
+      value={files}
+      onChange={setFiles}
+      css={{ maxWidth: 400 }}
+    />
+  );
+};
+WithFileAttachment.storyName = 'Single-file — With FileAttachment Card';
+WithFileAttachment.args = {
+  label: 'Attachment',
+  showFileAttachment: true,
+};
+WithFileAttachment.parameters = {
+  docs: {
+    description: {
+      story:
+        "With `showFileAttachment`, the selected file renders as a `FileAttachment` card below the input (icon, size, delete button, image preview for images) instead of inline text next to the button — the input row always shows the placeholder, matching multi-file mode. Combine with `uploadProgress` (a plain number works here, since there's only ever one file) to show upload progress.",
+    },
+  },
+};
+
 // ─── Multi-file ───────────────────────────────────────────────────────────────
 
 export const MultiFile: Story = (args: Args) => {
@@ -267,6 +307,58 @@ MultiFileWithFormats.parameters = {
     description: {
       story:
         'Combines `allowedFormats` and `maxFileSize` to reject invalid files silently. Add `onFileRejected` to surface the reason to users.',
+    },
+  },
+};
+
+// ─── Multi-file with upload progress ───────────────────────────────────────────
+
+const makeDemoFile = (name: string, sizeBytes: number) =>
+  new File(['x'.repeat(sizeBytes)], name);
+
+// 1x1 px PNG, padded with trailing filler bytes (ignored by PNG decoders past
+// the IEND chunk) so the demo shows a realistic file size while still
+// rendering as a real, decodable image preview.
+const TINY_PNG_BASE64 =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+
+const makeImageDemoFile = (name: string, sizeBytes: number) => {
+  const binary = atob(TINY_PNG_BASE64);
+  const bytes = new Uint8Array(sizeBytes);
+  for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+  return new File([bytes], name, { type: 'image/png' });
+};
+
+export const MultiFileWithUploadProgress: Story = (args: Args) => {
+  const [files, setFiles] = useState<File[]>([
+    makeDemoFile('invoice.pdf', 2 * 1024 * 1024),
+    makeImageDemoFile('photo.png', 4 * 1024 * 1024),
+    makeDemoFile('notes.docx', 512 * 1024),
+  ]);
+  return (
+    <FileUpload
+      {...args}
+      value={files}
+      onChange={setFiles}
+      css={{ maxWidth: 400 }}
+      uploadProgress={[
+        { name: 'invoice.pdf', progress: 100 },
+        { name: 'photo.png', progress: 45 },
+      ]}
+    />
+  );
+};
+MultiFileWithUploadProgress.storyName = 'Multi-file — With Upload Progress';
+MultiFileWithUploadProgress.args = {
+  label: 'Documents',
+  uploadedSectionTitle: 'Uploaded files',
+  isMultiFile: true,
+};
+MultiFileWithUploadProgress.parameters = {
+  docs: {
+    description: {
+      story:
+        'FileUpload only handles local file selection — it has no upload progress of its own. Pass `uploadProgress` (a single number applied to every file, or a `{ name, progress }[]` matched by file name) as your own upload reports progress. `photo.png` also demonstrates the automatic image preview (its `File` is passed straight through to `FileAttachment`). `notes.docx` has no matching entry, so it shows just its size — the fallback for files with no progress data yet.',
     },
   },
 };
