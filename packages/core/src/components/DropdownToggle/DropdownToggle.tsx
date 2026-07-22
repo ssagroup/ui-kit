@@ -79,7 +79,6 @@ const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
   const borderColor = isOpen ? theme.palette.primary.main : theme.colors.grey;
 
   return css`
-    justify-content: space-between;
     height: 40px;
     padding: 11px 15px 9px 10px;
     font-size: 14px;
@@ -126,7 +125,7 @@ export const DropdownToggleBase = styled.button<
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 8px;
 
   position: relative;

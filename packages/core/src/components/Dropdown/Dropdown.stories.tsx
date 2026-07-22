@@ -296,6 +296,25 @@ export const WithAvatars: StoryObj<Args> = {
 
 WithAvatars.args = { isDisabled: false };
 
+export const CustomWidth: StoryObj = (args: Args) => {
+  return (
+    <Dropdown
+      isDisabled={args.isDisabled}
+      selectedItem={items[0]}
+      css={css`
+        width: 320px;
+      `}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  );
+};
+
+CustomWidth.args = { isDisabled: false };
+
 export const LegacyStyle: StoryObj<Args> = {
   name: 'Legacy (Previous Style)',
   render: (args) => (
