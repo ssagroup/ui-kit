@@ -303,6 +303,24 @@ describe('FileUpload', () => {
       expect(screen.getByText('75%')).toBeInTheDocument();
       expect(screen.queryAllByText(/%/)).toHaveLength(1);
     });
+
+    it('matches duplicate-named files to distinct progress entries by occurrence, instead of colliding on one', () => {
+      render(
+        <FileUpload
+          isMultiFile
+          onChange={jest.fn()}
+          uploadProgress={[
+            { name: 'photo.pdf', progress: 30 },
+            { name: 'photo.pdf', progress: 90 },
+          ]}
+        />,
+      );
+
+      uploadFilesDirect([makePdf('photo.pdf'), makePdf('photo.pdf')]);
+
+      expect(screen.getByText('30%')).toBeInTheDocument();
+      expect(screen.getByText('90%')).toBeInTheDocument();
+    });
   });
 
   // ─── Validation / onFileRejected ────────────────────────────────────────────
@@ -454,6 +472,30 @@ describe('FileUpload', () => {
       expect(
         screen.getByRole('button', { name: 'Remove file' }),
       ).toBeInTheDocument();
+    });
+
+    it('renders a file-type-specific icon for the selected file, not always the pdf icon', async () => {
+      const pdfRender = render(
+        <FileUpload withDropArea onChange={jest.fn()} />,
+      );
+      await userEvent.upload(getFileInput(), makePdf('contract.pdf'));
+      const pdfIconMarkup = pdfRender.container.querySelector('svg')?.outerHTML;
+      pdfRender.unmount();
+
+      const docxRender = render(
+        <FileUpload withDropArea onChange={jest.fn()} />,
+      );
+      await userEvent.upload(
+        getFileInput(),
+        new File(['x'], 'report.docx', {
+          type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        }),
+      );
+      const docxIconMarkup =
+        docxRender.container.querySelector('svg')?.outerHTML;
+
+      expect(docxIconMarkup).toBeTruthy();
+      expect(docxIconMarkup).not.toBe(pdfIconMarkup);
     });
 
     it('clears the selection when the remove button is clicked inside the drop zone', async () => {

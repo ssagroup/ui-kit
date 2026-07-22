@@ -5,6 +5,7 @@ import FormHelperText from '@components/FormHelperText';
 import Label from '@components/Label';
 import Icon from '@components/Icon';
 import FileAttachment from '@components/FileAttachment';
+import { formatBytes, getFileTypeIcon } from '@components/FileAttachment/utils';
 import {
   FileUploadProps,
   FileRejectionReason,
@@ -17,19 +18,25 @@ const normalizeValue = (value?: File | File[]): File[] => {
   return Array.isArray(value) ? value : [value];
 };
 
-const formatBytes = (bytes: number): string => {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${Math.round(bytes / (1024 * 1024))} MB`;
-};
-
+/**
+ * Matches by the Nth occurrence of a name rather than the first, so files
+ * that share a name (e.g. two "photo.png" from different folders) each get
+ * their own progress entry instead of colliding on the same one.
+ */
 const getFileProgress = (
   file: File,
+  index: number,
+  files: File[],
   uploadProgress?: FileUploadProgress,
 ): number | undefined => {
   if (uploadProgress === undefined) return undefined;
   if (typeof uploadProgress === 'number') return uploadProgress;
-  return uploadProgress.find((entry) => entry.name === file.name)?.progress;
+
+  const occurrence = files
+    .slice(0, index + 1)
+    .filter((f) => f.name === file.name).length;
+  const matches = uploadProgress.filter((entry) => entry.name === file.name);
+  return matches[occurrence - 1]?.progress;
 };
 
 /**
@@ -247,7 +254,7 @@ const FileUpload = ({
           {!isMultiFile && files[0] ? (
             <>
               <Icon
-                name="file-pdf"
+                name={getFileTypeIcon(files[0].name) ?? 'picture'}
                 size={36}
                 color={theme.colors.greyDarker60}
               />
@@ -334,7 +341,7 @@ const FileUpload = ({
             <FileAttachment
               key={`${file.name}-${index}`}
               file={{ name: file.name, size: file.size, content: file }}
-              progress={getFileProgress(file, uploadProgress)}
+              progress={getFileProgress(file, index, files, uploadProgress)}
               onRemove={() => handleRemove(file)}
               isDisabled={disabled}
             />
