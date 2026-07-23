@@ -1,0 +1,137 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as BreadcrumbsStories from './Breadcrumbs.stories';
+
+<Meta of={BreadcrumbsStories} />
+
+# Breadcrumbs
+
+Breadcrumbs show the current page's position within the app hierarchy as a
+trail of links, ending with the current page. Navigation is handled through
+react-router, so the component must be rendered inside a router.
+
+## Default Usage
+
+Pass an ordered list of `{ label, to }` items — root first, current page last.
+The last item (or any item flagged `isCurrent`) is rendered as an emphasised,
+non-navigable label.
+
+```tsx
+import { Breadcrumbs } from '@ssa-ui-kit/core';
+
+function Example() {
+  return (
+    <Breadcrumbs
+      items={[
+        { label: 'Home', to: '/' },
+        { label: 'People', to: '/people' },
+        { label: 'Jane Doe' },
+      ]}
+    />
+  );
+}
+```
+
+<Canvas of={BreadcrumbsStories.Default} />
+
+## Truncation
+
+When a trail grows long, set `maxItems` to collapse it to `first … last`. The
+hidden middle crumbs stay reachable from the `...` menu.
+
+```tsx
+<Breadcrumbs
+  maxItems={3}
+  items={[
+    { label: 'Home', to: '/' },
+    { label: 'People', to: '/people' },
+    { label: 'Engineering', to: '/people/engineering' },
+    { label: 'Frontend', to: '/people/engineering/frontend' },
+    { label: 'Jane Doe' },
+  ]}
+/>
+```
+
+<Canvas of={BreadcrumbsStories.Truncated} />
+
+## Sibling menu
+
+A crumb can expose alternative routes through `siblings`. Hovering the crumb
+reveals a menu of those routes. This is the presentational half of the
+route-aware mode — the same data can be produced automatically from the router
+matches in a future iteration.
+
+```tsx
+<Breadcrumbs
+  items={[
+    { label: 'Home', to: '/' },
+    {
+      label: 'People',
+      to: '/people',
+      siblings: [
+        { label: 'Projects', to: '/projects' },
+        { label: 'Reports', to: '/reports' },
+      ],
+    },
+    { label: 'Jane Doe' },
+  ]}
+/>
+```
+
+<Canvas of={BreadcrumbsStories.WithSiblingMenu} />
+
+## Route-aware mode
+
+Instead of building `items` by hand, `useBreadcrumbs` derives them from your
+router. It matches the current location against the route tree, reads each
+route's `handle.crumb` (or `handle.title`) for the label, and attaches the
+route's siblings for the hover menu — so the trail stays in sync with
+navigation automatically.
+
+Annotate your routes with a `handle`:
+
+```tsx
+import { createBrowserRouter } from 'react-router-dom';
+import { BreadcrumbRouteHandle } from '@ssa-ui-kit/core';
+
+const routes = [
+  {
+    path: '/',
+    handle: { crumb: 'Home' } satisfies BreadcrumbRouteHandle,
+    children: [
+      { path: 'people', handle: { crumb: 'People' } },
+      { path: 'projects', handle: { crumb: 'Projects' } },
+      {
+        path: 'people/:id',
+        // `crumb` may be a resolver receiving the matched params.
+        handle: { crumb: ({ params }) => `User ${params.id}` },
+      },
+    ],
+  },
+];
+```
+
+Then render:
+
+```tsx
+import { Breadcrumbs, useBreadcrumbs } from '@ssa-ui-kit/core';
+
+function AppBreadcrumbs() {
+  const items = useBreadcrumbs({ routes });
+  return <Breadcrumbs items={items} maxItems={4} />;
+}
+```
+
+Routes without a `crumb`/`title` (layout or guard wrappers) are skipped, and
+sibling routes that need params you don't have are omitted from the menu. Pass
+`includeSiblings: false` to disable the hover menu, or `getLabel` as a
+last-resort label resolver for routes that carry no `handle`.
+
+<Canvas of={BreadcrumbsStories.RouteAware} />
+
+## Props
+
+<Controls />
+
+## Stories
+
+<Stories />
