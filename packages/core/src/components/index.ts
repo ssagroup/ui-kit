@@ -9,6 +9,8 @@ export * from './ButtonGroup';
 
 export * from './IconButton';
 
+export * from './Breadcrumbs';
+
 export { default as Checkbox } from './Checkbox';
 export * from './Checkbox';
 export type * from './Checkbox/types';
