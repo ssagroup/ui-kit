@@ -9,5 +9,5 @@ asset [1m[32mindex.js[39m[22m 102 KiB [1m[32m[emitted][39m[22m (name: ma
 orphan modules 490 KiB [1m[33m[orphan][39m[22m 73 modules
 runtime modules 937 bytes 4 modules
 [1m./src/index.ts + 60 modules[39m[22m 490 KiB [1m[31m[not cacheable][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 9147 ms
+webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 8608 ms
 [1mresolve-tspaths:[22m changed 24 file(s)

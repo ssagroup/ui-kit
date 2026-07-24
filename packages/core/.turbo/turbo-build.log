@@ -1,5 +1,5 @@
 
-> @ssa-ui-kit/core@3.18.0 build /home/runner/work/ui-kit/ui-kit/packages/core
+> @ssa-ui-kit/core@3.19.0 build /home/runner/work/ui-kit/ui-kit/packages/core
 > webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
 
 Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
@@ -37,5 +37,5 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 11660 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 11264 ms
 [1mresolve-tspaths:[22m changed 347 file(s)
