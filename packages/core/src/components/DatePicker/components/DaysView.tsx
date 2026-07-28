@@ -33,11 +33,22 @@ export const DaysView = () => {
 
   const handleDaySelect: MouseEventHandler<HTMLDivElement> = (event) => {
     const { target } = event;
-    const selectedDay = Number((target as HTMLDivElement).innerHTML);
+    const selectedDay = (target as HTMLDivElement).getAttribute('data-day');
     const isEnabled =
       (target as HTMLDivElement).getAttribute('aria-disabled') === 'false';
-    if (isEnabled) {
-      const newDate = calendarViewDateTime?.set({ day: selectedDay });
+    if (isEnabled && selectedDay) {
+      // The clicked cell may belong to the previous/next month (leading or
+      // trailing padding), so its year/month/day must come from data-day
+      // rather than being applied to the currently displayed month —
+      // otherwise e.g. clicking "30 Jul" while viewing August would
+      // silently resolve to 30 Aug. Any time-of-day already chosen via the
+      // time panel is preserved from calendarViewDateTime.
+      const parsedDay = DateTime.fromFormat(selectedDay, 'D');
+      const newDate = calendarViewDateTime?.set({
+        year: parsedDay.year,
+        month: parsedDay.month,
+        day: parsedDay.day,
+      });
       setCalendarViewDateTime(newDate);
       setDateTime(newDate);
       safeOnChange?.(newDate);
@@ -98,24 +109,23 @@ export const DaysView = () => {
                 : dateTime < currentDT && currentDT < otherDateDT;
           }
 
+          // Leading/trailing days from adjacent months are only muted, not
+          // disabled — they're real, selectable dates.
           let isAriaDisabled = false;
           if (dateMinDT && dateMaxDT) {
-            isAriaDisabled =
-              currentDT < dateMinDT ||
-              currentDT > dateMaxDT ||
-              !isCalendarMonth;
-          } else {
-            if (dateMinDT) {
-              isAriaDisabled = currentDT < dateMinDT || !isCalendarMonth;
-            }
-            if (dateMaxDT) {
-              isAriaDisabled = currentDT > dateMaxDT || !isCalendarMonth;
-            }
+            isAriaDisabled = currentDT < dateMinDT || currentDT > dateMaxDT;
+          } else if (dateMinDT) {
+            isAriaDisabled = currentDT < dateMinDT;
+          } else if (dateMaxDT) {
+            isAriaDisabled = currentDT > dateMaxDT;
           }
+
+          const isRangeActive =
+            isHighlightEnabled && !!otherDateDT && !!dateTime;
           const rangeEdge = S.getRangeEdge({
             isFirstSelected: isCalendarFirstDateSelected,
             isSecondSelected: isCalendarSecondDateSelected,
-            isRangeActive: isHighlightEnabled && !!otherDateDT && !!dateTime,
+            isRangeActive,
             mode: highlightDates?.mode,
           });
 
@@ -124,8 +134,10 @@ export const DaysView = () => {
               key={`day-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}-${index}`}
               aria-disabled={isAriaDisabled}
               aria-label={ariaLabel}
+              data-day={calendarDate}
               isCalendarDateNow={isCalendarDateNow}
               isCalendarDateSelected={isCalendarDateSelected}
+              isOutOfMonth={!isCalendarMonth}
               rangeEdge={rangeEdge}
               isHighlighted={isHighlightDate}>
               {calendarDay}

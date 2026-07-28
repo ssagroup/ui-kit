@@ -114,6 +114,7 @@ export const DaysViewCell = styled(Wrapper)<{
   isCalendarDateNow: boolean;
   isCalendarDateSelected: boolean;
   isHighlighted: boolean;
+  isOutOfMonth?: boolean;
   rangeEdge?: RangeEdge;
 }>`
   position: relative;
@@ -127,8 +128,10 @@ export const DaysViewCell = styled(Wrapper)<{
     getCellRadius(rangeEdge, isHighlighted)};
   border: ${({ theme, isCalendarDateNow }) =>
     isCalendarDateNow ? `1px solid ${theme.colors.grey}` : 'none'};
-  color: ${({ theme, isCalendarDateSelected }) =>
-    isCalendarDateSelected ? theme.colors.white : theme.colors.greyDarker};
+  color: ${({ theme, isCalendarDateSelected, isOutOfMonth }) => {
+    if (isCalendarDateSelected) return theme.colors.white;
+    return isOutOfMonth ? theme.colors.grey : theme.colors.greyDarker;
+  }};
   background: ${({ theme, isCalendarDateSelected }) =>
     isCalendarDateSelected && theme.palette.primary.main};
   cursor: pointer;

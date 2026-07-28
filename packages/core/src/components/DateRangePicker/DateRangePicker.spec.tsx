@@ -304,6 +304,49 @@ describe('DateRangePicker', () => {
     expect(mockOnYearChange).toHaveBeenCalledTimes(1);
   });
 
+  it('should keep leading/trailing days from adjacent months clickable', async () => {
+    const { getByTestId, getByRole, user } = setup({
+      defaultValue: ['07/29/2026', '08/01/2026'],
+    });
+
+    await user.click(getByTestId('daterangepicker-button'));
+    const dialogEl = getByRole('dialog');
+
+    // Move from the "from" month (July) into the "to" month (August), where
+    // 27-31 July are rendered as leading padding days.
+    await user.click(within(dialogEl).getByTestId('next-year-month'));
+
+    // Padding days from the adjacent month are real, selectable dates and
+    // must not be disabled just for falling outside the displayed month.
+    const day27 = within(dialogEl).getAllByText('27')[0];
+    const day30 = within(dialogEl).getAllByText('30')[0];
+    const day31 = within(dialogEl).getAllByText('31')[0];
+    expect(day27).toHaveAttribute('aria-disabled', 'false');
+    expect(day30).toHaveAttribute('aria-disabled', 'false');
+    expect(day31).toHaveAttribute('aria-disabled', 'false');
+  });
+
+  it('should resolve the correct month when a padding day from an adjacent month is clicked', async () => {
+    const { getByTestId, getByRole, user } = setup({
+      defaultValue: ['07/29/2026', '08/01/2026'],
+    });
+
+    await user.click(getByTestId('daterangepicker-button'));
+    const dialogEl = getByRole('dialog');
+
+    // View August, where 30-31 July render as leading padding days.
+    await user.click(within(dialogEl).getByTestId('next-year-month'));
+
+    // Clicking padding "30" must resolve to 30 Jul (the cell's real date),
+    // not 30 Aug (the displayed month). Opening the dialog resets range
+    // selection to "start", so this click sets the new start date.
+    const day30 = within(dialogEl).getAllByText('30')[0];
+    await user.click(day30);
+
+    const startDate = getByTestId('daterangepicker-input-from');
+    expect(startDate).toHaveValue('07/30/2026');
+  });
+
   it('should not render description, success, or error fields when "messages" prop is not passed', () => {
     const { queryByTestId } = setup();
     expect(queryByTestId('field-description')).not.toBeInTheDocument();
@@ -359,32 +402,30 @@ describe('DateRangePicker', () => {
     expect(mockOnError).toHaveBeenCalledTimes(1);
   });
 
-  it('should renders correct number of days for February (non-leap year)', async () => {
+  it('should not render a "February 29" cell for a non-leap year', async () => {
     const { getByTestId, getByRole, user } = setup({
       defaultValue: ['02/15/2025', '02/20/2025'],
     });
     await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
-    const days = within(dialogEl).queryAllByText('29');
-    const activeDays = days.filter(
-      (day) => day.getAttribute('aria-disabled') === 'false',
-    );
-    expect(activeDays).toHaveLength(0);
+    const feb29Cells = within(dialogEl)
+      .queryAllByText('29')
+      .filter((day) => day.getAttribute('aria-label')?.includes('February 29'));
+    expect(feb29Cells).toHaveLength(0);
   });
 
-  it('should renders correct number of days for February (leap year)', async () => {
+  it('should render a "February 29" cell for a leap year', async () => {
     const { getByTestId, getByRole, user } = setup({
       defaultValue: ['02/15/2024', '02/20/2024'],
     });
     await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
     expect(dialogEl).toBeInTheDocument();
-    const days = within(dialogEl).queryAllByText('29');
-    const activeDays = days.filter(
-      (day) => day.getAttribute('aria-disabled') === 'false',
-    );
-    expect(activeDays).toHaveLength(1);
+    const feb29Cells = within(dialogEl)
+      .queryAllByText('29')
+      .filter((day) => day.getAttribute('aria-label')?.includes('February 29'));
+    expect(feb29Cells).toHaveLength(1);
   });
 
   it('renders correct months list when month selection mode is active', async () => {
