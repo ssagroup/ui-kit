@@ -15,6 +15,24 @@ permissions:
   pull-requests: write
   checks: write
 
+env:
+  # Pinned deliberately — do not float this back to `latest`.
+  #
+  # `vercel@latest` drifted 58.0.0 -> 58.5.1 between two otherwise identical
+  # runs and broke `deploy --prebuilt`: the CLI uploaded 206 deployment files
+  # instead of 390, omitting the nested package.json files pnpm's store
+  # scatters through @swc/helpers, and Vercel's builder then failed to lstat a
+  # path its own Next.js output trace still referenced
+  # (ENOENT on .pnpm/@swc+helpers@0.5.15/.../_interop_require_default).
+  #
+  # Nothing in the 58.1.0-58.4.4 changelogs documents a change here, so this is
+  # a regression rather than an interface to adapt to. `vercel build` +
+  # `deploy --prebuilt` + a pnpm monorepo has broken this way before:
+  # vercel/vercel#12667 (open since 2024) and #15204 (open since 2026).
+  #
+  # Bump only together with a deploy run that is verified to succeed.
+  VERCEL_CLI_VERSION: '58.0.0'
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -190,7 +208,7 @@ jobs:
           path: packages
 
       - name: Install Vercel CLI
-        run: pnpm i -g vercel@latest
+        run: pnpm i -g vercel@${{ env.VERCEL_CLI_VERSION }}
 
       - name: Rename Git folder
         run: mv .git .git2
@@ -224,7 +242,7 @@ jobs:
           path: packages
 
       - name: Install Vercel CLI
-        run: pnpm i -g vercel@latest
+        run: pnpm i -g vercel@${{ env.VERCEL_CLI_VERSION }}
 
       - name: Pull Vercel project settings
         env:
