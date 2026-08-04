@@ -78,11 +78,26 @@ export interface RadioProps {
    * Whether the radio button is checked
    * Use for controlled component pattern
    */
+  checked?: boolean;
+
+  /**
+   * Whether the radio button is checked
+   *
+   * @deprecated Use `checked` instead. Removed in the next major release.
+   */
   isChecked?: boolean;
 
   /**
    * Whether the radio button is disabled
    * Disabled radios cannot be selected
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the radio button is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;

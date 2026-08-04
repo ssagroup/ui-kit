@@ -1,5 +1,6 @@
-import { FC, useEffect, useEffectEvent, useId, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useCallbackRef } from '@ssa-ui-kit/hooks';
 
 import {
   NotificationPositions,
@@ -95,9 +96,11 @@ const Notification: FC<NotificationProps> = (props) => {
   // overwriting each other's observer subscription (e.g. Storybook Docs view).
   const instanceId = useId();
 
-  // useEffectEvent gives a stable reference that always reads the latest props —
-  // no manual refs needed. The effect subscribes once and never re-runs.
-  const handleDispatch = useEffectEvent((params: DynamicNotificationParams) => {
+  // useCallbackRef gives a stable reference that always reads the latest props.
+  // The effect subscribes once and never re-runs.
+  // Deliberately not React's useEffectEvent: that requires React 19.2+, which
+  // would silently break consumers on 19.0/19.1. See docs-audit/react-19-pin-audit.md.
+  const handleDispatch = useCallbackRef((params: DynamicNotificationParams) => {
     // Per-notification `timeout` overrides the component-level default.
     const resolvedTimeout = 'timeout' in params ? params.timeout : timeout;
 

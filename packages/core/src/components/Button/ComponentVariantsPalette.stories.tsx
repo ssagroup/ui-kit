@@ -138,7 +138,7 @@ const meta = {
                   <Button variant={variant} size="large">
                     Large {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Button>
-                  <Button variant={variant} size="medium" isDisabled>
+                  <Button variant={variant} size="medium" disabled>
                     Disabled
                   </Button>
                 </div>
@@ -377,7 +377,7 @@ const meta = {
               <Checkbox
                 text="Primary (default)"
                 color="primary"
-                externalState={checkboxStates.primary}
+                checked={checkboxStates.primary}
                 onChange={(checked) =>
                   setCheckboxStates({ ...checkboxStates, primary: checked })
                 }
@@ -385,7 +385,7 @@ const meta = {
               <Checkbox
                 text="Success"
                 color="success"
-                externalState={checkboxStates.success}
+                checked={checkboxStates.success}
                 onChange={(checked) =>
                   setCheckboxStates({ ...checkboxStates, success: checked })
                 }
@@ -393,7 +393,7 @@ const meta = {
               <Checkbox
                 text="Custom"
                 color="custom"
-                externalState={checkboxStates.custom}
+                checked={checkboxStates.custom}
                 onChange={(checked) =>
                   setCheckboxStates({ ...checkboxStates, custom: checked })
                 }
@@ -472,7 +472,7 @@ const meta = {
                 value="primary"
                 text="Primary (default)"
                 color="primary"
-                isChecked={radioValue === 'primary'}
+                checked={radioValue === 'primary'}
                 onChange={(value) => setRadioValue(value)}
               />
               <Radio
@@ -480,7 +480,7 @@ const meta = {
                 value="success"
                 text="Success"
                 color="success"
-                isChecked={radioValue === 'success'}
+                checked={radioValue === 'success'}
                 onChange={(value) => setRadioValue(value)}
               />
               <Radio
@@ -493,7 +493,7 @@ const meta = {
                   hovered: '#45B8B0',
                   disabled: '#CCCCCC',
                 }}
-                isChecked={radioValue === 'custom'}
+                checked={radioValue === 'custom'}
                 onChange={(value) => setRadioValue(value)}
               />
             </Wrapper>

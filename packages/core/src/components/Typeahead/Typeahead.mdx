@@ -77,7 +77,7 @@ function SingleSelection() {
         name="country"
         label="Country"
         placeholder="Search and select a country"
-        defaultSelectedItems={[countries[0].id]}
+        defaultValue={[countries[0].id]}
         filterOptions={true}
         helperText="Start typing to filter options">
         {countries.map((country) => (
@@ -120,7 +120,7 @@ function MultipleSelection() {
         label="Technical Skills"
         placeholder="Select multiple skills"
         isMultiple={true}
-        defaultSelectedItems={[skills[0].id, skills[3].id]}
+        defaultValue={[skills[0].id, skills[3].id]}
         filterOptions={true}
         helperText="You can select multiple skills"
         onClearAll={() => console.log('All selections cleared')}
@@ -283,7 +283,7 @@ function EventHandling() {
           label="Development Categories"
           placeholder="Select categories"
           isMultiple={true}
-          selectedItems={selectedItems}
+          value={selectedItems}
           onChange={handleChange}
           onClearAll={handleClearAll}
           onRemoveSelectedClick={handleRemoveItem}

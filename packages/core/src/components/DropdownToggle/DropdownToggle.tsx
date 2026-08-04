@@ -1,5 +1,6 @@
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { resolveAriaProp } from '@utils/deprecation';
 import { DropdownToggleProps, MultipleStylesProps } from './types';
 
 /** Border colors per status, mirroring Input's basic/error/success maps */
@@ -166,6 +167,8 @@ const DropdownToggle = ({
   selectedCount,
   disabled,
   children,
+  'aria-labelledby': ariaLabelledbyNative,
+  'aria-controls': ariaControlsNative,
   ariaLabelledby,
   ariaControls,
   colors,
@@ -192,8 +195,18 @@ const DropdownToggle = ({
     onFocus={onFocus}
     disabled={disabled}
     role="combobox"
-    aria-labelledby={ariaLabelledby}
-    aria-controls={ariaControls}
+    aria-labelledby={resolveAriaProp(
+      'DropdownToggle',
+      'aria-labelledby',
+      ariaLabelledbyNative,
+      ariaLabelledby,
+    )}
+    aria-controls={resolveAriaProp(
+      'DropdownToggle',
+      'aria-controls',
+      ariaControlsNative,
+      ariaControls,
+    )}
     aria-expanded={isOpen}
     aria-haspopup="listbox">
     {children}

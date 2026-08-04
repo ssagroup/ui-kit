@@ -42,8 +42,8 @@ describe('Modal', () => {
       expect(queryByTestId('inner')).toBeInTheDocument();
     });
 
-    it('without background', async () => {
-      const { queryByTestId, queryAllByRole } = render(
+    it('without background', () => {
+      const { queryByTestId } = render(
         <div data-testid="root">
           <Modal>
             <ModalOpenButton>
@@ -58,10 +58,13 @@ describe('Modal', () => {
 
       fireEvent.click(screen.getByText(/open/i));
 
-      const [, bgElement] = await queryAllByRole('button');
+      // The overlay is the dialog's wrapper. This used to reach it as the
+      // second `role="button"` in the tree, which is the ambiguity that role
+      // existed to create.
+      const overlay = screen.getByRole('dialog').parentElement;
 
       expect(queryByTestId('inner')).toBeInTheDocument();
-      expect(bgElement).toHaveStyleRule('background-color', 'transparent');
+      expect(overlay).toHaveStyleRule('background-color', 'transparent');
     });
 
     it('trigger button accept parallel onClick call', () => {
@@ -88,7 +91,7 @@ describe('Modal', () => {
 
     it('renders opened', () => {
       const { queryByTestId } = render(
-        <Modal isOpen>
+        <Modal defaultOpen>
           <ModalOpenButton>
             <Button size="small" text="open" />
           </ModalOpenButton>
@@ -145,13 +148,16 @@ describe('Modal', () => {
   });
 
   describe('a11y', () => {
-    it('can be labelled by another element', () => {
+    // `aria-label` used to be wired to `aria-labelledby`, which takes id
+    // references — so the value named no element and the dialog ended up with
+    // no accessible name.
+    it('names the dialog from `aria-label`', () => {
       const { getByRole, getByText } = render(
         <Modal>
           <ModalOpenButton>
             <Button size="small" text="open" />
           </ModalOpenButton>
-          <ModalContent aria-label="dialog-label">
+          <ModalContent aria-label="Dialog label">
             <div data-testid="inner" />
           </ModalContent>
         </Modal>,
@@ -159,9 +165,43 @@ describe('Modal', () => {
 
       fireEvent.click(getByText(/open/i));
 
-      const dialog = getByRole('dialog');
+      expect(getByRole('dialog', { name: 'Dialog label' })).toBeInTheDocument();
+    });
 
-      expect(dialog).toHaveAttribute('aria-labelledby', 'dialog-label');
+    it('can still be labelled by another element', () => {
+      const { getByRole, getByText } = render(
+        <Modal>
+          <ModalOpenButton>
+            <Button size="small" text="open" />
+          </ModalOpenButton>
+          <ModalContent aria-labelledby="dialog-heading">
+            <h2 id="dialog-heading">Confirm</h2>
+          </ModalContent>
+        </Modal>,
+      );
+
+      fireEvent.click(getByText(/open/i));
+
+      expect(getByRole('dialog', { name: 'Confirm' })).toBeInTheDocument();
+    });
+
+    it('leaves no roleless overlay answering to `getByRole`', () => {
+      const { getAllByRole, getByText } = render(
+        <Modal>
+          <ModalOpenButton>
+            <Button size="small" text="open" />
+          </ModalOpenButton>
+          <ModalContent aria-label="Dialog label">
+            <Button size="small" text="close" />
+          </ModalContent>
+        </Modal>,
+      );
+
+      fireEvent.click(getByText(/open/i));
+
+      // The overlay carried `role="button"` with no handler, so the dialog's
+      // own buttons had an unrelated third match wrapped around them.
+      expect(getAllByRole('button', { name: 'close' })).toHaveLength(1);
     });
   });
 });

@@ -27,7 +27,7 @@ function App() {
         <Accordion
           id="first"
           title="Basic"
-          ariaControls="first-panel"
+          aria-controls="first-panel"
           renderContent={(props) => (
             <AccordionContent {...props}>
               <p>
@@ -47,8 +47,8 @@ function App() {
         <Accordion
           id="second"
           title="Advanced"
-          isOpened
-          ariaControls="second-panel"
+          defaultOpen
+          aria-controls="second-panel"
           renderContent={(props) => (
             <AccordionContent {...props}>
               <p>
@@ -63,7 +63,7 @@ function App() {
         <Accordion
           id="third"
           title="Indicator"
-          ariaControls="third-panel"
+          aria-controls="third-panel"
           renderContent={(props) => (
             <AccordionContent {...props}>
               <p>

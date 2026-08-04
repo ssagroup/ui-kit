@@ -29,7 +29,7 @@ export const ActionButton = ({
           <Wrapper title={title}>{icon}</Wrapper>
         )
       }
-      isDisabled={isDisabled}
+      disabled={isDisabled}
       onClick={onClick}
       css={css`
         margin: 0 7px;

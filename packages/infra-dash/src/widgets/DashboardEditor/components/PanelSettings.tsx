@@ -94,7 +94,7 @@ export const PanelSettings = ({
           width: 100% !important;
         `}
         filterOptions={false}
-        selectedItems={[panelComponent.id]}
+        value={[panelComponent.id]}
         onChange={(componentId) =>
           handleComponentChange(componentId as string)
         }>

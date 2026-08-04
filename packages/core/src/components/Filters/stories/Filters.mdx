@@ -142,7 +142,7 @@ const singleFilterGroup = {
       healthcare: {
         key: 'category-healthcare',
         name: 'healthcare',
-        isDisabled: true, // Disable specific items
+        disabled: true, // Disable specific items
         content: {
           statePath: ['category', 'items', 'healthcare'],
           text: 'Healthcare',
@@ -222,7 +222,7 @@ const filterDataWithDisabled = {
   strategy: {
     id: 'strategy',
     title: 'Strategy',
-    isDisabled: true, // Disable entire group
+    disabled: true, // Disable entire group
     isOpened: false,
     ariaControls: 'strategy-panel',
     selectedItems: [],

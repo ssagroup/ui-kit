@@ -81,13 +81,13 @@ export const MarginInfo = ({
         <Button
           css={BorrowButton}
           onClick={onBorrow}
-          isDisabled={disableBorrow || !onBorrow}
+          disabled={disableBorrow || !onBorrow}
           text="Borrow"
         />
         <Button
           css={RepayButton}
           onClick={onRepay}
-          isDisabled={disableRepay || !onRepay}
+          disabled={disableRepay || !onRepay}
           text="Repay"
         />
       </ButtonsWrapper>

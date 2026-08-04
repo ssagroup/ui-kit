@@ -3,7 +3,7 @@ import Icon from '@components/Icon';
 import Tooltip from '@components/Tooltip';
 import TooltipContent from '@components/TooltipContent';
 import TooltipTrigger from '@components/TooltipTrigger';
-import { iconButton } from './styles';
+import { iconButton, iconSizes } from './styles';
 import type { IconButtonProps } from './types';
 
 /**
@@ -20,6 +20,7 @@ import type { IconButtonProps } from './types';
  * - Optional aria-label; defaults to raw icon name for screen readers
  * - Single styles prop: button, iconColor, icon (all overridable)
  * - Transparent or grey background variant; disabled state
+ * - `size` matching Button's scale, so the two align in a toolbar
  *
  * @category Form Controls
  * @subcategory Action
@@ -36,6 +37,12 @@ import type { IconButtonProps } from './types';
  *
  * @example
  * ```tsx
+ * // Sized to match a medium Button beside it, submitting the surrounding form
+ * <IconButton icon="check" size="medium" type="submit" aria-label="Save" />
+ * ```
+ *
+ * @example
+ * ```tsx
  * <IconButton
  *   icon="search"
  *   onClick={onSearch}
@@ -46,6 +53,8 @@ import type { IconButtonProps } from './types';
 export const IconButton = ({
   icon,
   onClick,
+  type = 'button',
+  size = 'small',
   'aria-label': ariaLabel,
   title,
   disabled = false,
@@ -58,14 +67,14 @@ export const IconButton = ({
 
   const button = (
     <button
-      type="button"
+      type={type}
       aria-label={resolvedAriaLabel}
       onClick={onClick}
       disabled={disabled}
-      css={[iconButton(theme, transparent), styles?.button]}>
+      css={[iconButton(theme, transparent, size), styles?.button]}>
       <Icon
         name={icon}
-        size={20}
+        size={iconSizes[size]}
         color={iconColorResolved}
         css={styles?.icon}
       />

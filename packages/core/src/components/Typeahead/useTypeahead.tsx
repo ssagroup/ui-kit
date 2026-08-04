@@ -3,6 +3,7 @@ import { useController, useForm, useFormContext } from 'react-hook-form';
 import { OpenChangeReason } from '@floating-ui/react';
 import { useElementSize, useUncontrolled } from '@ssa-ui-kit/hooks';
 import { isNill } from '@ssa-ui-kit/utils';
+import { resolveDisabled } from '@utils/deprecation';
 import {
   TypeaheadOptionProps,
   TypeaheadValue,
@@ -152,7 +153,12 @@ export const useTypeahead = ({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const childElement = child as React.ReactElement<any>;
       const isActive = selectedItems.includes(childElement.props.value);
-      const { value, label, id, isDisabled } = childElement.props;
+      const { value, label, id } = childElement.props;
+      const isDisabled = resolveDisabled(
+        'TypeaheadOption',
+        childElement.props.disabled,
+        childElement.props.isDisabled,
+      );
 
       return React.cloneElement(childElement, {
         ...childElement.props,

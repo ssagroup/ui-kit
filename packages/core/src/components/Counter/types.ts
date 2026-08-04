@@ -1,4 +1,3 @@
-import React from 'react';
 import { MainSizes } from '@global-types/global';
 import { ColorsKeys } from '@global-types/emotion';
 import { Interpolation, SerializedStyles, Theme } from '@emotion/react';
@@ -52,8 +51,4 @@ export type CounterProps = {
    * Use for one-off layout adjustments (e.g. margins, positioning).
    */
   css?: Interpolation<Theme>;
-  /**
-   * Ref forwarded to the root `<div>` element.
-   */
-  ref?: React.Ref<HTMLDivElement>;
 };

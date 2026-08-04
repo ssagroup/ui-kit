@@ -90,7 +90,7 @@ describe('Checkbox', () => {
   });
 
   it('Renders in the disabled state', async () => {
-    const { getByRole, user, mockOnChange } = setup({ isDisabled: true });
+    const { getByRole, user, mockOnChange } = setup({ disabled: true });
 
     const checkboxEl = getByRole('checkbox', { checked: false });
 

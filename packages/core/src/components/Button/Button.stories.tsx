@@ -152,7 +152,7 @@ export const Disabled = () => (
       <React.Fragment key={variant}>
         <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
         {sizes.map((size) => (
-          <Button variant={variant} size={size} key={variant + size} isDisabled>
+          <Button variant={variant} size={size} key={variant + size} disabled>
             Button
           </Button>
         ))}
@@ -166,6 +166,34 @@ Disabled.parameters = {
     description: {
       story:
         'Use **custom** for new code; **tertiary** is legacy (same appearance, kept for compatibility).',
+    },
+  },
+};
+
+export const Loading = () => (
+  <GridWrapper>
+    <HeaderTitle>Variant</HeaderTitle>
+    <HeaderTitle>Small</HeaderTitle>
+    <HeaderTitle>Medium</HeaderTitle>
+    <HeaderTitle>Large</HeaderTitle>
+    {variants.map((variant) => (
+      <React.Fragment key={variant}>
+        <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
+        {sizes.map((size) => (
+          <Button variant={variant} size={size} key={variant + size} loading>
+            Button
+          </Button>
+        ))}
+      </React.Fragment>
+    ))}
+  </GridWrapper>
+);
+
+Loading.parameters = {
+  docs: {
+    description: {
+      story:
+        'While `loading`, the button is disabled, reports `aria-busy` and shows a spinner in place of its label. The label stays in the layout, so the button keeps its resting width and a row of buttons does not reflow.',
     },
   },
 };

@@ -17,6 +17,7 @@
   "license": "MIT",
   "description": "SSA UI Kit",
   "scripts": {
+    "clean": "node ../../scripts/clean.mjs",
     "test": "jest -i --no-cache",
     "build": "webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "sb:dev": "env storybook dev -p 6009",
@@ -68,8 +69,8 @@
     "@emotion/css": "^11.13.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "react": "19.x",
-    "react-dom": "19.x"
+    "react": ">=19",
+    "react-dom": ">=19"
   },
   "peerDependenciesMeta": {
     "@types/react": {

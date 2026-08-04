@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 
 import { CounterProps, CounterVariants } from './types';
@@ -67,32 +68,36 @@ const MAX_COUNT = 99;
  * <Counter count={3} css={{ marginLeft: 8, borderRadius: 4 }} />
  * ```
  */
-export const Counter = ({
-  count,
-  variant = CounterVariants.primary,
-  size = 'medium',
-  color,
-  className,
-  css,
-  ref,
-}: CounterProps) => {
-  const theme = useTheme();
-  const isEmpty = count === undefined;
-  const label = !isEmpty && count > MAX_COUNT ? `${MAX_COUNT}+` : count;
+export const Counter = forwardRef<HTMLDivElement, CounterProps>(
+  function Counter(
+    {
+      count,
+      variant = CounterVariants.primary,
+      size = 'medium',
+      color,
+      className,
+      css,
+    },
+    ref,
+  ) {
+    const theme = useTheme();
+    const isEmpty = count === undefined;
+    const label = !isEmpty && count > MAX_COUNT ? `${MAX_COUNT}+` : count;
 
-  const appliedVariantStyle = variantStyles[variant](theme);
-  const appliedSizeStyle = sizeStyles[!isEmpty ? size : 'dot'];
+    const appliedVariantStyle = variantStyles[variant](theme);
+    const appliedSizeStyle = sizeStyles[!isEmpty ? size : 'dot'];
 
-  const colorOverride = color ? makeColorOverride(theme, color) : undefined;
+    const colorOverride = color ? makeColorOverride(theme, color) : undefined;
 
-  return (
-    <CounterBase
-      ref={ref}
-      css={[appliedSizeStyle, appliedVariantStyle, colorOverride, css]}
-      className={className}>
-      {label}
-    </CounterBase>
-  );
-};
+    return (
+      <CounterBase
+        ref={ref}
+        css={[appliedSizeStyle, appliedVariantStyle, colorOverride, css]}
+        className={className}>
+        {label}
+      </CounterBase>
+    );
+  },
+);
 
 export default Counter;

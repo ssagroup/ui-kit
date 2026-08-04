@@ -59,7 +59,7 @@ function ModalContent({
   }
 
   const modalContent = (
-    <ModalDialog aria-label={ariaLabel} isOpen={isOpen} {...props}>
+    <ModalDialog aria-label={ariaLabel} open={isOpen} {...props}>
       {children}
     </ModalDialog>
   );

@@ -36,8 +36,8 @@ export const Item = ({
           <Accordion
             id={accordionUniqName}
             title={title}
-            isOpened={false}
-            ariaControls={`${accordionUniqName}-panel`}
+            open={false}
+            aria-controls={`${accordionUniqName}-panel`}
             css={{
               padding: 0,
               maxWidth: subMenuMaxWidth,

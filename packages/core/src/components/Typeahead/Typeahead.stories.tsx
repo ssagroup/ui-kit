@@ -72,8 +72,8 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typeahead
-          defaultSelectedItems={[items[2].id]}
-          isDisabled={args.isDisabled}
+          defaultValue={[items[2].id]}
+          disabled={args.isDisabled}
           onEmptyChange={(isEmpty) => {
             console.log('>>>onEmptyChange event', isEmpty);
           }}
@@ -97,7 +97,7 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-Basic.args = { isDisabled: false };
+Basic.args = { disabled: false };
 
 export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
@@ -109,7 +109,7 @@ export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
         <Wrapper
           css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
           <Typeahead
-            isDisabled={args.isDisabled}
+            disabled={args.isDisabled}
             onEmptyChange={(isEmpty) => {
               console.log('>>>onEmptyChange event', isEmpty);
             }}
@@ -127,9 +127,9 @@ export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
             ))}
           </Typeahead>
           <Typeahead
-            isDisabled={args.isDisabled}
+            disabled={args.isDisabled}
             isMultiple
-            defaultSelectedItems={[items[1].id]}
+            defaultValue={[items[1].id]}
             onEmptyChange={(isEmpty) => {
               console.log('>>>onEmptyChange event (multiple)', isEmpty);
             }}
@@ -155,7 +155,7 @@ export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-AutoSelectDisabled.args = { isDisabled: false };
+AutoSelectDisabled.args = { disabled: false };
 
 export const Multiple: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
@@ -187,9 +187,9 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typeahead
-          defaultSelectedItems={[items[2].id, items[1].id]}
+          defaultValue={[items[2].id, items[1].id]}
           isMultiple
-          isDisabled={args.isDisabled}
+          disabled={args.isDisabled}
           onEmptyChange={(isEmpty) => {
             console.log('>>>onEmptyChange event', isEmpty);
           }}
@@ -216,7 +216,7 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-Multiple.args = { isDisabled: false };
+Multiple.args = { disabled: false };
 
 const imageItems = [
   { id: 1, label: 'First', value: 1, iconName: 'cogwheel' },
@@ -259,9 +259,9 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
   return (
     <FormProvider {...useFormResult}>
       <Typeahead
-        defaultSelectedItems={[imageItems[2].id, imageItems[1].id]}
+        defaultValue={[imageItems[2].id, imageItems[1].id]}
         isMultiple
-        isDisabled={args.isDisabled}
+        disabled={args.isDisabled}
         name={'typeahead-dropdown'}
         label="Label"
         startIcon={<Icon name="user" size={16} />}
@@ -293,7 +293,7 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-WithImageAndStartIcon.args = { isDisabled: false };
+WithImageAndStartIcon.args = { disabled: false };
 
 export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
@@ -301,9 +301,9 @@ export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <Typeahead
         css={{ width: 420 }}
-        defaultSelectedItems={[managerOptions[0].id, managerOptions[2].id]}
+        defaultValue={[managerOptions[0].id, managerOptions[2].id]}
         isMultiple
-        isDisabled={args.isDisabled}
+        disabled={args.isDisabled}
         name="typeahead-managers"
         label="Select managers"
         placeholder="Select managers..."
@@ -323,7 +323,7 @@ export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-WithAvatars.args = { isDisabled: false };
+WithAvatars.args = { disabled: false };
 
 const mockError: FieldError = {
   type: 'required',
@@ -342,8 +342,8 @@ export const WithError: StoryObj = (args: TypeaheadProps) => {
   return (
     <FormProvider {...useFormResult}>
       <Typeahead
-        defaultSelectedItems={[]}
-        isDisabled={args.isDisabled}
+        defaultValue={[]}
+        disabled={args.isDisabled}
         name={fieldName}
         label="Label"
         validationSchema={{
@@ -360,15 +360,15 @@ export const WithError: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-WithError.args = { isDisabled: false };
+WithError.args = { disabled: false };
 
 export const WithSuccess: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
   return (
     <FormProvider {...useFormResult}>
       <Typeahead
-        defaultSelectedItems={[items[2].id]}
-        isDisabled={args.isDisabled}
+        defaultValue={[items[2].id]}
+        disabled={args.isDisabled}
         name={'typeahead-dropdown'}
         label="Label"
         validationSchema={{
@@ -387,14 +387,14 @@ export const WithSuccess: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-WithSuccess.args = { isDisabled: false };
+WithSuccess.args = { disabled: false };
 
 export const Opened: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
   return (
     <FormProvider {...useFormResult}>
       <Typeahead
-        isDisabled={args.isDisabled}
+        disabled={args.isDisabled}
         name={'typeahead-dropdown'}
         label="Label"
         isOpen
@@ -409,7 +409,7 @@ export const Opened: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-Opened.args = { isDisabled: false };
+Opened.args = { disabled: false };
 
 export const DynamicallyChangedItems = (args: TypeaheadProps) => {
   const [localItems, setLocalItems] = useState(items);
@@ -434,7 +434,7 @@ export const DynamicallyChangedItems = (args: TypeaheadProps) => {
         <Wrapper
           css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
           <Typeahead
-            defaultSelectedItems={[localItems[2].id]}
+            defaultValue={[localItems[2].id]}
             isMultiple
             name={'typeahead-dropdown'}
             label="Label"
@@ -463,7 +463,7 @@ export const DynamicallyChangedItems = (args: TypeaheadProps) => {
   );
 };
 
-DynamicallyChangedItems.args = { isDisabled: false };
+DynamicallyChangedItems.args = { disabled: false };
 
 export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
   const selectedItemIndex = useRef(0);
@@ -502,7 +502,7 @@ export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
         <Wrapper
           css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
           <Typeahead
-            selectedItems={selectedItems}
+            value={selectedItems}
             isMultiple
             name={'typeahead-dropdown'}
             label="Label"
@@ -542,7 +542,7 @@ export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
   );
 };
 
-DynamicallyChangedSelectedItems.args = { isDisabled: false };
+DynamicallyChangedSelectedItems.args = { disabled: false };
 
 export const WithFormState = (args: TypeaheadProps) => {
   const selectedItemIndex = useRef(0);
@@ -609,7 +609,7 @@ export const WithFormState = (args: TypeaheadProps) => {
   );
 };
 
-WithFormState.args = { isDisabled: false };
+WithFormState.args = { disabled: false };
 
 export const Disabled: StoryObj = (args: TypeaheadProps) => {
   const theme = useTheme();
@@ -617,9 +617,9 @@ export const Disabled: StoryObj = (args: TypeaheadProps) => {
   return (
     <FormProvider {...useFormResult}>
       <Typeahead
-        defaultSelectedItems={[items[2].id, items[1].id]}
+        defaultValue={[items[2].id, items[1].id]}
         isMultiple
-        isDisabled={args.isDisabled}
+        disabled={args.isDisabled}
         name={'typeahead-dropdown'}
         label="Label"
         startIcon={<Icon name="user" size={16} color={theme.colors.grey} />}
@@ -652,7 +652,7 @@ export const Disabled: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-Disabled.args = { isDisabled: true };
+Disabled.args = { disabled: true };
 
 export const NoItems: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
@@ -660,7 +660,7 @@ export const NoItems: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <Typeahead
         isMultiple
-        isDisabled={args.isDisabled}
+        disabled={args.isDisabled}
         name={'typeahead-dropdown'}
         label="Label"
         css={{
@@ -673,7 +673,7 @@ export const NoItems: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-NoItems.args = { isDisabled: false };
+NoItems.args = { disabled: false };
 
 export const CustomValues: StoryObj = (args: TypeaheadProps) => {
   const useFormResult = useForm<FieldValues>();
@@ -688,15 +688,10 @@ export const CustomValues: StoryObj = (args: TypeaheadProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Wrapper css={{ alignItems: 'flex-start', flexDirection: 'column' }}>
           <Typeahead
-            defaultSelectedItems={[
-              items[0].id,
-              items[1].id,
-              items[2].id,
-              'four',
-            ]}
+            defaultValue={[items[0].id, items[1].id, items[2].id, 'four']}
             isMultiple
             allowCustomValues={true}
-            isDisabled={args.isDisabled}
+            disabled={args.isDisabled}
             onEmptyChange={(isEmpty) => {
               console.log('>>>onEmptyChange event', isEmpty);
             }}
@@ -729,4 +724,4 @@ export const CustomValues: StoryObj = (args: TypeaheadProps) => {
   );
 };
 
-CustomValues.args = { isDisabled: false };
+CustomValues.args = { disabled: false };

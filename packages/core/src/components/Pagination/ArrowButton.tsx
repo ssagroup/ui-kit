@@ -3,6 +3,7 @@ import Button from '@components/Button';
 import Icon from '@components/Icon';
 
 import { ArrowButtonProps } from './types';
+import { resolveDisabled } from '@utils/deprecation';
 import { arrowBtnStyles } from './styles';
 
 /**
@@ -21,7 +22,7 @@ import { arrowBtnStyles } from './styles';
  * <ArrowButton
  *   direction="left"
  *   onClick={() => goToPreviousPage()}
- *   isDisabled={isFirstPage}
+ *   disabled={isFirstPage}
  * />
  * ```
  *
@@ -40,10 +41,12 @@ import { arrowBtnStyles } from './styles';
 export const ArrowButton = ({
   direction,
   onClick,
+  disabled,
   isDisabled,
   className,
 }: ArrowButtonProps) => {
   const theme = useTheme();
+  const isArrowDisabled = resolveDisabled('ArrowButton', disabled, isDisabled);
   return (
     <Button
       startIcon={
@@ -55,7 +58,7 @@ export const ArrowButton = ({
       }
       variant="tertiary"
       onClick={onClick}
-      isDisabled={isDisabled}
+      disabled={isArrowDisabled}
       size="small"
       className={className}
       css={arrowBtnStyles}

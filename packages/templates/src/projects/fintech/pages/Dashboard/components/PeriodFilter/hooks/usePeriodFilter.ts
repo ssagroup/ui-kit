@@ -9,16 +9,17 @@ export const usePeriodFilter = (
   onClick: (period: RequestPeriod) => void,
 ) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ButtonGroupItem>({
-    id: period.period,
-    text: '',
-  });
+  // ButtonGroup selection is compared on id, so track the id rather than a
+  // stand-in item with an empty `text`.
+  const [selectedItem, setSelectedItem] = useState<ButtonGroupItem['id']>(
+    period.period,
+  );
   const [lastSelectedPeriod, setLastSelectedPeriod] =
     useState<StatisticsPeriod>(period.period);
   const [initialRange, setInitialRange] = useState(period.periodRange);
 
   useEffect(() => {
-    setSelectedItem({ id: period.period, text: '' });
+    setSelectedItem(period.period);
   }, [period]);
 
   const onButtonClick = (item: ButtonGroupItem) => {
@@ -46,10 +47,7 @@ export const usePeriodFilter = (
 
   const onCancelClick = () => {
     setIsOpen(false);
-    setSelectedItem({
-      id: lastSelectedPeriod,
-      text: '',
-    });
+    setSelectedItem(lastSelectedPeriod);
   };
 
   return {

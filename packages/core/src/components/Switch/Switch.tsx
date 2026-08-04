@@ -1,6 +1,7 @@
 import { useTheme } from '@emotion/react';
 import SwitchBase from './SwitchBase';
 import { useSwitchContext } from './SwitchContext';
+import { resolveDisabled } from '@utils/deprecation';
 import { SwitchProps } from './types';
 
 /**
@@ -43,7 +44,7 @@ import { SwitchProps } from './types';
  * ```tsx
  * // Disabled (muted grey, cannot toggle)
  * <SwitchContextProvider initialState={true}>
- *   <Switch label="Locked feature" isDisabled />
+ *   <Switch label="Locked feature" disabled />
  * </SwitchContextProvider>
  * ```
  *
@@ -72,12 +73,15 @@ import { SwitchProps } from './types';
  */
 const Switch = ({
   label,
-  isDisabled = false,
+  disabled,
+  isDisabled,
   color = 'primary',
   colors,
 }: SwitchProps) => {
   const theme = useTheme();
   const { isOn, toggle } = useSwitchContext();
+  const isSwitchDisabled =
+    resolveDisabled('Switch', disabled, isDisabled) ?? false;
 
   let onColor: string;
   let hoverColor: string | undefined;
@@ -100,11 +104,11 @@ const Switch = ({
     <SwitchBase
       type="button"
       role="switch"
-      aria-readonly={isDisabled}
+      aria-readonly={isSwitchDisabled}
       aria-checked={isOn}
       aria-label={label}
-      disabled={isDisabled}
-      onClick={() => !isDisabled && toggle()}
+      disabled={isSwitchDisabled}
+      onClick={() => !isSwitchDisabled && toggle()}
       onColor={onColor}
       hoverColor={hoverColor}
       offOutlineColor={offOutlineColor}

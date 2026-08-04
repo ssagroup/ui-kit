@@ -323,7 +323,7 @@ describe('MultipleDropdown', () => {
 
   it('Renders in the disabled state', async () => {
     const { user, mockOnChange, queryByRole, getByTestId } = setup({
-      isDisabled: true,
+      disabled: true,
     });
 
     const dropdownEl = getByTestId('dropdown');
@@ -363,7 +363,7 @@ describe('MultipleDropdown', () => {
     expect(queryByRole('listbox')).toBeInTheDocument();
 
     rerender(
-      <MultipleDropdown isMultiple isDisabled>
+      <MultipleDropdown isMultiple disabled>
         {items.map((item, index) => (
           <DropdownOption key={index} value={item.value}>
             {item.label}
@@ -383,7 +383,7 @@ describe('MultipleDropdown', () => {
 
   it('New item should be rendered correctly', async () => {
     const args = {
-      isDisabled: false,
+      disabled: false,
       isMultiple: true,
       selectedItems: [],
       label: 'Strategy',

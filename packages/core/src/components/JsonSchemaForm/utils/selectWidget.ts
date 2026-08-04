@@ -3,6 +3,12 @@ import type { TypeaheadProps } from '@components/Typeahead/types';
 /**
  * Props that need special handling (computed from RJSF state) or are RJSF-controlled
  * These are extracted explicitly and NOT spread
+ *
+ * The deprecated spellings (`selectedItems`, `isDisabled`) stay on the list
+ * alongside their replacements: a `uiSchema` written before the rename would
+ * otherwise pass its filter and land on `Typeahead` through the spread, where
+ * it would take over whenever the RJSF-computed `value` / `disabled` happened
+ * to be undefined.
  */
 export type SelectWidgetNonSpreadableProps =
   | 'name'
@@ -10,8 +16,10 @@ export type SelectWidgetNonSpreadableProps =
   | 'onClearAll'
   | 'onRemoveSelectedClick'
   | 'onEmptyChange'
+  | 'value'
   | 'selectedItems'
   | 'isMultiple'
+  | 'disabled'
   | 'isDisabled'
   | 'placeholder'
   | 'renderOption'
@@ -39,9 +47,11 @@ export const extractSelectWidgetSpreadableProps = (
     'onClearAll',
     'onRemoveSelectedClick',
     'onEmptyChange',
-    'selectedItems',
+    'value',
+    'selectedItems', // deprecated alias of `value`
     'isMultiple',
-    'isDisabled',
+    'disabled',
+    'isDisabled', // deprecated alias of `disabled`
     'placeholder',
     'renderOption',
     'children',

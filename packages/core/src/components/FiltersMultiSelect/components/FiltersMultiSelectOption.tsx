@@ -87,7 +87,7 @@ export const FiltersMultiSelectOption = ({
       {group ? (
         <FilterButton
           variant="tertiary"
-          isDisabled={selectedFilter?.type === 'group'}
+          disabled={selectedFilter?.type === 'group'}
           endIcon={
             <Icon
               name={getIconName('group')}
@@ -102,7 +102,7 @@ export const FiltersMultiSelectOption = ({
         <>
           <FilterButton
             variant="tertiary"
-            isDisabled={selectedFilter?.type === 'include'}
+            disabled={selectedFilter?.type === 'include'}
             endIcon={
               <Icon
                 name={getIconName('include')}
@@ -115,7 +115,7 @@ export const FiltersMultiSelectOption = ({
           />
           <FilterButton
             variant="tertiary"
-            isDisabled={selectedFilter?.type === 'exclude'}
+            disabled={selectedFilter?.type === 'exclude'}
             endIcon={
               <Icon
                 name={getIconName('exclude')}

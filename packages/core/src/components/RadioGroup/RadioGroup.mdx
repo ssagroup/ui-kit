@@ -24,7 +24,7 @@ function BasicRadioGroup() {
   return (
     <RadioGroup
       name="fruit-selection"
-      externalState={selectedValue}
+      value={selectedValue}
       onChange={handleChange}>
       <Radio id="radio1" value="apple" text="Apple" />
       <Radio id="radio2" value="orange" text="Orange" />
@@ -53,7 +53,7 @@ function ControlledRadioGroup() {
     <div>
       <RadioGroup
         name="size"
-        externalState={selectedValue}
+        value={selectedValue}
         onChange={setSelectedValue}>
         <Radio id="size-small" value="small" text="Small" />
         <Radio id="size-medium" value="medium" text="Medium" />
@@ -76,7 +76,7 @@ Display radio buttons in a horizontal row:
 ```tsx
 <RadioGroup
   name="horizontal-fruit"
-  externalState={selectedValue}
+  value={selectedValue}
   onChange={handleChange}
   css={{
     display: 'flex',
@@ -96,7 +96,7 @@ Display radio buttons in a vertical column:
 ```tsx
 <RadioGroup
   name="vertical-fruit"
-  externalState={selectedValue}
+  value={selectedValue}
   onChange={handleChange}
   css={{
     marginTop: '10px',
@@ -123,7 +123,7 @@ Mark the radio group as required for form validation:
     <RadioGroup
       name="payment-method"
       isRequired={true}
-      externalState={paymentMethod}
+      value={paymentMethod}
       onChange={setPaymentMethod}>
       <Radio id="credit-card" value="credit" text="Credit Card" />
       <Radio id="debit-card" value="debit" text="Debit Card" />
@@ -143,7 +143,7 @@ Include disabled options within the radio group:
 ```tsx
 <RadioGroup
   name="subscription-tier"
-  externalState={selectedTier}
+  value={selectedTier}
   onChange={setSelectedTier}>
   <Radio id="basic" value="basic" text="Basic Plan - $9/month" />
   <Radio id="pro" value="pro" text="Pro Plan - $19/month" />
@@ -151,7 +151,7 @@ Include disabled options within the radio group:
     id="enterprise"
     value="enterprise"
     text="Enterprise Plan - Contact Sales"
-    isDisabled={true}
+    disabled={true}
   />
 </RadioGroup>
 ```
@@ -175,7 +175,7 @@ function DynamicRadioGroup() {
   return (
     <RadioGroup
       name="programming-language"
-      externalState={selectedLanguage}
+      value={selectedLanguage}
       onChange={setSelectedLanguage}>
       {languages.map((lang) => (
         <Radio
@@ -183,7 +183,7 @@ function DynamicRadioGroup() {
           id={lang.id}
           value={lang.value}
           text={lang.label}
-          isDisabled={lang.disabled}
+          disabled={lang.disabled}
         />
       ))}
     </RadioGroup>
@@ -202,7 +202,7 @@ function NumericRadioGroup() {
   return (
     <RadioGroup
       name="rating"
-      externalState={selectedRating}
+      value={selectedRating}
       onChange={(value) => setSelectedRating(Number(value))}>
       <Radio id="rating-1" value={1} text="1 Star" />
       <Radio id="rating-2" value={2} text="2 Stars" />
@@ -221,7 +221,7 @@ Apply custom styles to the radio group and individual radios:
 ```tsx
 <RadioGroup
   name="styled-options"
-  externalState={selectedValue}
+  value={selectedValue}
   onChange={handleChange}
   css={{
     padding: '20px',
@@ -283,7 +283,7 @@ function FormRadioGroup() {
 
         <RadioGroup
           name="preference"
-          externalState={selectedValue}
+          value={selectedValue}
           onChange={() => {}} // Handled by react-hook-form
           isRequired={true}>
           <Radio

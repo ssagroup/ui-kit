@@ -134,7 +134,7 @@ export default {
       control: { disable: true },
       table: { type: { summary: 'DropdownOptionProps' } },
     },
-    isDisabled: {
+    disabled: {
       description: 'Disables the dropdown, preventing any user interaction.',
       control: 'boolean',
       table: {
@@ -222,7 +222,7 @@ export const Basic: StoryObj = (args: Args) => {
     <Dropdown
       dropdownProps={args.dropdownProps}
       selectedItem={items[2]}
-      isDisabled={args.isDisabled}>
+      disabled={args.isDisabled}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -233,7 +233,7 @@ export const Basic: StoryObj = (args: Args) => {
 };
 
 Basic.args = {
-  isDisabled: false,
+  disabled: false,
   dropdownProps: {
     base: {
       name: 'dropdown',
@@ -259,11 +259,11 @@ export const Opened: StoryObj = (args: Args) => {
   );
 };
 
-Opened.args = { isOpen: true, isDisabled: false };
+Opened.args = { isOpen: true, disabled: false };
 
 export const Disabled: StoryObj<Args> = {
   render: () => (
-    <Dropdown selectedItem={items[2]} isDisabled>
+    <Dropdown selectedItem={items[2]} disabled>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -294,12 +294,12 @@ export const WithAvatars: StoryObj<Args> = {
   ),
 };
 
-WithAvatars.args = { isDisabled: false };
+WithAvatars.args = { disabled: false };
 
 export const CustomWidth: StoryObj = (args: Args) => {
   return (
     <Dropdown
-      isDisabled={args.isDisabled}
+      disabled={args.isDisabled}
       selectedItem={items[0]}
       css={css`
         width: 320px;
@@ -313,7 +313,7 @@ export const CustomWidth: StoryObj = (args: Args) => {
   );
 };
 
-CustomWidth.args = { isDisabled: false };
+CustomWidth.args = { disabled: false };
 
 export const LegacyStyle: StoryObj<Args> = {
   name: 'Legacy (Previous Style)',
@@ -328,11 +328,11 @@ export const LegacyStyle: StoryObj<Args> = {
   ),
 };
 
-LegacyStyle.args = { isDisabled: false };
+LegacyStyle.args = { disabled: false };
 
 export const Simple: StoryObj = (args: Args) => {
   return (
-    <Dropdown isDisabled={args.isDisabled}>
+    <Dropdown disabled={args.isDisabled}>
       {items.map((item) => (
         <DropdownOption
           key={item.value}
@@ -344,13 +344,13 @@ export const Simple: StoryObj = (args: Args) => {
   );
 };
 
-Simple.args = { isDisabled: false };
+Simple.args = { disabled: false };
 
 export const NoItems: StoryObj = () => {
   return <Dropdown>{null}</Dropdown>;
 };
 
-NoItems.args = { isDisabled: false };
+NoItems.args = { disabled: false };
 
 export const Custom: StoryObj = (args: Args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
@@ -377,7 +377,7 @@ export const Custom: StoryObj = (args: Args) => {
 
   return (
     <Dropdown
-      isDisabled={args.isDisabled}
+      disabled={args.isDisabled}
       selectedItem={items[2]}
       css={css`
         background: #ff947b;
@@ -406,7 +406,7 @@ export const Custom: StoryObj = (args: Args) => {
 };
 
 Custom.args = {
-  isDisabled: false,
+  disabled: false,
 };
 
 export const PositionAuto: StoryObj<Args> = {
@@ -427,7 +427,7 @@ export const PositionAuto: StoryObj<Args> = {
   ),
 };
 
-PositionAuto.args = { isDisabled: false };
+PositionAuto.args = { disabled: false };
 
 export const WithLabelAndHelperText: StoryObj<Args> = {
   render: (args) => (
@@ -495,7 +495,7 @@ export const WithLabelAndHelperText: StoryObj<Args> = {
   ),
 };
 
-WithLabelAndHelperText.args = { isDisabled: false };
+WithLabelAndHelperText.args = { disabled: false };
 
 export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -511,7 +511,7 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
   return (
     <div>
       <Dropdown
-        isDisabled={args.isDisabled}
+        disabled={args.isDisabled}
         selectedItem={items[selectedIndex]}
         onChange={handleChange}>
         {items.map((item) => (
@@ -529,4 +529,4 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
   );
 };
 
-DynamicallyChangedSelectedItem.args = { isDisabled: false };
+DynamicallyChangedSelectedItem.args = { disabled: false };

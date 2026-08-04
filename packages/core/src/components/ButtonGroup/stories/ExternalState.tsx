@@ -32,7 +32,7 @@ export const ExternalStateStory = () => {
         <ButtonGroup
           items={items}
           onClick={(item) => handleClick(item)()}
-          externalState={externalState}
+          value={externalState}
         />
       </div>
       <button

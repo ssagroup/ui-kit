@@ -15,6 +15,8 @@ const ProgressCircle = ({
   infoContent,
   mode = 'default',
   classnames,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
 }: ProgressCircleProps) => {
   const theme = useTheme();
   const gradientId = useId();
@@ -32,6 +34,13 @@ const ProgressCircle = ({
     <ProgressCircleBase
       gradientId={gradientId}
       role="progressbar"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      // `mode="infinite"` is an indeterminate spinner: per ARIA, omitting
+      // aria-valuenow is what signals "unknown progress".
+      aria-valuenow={mode === 'infinite' ? undefined : currentValue}
+      aria-valuemin={mode === 'infinite' ? undefined : 0}
+      aria-valuemax={mode === 'infinite' ? undefined : max}
       fullStroke={fullStroke}
       svgOffset={svgOffset}
       color={color}

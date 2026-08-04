@@ -81,7 +81,7 @@ export const YearsMonthsSwitch = () => {
         aria-label={`Previous ${rangePickerType === 'days' ? 'month' : 'year'}`}
         data-testid="previous-year-month"
         onClick={handlePrevious}
-        isDisabled={isMinMonthReached}
+        disabled={isMinMonthReached}
         css={{
           padding: 4,
           height: 32,
@@ -102,7 +102,7 @@ export const YearsMonthsSwitch = () => {
         }
         variant={'tertiary'}
         onClick={handleNext}
-        isDisabled={isMaxMonthReached}
+        disabled={isMaxMonthReached}
         aria-label={`Next ${rangePickerType === 'days' ? 'month' : 'year'}`}
         data-testid="next-year-month"
         css={{

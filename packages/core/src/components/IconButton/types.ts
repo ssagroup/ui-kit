@@ -8,9 +8,29 @@ export type IconButtonProps = {
   icon: keyof MapIconsType;
 
   /**
-   * Click handler
+   * Click handler. Optional — a `type="submit"` icon button inside a form
+   * needs no handler of its own.
    */
-  onClick: () => void;
+  onClick?: () => void;
+
+  /**
+   * HTML button type attribute
+   * - `button`: Standard button (default)
+   * - `submit`: Form submission button
+   * - `reset`: Form reset button
+   * @default 'button'
+   */
+  type?: 'button' | 'reset' | 'submit';
+
+  /**
+   * Size of the button and its icon. Matches `Button`'s size scale so the two
+   * line up in a toolbar.
+   * - `small`: 36px box, 20px icon (default)
+   * - `medium`: 46px box, 24px icon
+   * - `large`: 54px box, 28px icon
+   * @default 'small'
+   */
+  size?: keyof MainSizes;
 
   /**
    * Accessible label for screen readers. When omitted, the raw icon name is used.

@@ -64,7 +64,7 @@ describe('Component: Breadcrumbs', () => {
 
   it('uses the provided aria label', () => {
     const { getByRole } = setup(
-      <Breadcrumbs items={items} ariaLabel="You are here" />,
+      <Breadcrumbs items={items} aria-label="You are here" />,
     );
     getByRole('navigation', { name: 'You are here' });
   });

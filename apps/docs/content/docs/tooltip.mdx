@@ -63,8 +63,20 @@ between multiple tooltips.
 
 ## Controlled
 
-Pass `isOpen` to control visibility externally instead of relying on
-hover/click interactions.
+Pass `open` together with `onOpenChange` to control visibility externally
+instead of relying on hover/click interactions. For a tooltip that just starts
+open and then manages itself, pass `defaultOpen`.
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<Tooltip open={open} onOpenChange={setOpen}>
+  <TooltipTrigger>
+    <Button text="Details" />
+  </TooltipTrigger>
+  <TooltipContent>Controlled from the parent</TooltipContent>
+</Tooltip>;
+```
 
 ## Props
 
@@ -84,7 +96,10 @@ hover/click interactions.
 | `size`              | `'small' \| 'medium' \| 'large'` | `'medium'` | Size of the tooltip content.                                          |
 | `hasArrow`          | `boolean`                       | `true`    | Shows the pointer arrow.                                               |
 | `arrowProps`        | `TooltipArrowProps`             | —         | Extra props for the arrow element.                                     |
-| `isOpen`            | `boolean`                       | —         | Controls visibility externally when provided.                          |
+| `open`              | `boolean`                       | —         | Controlled visibility. Update it from `onOpenChange`.                  |
+| `defaultOpen`       | `boolean`                       | `false`   | Initial visibility for an uncontrolled tooltip.                        |
+| `onOpenChange`      | `(open: boolean) => void`       | —         | Called whenever the tooltip wants to open or close.                    |
+| `isOpen`            | `boolean`                       | —         | **Deprecated** — use `defaultOpen`. Never actually controlled the tooltip; it only seeded the initial state. |
 
 ### TooltipTrigger
 

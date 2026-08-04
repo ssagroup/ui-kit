@@ -1,7 +1,13 @@
-import { useState, useId, useEffect, useRef } from 'react';
+import { useId, useEffect, useRef, forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
+import { useControllableState } from '@ssa-ui-kit/hooks';
 import { CheckboxBase } from './CheckboxBase';
 import Icon from '@components/Icon';
+import {
+  resolveDeprecatedProp,
+  resolveDisabled,
+  warnDeprecatedProp,
+} from '@utils/deprecation';
 
 import { CheckboxProps } from './types';
 
@@ -89,75 +95,112 @@ import { CheckboxProps } from './types';
  *
  * @requires React Hook Form when using `register` prop
  */
-const Checkbox = ({
-  text,
-  id,
-  onChange,
-  isDisabled,
-  externalState,
-  initialState,
-  isIndeterminate,
-  name = '',
-  isRequired = false,
-  ref,
-  register,
-  ...rest
-}: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(Boolean(initialState));
-  const autoGenId = useId();
-  const theme = useTheme();
-  const checkboxInputRef = useRef<HTMLInputElement>(null);
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  function Checkbox(props, ref) {
+    const {
+      text,
+      id,
+      onChange,
+      disabled,
+      isDisabled,
+      checked,
+      externalState,
+      defaultChecked,
+      initialState,
+      isIndeterminate,
+      name = '',
+      isRequired = false,
+      register,
+      ...rest
+    } = props;
 
-  useEffect(() => {
-    // istanbul ignore else
-    if (checkboxInputRef.current) {
-      // Browsers drop the "indeterminate" state after the "checked" state
-      // changes. We keep the component in the "indeterminate" state until the
-      // prop's value changes to false or is removed.
-      checkboxInputRef.current.indeterminate = Boolean(isIndeterminate);
+    const isCheckboxDisabled = resolveDisabled(
+      'Checkbox',
+      disabled,
+      isDisabled,
+    );
+
+    if (externalState !== undefined) {
+      warnDeprecatedProp('Checkbox', 'externalState', 'checked');
     }
-  }, [isIndeterminate, isChecked]);
 
-  useEffect(() => {
-    if (typeof externalState === 'boolean') {
-      setIsChecked(Boolean(externalState));
-    }
-  }, [externalState]);
+    // `checked` is fully controlled — the parent owns the value and no internal
+    // state is written. The deprecated `externalState` keeps the semi-controlled
+    // path it shipped with, where it is copied *into* internal state, so existing
+    // consumers whose checkbox toggles itself without an `onChange` round-trip
+    // keep working.
+    const [isCheckedValue, setIsChecked] = useControllableState<boolean>({
+      controlled: 'checked' in props,
+      value: checked,
+      defaultValue: resolveDeprecatedProp({
+        component: 'Checkbox',
+        prop: 'defaultChecked',
+        value: defaultChecked,
+        deprecatedProp: 'initialState',
+        deprecatedValue: initialState,
+      }),
+      finalValue: false,
+      onChange,
+      semiControlled: {
+        active: 'externalState' in props,
+        value: externalState,
+      },
+    });
 
-  const checkboxId = id || autoGenId;
+    const isChecked = Boolean(isCheckedValue);
 
-  return (
-    <CheckboxBase htmlFor={checkboxId} {...rest}>
-      <input
-        id={checkboxId}
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => {
-          const newIsChecked = !isChecked;
-          setIsChecked(newIsChecked);
-          onChange?.(newIsChecked);
-        }}
-        disabled={isDisabled}
-        ref={(node: HTMLInputElement) => {
-          checkboxInputRef.current = node;
-          if (ref) {
-            ref.current = node;
-          }
-        }}
-        name={name}
-        required={isRequired}
-        {...register}
-      />
-      <div>
-        {isIndeterminate ? (
-          <Icon name="minus" size={12} color={theme.colors.white} />
-        ) : isChecked ? (
-          <Icon name="check" size={12} color={theme.colors.white} />
-        ) : null}
-      </div>
-      {['string', 'number'].includes(typeof text) ? <span>{text}</span> : text}
-    </CheckboxBase>
-  );
-};
+    const autoGenId = useId();
+    const theme = useTheme();
+    const checkboxInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      // istanbul ignore else
+      if (checkboxInputRef.current) {
+        // Browsers drop the "indeterminate" state after the "checked" state
+        // changes. We keep the component in the "indeterminate" state until the
+        // prop's value changes to false or is removed.
+        checkboxInputRef.current.indeterminate = Boolean(isIndeterminate);
+      }
+    }, [isIndeterminate, isChecked]);
+
+    const checkboxId = id || autoGenId;
+
+    return (
+      <CheckboxBase htmlFor={checkboxId} {...rest}>
+        <input
+          id={checkboxId}
+          type="checkbox"
+          checked={isChecked}
+          onChange={() => setIsChecked(!isChecked)}
+          disabled={isCheckboxDisabled}
+          ref={(node: HTMLInputElement | null) => {
+            checkboxInputRef.current = node;
+            // Support both callback and object refs — forwardRef may receive either.
+            if (typeof ref === 'function') {
+              ref(node);
+            } else if (ref) {
+              ref.current = node;
+            }
+          }}
+          name={name}
+          required={isRequired}
+          {...register}
+        />
+        <div>
+          {isIndeterminate ? (
+            <Icon name="minus" size={12} color={theme.colors.white} />
+          ) : isChecked ? (
+            <Icon name="check" size={12} color={theme.colors.white} />
+          ) : null}
+        </div>
+        {['string', 'number'].includes(typeof text) ? (
+          <span>{text}</span>
+        ) : (
+          text
+        )}
+      </CheckboxBase>
+    );
+  },
+);
 
 export default Checkbox;

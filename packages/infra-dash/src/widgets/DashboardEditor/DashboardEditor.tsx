@@ -165,7 +165,7 @@ export const DashboardEditorInternal = ({
         alignItems="start"
         css={{ flexGrow: 1, padding: '24px 32px', height: '100%' }}>
         <Wrapper css={{ gap: '24px' }}>
-          {!dashboardsSelectorDrawer.opened &&
+          {!dashboardsSelectorDrawer.open &&
             !dashboardsSelectorDrawer.transition.isMounted && (
               <Button
                 variant="secondary"
@@ -195,14 +195,14 @@ export const DashboardEditorInternal = ({
           />
           <Checkbox
             text="Publish"
-            initialState={dashboard.published}
+            defaultChecked={dashboard.published}
             onChange={(published) => setDashboard({ ...dashboard, published })}
           />
           <PeriodSelector />
           <Button
             variant="primary"
             css={{ height: '46px' }}
-            isDisabled={cannotPersist}
+            disabled={cannotPersist}
             onClick={handlePersistDashboard}>
             {dashboard.id > 0 ? 'Save' : 'Create'}
           </Button>

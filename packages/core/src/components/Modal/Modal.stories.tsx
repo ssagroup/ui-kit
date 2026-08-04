@@ -77,7 +77,7 @@ export const Custom: StoryObj<typeof Modal> = () => (
 Custom.args = {};
 
 export const Opened: StoryObj<typeof Modal> = () => (
-  <Modal isOpen>
+  <Modal defaultOpen>
     <ModalOpenButton>
       <Button variant="primary" size="small" text="Open modal" />
     </ModalOpenButton>
@@ -107,7 +107,7 @@ export const ExternalState: StoryObj<typeof Modal> = () => {
     setIsOpen(false);
   }, 5000);
   return (
-    <Modal isOpen={isOpen}>
+    <Modal open={isOpen} onOpenChange={setIsOpen}>
       <ModalOpenButton>
         <Button variant="primary" size="small" text="Open modal" />
       </ModalOpenButton>
@@ -146,7 +146,7 @@ export const InsideDrawer: StoryObj<typeof Modal> = () => {
         `}
       />
       <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-        {drawer.opened ? 'Close' : 'Open'} Drawer
+        {drawer.open ? 'Close' : 'Open'} Drawer
       </Button>
       <Drawer.Root store={drawer}>
         <Drawer.Portal>

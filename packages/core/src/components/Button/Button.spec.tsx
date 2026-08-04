@@ -64,7 +64,7 @@ const testButton = async (spec: TestPropsType) => {
       text={text}
       endIcon={appendIcon}
       startIcon={prependIcon}
-      isDisabled={disabled}
+      disabled={disabled}
       onClick={mockOnClick}
     />,
   );
@@ -581,13 +581,54 @@ describe('Button', () => {
 
   describe('Disabled', () => {
     it('Renders with default style', () => {
-      const { getByTestId } = render(<Button isDisabled text="Button" />);
+      const { getByTestId } = render(<Button disabled text="Button" />);
 
       const span = getByTestId('disabled-button-text');
 
       expect(span).toBeInTheDocument();
       expect(span).toHaveStyleRule('color', 'rgba(43, 45, 49, 0.4)');
       expect(span).toHaveTextContent('Button');
+    });
+  });
+
+  describe('Loading', () => {
+    it('Renders a spinner, disables the button and marks it busy', () => {
+      const { getByRole, getByTestId } = render(
+        <Button loading variant="primary" text="Save" />,
+      );
+
+      const button = getByRole('button');
+      expect(button).toBeDisabled();
+      expect(button).toHaveAttribute('aria-busy', 'true');
+      expect(getByTestId('button-spinner')).toBeInTheDocument();
+    });
+
+    it('Keeps the label in the layout so the width does not change', () => {
+      const { getByRole } = render(<Button loading text="Save" />);
+
+      // The label is still rendered (hidden), not swapped out — that is what
+      // keeps the button at its resting width.
+      expect(getByRole('button')).toHaveTextContent('Save');
+    });
+
+    it('Does not fire onClick while loading', async () => {
+      const onClick = jest.fn();
+      const { user, getByRole } = setup(
+        <Button loading text="Save" onClick={onClick} />,
+      );
+
+      await user.click(getByRole('button'));
+
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('Renders no spinner and stays enabled when not loading', () => {
+      const { getByRole, queryByTestId } = render(<Button text="Save" />);
+
+      const button = getByRole('button');
+      expect(button).toBeEnabled();
+      expect(button).not.toHaveAttribute('aria-busy');
+      expect(queryByTestId('button-spinner')).not.toBeInTheDocument();
     });
   });
 });

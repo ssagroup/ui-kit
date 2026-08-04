@@ -14,7 +14,7 @@ export default function SwitchDemo() {
           <Switch label="Success variant" color="success" />
         </SwitchContextProvider>
         <SwitchContextProvider initialState={true}>
-          <Switch label="Disabled" isDisabled />
+          <Switch label="Disabled" disabled />
         </SwitchContextProvider>
       </div>
     </PreviewRoot>

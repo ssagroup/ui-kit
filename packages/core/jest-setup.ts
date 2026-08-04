@@ -100,6 +100,7 @@ afterAll(() => {
 });
 
 import { createSerializer, matchers } from '@emotion/jest';
+import { toHaveNoViolations } from 'jest-axe';
 
 import { initRender } from './customTest';
 import theme from '@themes/main';
@@ -114,3 +115,7 @@ global.render = customRender;
 
 expect.addSnapshotSerializer(createSerializer());
 expect.extend(matchers);
+// Runtime accessibility assertions — see src/test-utils/axe.ts and
+// docs/accessibility.md. eslint-plugin-jsx-a11y already covers static JSX;
+// this catches what only exists once a component is rendered.
+expect.extend(toHaveNoViolations);

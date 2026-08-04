@@ -190,7 +190,7 @@ describe('TabBar', () => {
   const renderContent = (tab?: SmallTabProps): React.ReactNode => {
     return (
       <TabContents
-        id={tab?.ariaControls}
+        id={tab?.['aria-controls'] as string}
         labelledBy={tab?.tabId as string}
         text={`${tab?.topText || tab?.text} contents`}
       />
@@ -215,7 +215,7 @@ describe('TabBar', () => {
         key={tab.tabId}
         tabId={tab.tabId}
         text={tab.text || ''}
-        ariaControls={tab.controls}
+        aria-controls={tab.controls}
         renderContent={tab.renderContent as TabProps['renderContent']}
       />
     ),
@@ -281,7 +281,7 @@ describe('TabBar', () => {
         tabId={tab.tabId}
         topText={tab.topText || ''}
         bottomText={tab.bottomText || ''}
-        ariaControls={tab.controls}
+        aria-controls={tab.controls}
         renderContent={tab.renderContent as TabProps['renderContent']}
       />
     ),

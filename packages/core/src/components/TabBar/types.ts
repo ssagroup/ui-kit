@@ -14,6 +14,14 @@ export interface TabProps extends CommonProps {
   ) => React.ReactNode;
   isActive?: boolean;
   onClick?: (event?: React.MouseEvent<HTMLDivElement>) => void;
+  /** Id of the panel this tab controls. */
+  'aria-controls'?: string;
+  /**
+   * Id of the panel this tab controls.
+   *
+   * @deprecated Use `aria-controls` instead — `ariaControls` is removed in the
+   * next major release.
+   */
   ariaControls?: string;
   [prop: string | number | symbol]: unknown;
 }

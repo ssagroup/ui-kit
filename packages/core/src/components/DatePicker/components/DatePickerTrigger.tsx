@@ -81,7 +81,7 @@ export const DatePickerTrigger = () => {
       onClick={handleToggleOpen}
       variant="tertiary"
       aria-label="Calendar"
-      isDisabled={disabled}
+      disabled={disabled}
       className={classNames?.trigger?.calendarIcon}
       css={{
         padding: 0,

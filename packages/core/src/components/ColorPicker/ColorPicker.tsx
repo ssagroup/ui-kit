@@ -2,6 +2,7 @@ import { useTheme } from '@emotion/react';
 import { Popover, PopoverContent } from '@components/Popover';
 import TabBar, { TabBarContextProvider } from '@components/TabBar';
 import Tab from '@components/Tab';
+import { resolveDeprecatedProp } from '@utils/deprecation';
 import { ColorPickerProps } from './types';
 import { TabColorPalette, TabColorPicker, TabContent } from './components';
 import { ColorPickerProvider } from './ColorPickerContext';
@@ -10,22 +11,39 @@ import { COLORS_PALETTE } from './constants';
 import '@rc-component/color-picker/assets/index.css';
 
 export const ColorPicker = ({
-  color: providedColor,
+  value,
+  color,
+  defaultValue,
+  defaultColor,
   format: providedFormat,
   colorsPalette = COLORS_PALETTE,
   ...rest
 }: ColorPickerProps) => {
   const theme = useTheme();
+  const providedColor = resolveDeprecatedProp({
+    component: 'ColorPicker',
+    prop: 'value',
+    value,
+    deprecatedProp: 'color',
+    deprecatedValue: color,
+  });
+  const resolvedDefaultColor = resolveDeprecatedProp({
+    component: 'ColorPicker',
+    prop: 'defaultValue',
+    value: defaultValue,
+    deprecatedProp: 'defaultColor',
+    deprecatedValue: defaultColor,
+  });
   const tabsConfig = {
     colorPalette: {
       tabId: 'color-palette',
-      ariaControls: 'color-palette-panel',
+      'aria-controls': 'color-palette-panel',
       text: 'General',
       renderContent: TabColorPalette,
     },
     colorPicker: {
       tabId: 'color-picker',
-      ariaControls: 'color-picker-panel',
+      'aria-controls': 'color-picker-panel',
       text: 'Custom',
       renderContent: TabColorPicker,
     },
@@ -40,6 +58,7 @@ export const ColorPicker = ({
       <ColorPickerProvider
         providedColor={providedColor}
         providedFormat={providedFormat}
+        defaultColor={resolvedDefaultColor}
         colorsPalette={colorsPalette}
         {...rest}>
         <Popover interactionsEnabled={'click'} placement={'top-start'}>

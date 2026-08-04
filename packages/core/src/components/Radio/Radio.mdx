@@ -39,7 +39,7 @@ function RadioGroupExample() {
   return (
     <RadioGroup
       name="fruit"
-      externalState={selectedValue}
+      value={selectedValue}
       onChange={handleChange}>
       <Radio id="radio1" value="apple" text="Apple" />
       <Radio id="radio2" value="orange" text="Orange" />
@@ -61,7 +61,7 @@ Control whether a radio button is selected:
   id="checked-radio"
   value="checked"
   text="Checked Option"
-  isChecked={true}
+  checked={true}
   onChange={handleChange}
 />
 
@@ -70,7 +70,7 @@ Control whether a radio button is selected:
   id="unchecked-radio"
   value="unchecked"
   text="Unchecked Option"
-  isChecked={false}
+  checked={false}
   onChange={handleChange}
 />
 ```
@@ -84,7 +84,7 @@ Disable radio buttons when they shouldn't be selectable:
   id="disabled-radio"
   value="disabled"
   text="Disabled Option"
-  isDisabled={true}
+  disabled={true}
   onChange={handleChange}
 />
 ```
@@ -194,7 +194,7 @@ Display radio buttons in a horizontal layout:
 ```tsx
 <RadioGroup
   name="fruit-horizontal"
-  externalState={selectedValue}
+  value={selectedValue}
   onChange={handleChange}
   css={{
     display: 'flex',
@@ -214,7 +214,7 @@ Display radio buttons in a vertical layout:
 ```tsx
 <RadioGroup
   name="fruit-vertical"
-  externalState={selectedValue}
+  value={selectedValue}
   onChange={handleChange}
   css={{
     marginTop: '10px',

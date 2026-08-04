@@ -26,127 +26,223 @@ const managers = [
   },
 ] as const;
 
-describe('Form (rjsf)', () => {
-  it('Render form', () => {
-    const { container } = render(
-      <Form
-        validator={validator}
-        schema={{
-          title: 'Test Form',
-          description: 'Test Form Description',
-          type: 'object',
-          properties: {
-            stringField: {
-              title: 'String field title',
-              type: 'string',
-            },
-            arrayField: {
-              type: 'array',
-              title: 'Array field title',
-              description: 'Array field description',
-              items: {
-                type: 'string',
-              },
-            },
-            checkboxField: {
-              type: 'boolean',
-              title: 'Checkbox field title',
-            },
-            radioField: {
-              type: 'string',
-              title: 'Radio field title',
-              enum: ['Option 1', 'Option 2'],
-            },
-            checkboxesField: {
-              type: 'array',
-              title: 'Checkboxes field title',
-              items: {
-                type: 'string',
-                enum: ['foo', 'bar', 'fuzz', 'qux'],
-              },
-              uniqueItems: true,
-            },
-            selectField: {
-              type: 'string',
-              title: 'Select field title',
-              default: 'Option 1',
-              enum: ['Option 1', 'Option 2'],
-            },
-            selectMultipleField: {
-              type: 'array',
-              title: 'Select multiple fields title',
-              default: ['Option 1', 'Option 3'],
-              items: {
-                type: 'string',
-                enum: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
-              },
-              uniqueItems: true,
-            },
-            managers: {
-              type: 'array',
-              title: 'Select managers',
-              uniqueItems: true,
-              items: {
-                type: 'string',
-                oneOf: managers.map((manager) => ({
-                  const: manager.id,
-                  title: manager.name,
-                  avatar: manager.avatar,
-                })),
-              },
-            },
-            passwordField: {
-              type: 'string',
-              title: 'Password field title',
-              minLength: 8,
-            },
-          },
-        }}
-        uiSchema={{
+/**
+ * Renders a "kitchen sink" form covering every widget the rjsf registry maps.
+ * Used by the widget-mapping tests below to assert that each schema/uiSchema
+ * combination resolves to the expected SSA control.
+ *
+ * This replaces a former whole-container `toMatchSnapshot()`. That snapshot was
+ * 2400+ lines, so failures were unreadable and in practice got regenerated
+ * rather than reviewed, and it was coupled to React's internal `useId` format
+ * (which changed between 19.0 and 19.2) and to Emotion class ordering.
+ */
+const renderKitchenSinkForm = () =>
+  render(
+    <Form
+      validator={validator}
+      schema={{
+        title: 'Test Form',
+        description: 'Test Form Description',
+        type: 'object',
+        properties: {
           stringField: {
-            'ui:help': 'String field help',
-            'ui:placeholder': 'String field placeholder',
+            title: 'String field title',
+            type: 'string',
+          },
+          arrayField: {
+            type: 'array',
+            title: 'Array field title',
+            description: 'Array field description',
+            items: {
+              type: 'string',
+            },
           },
           checkboxField: {
-            'ui:help': 'checkbox',
+            type: 'boolean',
+            title: 'Checkbox field title',
           },
           radioField: {
-            'ui:widget': 'radio',
-            'ui:options': {
-              inline: true,
-            },
+            type: 'string',
+            title: 'Radio field title',
+            enum: ['Option 1', 'Option 2'],
           },
           checkboxesField: {
-            'ui:widget': 'checkboxes',
-            'ui:help': 'Checkboxes field help',
+            type: 'array',
+            title: 'Checkboxes field title',
+            items: {
+              type: 'string',
+              enum: ['foo', 'bar', 'fuzz', 'qux'],
+            },
+            uniqueItems: true,
           },
-          passwordField: {
-            'ui:widget': 'password',
-            'ui:help': 'Password field help',
+          selectField: {
+            type: 'string',
+            title: 'Select field title',
+            default: 'Option 1',
+            enum: ['Option 1', 'Option 2'],
+          },
+          selectMultipleField: {
+            type: 'array',
+            title: 'Select multiple fields title',
+            default: ['Option 1', 'Option 3'],
+            items: {
+              type: 'string',
+              enum: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+            },
+            uniqueItems: true,
           },
           managers: {
-            'ui:widget': 'select',
-            'ui:placeholder': 'Select managers...',
-            'ui:options': {
-              typeaheadAvatarSize: 'small',
+            type: 'array',
+            title: 'Select managers',
+            uniqueItems: true,
+            items: {
+              type: 'string',
+              oneOf: managers.map((manager) => ({
+                const: manager.id,
+                title: manager.name,
+                avatar: manager.avatar,
+              })),
             },
           },
-        }}
-        formData={{
-          stringField: 'String field value',
-          arrayField: ['Item 1', 'Item 2'],
-          checkboxField: true,
-          radioField: 'Option 1',
-          checkboxesField: ['foo', 'bar'],
-          selectField: 'Option 2',
-          selectMultipleField: ['Option 1', 'Option 3'],
-          managers: [managers[0].id, managers[2].id],
-          passwordField: 'password',
-        }}
-      />,
-    );
+          passwordField: {
+            type: 'string',
+            title: 'Password field title',
+            minLength: 8,
+          },
+        },
+      }}
+      uiSchema={{
+        stringField: {
+          'ui:help': 'String field help',
+          'ui:placeholder': 'String field placeholder',
+        },
+        checkboxField: {
+          'ui:help': 'checkbox',
+        },
+        radioField: {
+          'ui:widget': 'radio',
+          'ui:options': {
+            inline: true,
+          },
+        },
+        checkboxesField: {
+          'ui:widget': 'checkboxes',
+          'ui:help': 'Checkboxes field help',
+        },
+        passwordField: {
+          'ui:widget': 'password',
+          'ui:help': 'Password field help',
+        },
+        managers: {
+          'ui:widget': 'select',
+          'ui:placeholder': 'Select managers...',
+          'ui:options': {
+            typeaheadAvatarSize: 'small',
+          },
+        },
+      }}
+      formData={{
+        stringField: 'String field value',
+        arrayField: ['Item 1', 'Item 2'],
+        checkboxField: true,
+        radioField: 'Option 1',
+        checkboxesField: ['foo', 'bar'],
+        selectField: 'Option 2',
+        selectMultipleField: ['Option 1', 'Option 3'],
+        managers: [managers[0].id, managers[2].id],
+        passwordField: 'password',
+      }}
+    />,
+  );
 
-    expect(container).toMatchSnapshot();
+describe('Form (rjsf)', () => {
+  describe('widget mapping', () => {
+    it('renders the form title and description', () => {
+      renderKitchenSinkForm();
+
+      expect(screen.getByText('Test Form')).toBeInTheDocument();
+      expect(screen.getByText('Test Form Description')).toBeInTheDocument();
+      expect(screen.getByTestId('rjsf-submit-button')).toBeInTheDocument();
+    });
+
+    it('maps a string field to a text input, with help and placeholder', () => {
+      renderKitchenSinkForm();
+
+      const input = screen.getByDisplayValue('String field value');
+      expect(input).toHaveAttribute('type', 'text');
+      expect(input).toHaveAttribute('placeholder', 'String field placeholder');
+      expect(screen.getByText('String field title')).toBeInTheDocument();
+      expect(screen.getByText('String field help')).toBeInTheDocument();
+    });
+
+    it('maps an array field to per-item text inputs', () => {
+      renderKitchenSinkForm();
+
+      expect(screen.getByDisplayValue('Item 1')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Item 2')).toBeInTheDocument();
+      expect(screen.getByText('Array field description')).toBeInTheDocument();
+    });
+
+    it('maps a boolean field to a single checked checkbox', () => {
+      renderKitchenSinkForm();
+
+      expect(screen.getByText('Checkbox field title')).toBeInTheDocument();
+      // The boolean field's checkbox is checked via formData.checkboxField: true
+      const checked = screen
+        .getAllByRole('checkbox', { hidden: true })
+        .filter((el) => (el as HTMLInputElement).checked);
+      // checkboxField (true) + checkboxesField (foo, bar) = 3 checked boxes
+      expect(checked).toHaveLength(3);
+    });
+
+    it('maps an enum field with ui:widget=radio to radio inputs', () => {
+      renderKitchenSinkForm();
+
+      const first = screen.getByTestId('root_radioField-0');
+      const second = screen.getByTestId('root_radioField-1');
+
+      expect(first).toBeInTheDocument();
+      expect(second).toBeInTheDocument();
+      expect(screen.getByText('Radio field title')).toBeInTheDocument();
+    });
+
+    it('maps an array enum with ui:widget=checkboxes to a checkbox group', () => {
+      renderKitchenSinkForm();
+
+      expect(screen.getByText('Checkboxes field title')).toBeInTheDocument();
+      expect(screen.getByText('Checkboxes field help')).toBeInTheDocument();
+      // enum has 4 options: foo, bar, fuzz, qux
+      const boxes = screen.getAllByRole('checkbox', { hidden: true });
+      expect(boxes.length).toBeGreaterThanOrEqual(4);
+    });
+
+    it('maps select and multi-select fields to typeahead widgets', () => {
+      renderKitchenSinkForm();
+
+      // selectField, selectMultipleField and managers all resolve to Typeahead
+      expect(screen.getAllByTestId('typeahead')).toHaveLength(3);
+      expect(screen.getByText('Select field title')).toBeInTheDocument();
+      expect(
+        screen.getByText('Select multiple fields title'),
+      ).toBeInTheDocument();
+    });
+
+    it('maps a oneOf array with avatars to a typeahead showing avatars', () => {
+      renderKitchenSinkForm();
+
+      expect(screen.getByText('Select managers')).toBeInTheDocument();
+      // managers[0] and managers[2] are selected, each rendering an avatar
+      expect(screen.getAllByTestId('typeahead-item-avatar')).toHaveLength(2);
+    });
+
+    it('maps ui:widget=password to a password input', () => {
+      renderKitchenSinkForm();
+
+      const password = screen.getByDisplayValue('password');
+      expect(password).toHaveAttribute('type', 'password');
+      expect(screen.getByText('Password field title')).toBeInTheDocument();
+      expect(screen.getByText('Password field help')).toBeInTheDocument();
+    });
   });
 
   it('DateWidget converts yyyy-MM-dd to dd/mm/yyyy format for display', () => {

@@ -15,7 +15,7 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
+        checked={isChecked}
         text={text}
       />,
     );
@@ -40,7 +40,7 @@ describe('Radio', () => {
     const text = 'Apple';
 
     const { getByText } = render(
-      <Radio value={valueAttr} isChecked={isChecked} text={text} />,
+      <Radio value={valueAttr} checked={isChecked} text={text} />,
     );
 
     const labelEl = getByText(text).closest(
@@ -70,7 +70,7 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
+        checked={isChecked}
         text={text}
       />,
     );
@@ -103,8 +103,8 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
-        isDisabled={isDisabled}
+        checked={isChecked}
+        disabled={isDisabled}
         text={text}
       />,
     );
@@ -137,8 +137,8 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
-        isDisabled={isDisabled}
+        checked={isChecked}
+        disabled={isDisabled}
         text={text}
       />,
     );
@@ -169,7 +169,7 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
+        checked={isChecked}
       />,
     );
 
@@ -190,7 +190,7 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
+        checked={isChecked}
         isRequired={isRequired}
         text={text}
       />,
@@ -222,7 +222,7 @@ describe('Radio', () => {
         id={idAttr}
         name={nameAttr}
         value={valueAttr}
-        isChecked={isChecked}
+        checked={isChecked}
         css={{ backgroundColor: 'blue' }}
       />,
     );

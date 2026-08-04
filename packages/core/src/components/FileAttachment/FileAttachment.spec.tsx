@@ -343,14 +343,14 @@ describe('FileAttachment', () => {
       expect(onRemove).toHaveBeenCalledTimes(1);
     });
 
-    it('is disabled when isDisabled is true', () => {
+    it('is disabled when disabled is true', () => {
       render(
         <FileAttachment
           file={{ name: 'Report.pdf', size: 1024 }}
           onRemove={() => {
             /* no-op */
           }}
-          isDisabled
+          disabled
         />,
       );
 

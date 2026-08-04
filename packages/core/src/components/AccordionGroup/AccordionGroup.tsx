@@ -35,7 +35,7 @@ const AccordionBase = styled.div``;
  *     <Accordion
  *       id="first"
  *       title="First Section"
- *       ariaControls="first-panel"
+ *       aria-controls="first-panel"
  *       renderContent={(props) => (
  *         <AccordionContent {...props}>
  *           <p>Content for first section</p>
@@ -87,7 +87,14 @@ export const AccordionGroup = ({
   useLayoutEffect(() => {
     const initialAccordions: AccordionProps[] = [];
     Children.map(children, (child) => {
-      if (isValidElement(child) && child.props.isOpened) {
+      // `defaultOpen` is the intended spelling; `open` and the deprecated
+      // `isOpened` are read too, since both were previously how a consumer
+      // asked for an initially expanded accordion. Accordion itself warns
+      // about `isOpened`, so there is nothing to warn about here.
+      if (
+        isValidElement(child) &&
+        (child.props.defaultOpen ?? child.props.open ?? child.props.isOpened)
+      ) {
         const { renderContent, renderTitle, ...rest } = child.props;
         initialAccordions.push({
           id: rest.id,
@@ -104,13 +111,15 @@ export const AccordionGroup = ({
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           const { id } = child.props;
-          const isOpened = !!openedAccordions?.find(
+          const open = !!openedAccordions?.find(
             (activeAccordion) => activeAccordion.id === id,
           );
 
           return cloneElement(child, {
             key: id,
-            isOpened,
+            // Only the supported spelling — injecting `isOpened` here would
+            // make the kit warn on itself.
+            open,
             size,
             onClick: () =>
               toggleOpenedAccordion({

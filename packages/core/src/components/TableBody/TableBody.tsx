@@ -38,7 +38,7 @@ import { CommonProps } from '@global-types/emotion';
  *   {items.map(item => (
  *     <TableRow
  *       key={item.id}
- *       isDisabled={item.disabled}>
+ *       disabled={item.disabled}>
  *       <TableCell>{item.name}</TableCell>
  *     </TableRow>
  *   ))}

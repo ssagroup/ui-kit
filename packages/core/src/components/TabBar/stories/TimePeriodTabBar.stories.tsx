@@ -24,7 +24,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
     <Tab
       tabId="year"
       text="Year"
-      ariaControls="year-panel"
+      aria-controls="year-panel"
       renderContent={() => (
         <TabContents id="year-panel" labelledBy="year" text="Year contents" />
       )}
@@ -32,7 +32,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
     <Tab
       tabId="month"
       text="Month"
-      ariaControls="month-panel"
+      aria-controls="month-panel"
       renderContent={() => (
         <TabContents
           id="month-panel"
@@ -44,7 +44,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
     <Tab
       tabId="week"
       text="Week"
-      ariaControls="week-panel"
+      aria-controls="week-panel"
       renderContent={() => (
         <TabContents id="week-panel" labelledBy="week" text="Week contents" />
       )}
@@ -52,7 +52,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
     <Tab
       tabId="day"
       text="Day"
-      ariaControls="day-panel"
+      aria-controls="day-panel"
       renderContent={() => (
         <TabContents id="day-panel" labelledBy="day" text="Day contents" />
       )}
@@ -84,7 +84,7 @@ export const TimePeriodTabBarWithActiveBarFromProvider: StoryObj<typeof Tab> = (
     <Tab
       tabId="year"
       text="Year"
-      ariaControls="year-panel"
+      aria-controls="year-panel"
       renderContent={() => (
         <TabContents id="year-panel" labelledBy="year" text="Year contents" />
       )}
@@ -92,7 +92,7 @@ export const TimePeriodTabBarWithActiveBarFromProvider: StoryObj<typeof Tab> = (
     <Tab
       tabId="month"
       text="Month"
-      ariaControls="month-panel"
+      aria-controls="month-panel"
       renderContent={() => (
         <TabContents
           id="month-panel"
@@ -104,7 +104,7 @@ export const TimePeriodTabBarWithActiveBarFromProvider: StoryObj<typeof Tab> = (
     <Tab
       tabId="week"
       text="Week"
-      ariaControls="week-panel"
+      aria-controls="week-panel"
       renderContent={() => (
         <TabContents id="week-panel" labelledBy="week" text="Week contents" />
       )}
@@ -112,7 +112,7 @@ export const TimePeriodTabBarWithActiveBarFromProvider: StoryObj<typeof Tab> = (
     <Tab
       tabId="day"
       text="Day"
-      ariaControls="day-panel"
+      aria-controls="day-panel"
       renderContent={() => (
         <TabContents id="day-panel" labelledBy="day" text="Day contents" />
       )}
@@ -120,7 +120,7 @@ export const TimePeriodTabBarWithActiveBarFromProvider: StoryObj<typeof Tab> = (
     <Tab
       tabId="hour"
       text="Hour"
-      ariaControls="hour-panel"
+      aria-controls="hour-panel"
       renderContent={() => (
         <TabContents id="hour-panel" labelledBy="hour" text="Hour contents" />
       )}

@@ -90,7 +90,7 @@ function ExternallyControlledModal() {
   return (
     <div>
       <button onClick={() => setIsOpen(true)}>Open Modal Externally</button>
-      <Modal isOpen={isOpen}>
+      <Modal open={isOpen} onOpenChange={setIsOpen}>
         <ModalContent aria-label="Externally controlled modal">
           <div>
             <h3>Controlled Modal</h3>

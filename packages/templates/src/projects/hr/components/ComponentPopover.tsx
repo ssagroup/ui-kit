@@ -46,7 +46,7 @@ export const ComponentPopover = React.forwardRef<
       {...restPopoverProps}>
       <PopoverTrigger
         dataTestId="component-popover-button"
-        isDisabled={isDisabled}
+        disabled={isDisabled}
         asChild={asChild}
         css={{
           marginLeft: 10,

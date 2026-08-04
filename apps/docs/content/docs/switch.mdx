@@ -24,7 +24,7 @@ export function Example() {
         <Switch label="Success variant" color="success" />
       </SwitchContextProvider>
       <SwitchContextProvider initialState={true}>
-        <Switch label="Disabled" isDisabled />
+        <Switch label="Disabled" disabled />
       </SwitchContextProvider>
     </>
   );
@@ -63,6 +63,6 @@ parent component.
 | Prop         | Type                                    | Default     | Description                                                       |
 | -------------- | ------------------------------------------ | ------------- | ----------------------------------------------------------------------- |
 | `label`       | `string`                                  | —           | Required. Accessible label (`aria-label`).                        |
-| `isDisabled`  | `boolean`                                  | `false`     | Disables toggling; always renders a muted grey background.        |
+| `disabled`  | `boolean`                                  | `false`     | Disables toggling; always renders a muted grey background.        |
 | `color`       | `'primary' \| 'success' \| 'custom'`     | `'primary'` | On-state color.                                                     |
 | `colors`      | `{ on?: string; offOutline?: string }`    | —           | Fine-grained overrides, only used when `color="custom"`.          |

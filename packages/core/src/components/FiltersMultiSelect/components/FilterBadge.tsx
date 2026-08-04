@@ -95,7 +95,7 @@ export const FilterBadge = ({
       {withRemoveButton && (
         <Button
           variant="tertiary"
-          isDisabled={disabled}
+          disabled={disabled}
           css={{ padding: 0, cursor: disabled ? 'default' : 'pointer' }}
           onClick={(e) => {
             e.stopPropagation();

@@ -10,6 +10,7 @@ import DropdownArrow from '@components/DropdownArrow';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
 import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
+import { resolveDisabled } from '@utils/deprecation';
 
 import { DropdownContextType, DropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
@@ -97,6 +98,7 @@ const DropdownPlaceholderLabel = styled.div`
 function MultipleDropdownInner<T extends DropdownOptionProps>(
   {
     selectedItems = [],
+    disabled,
     isDisabled,
     isOpen: isInitOpen,
     isMultiple = true,
@@ -110,6 +112,11 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
+  const isDropdownDisabled = resolveDisabled(
+    'MultipleDropdown',
+    disabled,
+    isDisabled,
+  );
   const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
   const dropdownId = useId();
@@ -129,7 +136,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   );
 
   const onChange = (item: DropdownOptionProps) => {
-    if (isDisabled || !item) {
+    if (isDropdownDisabled || !item) {
       return;
     }
     if (!isMultiple && optionsWithKey[item.value].isSelected) {
@@ -167,10 +174,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
 
   useEffect(() => {
-    if (isDisabled && isOpen) {
+    if (isDropdownDisabled && isOpen) {
       setIsOpen(false);
     }
-  }, [isDisabled]);
+  }, [isDropdownDisabled]);
 
   useEffect(() => {
     const childrenArray = React.Children.toArray(children).filter(Boolean);
@@ -226,10 +233,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
         <DropdownToggle
           className={className}
           isOpen={isOpen}
-          disabled={isDisabled}
+          disabled={isDropdownDisabled}
           onClick={setIsOpen.bind(null, !isOpen)}
-          ariaLabelledby={`dropdown-label-${dropdownId}`}
-          ariaControls={`dropdown-popup-${dropdownId}`}
+          aria-labelledby={`dropdown-label-${dropdownId}`}
+          aria-controls={`dropdown-popup-${dropdownId}`}
           isMultiple={isMultiple}
           selectedCount={valuesWithoutPlaceholder.length}>
           {isMultiple ? (

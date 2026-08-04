@@ -19,6 +19,11 @@ export interface FileAttachmentProps {
   uploadedText?: string;
   showDescription?: boolean;
   icon?: IconProps['name'];
+  /** Mutes the attachment and disables the remove button. */
+  disabled?: boolean;
+  /**
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   */
   isDisabled?: boolean;
   onRemove?: () => void;
   className?: string;

@@ -15,4 +15,6 @@ export {
   useFilterMultiSelect,
   type Filter,
   type SelectedFilter,
+  type UseFiltersMultiSelectOptions,
+  type UseFiltersMultiSelectStore,
 } from './useFiltersMultiSelect';

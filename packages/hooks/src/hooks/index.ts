@@ -6,6 +6,8 @@ export { useTextSizeDecrease } from './text/useTextSizeDecrease';
 export { useDeviceType } from './useDeviceType';
 export { useToggle } from './useToggle';
 export { useUncontrolled } from './useUncontrolled';
+export { useControllableState } from './useControllableState';
+export type { UseControllableStateOptions } from './useControllableState';
 export { createSafeContext } from './useSafeContext';
 export { useResizeObserver, useElementSize } from './useResizeObserver';
 export { useCallbackRef } from './useCallbackRef';

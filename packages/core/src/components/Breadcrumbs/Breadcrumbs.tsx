@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 
 import Icon from '@components/Icon';
 import theme from '@themes/main';
+import { resolveAriaProp } from '@utils/deprecation';
 
 import { WithLink } from '../WithLink';
 
@@ -39,10 +40,15 @@ export const Breadcrumbs = ({
   items,
   maxItems,
   separator = DefaultSeparator,
-  ariaLabel = 'Breadcrumb',
+  'aria-label': ariaLabelNative,
+  ariaLabel,
   className,
   css,
 }: BreadcrumbsProps) => {
+  const label =
+    resolveAriaProp('Breadcrumbs', 'aria-label', ariaLabelNative, ariaLabel) ??
+    'Breadcrumb';
+
   if (!items.length) {
     return null;
   }
@@ -87,7 +93,7 @@ export const Breadcrumbs = ({
   };
 
   return (
-    <nav aria-label={ariaLabel} css={[styles.nav, css]} className={className}>
+    <nav aria-label={label} css={[styles.nav, css]} className={className}>
       <ol css={styles.list}>
         {entries.map((entry, position) => {
           const isLastEntry = position === entries.length - 1;

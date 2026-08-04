@@ -9,14 +9,14 @@ import { useDrawer, Position } from './useDrawer';
 describe('useDrawer', () => {
   const DrawerTestComponent = ({
     position = 'left' as Position,
-    defaultOpened = false,
+    defaultOpen = false,
     dismissable = false,
     title = '',
     withCloseButton = false,
   }) => {
     const drawer = useDrawer({
       position,
-      defaultOpened,
+      defaultOpen,
       dismissable,
       title,
       withCloseButton,
@@ -24,7 +24,7 @@ describe('useDrawer', () => {
     return (
       <>
         <button onClick={() => drawer.toggle()} data-testid="toggle-button">
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>
@@ -57,8 +57,8 @@ describe('useDrawer', () => {
     });
   });
 
-  it('Should render with default opened state when defaultOpened is true', () => {
-    render(<DrawerTestComponent defaultOpened={true} />);
+  it('Should render with default opened state when defaultOpen is true', () => {
+    render(<DrawerTestComponent defaultOpen={true} />);
     expect(screen.getByTestId('drawer-content')).toBeInTheDocument();
     expect(screen.getByText('Close')).toBeInTheDocument();
   });
@@ -93,7 +93,7 @@ describe('useDrawer', () => {
 
     for (const position of positions) {
       const { unmount } = render(
-        <DrawerTestComponent position={position} defaultOpened={true} />,
+        <DrawerTestComponent position={position} defaultOpen={true} />,
       );
 
       const content = screen.getByTestId('drawer-content');
@@ -112,7 +112,7 @@ describe('useDrawer', () => {
 
   it('Should use dismissable option correctly', async () => {
     const user = userEvent.setup();
-    render(<DrawerTestComponent dismissable={true} defaultOpened={true} />);
+    render(<DrawerTestComponent dismissable={true} defaultOpen={true} />);
 
     await user.click(document.body);
 

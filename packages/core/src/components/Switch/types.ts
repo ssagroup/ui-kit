@@ -61,6 +61,14 @@ export interface SwitchProps {
    * Disabled switches cannot be toggled; background becomes `greySelectedMenuItem`
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * Whether the switch is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   * @default false
+   */
   isDisabled?: boolean;
 
   /**

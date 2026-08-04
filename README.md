@@ -30,7 +30,61 @@ SSA UI kit components are designed with the following principles:
 
 **Compound Components**: Many components like `Table`, `Modal`, `Field`, and `Dropdown` use compound component patterns for flexible composition.
 
-**Status Props**: Components use consistent prop naming like `status` (for validation states), `isDisabled` (for disabled state), and `variant` (for visual variants).
+**Status Props**: Components use consistent prop naming like `status` (for validation states), `disabled` (for disabled state), and `variant` (for visual variants).
+
+**Controlled & Uncontrolled**: Form controls follow the React convention —
+`checked`/`defaultChecked` for booleans, `value`/`defaultValue` for everything
+else.
+
+> **Prop renames (v3.20).** The library is converging on the names the DOM, MUI,
+> Radix and Ant use. Each old prop still works and warns once per component in
+> development; all are removed at the next major.
+>
+> | Old | New | Components |
+> | --- | --- | --- |
+> | `isDisabled` | `disabled` | 15 components |
+> | `isChecked` | `checked` | `Radio` |
+> | `initialState` | `defaultChecked` | `Checkbox` |
+> | `externalState` | `checked` | `Checkbox` |
+> | `externalState`, `selectedItem` | `value` | `RadioGroup`, `ButtonGroup` |
+> | `selectedItems` / `defaultSelectedItems` | `value` / `defaultValue` | `Typeahead` |
+> | `color` / `defaultColor` | `value` / `defaultValue` | `ColorPicker` |
+> | `ariaLabel` | `aria-label` | `Breadcrumbs`, `Pagination` |
+> | `ariaLabelledby` | `aria-labelledby` | `CardContent`, `DropdownOptions`, `MultipleDropdownOptions`, `DropdownToggle` |
+> | `ariaControls` | `aria-controls` | `Accordion`, `Tab`, `LargeTab`, `DropdownToggle` |
+> | `opened` / `defaultOpened` | `open` / `defaultOpen` | `Drawer`, `useDrawer` |
+> | `opened` / `defaultOpened` / `onOpenedChange` | `open` / `defaultOpen` / `onOpenChange` | `useFilterMultiSelect` |
+> | `initialOpen` | `defaultOpen` | `Popover`, `usePopover` |
+> | `isOpen` | `open` | `Modal`, `ModalDialog` |
+> | `isOpen` | `defaultOpen` | `Tooltip`, `useTooltip` |
+> | `isOpened` | `open` / `defaultOpen` | `Accordion`, `AccordionContent` |
+>
+> Open state now follows one shape everywhere: `open` (controlled),
+> `defaultOpen` (uncontrolled seed) and `onOpenChange` (notification).
+> `onOpenChange` is new on `Modal`, `Tooltip` and `Accordion`, which previously
+> had no way to tell a parent they had opened or closed.
+>
+> Run `node scripts/codemods/prop-renames.mjs src` to rename call sites
+> automatically (`--dry` to preview). It rewrites JSX attributes, kit hook
+> options (`useDrawer({ defaultOpened })`) and recognised item-object keys —
+> only where the tag or callee resolves, in that file, to an import from
+> `@ssa-ui-kit/*`, including aliased (`Button as KitButton`), qualified
+> (`Drawer.Root`) and namespaced (`Kit.Button`) imports. Components of the same
+> name from elsewhere are left alone, which matters because Chakra UI uses
+> `isDisabled` as its own real API on `Button`, `Checkbox`, `Radio` and
+> `Switch`.
+>
+> ⚠ Two groups are **not** pure renames, and the codemod flags every such site.
+>
+> - `externalState` / `selectedItem` / `Modal.isOpen` → `checked` / `value` /
+>   `open`: the old props are synced *into* internal state, so the control still
+>   moves on click even when the parent ignores the change callback; the
+>   replacements are fully controlled. Confirm the parent writes the value back
+>   — if it does not, use `defaultChecked` / `defaultValue` / `defaultOpen`.
+> - `Tooltip.isOpen` and `Accordion.isOpened` → `defaultOpen`: these read as
+>   controlled but only ever seeded the initial state, so a changing value did
+>   nothing. `defaultOpen` preserves that exactly; if you meant to control the
+>   component, move to `open` + `onOpenChange`.
 
 ## 🚀 Hero Example
 
@@ -132,23 +186,60 @@ pnpm add @ssa-ui-kit/hooks
 
 ### Peer Dependencies
 
-Make sure you have React 19.x, Emotion, and React Hook Form installed:
+Make sure you have React 19 or later, Emotion, and React Hook Form installed:
 
 ```bash
-npm install react@19.x react-dom@19.x @emotion/react @emotion/styled react-hook-form
+npm install react@^19 react-dom@^19 @emotion/react @emotion/styled react-hook-form
 ```
 
-> **Note:** The UI kit targets React 19.x. Using React 18 may cause compatibility issues; we recommend upgrading to React 19.
+> **Note:** The UI kit requires React 19 or later (`>=19`). React 18 is not supported — some components rely on React 19 features such as refs-as-props.
 
-## ⚠️ CRITICAL: Vite Configuration for React Hook Form
+## Vite + React Hook Form
 
-> **🚨 IMPORTANT**: If you're using **Vite** and experiencing `useFormContext() returned null` errors with form components (like `DateRangePicker`, `DatePicker`, etc.), you **MUST** configure Vite to use the CommonJS bundle of `react-hook-form`.
+> **As of the dual ESM/CJS build, the `react-hook-form` alias below should no longer be needed.** `@ssa-ui-kit/core`, `@ssa-ui-kit/hooks`, `@ssa-ui-kit/utils` and `@ssa-ui-kit/widgets` now ship a real ESM bundle (`dist/index.mjs`) alongside the CommonJS one, and their `exports` map points `import` at it. The ESM bundle emits `import ... from 'react-hook-form'` rather than `require('react-hook-form')`, so Vite resolves a single shared instance.
 
-### The Problem
+### The original problem
 
-The UI kit (`@ssa-ui-kit/core`) is built with webpack and uses CommonJS externals. When webpack externalizes `react-hook-form`, it expects the **CommonJS version**. However, Vite defaults to the **ESM bundle** (`index.esm.mjs`). Different module instances = different React contexts, causing `useFormContext()` to return `null` inside UI kit components.
+The UI kit was previously published as a **CommonJS-only** bundle. When webpack externalised `react-hook-form` it emitted `require('react-hook-form')`, while Vite loaded the **ESM** build (`index.esm.mjs`) for the app. Two module instances meant two React contexts, so `FormProvider` wrote into one and `useFormContext()` read from the other — returning `null` inside UI kit components.
 
-### The Fix
+### If you still hit `useFormContext() returned null`
+
+First check you are resolving the ESM entry (`node_modules/@ssa-ui-kit/core/dist/index.mjs`). If you are, the most likely cause is now **duplicate copies of `react-hook-form` in your dependency tree** rather than a module-format mismatch. This is common when the kit is consumed via `npm link`, `file:` or a workspace symlink, because the linked package resolves its own peer dependencies from *its* tree instead of yours. `resolve.dedupe` is the fix for that case:
+
+```typescript
+export default defineConfig({
+  resolve: { dedupe: ['react', 'react-dom', 'react-hook-form'] },
+});
+```
+
+### Duplicate copies of the kit itself
+
+Shipping both bundles introduces one trade-off worth knowing about. `exports.import`
+resolves to `dist/index.mjs` and `exports.require` to `dist/index.js`, so a
+dependency graph that reaches `@ssa-ui-kit/core` **both** ways loads both files —
+and each gets its own module scope. React contexts are per-instance, so the kit's
+own contexts then exist twice: a `ThemeProvider` from one copy is invisible to a
+`useTheme` from the other, a `PopoverTrigger` cannot find the `Popover` wrapping
+it, and so on. Most apps are wholly ESM or wholly CJS and never hit this; the
+usual trigger is `npm link`, a `file:` dependency, or a workspace symlink giving
+the linked package its own `node_modules`.
+
+The kit detects this and warns once in development:
+
+```
+[ssa-ui-kit] Two copies of `@ssa-ui-kit/core` are loaded in this runtime.
+```
+
+Deduplicate the same way as above:
+
+```typescript
+export default defineConfig({
+  resolve: { dedupe: ['@ssa-ui-kit/core', 'react', 'react-dom', 'react-hook-form'] },
+});
+```
+
+<details>
+<summary>Legacy workaround (required for versions before the ESM build)</summary>
 
 Add this alias to your `vite.config.ts`:
 
@@ -177,13 +268,13 @@ export default defineConfig({
 });
 ```
 
-### Why This Matters
-
-React contexts are **instance-specific**. Even with the same package version, if the library uses a different module instance (ESM vs CJS), the context won't be shared. Using the CommonJS bundle ensures both your app and the webpack-built UI kit use the **same instance**.
+React contexts are **instance-specific**. Even with the same package version, if the library uses a different module instance (ESM vs CJS), the context won't be shared. Forcing the CommonJS bundle made both your app and the CJS-only UI kit use the **same instance**.
 
 **Related Issue**: [react-hook-form#8281](https://github.com/react-hook-form/react-hook-form/issues/8281)
 
-> **💡 Note**: This only applies to Vite projects. Webpack projects don't need this configuration.
+</details>
+
+> **💡 Note**: This only ever applied to Vite projects. Webpack projects did not need it.
 
 ## 🏁 Quick Start
 
@@ -406,7 +497,7 @@ function ResponsiveComponent() {
 
 The project is built using:
 
-- [React](https://react.dev/) 19.x
+- [React](https://react.dev/) 19+
 - [TypeScript](https://www.typescriptlang.org/)
 - CSS-in-JS with [Emotion](https://emotion.sh/docs/introduction)
 - Charts with [Nivo](https://nivo.rocks/)

@@ -19,6 +19,7 @@ import Icon from '@components/Icon';
 import Label from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
+import { resolveDisabled } from '@utils/deprecation';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, DropdownPositions, DropdownProps } from './types';
@@ -138,6 +139,7 @@ const SelectedContent = styled.span`
  */
 const Dropdown = <T extends DropdownOptionProps>({
   selectedItem,
+  disabled,
   isDisabled,
   isOpen: isInitOpen,
   children,
@@ -153,6 +155,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   icon,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
+  const isDropdownDisabled = resolveDisabled('Dropdown', disabled, isDisabled);
   const status = success ? 'success' : errors ? 'error' : 'basic';
   const { dropdownPosition = DropdownPositions.auto } = componentProps ?? {};
 
@@ -174,7 +177,7 @@ const Dropdown = <T extends DropdownOptionProps>({
 
     setIsOpen(false);
 
-    if (isDisabled || !innerItem) {
+    if (isDropdownDisabled || !innerItem) {
       return;
     }
 
@@ -191,24 +194,24 @@ const Dropdown = <T extends DropdownOptionProps>({
   useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));
 
   useEffect(() => {
-    if (isDisabled) {
+    if (isDropdownDisabled) {
       setColors([theme.colors.greyDarker60, theme.colors.grey20]);
     } else if (isOpen) {
       setColors([theme.colors.white, theme.colors.white60]);
     } else if (isFocused) {
       setColors([theme.colors.greyDarker, theme.colors.greyDarker60]);
     }
-  }, [isOpen, isDisabled, isFocused]);
+  }, [isOpen, isDropdownDisabled, isFocused]);
 
   useEffect(() => {
     setActiveItem(selectedItem);
   }, [selectedItem]);
 
   useEffect(() => {
-    if (isDisabled && isOpen) {
+    if (isDropdownDisabled && isOpen) {
       setIsOpen(false);
     }
-  }, [isDisabled]);
+  }, [isDropdownDisabled]);
 
   useLayoutEffect(() => {
     if (!isOpen || !dropdownRef.current) return;
@@ -275,7 +278,7 @@ const Dropdown = <T extends DropdownOptionProps>({
     <Icon
       name={icon}
       size={16}
-      color={isDisabled ? theme.colors.grey : theme.colors.greyDarker80}
+      color={isDropdownDisabled ? theme.colors.grey : theme.colors.greyDarker80}
     />
   ) : null;
 
@@ -290,7 +293,7 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   return (
     <DropdownFieldWrapper>
-      {label ? <Label isDisabled={isDisabled}>{label}</Label> : null}
+      {label ? <Label disabled={isDropdownDisabled}>{label}</Label> : null}
       <DropdownContext.Provider value={contextValue}>
         <DropdownBase
           {...componentProps?.base}
@@ -300,13 +303,13 @@ const Dropdown = <T extends DropdownOptionProps>({
             {...componentProps?.toggleButton}
             className={className}
             isOpen={isOpen}
-            disabled={isDisabled}
+            disabled={isDropdownDisabled}
             status={status}
             onClick={setIsOpen.bind(null, !isOpen)}
             onFocus={setIsFocused.bind(null, true)}
             colors={colors}
-            ariaLabelledby={`dropdown-label-${dropdownId}`}
-            ariaControls={`dropdown-popup-${dropdownId}`}>
+            aria-labelledby={`dropdown-label-${dropdownId}`}
+            aria-controls={`dropdown-popup-${dropdownId}`}>
             {toggleContent}
             <DropdownArrow
               {...componentProps?.toggleButtonArrow}
@@ -318,7 +321,10 @@ const Dropdown = <T extends DropdownOptionProps>({
         </DropdownBase>
       </DropdownContext.Provider>
       {helperText || errors ? (
-        <FormHelperText role="status" status={status} disabled={isDisabled}>
+        <FormHelperText
+          role="status"
+          status={status}
+          disabled={isDropdownDisabled}>
           {errors?.message || helperText}
         </FormHelperText>
       ) : null}

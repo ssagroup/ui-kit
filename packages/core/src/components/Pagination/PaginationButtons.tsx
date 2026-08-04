@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useTheme } from '@emotion/react';
 import Button from '@components/Button';
 
+import { resolveDisabled } from '@utils/deprecation';
 import { breakStyles, pageBtnStyles, selectedPageBtnStyles } from './styles';
 import { PaginationButtonsProps, PageButtonProps } from './types';
 
@@ -28,9 +29,11 @@ const PageButton = ({
   onClick,
   isSelected,
   page,
+  disabled,
   isDisabled,
 }: PageButtonProps) => {
   const theme = useTheme();
+  const isButtonDisabled = resolveDisabled('PageButton', disabled, isDisabled);
   const styles = useMemo(() => {
     return isSelected ? selectedPageBtnStyles(theme) : pageBtnStyles(theme);
   }, [isSelected]);
@@ -39,7 +42,7 @@ const PageButton = ({
     <Button
       size="small"
       variant="secondary"
-      isDisabled={isDisabled}
+      disabled={isButtonDisabled}
       onClick={
         isSelected
           ? () => {
@@ -72,7 +75,7 @@ const PageButton = ({
  *   range={[1, 2, 3, -1, 10]}  // -1 represents ellipsis break
  *   selectedPage={2}
  *   onClick={(page) => setPage(page)}
- *   isDisabled={false}
+ *   disabled={false}
  * />
  * ```
  *
@@ -94,8 +97,15 @@ export const PaginationButtons = ({
   range,
   selectedPage,
   onClick,
+  disabled,
   isDisabled,
 }: PaginationButtonsProps) => {
+  const isGroupDisabled = resolveDisabled(
+    'PaginationButtons',
+    disabled,
+    isDisabled,
+  );
+
   return (
     <div css={{ display: 'flex', alignItems: 'center', gap: 2 }}>
       {Array.isArray(range) &&
@@ -108,7 +118,7 @@ export const PaginationButtons = ({
               page={page}
               isSelected={page === selectedPage}
               onClick={() => onClick(page)}
-              isDisabled={isDisabled}
+              disabled={isGroupDisabled}
             />
           );
         })}

@@ -1,7 +1,12 @@
-import styled from '@emotion/styled';
+import type { ComponentProps } from 'react';
+import styled, { type StyledComponent } from '@emotion/styled';
 import { HRTableCell } from '@hr/components';
 
-export const EventInfoCell = styled(HRTableCell)`
+// Explicit annotation: without it the inferred type names core's internal dist
+// path, which is not portable in the emitted declarations (TS2742).
+export const EventInfoCell: StyledComponent<
+  ComponentProps<typeof HRTableCell>
+> = styled(HRTableCell)`
   padding: 0;
   background: inherit;
   height: 34px;

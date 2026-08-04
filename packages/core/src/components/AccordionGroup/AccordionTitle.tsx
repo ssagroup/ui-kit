@@ -37,10 +37,10 @@ const CardHeaderBaseButton = CardHeaderBase.withComponent('button');
  * ```tsx
  * // Custom title using AccordionTitle as reference
  * <Accordion
- *   renderTitle={({ title, isOpened, onClick }) => (
- *     <button onClick={onClick} aria-expanded={isOpened}>
+ *   renderTitle={({ title, open, onClick }) => (
+ *     <button onClick={onClick} aria-expanded={open}>
  *       <span>{title}</span>
- *       <Icon name={isOpened ? "chevron-down" : "chevron-right"} />
+ *       <Icon name={open ? "chevron-down" : "chevron-right"} />
  *     </button>
  *   )}
  * />
@@ -52,14 +52,20 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
   title,
   size = 'empty',
   id,
+  open,
+  // Accordion passes both spellings; keep the deprecated ones out of `props`
+  // so they cannot reach the DOM.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isOpened,
-  ariaControls,
+  'aria-controls': ariaControls,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ariaControls: deprecatedAriaControls,
   className,
   onClick,
   ...props
 }) => {
   const theme = useTheme();
-  const styles = createTitleStyles(theme, isOpened);
+  const styles = createTitleStyles(theme, open);
   return (
     <CardHeaderBaseButton
       type="button"
@@ -67,7 +73,7 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
       css={styles[size]}
       className={className}
       id={`${id}`}
-      aria-expanded={isOpened}
+      aria-expanded={open}
       aria-controls={ariaControls}
       onClick={() => {
         if (typeof onClick === 'function') {
@@ -77,7 +83,7 @@ export const AccordionTitle: AccordionProps['renderTitle'] = ({
       {...props}>
       <Fragment>
         {title}
-        {isOpened ? (
+        {open ? (
           <Icon name="carrot-down" data-testid="accordion-title-icon-down" />
         ) : (
           <Icon name="carrot-up" data-testid="accordion-title-icon-up" />

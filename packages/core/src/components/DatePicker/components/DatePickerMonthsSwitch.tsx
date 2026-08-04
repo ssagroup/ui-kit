@@ -68,7 +68,7 @@ export const DatePickerMonthsSwitch = () => {
         aria-label="Previous month"
         data-testid="previous-month"
         onClick={handlePreviousMonth}
-        isDisabled={isMinMonthReached}
+        disabled={isMinMonthReached}
         css={{
           padding: 4,
           height: 32,
@@ -90,7 +90,7 @@ export const DatePickerMonthsSwitch = () => {
         className={classNames?.monthsSwitch?.nextMonth}
         variant={'tertiary'}
         onClick={handleNextMonth}
-        isDisabled={isMaxMonthReached}
+        disabled={isMaxMonthReached}
         aria-label="Next month"
         data-testid="next-month"
         css={{

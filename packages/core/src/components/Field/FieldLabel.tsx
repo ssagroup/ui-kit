@@ -49,7 +49,7 @@ export interface FieldLabelProps extends LabelProps {
 export const FieldLabel = ({ children, ...props }: FieldLabelProps) => {
   const ctx = useFieldContext();
   return (
-    <Label isDisabled={ctx.disabled} {...props}>
+    <Label disabled={ctx.disabled} {...props}>
       {children}
     </Label>
   );

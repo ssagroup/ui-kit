@@ -1,4 +1,6 @@
-import { useState, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
+import { useCallbackRef, useControllableState } from '@ssa-ui-kit/hooks';
+import { resolveOpenState } from '@utils/deprecation';
 import {
   useFloating,
   offset,
@@ -26,12 +28,32 @@ export const useTooltip: UseTooltip = (props) => {
     size = 'small',
     hasArrow = true,
     arrowProps = {},
-    isOpen: isInitOpen = false,
     allowHoverContent = false,
     hoverOpenDelay = 0,
     hoverCloseDelay = 0,
   } = props || {};
-  const [isOpen, setIsOpen] = useState(isInitOpen || false);
+
+  // `isOpen` maps to `defaultOpen`, not `open`: despite the name it never
+  // controlled the tooltip, it only ever seeded the initial state.
+  const openState = resolveOpenState('Tooltip', props || {}, {
+    defaultAlias: 'isOpen',
+  });
+
+  const [openValue, setOpen] = useControllableState<boolean>({
+    controlled: openState.isControlled,
+    value: openState.open,
+    defaultValue: openState.defaultOpen,
+    finalValue: false,
+    onChange: openState.onOpenChange,
+  });
+  const isOpen = Boolean(openValue);
+
+  // Stable identity, so the memoised context value below does not change on
+  // every render. Reads `isOpen` through the ref, so the functional
+  // `setIsOpen(prev => …)` form still sees the current value.
+  const setIsOpen = useCallbackRef((action: React.SetStateAction<boolean>) => {
+    setOpen(typeof action === 'function' ? action(isOpen) : action);
+  });
   const arrowRef = useRef(null);
 
   const floatingData = useFloating({

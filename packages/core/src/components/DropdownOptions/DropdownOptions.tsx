@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 
 import { useDropdownContext } from '@components/Dropdown/Dropdown.context';
 import DropdownOption from '@components/DropdownOption';
+import { resolveAriaProp } from '@utils/deprecation';
 
 import { DropdownItemsListProps } from './types';
 
@@ -104,12 +105,19 @@ const noItemsMsg = { id: Number.NaN, value: 'No items' };
  * - Screen reader friendly
  */
 const DropdownOptions = ({
+  'aria-labelledby': ariaLabelledbyNative,
   ariaLabelledby,
   id,
   children,
 }: DropdownItemsListProps) => {
   const { onChange, activeItem, maxHeight, listRef, placement } =
     useDropdownContext();
+  const labelledby = resolveAriaProp(
+    'DropdownOptions',
+    'aria-labelledby',
+    ariaLabelledbyNative,
+    ariaLabelledby,
+  );
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
@@ -151,7 +159,7 @@ const DropdownOptions = ({
       role="listbox"
       tabindex="-1"
       id={id}
-      aria-labelledby={ariaLabelledby}
+      aria-labelledby={labelledby}
       maxHeight={maxHeight}
       placement={placement}>
       {options}

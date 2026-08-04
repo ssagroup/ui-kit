@@ -153,7 +153,7 @@ const DashboardAccordionItem = ({
         padding: 0 !important;
         align-items: start !important;
       `}
-      renderTitle={({ title, isOpened, onClick }) => (
+      renderTitle={({ title, open, onClick }) => (
         <Button
           onClick={onClick}
           variant="tertiary"
@@ -171,7 +171,7 @@ const DashboardAccordionItem = ({
             }
           `}
           startIcon={
-            isOpened ? (
+            open ? (
               <Icon name="carrot-down" size={12} />
             ) : (
               <Icon name="carrot-right" size={12} />
@@ -180,11 +180,11 @@ const DashboardAccordionItem = ({
           {title}
         </Button>
       )}
-      renderContent={({ isOpened }) => (
+      renderContent={({ open }) => (
         <div
           css={{
             width: '100%',
-            display: isOpened ? 'block' : 'none',
+            display: open ? 'block' : 'none',
             fontWeight: 500,
             fontSize: '14px',
           }}>

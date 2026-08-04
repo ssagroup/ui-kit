@@ -19,7 +19,7 @@ import { CommonProps } from '@global-types/emotion';
  * @example
  * ```tsx
  * // Disabled table row (aria-disabled is automatically set)
- * <TableRow isDisabled>
+ * <TableRow disabled>
  *   <TableCell>Disabled Row</TableCell>
  * </TableRow>
  * ```
@@ -30,6 +30,14 @@ export interface TableRowProps
    * Whether the row is disabled
    * Disabled rows have reduced opacity and no pointer cursor.
    * Automatically sets aria-disabled attribute when true.
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the row is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;

@@ -49,7 +49,7 @@ const meta = {
       control: 'boolean',
       description: 'Toggles the size/progress/status line below the title.',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       description: 'Dims the row and disables the delete button.',
     },
@@ -79,7 +79,7 @@ const meta = {
     uploadingText: 'Uploading',
     uploadedText: 'Uploaded Successfully',
     showDescription: true,
-    isDisabled: false,
+    disabled: false,
   },
   parameters: {
     docs: {
@@ -195,7 +195,7 @@ export const WithoutDeleteButton: Story = {
 
 export const Disabled: Story = {
   args: {
-    isDisabled: true,
+    disabled: true,
     onRemove: () => {
       /* no-op */
     },

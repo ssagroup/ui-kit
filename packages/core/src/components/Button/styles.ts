@@ -1,5 +1,48 @@
-import { css, SerializedStyles, Theme } from '@emotion/react';
+import { css, keyframes, SerializedStyles, Theme } from '@emotion/react';
 import { ButtonVariants } from './types';
+
+// Centring lives in the keyframes because `transform` is doing both jobs.
+const spin = keyframes`
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+`;
+
+/**
+ * Keeps the button at its resting width while loading: the real content stays
+ * in the layout but is hidden, and the spinner is centred over it.
+ *
+ * `display: contents` leaves the children as direct flex items of the button,
+ * so the loading state measures exactly the same as the resting state.
+ * `&&` outweighs `buttonBlock`'s `span { … }` rule in block mode.
+ */
+export const loadingContent = css`
+  && {
+    display: contents;
+    visibility: hidden;
+  }
+`;
+
+export const loadingSpinner = css`
+  && {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1em;
+    height: 1em;
+    margin: 0;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ${spin} 0.7s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    && {
+      animation-duration: 2.4s;
+    }
+  }
+`;
 
 export const buttonBlock = css`
   display: grid;

@@ -42,7 +42,7 @@ export const Default: StoryObj<typeof Radio> = (args: Args) => (
     <Typography variant="h5" css={{ marginTop: 10 }}>
       Checked Radio
     </Typography>
-    <Radio {...args} isChecked />
+    <Radio {...args} checked />
   </Fragment>
 );
 Default.storyName = 'Radio';
@@ -74,7 +74,7 @@ export const Colors = () => (
             value="checked"
             text="Checked"
             color={color}
-            isChecked
+            checked
             onChange={() => {}}
           />
           <Radio
@@ -83,7 +83,7 @@ export const Colors = () => (
             value="disabled"
             text="Disabled"
             color={color}
-            isDisabled
+            disabled
             onChange={() => {}}
           />
         </div>
@@ -120,7 +120,7 @@ export const CustomColors = () => (
         text="Checked"
         color="custom"
         colors={customColors}
-        isChecked
+        checked
         onChange={() => {}}
       />
       <Radio
@@ -130,7 +130,7 @@ export const CustomColors = () => (
         text="Disabled"
         color="custom"
         colors={customColors}
-        isDisabled
+        disabled
         onChange={() => {}}
       />
     </div>

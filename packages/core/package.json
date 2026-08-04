@@ -2,11 +2,12 @@
   "name": "@ssa-ui-kit/core",
   "version": "3.19.1",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "default": "./dist/index.js"
     }
@@ -57,12 +58,12 @@
     "@rjsf/utils": "5.24.8",
     "@rjsf/validator-ajv8": "5.24.8",
     "@types/luxon": "3.4.2",
-    "@types/react-plotly.js": "2.6.3",
-    "@types/sass": "1.45.0"
+    "@types/react-plotly.js": "2.6.3"
   },
   "scripts": {
+    "clean": "node ../../scripts/clean.mjs",
     "test": "jest -i --no-cache",
-    "build": "webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
+    "build": "node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "build:watch": "webpack --mode=production --node-env=production --watch && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
     "sb:dev": "env storybook dev -p 6006",
     "sb:build": "env storybook build",
@@ -90,8 +91,8 @@
     "@nivo/treemap": "^0.99.0",
     "@rjsf/core": "^5.0.0",
     "@rjsf/utils": "^5.0.0",
-    "react": "19.x",
-    "react-dom": "19.x",
+    "react": ">=19",
+    "react-dom": ">=19",
     "react-hook-form": "^7.46.1",
     "react-router-dom": "6.x || 7.x"
   },

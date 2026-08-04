@@ -4,6 +4,7 @@ import { usePaginationRange } from '@ssa-ui-kit/hooks';
 import { isNill } from '@ssa-ui-kit/utils';
 import { InputProps } from '@components/Input/types';
 import Wrapper from '@components/Wrapper';
+import { resolveAriaProp, resolveDisabled } from '@utils/deprecation';
 import { ArrowButton } from './ArrowButton';
 import { PaginationButtons } from './PaginationButtons';
 import { PaginationProps } from './types';
@@ -76,7 +77,7 @@ import * as S from './styles';
  * ```tsx
  * // Disabled pagination
  * <PaginationContextProvider selectedPage={5}>
- *   <Pagination pagesCount={10} isDisabled />
+ *   <Pagination pagesCount={10} disabled />
  * </PaginationContextProvider>
  * ```
  *
@@ -96,7 +97,9 @@ const Pagination = ({
   pagesCount,
   className,
   as,
+  'aria-label': ariaLabelNative,
   ariaLabel,
+  disabled,
   isDisabled,
   pageNumberPlaceholder = 'Page №',
   errorTooltip = 'The value is out of range',
@@ -108,6 +111,17 @@ const Pagination = ({
   renderPageCount,
 }: PaginationProps) => {
   const theme = useTheme();
+  const isPaginationDisabled = resolveDisabled(
+    'Pagination',
+    disabled,
+    isDisabled,
+  );
+  const label = resolveAriaProp(
+    'Pagination',
+    'aria-label',
+    ariaLabelNative,
+    ariaLabel,
+  );
   const { page, setPage } = usePaginationContext();
   const range = usePaginationRange({ pagesCount, selectedPage: page });
   const [inputStatus, setInputStatus] = useState<InputProps['status']>('basic');
@@ -128,7 +142,7 @@ const Pagination = ({
     <S.PaginationNav
       className={className}
       as={as}
-      aria-label={ariaLabel || 'Pagination'}>
+      aria-label={label || 'Pagination'}>
       {isRowPerPageVisible && <RowsPerPageDropdown {...rowPerPageProps} />}
       {isPageSettingVisible && (
         <Wrapper css={{ width: 'auto', gap: 16 }}>
@@ -167,8 +181,8 @@ const Pagination = ({
               setPage(page - 1);
             }
           }}
-          isDisabled={
-            isDisabled ||
+          disabled={
+            isPaginationDisabled ||
             isNill(pagesCount) ||
             pagesCount <= 1 ||
             isNill(page) ||
@@ -179,7 +193,7 @@ const Pagination = ({
           range={range}
           selectedPage={page}
           onClick={setPage}
-          isDisabled={isDisabled}
+          disabled={isPaginationDisabled}
         />
         <ArrowButton
           direction="right"
@@ -188,8 +202,8 @@ const Pagination = ({
               setPage(page + 1);
             }
           }}
-          isDisabled={
-            isDisabled ||
+          disabled={
+            isPaginationDisabled ||
             isNill(pagesCount) ||
             pagesCount <= 1 ||
             isNill(page) ||

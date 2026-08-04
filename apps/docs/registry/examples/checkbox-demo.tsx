@@ -13,14 +13,14 @@ export default function CheckboxDemo() {
         <Checkbox
           id="checkbox-demo-controlled"
           text="Controlled checkbox"
-          externalState={checked}
+          checked={checked}
           onChange={setChecked}
         />
         <Checkbox
           id="checkbox-demo-success"
           text="Success variant"
           color="success"
-          initialState
+          defaultChecked
         />
         <Checkbox
           id="checkbox-demo-indeterminate"
@@ -30,8 +30,8 @@ export default function CheckboxDemo() {
         <Checkbox
           id="checkbox-demo-disabled"
           text="Disabled"
-          isDisabled
-          initialState
+          disabled
+          defaultChecked
         />
       </div>
     </PreviewRoot>

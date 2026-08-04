@@ -24,7 +24,7 @@ export default function TypeaheadDemo() {
             name="language"
             label="Language"
             helperText="Start typing to filter"
-            defaultSelectedItems={[items[0].id]}
+            defaultValue={[items[0].id]}
             renderOption={({ label, input }) =>
               highlightInputMatch(label, input)
             }

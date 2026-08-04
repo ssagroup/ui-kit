@@ -57,11 +57,28 @@ export interface PaginationProps extends CommonProps {
    * ARIA label for the pagination navigation
    * @default 'Pagination'
    */
+  'aria-label'?: string;
+
+  /**
+   * ARIA label for the pagination navigation
+   *
+   * @deprecated Use `aria-label` instead — `ariaLabel` is removed in the next
+   * major release.
+   * @default 'Pagination'
+   */
   ariaLabel?: string;
 
   /**
    * Whether the pagination is disabled
    * Disabled pagination prevents all navigation actions
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the pagination is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;
@@ -149,6 +166,14 @@ export interface PaginationButtonsProps {
    * Whether the buttons are disabled
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * Whether the buttons are disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   * @default false
+   */
   isDisabled?: boolean;
 }
 
@@ -169,6 +194,14 @@ export interface ArrowButtonProps {
 
   /**
    * Whether the button is disabled
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the button is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;
@@ -201,6 +234,14 @@ export interface PageButtonProps {
 
   /**
    * Whether the button is disabled
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the button is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;

@@ -58,7 +58,7 @@ export const Body = ({
           <TableRowProvider key={`bots-table-row-${bot.id}-provider`} row={bot}>
             <TableRow
               key={`bots-table-row-${bot.id}`}
-              isDisabled={allRowsDisabled}
+              disabled={allRowsDisabled}
               css={{
                 height: 'auto',
                 '&:hover': {

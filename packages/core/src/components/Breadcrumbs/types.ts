@@ -53,7 +53,17 @@ export interface BreadcrumbsProps extends CommonProps {
   maxItems?: number;
   /** Custom separator between crumbs. Defaults to a right chevron. */
   separator?: React.ReactNode;
-  /** Accessible label for the wrapping `nav`. */
+  /**
+   * Accessible label for the wrapping `nav`.
+   * @default 'Breadcrumb'
+   */
+  'aria-label'?: string;
+  /**
+   * Accessible label for the wrapping `nav`.
+   *
+   * @deprecated Use `aria-label` instead — `ariaLabel` is removed in the next
+   * major release.
+   */
   ariaLabel?: string;
   /** Custom Emotion styles applied to the wrapping `nav`. */
   css?: Interpolation<Theme>;

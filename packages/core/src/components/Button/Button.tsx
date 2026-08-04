@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 
 import Wrapper from '@components/Wrapper/Wrapper';
+import { resolveDisabled } from '@utils/deprecation';
 
 import { ButtonBase } from './ButtonBase';
 import {
@@ -16,6 +17,8 @@ import {
   buttonBlock,
   iconWrapperLeft,
   iconWrapperRight,
+  loadingContent,
+  loadingSpinner,
 } from './styles';
 
 const WHITE_TEXT_VARIANTS = new Set<keyof ButtonVariants>([
@@ -68,6 +71,12 @@ const WHITE_TEXT_VARIANTS = new Set<keyof ButtonVariants>([
  *
  * @example
  * ```tsx
+ * // Loading: spinner replaces the label, button is disabled, width is unchanged
+ * <Button variant="primary" text="Save" loading={isSaving} onClick={handleSave} />
+ * ```
+ *
+ * @example
+ * ```tsx
  * // Button with custom children
  * <Button variant="secondary" onClick={handleAction}>
  *   <span>Custom Content</span>
@@ -99,7 +108,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'custom',
       type = 'button',
       className,
+      disabled,
       isDisabled,
+      loading = false,
       onClick,
       children,
       ...ariaProps
@@ -111,6 +122,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const theme = useTheme();
+    const isButtonDisabled =
+      resolveDisabled('Button', disabled, isDisabled) || loading;
 
     const appliedVariantStyle = (
       variantStyles[variant] ?? variantStyles.custom
@@ -118,22 +131,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const resolveTextNode = () => {
       if (!text) return null;
-      if (isDisabled) return <DisabledButtonText text={text} size={size} />;
+      if (isButtonDisabled)
+        return <DisabledButtonText text={text} size={size} />;
       if (WHITE_TEXT_VARIANTS.has(variant)) {
         return <WhiteButtonText text={text} size={size} />;
       }
       return <GreyButtonText text={text} size={size} />;
     };
 
-    const btn = (
-      <ButtonBase
-        ref={ref}
-        css={[sizeStyles[size], appliedVariantStyle]}
-        type={type}
-        disabled={isDisabled}
-        className={className}
-        onClick={onClick}
-        {...ariaProps}>
+    const content = (
+      <>
         {startIcon ? (
           <span
             style={!text ? { margin: 0 } : undefined}
@@ -151,6 +158,34 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             {endIcon}
           </span>
         ) : null}
+      </>
+    );
+
+    const btn = (
+      <ButtonBase
+        ref={ref}
+        css={[sizeStyles[size], appliedVariantStyle]}
+        type={type}
+        disabled={isButtonDisabled}
+        aria-busy={loading || undefined}
+        className={className}
+        onClick={onClick}
+        {...ariaProps}>
+        {loading ? (
+          <>
+            <span
+              css={loadingSpinner}
+              data-testid="button-spinner"
+              aria-hidden="true"
+            />
+            {/* Kept in the layout so the button does not change width. */}
+            <span css={loadingContent} aria-hidden="true">
+              {content}
+            </span>
+          </>
+        ) : (
+          content
+        )}
       </ButtonBase>
     );
 

@@ -47,7 +47,7 @@ export const StyledTableStory = () => {
             <TableRow
               aria-disabled={item.isDisabled}
               key={item.id}
-              isDisabled={item.isDisabled}
+              disabled={item.isDisabled}
               onClick={item.isDisabled ? undefined : handleRowClick(item)}>
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.creationDate}</TableCell>

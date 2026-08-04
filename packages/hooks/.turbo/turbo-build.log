@@ -1,13 +1,16 @@
 
-> @ssa-ui-kit/hooks@3.19.1 build /home/runner/work/ui-kit/ui-kit/packages/hooks
-> webpack --mode=production --node-env=production && tsc --build && resolve-tspaths
+> @ssa-ui-kit/hooks@3.19.0 build /Users/yaroslav/Desktop/SuperFolder/projects/ui-kit/packages/hooks
+> node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && tsc --build && resolve-tspaths
 
-Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+clean(hooks): removed dist
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
-asset [1m[32mindex.js[39m[22m 15 KiB [1m[32m[emitted][39m[22m (name: main)
-orphan modules 11.1 KiB [1m[33m[orphan][39m[22m 19 modules
-runtime modules 670 bytes 3 modules
-[1m./src/index.ts + 19 modules[39m[22m 11.2 KiB [1m[31m[not cacheable][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 1768 ms
+asset index.js 19 KiB [emitted] (name: main)
+cached modules 30.1 KiB (javascript) 670 bytes (runtime) [cached] 24 modules
+webpack 5.103.0 compiled successfully in 613 ms
+
+asset index.mjs 17.7 KiB [emitted] [javascript module] (name: main)
+cached modules 30.1 KiB (javascript) 396 bytes (runtime) [cached] 23 modules
+webpack 5.103.0 compiled successfully in 157 ms
 [1mresolve-tspaths:[22m changed 0 file(s)

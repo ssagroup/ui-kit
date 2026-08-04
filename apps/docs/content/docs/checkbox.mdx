@@ -4,8 +4,8 @@ description: Form control for selecting one or more options, with checked, indet
 ---
 
 `Checkbox` supports checked, unchecked, indeterminate, and disabled states,
-and can run controlled (via `externalState`) or uncontrolled (via
-`initialState`). Pass `register` from React Hook Form to wire it into a form.
+and can run controlled (via `checked`) or uncontrolled (via `defaultChecked`).
+Pass `register` from React Hook Form to wire it into a form.
 
 ## Examples
 
@@ -22,17 +22,17 @@ export function Example() {
       <Checkbox
         id="controlled"
         text="Controlled checkbox"
-        externalState={checked}
+        checked={checked}
         onChange={setChecked}
       />
       <Checkbox
         id="success"
         text="Success variant"
         color="success"
-        initialState
+        defaultChecked
       />
       <Checkbox id="indeterminate" text="Indeterminate" isIndeterminate />
-      <Checkbox id="disabled" text="Disabled" isDisabled initialState />
+      <Checkbox id="disabled" text="Disabled" disabled defaultChecked />
     </>
   );
 }
@@ -70,10 +70,10 @@ Pass `register('fieldName')` from React Hook Form, along with `name` and
 | `name`             | `string`                                 | `''`             | Form field name; required for React Hook Form integration.          |
 | `register`         | `UseFormReturn['register']`             | —                | React Hook Form's `register` function.                              |
 | `onChange`         | `(newState: boolean) => void`           | —                | Called with the new checked state.                                  |
-| `externalState`    | `boolean`                               | —                | Controls the checkbox externally (controlled mode).                 |
-| `initialState`     | `boolean`                                | `false`          | Initial checked state (uncontrolled mode only).                     |
+| `checked`          | `boolean`                               | —                | Controls the checkbox externally (controlled mode).                 |
+| `defaultChecked`   | `boolean`                                | `false`          | Initial checked state (uncontrolled mode only).                     |
 | `isIndeterminate`  | `boolean`                                | `false`          | Shows a partially-selected (minus) state.                           |
-| `isDisabled`       | `boolean`                                | `false`          | Disables interaction.                                                |
+| `disabled`       | `boolean`                                | `false`          | Disables interaction.                                                |
 | `isRequired`       | `boolean`                                | `false`          | Marks the field as required for form validation.                    |
 | `color`            | `'primary' \| 'success' \| 'custom'`    | `'primary'`      | Checked/focus color, sourced from `theme.palette`.                  |
 | `ref`              | `RefObject<HTMLInputElement>`           | —                | Ref to the underlying input element.                                 |

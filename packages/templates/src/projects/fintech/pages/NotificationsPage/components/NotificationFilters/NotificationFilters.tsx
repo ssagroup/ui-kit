@@ -38,24 +38,23 @@ export const NotificationFilters = ({
     unreadFilter?.isShown
       ? {
           id: UNREAD_FILTER_ID,
-          isDisabled: unreadFilter.isDisabled,
+          disabled: unreadFilter.isDisabled,
           text: unreadFilter.text,
         }
       : null,
     allFilter?.isShown
       ? {
           id: ALL_FILTER_ID,
-          isDisabled: allFilter.isDisabled,
+          disabled: allFilter.isDisabled,
           text: allFilter.text,
         }
       : null,
   ].filter(isTruthy);
 
-  const selectedItem = !isNill(selectedItemId)
-    ? selectedItemId === UNREAD_FILTER_ID
-      ? items[0]
-      : items[1]
-    : undefined;
+  // ButtonGroup matches on id, so hand it the id straight through. The previous
+  // id → item mapping went via array index, which picked the wrong item
+  // whenever `unreadFilter.isShown` was false and the array shifted up.
+  const selectedItem = isNill(selectedItemId) ? undefined : selectedItemId;
 
   return (
     <>

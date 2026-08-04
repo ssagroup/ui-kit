@@ -141,7 +141,7 @@ Set an initial selected item:
 Disable the entire dropdown when needed:
 
 ```tsx
-<Dropdown selectedItem={items[0]} isDisabled={true} onChange={handleChange}>
+<Dropdown selectedItem={items[0]} disabled={true} onChange={handleChange}>
   {items.map((item) => (
     <DropdownOption key={item.id} value={item.id}>
       {item.value}

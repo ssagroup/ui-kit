@@ -1,4 +1,5 @@
 import { assocPath, pathOr } from '@ssa-ui-kit/utils';
+import { resolveDisabled } from '@utils/deprecation';
 import { TableFilterConfig } from '../types';
 
 export const getSubmitData = (checkboxData: TableFilterConfig) => {
@@ -40,7 +41,12 @@ export const getClearData = (checkboxData: TableFilterConfig) => {
     const currentItems = checkboxData[groupName].items;
     Object.keys(checkboxData[groupName].items).forEach((itemKey) => {
       const itemInfo = currentItems[itemKey];
-      if (itemInfo.isDisabled && selectedItems.includes(itemInfo.name)) {
+      const isItemDisabled = resolveDisabled(
+        'TableFilters',
+        itemInfo.disabled,
+        itemInfo.isDisabled,
+      );
+      if (isItemDisabled && selectedItems.includes(itemInfo.name)) {
         notChangedData.push(itemInfo.name);
       }
     });

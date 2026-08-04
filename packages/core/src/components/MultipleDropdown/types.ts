@@ -39,6 +39,14 @@ export type DropdownProps<P extends DropdownOptionProps> = {
    * Disables the dropdown, preventing any user interaction
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * Disables the dropdown, preventing any user interaction
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   * @default false
+   */
   isDisabled?: boolean;
 
   /**

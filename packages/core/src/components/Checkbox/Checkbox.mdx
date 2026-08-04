@@ -46,7 +46,7 @@ Set the initial checked state of the checkbox:
 
 ### External State Control
 
-Control the checkbox state externally using the `externalState` prop:
+Control the checkbox state externally using the `checked` prop:
 
 ```tsx
 import { useState } from 'react';
@@ -58,7 +58,7 @@ function ControlledCheckbox() {
     <Checkbox
       id="controlled-checkbox"
       text="Controlled checkbox"
-      externalState={isChecked}
+      checked={isChecked}
       onChange={setIsChecked}
     />
   );
@@ -87,7 +87,7 @@ Disable user interaction with the checkbox:
 <Checkbox
   id="disabled-unchecked"
   text="Disabled option"
-  isDisabled={true}
+  disabled={true}
   onChange={handleChange}
 />
 
@@ -96,7 +96,7 @@ Disable user interaction with the checkbox:
   id="disabled-checked"
   text="Disabled checked option"
   initialState={true}
-  isDisabled={true}
+  disabled={true}
   onChange={handleChange}
 />
 ```
