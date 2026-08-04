@@ -1,12 +1,18 @@
 
-> @ssa-ui-kit/docs@0.0.0 build /Users/yaroslav/Desktop/SuperFolder/projects/ui-kit/apps/docs
+> @ssa-ui-kit/docs@0.0.0 build /home/runner/work/ui-kit/ui-kit/apps/docs
 > next build
+
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
 
    ▲ Next.js 15.5.19
 
-[MDX] updated map file in 10.86474999999973ms
+[MDX] updated map file in 29.476529000000028ms
    Creating an optimized production build ...
- ✓ Compiled successfully in 3.5s
+ ✓ Compiled successfully in 48s
    Skipping linting
    Checking validity of types ...
    Collecting page data ...
