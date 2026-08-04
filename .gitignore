@@ -12,7 +12,8 @@ stats.json
 .pnpm-store
 .npmrc
 tsbuildcache
-tsconfig.tsbuildinfo
+*.tsbuildinfo
+.turbo/cache
 **/custom-shots/**
 test-results/
 playwright-report/

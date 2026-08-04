@@ -1,4 +1,5 @@
 import { SmallTabProps } from '@components/TabBar/types';
+import { resolveAriaProp } from '@utils/deprecation';
 
 import { TabBase } from './TabBase';
 
@@ -6,6 +7,7 @@ const Tab = ({
   onClick,
   isActive,
   text,
+  'aria-controls': ariaControlsNative,
   ariaControls,
   tabId,
   className,
@@ -15,7 +17,12 @@ const Tab = ({
       role="tab"
       id={`${tabId}`}
       aria-selected={isActive}
-      aria-controls={ariaControls}
+      aria-controls={resolveAriaProp(
+        'Tab',
+        'aria-controls',
+        ariaControlsNative,
+        ariaControls,
+      )}
       tabIndex={0}
       isActive={isActive}
       title={text}

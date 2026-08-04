@@ -95,8 +95,8 @@ export const BarLineComplexChartTooltip = forwardRef<
               text={itemOutput}
               onChange={handleChange(item.type || '', item.name || '')}
               ref={undefined}
-              externalState={isSelected}
-              isDisabled={isDisabled}
+              checked={isSelected}
+              disabled={isDisabled}
               css={{
                 display: 'flex',
                 whiteSpace: 'nowrap',

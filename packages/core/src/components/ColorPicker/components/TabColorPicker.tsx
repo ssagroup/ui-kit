@@ -94,7 +94,7 @@ export const TabColorPicker = () => {
             </div>
             <CopyButton
               variant="tertiary"
-              isDisabled={!parsedColor || !parsedColor.isValid}
+              disabled={!parsedColor || !parsedColor.isValid}
               onClick={() => copy(colorFormatter[format](parsedColor!))}>
               <Icon name="copy" size={14} color={theme.colors.greyFilterIcon} />
             </CopyButton>

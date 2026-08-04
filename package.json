@@ -68,7 +68,9 @@
     "sb:deploy:infra-dash": "pnpm sb:build:infra-dash && firebase deploy --only hosting:infra-dash",
     "deploy:dashboard": "pnpm --filter ./examples/fitness-dashboard build && firebase deploy --only hosting:fitness-dashboard",
     "release": "tsx ./scripts/release",
-    "prepare": "husky"
+    "prepare": "husky",
+    "clean:all": "pnpm -r --parallel clean",
+    "build:fresh": "pnpm clean:all && pnpm build:all"
   },
   "keywords": [
     "react",
@@ -100,11 +102,11 @@
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
     "@types/jest": "29.5.2",
+    "@types/jest-axe": "^3.5.9",
     "@types/node": "22.19.3",
     "@types/ramda": "0.30.2",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "@types/sass": "1.45.0",
     "@typescript-eslint/eslint-plugin": "8.49.0",
     "@typescript-eslint/parser": "8.49.0",
     "babel-jest": "29.7.0",
@@ -126,6 +128,7 @@
     "html-webpack-plugin": "5.6.5",
     "husky": "9.1.7",
     "jest": "29.7.0",
+    "jest-axe": "^11.0.0",
     "jest-cli": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "jest-watch-typeahead": "2.2.2",

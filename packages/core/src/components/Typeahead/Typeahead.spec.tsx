@@ -119,7 +119,7 @@ describe('Typeahead Component', () => {
     const defaultSelected = [1];
     const { user, mockOnChange } = setup({
       isMultiple: true,
-      defaultSelectedItems: defaultSelected,
+      defaultValue: defaultSelected,
     });
     const combobox = screen.getByRole('combobox');
 
@@ -151,7 +151,7 @@ describe('Typeahead Component', () => {
     const defaultSelected = [2, 4];
     const { user, mockOnClearAll, mockOnEmptyChange } = setup({
       isMultiple: true,
-      defaultSelectedItems: defaultSelected,
+      defaultValue: defaultSelected,
     });
     const combobox = screen.getByRole('combobox');
 
@@ -172,7 +172,7 @@ describe('Typeahead Component', () => {
   });
 
   it('does not open when disabled', async () => {
-    const { user } = setup({ isDisabled: true });
+    const { user } = setup({ disabled: true });
     const combobox = screen.getByRole('combobox');
     await user.click(combobox);
     expect(screen.queryByRole('listbox')).toBeNull();
@@ -216,7 +216,7 @@ describe('Typeahead Component', () => {
     const { user, mockOnChange, container } = setup({
       autoSelect: true,
       isMultiple: true,
-      defaultSelectedItems: [2],
+      defaultValue: [2],
     });
     const input = container.querySelector(
       '.typeahead-input',
@@ -241,7 +241,7 @@ describe('Typeahead Component', () => {
   it('calls onRemoveSelectedClick when removing selected item', async () => {
     const { user, mockOnRemoveSelectedClick } = setup({
       isMultiple: true,
-      defaultSelectedItems: [1, 2],
+      defaultValue: [1, 2],
     });
 
     const removeButtons = screen.getAllByTestId('typeahead-item-remove');
@@ -296,7 +296,7 @@ describe('Typeahead Component', () => {
     it('renders avatar in selected chip in multiple mode', () => {
       setup({
         isMultiple: true,
-        defaultSelectedItems: [1],
+        defaultValue: [1],
         children: (
           <TypeaheadOption
             value={1}
@@ -375,7 +375,7 @@ describe('Typeahead Component', () => {
       const { user } = setup({
         isMultiple: true,
         allowCustomValues: true,
-        defaultSelectedItems: ['custom-selected'],
+        defaultValue: ['custom-selected'],
       });
 
       const combobox = screen.getByRole('combobox');

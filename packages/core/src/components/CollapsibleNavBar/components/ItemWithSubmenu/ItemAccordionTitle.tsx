@@ -81,7 +81,7 @@ export const ItemAccordionTitle = ({
                 accordionUniqueName={accordionUniqueName}
                 prefix={item.prefix}
                 id={accordionUniqueName}
-                isOpened
+                open
                 isPopover
                 useMatchPattern={useMatchPattern}
               />

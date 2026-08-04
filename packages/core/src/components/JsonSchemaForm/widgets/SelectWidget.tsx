@@ -141,8 +141,8 @@ export const SelectWidget = <
     <div id={id} onBlur={handleBlur} onFocus={handleFocus}>
       <Typeahead
         width="100%"
-        selectedItems={selectedItems}
-        isDisabled={disabled}
+        value={selectedItems}
+        disabled={disabled}
         name={name}
         isMultiple={isMultiple}
         placeholder={customPlaceholder || undefined}
@@ -158,7 +158,7 @@ export const SelectWidget = <
             value={item.value}
             label={item.label || item.value}
             avatar={getAvatarNode(item, selectUiOptions)}
-            isDisabled={
+            disabled={
               disabled ||
               (Array.isArray(enumDisabled) &&
                 enumDisabled.includes(item.value as string))

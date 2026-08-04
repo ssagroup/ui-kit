@@ -20,17 +20,14 @@ export const Footer = ({
       <ReadAllButton
         onClick={onReadAllClick}
         text={t('pages.notifications.readAllBtnText')}
-        isDisabled={isReadAllDisabled}
+        disabled={isReadAllDisabled}
       />
       <PaginationWrapper>
         <RowsPerPageDropdown
           onChange={({ value }) => onRowsPerPageChange(value as number)}
         />
         {pagesCount > 0 && (
-          <Pagination
-            pagesCount={pagesCount}
-            isDisabled={isPaginationDisabled}
-          />
+          <Pagination pagesCount={pagesCount} disabled={isPaginationDisabled} />
         )}
       </PaginationWrapper>
     </ControlsWrapper>

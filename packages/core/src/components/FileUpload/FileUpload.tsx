@@ -222,7 +222,7 @@ const FileUpload = ({
 
   return (
     <div css={[S.wrapper, css]} className={className}>
-      {label && <Label isDisabled={disabled}>{label}</Label>}
+      {label && <Label disabled={disabled}>{label}</Label>}
 
       <input
         ref={inputRef}
@@ -309,7 +309,7 @@ const FileUpload = ({
             variant="primary"
             size="small"
             text={actionText}
-            isDisabled={disabled}
+            disabled={disabled}
             onClick={handleChooseClick}
             type="button"
           />
@@ -343,7 +343,7 @@ const FileUpload = ({
               file={{ name: file.name, size: file.size, content: file }}
               progress={getFileProgress(file, index, files, uploadProgress)}
               onRemove={() => handleRemove(file)}
-              isDisabled={disabled}
+              disabled={disabled}
             />
           ))}
         </div>

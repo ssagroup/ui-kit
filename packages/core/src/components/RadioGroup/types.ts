@@ -15,7 +15,7 @@ import { RadioProps } from '@components/Radio/types';
  * <RadioGroup name="fruit" onChange={(value) => console.log(value)}>
  *   <Radio id="r1" value="apple" text="Apple" />
  *   <Radio id="r2" value="orange" text="Orange" />
- *   <Radio id="r3" value="banana" text="Banana" isDisabled />
+ *   <Radio id="r3" value="banana" text="Banana" disabled />
  * </RadioGroup>
  * ```
  *
@@ -36,6 +36,26 @@ import { RadioProps } from '@components/Radio/types';
 export interface RadioGroupProps {
   name: string;
   isRequired?: boolean;
+
+  /**
+   * Selected value, for the controlled pattern. When provided, the parent owns
+   * the selection and the group only reports intent through `onChange`.
+   */
+  value?: string | number;
+
+  /**
+   * Initially selected value. Only used when neither `value` nor the
+   * deprecated `externalState` is provided — both of those track the parent
+   * for the group's whole lifetime and so outrank an initial value.
+   */
+  defaultValue?: string | number;
+
+  /**
+   * @deprecated Use `value` instead. Removed in the next major release.
+   * Note the semantics differ slightly: `externalState` is synced *into*
+   * internal state, so the group still moves on click even when the parent
+   * ignores `onChange`. `value` is fully controlled.
+   */
   externalState?: string | number;
   className?: string;
   onChange: (value: string | number) => void;

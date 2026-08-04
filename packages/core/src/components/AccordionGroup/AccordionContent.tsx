@@ -41,8 +41,8 @@ import { useTheme } from '@emotion/react';
  * ```tsx
  * // Custom content using AccordionContent props
  * <Accordion
- *   renderContent={({ isOpened, ...props }) => (
- *     <div {...props} style={{ display: isOpened ? 'block' : 'none' }}>
+ *   renderContent={({ open, ...props }) => (
+ *     <div {...props} style={{ display: open ? 'block' : 'none' }}>
  *       Custom content with conditional rendering
  *     </div>
  *   )}
@@ -52,6 +52,10 @@ import { useTheme } from '@emotion/react';
  * @see {@link Accordion} - Parent component that uses this component
  */
 export const AccordionContent = ({
+  open,
+  // Accordion passes both spellings; keep the deprecated one out of `rest` so
+  // it cannot reach the DOM.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isOpened,
   children,
   size = 'empty',
@@ -60,7 +64,7 @@ export const AccordionContent = ({
   children: React.ReactNode;
 }) => {
   const theme = useTheme();
-  const styles = createContentStyles(theme, isOpened);
+  const styles = createContentStyles(theme, open);
   return (
     <CardContent css={styles[size]} {...rest}>
       {children}

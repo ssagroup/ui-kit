@@ -16,6 +16,7 @@ import {
   PopoverDescription,
 } from '@components/Popover';
 import { CheckboxProps } from '@components/Checkbox';
+import { resolveDisabled } from '@utils/deprecation';
 import {
   tableFilterDividerStyles,
   tableFilterPopoverContentStyles,
@@ -213,20 +214,25 @@ export const TableFilters = ({
                       key={accordionInfo.id}
                       id={accordionInfo.id}
                       title={accordionInfo.title}
-                      isOpened={accordionInfo.isOpened}
-                      ariaControls={accordionInfo.ariaControls}
+                      open={accordionInfo.isOpened}
+                      aria-controls={accordionInfo.ariaControls}
                       renderContent={(props) => (
                         <TableFiltersAccordionContent {...props}>
                           {Object.keys(accordionInfo.items).map((itemKey) => {
                             const info = accordionInfo.items[itemKey];
+                            const isItemDisabled = resolveDisabled(
+                              'TableFilters',
+                              info.disabled,
+                              info.isDisabled,
+                            );
                             const extraProps: Partial<CheckboxProps> = {};
                             const currentState = !!localCheckboxData?.[
                               accordionInfo.id
                             ].selectedItemsDraft?.includes(info.name);
-                            if (info.isDisabled) {
-                              extraProps.initialState = currentState;
+                            if (isItemDisabled) {
+                              extraProps.defaultChecked = currentState;
                             } else {
-                              extraProps.externalState = currentState;
+                              extraProps.checked = currentState;
                             }
                             return (
                               <TableFilterCheckbox
@@ -238,7 +244,7 @@ export const TableFilters = ({
                                   info.name,
                                 )}
                                 text={info.content.text}
-                                isDisabled={info.isDisabled}
+                                disabled={isItemDisabled}
                                 {...extraProps}
                               />
                             );

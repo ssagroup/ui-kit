@@ -39,6 +39,16 @@ const meta = {
       control: 'boolean',
       description: 'Transparent background',
     },
+    size: {
+      options: ['small', 'medium', 'large'],
+      control: { type: 'inline-radio' },
+      description: 'Box and icon size; matches Button’s size scale',
+    },
+    type: {
+      options: ['button', 'submit', 'reset'],
+      control: { type: 'inline-radio' },
+      description: 'HTML button type',
+    },
     styles: {
       control: false,
       description: 'Custom styles: button, iconColor, icon',
@@ -97,6 +107,17 @@ export const Disabled: Story = {
     disabled: true,
     onClick: () => {},
   },
+};
+
+export const Sizes: Story = {
+  args: { onClick: () => {} },
+  render: (args) => (
+    <div css={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <IconButton {...args} size="small" aria-label="Small" />
+      <IconButton {...args} size="medium" aria-label="Medium" />
+      <IconButton {...args} size="large" aria-label="Large" />
+    </div>
+  ),
 };
 
 export const WithTooltip: Story = {

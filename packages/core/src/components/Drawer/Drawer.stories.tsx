@@ -20,7 +20,7 @@ const meta = {
   },
   decorators: [
     (Story, { args, viewMode }) => {
-      args.defaultOpened = args.defaultOpened ?? viewMode === 'story';
+      args.defaultOpen = args.defaultOpen ?? viewMode === 'story';
       return <Story />;
     },
   ],
@@ -59,7 +59,7 @@ export const Default: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>
@@ -82,7 +82,7 @@ export const PositionRight: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>
@@ -105,7 +105,7 @@ export const PositionTop: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>
@@ -128,7 +128,7 @@ export const PositionBottom: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>
@@ -146,7 +146,7 @@ export const PositionBottom: Story = {
 
 export const WithinContainer: Story = {
   args: {
-    defaultOpened: true,
+    defaultOpen: true,
     title: undefined,
     withCloseButton: undefined,
   },
@@ -155,7 +155,7 @@ export const WithinContainer: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Wrapper
           direction="column"
@@ -188,7 +188,7 @@ export const WithinContainer: Story = {
 
 export const WithinContainerPositionTop: Story = {
   args: {
-    defaultOpened: true,
+    defaultOpen: true,
     position: 'top',
     title: undefined,
     withCloseButton: undefined,
@@ -198,7 +198,7 @@ export const WithinContainerPositionTop: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Wrapper
           direction="column"
@@ -229,13 +229,13 @@ export const WithinContainerPositionTop: Story = {
 };
 
 export const WithinContainerOverlap: Story = {
-  args: { defaultOpened: true, title: undefined, withCloseButton: undefined },
+  args: { defaultOpen: true, title: undefined, withCloseButton: undefined },
   render: (args) => {
     const drawer = useDrawer(args);
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Wrapper
           direction="column"
@@ -271,7 +271,7 @@ export const WithinContainerOverlap: Story = {
 
 export const WithinContainerOverlapPositionTop: Story = {
   args: {
-    defaultOpened: true,
+    defaultOpen: true,
     position: 'top',
     title: undefined,
     withCloseButton: undefined,
@@ -281,7 +281,7 @@ export const WithinContainerOverlapPositionTop: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Wrapper
           direction="column"
@@ -326,7 +326,7 @@ export const DismissableWithLockScroll: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>
@@ -355,7 +355,7 @@ export const WithHeaderComponent: Story = {
     return (
       <>
         <Button variant="primary" {...drawer.interactions.getReferenceProps()}>
-          {drawer.opened ? 'Close' : 'Open'}
+          {drawer.open ? 'Close' : 'Open'}
         </Button>
         <Drawer.Root store={drawer}>
           <Drawer.Portal>

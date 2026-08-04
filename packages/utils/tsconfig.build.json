@@ -20,7 +20,7 @@
     "noEmit": false,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "./tsbuildcache",
+    "tsBuildInfoFile": "./dist/tsbuildcache",
     "typeRoots": [
       "./src/types",
       "./node_modules/@types",

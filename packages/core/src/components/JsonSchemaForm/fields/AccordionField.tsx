@@ -96,9 +96,9 @@ export const AccordionField = <
     <Accordion
       id={accordionId}
       size="small"
-      ariaControls={`${accordionId}-content`}
+      aria-controls={`${accordionId}-content`}
       title={title}
-      isOpened={!collapsed}
+      open={!collapsed}
       onClick={() => onAccordionClick()}
       css={{ padding: 0, border: 'none' }}
       renderContent={(contentProps) => (

@@ -38,7 +38,7 @@ export const RadioWidget = <
     <RadioGroup
       name={name}
       onChange={handleChange}
-      externalState={selectedIndex}
+      value={selectedIndex}
       isRequired={required}
       css={{
         [`> label`]: {
@@ -50,7 +50,7 @@ export const RadioWidget = <
             <Radio
               id={optionId(id, i)}
               name={id}
-              isDisabled={
+              disabled={
                 disabled ||
                 (Array.isArray(enumDisabled) &&
                   enumDisabled.indexOf(option.value) !== -1)

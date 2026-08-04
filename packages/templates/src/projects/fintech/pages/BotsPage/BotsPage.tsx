@@ -36,13 +36,13 @@ const BotsPageComponent = () => {
       {
         <BotsNavigationMD
           handleRunStateClick={handleRunStateClick}
-          externalState={selectedGroupItem}
+          value={selectedGroupItem}
         />
       }
       {renderHeaderContent(
         <BotsNavigationSM
           handleRunStateClick={handleRunStateClick}
-          externalState={selectedGroupItem}
+          value={selectedGroupItem}
         />,
       )}
       <BotsFilters

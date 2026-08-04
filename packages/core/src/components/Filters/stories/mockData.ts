@@ -183,7 +183,7 @@ export const mockData: TableFilterConfig = {
       btcfdusd: {
         key: 'btcfdusd',
         name: 'btcfdusd',
-        isDisabled: true,
+        disabled: true,
         content: {
           statePath: ['pairs', 'items', 'btcfdusd'],
           text: 'BTC-FDUSD',
@@ -201,7 +201,7 @@ export const mockData: TableFilterConfig = {
       binance: {
         key: 'binance',
         name: 'binance',
-        isDisabled: true,
+        disabled: true,
         content: {
           statePath: ['exchange', 'items', 'binance'],
           text: 'Binance',

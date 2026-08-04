@@ -6,7 +6,7 @@ import { buttonGroupItems } from './consts';
 
 export const BotsNavigation = ({
   handleRunStateClick,
-  externalState,
+  value,
 }: BotsNavigationProps) => {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -44,8 +44,7 @@ export const BotsNavigation = ({
           <ButtonGroup
             items={items}
             onClick={handleRunStateClick}
-            selectedItem={externalState}
-            externalState={externalState}
+            value={value}
           />
         </div>
       </Wrapper>

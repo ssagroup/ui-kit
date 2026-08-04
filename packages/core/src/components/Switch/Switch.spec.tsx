@@ -103,7 +103,7 @@ describe('Switch', () => {
     const isOn = true;
     const isDisabled = true;
     const { user, getByRole } = setup(
-      <Switch label={TEST_LABEL} isDisabled={isDisabled} />,
+      <Switch label={TEST_LABEL} disabled={isDisabled} />,
       isOn,
     );
 
@@ -123,7 +123,7 @@ describe('Switch', () => {
     const isDisabled = true;
     const isOn = false;
     const { user, getByRole } = setup(
-      <Switch label={TEST_LABEL} isDisabled={isDisabled} />,
+      <Switch label={TEST_LABEL} disabled={isDisabled} />,
       isOn,
     );
 

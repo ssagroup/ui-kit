@@ -12,7 +12,8 @@ import {
   useHover,
   safePolygon,
 } from '@floating-ui/react';
-import { isNill } from '@ssa-ui-kit/utils';
+import { useControllableState } from '@ssa-ui-kit/hooks';
+import { resolveOpenState } from '@utils/deprecation';
 import { PopoverOptions, UsePopover } from '../types';
 
 /**
@@ -36,24 +37,35 @@ import { PopoverOptions, UsePopover } from '../types';
  *
  * @see {@link Popover} - Component that uses this hook
  */
-export const usePopover: UsePopover = ({
-  initialOpen = false,
-  placement = 'bottom',
-  modal,
-  open: controlledOpen,
-  onOpenChange: setControlledOpen,
-  keyboardHandlers = true,
-  floatingOptions = {},
-  interactionsEnabled = 'click',
-}: PopoverOptions = {}) => {
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
+export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
+  const {
+    placement = 'bottom',
+    modal,
+    keyboardHandlers = true,
+    floatingOptions = {},
+    interactionsEnabled = 'click',
+  } = options;
+
+  const openState = resolveOpenState('Popover', options, {
+    defaultAlias: 'initialOpen',
+  });
+
+  // Previously `setControlledOpen ?? setUncontrolledOpen`, which meant an
+  // `onOpenChange` passed *without* `open` replaced the internal setter
+  // entirely: the popover reported every intent and then never moved.
+  const [openValue, setOpen] = useControllableState<boolean>({
+    controlled: openState.isControlled,
+    value: openState.open,
+    defaultValue: openState.defaultOpen,
+    finalValue: false,
+    onChange: openState.onOpenChange,
+  });
+  const open = Boolean(openValue);
+
   const [labelId, setLabelId] = React.useState<string | undefined>();
   const [descriptionId, setDescriptionId] = React.useState<
     string | undefined
   >();
-
-  const open = controlledOpen ?? uncontrolledOpen;
-  const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
   const data = useFloating({
     placement,
@@ -73,12 +85,14 @@ export const usePopover: UsePopover = ({
 
   const context = data.context;
 
+  // A controlled popover leaves toggling to its parent, so the interactions
+  // that would move it on their own stay off.
+  const isControlled = openState.isControlled;
+
   const click = useClick(context, {
-    enabled:
-      isNill(controlledOpen) && ['click', 'both'].includes(interactionsEnabled),
+    enabled: !isControlled && ['click', 'both'].includes(interactionsEnabled),
     keyboardHandlers,
   });
-  const isControlled = controlledOpen !== undefined;
   const dismiss = useDismiss(context, {
     // When controlled, disable referencePress (parent handles toggle) but keep outsidePress
     referencePress: !isControlled,
@@ -89,8 +103,7 @@ export const usePopover: UsePopover = ({
   });
   const role = useRole(context);
   const hover = useHover(context, {
-    enabled:
-      isNill(controlledOpen) && ['hover', 'both'].includes(interactionsEnabled),
+    enabled: !isControlled && ['hover', 'both'].includes(interactionsEnabled),
     handleClose: safePolygon(),
   });
 

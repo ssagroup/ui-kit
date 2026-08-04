@@ -201,8 +201,21 @@ Use the `block` prop to make the button span the full width of its container:
 Disable buttons to prevent user interaction:
 
 ```tsx
-<Button variant="primary" isDisabled>
+<Button variant="primary" disabled>
   Disabled Button
+</Button>
+```
+
+## Loading State
+
+Use the `loading` prop while an action is in flight. The button is disabled,
+reports `aria-busy`, and shows a spinner in place of its label. The label stays
+in the layout, so the button keeps its width and the surrounding row does not
+reflow:
+
+```tsx
+<Button variant="primary" loading={isSaving} onClick={handleSave}>
+  Save
 </Button>
 ```
 

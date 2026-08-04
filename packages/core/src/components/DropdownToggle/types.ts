@@ -15,8 +15,30 @@ export interface DropdownToggleProps
   isMultiple?: boolean;
   disabled?: boolean;
   children?: React.ReactNode;
-  ariaLabelledby: string;
-  ariaControls: string;
+  /**
+   * Id of the element labelling the toggle.
+   *
+   * Re-declared because `ControlledButtonProps` omits it from the inherited
+   * button attributes — that omission is about `dropdownProps.toggleButton`,
+   * where Dropdown owns the wiring, not about this component's own surface.
+   */
+  'aria-labelledby'?: string;
+  /** Id of the listbox the toggle controls. */
+  'aria-controls'?: string;
+  /**
+   * Id of the element labelling the toggle.
+   *
+   * @deprecated Use `aria-labelledby` instead — `ariaLabelledby` is removed in
+   * the next major release.
+   */
+  ariaLabelledby?: string;
+  /**
+   * Id of the listbox the toggle controls.
+   *
+   * @deprecated Use `aria-controls` instead — `ariaControls` is removed in the
+   * next major release.
+   */
+  ariaControls?: string;
   colors?: Array<string | undefined>;
   className?: string;
   selectedCount?: number;

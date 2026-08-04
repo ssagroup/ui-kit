@@ -158,7 +158,7 @@ export const Disabled: Story = {
 
 export const Empty: Story = {
   render: (args) => {
-    const store = useFilterMultiSelect({ defaultOpened: true });
+    const store = useFilterMultiSelect({ defaultOpen: true });
     return (
       <FiltersMultiSelect {...args} store={store}>
         <FiltersMultiSelectOptions>{null}</FiltersMultiSelectOptions>
@@ -169,7 +169,7 @@ export const Empty: Story = {
 
 export const WithCustomEmptyNode: Story = {
   render: (args) => {
-    const store = useFilterMultiSelect({ defaultOpened: true });
+    const store = useFilterMultiSelect({ defaultOpen: true });
     return (
       <FiltersMultiSelect
         {...args}

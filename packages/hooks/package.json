@@ -6,7 +6,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "default": "./dist/index.js"
     }
@@ -30,7 +30,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "webpack --mode=production --node-env=production && tsc --build && resolve-tspaths",
+    "clean": "node ../../scripts/clean.mjs",
+    "build": "node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && tsc --build && resolve-tspaths",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },
@@ -39,7 +40,7 @@
     "usehooks-ts": "3.1.1"
   },
   "peerDependencies": {
-    "react": "19.x"
+    "react": ">=19"
   },
   "peerDependenciesMeta": {
     "@types/react": {
@@ -50,5 +51,6 @@
     ">0.1%",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "module": "dist/index.mjs"
 }

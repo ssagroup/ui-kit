@@ -110,6 +110,22 @@ export interface ButtonProps extends ButtonAriaProps {
    * Disables the button, preventing user interaction
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * Shows a spinner in place of the button's content and disables interaction.
+   * The button keeps its resting width, so a row of buttons does not reflow.
+   * Also sets `aria-busy`.
+   * @default false
+   */
+  loading?: boolean;
+
+  /**
+   * Disables the button, preventing user interaction
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   * @default false
+   */
   isDisabled?: boolean;
 
   /**

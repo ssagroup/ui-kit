@@ -43,7 +43,7 @@ export const ActionRun = ({ row }: { row: StyledTableItem }) => {
       placement="top-start">
       <PopoverTrigger
         variant="tertiary"
-        isDisabled={isDisabled}
+        disabled={isDisabled}
         aria-label="Run reason"
         dataTestId="run-reason-trigger-button"
         css={{

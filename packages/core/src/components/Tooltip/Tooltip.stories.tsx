@@ -152,7 +152,7 @@ Opened.args = {
   enableClick: false,
   enableHover: true,
   size: 'large',
-  isOpen: true,
+  defaultOpen: true,
 };
 Opened.parameters = {
   pseudo: {

@@ -114,7 +114,30 @@ export interface TooltipProps extends CommonProps {
 
   /**
    * Controlled open state
-   * When provided, controls tooltip visibility externally
+   * When provided, the tooltip is fully controlled and the parent must update
+   * this value from `onOpenChange`
+   */
+  open?: boolean;
+
+  /**
+   * Initial open state for an uncontrolled tooltip
+   * @default false
+   */
+  defaultOpen?: boolean;
+
+  /**
+   * Called whenever the tooltip wants to open or close — hover, click, dismiss
+   * or Escape
+   */
+  onOpenChange?: (open: boolean) => void;
+
+  /**
+   * Initial open state.
+   *
+   * @deprecated Use `defaultOpen` instead. Despite the name, `isOpen` never
+   * controlled the tooltip — it only seeded the initial state, so a changing
+   * value had no effect. Pass `open` together with `onOpenChange` for real
+   * controlled behaviour. Removed in the next major release.
    */
   isOpen?: boolean;
 }

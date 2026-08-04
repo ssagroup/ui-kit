@@ -21,7 +21,7 @@ function BasicDrawer() {
   return (
     <>
       <Button {...drawer.interactions.getReferenceProps()}>
-        {drawer.opened ? 'Close' : 'Open'} Drawer
+        {drawer.open ? 'Close' : 'Open'} Drawer
       </Button>
 
       <Drawer.Root store={drawer}>
@@ -118,7 +118,7 @@ function ControlledDrawer() {
   const [isOpen, setIsOpen] = useState(false);
 
   const drawer = useDrawer({
-    opened: isOpen,
+    open: isOpen,
     onOpenChange: setIsOpen,
   });
 
@@ -146,7 +146,7 @@ Set the drawer to be open by default:
 
 ```tsx
 const drawer = useDrawer({
-  defaultOpened: true,
+  defaultOpen: true,
   title: 'Initially Open Drawer',
 });
 ```

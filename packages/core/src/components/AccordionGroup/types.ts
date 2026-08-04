@@ -32,7 +32,7 @@ type AccordionGroupChildren = React.ReactElement<
  *     <Accordion
  *       id="first"
  *       title="First Accordion"
- *       ariaControls="first-panel"
+ *       aria-controls="first-panel"
  *       renderContent={(props) => (
  *         <AccordionContent {...props}>
  *           <p>Content for first accordion</p>
@@ -43,8 +43,8 @@ type AccordionGroupChildren = React.ReactElement<
  *     <Accordion
  *       id="second"
  *       title="Second Accordion"
- *       ariaControls="second-panel"
- *       isOpened
+ *       aria-controls="second-panel"
+ *       defaultOpen
  *       renderContent={(props) => (
  *         <AccordionContent {...props}>
  *           <p>Content for second accordion</p>
@@ -100,8 +100,8 @@ export interface AccordionGroupProps {
  * <Accordion
  *   id="accordion-1"
  *   title="Click to expand"
- *   ariaControls="panel-1"
- *   isOpened={false}
+ *   aria-controls="panel-1"
+ *   defaultOpen={false}
  *   renderTitle={AccordionTitle}
  *   renderContent={(props) => (
  *     <AccordionContent {...props}>
@@ -131,6 +131,15 @@ export interface AccordionProps {
   renderTitle: (
     data: RenderContentProps & {
       title: string;
+      /** Id of the content panel this title controls. */
+      'aria-controls'?: string;
+      /**
+       * Id of the content panel this title controls.
+       *
+       * @deprecated Read `aria-controls` instead — the `ariaControls` key is
+       * still passed for compatibility and is removed in the next major
+       * release.
+       */
       ariaControls?: string;
       onClick?: () => void;
     },
@@ -166,6 +175,14 @@ export type RenderContentProps = Pick<AccordionProps, 'id' | 'size'> &
      * Whether the accordion is currently open
      * @default false
      */
+    open?: boolean;
+
+    /**
+     * Whether the accordion is currently open
+     *
+     * @deprecated Read `open` instead — `Accordion` passes both keys for the
+     * deprecation window and drops `isOpened` in the next major release.
+     */
     isOpened?: boolean;
 
     /**
@@ -188,14 +205,52 @@ export type RenderContentProps = Pick<AccordionProps, 'id' | 'size'> &
 export interface AccordionViewProps extends AccordionProps {
   /**
    * ARIA controls attribute
+   * Links the accordion header to its content panel, and is used as that
+   * panel's `id` — so it lands on the title button rather than on the
+   * accordion's own region element.
+   */
+  'aria-controls'?: string;
+
+  /**
+   * ARIA controls attribute
    * Links the accordion header to its content panel
    * Should match the id of the content panel
+   *
+   * @deprecated Use `aria-controls` instead — `ariaControls` is removed in the
+   * next major release.
    */
   ariaControls?: string;
 
   /**
    * Whether the accordion is currently open
+   *
+   * Normally injected by the parent `AccordionGroup`, which owns the open
+   * state. Setting it directly on an `Accordion` inside a group seeds that
+   * accordion's initial state on mount.
    * @default false
+   */
+  open?: boolean;
+
+  /**
+   * Whether the accordion starts open
+   *
+   * Read once by `AccordionGroup` on mount; the group owns the state from then
+   * on. Prefer this over `open` when all you want is an initially expanded
+   * accordion.
+   * @default false
+   */
+  defaultOpen?: boolean;
+
+  /**
+   * Called when the accordion is toggled, with the state it is moving to
+   */
+  onOpenChange?: (open: boolean) => void;
+
+  /**
+   * Whether the accordion is currently open
+   *
+   * @deprecated Use `open` (or `defaultOpen` for initial state) instead —
+   * `isOpened` is removed in the next major release.
    */
   isOpened?: boolean;
 

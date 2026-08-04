@@ -29,15 +29,15 @@ const checkboxPropsVariants: Array<CheckboxProps & { caption?: string }> = [
   {
     id: 'checked',
     caption: 'Checked by default',
-    initialState: true,
+    defaultChecked: true,
     onChange() {
       /* no-op */
     },
   },
   {
     id: 'checked-disabled',
-    initialState: true,
-    isDisabled: true,
+    defaultChecked: true,
+    disabled: true,
     onChange() {
       /* no-op */
     },
@@ -51,7 +51,7 @@ const checkboxPropsVariants: Array<CheckboxProps & { caption?: string }> = [
   },
   {
     id: 'not-checked-disabled',
-    isDisabled: true,
+    disabled: true,
     onChange() {
       /* no-op */
     },
@@ -67,7 +67,7 @@ const checkboxPropsVariants: Array<CheckboxProps & { caption?: string }> = [
   {
     id: 'undetermined-disabled',
     isIndeterminate: true,
-    isDisabled: true,
+    disabled: true,
     onChange() {
       /* no-op */
     },
@@ -112,7 +112,7 @@ export const Colors = () => (
             id={`${color}-checked`}
             text="Checked"
             color={color}
-            initialState
+            defaultChecked
             onChange={() => {
               /* no-op */
             }}
@@ -130,7 +130,7 @@ export const Colors = () => (
             id={`${color}-disabled`}
             text="Disabled"
             color={color}
-            isDisabled
+            disabled
             onChange={() => {
               /* no-op */
             }}

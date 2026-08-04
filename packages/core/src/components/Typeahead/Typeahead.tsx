@@ -7,6 +7,7 @@ import {
 import FormHelperText from '@components/FormHelperText';
 import Wrapper from '@components/Wrapper';
 import Label from '@components/Label';
+import { resolveDeprecatedProp, resolveDisabled } from '@utils/deprecation';
 import { TypeaheadContext } from './Typeahead.context';
 import { useTypeahead } from './useTypeahead';
 import {
@@ -61,7 +62,7 @@ import { TypeaheadProps } from './types';
  *   name="tags"
  *   isMultiple
  *   label="Tags"
- *   selectedItems={selected}
+ *   value={selected}
  *   onChange={(item, isSelected) => handleToggle(item, isSelected)}>
  *   {options.map(opt => (
  *     <TypeaheadOption key={opt.id} value={opt.id}>
@@ -192,9 +193,12 @@ import { TypeaheadProps } from './types';
 export const Typeahead = ({
   name = 'typeahead-search',
   label,
+  value,
+  defaultValue,
   selectedItems,
   defaultSelectedItems,
   isOpen,
+  disabled,
   isDisabled,
   isMultiple,
   children,
@@ -222,12 +226,31 @@ export const Typeahead = ({
   renderOption,
 }: TypeaheadProps) => {
   const theme = useTheme();
+  const isTypeaheadDisabled = resolveDisabled(
+    'Typeahead',
+    disabled,
+    isDisabled,
+  );
+  const resolvedValue = resolveDeprecatedProp({
+    component: 'Typeahead',
+    prop: 'value',
+    value,
+    deprecatedProp: 'selectedItems',
+    deprecatedValue: selectedItems,
+  });
+  const resolvedDefaultValue = resolveDeprecatedProp({
+    component: 'Typeahead',
+    prop: 'defaultValue',
+    value: defaultValue,
+    deprecatedProp: 'defaultSelectedItems',
+    deprecatedValue: defaultSelectedItems,
+  });
   const hookResult = useTypeahead({
     name,
-    selectedItems,
-    defaultSelectedItems,
+    selectedItems: resolvedValue,
+    defaultSelectedItems: resolvedDefaultValue,
     isOpen,
-    isDisabled,
+    isDisabled: isTypeaheadDisabled,
     isMultiple,
     children,
     className,
@@ -262,7 +285,7 @@ export const Typeahead = ({
         {label && (
           <Label
             htmlFor={hookResult.inputName}
-            isDisabled={isDisabled}
+            disabled={isTypeaheadDisabled}
             data-testid="typeahead-label">
             {label}
           </Label>
@@ -299,7 +322,7 @@ export const Typeahead = ({
           <FormHelperText
             role="status"
             status={hookResult.status}
-            disabled={isDisabled}
+            disabled={isTypeaheadDisabled}
             data-testid="helper-text">
             {hookResult.error
               ? hookResult.error?.message?.toString()

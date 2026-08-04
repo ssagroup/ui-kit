@@ -253,7 +253,7 @@ describe('Pagination', () => {
   });
 
   it('Renders in a disabled state', () => {
-    setup(<Pagination pagesCount={3} isDisabled={true} />, 2);
+    setup(<Pagination pagesCount={3} disabled={true} />, 2);
 
     const buttonEls = screen.getAllByRole('button');
     expect(buttonEls.length).toBe(5); // "previous" "1" "2" "3" "next"

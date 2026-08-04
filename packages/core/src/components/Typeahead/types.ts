@@ -37,13 +37,27 @@ export type TypeaheadOptionProps = Record<string, TypeaheadValue>;
  */
 export interface TypeaheadProps {
   /**
+   * Controlled selected values (array, even in single-select mode).
+   * When provided, controls the selection externally.
+   */
+  value?: Array<TypeaheadValue>;
+
+  /**
+   * Initially selected values, for uncontrolled mode.
+   */
+  defaultValue?: Array<TypeaheadValue>;
+
+  /**
    * Controlled selected items (array of values)
-   * When provided, controls the selected items externally
+   *
+   * @deprecated Use `value` instead. Removed in the next major release.
    */
   selectedItems?: Array<TypeaheadValue>;
 
   /**
    * Default selected items for uncontrolled mode
+   *
+   * @deprecated Use `defaultValue` instead. Removed in the next major release.
    */
   defaultSelectedItems?: Array<TypeaheadValue>;
 
@@ -57,6 +71,14 @@ export interface TypeaheadProps {
   /**
    * Whether the component is disabled
    * Disabled typeahead cannot be interacted with
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the component is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;
@@ -266,6 +288,13 @@ export interface TypeaheadItemProps extends CommonProps {
 
   /**
    * Whether this option is disabled
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether this option is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    */
   isDisabled?: boolean;
 

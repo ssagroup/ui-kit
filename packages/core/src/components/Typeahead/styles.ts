@@ -150,7 +150,7 @@ export const TypeaheadItemCross = styled(Button)<{
   &:active,
   &:focus,
   &:hover {
-    cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
     background: none;
     box-shadow: none;
   }

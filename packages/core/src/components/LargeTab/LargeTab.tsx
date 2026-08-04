@@ -1,6 +1,7 @@
 import { useTheme } from '@emotion/react';
 
 import { LargeTabProps } from '@components/TabBar/types';
+import { resolveAriaProp } from '@utils/deprecation';
 
 import { LargeTabBase } from './LargeTabBase';
 
@@ -11,6 +12,7 @@ const LargeTab = ({
   bottomText,
   isActive,
   onClick,
+  'aria-controls': ariaControlsNative,
   ariaControls,
   tabId,
 }: LargeTabProps) => {
@@ -20,7 +22,12 @@ const LargeTab = ({
       role="tab"
       id={`${tabId}`}
       aria-selected={isActive}
-      aria-controls={ariaControls}
+      aria-controls={resolveAriaProp(
+        'LargeTab',
+        'aria-controls',
+        ariaControlsNative,
+        ariaControls,
+      )}
       tabIndex={0}
       isActive={isActive}
       title={`${topText}-${bottomText}`}

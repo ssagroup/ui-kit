@@ -186,6 +186,7 @@ export type * from './History/types';
 export * from './Pagination';
 
 export { default as Link } from './Link';
+export type { LinkProps } from './Link/Link.types';
 export * from './WithLink';
 
 export { default as Wrapper } from './Wrapper';

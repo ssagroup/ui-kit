@@ -2,6 +2,7 @@ import { useId, useState } from 'react';
 import { useTheme } from '@emotion/react';
 
 import Icon from '@components/Icon';
+import { resolveDeprecatedProp, resolveDisabled } from '@utils/deprecation';
 
 import { RadioBase } from './RadioBase';
 import { RadioProps } from './types';
@@ -77,7 +78,9 @@ const Radio = ({
   id,
   name = '',
   value,
+  checked,
   isChecked,
+  disabled,
   isDisabled,
   isRequired,
   text,
@@ -87,6 +90,14 @@ const Radio = ({
   onChange,
 }: RadioProps) => {
   const theme = useTheme();
+  const isRadioDisabled = resolveDisabled('Radio', disabled, isDisabled);
+  const isRadioChecked = resolveDeprecatedProp({
+    component: 'Radio',
+    prop: 'checked',
+    value: checked,
+    deprecatedProp: 'isChecked',
+    deprecatedValue: isChecked,
+  });
 
   const autoGenId = useId();
   const [isHovered, setIsHovered] = useState(false);
@@ -120,19 +131,23 @@ const Radio = ({
         id={radioId}
         type="radio"
         value={value}
-        checked={isChecked}
+        checked={isRadioChecked}
         onChange={() => typeof onChange === 'function' && onChange(value)}
-        disabled={isDisabled}
+        disabled={isRadioDisabled}
         required={isRequired}
         name={name}
       />
       <Icon
-        name={isChecked ? 'radio-on' : 'circle'}
+        name={isRadioChecked ? 'radio-on' : 'circle'}
         size={20}
         color={
-          isDisabled ? disabledColor : isHovered ? hoveredColor : defaultColor
+          isRadioDisabled
+            ? disabledColor
+            : isHovered
+              ? hoveredColor
+              : defaultColor
         }
-        data-testid={isChecked ? 'radio-on-icon' : 'radio-off-icon'}
+        data-testid={isRadioChecked ? 'radio-on-icon' : 'radio-off-icon'}
       />
       {text ? <span data-testid={id}>{text}</span> : null}
     </RadioBase>

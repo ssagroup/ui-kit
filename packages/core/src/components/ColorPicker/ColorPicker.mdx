@@ -18,7 +18,7 @@ function BasicColorPicker() {
 
   return (
     <ColorPicker
-      defaultColor={selectedColor}
+      defaultValue={selectedColor}
       onChange={setSelectedColor}
       label="Choose Color"
     />
@@ -39,7 +39,7 @@ The component comes with a carefully curated default palette of 15 colors optimi
 
 ```tsx
 <ColorPicker
-  defaultColor="#F463EA"
+  defaultValue="#F463EA"
   onChange={setSelectedColor}
   label="Select from palette"
 />
@@ -51,7 +51,7 @@ Override the default palette with your own brand colors:
 
 ```tsx
 <ColorPicker
-  defaultColor="#FF5E5B"
+  defaultValue="#FF5E5B"
   onChange={setSelectedColor}
   label="Brand Colors"
   colorsPalette={[
@@ -71,7 +71,7 @@ Support for three standard color formats with easy switching:
 
 ```tsx
 <ColorPicker
-  defaultColor="#F463EA"
+  defaultValue="#F463EA"
   defaultFormat="hex" // 'hex' | 'rgb' | 'hsl'
   onChange={setSelectedColor}
   label="Multi-format picker"
@@ -98,9 +98,9 @@ function ControlledPicker() {
   );
 }
 
-// Uncontrolled component (using defaultColor)
+// Uncontrolled component (using defaultValue)
 <ColorPicker
-  defaultColor="#F463EA"
+  defaultValue="#F463EA"
   onChange={setSelectedColor}
   label="Uncontrolled picker"
 />;
@@ -111,7 +111,7 @@ function ControlledPicker() {
 Disable the color picker when needed:
 
 ```tsx
-<ColorPicker defaultColor="#F463EA" disabled={true} label="Disabled picker" />
+<ColorPicker defaultValue="#F463EA" disabled={true} label="Disabled picker" />
 ```
 
 ### Custom Styling
@@ -120,7 +120,7 @@ Apply custom CSS classes to different parts of the component:
 
 ```tsx
 <ColorPicker
-  defaultColor="#F463EA"
+  defaultValue="#F463EA"
   onChange={setSelectedColor}
   label="Styled picker"
   classnames={{

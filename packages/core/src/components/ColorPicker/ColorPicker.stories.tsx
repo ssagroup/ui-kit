@@ -15,22 +15,22 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => {
     const [color, setColor] = useState<string>(
-      args.defaultColor ?? COLORS_PALETTE[0],
+      args.defaultValue ?? COLORS_PALETTE[0],
     );
 
     return (
-      <ColorPicker defaultColor={color} onChange={setColor} label="Label" />
+      <ColorPicker defaultValue={color} onChange={setColor} label="Label" />
     );
   },
 };
 
 export const DifferentColorPalette: Story = {
   render: (args) => {
-    const [color, setColor] = useState<string>(args.defaultColor ?? '#FF5E5B');
+    const [color, setColor] = useState<string>(args.defaultValue ?? '#FF5E5B');
 
     return (
       <ColorPicker
-        defaultColor={color}
+        defaultValue={color}
         onChange={setColor}
         label="Label"
         colorsPalette={[

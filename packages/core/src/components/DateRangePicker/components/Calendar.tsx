@@ -91,7 +91,7 @@ export const DatePickerCalendar = () => {
           <C.Button
             variant="primary"
             onClick={handlePresentClick}
-            isDisabled={isPresentButtonDisabled}
+            disabled={isPresentButtonDisabled}
             data-testid="daterangepicker-present-button"
             css={{
               marginTop: 12,

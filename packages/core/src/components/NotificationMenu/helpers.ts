@@ -8,8 +8,8 @@ export interface DataProps {
 
 export const notificationData: DataProps = {
   groupButtonItems: [
-    { id: 1, text: 'All', isDisabled: false },
-    { id: 2, text: 'Unread', isDisabled: false },
+    { id: 1, text: 'All', disabled: false },
+    { id: 2, text: 'Unread', disabled: false },
   ],
   notificationItems: [
     {
@@ -84,7 +84,7 @@ export const disableButton = (
 ) => {
   return arr.reduce((accBtn: Array<ButtonGroupItem>, btn) => {
     if (!divideOnSubArr(notifyArr)[btn.text].length) {
-      btn.isDisabled = true;
+      btn.disabled = true;
     }
     return [...accBtn, btn];
   }, []);

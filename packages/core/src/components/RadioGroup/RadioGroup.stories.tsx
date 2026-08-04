@@ -15,7 +15,7 @@ export default {
     className: {
       control: { disable: true },
     },
-    externalState: {
+    value: {
       control: { disable: true },
     },
     color: {
@@ -45,12 +45,12 @@ export const HorizontalRadioGroupStories: StoryObj<typeof RadioGroup> = (
     <Fragment>
       <Typography variant="h4">Horizontal Radio Group</Typography>
       <RadioGroup
-        externalState={'orange'}
+        value={'orange'}
         {...args}
         css={{ marginTop: '10px', gap: 10, display: 'flex' }}>
         <Radio id="radio1" value="apple" text="Apple" />
         <Radio id="radio2" value="orange" text="Orange" />
-        <Radio id="radio3" value="banana" text="Banana" isDisabled={true} />
+        <Radio id="radio3" value="banana" text="Banana" disabled={true} />
       </RadioGroup>
     </Fragment>
   );
@@ -75,7 +75,7 @@ export const VerticalRadioGroupStories: StoryObj<typeof RadioGroup> = (
       }}>
       <Radio id="radio21" value="apricot" text="Apricot" />
       <Radio id="radio22" value="avocado" text="Avocado" />
-      <Radio id="radio23" value="cherry" text="Cherry" isDisabled={true} />
+      <Radio id="radio23" value="cherry" text="Cherry" disabled={true} />
     </RadioGroup>
   </Fragment>
 );

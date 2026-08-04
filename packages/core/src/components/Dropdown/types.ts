@@ -87,6 +87,11 @@ export interface DropdownProps<
    * Disabled dropdowns cannot be opened or interacted with
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   */
   isDisabled?: boolean;
 
   /**

@@ -328,7 +328,7 @@ describe('Dropdown', () => {
 
   it('Renders in the disabled state', async () => {
     const { user, mockOnChange, queryByRole, getByTestId } = setup({
-      isDisabled: true,
+      disabled: true,
     });
 
     const dropdownEl = getByTestId('dropdown');
@@ -368,7 +368,7 @@ describe('Dropdown', () => {
     expect(queryByRole('listbox')).toBeInTheDocument();
 
     rerender(
-      <Dropdown isDisabled>
+      <Dropdown disabled>
         {items.map((item, index) => (
           <DropdownOption key={index} value={item.id}>
             {item.value}

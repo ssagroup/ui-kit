@@ -15,9 +15,9 @@ A button group allows users to select one option from a set of related choices. 
 import { ButtonGroup, ButtonGroupItem } from '@ssa-ui-kit/core';
 
 const items: ButtonGroupItem[] = [
-  { id: 1, text: 'All (10)', isDisabled: false },
-  { id: 2, text: 'Running (117)', isDisabled: false },
-  { id: 3, text: 'Stopped (2)', isDisabled: false },
+  { id: 1, text: 'All (10)', disabled: false },
+  { id: 2, text: 'Running (117)', disabled: false },
+  { id: 3, text: 'Stopped (2)', disabled: false },
 ];
 
 function Demo() {
@@ -29,6 +29,42 @@ function Demo() {
 }
 ```
 
+## Composed Usage
+
+When a button needs an icon or any markup an item cannot express, pass
+`ButtonGroupButton` children instead of `items`. Selection stays on the group —
+each button only declares its `id`:
+
+```tsx
+import { ButtonGroup, ButtonGroupButton, Icon } from '@ssa-ui-kit/core';
+
+function ComposedDemo() {
+  const [selected, setSelected] = useState('all');
+
+  return (
+    <ButtonGroup value={selected} onClick={({ id }) => setSelected(id)}>
+      <ButtonGroupButton id="all">All</ButtonGroupButton>
+      <ButtonGroupButton id="running" text="Running">
+        <Icon name="clock" size={14} /> Running
+      </ButtonGroupButton>
+      <ButtonGroupButton id="stopped" disabled>
+        Stopped
+      </ButtonGroupButton>
+    </ButtonGroup>
+  );
+}
+```
+
+Two differences from the `items` API worth knowing:
+
+- An **uncontrolled** composed group starts with nothing selected — pass
+  `defaultValue` to preselect. The `items` API can default to the first item
+  because it can see the list; children mode cannot.
+- The group's `onClick` reports `{ id, text, disabled }` built from the clicked
+  button's props. `id` is always accurate; `text` is filled in only when the
+  button's content is a plain string or its `text` prop is set. Each button can
+  also take its own `onClick`.
+
 ## Features
 
 ### Single Selection
@@ -37,19 +73,20 @@ ButtonGroup automatically manages the active state, ensuring only one button can
 
 ### External State Control
 
-You can control the selected item externally using the `externalState` prop:
+You can control the selected item externally using the `value` prop. Pass the
+item's `id` — usually what you already have in state — or the whole item:
 
 ```tsx
 import { useState } from 'react';
 
 function ControlledDemo() {
-  const [selectedItem, setSelectedItem] = useState(items[0]);
+  const [selectedId, setSelectedId] = useState(items[0].id);
 
   return (
     <ButtonGroup
       items={items}
-      externalState={selectedItem}
-      onClick={setSelectedItem}
+      value={selectedId}
+      onClick={(item) => setSelectedId(item.id)}
     />
   );
 }
@@ -57,13 +94,13 @@ function ControlledDemo() {
 
 ### Disabled Items
 
-Individual buttons can be disabled by setting `isDisabled: true` in the item:
+Individual buttons can be disabled by setting `disabled: true` in the item:
 
 ```tsx
 const itemsWithDisabled: ButtonGroupItem[] = [
-  { id: 1, text: 'Available', isDisabled: false },
-  { id: 2, text: 'Disabled', isDisabled: true },
-  { id: 3, text: 'Active', isDisabled: false },
+  { id: 1, text: 'Available', disabled: false },
+  { id: 2, text: 'Disabled', disabled: true },
+  { id: 3, text: 'Active', disabled: false },
 ];
 ```
 

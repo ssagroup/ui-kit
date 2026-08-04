@@ -25,7 +25,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="monday"
       topText="Mon"
       bottomText="02"
-      ariaControls="monday-panel"
+      aria-controls="monday-panel"
       renderContent={() => (
         <TabContents
           id="monday-panel"
@@ -38,7 +38,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="tuesday"
       topText="Tue"
       bottomText="03"
-      ariaControls="tuesday-panel"
+      aria-controls="tuesday-panel"
       renderContent={() => (
         <TabContents
           id="tuesday-panel"
@@ -51,7 +51,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="wednesday"
       topText="Wed"
       bottomText="04"
-      ariaControls="wednesday-panel"
+      aria-controls="wednesday-panel"
       renderContent={() => (
         <TabContents
           id="wednesday-panel"
@@ -64,7 +64,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="thursday"
       topText="Thu"
       bottomText="05"
-      ariaControls="thursday-panel"
+      aria-controls="thursday-panel"
       renderContent={() => (
         <TabContents
           id="thursday-panel"
@@ -77,7 +77,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="friday"
       topText="Fri"
       bottomText="06"
-      ariaControls="friday-panel"
+      aria-controls="friday-panel"
       renderContent={() => (
         <TabContents
           id="friday-panel"
@@ -90,7 +90,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="saturday"
       topText="Sat"
       bottomText="07"
-      ariaControls="saturday-panel"
+      aria-controls="saturday-panel"
       renderContent={() => (
         <TabContents
           id="saturday-panel"
@@ -103,7 +103,7 @@ const TabBarOutput = ({ args }: { args: Args }) => (
       tabId="sunday"
       topText="Sun"
       bottomText="08"
-      ariaControls="sunday-panel"
+      aria-controls="sunday-panel"
       renderContent={() => (
         <TabContents
           id="sunday-panel"

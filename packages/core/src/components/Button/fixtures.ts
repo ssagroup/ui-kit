@@ -3,7 +3,7 @@ import { ButtonProps } from './types';
 
 export type TestPropsType = Omit<
   ButtonProps,
-  'isDisabled' | 'startIcon' | 'endIcon'
+  'isDisabled' | 'disabled' | 'startIcon' | 'endIcon'
 > & {
   disabled?: boolean;
   startIcon?: React.ComponentProps<typeof Icon>['name'];

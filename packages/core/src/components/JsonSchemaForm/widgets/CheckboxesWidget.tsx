@@ -74,12 +74,12 @@ export const CheckboxesWidget = <
             <Checkbox
               id={optionId(id, i)}
               onChange={() => handleChange(i)}
-              isDisabled={
+              disabled={
                 disabled ||
                 (Array.isArray(enumDisabled) &&
                   enumDisabled.indexOf(option.value) !== -1)
               }
-              initialState={selectedOptions.includes(String(i))}
+              defaultChecked={selectedOptions.includes(String(i))}
               name={id}
               text={option.label}
             />

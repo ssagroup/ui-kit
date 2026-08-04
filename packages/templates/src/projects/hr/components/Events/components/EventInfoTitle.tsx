@@ -66,7 +66,7 @@ export const EventInfoTitle = ({
           <ButtonGroup
             items={ITEMS}
             onClick={handleEventTypeChange}
-            selectedItem={selectedButtonGroupItem}
+            value={selectedButtonGroupItem}
             buttonStyles={
               {
                 height: 40,

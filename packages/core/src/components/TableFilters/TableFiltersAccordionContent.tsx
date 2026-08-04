@@ -4,7 +4,7 @@ import {
 } from '@components/AccordionGroup';
 
 export const TableFiltersAccordionContent = ({
-  isOpened,
+  open,
   children,
   ...rest
 }: RenderContentProps & {
@@ -12,9 +12,9 @@ export const TableFiltersAccordionContent = ({
 }) => (
   <AccordionContent
     {...rest}
-    isOpened={isOpened}
+    open={open}
     css={{
-      padding: isOpened ? '18px 3px 5px 3px' : 0,
+      padding: open ? '18px 3px 5px 3px' : 0,
     }}>
     {children}
   </AccordionContent>

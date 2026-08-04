@@ -24,7 +24,7 @@ export const AccordionTemplate = (
     <Accordion
       id="first"
       title="Basic"
-      ariaControls="first-panel"
+      aria-controls="first-panel"
       renderContent={(props) => (
         <AccordionContent {...props}>
           <Typography>
@@ -44,8 +44,8 @@ export const AccordionTemplate = (
     <Accordion
       id="second"
       title="Advanced"
-      isOpened
-      ariaControls="second-panel"
+      defaultOpen
+      aria-controls="second-panel"
       renderContent={(props) => (
         <AccordionContent {...props}>
           <Typography>
@@ -60,7 +60,7 @@ export const AccordionTemplate = (
     <Accordion
       id="third"
       title="Indicator"
-      ariaControls="third-panel"
+      aria-controls="third-panel"
       renderContent={(props) => (
         <AccordionContent {...props}>
           <Typography>

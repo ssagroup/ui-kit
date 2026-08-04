@@ -55,11 +55,16 @@ export const PopoverTrigger = React.forwardRef<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const childrenElement = children as React.ReactElement<any>;
 
-    // Extract ref from children props BEFORE calling getReferenceProps to avoid conflicts
-    // In React 19, refs are regular props, but forwardRef components may not expose them in children.props.ref
-    // We extract it here for backward compatibility
-    const { ref: existingChildrenRef, ...childrenPropsWithoutRef } =
+    // Extract ref from children BEFORE calling getReferenceProps to avoid conflicts.
+    // React 19 puts refs in `props.ref`; React 18 and earlier strip it from props and
+    // expose it as `element.ref`. Read props first so the React 19 path short-circuits
+    // before touching `element.ref`, which React 19 warns about on access.
+    const { ref: propsRef, ...childrenPropsWithoutRef } =
       childrenElement.props || {};
+    const existingChildrenRef =
+      propsRef ??
+      (childrenElement as { ref?: React.Ref<HTMLElement> }).ref ??
+      undefined;
 
     // Merge all refs: floating-ui's setReference, children's ref, and propRef
     // This ensures positioning works while preserving any refs passed to the child component
@@ -82,9 +87,11 @@ export const PopoverTrigger = React.forwardRef<
     return React.cloneElement(children, referenceProps as any);
   }
 
-  // For non-asChild case, merge refs normally
+  // For non-asChild case, merge refs normally.
+  // Same cross-version ref lookup as the asChild branch above.
   const childrenRef = React.isValidElement(children)
-    ? (children.props as { ref?: React.Ref<unknown> })?.ref
+    ? ((children.props as { ref?: React.Ref<unknown> })?.ref ??
+      (children as { ref?: React.Ref<unknown> }).ref)
     : undefined;
   const ref = useMergeRefs([context?.refs.setReference, propRef, childrenRef]);
 

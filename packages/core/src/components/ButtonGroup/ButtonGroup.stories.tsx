@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { css, useTheme } from '@emotion/react';
+import Icon from '@components/Icon';
 import { ButtonGroup } from './ButtonGroup';
+import { ButtonGroupButton } from './ButtonGroupButton';
 import { items } from './helpers';
+import { ButtonGroupItem } from './types';
 import { ExternalStateStory } from './stories/ExternalState';
 
 export default {
@@ -20,6 +24,32 @@ export const ExternalState: StoryObj<typeof ButtonGroup> = () => {
 };
 
 ExternalState.args = {};
+
+export const Composed: StoryObj<typeof ButtonGroup> = () => {
+  const [selected, setSelected] = useState<ButtonGroupItem['id']>('all');
+
+  return (
+    <ButtonGroup value={selected} onClick={({ id }) => setSelected(id)}>
+      <ButtonGroupButton id="all">All</ButtonGroupButton>
+      <ButtonGroupButton id="running" text="Running">
+        <Icon name="clock" size={14} />
+        <span css={{ marginLeft: 6 }}>Running</span>
+      </ButtonGroupButton>
+      <ButtonGroupButton id="stopped" disabled>
+        Stopped
+      </ButtonGroupButton>
+    </ButtonGroup>
+  );
+};
+
+Composed.parameters = {
+  docs: {
+    description: {
+      story:
+        'Composed children let a button carry an icon or any other markup — the `items` API is limited to plain labels. Selection still lives on the group; each button only needs an `id`.',
+    },
+  },
+};
 
 export const CustomStyle: StoryObj<typeof ButtonGroup> = () => {
   const theme = useTheme();

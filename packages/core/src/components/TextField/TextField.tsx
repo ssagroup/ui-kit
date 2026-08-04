@@ -109,7 +109,7 @@ const TextField = ({
 
   return (
     <>
-      <Label htmlFor={`formElement-${name}`} isDisabled={disabled}>
+      <Label htmlFor={`formElement-${name}`} disabled={disabled}>
         {label}
       </Label>
 

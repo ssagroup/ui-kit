@@ -35,7 +35,7 @@ function TimePeriodTabBar() {
           <Tab
             tabId="year"
             text="Year"
-            ariaControls="year-panel"
+            aria-controls="year-panel"
             renderContent={() => (
               <div id="year-panel" role="tabpanel" aria-labelledby="year">
                 Year content goes here
@@ -45,7 +45,7 @@ function TimePeriodTabBar() {
           <Tab
             tabId="month"
             text="Month"
-            ariaControls="month-panel"
+            aria-controls="month-panel"
             renderContent={() => (
               <div id="month-panel" role="tabpanel" aria-labelledby="month">
                 Month content goes here
@@ -55,7 +55,7 @@ function TimePeriodTabBar() {
           <Tab
             tabId="week"
             text="Week"
-            ariaControls="week-panel"
+            aria-controls="week-panel"
             renderContent={() => (
               <div id="week-panel" role="tabpanel" aria-labelledby="week">
                 Week content goes here
@@ -84,7 +84,7 @@ function WeekTabBar() {
             tabId="monday"
             topText="Mon"
             bottomText="02"
-            ariaControls="monday-panel"
+            aria-controls="monday-panel"
             renderContent={() => (
               <div id="monday-panel" role="tabpanel" aria-labelledby="monday">
                 Monday's schedule and events
@@ -95,7 +95,7 @@ function WeekTabBar() {
             tabId="tuesday"
             topText="Tue"
             bottomText="03"
-            ariaControls="tuesday-panel"
+            aria-controls="tuesday-panel"
             renderContent={() => (
               <div id="tuesday-panel" role="tabpanel" aria-labelledby="tuesday">
                 Tuesday's schedule and events
@@ -187,7 +187,7 @@ The TabBar component includes proper ARIA attributes and keyboard navigation sup
 <Tab
   tabId="settings"
   text="Settings"
-  ariaControls="settings-panel" // Links tab to its content panel
+  aria-controls="settings-panel" // Links tab to its content panel
   renderContent={() => (
     <div
       id="settings-panel"
@@ -256,7 +256,7 @@ function CalendarTabBar() {
           tabId={day.id}
           topText={day.shortName} // "Mon", "Tue", etc.
           bottomText={day.date} // "02", "03", etc.
-          ariaControls={`day-${day.id}-panel`}
+          aria-controls={`day-${day.id}-panel`}
           renderContent={() => (
             <div id={`day-${day.id}-panel`} role="tabpanel">
               <h3>

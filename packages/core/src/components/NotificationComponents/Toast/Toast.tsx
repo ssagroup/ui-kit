@@ -1,5 +1,6 @@
-import { FC, useEffect, useEffectEvent, useId, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useCallbackRef } from '@ssa-ui-kit/hooks';
 
 import {
   NotificationPositions,
@@ -96,10 +97,12 @@ const Toast: FC<ToastProps> = (props) => {
   // each keep independent subscriptions without overwriting each other.
   const instanceId = useId();
 
-  // useEffectEvent gives us a stable function reference that always reads the
-  // latest prop values — no manual refs needed. The effect subscribes once and
-  // never re-runs, while the handler always sees fresh position, maxAmount, etc.
-  const handleDispatch = useEffectEvent((params: DynamicToastParams) => {
+  // useCallbackRef gives us a stable function reference that always reads the
+  // latest prop values. The effect subscribes once and never re-runs, while the
+  // handler always sees fresh position, maxAmount, etc.
+  // Deliberately not React's useEffectEvent: that requires React 19.2+, which
+  // would silently break consumers on 19.0/19.1. See docs-audit/react-19-pin-audit.md.
+  const handleDispatch = useCallbackRef((params: DynamicToastParams) => {
     const resolvedTimeout = 'timeout' in params ? params.timeout : timeout;
     const resolvedWithProgress =
       !!resolvedTimeout &&

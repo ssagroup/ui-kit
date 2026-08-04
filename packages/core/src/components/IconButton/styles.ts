@@ -1,12 +1,30 @@
 import { css, Theme } from '@emotion/react';
 
-export const iconButton = (theme: Theme, transparent: boolean) =>
+/** Box size per `size` value; kept in step with `Button`'s height scale. */
+export const buttonSizes: Record<keyof MainSizes, number> = {
+  small: 36,
+  medium: 46,
+  large: 54,
+};
+
+/** Icon size per `size` value. */
+export const iconSizes: Record<keyof MainSizes, number> = {
+  small: 20,
+  medium: 24,
+  large: 28,
+};
+
+export const iconButton = (
+  theme: Theme,
+  transparent: boolean,
+  size: keyof MainSizes = 'small',
+) =>
   css({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 36,
-    height: 36,
+    width: buttonSizes[size],
+    height: buttonSizes[size],
     padding: 0,
     border: 'none',
     borderRadius: 8,

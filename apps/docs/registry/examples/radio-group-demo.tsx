@@ -11,7 +11,7 @@ export default function RadioGroupDemo() {
     <PreviewRoot>
       <RadioGroup
         name="radio-group-demo-fruit"
-        externalState={selected}
+        value={selected}
         onChange={(value) => setSelected(String(value))}
       >
         <Radio id="radio-group-demo-apple" value="apple" text="Apple" />
@@ -20,7 +20,7 @@ export default function RadioGroupDemo() {
           id="radio-group-demo-banana"
           value="banana"
           text="Banana"
-          isDisabled
+          disabled
         />
       </RadioGroup>
     </PreviewRoot>

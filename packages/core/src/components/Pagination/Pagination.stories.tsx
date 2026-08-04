@@ -68,7 +68,7 @@ export const ManyPages: Story = {
 export const Disabled: Story = {
   args: {
     pagesCount: 10,
-    isDisabled: true,
+    disabled: true,
   },
   parameters: {
     selectedPage: 5,

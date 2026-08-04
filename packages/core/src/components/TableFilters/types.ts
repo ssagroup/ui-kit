@@ -29,6 +29,14 @@ export interface SingleItem {
    * Whether the item is disabled
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * Whether the item is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   * @default false
+   */
   isDisabled?: boolean;
 
   /**
@@ -74,6 +82,14 @@ export interface AccordionInfo {
 
   /**
    * Whether the entire group is disabled
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * Whether the entire group is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
    * @default false
    */
   isDisabled?: boolean;

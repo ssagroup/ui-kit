@@ -1,13 +1,14 @@
 import { css, Theme, useTheme } from '@emotion/react';
 
+import { resolveOpenState } from '@utils/deprecation';
 import { ModalDialogProps } from './types';
 
 const modalDialogWrapper = (
   theme: Theme,
-  isOpen: ModalDialogProps['isOpen'],
+  open: ModalDialogProps['open'],
   noBackground: ModalDialogProps['noBackground'],
 ) => css`
-  display: ${isOpen ? 'flex' : 'none'};
+  display: ${open ? 'flex' : 'none'};
 
   position: fixed;
   inset: 0;
@@ -22,9 +23,9 @@ const modalDialogWrapper = (
 
 const modalDialogContent = (
   theme: Theme,
-  isOpen: ModalDialogProps['isOpen'],
+  open: ModalDialogProps['open'],
 ) => css`
-  display: ${isOpen ? 'flex' : 'none'};
+  display: ${open ? 'flex' : 'none'};
 
   flex-direction: column;
   position: relative;
@@ -43,7 +44,7 @@ const modalDialogContent = (
  *
  * Renders the fixed full-screen overlay and centered dialog box. Used internally
  * by ModalContent; typically not used directly. Handles visibility (display
- * based on isOpen), optional background overlay (noBackground), and dialog
+ * based on open), optional background overlay (noBackground), and dialog
  * ARIA attributes (role="dialog", aria-modal).
  *
  * @category Components
@@ -66,6 +67,7 @@ const modalDialogContent = (
  * - Fixed overlay for focus containment
  */
 const ModalDialog = ({
+  open,
   isOpen,
   noBackground,
   children,
@@ -73,17 +75,28 @@ const ModalDialog = ({
   ...props
 }: ModalDialogProps) => {
   const theme = useTheme();
+  const { open: isDialogOpen } = resolveOpenState(
+    'ModalDialog',
+    { open, isOpen },
+    { controlledAlias: 'isOpen' },
+  );
 
   return (
-    <div
-      role="button"
-      tabIndex={-1}
-      css={modalDialogWrapper(theme, isOpen, noBackground)}>
+    // The overlay is decoration. It used to carry `role="button"` and
+    // `tabIndex={-1}` without a handler or an accessible name, which made it
+    // answer to `getByRole('button')` — and compute its name from whatever the
+    // dialog happened to contain — for no behaviour at all.
+    <div css={modalDialogWrapper(theme, isDialogOpen, noBackground)}>
       <div
         aria-modal="true"
-        aria-labelledby={ariaLabel}
+        // `aria-label`, not `aria-labelledby`: the prop is a label string, and
+        // `aria-labelledby` takes id references. Pointing it at a non-existent
+        // id left the dialog with no accessible name at all. Consumers wanting
+        // to label from a heading can still pass a real `aria-labelledby`
+        // through `...props`, which is spread after this.
+        aria-label={ariaLabel}
         role="dialog"
-        css={modalDialogContent(theme, isOpen)}
+        css={modalDialogContent(theme, isDialogOpen)}
         {...props}>
         {children}
       </div>

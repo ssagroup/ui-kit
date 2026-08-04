@@ -1,4 +1,4 @@
-import { RefObject, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import {
   Control,
   FieldPath,
@@ -67,8 +67,23 @@ export interface CheckboxProps extends Partial<
   onChange?: (newState: boolean) => void;
 
   /**
+   * Checked state, for the controlled pattern. When provided, the parent owns
+   * the value: the checkbox renders exactly what it is given and only reports
+   * intent through `onChange`.
+   *
+   * Note this is stricter than the deprecated `externalState`, which let the
+   * checkbox also toggle itself.
+   */
+  checked?: boolean;
+
+  /**
    * External state control - allows parent component to control checkbox state
    * When provided, the checkbox becomes controlled
+   *
+   * @deprecated Use `checked` instead. Removed in the next major release.
+   * Note the semantics differ slightly: `externalState` is synced *into*
+   * internal state, so the checkbox still toggles on click even when the
+   * parent ignores `onChange`. `checked` is fully controlled.
    */
   externalState?: boolean;
 
@@ -77,11 +92,27 @@ export interface CheckboxProps extends Partial<
    * Disabled checkboxes cannot be interacted with and appear visually muted
    * @default false
    */
+  disabled?: boolean;
+
+  /**
+   * Whether the checkbox is disabled
+   *
+   * @deprecated Use `disabled` instead. Removed in the next major release.
+   * @default false
+   */
   isDisabled?: boolean;
 
   /**
    * Initial checked state when component mounts
    * Only used for uncontrolled checkboxes
+   * @default false
+   */
+  defaultChecked?: boolean;
+
+  /**
+   * Initial checked state when component mounts
+   *
+   * @deprecated Use `defaultChecked` instead. Removed in the next major release.
    * @default false
    */
   initialState?: boolean;
@@ -106,11 +137,6 @@ export interface CheckboxProps extends Partial<
    * @default false
    */
   isRequired?: boolean;
-
-  /**
-   * Ref object to access the underlying input element
-   */
-  ref?: RefObject<HTMLInputElement>;
 
   /**
    * Color variant of the checkbox — controls the checked and focus-state colors.

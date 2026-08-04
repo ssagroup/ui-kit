@@ -47,6 +47,14 @@ export interface PopoverOptions {
    * Initial open state for uncontrolled popover
    * @default false
    */
+  defaultOpen?: boolean;
+
+  /**
+   * Initial open state for uncontrolled popover
+   *
+   * @deprecated Use `defaultOpen` instead — `initialOpen` is removed in the
+   * next major release.
+   */
   initialOpen?: boolean;
 
   /**

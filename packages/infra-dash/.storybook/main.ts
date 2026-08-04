@@ -10,7 +10,12 @@ import initWebpackConfig from '../webpack.config.js';
 import initBabelConfig from '../../../babel.config.js';
 import webpack from 'webpack';
 
-const appWebpackConfig: Configuration = initWebpackConfig();
+// Dual-output packages (`dualOutput: true`) return `[umd, esm]` rather than a
+// single config. Both passes compile the same sources with the same loaders and
+// aliases — which is all Storybook borrows here — so take the first. Without
+// this, `.module.rules` reads as `undefined` on the array and Storybook loses
+// babel-loader entirely: every `.stories.tsx` fails with "Module parse failed".
+const [appWebpackConfig] = [initWebpackConfig()].flat() as Configuration[];
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../**/*.mdx'],

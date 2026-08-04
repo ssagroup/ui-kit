@@ -20,7 +20,7 @@ export const CheckboxWidget = <
     <div>
       <Checkbox
         id={id}
-        initialState={value}
+        defaultChecked={value}
         onChange={onChange}
         text={labelValue(label, hideLabel, '')}
         css={{ marginBottom: 0 }}

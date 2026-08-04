@@ -85,7 +85,7 @@ export default {
         defaultValue: { summary: 'true' },
       },
     },
-    isDisabled: {
+    disabled: {
       description: 'Disables the dropdown, preventing any user interaction.',
       control: 'boolean',
       table: {
@@ -161,7 +161,7 @@ export const Basic: StoryObj = (args: Args) => {
 };
 
 Basic.args = {
-  isDisabled: false,
+  disabled: false,
   isMultiple: true,
   selectedItems: [items[0], items[2]],
   label: 'Strategy',
@@ -180,7 +180,7 @@ export const PlaceholderHidden: StoryObj = (args: Args) => {
 };
 
 PlaceholderHidden.args = {
-  isDisabled: false,
+  disabled: false,
   isMultiple: true,
   selectedItems: [],
   showPlaceholder: false,
@@ -189,7 +189,7 @@ PlaceholderHidden.args = {
 
 export const Single: StoryObj = (args: Args) => {
   return (
-    <MultipleDropdown isDisabled={args.isDisabled} isMultiple={args.isMultiple}>
+    <MultipleDropdown disabled={args.isDisabled} isMultiple={args.isMultiple}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -200,7 +200,7 @@ export const Single: StoryObj = (args: Args) => {
 };
 
 Single.args = {
-  isDisabled: false,
+  disabled: false,
   isMultiple: false,
   selectedItems: [items[0]],
 };
@@ -223,7 +223,7 @@ export const Opened: StoryObj = (args: Args) => {
 
 Opened.args = {
   isOpen: true,
-  isDisabled: false,
+  disabled: false,
   label: 'Strategy',
   isMultiple: true,
   selectedItems: [items[1]],
@@ -239,13 +239,13 @@ export const Simple: StoryObj = (args: Args) => {
   );
 };
 
-Simple.args = { isDisabled: false, label: 'Strategy', selectedItems: [] };
+Simple.args = { disabled: false, label: 'Strategy', selectedItems: [] };
 
 export const NoItems: StoryObj = () => {
   return <MultipleDropdown label="Strategy">{null}</MultipleDropdown>;
 };
 
-NoItems.args = { isDisabled: false, selectedItems: [] };
+NoItems.args = { disabled: false, selectedItems: [] };
 
 export const Custom: StoryObj = (args: Args) => {
   // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
@@ -271,7 +271,7 @@ export const Custom: StoryObj = (args: Args) => {
 
   return (
     <MultipleDropdown
-      isDisabled={args.isDisabled}
+      disabled={args.isDisabled}
       selectedItems={[items[2]]}
       label="Strategy"
       css={css`
@@ -301,7 +301,7 @@ export const Custom: StoryObj = (args: Args) => {
 };
 
 Custom.args = {
-  isDisabled: false,
+  disabled: false,
 };
 
 export const LegacyStyle: StoryObj<Args> = {
@@ -322,11 +322,11 @@ export const LegacyStyle: StoryObj<Args> = {
   ),
 };
 
-LegacyStyle.args = { isDisabled: false, isMultiple: true };
+LegacyStyle.args = { disabled: false, isMultiple: true };
 
 export const Disabled: StoryObj<Args> = {
   render: () => (
-    <MultipleDropdown label="Strategy" isDisabled selectedItems={[items[0]]}>
+    <MultipleDropdown label="Strategy" disabled selectedItems={[items[0]]}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -336,7 +336,7 @@ export const Disabled: StoryObj<Args> = {
   ),
 };
 
-Disabled.args = { isDisabled: true };
+Disabled.args = { disabled: true };
 
 export const DynamicallyChangedItems = (args: Args) => {
   const [localItems, setLocalItems] = useState(items);
@@ -368,7 +368,7 @@ export const DynamicallyChangedItems = (args: Args) => {
 };
 
 DynamicallyChangedItems.args = {
-  isDisabled: false,
+  disabled: false,
   isMultiple: true,
   selectedItems: [items[0], items[2]],
   label: 'Strategy2',

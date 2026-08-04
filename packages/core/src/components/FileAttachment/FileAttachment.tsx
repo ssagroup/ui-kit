@@ -1,5 +1,6 @@
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
+import { resolveDisabled } from '@utils/deprecation';
 import { FileAttachmentProps } from './types';
 import { formatBytes, getFileTypeIcon, isImageFile } from './utils';
 import { useFilePreviewUrl } from './hooks';
@@ -47,12 +48,15 @@ const FileAttachment = ({
   uploadedText = 'Uploaded Successfully',
   showDescription = true,
   icon,
-  isDisabled = false,
+  disabled,
+  isDisabled,
   onRemove,
   className,
   css: cssProp,
 }: FileAttachmentProps) => {
   const theme = useTheme();
+  const isAttachmentDisabled =
+    resolveDisabled('FileAttachment', disabled, isDisabled) ?? false;
   const clampedProgress =
     progress === undefined ? undefined : Math.min(100, Math.max(0, progress));
   const isUploaded = clampedProgress !== undefined && clampedProgress >= 100;
@@ -69,7 +73,7 @@ const FileAttachment = ({
     <div
       css={[
         S.container(theme, size),
-        isDisabled && S.disabledContainer(theme),
+        isAttachmentDisabled && S.disabledContainer(theme),
         cssProp,
       ]}
       className={className}>
@@ -104,7 +108,15 @@ const FileAttachment = ({
                 <span>|</span>
                 {progressDisplay === 'bar' ? (
                   <>
-                    <div css={S.progressTrack(theme)} role="progressbar">
+                    <div
+                      css={S.progressTrack(theme)}
+                      role="progressbar"
+                      // A progressbar role needs a name and a value, or screen
+                      // readers announce only "progress bar".
+                      aria-label={`Uploading ${file.name}`}
+                      aria-valuenow={clampedProgress}
+                      aria-valuemin={0}
+                      aria-valuemax={100}>
                       <div
                         css={S.progressFill(theme)}
                         style={{ width: `${clampedProgress}%` }}
@@ -129,7 +141,7 @@ const FileAttachment = ({
         <button
           type="button"
           css={S.deleteButton(theme)}
-          disabled={isDisabled}
+          disabled={isAttachmentDisabled}
           onClick={onRemove}
           aria-label={`Remove ${file.name}`}>
           <Icon name="delete" size={16} color="currentColor" />

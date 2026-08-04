@@ -109,7 +109,7 @@ export const FiltersMultiSelect = ({
                   store.toggleDropdown(open);
                 }
               },
-              open: store.opened,
+              open: store.open,
             }}>
             <PopoverTrigger asChild>
               <Wrapper
@@ -171,7 +171,7 @@ export const FiltersMultiSelect = ({
                 <Button
                   data-testid="clear-all-filters"
                   variant="tertiary"
-                  isDisabled={disabled}
+                  disabled={disabled}
                   css={{
                     height: '32px',
                     display:
@@ -196,7 +196,7 @@ export const FiltersMultiSelect = ({
                     />
                   }
                 />
-                {store.opened ? (
+                {store.open ? (
                   <Icon name="carrot-up" size={12} />
                 ) : (
                   <Icon name="carrot-down" size={12} />

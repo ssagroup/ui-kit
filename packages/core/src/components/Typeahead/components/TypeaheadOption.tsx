@@ -11,8 +11,15 @@ export const TypeaheadOption = ({
   ...rest
 }: TypeaheadItemProps) => {
   const theme = useTheme();
+
+  // `disabled` is the supported spelling, but the styled <li> below would
+  // forward it to the DOM, where it is not valid on an <li>. useTypeahead has
+  // already resolved it into `isDisabled`, which emotion filters out.
+  const optionProps = { ...rest };
+  delete optionProps.disabled;
+
   return (
-    <S.TypeaheadOption {...rest}>
+    <S.TypeaheadOption {...optionProps}>
       {avatar && (
         <S.TypeaheadItemAvatar data-testid="typeahead-option-avatar">
           {avatar}

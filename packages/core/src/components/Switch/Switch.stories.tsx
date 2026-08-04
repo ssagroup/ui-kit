@@ -92,7 +92,7 @@ export const Colors: StoryObj<typeof Switch> = {
               }}>
               <Typography variant="caption">Disabled</Typography>
               <SwitchContextProvider initialState={true}>
-                <Switch label={`${color} disabled`} color={color} isDisabled />
+                <Switch label={`${color} disabled`} color={color} disabled />
               </SwitchContextProvider>
             </div>
           </div>
@@ -141,13 +141,13 @@ export const Disabled: StoryObj<typeof Switch> = {
     <Fragment>
       <Typography variant="h5">Disabled — On</Typography>
       <SwitchContextProvider initialState={true}>
-        <Switch {...args} isDisabled />
+        <Switch {...args} disabled />
       </SwitchContextProvider>
       <Typography variant="h5" css={{ marginTop: 10 }}>
         Disabled — Off
       </Typography>
       <SwitchContextProvider initialState={false}>
-        <Switch {...args} isDisabled />
+        <Switch {...args} disabled />
       </SwitchContextProvider>
     </Fragment>
   ),

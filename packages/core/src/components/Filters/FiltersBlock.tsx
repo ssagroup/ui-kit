@@ -41,7 +41,7 @@ export const FiltersBlock = () => {
                 <DropdownOption
                   key={`${accordionInfo.id}${item.name}`}
                   value={item.name}
-                  isDisabled={item.isDisabled}>
+                  disabled={item.isDisabled}>
                   {item.content.text}
                 </DropdownOption>
               );

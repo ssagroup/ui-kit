@@ -1,18 +1,12 @@
 
-> @ssa-ui-kit/docs@0.0.0 build /home/runner/work/ui-kit/ui-kit/apps/docs
+> @ssa-ui-kit/docs@0.0.0 build /Users/yaroslav/Desktop/SuperFolder/projects/ui-kit/apps/docs
 > next build
-
-⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
-Attention: Next.js now collects completely anonymous telemetry regarding usage.
-This information is used to shape Next.js' roadmap and prioritize features.
-You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-https://nextjs.org/telemetry
 
    ▲ Next.js 15.5.19
 
-[MDX] updated map file in 377.17095300000005ms
+[MDX] updated map file in 10.86474999999973ms
    Creating an optimized production build ...
- ✓ Compiled successfully in 46s
+ ✓ Compiled successfully in 3.5s
    Skipping linting
    Checking validity of types ...
    Collecting page data ...
@@ -36,7 +30,7 @@ Route (app)                                 Size  First Load JS
 + First Load JS shared by all             103 kB
   ├ chunks/1026-5dcfe6108b8acdb1.js      46.1 kB
   ├ chunks/808d3bc2-829ffcc9fde7ccd9.js  54.2 kB
-  └ other shared chunks (total)          3.13 kB
+  └ other shared chunks (total)          3.09 kB
 
 
 ○  (Static)   prerendered as static content

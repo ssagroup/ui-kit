@@ -238,7 +238,7 @@ describe('Tooltip', () => {
 
   it('Shows up by default', () => {
     const { queryByText } = setup(
-      <Tooltip isOpen>
+      <Tooltip defaultOpen>
         <TooltipTrigger>
           <Button size="medium" text="Click me!" />
         </TooltipTrigger>

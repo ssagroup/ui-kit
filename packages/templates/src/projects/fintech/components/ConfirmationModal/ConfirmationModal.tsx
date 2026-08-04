@@ -22,7 +22,17 @@ export const ConfirmationModal = ({
     onClose?.();
   };
   return (
-    <Modal isOpen={isOpen}>
+    // `open` is fully controlled, so the modal cannot move itself: without
+    // `onOpenChange` the ModalOpenButton and the ModalDismissButtons inside
+    // ModalButtons would fire and do nothing. Closing goes through the modals
+    // context, which unmounts this whole subtree.
+    <Modal
+      open={isOpen}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) {
+          onCloseHandle();
+        }
+      }}>
       {trigger ? <ModalOpenButton>{trigger}</ModalOpenButton> : null}
       <ModalContent>
         <ModalHeader title={title} onClose={onCloseHandle} />

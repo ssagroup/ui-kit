@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import Checkbox from '@components/Checkbox';
 import { useMultipleDropdownContext } from '@components/MultipleDropdown/MultipleDropdown.context';
 import DropdownOption from '@components/DropdownOption';
+import { resolveAriaProp, resolveDisabled } from '@utils/deprecation';
 
 import { checkboxStyles } from '@components/Checkbox/styles';
 import { DropdownItemsListProps } from './types';
@@ -77,12 +78,19 @@ const DropdownOptionButton = styled.div<{
 const noItemsMsg = { id: Number.NaN, value: 'No items' };
 
 const MultipleDropdownOptions = ({
+  'aria-labelledby': ariaLabelledbyNative,
   ariaLabelledby,
   id,
   children,
 }: DropdownItemsListProps) => {
   const { onChange, allItems, isMultiple, maxHeight } =
     useMultipleDropdownContext();
+  const labelledby = resolveAriaProp(
+    'MultipleDropdownOptions',
+    'aria-labelledby',
+    ariaLabelledbyNative,
+    ariaLabelledby,
+  );
 
   const toggleItem = (value: string | number, isDisabled: boolean) => {
     if (!isDisabled) {
@@ -97,7 +105,13 @@ const MultipleDropdownOptions = ({
   const options = (childrenArray as React.ReactElement<any>[]).map((child) => {
     const element = allItems[child.props.value];
     const isActive = Boolean(element?.isSelected);
-    const isDisabled = Boolean(element?.isDisabled);
+    const isDisabled = Boolean(
+      resolveDisabled(
+        'DropdownOption',
+        element?.disabled as unknown as boolean | undefined,
+        element?.isDisabled as unknown as boolean | undefined,
+      ),
+    );
 
     return React.cloneElement(
       child,
@@ -117,9 +131,8 @@ const MultipleDropdownOptions = ({
         role="button">
         {isMultiple && (
           <Checkbox
-            initialState={isActive}
-            externalState={isActive}
-            isDisabled={isDisabled}
+            checked={isActive}
+            disabled={isDisabled}
             css={{
               margin: 0,
             }}
@@ -146,7 +159,7 @@ const MultipleDropdownOptions = ({
       role="listbox"
       tabindex="-1"
       id={id}
-      aria-labelledby={ariaLabelledby}
+      aria-labelledby={labelledby}
       maxHeight={maxHeight}>
       {options}
     </DropdownOptionsBase>
