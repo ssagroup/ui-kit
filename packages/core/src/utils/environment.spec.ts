@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
 import { isDevEnvironment } from './environment';
 
 describe('utils => isDevEnvironment', () => {
@@ -38,5 +41,53 @@ describe('utils => isDevEnvironment', () => {
     expect(isDevEnvironment()).toBe(false);
 
     globalThis.process = original;
+  });
+
+  // The bug this guards against only ever appears in a browser: a bundler
+  // substitutes the literal `process.env.NODE_ENV` token and leaves everything
+  // else alone, so any `typeof process` check in front of it survives into a
+  // runtime with no `process` global and vetoes the substituted value. Jest
+  // always has `process`, so reproduce the consumer's bundle directly —
+  // substitute, drop `process`, then run it.
+  describe('the shape a consumer bundler actually ships', () => {
+    const bundleFor = (nodeEnv: string) => {
+      const source = readFileSync(join(__dirname, 'environment.ts'), 'utf8');
+      const substituted = source
+        .replace(/export const/, 'return')
+        .replace(/process\.env\.NODE_ENV/g, JSON.stringify(nodeEnv))
+        .replace(/: boolean/g, '');
+
+      return new Function(substituted)() as () => boolean;
+    };
+
+    const withoutProcess = (run: () => void) => {
+      const original = globalThis.process;
+      delete (globalThis as { process?: unknown }).process;
+
+      try {
+        run();
+      } finally {
+        globalThis.process = original;
+      }
+    };
+
+    it('is true in a browser dev build, so warnings actually fire', () => {
+      const bundled = bundleFor('development');
+
+      withoutProcess(() => expect(bundled()).toBe(true));
+    });
+
+    it('is false in a browser production build', () => {
+      const bundled = bundleFor('production');
+
+      withoutProcess(() => expect(bundled()).toBe(false));
+    });
+
+    it('has no `typeof process` guard in front of the substituted value', () => {
+      const source = readFileSync(join(__dirname, 'environment.ts'), 'utf8');
+      const body = source.slice(source.indexOf('export const'));
+
+      expect(body).not.toContain('typeof process');
+    });
   });
 });
