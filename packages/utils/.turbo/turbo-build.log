@@ -1,6 +1,6 @@
 
-> @ssa-ui-kit/utils@3.20.1 build /home/runner/work/ui-kit/ui-kit/packages/utils
-> node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
+> @ssa-ui-kit/utils@3.20.2 build /home/runner/work/ui-kit/ui-kit/packages/utils
+> node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && node ../../scripts/verify-esm-bundle.mjs && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
 
 clean(utils): nothing to remove
 Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
@@ -10,11 +10,12 @@ asset [1m[32mindex.js[39m[22m 10.5 KiB [1m[32m[emitted][39m[22m (name: m
 orphan modules 7.3 KiB [1m[33m[orphan][39m[22m 20 modules
 runtime modules 670 bytes 3 modules
 [1m./src/index.ts + 17 modules[39m[22m 7.71 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 1663 ms
+webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 1332 ms
 
 asset [1m[32mindex.mjs[39m[22m 9.36 KiB [1m[32m[emitted][39m[22m [javascript module] (name: main)
 orphan modules 7.3 KiB [1m[33m[orphan][39m[22m 20 modules
 runtime modules 670 bytes 3 modules
 [1m./src/index.ts + 17 modules[39m[22m 7.71 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 1064 ms
+webpack 5.103.0 compiled [1m[32msuccessfully[39m[22m in 845 ms
+verify-esm-bundle(utils): ok — 0 externals, 15 exports load without a bundler
 [1mresolve-tspaths:[22m changed 0 file(s)

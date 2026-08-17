@@ -1,6 +1,6 @@
 {
   "name": "@ssa-ui-kit/core",
-  "version": "3.20.1",
+  "version": "3.20.2",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

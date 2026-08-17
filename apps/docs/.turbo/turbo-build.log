@@ -8,11 +8,11 @@ This information is used to shape Next.js' roadmap and prioritize features.
 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
 https://nextjs.org/telemetry
 
+[MDX] updated map file in 26.445420000000013ms
    ▲ Next.js 15.5.19
 
-[MDX] updated map file in 80.00873100000013ms
    Creating an optimized production build ...
- ✓ Compiled successfully in 46s
+ ✓ Compiled successfully in 37.2s
    Skipping linting
    Checking validity of types ...
    Collecting page data ...
@@ -27,7 +27,7 @@ https://nextjs.org/telemetry
 Route (app)                                 Size  First Load JS
 ┌ ○ /                                      165 B         107 kB
 ├ ○ /_not-found                             1 kB         104 kB
-├ ƒ /api/search                            127 B         104 kB
+├ ƒ /api/search                            127 B         103 kB
 └ ● /docs/[[...slug]]                    15.1 kB         135 kB
     ├ /docs/avatar
     ├ /docs/badge
@@ -36,7 +36,7 @@ Route (app)                                 Size  First Load JS
 + First Load JS shared by all             103 kB
   ├ chunks/1026-5dcfe6108b8acdb1.js      46.1 kB
   ├ chunks/808d3bc2-829ffcc9fde7ccd9.js  54.2 kB
-  └ other shared chunks (total)          3.09 kB
+  └ other shared chunks (total)          2.61 kB
 
 
 ○  (Static)   prerendered as static content
