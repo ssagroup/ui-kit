@@ -18,7 +18,7 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 const mockReact = React;
-jest.mock('react-plotly.js', () => ({
+jest.mock('@components/Charts/common/Plot', () => ({
   __esModule: true,
   default: ({ data, layout }: { data: unknown[]; layout: unknown }) =>
     mockReact.createElement('div', {

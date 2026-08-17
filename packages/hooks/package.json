@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "clean": "node ../../scripts/clean.mjs",
-    "build": "node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && tsc --build && resolve-tspaths",
+    "build": "node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && node ../../scripts/verify-esm-bundle.mjs && tsc --build && resolve-tspaths",
     "ts-show-config": "tsc --showConfig -p ./tsconfig.json",
     "ts-check": "tsc -p ./tsconfig.json"
   },

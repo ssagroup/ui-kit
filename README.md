@@ -238,6 +238,37 @@ export default defineConfig({
 });
 ```
 
+### `Element type is invalid ... but got: object` under `vite dev`
+
+Fixed. If you are on 3.20.1 or earlier, the symptom is a chart or colour-picker
+component that renders fine after `vite build` but throws under `vite dev` —
+often as a 404 and a reload loop, and only once the component actually mounts:
+
+```
+Element type is invalid: expected a string (for built-in components) or a
+class/function (for composite components) but got: object.
+```
+
+The ESM bundle externalised two CommonJS-only packages (`react-plotly.js`,
+`@rc-component/color-picker`) and imported them as `import { default as X } from
+'…'`. A plain ESM loader binds `default` to the whole `module.exports` of a
+CommonJS module — `__esModule` is a bundler convention, not part of the interop
+spec — so `X` arrived as `{ __esModule: true, default: Component }`. Rollup
+rewrites those dependencies during `vite build`, which is why only `vite dev`
+was affected, and only for deps Vite chose not to pre-bundle.
+
+Both are now bundled into the kit, so no consumer configuration is needed.
+On an older version, the workaround is to force Vite to pre-bundle them:
+
+```typescript
+export default defineConfig({
+  optimizeDeps: {
+    exclude: ['@ssa-ui-kit/core'],
+    include: ['react-plotly.js', '@rc-component/color-picker'],
+  },
+});
+```
+
 <details>
 <summary>Legacy workaround (required for versions before the ESM build)</summary>
 

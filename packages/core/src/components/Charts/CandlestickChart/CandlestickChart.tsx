@@ -1,5 +1,6 @@
 import { renderToString } from 'react-dom/server';
-import Plot, { PlotParams } from 'react-plotly.js';
+import { PlotParams } from 'react-plotly.js';
+import Plot from '@components/Charts/common/Plot';
 import { useTheme } from '@emotion/react';
 
 import {

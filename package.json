@@ -132,6 +132,7 @@
     "jest-cli": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "jest-watch-typeahead": "2.2.2",
+    "jsdom": "20.0.3",
     "jsdom-testing-mocks": "1.16.0",
     "lint-staged": "15.5.2",
     "postcss-styled-syntax": "0.7.1",

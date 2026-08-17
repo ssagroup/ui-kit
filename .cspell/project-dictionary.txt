@@ -211,3 +211,11 @@ yref
 yshift
 yvals
 zeroline
+externalise
+externalised
+externalises
+externalising
+synthesise
+synthesised
+synthesises
+extensionless

@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
-import Plot from 'react-plotly.js';
+import Plot from '@components/Charts/common/Plot';
 import { useTheme } from '@emotion/react';
 import { debounce, pathOr } from '@ssa-ui-kit/utils';
 import Wrapper from '@components/Wrapper';
