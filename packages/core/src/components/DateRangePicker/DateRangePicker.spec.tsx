@@ -5,7 +5,16 @@ import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
 import { DateRangePicker } from '@components';
 import { DEFAULT_MASK_FORMAT, DEFAULT_MONTH_MASK_FORMAT } from './constants';
-import { DateRangePickerProps } from './types';
+import { DateRangePreset, DateRangePickerProps } from './types';
+import {
+  DEFAULT_DATE_RANGE_PRESETS,
+  currentMonthPreset,
+  currentWeekPreset,
+  lastMonthPreset,
+  lastWeekPreset,
+  todayPreset,
+  yesterdayPreset,
+} from './utils/presets';
 import { FormGroup, mainTheme } from '../..';
 
 describe('DateRangePicker', () => {
@@ -764,5 +773,287 @@ describe('DateRangePicker', () => {
         null, // end date (null means "Present")
       ]),
     );
+  });
+
+  describe('presets', () => {
+    const fixedPreset: DateRangePreset = {
+      label: 'Fixed range',
+      dateRange: [new Date(2025, 0, 10), new Date(2025, 0, 20)],
+    };
+
+    const openCalendar = async (
+      user: ReturnType<typeof userEvent.setup>,
+      getByTestId: (id: string) => HTMLElement,
+    ) => {
+      await user.click(getByTestId('daterangepicker-button'));
+    };
+
+    it('should not render the presets panel when [presets] is omitted', async () => {
+      const { user, getByTestId, queryByTestId } = setup();
+      await openCalendar(user, getByTestId);
+      expect(queryByTestId('daterangepicker-presets')).not.toBeInTheDocument();
+    });
+
+    it('should not render the presets panel for an empty [presets] array', async () => {
+      const { user, getByTestId, queryByTestId } = setup({ presets: [] });
+      await openCalendar(user, getByTestId);
+      expect(queryByTestId('daterangepicker-presets')).not.toBeInTheDocument();
+    });
+
+    it('should render one item per preset', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        presets: DEFAULT_DATE_RANGE_PRESETS,
+      });
+      await openCalendar(user, getByTestId);
+
+      const panel = getByTestId('daterangepicker-presets');
+      expect(panel).toBeVisible();
+      expect(within(panel).getAllByRole('button')).toHaveLength(
+        DEFAULT_DATE_RANGE_PRESETS.length,
+      );
+      expect(
+        within(getByRole('dialog')).getByText('Current month'),
+      ).toBeInTheDocument();
+    });
+
+    it('should apply the range to both inputs and emit onChange when a preset is clicked', async () => {
+      const { user, getByTestId, mockOnChange } = setup({
+        presets: [fixedPreset],
+      });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-input-from')).toHaveValue(
+          '01/10/2025',
+        );
+      });
+      expect(getByTestId('daterangepicker-input-to')).toHaveValue('01/20/2025');
+      expect(mockOnChange).toHaveBeenCalledWith([
+        new Date(2025, 0, 10),
+        new Date(2025, 0, 20),
+      ]);
+    });
+
+    it('should keep the calendar open after applying a preset', async () => {
+      const { user, getByTestId } = setup({ presets: [fixedPreset] });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      expect(getByTestId('daterangepicker-calendar')).toBeVisible();
+    });
+
+    it('should mark the matching preset as pressed and unmark the others', async () => {
+      const { user, getByTestId } = setup({
+        presets: [fixedPreset, todayPreset],
+      });
+      await openCalendar(user, getByTestId);
+
+      expect(getByTestId('daterangepicker-preset-0')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      );
+
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-preset-0')).toHaveAttribute(
+          'aria-pressed',
+          'true',
+        );
+      });
+      expect(getByTestId('daterangepicker-preset-1')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      );
+    });
+
+    it('should start a new range when a day is clicked after a preset', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        presets: [fixedPreset],
+      });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-input-to')).toHaveValue(
+          '01/20/2025',
+        );
+      });
+
+      // The calendar view sits on January 2025 after the preset, so day 5 is
+      // the start of a brand-new range rather than the end of the preset one.
+      const day5 = within(getByRole('dialog'))
+        .getAllByText('5')
+        .filter((day) => day.getAttribute('aria-disabled') === 'false');
+      await user.click(day5[0]);
+
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-input-from')).toHaveValue(
+          '01/05/2025',
+        );
+      });
+      expect(getByTestId('daterangepicker-input-to')).toHaveValue('');
+    });
+
+    // Only the day grid labels its cells with a full date, so their presence
+    // is what tells the three calendar views apart.
+    const dayCells = (dialogEl: HTMLElement) =>
+      within(dialogEl).queryAllByLabelText(/^\w+, \w+ \d{1,2}, \d{4}$/);
+
+    it('should return to the day grid when a preset is applied from a drilled-down view', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        presets: [fixedPreset],
+      });
+      await openCalendar(user, getByTestId);
+      const dialogEl = getByRole('dialog');
+      expect(dayCells(dialogEl).length).toBeGreaterThan(0);
+
+      // Drill down into the year grid — the day cells go away with it.
+      await user.click(getByTestId('calendar-type-change-button'));
+      expect(dayCells(dialogEl)).toHaveLength(0);
+
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      // The applied range has to be visible where the user can adjust it.
+      await waitFor(() => {
+        expect(dayCells(dialogEl).length).toBeGreaterThan(0);
+      });
+    });
+
+    it('should return to the base view of the picker type, not the day grid', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        rangePickerType: 'months',
+        presets: [fixedPreset],
+      });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('calendar-type-change-button'));
+
+      const dialogEl = getByRole('dialog');
+      expect(within(dialogEl).queryByText('Jan')).not.toBeInTheDocument();
+
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      // A months picker goes back to its month grid — never to a day grid it
+      // does not use.
+      await waitFor(() => {
+        expect(within(dialogEl).getByText('Jan')).toBeInTheDocument();
+      });
+      expect(dayCells(dialogEl)).toHaveLength(0);
+    });
+
+    it('should swap a reversed preset range', async () => {
+      const { user, getByTestId } = setup({
+        presets: [
+          {
+            label: 'Reversed',
+            dateRange: [new Date(2025, 0, 20), new Date(2025, 0, 10)],
+          },
+        ],
+      });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-input-from')).toHaveValue(
+          '01/10/2025',
+        );
+      });
+      expect(getByTestId('daterangepicker-input-to')).toHaveValue('01/20/2025');
+    });
+
+    it('should clamp a preset range to [dateMin] / [dateMax]', async () => {
+      const { user, getByTestId } = setup({
+        dateMin: '01/12/2025',
+        dateMax: '01/18/2025',
+        presets: [fixedPreset],
+      });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-input-from')).toHaveValue(
+          '01/12/2025',
+        );
+      });
+      expect(getByTestId('daterangepicker-input-to')).toHaveValue('01/18/2025');
+    });
+
+    it('should ignore a preset range that falls entirely outside the bounds', async () => {
+      const { user, getByTestId, mockOnChange } = setup({
+        dateMin: '01/01/2026',
+        dateMax: '12/31/2026',
+        presets: [fixedPreset],
+      });
+      await openCalendar(user, getByTestId);
+      await user.click(getByTestId('daterangepicker-preset-0'));
+
+      expect(getByTestId('daterangepicker-input-from')).toHaveValue('');
+      expect(getByTestId('daterangepicker-input-to')).toHaveValue('');
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it('should resolve a function preset at click time', async () => {
+      const dateRange = jest.fn(
+        () => [new Date(2025, 0, 10), new Date(2025, 0, 20)] as [Date, Date],
+      );
+      const { user, getByTestId } = setup({
+        presets: [{ label: 'Lazy', dateRange }],
+      });
+      await openCalendar(user, getByTestId);
+      expect(dateRange).toHaveBeenCalled();
+
+      await user.click(getByTestId('daterangepicker-preset-0'));
+      await waitFor(() => {
+        expect(getByTestId('daterangepicker-input-from')).toHaveValue(
+          '01/10/2025',
+        );
+      });
+    });
+  });
+
+  describe('built-in presets', () => {
+    beforeEach(() => {
+      // Wednesday, 15 July 2026 — mid-week and mid-month, so week and month
+      // boundaries are unambiguous.
+      jest.useFakeTimers({ doNotFake: ['nextTick'] });
+      jest.setSystemTime(new Date(2026, 6, 15, 12, 0, 0));
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    const resolve = (preset: DateRangePreset) =>
+      (typeof preset.dateRange === 'function'
+        ? preset.dateRange()
+        : preset.dateRange
+      ).map((date) => DateTime.fromJSDate(date).toFormat('MM/dd/yyyy'));
+
+    it.each([
+      ['Today', todayPreset, ['07/15/2026', '07/15/2026']],
+      ['Yesterday', yesterdayPreset, ['07/14/2026', '07/14/2026']],
+      ['Current week', currentWeekPreset, ['07/13/2026', '07/19/2026']],
+      ['Last week', lastWeekPreset, ['07/06/2026', '07/12/2026']],
+      ['Current month', currentMonthPreset, ['07/01/2026', '07/31/2026']],
+      ['Last month', lastMonthPreset, ['06/01/2026', '06/30/2026']],
+    ])(
+      'should resolve "%s" relative to the current date',
+      (_label, preset, expected) => {
+        expect(resolve(preset)).toEqual(expected);
+      },
+    );
+
+    it('should normalize both ends to midnight so a preset matches a hand-picked range', () => {
+      const [from, to] = (currentMonthPreset.dateRange as () => [Date, Date])();
+      [from, to].forEach((date) => {
+        expect([
+          date.getHours(),
+          date.getMinutes(),
+          date.getSeconds(),
+          date.getMilliseconds(),
+        ]).toEqual([0, 0, 0, 0]);
+      });
+    });
   });
 });

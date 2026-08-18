@@ -200,6 +200,78 @@ range. With no **`defaultValue`** it empties both fields:
 />
 ```
 
+### Presets
+
+Pass **`presets`** to list shortcut ranges to the left of the calendar. Clicking one applies
+the range and **keeps the popover open**, so the user can still fine-tune the dates by hand;
+the matching item stays highlighted while the range is unchanged. Nothing renders when the
+prop is omitted or empty, so the popover keeps its original width.
+
+Use the ready-made set:
+
+```tsx
+import { DateRangePicker, DEFAULT_DATE_RANGE_PRESETS } from '@ssa-ui-kit/core';
+
+<DateRangePicker
+  name="report"
+  label="Reporting period"
+  presets={DEFAULT_DATE_RANGE_PRESETS}
+  onChange={handleDateRangeChange}
+/>;
+```
+
+**`DEFAULT_DATE_RANGE_PRESETS`** contains **Today**, **Yesterday**, **Current week**,
+**Last week**, **Current month**, and **Last month**. Each one is also exported on its own
+(**`todayPreset`**, **`yesterdayPreset`**, **`currentWeekPreset`**, **`lastWeekPreset`**,
+**`currentMonthPreset`**, **`lastMonthPreset`**) so the set and its order can be composed:
+
+```tsx
+import {
+  DateRangePicker,
+  todayPreset,
+  currentMonthPreset,
+  type DateRangePreset,
+} from '@ssa-ui-kit/core';
+
+const lastSevenDays: DateRangePreset = {
+  label: 'Last 7 days',
+  // A function is resolved at click time, so a relative range can never go
+  // stale in an app that stays open across midnight.
+  dateRange: () => {
+    const to = new Date();
+    const from = new Date(to);
+    from.setDate(from.getDate() - 6);
+    return [from, to];
+  },
+};
+
+const fixedQuarter: DateRangePreset = {
+  label: 'Q1 2025',
+  // A fixed range can be a plain tuple.
+  dateRange: [new Date(2025, 0, 1), new Date(2025, 2, 31)],
+};
+
+<DateRangePicker
+  name="report"
+  presets={[todayPreset, lastSevenDays, currentMonthPreset, fixedQuarter]}
+/>;
+```
+
+Every entry follows the same shape — a **`label`** and a **`dateRange`**. A reversed tuple is
+swapped, ends outside **`dateMin`** / **`dateMax`** are clamped to those bounds, and a range
+lying entirely outside them is ignored. After a preset is applied, the next click in the
+calendar starts a **new** range rather than moving the end date.
+
+Style the column through **`classNames.presets`**:
+
+```tsx
+<DateRangePicker
+  name="report"
+  presets={DEFAULT_DATE_RANGE_PRESETS}
+  classNames={{ presets: { root: 'custom-presets', item: 'custom-preset' } }}
+/>
+```
+
 ### Disabled State
 
 Disable the date range picker when needed:
@@ -252,6 +324,10 @@ Apply custom CSS classes to different parts of the component:
     },
     calendar: 'custom-calendar',
     label: 'custom-label',
+    presets: {
+      root: 'custom-presets',
+      item: 'custom-preset',
+    },
   }}
 />
 ```
