@@ -71,6 +71,7 @@ export const useDateRangePicker = ({
     React.SetStateAction<'start' | 'end' | null>
   >;
   clearInputValue: (field: 'from' | 'to') => void;
+  applyDateRange: (from: Date, to: Date) => void;
   isEndDatePresent: boolean;
   setIsEndDatePresent: React.Dispatch<React.SetStateAction<boolean>>;
   setLastChangedDate: React.Dispatch<
@@ -198,6 +199,61 @@ export const useDateRangePicker = ({
 
     // Notify parent: undefined = cleared, null = "Present" (end date only)
     onChange?.(newLastChangedDate);
+  };
+
+  /**
+   * Applies a whole range in one step — what the **presets** list needs, and
+   * what the two-click calendar flow cannot express. Everything the calendar
+   * flow touches is updated together (anchors, view, form fields, parent
+   * `onChange`) so a preset lands the picker in exactly the state two manual
+   * clicks would have produced.
+   */
+  const applyDateRange = (from: Date, to: Date) => {
+    let fromDT = DateTime.fromJSDate(from).startOf('day');
+    let toDT = DateTime.fromJSDate(to).startOf('day');
+
+    if (!fromDT.isValid || !toDT.isValid) {
+      return;
+    }
+
+    // A reversed tuple is a caller mistake rather than a user action, so it is
+    // always swapped — `allowReverseSelection` only governs calendar clicks.
+    if (fromDT > toDT) {
+      [fromDT, toDT] = [toDT, fromDT];
+    }
+
+    const minDT = dateMinDT.startOf('day');
+    const maxDT = dateMaxDT.startOf('day');
+    if (fromDT < minDT) {
+      fromDT = minDT;
+    }
+    if (toDT > maxDT) {
+      toDT = maxDT;
+    }
+    // The range sat entirely outside the allowed bounds — clamping it would
+    // silently select something the caller never asked for.
+    if (fromDT > toDT) {
+      return;
+    }
+
+    setIsEndDatePresent(false);
+    setDateTime([fromDT, toDT]);
+    setCalendarViewDateTime([fromDT, toDT]);
+    setLastChangedDate([fromDT.toJSDate(), toDT.toJSDate()]);
+    setValue(nameFrom, fromDT.toFormat(luxonFormat));
+    setValue(nameTo, toDT.toFormat(luxonFormat));
+    clearErrors();
+    setStatus('basic');
+    // The calendar stays open after a preset, so the next day click has to
+    // start a fresh range instead of being read as the end of this one.
+    setRangeSelectionStep('start');
+    setLastFocusedElement('from');
+    // A drill-down into the month or year grid is navigation state, not a
+    // selection mode — closing the popover already rewinds it. A preset has
+    // the same effect: it lands a finished range, so the base view is where
+    // that range is visible and where fine-tuning continues.
+    setCalendarType(rangePickerType);
+    onChange?.([fromDT.toJSDate(), toDT.toJSDate()]);
   };
 
   const safeOnChange = (newDateTime?: DateTime) => {
@@ -872,5 +928,6 @@ export const useDateRangePicker = ({
     setIsEndDatePresent,
     setLastChangedDate,
     clearInputValue: clearField,
+    applyDateRange,
   };
 };

@@ -5,7 +5,13 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Form from '@components/Form';
 import FormGroup from '@components/FormGroup';
 import { DateRangePicker } from '@components';
-import { DateRangePickerProps } from './types';
+import { DateRangePickerProps, DateRangePreset } from './types';
+import {
+  DEFAULT_DATE_RANGE_PRESETS,
+  currentMonthPreset,
+  lastMonthPreset,
+  todayPreset,
+} from './utils/presets';
 
 export default {
   title: 'Components/DateRangePicker',
@@ -288,5 +294,59 @@ WithPresentOption.args = {
   messages: {
     description:
       'Click "Present" button to set end date as ongoing (no end date). The end date will show "Present" and onChange will receive null for the end date.',
+  },
+};
+
+export const WithPresets: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+WithPresets.args = {
+  ...commonArgs,
+  name: 'field12',
+  presets: DEFAULT_DATE_RANGE_PRESETS,
+  messages: {
+    description:
+      'Click a preset to fill the range. The calendar stays open, so the dates can still be adjusted by hand afterwards.',
+  },
+};
+
+const lastNDaysPreset = (days: number): DateRangePreset => ({
+  label: `Last ${days} days`,
+  dateRange: () => {
+    const today = DateTime.now();
+    return [
+      today
+        .minus({ days: days - 1 })
+        .startOf('day')
+        .toJSDate(),
+      today.startOf('day').toJSDate(),
+    ];
+  },
+});
+
+export const WithCustomPresets: StoryObj<typeof DateRangePicker> = (
+  args: DateRangePickerProps,
+) => {
+  return <DateRangePicker {...args} />;
+};
+WithCustomPresets.args = {
+  ...commonArgs,
+  name: 'field13',
+  presets: [
+    todayPreset,
+    lastNDaysPreset(7),
+    lastNDaysPreset(30),
+    currentMonthPreset,
+    lastMonthPreset,
+    {
+      label: 'Year 2025',
+      dateRange: [new Date(2025, 0, 1), new Date(2025, 11, 31)],
+    },
+  ],
+  messages: {
+    description:
+      'Built-in presets composed with custom ones — relative ranges use a function, the fixed one a plain tuple.',
   },
 };

@@ -7,6 +7,17 @@ export {
 } from './DateRangePickerFormBridge';
 
 export {
+  DEFAULT_DATE_RANGE_PRESETS,
+  todayPreset,
+  yesterdayPreset,
+  currentWeekPreset,
+  lastWeekPreset,
+  currentMonthPreset,
+  lastMonthPreset,
+  resolvePresetRange,
+} from './utils/presets';
+
+export {
   DEFAULT_MASK_FORMAT,
   DEFAULT_EUROPEAN_MASK_FORMAT,
   DEFAULT_MONTH_MASK_FORMAT,
@@ -23,4 +34,6 @@ export type {
   DateRangePickerOnChangeDates,
   DateTimeTuple,
   DateRangePickerContextProps,
+  DateRangePreset,
+  DateRangePresetValue,
 } from './types';

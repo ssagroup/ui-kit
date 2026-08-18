@@ -47,6 +47,46 @@ export type DateRangePickerOnChangeDates = [
 export type DateTimeTuple = [DateTime | undefined, DateTime | undefined];
 
 /**
+ * Resolved preset range: **[start, end]** as JavaScript **`Date`** values.
+ */
+export type DateRangePresetValue = [Date, Date];
+
+/**
+ * One entry in the **`presets`** list rendered beside the calendar.
+ *
+ * **`dateRange`** is either a fixed tuple or a factory. Prefer the factory for
+ * anything relative to *now* (**Today**, **Current week**, …) — it is evaluated
+ * when the list renders and when the item is clicked, so the range cannot go
+ * stale in an app that stays open across midnight.
+ *
+ * @example
+ * ```tsx
+ * const lastSevenDays: DateRangePreset = {
+ *   label: 'Last 7 days',
+ *   dateRange: () => {
+ *     const today = new Date();
+ *     const from = new Date(today);
+ *     from.setDate(from.getDate() - 6);
+ *     return [from, today];
+ *   },
+ * };
+ * ```
+ */
+export interface DateRangePreset {
+  /**
+   * Text shown for the item (also its accessible name).
+   */
+  label: string;
+
+  /**
+   * The range applied on click — a fixed **`[start, end]`** tuple, or a
+   * function returning one. Reversed tuples are swapped, and ends outside
+   * **`dateMin`** / **`dateMax`** are clamped to those bounds.
+   */
+  dateRange: DateRangePresetValue | (() => DateRangePresetValue);
+}
+
+/**
  * Active calendar view: day grid, month grid, or year list (aligned with **rangePickerType** / header navigation).
  */
 export type CalendarType = PickerCalendarType;
@@ -193,7 +233,22 @@ export interface DateRangePickerProps {
     };
     calendar?: string;
     label?: string;
+    presets?: {
+      root?: string;
+      item?: string;
+    };
   };
+
+  /**
+   * Shortcut ranges (**Today**, **Last month**, …) listed to the left of the
+   * calendar. Clicking one applies its range and keeps the popover open, so
+   * the user can still fine-tune the dates in the calendar. Nothing renders
+   * when the prop is omitted or empty.
+   *
+   * Use **`DEFAULT_DATE_RANGE_PRESETS`** for the common set, or build your own
+   * array of **`DateRangePreset`**.
+   */
+  presets?: DateRangePreset[];
 
   /**
    * Emits **`[start, end]`** as **`Date`**, **`null`** (Present end only), or **`undefined`** per side.
@@ -418,6 +473,15 @@ export interface DateRangePickerContextProps extends Omit<
    * Clears **from** or **to** and syncs form state.
    */
   clearInputValue: (field: 'from' | 'to') => void;
+
+  /**
+   * Applies a complete range at once (used by **`presets`**): sets both
+   * anchors, moves the calendar view onto them, syncs both form fields, and
+   * emits **`onChange`**. Reversed input is swapped and out-of-bounds ends are
+   * clamped to **`dateMin`** / **`dateMax`**; a range that falls entirely
+   * outside those bounds is ignored.
+   */
+  applyDateRange: (from: Date, to: Date) => void;
 
   /**
    * End field shows **Present** (open-ended); form **to** value may be empty while flag is true.

@@ -44,6 +44,9 @@ export const DateRangePickerContext =
     clearInputValue: () => {
       // no-op
     },
+    applyDateRange: () => {
+      // no-op
+    },
     setCalendarViewDateTime: () => {
       // no-op
     },
