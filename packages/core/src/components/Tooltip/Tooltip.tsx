@@ -57,6 +57,19 @@ import { TooltipProps } from './types';
  *
  * @example
  * ```tsx
+ * // Dark surface, no shadow
+ * <Tooltip color="dark" hasShadow={false}>
+ *   <TooltipTrigger>
+ *     <Button>Hover me</Button>
+ *   </TooltipTrigger>
+ *   <TooltipContent title="Headline" maxWidth={200}>
+ *     Body text that wraps at 200px
+ *   </TooltipContent>
+ * </Tooltip>
+ * ```
+ *
+ * @example
+ * ```tsx
  * // Tooltip without arrow
  * <Tooltip hasArrow={false}>
  *   <TooltipTrigger>

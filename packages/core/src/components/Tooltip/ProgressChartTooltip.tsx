@@ -5,6 +5,7 @@ import Typography from '@components/Typography';
 import { TooltipContentBase } from './TooltipContentBase';
 import { ProgressChartTooltipProps } from './types';
 import { mapSizes } from './utils';
+import { chartTooltipText } from './styles';
 
 export const ProgressChartTooltip = ({
   caption,
@@ -17,7 +18,12 @@ export const ProgressChartTooltip = ({
 
   return (
     <TooltipContentBase
-      css={[mapSizes.small, { padding: '12px', width: '112px' }]}>
+      hasShadow={false}
+      css={[
+        mapSizes.small,
+        chartTooltipText,
+        { padding: '12px', width: '112px' },
+      ]}>
       <div
         css={{
           display: 'flex',

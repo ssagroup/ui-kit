@@ -2,6 +2,7 @@ import { LineSeries } from '@nivo/line';
 import { TooltipContentBase } from './TooltipContentBase';
 import { SimpleChartTooltipProps } from './types';
 import { mapSizes } from './utils';
+import { chartTooltipText } from './styles';
 
 export const SimpleChartTooltip = <Series extends LineSeries>({
   point,
@@ -12,7 +13,12 @@ export const SimpleChartTooltip = <Series extends LineSeries>({
   const { xFormatted, yFormatted } = data;
 
   return (
-    <TooltipContentBase css={mapSizes[size]}>
+    // The chart legend spec keeps `small` at 9.26px rather than the 8px of the
+    // design's default content, so that one size is pinned; `medium`/`large`
+    // still scale with the shared size tokens.
+    <TooltipContentBase
+      hasShadow={false}
+      css={[mapSizes[size], size === 'small' && chartTooltipText]}>
       {typeof renderValue === 'function'
         ? renderValue(data)
         : `${xFormatted} - ${yFormatted}`}

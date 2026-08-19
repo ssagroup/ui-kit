@@ -20,6 +20,16 @@ import { CommonProps } from '@global-types/emotion';
 export type TooltipSize = 'small' | 'medium' | 'large';
 
 /**
+ * Color scheme of the tooltip surface — mirrors the `Color` dimension of the
+ * design.
+ * - `grey`: light grey surface with dark text (default)
+ * - `white`: white surface with dark text — bordered by default
+ * - `dark`: dark surface with white text
+ * - `nonOpaque`: semi-transparent white surface with dark text
+ */
+export type TooltipColor = 'grey' | 'white' | 'dark' | 'nonOpaque';
+
+/**
  * Props for the Tooltip component
  *
  * Root container component for tooltip system using compound component pattern.
@@ -102,6 +112,24 @@ export interface TooltipProps extends CommonProps {
   size?: TooltipSize;
 
   /**
+   * Color scheme of the tooltip content
+   * @default 'grey'
+   */
+  color?: TooltipColor;
+
+  /**
+   * Whether the tooltip surface (and its arrow) is outlined with a 1px border
+   * @default true when `color` is `'white'`, false otherwise
+   */
+  hasBorder?: boolean;
+
+  /**
+   * Whether the tooltip surface casts a drop shadow
+   * @default true
+   */
+  hasShadow?: boolean;
+
+  /**
    * Whether to display arrow pointing to trigger
    * @default true
    */
@@ -150,14 +178,14 @@ interface RefObject<T> {
   current: T;
 }
 
-export type UseTooltip = (props?: UseTooltipArgs) => Pick<
-  TooltipProps,
-  'size' | 'hasArrow' | 'arrowProps'
-> & {
-  arrowRef: RefObject<null>;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-} & UseFloatingReturn &
+export type UseTooltip = (props?: UseTooltipArgs) => Required<
+  Pick<TooltipProps, 'color' | 'hasBorder' | 'hasShadow'>
+> &
+  Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'> & {
+    arrowRef: RefObject<null>;
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  } & UseFloatingReturn &
   UseInteractions;
 
 export type TooltipContextType =
@@ -166,7 +194,8 @@ export type TooltipContextType =
         arrowRef: React.Ref<SVGSVGElement>;
         isOpen: boolean;
         setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-      } & Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
+      } & Required<Pick<TooltipProps, 'color' | 'hasBorder' | 'hasShadow'>> &
+      Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
   | null;
 
 export type TooltipArrowProps = Omit<
@@ -187,6 +216,19 @@ export interface TooltipContentProps {
    * Can be text, React nodes, or formatted content
    */
   children: React.ReactNode;
+
+  /**
+   * Optional headline rendered in bold above `children`, separated by an 8px
+   * gap. Accepts plain text or any React node.
+   */
+  title?: React.ReactNode;
+
+  /**
+   * Maximum width of the tooltip surface. Without it the tooltip is sized to
+   * its content and never wraps — set it for multi-line content such as a
+   * `title` with a paragraph of text.
+   */
+  maxWidth?: number | string;
 
   /**
    * Custom CSS class name

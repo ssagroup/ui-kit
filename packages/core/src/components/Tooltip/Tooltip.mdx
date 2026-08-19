@@ -21,7 +21,7 @@ function BasicTooltip() {
   return (
     <Tooltip enableHover>
       <TooltipTrigger>
-        <Button variant='primary' text="Hover me" />
+        <Button variant="primary" text="Hover me" />
       </TooltipTrigger>
       <TooltipContent>This is a helpful tooltip message</TooltipContent>
     </Tooltip>
@@ -147,6 +147,65 @@ function TooltipSizes() {
     </div>
   );
 }
+```
+
+### Colors
+
+Pick the surface with the `color` prop — `grey` (default), `white`, `dark` or `nonOpaque` (a semi-transparent white for use over imagery or charts). The arrow is filled to match automatically.
+
+```tsx
+function TooltipColors() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+      {['grey', 'white', 'dark', 'nonOpaque'].map((color) => (
+        <Tooltip key={color} enableHover color={color}>
+          <TooltipTrigger>
+            <Button text={color} size="medium" />
+          </TooltipTrigger>
+          <TooltipContent>Content</TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
+}
+```
+
+### Border and Shadow
+
+`hasBorder` is independent of the color: it defaults to `true` for `white` and `false` for the other surfaces, and either default can be overridden. `hasShadow` (on by default) removes the drop shadow.
+
+```tsx
+// White surface without its default border
+<Tooltip enableHover color="white" hasBorder={false}>
+  <TooltipTrigger>
+    <Button text="No border" />
+  </TooltipTrigger>
+  <TooltipContent>Borderless</TooltipContent>
+</Tooltip>
+
+// Dark surface, outlined, no shadow
+<Tooltip enableHover color="dark" hasBorder hasShadow={false}>
+  <TooltipTrigger>
+    <Button text="Outlined" />
+  </TooltipTrigger>
+  <TooltipContent>Outlined</TooltipContent>
+</Tooltip>
+```
+
+### Titled Tooltips
+
+Pass `title` to `TooltipContent` for a bold headline above the body text. Add `maxWidth` so longer copy wraps — without it the tooltip is sized to its content and stays on a single line.
+
+```tsx
+<Tooltip enableHover color="dark" size="medium">
+  <TooltipTrigger>
+    <Button text="Details" />
+  </TooltipTrigger>
+  <TooltipContent title="Headline" maxWidth={200}>
+    A short description that wraps onto several lines. Phasellus vulputate erat
+    felis, sed bibendum nunc dapibus eu.
+  </TooltipContent>
+</Tooltip>
 ```
 
 ### Custom Content Tooltips

@@ -26,12 +26,18 @@ export const useTooltip: UseTooltip = (props) => {
     enableClientPoint = false,
     offsetOptions = 12,
     size = 'small',
+    color = 'grey',
+    hasShadow = true,
     hasArrow = true,
     arrowProps = {},
     allowHoverContent = false,
     hoverOpenDelay = 0,
     hoverCloseDelay = 0,
   } = props || {};
+
+  // The design only outlines the white surface, but the border is independent
+  // of the color — any variant can opt in or out of it.
+  const hasBorder = props?.hasBorder ?? color === 'white';
 
   // `isOpen` maps to `defaultOpen`, not `open`: despite the name it never
   // controlled the tooltip, it only ever seeded the initial state.
@@ -108,6 +114,9 @@ export const useTooltip: UseTooltip = (props) => {
       setIsOpen,
       arrowRef,
       size,
+      color,
+      hasBorder,
+      hasShadow,
       hasArrow,
       arrowProps,
       ...floatingData,
@@ -118,6 +127,9 @@ export const useTooltip: UseTooltip = (props) => {
       setIsOpen,
       arrowRef,
       size,
+      color,
+      hasBorder,
+      hasShadow,
       hasArrow,
       arrowProps,
       floatingData,

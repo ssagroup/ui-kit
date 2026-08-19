@@ -22,6 +22,12 @@ export default {
         type: 'select',
       },
     },
+    color: {
+      options: ['grey', 'white', 'dark', 'nonOpaque'],
+      control: {
+        type: 'select',
+      },
+    },
     arrowProps: {
       control: {
         disable: true,
@@ -196,6 +202,124 @@ WithDelays.parameters = {
     description: {
       story:
         'Tooltips with delay configuration. Move your mouse quickly across the buttons to see how delays prevent the "traffic light" effect. Configure `hoverOpenDelay` (300ms) and `hoverCloseDelay` (100ms) to control appearance and disappearance timing.',
+    },
+  },
+};
+
+export const Colors: StoryObj<typeof Tooltip> = (args: Args) => {
+  const colors = ['grey', 'white', 'dark', 'nonOpaque'] as const;
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '48px',
+        justifyContent: 'center',
+      }}>
+      {colors.map((color) => (
+        <Tooltip key={color} {...args} color={color}>
+          <TooltipTrigger>
+            <Button variant="primary" size="medium" text={color} />
+          </TooltipTrigger>
+          <TooltipContent>Content</TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
+};
+
+Colors.args = {
+  enableClick: false,
+  enableHover: true,
+  size: 'medium',
+  placement: 'top',
+};
+
+Colors.parameters = {
+  docs: {
+    description: {
+      story:
+        'The four surfaces from the design: `grey` (default), `white` (bordered by default), `dark` and `nonOpaque`. The arrow follows the surface color automatically.',
+    },
+  },
+};
+
+export const WithTitle: StoryObj<typeof Tooltip> = (args: Args) => {
+  return (
+    <Tooltip {...args}>
+      <TooltipTrigger>
+        <Button variant="primary" size="medium" text="Hover over me!" />
+      </TooltipTrigger>
+      <TooltipContent title="Headline" maxWidth={200}>
+        A short description that wraps onto several lines once the tooltip
+        reaches its maximum width.
+      </TooltipContent>
+    </Tooltip>
+  );
+};
+
+WithTitle.args = {
+  enableClick: false,
+  enableHover: true,
+  size: 'medium',
+  color: 'dark',
+  placement: 'top',
+};
+
+WithTitle.storyName = 'With title';
+WithTitle.parameters = {
+  docs: {
+    description: {
+      story:
+        'Pass `title` to `TooltipContent` for the headline layout. `maxWidth` lets the body text wrap — without it the tooltip is sized to its content and stays on one line.',
+    },
+  },
+};
+
+export const BorderAndShadow: StoryObj<typeof Tooltip> = (args: Args) => {
+  const variants = [
+    { label: 'Bordered', props: { hasBorder: true } },
+    {
+      label: 'No border',
+      props: { color: 'white' as const, hasBorder: false },
+    },
+    { label: 'No shadow', props: { hasShadow: false } },
+  ];
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '48px',
+        justifyContent: 'center',
+      }}>
+      {variants.map(({ label, props }) => (
+        <Tooltip key={label} {...args} {...props}>
+          <TooltipTrigger>
+            <Button variant="primary" size="medium" text={label} />
+          </TooltipTrigger>
+          <TooltipContent>{label}</TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
+};
+
+BorderAndShadow.args = {
+  enableClick: false,
+  enableHover: true,
+  size: 'medium',
+  placement: 'top',
+};
+
+BorderAndShadow.storyName = 'Border and shadow';
+BorderAndShadow.parameters = {
+  docs: {
+    description: {
+      story:
+        '`hasBorder` is independent of the color — it defaults to `true` for `white` and `false` for every other surface, and can be flipped either way. `hasShadow` opts out of the drop shadow.',
     },
   },
 };

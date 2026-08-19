@@ -76,8 +76,8 @@ export const DatePickerCalendar = () => {
         // its own, so the padding moves inside when both are shown.
         padding: hasPresets ? 0 : 24,
         paddingTop: hasPresets ? 0 : 16,
-        // 160 presets column + 328 calendar, matching the day-and-time pop-up.
-        width: hasPresets ? 488 : 328,
+        // 200 presets column + 328 calendar, per the Figma Filter Date Picker.
+        width: hasPresets ? 528 : 328,
         height: showPresentOption ? 410 : 368,
         flexDirection: 'row',
         alignItems: 'flex-start',

@@ -10,6 +10,7 @@ import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
 
 import Tooltip, { SimpleChartTooltip, ProgressChartTooltip } from './index';
+import type { TooltipProps } from './types';
 
 function setup(component: React.ReactElement) {
   const user = userEvent.setup();
@@ -249,6 +250,137 @@ describe('Tooltip', () => {
     expect(queryByText(tooltipText)).toBeInTheDocument();
   });
 
+  describe('appearance', () => {
+    const renderTooltip = (props: Partial<TooltipProps> = {}) =>
+      setup(
+        <Tooltip defaultOpen {...props}>
+          <TooltipTrigger>
+            <Button size="medium" text="Click me!" />
+          </TooltipTrigger>
+          <TooltipContent>{tooltipText}</TooltipContent>
+        </Tooltip>,
+      );
+
+    it('Renders the grey surface with a shadow by default', () => {
+      const { getByText } = renderTooltip();
+
+      const content = getByText(tooltipText);
+      expect(content).toHaveStyle({
+        background: theme.palette.secondary.light,
+        color: theme.colors.greyDarker,
+        boxShadow: `0 10px 40px ${theme.colors.greyShadow}`,
+      });
+      expect(content).not.toHaveStyle({
+        border: `1px solid ${theme.colors.grey}`,
+      });
+    });
+
+    it.each([
+      ['dark', theme.colors.greyBackground, theme.colors.white],
+      ['nonOpaque', theme.colors.white64, theme.colors.greyDarker],
+      ['white', theme.colors.white, theme.colors.greyDarker],
+    ] as const)('Renders the %s surface', (color, background, textColor) => {
+      const { getByText } = renderTooltip({ color });
+
+      expect(getByText(tooltipText)).toHaveStyle({
+        background,
+        color: textColor,
+      });
+    });
+
+    it('Outlines the white surface by default', () => {
+      const { getByText } = renderTooltip({ color: 'white' });
+
+      expect(getByText(tooltipText)).toHaveStyle({
+        border: `1px solid ${theme.colors.grey}`,
+      });
+    });
+
+    it('Allows the border to be toggled independently of the color', () => {
+      const { getByText, unmount } = renderTooltip({
+        color: 'white',
+        hasBorder: false,
+      });
+
+      expect(getByText(tooltipText)).not.toHaveStyle({
+        border: `1px solid ${theme.colors.grey}`,
+      });
+      unmount();
+
+      const { getByText: getByTextDark } = renderTooltip({
+        color: 'dark',
+        hasBorder: true,
+      });
+
+      expect(getByTextDark(tooltipText)).toHaveStyle({
+        border: `1px solid ${theme.colors.grey}`,
+      });
+    });
+
+    it('Drops the shadow when hasShadow is false', () => {
+      const { getByText } = renderTooltip({ hasShadow: false });
+
+      expect(getByText(tooltipText)).not.toHaveStyle({
+        boxShadow: `0 10px 40px ${theme.colors.greyShadow}`,
+      });
+    });
+
+    it('Fills the arrow with the surface color', () => {
+      const { getByTestId } = renderTooltip({ color: 'dark' });
+
+      expect(getByTestId('floating-arrow')).toHaveAttribute(
+        'fill',
+        theme.colors.greyBackground,
+      );
+    });
+
+    it('Strokes the arrow when the tooltip is bordered', () => {
+      const { getByTestId } = renderTooltip({ color: 'white' });
+
+      const paths = Array.from(
+        getByTestId('floating-arrow').querySelectorAll('path'),
+      );
+      expect(
+        paths.some((path) => path.getAttribute('stroke') === theme.colors.grey),
+      ).toBe(true);
+    });
+
+    it('Renders a title above the content', () => {
+      const titleText = 'Headline';
+      const { getByText } = setup(
+        <Tooltip defaultOpen>
+          <TooltipTrigger>
+            <Button size="medium" text="Click me!" />
+          </TooltipTrigger>
+          <TooltipContent title={titleText} maxWidth={200}>
+            {tooltipText}
+          </TooltipContent>
+        </Tooltip>,
+      );
+
+      const title = getByText(titleText);
+      expect(title).toBeInTheDocument();
+      // `color: inherit` is explicit so a global `* { color }` reset can't
+      // repaint the headline away from the surface color.
+      expect(title).toHaveStyle({ fontWeight: 700, color: 'inherit' });
+
+      const content = title.parentElement as HTMLElement;
+      expect(content).toHaveStyle({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        maxWidth: '200px',
+      });
+      expect(content).toHaveTextContent(tooltipText);
+    });
+
+    it("Doesn't constrain the width without maxWidth", () => {
+      const { getByText } = renderTooltip();
+
+      expect(getByText(tooltipText).style.maxWidth).toBe('');
+    });
+  });
+
   describe('SimpleChartTooltip', () => {
     const point: Point<LineSeries> = {
       id: '',
@@ -272,6 +404,31 @@ describe('Tooltip', () => {
     it('Renders with the default formatting', () => {
       const { getByText } = setup(<SimpleChartTooltip point={point} />);
       getByText('x-formatted - y-formatted');
+    });
+
+    const chartText = 'x-formatted - y-formatted';
+
+    it('Keeps the legend text size at the default size, scales beyond it', () => {
+      const { getByText, unmount } = setup(
+        <SimpleChartTooltip point={point} />,
+      );
+
+      expect(getByText(chartText)).toHaveStyle({ fontSize: '0.579rem' });
+      unmount();
+
+      const { getByText: getByTextMedium } = setup(
+        <SimpleChartTooltip point={point} size="medium" />,
+      );
+
+      expect(getByTextMedium(chartText)).toHaveStyle({ fontSize: '12px' });
+    });
+
+    it("Doesn't cast the surface shadow", () => {
+      const { getByText } = setup(<SimpleChartTooltip point={point} />);
+
+      expect(getByText(chartText)).not.toHaveStyle({
+        boxShadow: `0 10px 40px ${theme.colors.greyShadow}`,
+      });
     });
 
     it('Renders with a custom formatting', () => {
