@@ -29,6 +29,12 @@ function BasicTooltip() {
 }
 ```
 
+## Tooltip or Popover?
+
+Tooltip is a passive label: `role="tooltip"`, hover-first, non-focusable content, no focus trap and no dismiss affordance. Reach for [Popover](/docs/components-popover--docs) as soon as the floating content is interactive — it is a `role="dialog"`, opens on click, can trap focus and wires `aria-labelledby`/`aria-describedby` through `PopoverHeading`/`PopoverDescription`.
+
+Both render the same surface tokens (`color`, `size`, `hasBorder`, `hasShadow`, `hasArrow`), so switching between them is a one-line change visually.
+
 ## Features
 
 ### Hover Tooltips

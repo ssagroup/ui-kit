@@ -28,7 +28,7 @@ export const PopoverDescription = React.forwardRef<
   HTMLParagraphElement,
   Parameters<typeof Typography>[0]
 >(function PopoverDescription(props, ref) {
-  const { setDescriptionId } = usePopoverContext();
+  const { setDescriptionId, color } = usePopoverContext();
   const id = useId();
 
   // Only sets `aria-describedby` on the Popover root element
@@ -38,5 +38,15 @@ export const PopoverDescription = React.forwardRef<
     return () => setDescriptionId(undefined);
   }, [id, setDescriptionId]);
 
-  return <Typography as="div" {...props} ref={ref} id={id} />;
+  // `Typography` defaults to dark text, which would be unreadable on a dark
+  // surface — inherit the surface's own color instead whenever one is set.
+  return (
+    <Typography
+      as="div"
+      color={color ? 'inherit' : undefined}
+      {...props}
+      ref={ref}
+      id={id}
+    />
+  );
 });

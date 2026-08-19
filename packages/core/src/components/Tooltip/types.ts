@@ -10,6 +10,7 @@ import { MapIconsType } from '@components/Icon/types';
 import { ProgressBarProps } from '@components/ProgressBar/types';
 import { SerializedStyles } from '@emotion/react';
 import { CommonProps } from '@global-types/emotion';
+import { FloatingSurfaceColor } from '@styles/floatingSurface';
 
 /**
  * Size variant for tooltip content
@@ -21,13 +22,13 @@ export type TooltipSize = 'small' | 'medium' | 'large';
 
 /**
  * Color scheme of the tooltip surface — mirrors the `Color` dimension of the
- * design.
+ * design. Shared with Popover, which renders the same surface.
  * - `grey`: light grey surface with dark text (default)
  * - `white`: white surface with dark text — bordered by default
  * - `dark`: dark surface with white text
  * - `nonOpaque`: semi-transparent white surface with dark text
  */
-export type TooltipColor = 'grey' | 'white' | 'dark' | 'nonOpaque';
+export type TooltipColor = FloatingSurfaceColor;
 
 /**
  * Props for the Tooltip component
