@@ -17,6 +17,8 @@ export {
   shadow,
   title,
   withTitle,
+  surfaceColors,
+  resolveSurfaceArrowProps,
   surfaceBackgrounds as backgroundColors,
 } from '@styles/floatingSurface';
 

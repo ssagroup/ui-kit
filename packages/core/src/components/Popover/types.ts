@@ -135,7 +135,12 @@ export interface PopoverOptions {
   hasShadow?: boolean;
 
   /**
-   * Whether to display an arrow pointing at the trigger
+   * Whether to display an arrow pointing at the trigger.
+   *
+   * The arrow is filled from `color`. With no `color` the popover draws no
+   * surface of its own, so the arrow falls back to a white fill — matching the
+   * light card unstyled content usually supplies. Set `arrowProps.fill` for
+   * anything else.
    * @default false
    */
   hasArrow?: boolean;
@@ -181,9 +186,10 @@ export interface PopoverContentProps extends React.HTMLProps<HTMLDivElement> {
 
   /**
    * Props forwarded to the built-in close button, e.g. `icon`, `size` or
-   * `aria-label`
+   * `aria-label`. An `onClick` runs before the popover closes — it composes
+   * with the dismissal rather than replacing it.
    */
-  closeButtonProps?: Partial<Omit<IconButtonProps, 'onClick'>>;
+  closeButtonProps?: Partial<IconButtonProps>;
 }
 
 export type SetIDs = {

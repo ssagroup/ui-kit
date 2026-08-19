@@ -12,6 +12,11 @@ import { IconButton } from '@components/IconButton';
 import * as surface from '@styles/floatingSurface';
 import { PopoverContentProps } from './types';
 
+/** Box size of the built-in close button. */
+const CLOSE_BUTTON_SIZE = 24;
+/** Its 4px inset on both axes, plus an 8px gap before the content. */
+const CLOSE_BUTTON_INSET = `${CLOSE_BUTTON_SIZE + 4 + 8}px`;
+
 /**
  * PopoverContent - Content container for popover
  *
@@ -90,6 +95,17 @@ export const PopoverContent = React.forwardRef<
 
   const { color, size, hasBorder, hasShadow, hasArrow, arrowProps } = context;
 
+  // The rounded corner belongs to any surface the popover draws itself, not
+  // only a colored one — a border or a shadow on square corners reads as a
+  // rendering bug.
+  const hasSurface = Boolean(color) || Boolean(hasBorder) || Boolean(hasShadow);
+
+  // Matches `IconButton`'s own fallback, so the glyph keeps one color across
+  // rest and hover whether or not the surface supplies one.
+  const closeIconColor =
+    closeButtonProps?.styles?.iconColor ??
+    (color ? surface.surfaceTextColors[color](theme) : theme.colors.greyDarker);
+
   return (
     <FloatingPortal>
       <FloatingFocusManager
@@ -104,9 +120,14 @@ export const PopoverContent = React.forwardRef<
               position: 'relative',
             },
             size && surface.surfaceSizes[size],
-            color && [surface.surfaceColors[color](theme), surface.radius],
+            hasSurface && surface.radius,
+            color && surface.surfaceColors[color](theme),
             hasBorder && surface.border(theme),
             hasShadow && surface.shadow(theme),
+            // The close button is absolutely positioned, so it takes no space
+            // of its own — the surface has to keep its corner clear or the
+            // content runs underneath it.
+            hasCloseButton && { paddingRight: CLOSE_BUTTON_INSET },
           ]}
           style={{
             ...context.floatingStyles,
@@ -125,18 +146,12 @@ export const PopoverContent = React.forwardRef<
               width={10}
               height={10}
               {...arrowProps}
-              fill={
-                arrowProps?.fill ??
-                (color ? surface.surfaceBackgrounds[color](theme) : undefined)
-              }
-              stroke={
-                hasBorder
-                  ? (arrowProps?.stroke ?? theme.colors.grey)
-                  : undefined
-              }
-              strokeWidth={
-                hasBorder ? (arrowProps?.strokeWidth ?? 1) : undefined
-              }
+              {...surface.resolveSurfaceArrowProps({
+                theme,
+                color,
+                hasBorder,
+                overrides: arrowProps,
+              })}
             />
           )}
           {hasCloseButton && (
@@ -146,36 +161,41 @@ export const PopoverContent = React.forwardRef<
               transparent
               aria-label="Close"
               {...closeButtonProps}
-              onClick={() => context.setOpen(false)}
+              onClick={() => {
+                closeButtonProps?.onClick?.();
+                context.setOpen(false);
+              }}
               styles={{
                 ...closeButtonProps?.styles,
                 // Resolved from the surface rather than left to
                 // `currentColor`: a global `* { color: … }` reset sets the
                 // computed color of the nested svg itself, so `currentColor`
                 // would come out dark on every surface.
-                iconColor:
-                  closeButtonProps?.styles?.iconColor ??
-                  (color ? surface.surfaceTextColors[color](theme) : undefined),
+                iconColor: closeIconColor,
                 button: [
                   {
                     position: 'absolute',
                     top: '4px',
                     right: '4px',
-                    width: '24px',
-                    height: '24px',
+                    width: `${CLOSE_BUTTON_SIZE}px`,
+                    height: `${CLOSE_BUTTON_SIZE}px`,
                     borderRadius: '6px',
                     opacity: 0.6,
-                    // Without this the button's own color comes from a global
-                    // `* { color: … }` reset — which outranks inheritance — and
-                    // `currentColor` below resolves dark on every surface.
-                    color: 'inherit',
                     // `IconButton` recolors the glyph to `primary.main` on
-                    // hover, which reads as a blue box on any icon drawn as a
-                    // filled shape. The close button dims instead.
+                    // hover, which reads as a blue box on an icon drawn as a
+                    // filled shape. The close button dims instead, holding the
+                    // glyph at its resting color: `fill` for filled icons,
+                    // `stroke` for outlined ones — matched on the attribute
+                    // each icon actually declares, so neither is repainted
+                    // with the other's property and made to disappear.
                     '&:hover:not(:disabled)': {
                       opacity: 1,
-                      '& svg': { color: 'inherit' },
-                      '& svg path': { fill: 'none' },
+                      '& svg': { color: closeIconColor },
+                      '& svg path[fill]': { fill: closeIconColor },
+                      '& svg path[stroke]': {
+                        stroke: closeIconColor,
+                        fill: 'none',
+                      },
                     },
                   },
                   closeButtonProps?.styles?.button,

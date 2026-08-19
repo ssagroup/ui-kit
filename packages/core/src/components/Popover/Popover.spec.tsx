@@ -143,6 +143,77 @@ describe('Popover', () => {
       expect(getByText(contentText)).toHaveStyle({ padding: '8px 16px' });
     });
 
+    it('Rounds the corners of a bordered surface that has no color', () => {
+      const { getByText } = renderPopover({ hasBorder: true });
+
+      expect(getByText(contentText)).toHaveStyle({
+        border: `1px solid ${theme.colors.grey}`,
+        borderRadius: '8px',
+      });
+    });
+
+    it('Scales the description with the surface size', () => {
+      const descriptionText = 'Description';
+      const renderDescription = (options: PopoverOptions) =>
+        render(
+          <Popover open {...options}>
+            <PopoverTrigger>Open</PopoverTrigger>
+            <PopoverContent>
+              <PopoverDescription>{descriptionText}</PopoverDescription>
+            </PopoverContent>
+          </Popover>,
+        );
+
+      const { getByText, unmount } = renderDescription({ size: 'medium' });
+      expect(getByText(descriptionText)).toHaveStyle({ fontSize: 'inherit' });
+      unmount();
+
+      // Without a size there is nothing to follow, so `Typography` keeps its
+      // own scale.
+      const { getByText: getPlain } = renderDescription({});
+      expect(
+        window.getComputedStyle(getPlain(descriptionText)).fontSize,
+      ).not.toBe('inherit');
+    });
+
+    // A caller's `css` prop reaches the description as a merged `className`,
+    // never as a prop — so it composes with the inherited scale instead of
+    // replacing it, and still wins where the two set the same property.
+    it('Merges a caller css prop with the inherited size', () => {
+      const descriptionText = 'Description';
+      const { getByText } = render(
+        <Popover open size="medium">
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverContent>
+            <PopoverDescription css={{ marginTop: 4 }}>
+              {descriptionText}
+            </PopoverDescription>
+          </PopoverContent>
+        </Popover>,
+      );
+
+      expect(getByText(descriptionText)).toHaveStyle({
+        marginTop: '4px',
+        fontSize: 'inherit',
+      });
+    });
+
+    it('Lets a caller css prop override the inherited size', () => {
+      const descriptionText = 'Description';
+      const { getByText } = render(
+        <Popover open size="medium">
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverContent>
+            <PopoverDescription css={{ fontSize: 21 }}>
+              {descriptionText}
+            </PopoverDescription>
+          </PopoverContent>
+        </Popover>,
+      );
+
+      expect(getByText(descriptionText)).toHaveStyle({ fontSize: '21px' });
+    });
+
     it('Renders an arrow filled from the surface color when asked', () => {
       const { queryByTestId, unmount } = renderPopover();
       expect(queryByTestId('popover-arrow')).not.toBeInTheDocument();
@@ -153,6 +224,29 @@ describe('Popover', () => {
       expect(getByTestId('popover-arrow')).toHaveAttribute(
         'fill',
         theme.colors.greyBackground,
+      );
+    });
+
+    it('Falls back to a white arrow rather than an unpainted one', () => {
+      // `FloatingArrow` spreads `fill` onto the svg, so leaving it undefined
+      // renders the arrow in SVG's initial black.
+      const { getByTestId } = renderPopover({ hasArrow: true });
+
+      expect(getByTestId('popover-arrow')).toHaveAttribute(
+        'fill',
+        theme.colors.white,
+      );
+    });
+
+    it('Lets arrowProps override the fill on an unstyled popover', () => {
+      const { getByTestId } = renderPopover({
+        hasArrow: true,
+        arrowProps: { fill: theme.colors.greyGraphite },
+      });
+
+      expect(getByTestId('popover-arrow')).toHaveAttribute(
+        'fill',
+        theme.colors.greyGraphite,
       );
     });
 
@@ -204,6 +298,28 @@ describe('Popover', () => {
       );
 
       fireEvent.click(getCloseButton('Close'));
+      expect(onOpenChange).toHaveBeenCalledWith(false);
+    });
+
+    it('Keeps the corner clear of the content when the close button is on', () => {
+      const { getByText } = renderPopover(
+        { size: 'medium' },
+        { hasCloseButton: true },
+      );
+
+      expect(getByText(contentText)).toHaveStyle({ paddingRight: '36px' });
+    });
+
+    it('Runs a close button onClick before dismissing, not instead of it', () => {
+      const onClick = jest.fn();
+      const onOpenChange = jest.fn();
+      const { getByLabelText } = renderPopover(
+        { onOpenChange },
+        { hasCloseButton: true, closeButtonProps: { onClick } },
+      );
+
+      fireEvent.click(getByLabelText('Close'));
+      expect(onClick).toHaveBeenCalledTimes(1);
       expect(onOpenChange).toHaveBeenCalledWith(false);
     });
   });
