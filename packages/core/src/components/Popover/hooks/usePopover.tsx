@@ -87,7 +87,8 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
         padding: 5,
       }),
       shift({ padding: 5 }),
-      arrow({ element: arrowRef }),
+      // Only measured when there is an arrow to place.
+      ...(hasArrow ? [arrow({ element: arrowRef })] : []),
     ],
     ...floatingOptions,
   });
@@ -163,6 +164,7 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
       hasShadow,
       hasArrow,
       arrowProps,
+      arrowRef,
       modal,
       labelId,
       descriptionId,

@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import { FloatingArrow } from '@floating-ui/react';
 import { useTooltipContext } from './useTooltipContext';
 import { TooltipArrowProps } from './types';
-import { backgroundColors } from './styles';
+import { resolveSurfaceArrowProps } from './styles';
 
 export const TooltipArrow = ({
   width = 10,
@@ -12,7 +12,7 @@ export const TooltipArrow = ({
   strokeWidth,
   ...props
 }: TooltipArrowProps) => {
-  const { context, arrowRef, color = 'grey', hasBorder } = useTooltipContext();
+  const { context, arrowRef, color, hasBorder } = useTooltipContext();
   const theme = useTheme();
 
   return (
@@ -22,9 +22,12 @@ export const TooltipArrow = ({
       context={context}
       width={width}
       height={height}
-      fill={fill || backgroundColors[color](theme)}
-      stroke={hasBorder ? (stroke ?? theme.colors.grey) : stroke}
-      strokeWidth={hasBorder ? (strokeWidth ?? 1) : strokeWidth}
+      {...resolveSurfaceArrowProps({
+        theme,
+        color,
+        hasBorder,
+        overrides: { fill, stroke, strokeWidth },
+      })}
       {...props}
     />
   );

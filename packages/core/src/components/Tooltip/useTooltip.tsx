@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react';
+import { isBorderedByDefault } from '@styles/floatingSurface';
 import { useFloatingDisclosure } from '@utils/useFloatingDisclosure';
 import {
   useFloating,
@@ -36,7 +37,7 @@ export const useTooltip: UseTooltip = (props) => {
 
   // The design only outlines the white surface, but the border is independent
   // of the color — any variant can opt in or out of it.
-  const hasBorder = props?.hasBorder ?? color === 'white';
+  const hasBorder = props?.hasBorder ?? isBorderedByDefault(color);
 
   // `isOpen` maps to `defaultOpen`, not `open`: despite the name it never
   // controlled the tooltip, it only ever seeded the initial state.
