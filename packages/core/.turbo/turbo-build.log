@@ -1,15 +1,15 @@
 
-> @ssa-ui-kit/core@3.20.2 build /home/runner/work/ui-kit/ui-kit/packages/core
+> @ssa-ui-kit/core@3.20.3 build /home/runner/work/ui-kit/ui-kit/packages/core
 > node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && node ../../scripts/verify-esm-bundle.mjs && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
 
 clean(core): nothing to remove
 Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
-asset [1m[33mindex.js[39m[22m [1m[33m5.76 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main)
-orphan modules 5.51 MiB [1m[33m[orphan][39m[22m 1347 modules
+asset [1m[33mindex.js[39m[22m [1m[33m5.91 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main)
+orphan modules 5.66 MiB [1m[33m[orphan][39m[22m 1351 modules
 runtime modules 1.73 KiB 8 modules
-built modules 5.61 MiB [1m[33m[built][39m[22m
+built modules 5.75 MiB [1m[33m[built][39m[22m
   modules by path [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/*.js[39m[22m 173 KiB 224 modules
   modules by path [1m../../node_modules/.pnpm/style-loader@4.0.0_webpack@5.103.0_esbuild@0.27.1_webpa...(truncated)[39m[22m 5.84 KiB 6 modules
   modules by path [1m../../node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/[39m[22m 28.6 KiB 6 modules
@@ -26,11 +26,11 @@ built modules 5.61 MiB [1m[33m[built][39m[22m
 [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
 This can impact web performance.
 Assets: 
-  index.js (5.76 MiB)[39m[22m
+  index.js (5.91 MiB)[39m[22m
 
 [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
 Entrypoints:
-  main (5.76 MiB)
+  main (5.91 MiB)
       index.js
 [39m[22m
 
@@ -38,12 +38,12 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 9709 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 11007 ms
 
-asset [1m[33mindex.mjs[39m[22m [1m[33m5.84 MiB[39m[22m [1m[32m[emitted][39m[22m [javascript module] [1m[33m[big][39m[22m (name: main)
-orphan modules 5.51 MiB [1m[33m[orphan][39m[22m 1347 modules
+asset [1m[33mindex.mjs[39m[22m [1m[33m5.98 MiB[39m[22m [1m[32m[emitted][39m[22m [javascript module] [1m[33m[big][39m[22m (name: main)
+orphan modules 5.66 MiB [1m[33m[orphan][39m[22m 1351 modules
 runtime modules 1.32 KiB 8 modules
-built modules 5.61 MiB [1m[33m[built][39m[22m
+built modules 5.75 MiB [1m[33m[built][39m[22m
   modules by path [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/*.js[39m[22m 173 KiB 224 modules
   modules by path [1m../../node_modules/.pnpm/style-loader@4.0.0_webpack@5.103.0_esbuild@0.27.1_webpa...(truncated)[39m[22m 5.84 KiB 6 modules
   modules by path [1m../../node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/[39m[22m 28.6 KiB 6 modules
@@ -60,11 +60,11 @@ built modules 5.61 MiB [1m[33m[built][39m[22m
 [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
 This can impact web performance.
 Assets: 
-  index.mjs (5.84 MiB)[39m[22m
+  index.mjs (5.98 MiB)[39m[22m
 
 [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
 Entrypoints:
-  main (5.84 MiB)
+  main (5.98 MiB)
       index.mjs
 [39m[22m
 
@@ -72,6 +72,6 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 10586 ms
-verify-esm-bundle(core): ok — 19 externals, 260 exports load without a bundler
-[1mresolve-tspaths:[22m changed 347 file(s)
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 11000 ms
+verify-esm-bundle(core): ok — 19 externals, 268 exports load without a bundler
+[1mresolve-tspaths:[22m changed 349 file(s)
