@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen, within } from '../../../customTest';
 
-import { Pagination, PaginationContextProvider } from './index';
+import {
+  Pagination,
+  PaginationContextProvider,
+  usePaginationContext,
+} from './index';
 
 function setup(component: React.ReactNode, selectedPage?: number) {
   return {
@@ -260,6 +264,98 @@ describe('Pagination', () => {
     for (const btnEl of buttonEls) {
       expect(btnEl).toBeDisabled();
     }
+  });
+
+  /**
+   * `setPage` must keep a stable identity for the whole lifetime of the
+   * provider. The pattern below - reset to page 1 whenever the entity being
+   * paged changes - is how consumers write it, and it is what
+   * `react-hooks/exhaustive-deps` asks for. A setter whose identity changed on
+   * every page change re-fired this effect after each click and snapped the
+   * view back to page 1, so no paginated view could ever reach page 2.
+   */
+  describe('Setter stability', () => {
+    const ResetOnEntityChange = ({ entityId }: { entityId: string }) => {
+      const { page, setPage } = usePaginationContext();
+
+      useEffect(() => {
+        setPage(1);
+      }, [entityId, setPage]);
+
+      return (
+        <div>
+          <span data-testid="current-page">{page}</span>
+          <Pagination pagesCount={5} />
+        </div>
+      );
+    };
+
+    it('Stays on the page the user picked when a consumer effect depends on `setPage`', async () => {
+      const user = userEvent.setup();
+      render(
+        <PaginationContextProvider selectedPage={1}>
+          <ResetOnEntityChange entityId="person-1" />
+        </PaginationContextProvider>,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+
+      expect(screen.getByTestId('current-page')).toHaveTextContent('2');
+      expect(
+        screen.getByRole('button', { name: 'Current page 2' }),
+      ).toBeInTheDocument();
+    });
+
+    it('Still resets to page 1 when the entity actually changes', async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(
+        <PaginationContextProvider selectedPage={1}>
+          <ResetOnEntityChange entityId="person-1" />
+        </PaginationContextProvider>,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Go to page 3' }));
+      expect(screen.getByTestId('current-page')).toHaveTextContent('3');
+
+      rerender(
+        <PaginationContextProvider selectedPage={1}>
+          <ResetOnEntityChange entityId="person-2" />
+        </PaginationContextProvider>,
+      );
+
+      expect(screen.getByTestId('current-page')).toHaveTextContent('1');
+    });
+
+    it('Keeps `setPage` and `setPerPage` identities across page changes', async () => {
+      const user = userEvent.setup();
+      const setters: Array<{
+        setPage: unknown;
+        setPerPage: unknown;
+      }> = [];
+
+      const IdentityProbe = () => {
+        const { setPage, setPerPage } = usePaginationContext();
+        setters.push({ setPage, setPerPage });
+        return <Pagination pagesCount={5} />;
+      };
+
+      render(
+        <PaginationContextProvider selectedPage={1}>
+          <IdentityProbe />
+        </PaginationContextProvider>,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+
+      expect(setters.length).toBeGreaterThan(1);
+      expect(
+        setters.every(
+          ({ setPage, setPerPage }) =>
+            setPage === setters[0].setPage &&
+            setPerPage === setters[0].setPerPage,
+        ),
+      ).toBe(true);
+    });
   });
 
   describe('Controlled mode', () => {

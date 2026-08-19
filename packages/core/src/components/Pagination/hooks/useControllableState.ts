@@ -65,18 +65,42 @@ export const useControllableState = <T>({
   }
   isControlledRef.current = isControlled;
 
-  const setValue = useCallback<Dispatch<SetStateAction<T>>>(
-    (next) => {
-      const resolved =
-        typeof next === 'function' ? (next as (prev: T) => T)(value) : next;
+  /**
+   * Latest render's value / onChange, mirrored into refs so the setter below
+   * can read them without listing them as dependencies.
+   *
+   * The setter's identity MUST stay constant for the lifetime of the
+   * component. Consumers routinely put it in an effect's dependency array -
+   * `useEffect(() => setPage(1), [personId, setPage])` is the canonical
+   * "reset to page 1 when the entity changes" pattern, and it is exactly what
+   * `react-hooks/exhaustive-deps` asks for. A setter that changed identity on
+   * every value change turned that effect into an infinite reset loop: the
+   * page moved to 2, the setter identity changed, the effect re-fired and put
+   * it straight back to 1.
+   */
+  const valueRef = useRef(value);
+  valueRef.current = value;
 
-      if (!isControlled) {
-        setUncontrolledValue(resolved);
-      }
-      onChange?.(resolved);
-    },
-    [isControlled, onChange, value],
-  );
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
+  const setValue = useCallback<Dispatch<SetStateAction<T>>>((next) => {
+    const resolved =
+      typeof next === 'function'
+        ? (next as (prev: T) => T)(valueRef.current)
+        : next;
+
+    if (!isControlledRef.current) {
+      // Keep the ref ahead of the re-render so several setter calls batched
+      // into one event each see the value the previous call produced.
+      valueRef.current = resolved;
+      setUncontrolledValue(resolved);
+    }
+
+    // Deliberately outside the state updater: React 18 StrictMode
+    // double-invokes updaters, which would fire `onChange` twice.
+    onChangeRef.current?.(resolved);
+  }, []);
 
   return [value, setValue];
 };
