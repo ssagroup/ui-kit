@@ -10,6 +10,7 @@ import { TooltipContentBase } from '@components/Tooltip/TooltipContentBase';
 import { TooltipContentProps, TooltipSize } from '@components/Tooltip/types';
 import { useTooltipContext } from '@components/Tooltip/useTooltipContext';
 import { mapSizes } from '@components/Tooltip/utils';
+import * as styles from '@components/Tooltip/styles';
 
 /**
  * TooltipContent - Content container for tooltip display
@@ -48,6 +49,14 @@ import { mapSizes } from '@components/Tooltip/utils';
  * </TooltipContent>
  * ```
  *
+ * @example
+ * ```tsx
+ * // Headline above the body text, wrapping at 200px
+ * <TooltipContent title="Headline" maxWidth={200}>
+ *   A short description that wraps onto several lines.
+ * </TooltipContent>
+ * ```
+ *
  * @see {@link Tooltip} - Parent component that provides context
  * @see {@link TooltipTrigger} - Trigger component that activates tooltip
  *
@@ -57,7 +66,10 @@ import { mapSizes } from '@components/Tooltip/utils';
  * - Only visible when isOpen is true
  */
 const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
-  function TooltipContent({ children, className, style }, refProp) {
+  function TooltipContent(
+    { children, title, maxWidth, className, style },
+    refProp,
+  ) {
     const tooltipCtx = useTooltipContext();
     const ref = useMergeRefs([tooltipCtx?.refs.setFloating, refProp]);
 
@@ -66,22 +78,31 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
         {tooltipCtx?.isOpen && (
           <FloatingFocusManager context={tooltipCtx.context} modal={false}>
             <TooltipContentBase
+              tooltipColor={tooltipCtx.color}
+              hasBorder={tooltipCtx.hasBorder}
+              hasShadow={tooltipCtx.hasShadow}
               {...tooltipCtx.getFloatingProps({
                 ref,
-                css:
+                css: [
                   tooltipCtx.size && mapSizes[tooltipCtx.size as TooltipSize],
+                  title != null && styles.withTitle,
+                ],
                 className,
                 style: {
                   position: tooltipCtx.strategy,
                   top: tooltipCtx.y ?? 0,
                   left: tooltipCtx.x ?? 0,
                   width: 'max-content',
+                  ...(maxWidth === undefined
+                    ? {}
+                    : { maxWidth, overflowWrap: 'break-word' }),
                   ...style,
                 },
               })}>
               {tooltipCtx.hasArrow && (
                 <TooltipArrow {...tooltipCtx.arrowProps} />
               )}
+              {title != null && <div css={styles.title}>{title}</div>}
               {children}
             </TooltipContentBase>
           </FloatingFocusManager>

@@ -9,6 +9,7 @@ const main: Theme = {
     white80: 'rgba(255, 255, 255, 0.8)', //  #ffffff
     white60: 'rgba(255, 255, 255, 0.6)', //  #ffffff
     white30: 'rgba(255, 255, 255, 0.3)', //  #ffffff
+    white64: 'rgba(255, 255, 255, 0.64)', //  #ffffff — Tooltip 'nonOpaque'
     greyLighter: 'rgba(238, 241, 247, 1)', //  #eef1f7
     greyLighter20: 'rgba(238, 241, 247, 0.2)', //#eef1f766
     greyLighter40: 'rgba(238, 241, 247, 0.4)', //#eef1f766

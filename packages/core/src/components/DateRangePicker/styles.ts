@@ -30,10 +30,9 @@ export const PresetsPanel = styled.div`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  gap: 4px;
-  width: 160px;
+  width: 200px;
   height: 100%;
-  padding: 16px 12px 24px;
+  padding: 24px;
   overflow-y: auto;
   scrollbar-width: thin;
   border-right: 1px solid ${({ theme }) => theme.colors.greyLighter};
@@ -45,9 +44,13 @@ export const PresetsPanel = styled.div`
  * state.
  */
 export const PresetButton = styled.button<{ isActive: boolean }>`
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
   width: 100%;
-  padding: 8px 12px;
+  /* Figma "Filter Cell": a 40px row, the same height as a calendar day cell. */
+  height: 40px;
+  padding: 0 12px;
   border: none;
   border-radius: 6px;
   font-family: inherit;

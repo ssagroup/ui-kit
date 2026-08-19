@@ -13,6 +13,7 @@ type Colors = MakeColors<
     'white60',
     'white80',
     'white30',
+    'white64',
     'dark',
     'greyLighter',
     'greenLighterRGB',
