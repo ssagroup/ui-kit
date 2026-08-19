@@ -28,7 +28,7 @@ export const PopoverHeading = React.forwardRef<
   HTMLHeadingElement,
   Parameters<typeof Typography>[0]
 >(function PopoverHeading(props, ref) {
-  const { setLabelId } = usePopoverContext();
+  const { setLabelId, color } = usePopoverContext();
   const id = useId();
 
   // Only sets `aria-labelledby` on the Popover root element
@@ -39,7 +39,13 @@ export const PopoverHeading = React.forwardRef<
   }, [id, setLabelId]);
 
   return (
-    <Typography {...props} ref={ref} id={id}>
+    // `Typography` defaults to dark text, which would be unreadable on a dark
+    // surface — inherit the surface's own color instead whenever one is set.
+    <Typography
+      color={color ? 'inherit' : undefined}
+      {...props}
+      ref={ref}
+      id={id}>
       {props.children}
     </Typography>
   );

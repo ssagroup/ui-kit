@@ -1,9 +1,16 @@
 import {
+  FloatingArrow,
+  OffsetOptions,
   Placement,
   useInteractions,
   UseFloatingReturn,
   UseFloatingOptions,
 } from '@floating-ui/react';
+import {
+  FloatingSurfaceColor,
+  FloatingSurfaceSize,
+} from '@styles/floatingSurface';
+import { IconButtonProps } from '@components/IconButton/types';
 
 /**
  * Interaction modes for popover activation
@@ -98,6 +105,85 @@ export interface PopoverOptions {
    * Callback fired when open state changes
    */
   onOpenChange?: (open: boolean) => void;
+
+  /**
+   * Color scheme of the popover surface. Shared with Tooltip — see
+   * {@link FloatingSurfaceColor}.
+   *
+   * Left unset, the popover renders unstyled (no background, border or
+   * shadow) and its content supplies its own surface, which is how every
+   * popover in the kit behaved before this prop existed.
+   */
+  color?: FloatingSurfaceColor;
+
+  /**
+   * Padding/typography scale of the popover surface. Unset means no padding is
+   * applied, leaving spacing to the content.
+   */
+  size?: FloatingSurfaceSize;
+
+  /**
+   * Whether the surface (and its arrow) is outlined with a 1px border
+   * @default true when `color` is `'white'`, false otherwise
+   */
+  hasBorder?: boolean;
+
+  /**
+   * Whether the surface casts a drop shadow
+   * @default true when `color` is set, false otherwise
+   */
+  hasShadow?: boolean;
+
+  /**
+   * Whether to display an arrow pointing at the trigger
+   * @default false
+   */
+  hasArrow?: boolean;
+
+  /**
+   * Additional props for the arrow element
+   */
+  arrowProps?: PopoverArrowProps;
+
+  /**
+   * Offset between the trigger and the popover
+   * @default 12 when `hasArrow` is set, 5 otherwise
+   */
+  offsetOptions?: OffsetOptions;
+}
+
+export type PopoverArrowProps = Omit<
+  React.ComponentProps<typeof FloatingArrow>,
+  'context'
+>;
+
+/**
+ * Props for PopoverContent component
+ */
+export interface PopoverContentProps extends React.HTMLProps<HTMLDivElement> {
+  /**
+   * Disables the focus manager wrapping the content
+   * @default false
+   */
+  isFocusManagerDisabled?: boolean;
+
+  /**
+   * Whether closed content is unmounted or kept mounted but hidden
+   * @default 'unmount'
+   */
+  mountMode?: MountMode;
+
+  /**
+   * Renders a close button in the top-right corner of the surface
+   * @default false
+   */
+  hasCloseButton?: boolean;
+
+  /**
+   * Props forwarded to the built-in close button, e.g. `icon`, `size` or
+   * `aria-label`
+   */
+  closeButtonProps?: Partial<Omit<IconButtonProps, 'onClick'>>;
 }
 
 export type SetIDs = {
@@ -136,7 +222,13 @@ export interface PopoverTriggerProps {
 
 type UseInteractions = ReturnType<typeof useInteractions>;
 
-export type UsePopover = (props: PopoverOptions) => {
+export type UsePopover = (props: PopoverOptions) => Pick<
+  PopoverOptions,
+  'color' | 'size' | 'hasArrow' | 'arrowProps'
+> & {
+  hasBorder: boolean;
+  hasShadow: boolean;
+  arrowRef: React.RefObject<SVGSVGElement | null>;
   open: boolean;
   modal?: boolean;
   labelId?: string;

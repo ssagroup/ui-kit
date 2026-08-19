@@ -36,6 +36,57 @@ function BasicPopover() {
 }
 ```
 
+## Popover or Tooltip?
+
+Both float next to a trigger and share the same surface tokens, but they are not interchangeable:
+
+|                    | Tooltip                | Popover                                                                             |
+| ------------------ | ---------------------- | ----------------------------------------------------------------------------------- |
+| ARIA role          | `tooltip`              | `dialog`                                                                            |
+| Opens on           | hover                  | click (configurable)                                                                |
+| Content            | passive, non-focusable | interactive, focusable                                                              |
+| Focus              | never trapped          | optional `modal` focus trap                                                         |
+| Labelling          | none needed            | `PopoverHeading` / `PopoverDescription` wire `aria-labelledby` / `aria-describedby` |
+| Dismiss affordance | none                   | `PopoverClose`, or `hasCloseButton`                                                 |
+
+Use Tooltip to label a control, Popover for anything the user interacts with.
+
+## Surface
+
+`color`, `size`, `hasBorder`, `hasShadow` and `hasArrow` come from the same tokens Tooltip uses, so the two stay visually in step:
+
+```tsx
+<Popover color="dark" size="medium" hasArrow>
+  <PopoverTrigger>Open</PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeading variant="h6">Headline</PopoverHeading>
+    <PopoverDescription variant="body2">Body text</PopoverDescription>
+  </PopoverContent>
+</Popover>
+```
+
+- `color` — `grey`, `white`, `dark` or `nonOpaque` (semi-transparent). **Unset by default**: the popover renders with no background, border or shadow, exactly as it did before these props existed, so existing usages are unaffected.
+- `size` — `small`, `medium` or `large` padding. Unset means no padding, leaving spacing to the content.
+- `hasBorder` — defaults to `true` for `white`, `false` otherwise; independent of the color either way.
+- `hasShadow` — defaults to `true` once a `color` is set.
+- `hasArrow` / `arrowProps` — off by default. Turning it on widens the default trigger gap from 5px to 12px so the arrow clears the trigger; override with `offsetOptions`.
+
+`PopoverHeading` and `PopoverDescription` accept the full `Typography` prop surface (`variant`, `weight`, `color`, `css`), and inherit the surface color automatically when one is set — so a dark popover doesn't need its text recolored by hand.
+
+## Close button
+
+`hasCloseButton` on `PopoverContent` renders a close affordance in the top-right corner — a 24px `cross` glyph that takes the surface's own text color and dims until hovered. It's off by default, and `closeButtonProps` forwards to the underlying `IconButton`:
+
+```tsx
+<PopoverContent
+  hasCloseButton
+  closeButtonProps={{ icon: 'close-circle-outline', 'aria-label': 'Dismiss' }}>
+  <PopoverDescription>…</PopoverDescription>
+</PopoverContent>
+```
+
+For a text button, or one placed inside your own layout, keep using `PopoverClose`.
+
 ## Features
 
 ### Interaction Modes

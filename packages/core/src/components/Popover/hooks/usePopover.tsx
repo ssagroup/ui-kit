@@ -11,9 +11,10 @@ import {
   useInteractions,
   useHover,
   safePolygon,
+  arrow,
 } from '@floating-ui/react';
-import { useControllableState } from '@ssa-ui-kit/hooks';
-import { resolveOpenState } from '@utils/deprecation';
+import { isBorderedByDefault } from '@styles/floatingSurface';
+import { useFloatingDisclosure } from '@utils/useFloatingDisclosure';
 import { PopoverOptions, UsePopover } from '../types';
 
 /**
@@ -44,23 +45,29 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
     keyboardHandlers = true,
     floatingOptions = {},
     interactionsEnabled = 'click',
+    color,
+    size,
+    hasArrow = false,
+    arrowProps = {},
+    offsetOptions,
   } = options;
 
-  const openState = resolveOpenState('Popover', options, {
-    defaultAlias: 'initialOpen',
-  });
+  // Both default off the color: an unstyled popover — the shape every popover
+  // in the kit had before the surface props existed — keeps rendering exactly
+  // as it did.
+  const hasBorder = options.hasBorder ?? isBorderedByDefault(color);
+  const hasShadow = options.hasShadow ?? Boolean(color);
 
   // Previously `setControlledOpen ?? setUncontrolledOpen`, which meant an
   // `onOpenChange` passed *without* `open` replaced the internal setter
   // entirely: the popover reported every intent and then never moved.
-  const [openValue, setOpen] = useControllableState<boolean>({
-    controlled: openState.isControlled,
-    value: openState.open,
-    defaultValue: openState.defaultOpen,
-    finalValue: false,
-    onChange: openState.onOpenChange,
+  const { open, setOpen, isControlled } = useFloatingDisclosure({
+    component: 'Popover',
+    props: options,
+    aliases: { defaultAlias: 'initialOpen' },
   });
-  const open = Boolean(openValue);
+
+  const arrowRef = React.useRef<SVGSVGElement | null>(null);
 
   const [labelId, setLabelId] = React.useState<string | undefined>();
   const [descriptionId, setDescriptionId] = React.useState<
@@ -73,12 +80,14 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(5),
+      // An arrow needs to clear the trigger, so it widens the default gap.
+      offset(offsetOptions ?? (hasArrow ? 12 : 5)),
       flip({
         crossAxis: placement.includes('-'),
         padding: 5,
       }),
       shift({ padding: 5 }),
+      arrow({ element: arrowRef }),
     ],
     ...floatingOptions,
   });
@@ -87,8 +96,6 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
 
   // A controlled popover leaves toggling to its parent, so the interactions
   // that would move it on their own stay off.
-  const isControlled = openState.isControlled;
-
   const click = useClick(context, {
     enabled: !isControlled && ['click', 'both'].includes(interactionsEnabled),
     keyboardHandlers,
@@ -131,6 +138,13 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
       setOpen,
       ...interactions,
       ...data,
+      color,
+      size,
+      hasBorder,
+      hasShadow,
+      hasArrow,
+      arrowProps,
+      arrowRef,
       modal,
       labelId,
       descriptionId,
@@ -143,6 +157,12 @@ export const usePopover: UsePopover = (options: PopoverOptions = {}) => {
       setOpen,
       interactions,
       data,
+      color,
+      size,
+      hasBorder,
+      hasShadow,
+      hasArrow,
+      arrowProps,
       modal,
       labelId,
       descriptionId,

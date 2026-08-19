@@ -17,7 +17,20 @@ export type Args = Parameters<PopoverType>[0];
 export default {
   title: 'Components/Popover',
   component: Popover,
-  argTypes: {},
+  argTypes: {
+    color: {
+      options: [undefined, 'grey', 'white', 'dark', 'nonOpaque'],
+      control: {
+        type: 'select',
+      },
+    },
+    size: {
+      options: [undefined, 'small', 'medium', 'large'],
+      control: {
+        type: 'select',
+      },
+    },
+  },
 } as Meta<typeof Popover>;
 
 export const Default: StoryObj<PopoverType> = () => {
@@ -171,3 +184,80 @@ export const AdvancedPositioning: StoryObj<PopoverType> = () => {
   );
 };
 AdvancedPositioning.args = {};
+
+export const Surface: StoryObj<PopoverType> = (args: PopoverOptions) => {
+  const colors = ['grey', 'white', 'dark', 'nonOpaque'] as const;
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '40px',
+        justifyContent: 'center',
+        padding: '60px 0',
+      }}>
+      {colors.map((color) => (
+        <Popover key={color} {...args} color={color}>
+          <PopoverTrigger>{color}</PopoverTrigger>
+          <PopoverContent>
+            <PopoverHeading variant="h6">Headline</PopoverHeading>
+            <PopoverDescription variant="body2">
+              The surface tokens are shared with Tooltip.
+            </PopoverDescription>
+          </PopoverContent>
+        </Popover>
+      ))}
+    </div>
+  );
+};
+
+Surface.args = {
+  size: 'medium',
+  hasArrow: true,
+  placement: 'top',
+};
+
+Surface.parameters = {
+  docs: {
+    description: {
+      story:
+        'The same four surfaces Tooltip renders — `grey`, `white` (bordered by default), `dark` and `nonOpaque` — plus `size` for padding and `hasArrow` for the pointer. Leave `color` unset and the popover stays unstyled, as it was before these props existed.',
+    },
+  },
+};
+
+export const WithCloseButton: StoryObj<PopoverType> = (
+  args: PopoverOptions,
+) => {
+  return (
+    <div style={{ padding: '60px 0', textAlign: 'center' }}>
+      <Popover {...args}>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent hasCloseButton>
+          <PopoverHeading variant="h6">Headline</PopoverHeading>
+          <PopoverDescription variant="body2">
+            Dismiss this with the button in the corner.
+          </PopoverDescription>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};
+
+WithCloseButton.args = {
+  color: 'white',
+  size: 'large',
+  hasArrow: true,
+  placement: 'top',
+};
+
+WithCloseButton.storyName = 'With close button';
+WithCloseButton.parameters = {
+  docs: {
+    description: {
+      story:
+        '`hasCloseButton` on `PopoverContent` renders a built-in close affordance in the top-right corner. It is off by default; `closeButtonProps` forwards to the underlying `IconButton` for a different icon, size or label.',
+    },
+  },
+};
