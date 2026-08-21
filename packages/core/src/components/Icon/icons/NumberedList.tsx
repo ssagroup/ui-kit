@@ -12,7 +12,7 @@ export const NumberedList = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <g transform="translate(8.2, 5)">
+    <g transform="translate(8.2008, 5)">
       <path
         d="M4.39453 14H2.63477V1.91504L0 3.50977V1.5752L2.63477 0H4.39453V14Z"
         fill={fill}
