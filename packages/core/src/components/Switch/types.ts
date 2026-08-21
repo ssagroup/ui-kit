@@ -16,7 +16,9 @@
  *   On hover, a `rgba(0,0,0,0.15)` overlay darkens the track; the knob is unaffected.
  *
  * The off state always uses a neutral grey background (`greyFocused`) regardless
- * of variant. Disabled state always uses `greySelectedMenuItem` (same for all variants).
+ * of variant. When disabled, the off state uses `greySelectedMenuItem` while the
+ * on state keeps its color, muted by a white overlay, so a locked-on switch
+ * still reads as on.
  *
  * @example
  * ```tsx
@@ -58,7 +60,8 @@ export interface SwitchProps {
 
   /**
    * Whether the switch is disabled
-   * Disabled switches cannot be toggled; background becomes `greySelectedMenuItem`
+   * Disabled switches cannot be toggled. The off state becomes
+   * `greySelectedMenuItem`; the on state keeps its color, muted.
    * @default false
    */
   disabled?: boolean;

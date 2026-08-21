@@ -135,6 +135,16 @@ export const Colors = () => (
               /* no-op */
             }}
           />
+          <Checkbox
+            id={`${color}-disabled-checked`}
+            text="Disabled + checked"
+            color={color}
+            defaultChecked
+            disabled
+            onChange={() => {
+              /* no-op */
+            }}
+          />
         </div>
       </Fragment>
     ))}

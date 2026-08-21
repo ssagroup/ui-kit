@@ -80,7 +80,11 @@ Use the indeterminate state to represent a partially selected state, commonly us
 
 ### Disabled State
 
-Disable user interaction with the checkbox:
+Disable user interaction with the checkbox. The checked and unchecked
+positions stay visually distinct: a disabled *unchecked* box goes flat
+`greyFocused40`, while a disabled *checked* (or indeterminate) box keeps the
+variant's fill colour, muted by a white overlay, so a locked-on option still
+reads as selected. The tick itself stays fully opaque.
 
 ```tsx
 // Disabled unchecked
@@ -114,11 +118,11 @@ Checkboxes can be used without text labels when the context is clear:
 The `color` prop controls the checked-state and focus colors. Colors are
 sourced from `theme.palette` for consistency with the rest of the design system.
 
-| Value | Palette key | Resting border | Checked fill | Hover fill | Disabled box |
-|-------|-------------|----------------|--------------|------------|--------------|
-| `primary` *(default)* | `palette.primary` | `primary.light` | `primary.main` | `primary.dark` | `greyFocused40` |
-| `success` | `palette.success` | `success.main` | `success.main` | `success.dark` | `greyFocused40` |
-| `custom` | — | none (bring your own) | — | — | — |
+| Value | Palette key | Resting border | Checked fill | Hover fill | Disabled (unchecked) | Disabled (checked) |
+|-------|-------------|----------------|--------------|------------|----------------------|--------------------|
+| `primary` *(default)* | `palette.primary` | `primary.light` | `primary.main` | `primary.dark` | `greyFocused40` | `primary.main`, muted |
+| `success` | `palette.success` | `success.main` | `success.main` | `success.dark` | `greyFocused40` | `success.main`, muted |
+| `custom` | — | none (bring your own) | — | — | — | — |
 
 ```tsx
 // Default — primary (blue)

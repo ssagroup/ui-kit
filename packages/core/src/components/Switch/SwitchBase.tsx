@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { DISABLED_SURFACE_OVERLAY } from '@styles/disabledSurface';
 
 interface SwitchBaseProps {
   onColor: string;
@@ -57,8 +58,30 @@ const SwitchBase = styled('button', {
       : ''}
 
   &:disabled {
-    background: ${({ theme }) => theme.colors.greySelectedMenuItem};
     cursor: auto;
+  }
+
+  &:disabled[aria-checked='false'] {
+    background: ${({ theme }) => theme.colors.greySelectedMenuItem};
+  }
+
+  /*
+   * Disabled + on keeps the resolved on-color so the state stays readable,
+   * muted by DISABLED_SURFACE_OVERLAY. The overlay paints over the track and
+   * below the knob (::before, z-index 1), which stays opaque — see
+   * @styles/disabledSurface for why this is not just opacity.
+   */
+  &:disabled[aria-checked='true'] {
+    background: ${({ onColor }) => onColor};
+  }
+
+  &:disabled[aria-checked='true']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    background: ${DISABLED_SURFACE_OVERLAY};
+    pointer-events: none;
   }
 
   &[aria-checked='false']:focus::after,

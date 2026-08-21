@@ -35,7 +35,8 @@ off-state focus outline. Colors are sourced from `theme.palette`.
 | `custom` | — | via `colors.on` | `rgba(0,0,0,0.15)` overlay | via `colors.offOutline` |
 
 The off state always shows a neutral grey background (`greyFocused`) regardless
-of color variant. The disabled state always uses `greySelectedMenuItem` (same for all variants).
+of color variant. When disabled, the off state uses `greySelectedMenuItem`, while
+the on state keeps its color — see [Disabled State](#disabled-state).
 
 ```tsx
 // Default — primary (blue)
@@ -60,12 +61,27 @@ of color variant. The disabled state always uses `greySelectedMenuItem` (same fo
 
 ### Disabled State
 
-Disabled switches show a solid `greySelectedMenuItem` background in both on
-and off positions and cannot be toggled:
+Disabled switches cannot be toggled, and the two positions stay visually
+distinct:
+
+- **Disabled + on** keeps the variant's on-color, muted by a white overlay, so a
+  locked-on setting still reads as on. This works the same for `primary`,
+  `success`, and `custom` — a custom `colors.on` is dimmed by the same overlay,
+  with no extra prop to set.
+- **Disabled + off** uses a solid `greySelectedMenuItem` background.
+
+The knob stays fully opaque in both cases, so its position remains a reliable
+state cue.
 
 ```tsx
+// Muted blue — still reads as "on"
 <SwitchContextProvider initialState={true}>
   <Switch label="Locked feature" disabled />
+</SwitchContextProvider>
+
+// Solid grey
+<SwitchContextProvider initialState={false}>
+  <Switch label="Unavailable feature" disabled />
 </SwitchContextProvider>
 ```
 
