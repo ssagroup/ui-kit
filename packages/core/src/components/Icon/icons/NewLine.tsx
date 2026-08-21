@@ -8,7 +8,7 @@ export const NewLine = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <g transform="translate(5, 8)">
+    <g transform="translate(4.9992, 7.9992)">
       <path d="M12 0V6H5V8.38672L0 5.5L5 2.61328V5H11V0H12Z" fill={fill} />
     </g>
   </svg>

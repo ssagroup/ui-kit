@@ -8,7 +8,7 @@ export const Uppercase = ({ fill = '#000', size = 24, ...props }: SVGProps) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}>
-    <g transform="translate(6.1, 5)">
+    <g transform="translate(6.1008, 5)">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
