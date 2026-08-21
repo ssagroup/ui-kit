@@ -76,11 +76,7 @@ describe('Icons', () => {
 
       expect(icon).toBeInTheDocument();
 
-      if (iconName === 'more-vertical') {
-        expect(icon).toHaveAttribute('width', '3px');
-      } else {
-        expect(icon).toHaveAttribute('width', '12px');
-      }
+      expect(icon).toHaveAttribute('width', '12px');
       expect(icon).toHaveAttribute('height', '12px');
     });
   });

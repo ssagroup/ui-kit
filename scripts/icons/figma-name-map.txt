@@ -1,0 +1,17 @@
+autoscale|autoscale 24
+compensation|compencation
+profiles-changes|profile-changes
+clipboard-assessment|clipboard-ssessment
+quotation|Qoutation
+salary-reports|clipboard-technclipboard-tesalary-reports
+filter-funnel|funnel-filter
+education|education 1
+maximize|fulscreen
+user|Circle User
+certification|certificates
+carrot-down|Arrow Down
+carrot-up|Arrow Up
+carrot-left|Arrow Left
+carrot-right|Arrow Right
+plus|Add
+cross|Close
