@@ -279,8 +279,12 @@ describe('Popover', () => {
           getByLabelText('Close').querySelectorAll('path'),
         );
         expect(paths.length).toBeGreaterThan(0);
+        // Icons carry their colour on whichever of fill/stroke they are drawn
+        // with, so assert against the one this glyph actually uses.
         paths.forEach((path) =>
-          expect(path).toHaveAttribute('stroke', expected),
+          expect(path.getAttribute('fill') ?? path.getAttribute('stroke')).toBe(
+            expected,
+          ),
         );
       },
     );

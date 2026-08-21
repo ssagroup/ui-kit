@@ -16,7 +16,7 @@ export default {
     },
   },
   args: {
-    size: 28,
+    size: 24,
   },
   argTypes: {
     color: { control: 'color' },
