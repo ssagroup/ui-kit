@@ -8,6 +8,7 @@ import FormCheckbox from '@components/FormCheckbox';
 
 import { CheckboxProps } from './types';
 import { getByRole } from '@testing-library/dom';
+import { DISABLED_SURFACE_OVERLAY } from '@styles/disabledSurface';
 
 const checkLabel = () => {
   const labelEl = document.getElementsByTagName('label')[0];
@@ -96,6 +97,51 @@ describe('Checkbox', () => {
 
     await user.click(checkboxEl);
     expect(mockOnChange).not.toBeCalled();
+  });
+
+  it('[disabled] Keeps the fill colour when checked', () => {
+    setup({ disabled: true, defaultChecked: true });
+
+    const labelEl = checkLabel();
+
+    // The checked fill survives being disabled, so a locked-on box still reads
+    // as checked instead of flattening to near-white grey.
+    expect(labelEl).toHaveStyleRule('background', colors.palette.primary.main, {
+      target: /input:disabled:checked\+div::before/,
+    });
+    // ...muted by the shared overlay, which sits below the tick (z-index 2).
+    expect(labelEl).toHaveStyleRule('background', DISABLED_SURFACE_OVERLAY, {
+      target: /input:disabled:checked\+div::after/,
+    });
+    // The overlay must be pinned to the same hard 20x20 as the ::before fill it
+    // covers. Sizing it off the box instead (inset: 0) let it drift when a long
+    // label squeezed the flex item, leaving a strip of undimmed fill showing.
+    (['height', 'width'] as const).forEach((prop) => {
+      expect(labelEl).toHaveStyleRule(prop, '20px', {
+        target: /input:disabled:checked\+div::after/,
+      });
+    });
+    checkIcon(labelEl, true);
+  });
+
+  it('[disabled] Keeps the fill colour when indeterminate', () => {
+    setup({ disabled: true, isIndeterminate: true, color: 'success' });
+
+    const labelEl = checkLabel();
+
+    expect(labelEl).toHaveStyleRule('background', colors.palette.success.main, {
+      target: /input:disabled:indeterminate\+div::before/,
+    });
+  });
+
+  it('[disabled] Falls back to grey when unchecked', () => {
+    setup({ disabled: true });
+
+    const labelEl = checkLabel();
+
+    expect(labelEl).toHaveStyleRule('background', colors.colors.greyFocused40, {
+      target: /input:disabled:not\(:checked, :indeterminate\)\+div/,
+    });
   });
 
   it('Renders with the initial state passed in props', async () => {

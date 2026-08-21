@@ -17,7 +17,8 @@ import { SwitchProps } from './types';
  * object to supply arbitrary CSS color values.
  *
  * The off state always shows a neutral grey background (`greyFocused`).
- * The disabled state always uses `greySelectedMenuItem`, regardless of color variant.
+ * When disabled, the off state uses `greySelectedMenuItem`; the on state keeps its
+ * color, muted by a white overlay so the on/off distinction survives.
  * Hovering the on state darkens it: palette variants swap to their `palette.*.dark`
  * token; custom colors get a `rgba(0,0,0,0.15)` overlay so the knob stays unaffected.
  *
@@ -42,7 +43,7 @@ import { SwitchProps } from './types';
  *
  * @example
  * ```tsx
- * // Disabled (muted grey, cannot toggle)
+ * // Disabled + on (muted on-color, cannot toggle)
  * <SwitchContextProvider initialState={true}>
  *   <Switch label="Locked feature" disabled />
  * </SwitchContextProvider>

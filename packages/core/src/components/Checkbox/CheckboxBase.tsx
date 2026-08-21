@@ -18,6 +18,13 @@ export const CheckboxBase = styled(Label)<Pick<CheckboxProps, 'color'>>`
     position: relative;
     height: 20px;
     width: 20px;
+
+    /*
+     * The box is a flex item, and ::before draws it at a hard 20x20. Without
+     * this it shrinks under a long label in a tight row while ::before does
+     * not, so the drawn box no longer lines up with its own footprint.
+     */
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;

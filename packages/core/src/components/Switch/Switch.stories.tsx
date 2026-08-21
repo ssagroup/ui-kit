@@ -129,6 +129,23 @@ export const Colors: StoryObj<typeof Switch> = {
                 <Switch label={`${label} off`} color="custom" colors={colors} />
               </SwitchContextProvider>
             </div>
+            <div
+              css={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 4,
+                alignItems: 'center',
+              }}>
+              <Typography variant="caption">Disabled</Typography>
+              <SwitchContextProvider initialState={true}>
+                <Switch
+                  label={`${label} disabled`}
+                  color="custom"
+                  colors={colors}
+                  disabled
+                />
+              </SwitchContextProvider>
+            </div>
           </div>
         </div>
       ))}
@@ -140,6 +157,10 @@ export const Disabled: StoryObj<typeof Switch> = {
   render: (args) => (
     <Fragment>
       <Typography variant="h5">Disabled — On</Typography>
+      <Typography variant="caption">
+        Keeps the on-color, muted — the state stays readable while the control
+        is locked.
+      </Typography>
       <SwitchContextProvider initialState={true}>
         <Switch {...args} disabled />
       </SwitchContextProvider>
@@ -148,6 +169,12 @@ export const Disabled: StoryObj<typeof Switch> = {
       </Typography>
       <SwitchContextProvider initialState={false}>
         <Switch {...args} disabled />
+      </SwitchContextProvider>
+      <Typography variant="h5" css={{ marginTop: 10 }}>
+        Enabled — On (for comparison)
+      </Typography>
+      <SwitchContextProvider initialState={true}>
+        <Switch {...args} />
       </SwitchContextProvider>
     </Fragment>
   ),

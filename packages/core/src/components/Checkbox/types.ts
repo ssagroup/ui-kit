@@ -142,11 +142,13 @@ export interface CheckboxProps extends Partial<
    * Color variant of the checkbox — controls the checked and focus-state colors.
    * Sourced from `theme.palette`:
    * - `primary` — blue (uses `palette.primary`); resting border is `palette.primary.light`,
-   *   checked fill is `palette.primary.main`, hover fill is `palette.primary.dark`,
-   *   disabled box background is `greyFocused40`
+   *   checked fill is `palette.primary.main`, hover fill is `palette.primary.dark`.
+   *   When disabled, an unchecked box is `greyFocused40` while a checked one keeps
+   *   `palette.primary.main`, muted
    * - `success` — green (uses `palette.success`); resting border is `palette.success.main`,
-   *   checked fill is `palette.success.main`, hover fill is `palette.success.dark`,
-   *   disabled box background is `greyFocused40`
+   *   checked fill is `palette.success.main`, hover fill is `palette.success.dark`.
+   *   When disabled, an unchecked box is `greyFocused40` while a checked one keeps
+   *   `palette.success.main`, muted
    * - `custom` — no built-in color; apply styles via `className` or the `css` prop
    * @default 'primary'
    */

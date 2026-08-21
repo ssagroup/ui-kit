@@ -21,12 +21,18 @@ interface CheckSwitchStyleAndMarkup {
     options: {
       isOn: boolean;
       isDisabled?: boolean;
+      /**
+       * Resolved on-state background of the Switch under test. Only consulted
+       * for isDisabled + isOn, the one branch whose expected colour depends on
+       * the `color`/`colors` props; every other state is colour-independent.
+       */
+      onColor?: string;
     },
   ): void;
 }
 const checkSwitchStyleAndMarkup: CheckSwitchStyleAndMarkup = (
   switchEl,
-  { isOn, isDisabled = false },
+  { isOn, isDisabled = false, onColor = theme.palette.primary.main },
 ) => {
   // NOTE: we cannot test :before/:hover styles because getComputedStyle()
   // support for pseudo-classes is not implemented in the test suite yet.
@@ -42,10 +48,14 @@ const checkSwitchStyleAndMarkup: CheckSwitchStyleAndMarkup = (
       cursor: ${isDisabled ? 'auto' : 'pointer'};
     `);
 
-  if (isDisabled) {
+  if (isDisabled && !isOn) {
     expect(switchEl).toHaveStyle(
       `background: ${theme.colors.greySelectedMenuItem};`,
     );
+  } else if (isDisabled && isOn) {
+    // Disabled + on keeps the on-color rather than flattening to grey; the
+    // white ::after overlay that mutes it cannot be asserted here (see NOTE).
+    expect(switchEl).toHaveStyle(`background: ${onColor};`);
   } else if (!isOn) {
     expect(switchEl).toHaveStyle(`background: ${theme.colors.greyFocused};`);
   }
@@ -169,6 +179,47 @@ describe('Switch', () => {
     await user.keyboard('[Space]');
 
     expect(switchEl).toHaveFocus();
+  });
+
+  it('[disabled] Keeps the palette on-color when "on"', () => {
+    const { getByRole } = setup(
+      <Switch label={TEST_LABEL} color="success" disabled />,
+      true,
+    );
+
+    expect(getByRole('switch')).toHaveStyle(
+      `background: ${theme.palette.success.main};`,
+    );
+  });
+
+  it('[disabled] Keeps a custom on-color when "on"', () => {
+    const { getByRole } = setup(
+      <Switch
+        label={TEST_LABEL}
+        color="custom"
+        colors={{ on: '#FF6B6B' }}
+        disabled
+      />,
+      true,
+    );
+
+    expect(getByRole('switch')).toHaveStyle('background: #FF6B6B;');
+  });
+
+  it('[disabled] Falls back to grey when "off", whatever the color', () => {
+    const { getByRole } = setup(
+      <Switch
+        label={TEST_LABEL}
+        color="custom"
+        colors={{ on: '#FF6B6B' }}
+        disabled
+      />,
+      false,
+    );
+
+    expect(getByRole('switch')).toHaveStyle(
+      `background: ${theme.colors.greySelectedMenuItem};`,
+    );
   });
 
   it('test default initial state', () => {
