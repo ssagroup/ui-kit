@@ -31,6 +31,19 @@ describe('DateRangePicker', () => {
     );
   };
 
+  // The calendar pads its grid with the neighbouring months' days, so a bare
+  // getByText(n) is ambiguous whenever the trailing pad repeats a day number
+  // the opened month already has — September 2026 renders both 9/10 and 10/10.
+  // Pin the lookup to the month the calendar actually opened on.
+  const getDayCell = (dialogEl: HTMLElement, day: number) => {
+    const dataDay = DateTime.now().set({ day }).toFormat('M/d/yyyy');
+    const cell = dialogEl.querySelector<HTMLElement>(`[data-day="${dataDay}"]`);
+    if (!cell) {
+      throw new Error(`No calendar cell found for ${dataDay}`);
+    }
+    return cell;
+  };
+
   function setup(props: Partial<DateRangePickerProps> = {}) {
     const mockOnChange = jest.fn();
     const mockOnOpen = jest.fn();
@@ -149,8 +162,8 @@ describe('DateRangePicker', () => {
 
     await user.click(getByTestId('daterangepicker-button'));
     const dialogEl = getByRole('dialog');
-    await user.click(within(dialogEl).getByText(10));
-    await user.click(within(dialogEl).getByText(20));
+    await user.click(getDayCell(dialogEl, 10));
+    await user.click(getDayCell(dialogEl, 20));
     expect(fromEl).not.toHaveValue('');
     expect(toEl).not.toHaveValue('');
 
