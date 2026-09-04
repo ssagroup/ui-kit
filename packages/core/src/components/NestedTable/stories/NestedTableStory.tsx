@@ -152,3 +152,36 @@ export const NestedTableStory = () => {
     </NestedTable>
   );
 };
+
+export const NestedTableCollapsedStory = () => (
+  <NestedTable defaultCollapsed>
+    <TableHead>
+      <NestedTableRow isHeader>
+        <NestedTableCell as="th">Version</NestedTableCell>
+        <NestedTableCell as="th">Layer</NestedTableCell>
+        <NestedTableCell as="th">Type</NestedTableCell>
+        <NestedTableCell
+          as="th"
+          css={{ '& div': { justifyContent: 'center' } }}>
+          Action
+        </NestedTableCell>
+      </NestedTableRow>
+    </TableHead>
+    <TableBody>
+      {/* Inherits the table-level default: starts collapsed */}
+      <WithNestedTableRow>
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+      </WithNestedTableRow>
+      {/* Opts out of the table-level default: starts expanded */}
+      <WithNestedTableRow defaultCollapsed={false}>
+        <NestedDefaultRow />
+        <NestedDefaultRow />
+      </WithNestedTableRow>
+      <WithNestedTableRow>
+        <NestedDefaultRow />
+      </WithNestedTableRow>
+    </TableBody>
+  </NestedTable>
+);

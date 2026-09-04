@@ -8,7 +8,11 @@ import {
   Stories,
 } from '@storybook/addon-docs/blocks';
 import Table from '@components/Table';
-import { NestedTableDefaultStory, NestedTableStory } from './NestedTableStory';
+import {
+  NestedTableCollapsedStory,
+  NestedTableDefaultStory,
+  NestedTableStory,
+} from './NestedTableStory';
 
 export default {
   title: 'Components/NestedTable',
@@ -48,3 +52,8 @@ Default.args = {};
 
 export const Custom: StoryObj<typeof Table> = () => <NestedTableStory />;
 Custom.args = {};
+
+export const CollapsedByDefault: StoryObj<typeof Table> = () => (
+  <NestedTableCollapsedStory />
+);
+CollapsedByDefault.args = {};

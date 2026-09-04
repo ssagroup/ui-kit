@@ -185,6 +185,51 @@ Configure custom icons for the expand/collapse functionality:
 </NestedTable>
 ```
 
+### Collapsed by Default
+
+Row groups start expanded. Pass `defaultCollapsed` to seed them closed —
+either per group, or once on the table so every group inherits it:
+
+```tsx
+// Every group in this table starts collapsed
+<NestedTable defaultCollapsed>
+  <TableHead>
+    <NestedTableRow isHeader>
+      <NestedTableCell as="th">Day</NestedTableCell>
+      <NestedTableCell as="th">Total</NestedTableCell>
+    </NestedTableRow>
+  </TableHead>
+  <TableBody>
+    <WithNestedTableRow>
+      <NestedTableRow>
+        <NestedTableCell>Mon</NestedTableCell>
+        <NestedTableCell>8h</NestedTableCell>
+      </NestedTableRow>
+      <NestedTableRow>
+        <NestedTableCell>Standup</NestedTableCell>
+        <NestedTableCell>0.5h</NestedTableCell>
+      </NestedTableRow>
+    </WithNestedTableRow>
+    {/* A single group can opt out of the table-level default */}
+    <WithNestedTableRow defaultCollapsed={false}>
+      <NestedTableRow>
+        <NestedTableCell>Tue</NestedTableCell>
+        <NestedTableCell>6h</NestedTableCell>
+      </NestedTableRow>
+      <NestedTableRow>
+        <NestedTableCell>Review</NestedTableCell>
+        <NestedTableCell>1h</NestedTableCell>
+      </NestedTableRow>
+    </WithNestedTableRow>
+  </TableBody>
+</NestedTable>
+```
+
+`defaultCollapsed` on `WithNestedTableRow` wins over the table-level value.
+It only seeds the initial state — after that the group is driven by its own
+toggle. Groups with a single row are never collapsible, so they always start
+expanded regardless of this prop.
+
 ### Custom Row Styling
 
 Apply custom styling to specific rows or groups:

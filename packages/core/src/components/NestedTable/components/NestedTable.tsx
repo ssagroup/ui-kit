@@ -8,6 +8,7 @@ export const NestedTable = ({
   children,
   collapsedIconName,
   expandedIconName,
+  defaultCollapsed,
   ...rest
 }: PropsWithChildren &
   NestedTableContextType &
@@ -16,7 +17,8 @@ export const NestedTable = ({
   return (
     <NestedTableProvider
       collapsedIconName={collapsedIconName}
-      expandedIconName={expandedIconName}>
+      expandedIconName={expandedIconName}
+      defaultCollapsed={defaultCollapsed}>
       <Table {...rest}>{children}</Table>
     </NestedTableProvider>
   );
