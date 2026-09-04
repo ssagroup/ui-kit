@@ -2,7 +2,7 @@
 > @ssa-ui-kit/infra-dash@1.3.0 build /home/runner/work/ui-kit/ui-kit/packages/infra-dash
 > webpack --mode=production --node-env=production && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json
 
-Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 asset [1m[33mindex.js[39m[22m [1m[33m498 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main)
@@ -25,5 +25,5 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 8052 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 7014 ms
 [1mresolve-tspaths:[22m changed 24 file(s)
