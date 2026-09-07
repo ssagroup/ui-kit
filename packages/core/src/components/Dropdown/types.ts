@@ -159,11 +159,42 @@ export interface DropdownProps<
   icon?: IconProps['name'];
 
   /**
+   * Width of the dropdown.
+   * Can be a number (pixels) or a string (any CSS value, e.g. `'100%'`).
+   *
+   * The value is applied to the outer field wrapper; the positioning base and
+   * the toggle button are stretched to fill it. All three have to be sized,
+   * because each one shrink-wraps on its own — but only the outermost carries
+   * the value, so a relative width like `'60%'` resolves against the
+   * surrounding container rather than compounding at every level.
+   *
+   * Setting the width from the outside via `className` / `css` only reaches the
+   * toggle button, which cannot grow past a shrink-wrapped parent.
+   *
+   * Has no default: when omitted, the dropdown sizes itself to its content,
+   * matching the behaviour of previous versions.
+   *
+   * @example
+   * ```tsx
+   * // Fill the surrounding form column
+   * <Dropdown width="100%" selectedItem={selected} onChange={handleChange}>
+   *   ...
+   * </Dropdown>
+   * ```
+   */
+  width?: string | number;
+
+  /**
    * Props object for sub-components
    * Allows fine-grained control over component parts
    */
   dropdownProps?: {
-    /** Props for the wrapper div element */
+    /**
+     * Props for the wrapper div element.
+     *
+     * For sizing prefer the top-level `width` prop — it also reaches the outer
+     * field wrapper, which this slot cannot.
+     */
     base?: React.HTMLAttributes<HTMLDivElement>;
     /** Props for the toggle button element (excluding controlled props) */
     toggleButton?: Omit<

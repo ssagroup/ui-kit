@@ -109,6 +109,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     onChange: handleChange,
     className,
     maxHeight = 200,
+    width,
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
@@ -120,6 +121,26 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
   const dropdownId = useId();
+  // `width` has no default — without it the base and the toggle both
+  // shrink-wrap, which is the historical behaviour. When set it has to clear
+  // the base's `min-width` and the multiple toggle's `max-width`, otherwise
+  // those caps silently win over the explicit value.
+  //
+  // Only the outer base gets the requested value; the toggle gets 100%.
+  // Repeating the value would compound relative units: `width="60%"` would
+  // otherwise render the toggle at 60% of an already-60% base.
+  //
+  // Spread rather than passed as `css={...}`: Emotion wraps an element whenever
+  // `css` is present in its props, even when its value is undefined, and that
+  // re-serializes any incoming `className` (e.g. from
+  // `styled(MultipleDropdown)`). Omitting the key keeps the no-width path
+  // identical to writing no `css` prop.
+  const baseCssProps =
+    width === undefined ? undefined : { css: { width, minWidth: 0 } };
+  const toggleCssProps =
+    width === undefined
+      ? undefined
+      : { css: { width: '100%', maxWidth: 'none' } };
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, T>
@@ -228,9 +249,11 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
       <DropdownBase
+        {...baseCssProps}
         ref={useMergeRefs([dropdownBaseRef, ref])}
         data-testid="dropdown">
         <DropdownToggle
+          {...toggleCssProps}
           className={className}
           isOpen={isOpen}
           disabled={isDropdownDisabled}

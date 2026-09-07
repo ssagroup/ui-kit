@@ -167,6 +167,15 @@ export default {
       table: { type: { summary: 'StyledComponent' } },
       control: { disable: true },
     },
+    width: {
+      description:
+        'Width of the dropdown. Sizes the outer field wrapper, with the base and toggle button stretched to fill it, so relative units resolve against the surrounding container. Number values are treated as pixels. Omit it to keep the dropdown sized to its content.',
+      control: 'text',
+      table: {
+        type: { summary: 'string | number' },
+        defaultValue: { summary: 'undefined (sized to content)' },
+      },
+    },
     'dropdownProps.toggleButton.name': {
       description: 'Custom name attribute for dropdown div.',
       control: { type: 'text' },
@@ -298,12 +307,7 @@ WithAvatars.args = { disabled: false };
 
 export const CustomWidth: StoryObj = (args: Args) => {
   return (
-    <Dropdown
-      disabled={args.isDisabled}
-      selectedItem={items[0]}
-      css={css`
-        width: 320px;
-      `}>
+    <Dropdown disabled={args.isDisabled} selectedItem={items[0]} width={320}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -314,6 +318,72 @@ export const CustomWidth: StoryObj = (args: Args) => {
 };
 
 CustomWidth.args = { disabled: false };
+
+/**
+ * `width="100%"` makes the dropdown fill whatever container it is placed in —
+ * the usual case for a form column or a filter bar.
+ *
+ * It has to be a prop rather than a `css` override: the control is three nested
+ * elements deep (field wrapper -> base -> toggle button), and each one sizes
+ * itself to its content. Stretching only the toggle via `css` / `className`
+ * resolves `100%` against a base that is itself shrink-wrapped, so nothing
+ * moves.
+ *
+ * The prop sizes all three, but only the outer wrapper carries the value — the
+ * base and toggle are set to `100%` — so relative units resolve against the
+ * container instead of compounding.
+ *
+ * Edit the `width` control to try other values against the fixed 520px dashed
+ * container: `60%` lands at 312px (not 60% of 60% of 60%), `320px` and
+ * `fit-content` work too. The second dropdown has no `width` prop and stays
+ * sized to its content for comparison.
+ */
+export const FullWidth: StoryObj = (args: Args) => {
+  return (
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 520px;
+        padding: 16px;
+        border: 1px dashed #c4c4c4;
+        border-radius: 12px;
+      `}>
+      <Dropdown
+        {...args}
+        label={
+          args.width ? `width="${args.width}"` : 'No width (sized to content)'
+        }
+        selectedItem={items[0]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        width={undefined}
+        label="Sized to content (no width prop)"
+        selectedItem={items[0]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+    </div>
+  );
+};
+
+FullWidth.args = { disabled: false, width: '100%' };
 
 export const LegacyStyle: StoryObj<Args> = {
   name: 'Legacy (Previous Style)',

@@ -96,6 +96,21 @@ export type DropdownProps<P extends DropdownOptionProps> = {
    * @default 200
    */
   maxHeight?: number;
+
+  /**
+   * Width of the dropdown.
+   * Can be a number (pixels) or a string (any CSS value, e.g. `'100%'`).
+   *
+   * The value is applied to the positioning base; the toggle button is
+   * stretched to fill it, so a relative width like `'60%'` resolves against the
+   * surrounding container instead of compounding. It also clears the base's
+   * default `min-width` and the toggle's `max-width`, which would otherwise cap
+   * the value.
+   *
+   * Has no default: when omitted, the dropdown sizes itself to its content,
+   * matching the behaviour of previous versions.
+   */
+  width?: string | number;
 };
 
 /**

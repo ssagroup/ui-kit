@@ -116,6 +116,32 @@ function SingleSelectionExample() {
 }
 ```
 
+### Width
+
+By default the MultipleDropdown sizes itself to its content. Use the `width` prop for an explicit
+width — a number is treated as pixels, a string is used as-is, so `width="100%"` makes it fill its
+container:
+
+```tsx
+<MultipleDropdown
+  width="100%"
+  label="Strategy"
+  selectedItems={selectedItems}
+  onChange={handleChange}>
+  {items.map((item) => (
+    <DropdownOption key={item.value} value={item.value}>
+      {item.label}
+    </DropdownOption>
+  ))}
+</MultipleDropdown>
+```
+
+The value lands on the positioning base, and the toggle button is set to `100%` so it fills it —
+both have to be sized, since each shrink-wraps on its own, but repeating the value would make
+`width="60%"` mean 60% of an already-60% base. The prop also clears the base's default
+`min-width: 180px` and the toggle's `max-width: 250px`, which would otherwise silently cap the value
+you asked for. It has no default, so existing dropdowns keep their content-based width.
+
 ### Placeholder Control
 
 Control placeholder visibility and behavior:

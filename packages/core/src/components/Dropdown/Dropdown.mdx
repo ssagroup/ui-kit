@@ -73,6 +73,43 @@ You can pass props to different parts of the Dropdown component using the `dropd
 </Dropdown>
 ```
 
+### Width
+
+By default the Dropdown sizes itself to its content. Use the `width` prop to give it an explicit
+width — a number is treated as pixels, a string is used as-is, so `width="100%"` makes it fill
+whatever container it is in:
+
+```tsx
+// Fill the surrounding form column
+<Dropdown width="100%" selectedItem={items[0]} onChange={handleChange}>
+  {items.map((item) => (
+    <DropdownOption key={item.id} value={item.id}>
+      {item.value}
+    </DropdownOption>
+  ))}
+</Dropdown>
+
+// Fixed width
+<Dropdown width={320} selectedItem={items[0]} onChange={handleChange}>
+  ...
+</Dropdown>
+```
+
+This has to be a prop rather than a style override. The control is three nested elements deep — the
+field wrapper, the positioning base, and the toggle button — and each of them sizes itself to its
+content. `className` and `css` land on the toggle button only, so a `width: 100%` there resolves
+against a base that is still shrink-wrapped and nothing moves.
+
+The prop sizes all three, but only the outer wrapper receives the value — the base and the toggle
+are set to `100%` so they fill it. That is what makes relative units behave: `width="60%"` is 60% of
+the surrounding container. Repeating `60%` at each level would instead give 60% of 60% of 60%, i.e.
+about 21% of the container.
+
+The prop has no default, so existing dropdowns keep their content-based width. `dropdownProps.base`
+continues to work: it is spread onto the base element as before, and an inline `style` there still
+beats `width`, so a call site can be migrated gradually. `dropdownProps.toggleButton.css` also still
+wins over `width` — it is merged last.
+
 ### Viewport-Aware Placement
 
 By default (`dropdownPosition: 'auto'`) the options list opens downward. On every open the component

@@ -412,4 +412,51 @@ describe('MultipleDropdown', () => {
     listItemEls = within(getByRole('listbox')).getAllByRole('button');
     expect(listItemEls.length).toEqual(4);
   });
+
+  describe('width', () => {
+    it('shrink-wraps at both levels when width is not provided', () => {
+      const { getByTestId } = setup();
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      expect(dropdownBaseEl).toHaveStyleRule('display', 'inline-block');
+      expect(dropdownBaseEl).toHaveStyleRule('min-width', '180px');
+      expect(dropdownToggleEl).toHaveStyleRule('width', 'auto');
+      expect(dropdownToggleEl).toHaveStyleRule('max-width', '250px');
+    });
+
+    it('applies width to the base and stretches the toggle to fill it', () => {
+      const { getByTestId } = setup({ width: '100%' });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
+      expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
+    });
+
+    it('does not compound a percentage width onto the toggle', () => {
+      const { getByTestId } = setup({ width: '60%' });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      // Repeating '60%' would render the toggle at 60% of an already-60% base.
+      expect(dropdownBaseEl).toHaveStyleRule('width', '60%');
+      expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
+    });
+
+    it('clears the min-width and max-width caps that would fight the width', () => {
+      const { getByTestId } = setup({ width: 120 });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      expect(dropdownBaseEl).toHaveStyleRule('width', '120px');
+      expect(dropdownBaseEl).toHaveStyleRule('min-width', '0');
+      expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
+      expect(dropdownToggleEl).toHaveStyleRule('max-width', 'none');
+    });
+  });
 });

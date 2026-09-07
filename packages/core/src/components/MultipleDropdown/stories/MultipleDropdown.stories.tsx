@@ -101,6 +101,15 @@ export default {
         defaultValue: { summary: "'Select something'" },
       },
     },
+    width: {
+      description:
+        'Width of the dropdown. Sizes the base, with the toggle button stretched to fill it, and clears their default `min-width` / `max-width`. Number values are treated as pixels. Omit it to keep the dropdown sized to its content.',
+      control: 'text',
+      table: {
+        type: { summary: 'string | number' },
+        defaultValue: { summary: 'undefined (sized to content)' },
+      },
+    },
     showPlaceholder: {
       description:
         'When `true` the placeholder value is included in the displayed list. Set to `false` to hide it and only show the badge count.',
@@ -165,6 +174,58 @@ Basic.args = {
   isMultiple: true,
   selectedItems: [items[0], items[2]],
   label: 'Strategy',
+};
+
+/**
+ * `width="100%"` makes the dropdown fill its container. It also clears the
+ * base's default `min-width: 180px` and the toggle's `max-width: 250px`, which
+ * would otherwise silently cap the value.
+ *
+ * The value carries on the base only — the toggle is set to `100%` — so the
+ * `60%` example below is 60% of the dashed box rather than 60% of an
+ * already-60% base.
+ */
+export const FullWidth: StoryObj = (args: Args) => {
+  return (
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 520px;
+        padding: 16px;
+        border: 1px dashed #c4c4c4;
+        border-radius: 12px;
+      `}>
+      <MultipleDropdown {...args} width="100%" label="Fills the container">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown {...args} width="60%" label="60% of the container">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown {...args} label="Sized to content">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+    </div>
+  );
+};
+
+FullWidth.args = {
+  disabled: false,
+  isMultiple: true,
+  selectedItems: [items[0], items[2]],
 };
 
 export const PlaceholderHidden: StoryObj = (args: Args) => {

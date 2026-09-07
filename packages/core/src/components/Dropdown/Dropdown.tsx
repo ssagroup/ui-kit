@@ -153,11 +153,33 @@ const Dropdown = <T extends DropdownOptionProps>({
   errors,
   success,
   icon,
+  width,
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
   const isDropdownDisabled = resolveDisabled('Dropdown', disabled, isDisabled);
   const status = success ? 'success' : errors ? 'error' : 'basic';
   const { dropdownPosition = DropdownPositions.auto } = componentProps ?? {};
+  // `width` has no default: without it every level keeps shrink-wrapping, which
+  // is the historical behaviour. When set, all three nested levels
+  // (wrapper -> base -> toggle) have to be stretched — sizing only one is a
+  // no-op, because the level above it is still sized to its content.
+  //
+  // Only the outermost level gets the requested value; the inner two get 100%.
+  // Repeating the value would compound relative units: `width="60%"` would
+  // otherwise render the base at 60% of the wrapper and the toggle at 60% of
+  // that, i.e. 21.6% of the container.
+  //
+  // Spread rather than passed as `css={...}`: Emotion wraps an element whenever
+  // `css` is present in its props, even when its value is undefined, and that
+  // re-serializes any incoming `className` (e.g. from `styled(Dropdown)`).
+  // Omitting the key keeps the no-width path identical to writing no `css` prop.
+  const wrapperCssProps = width === undefined ? undefined : { css: { width } };
+  const baseCssProps =
+    width === undefined ? undefined : { css: { width: '100%' } };
+  const toggleCssProps =
+    width === undefined
+      ? undefined
+      : { css: [{ width: '100%' }, componentProps?.toggleButton?.css] };
 
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -292,15 +314,17 @@ const Dropdown = <T extends DropdownOptionProps>({
   );
 
   return (
-    <DropdownFieldWrapper>
+    <DropdownFieldWrapper {...wrapperCssProps}>
       {label ? <Label disabled={isDropdownDisabled}>{label}</Label> : null}
       <DropdownContext.Provider value={contextValue}>
         <DropdownBase
           {...componentProps?.base}
+          {...baseCssProps}
           ref={dropdownRef}
           data-testid="dropdown">
           <DropdownToggle
             {...componentProps?.toggleButton}
+            {...toggleCssProps}
             className={className}
             isOpen={isOpen}
             disabled={isDropdownDisabled}

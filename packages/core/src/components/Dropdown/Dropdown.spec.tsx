@@ -478,4 +478,87 @@ describe('Dropdown', () => {
     // Leading icon + trailing carrot arrow
     expect(dropdownToggleEl.querySelectorAll('svg').length).toBe(2);
   });
+
+  describe('width', () => {
+    it('shrink-wraps at every level when width is not provided', () => {
+      const { getByTestId } = setup();
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule(
+        'display',
+        'inline-flex',
+      );
+      expect(dropdownBaseEl).toHaveStyleRule('display', 'inline-block');
+      expect(dropdownToggleEl).toHaveStyleRule('width', 'auto');
+    });
+
+    it('stretches all three levels, sizing only the outermost one', () => {
+      const { getByTestId } = setup({ width: '100%' });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      // All three levels have to be stretched: the toggle cannot grow past a
+      // base that is still sized to its content, and neither can the base.
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '100%');
+      expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
+      expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
+    });
+
+    it('does not compound a percentage width down the nested levels', () => {
+      const { getByTestId } = setup({ width: '60%' });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      // Repeating '60%' at every level would render the base at 60% of the
+      // wrapper and the toggle at 60% of that — 21.6% of the container.
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '60%');
+      expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
+      expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
+    });
+
+    it('treats a numeric width as pixels', () => {
+      const { getByTestId } = setup({ width: 320 });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '320px');
+      expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
+      expect(within(dropdownBaseEl).getByRole('combobox')).toHaveStyleRule(
+        'width',
+        '100%',
+      );
+    });
+
+    it('keeps dropdownProps.base working alongside width', () => {
+      const { getByTestId } = setup({
+        width: '100%',
+        dropdownProps: { base: { id: 'my-dropdown', style: { flexGrow: 1 } } },
+      });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+
+      expect(dropdownBaseEl).toHaveAttribute('id', 'my-dropdown');
+      expect(dropdownBaseEl).toHaveStyle({ flexGrow: '1' });
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '100%');
+    });
+
+    it('lets dropdownProps.toggleButton.css override the width', () => {
+      const { getByTestId } = setup({
+        width: '100%',
+        dropdownProps: { toggleButton: { css: { width: 200 } } },
+      });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '100%');
+      expect(within(dropdownBaseEl).getByRole('combobox')).toHaveStyleRule(
+        'width',
+        '200px',
+      );
+    });
+  });
 });
