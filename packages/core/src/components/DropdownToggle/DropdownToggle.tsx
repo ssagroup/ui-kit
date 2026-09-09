@@ -132,6 +132,11 @@ export const DropdownToggleBase = styled.button<
   position: relative;
 
   width: auto;
+
+  /* A <button> keeps shrink-to-fit sizing even as a block-level flex container,
+     so width: auto alone would let a long label grow it past its container.
+     The multiple-select variant overrides this with its own 250px cap. */
+  max-width: 100%;
   height: 44px;
   padding: 0 14px;
 

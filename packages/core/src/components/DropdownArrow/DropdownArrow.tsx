@@ -6,6 +6,10 @@ import { CommonProps } from '@global-types/emotion';
 export const DropdownArrowBase = styled.div<CommonProps>`
   display: flex;
   align-items: center;
+
+  /* The label next to it ellipsises; without this the arrow would be squashed
+     first, since flex items shrink before their content overflows. */
+  flex-shrink: 0;
 `;
 
 interface DropdownArrowProps extends CommonProps {

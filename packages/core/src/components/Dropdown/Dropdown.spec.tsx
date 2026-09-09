@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { within } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import DropdownOption from '@components/DropdownOption';
@@ -21,6 +23,8 @@ const items = [
 ];
 
 const getListItemValue = (item: Item) => item.value;
+
+const LONG_VALUE = 'Two lorem ipsum '.repeat(30).trim();
 
 describe('Dropdown', () => {
   function setup(props = {}) {
@@ -559,6 +563,181 @@ describe('Dropdown', () => {
         'width',
         '200px',
       );
+    });
+  });
+
+  describe('long content', () => {
+    it('ellipsises the selected value instead of wrapping it', () => {
+      const { getByTestId } = setup({ selectedItem: { value: LONG_VALUE } });
+
+      const label = within(getByTestId('dropdown')).getByText(LONG_VALUE);
+
+      // The toggle is a fixed 44px, so a wrapping label spills above and below
+      // its border instead of being clipped.
+      expect(label).toHaveStyleRule('white-space', 'nowrap');
+      expect(label).toHaveStyleRule('text-overflow', 'ellipsis');
+      expect(label).toHaveStyleRule('overflow', 'hidden');
+    });
+
+    it('ellipsises the selected value when a leading icon is rendered', () => {
+      const { getByTestId } = setup({
+        icon: 'user',
+        selectedItem: { value: LONG_VALUE },
+      });
+
+      const label = within(getByTestId('dropdown')).getByText(LONG_VALUE);
+
+      expect(label).toHaveStyleRule('text-overflow', 'ellipsis');
+    });
+
+    it('lets the label shrink below its intrinsic width', () => {
+      const { getByTestId } = setup({ selectedItem: { value: LONG_VALUE } });
+
+      const label = within(getByTestId('dropdown')).getByText(LONG_VALUE);
+
+      // A nowrap flex item reports its full text width as its minimum, which
+      // would grow the toggle rather than clip the text.
+      expect(label).toHaveStyleRule('min-width', '0');
+    });
+
+    it('caps every level at its container so nothing overflows sideways', () => {
+      const { getByTestId } = setup({ selectedItem: { value: LONG_VALUE } });
+
+      const dropdownBaseEl = getByTestId('dropdown');
+      const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
+
+      // Each level is shrink-to-fit, and a shrink-to-fit box sizes to its
+      // min-content when that exceeds the space available. Without a definite
+      // width to resolve against, the label has nothing to be clipped by.
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('max-width', '100%');
+      expect(dropdownBaseEl).toHaveStyleRule('max-width', '100%');
+      expect(dropdownToggleEl).toHaveStyleRule('max-width', '100%');
+    });
+
+    it('keeps the arrow at full size next to a truncated label', async () => {
+      const { user, getByTestId, findByTestId } = setup({
+        selectedItem: { value: LONG_VALUE },
+      });
+
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const arrow = await findByTestId('dropdown-arrow-up');
+
+      // Flex items shrink before their content overflows, so without this the
+      // arrow is squashed rather than the label truncated.
+      expect(arrow.parentElement).toHaveStyleRule('flex-shrink', '0');
+    });
+
+    it('ellipsises option labels rather than widening the list', async () => {
+      const { user, getByTestId, getByRole } = setup();
+
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const listboxEl = getByRole('listbox');
+      const label = within(listboxEl).getByText(items[0].value);
+
+      expect(label).toHaveStyleRule('white-space', 'nowrap');
+      expect(label).toHaveStyleRule('text-overflow', 'ellipsis');
+      // `min-width: max-content` used to let one long option stretch the popup
+      // far past the viewport.
+      expect(listboxEl).toHaveStyleRule('width', '100%');
+      expect(listboxEl).not.toHaveStyleRule('min-width', 'max-content');
+    });
+
+    it('centres option rows vertically within their highlight band', async () => {
+      const { user, getByTestId, getByRole } = setup();
+
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const [row] = within(getByRole('listbox')).getAllByRole('listitem');
+
+      // The row is a fixed 40px but its line box is ~19px; as a plain block the
+      // text sat against the top padding edge with all the slack below it.
+      expect(row).toHaveStyleRule('display', 'flex');
+      expect(row).toHaveStyleRule('align-items', 'center');
+    });
+
+    it('makes every option label a hover tooltip trigger', async () => {
+      const { user, getByTestId, getByRole } = setup();
+
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const label = within(getByRole('listbox')).getByText(items[0].value);
+
+      // Tooltip opens on click by default, so both flags are passed
+      // explicitly — a click on a row has to select it, not open a tooltip.
+      expect(label).toHaveAttribute('aria-haspopup', 'dialog');
+      expect(label).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('skips the tooltip when the option content is not plain text', async () => {
+      const mountSpy = jest.fn();
+      const Widget = () => {
+        useEffect(() => mountSpy(), []);
+        return <span>Rich content</span>;
+      };
+
+      jest.useFakeTimers();
+      const user = userEvent.setup({
+        advanceTimers: jest.advanceTimersByTime.bind(jest),
+      });
+
+      const { getByTestId, getByRole, queryAllByText } = render(
+        <Dropdown onChange={jest.fn()}>
+          <DropdownOption value="rich">
+            <Widget />
+          </DropdownOption>
+        </Dropdown>,
+      );
+
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const label = within(getByRole('listbox')).getByText('Rich content');
+      expect(label).not.toHaveAttribute('aria-haspopup');
+
+      // Hover past the delay: TooltipContent only mounts once open, so this is
+      // where a repeated node would become a second, unsynced copy of the
+      // component — separate state, a clobbered ref, effects fired twice.
+      await user.hover(label);
+      act(() => {
+        jest.advanceTimersByTime(1500);
+      });
+
+      expect(queryAllByText('Rich content')).toHaveLength(1);
+      expect(mountSpy).toHaveBeenCalledTimes(1);
+
+      jest.useRealTimers();
+    });
+
+    it('reveals the full label on hover, after the delay', async () => {
+      jest.useFakeTimers();
+      const user = userEvent.setup({
+        advanceTimers: jest.advanceTimersByTime.bind(jest),
+      });
+
+      const { getByTestId, getByRole, queryAllByRole } = render(
+        <Dropdown onChange={jest.fn()}>
+          {items.map((item, index) => (
+            <DropdownOption key={index} value={item.value} />
+          ))}
+        </Dropdown>,
+      );
+
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const label = within(getByRole('listbox')).getByText(items[0].value);
+      await user.hover(label);
+
+      expect(queryAllByRole('dialog')).toHaveLength(0);
+
+      act(() => {
+        jest.advanceTimersByTime(1500);
+      });
+
+      const tooltip = getByRole('dialog');
+      expect(tooltip).toHaveTextContent(items[0].value);
+
+      jest.useRealTimers();
     });
   });
 });

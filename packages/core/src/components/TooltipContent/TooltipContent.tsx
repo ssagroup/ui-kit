@@ -16,9 +16,13 @@ import * as styles from '@components/Tooltip/styles';
  * TooltipContent - Content container for tooltip display
  *
  * Renders the actual tooltip content that appears when the trigger is activated.
- * Uses Floating Portal for proper z-index stacking and FloatingFocusManager for
- * keyboard accessibility. Automatically positions based on Floating UI context
- * and respects size variants and arrow configuration.
+ * Automatically positions based on Floating UI context and respects size
+ * variants and arrow configuration. Uses FloatingFocusManager for keyboard
+ * accessibility.
+ *
+ * Renders in a Floating Portal to escape any ancestor's `overflow` clipping.
+ * Note that the portal by itself does not lift the tooltip above positioned
+ * siblings -- the surface carries its own z-index for that.
  *
  * Only renders when tooltip is open (isOpen is true). Supports custom styling
  * and can contain any React content.

@@ -24,23 +24,51 @@ import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, DropdownPositions, DropdownProps } from './types';
 
+/*
+ * Both levels are shrink-to-fit, and a shrink-to-fit box sizes to its
+ * min-content when that exceeds the space available -- for a nowrap label that
+ * is the entire string, so the dropdown would grow past its container instead
+ * of ellipsising. `max-width: 100%` gives each level a definite width to
+ * resolve against, which is what actually lets the label clip.
+ */
 const DropdownFieldWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 100%;
 `;
 
 const DropdownBase = styled.div`
   display: inline-block;
   position: relative;
+  max-width: 100%;
 `;
 
 const SelectedContent = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
   min-width: 0;
+`;
+
+/**
+ * Keeps the selected value on a single line and ellipsises it. Without this the
+ * label wraps and, because the toggle is a fixed 44px, spills above and below
+ * the border. `min-width: 0` is what lets the toggle shrink below the label's
+ * intrinsic width at all — a nowrap flex item otherwise reports its full text
+ * width as its minimum, so the dropdown would keep growing instead of clipping.
+ */
+const SelectedLabel = styled.span`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+`;
+
+const LeadingElement = styled.span`
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 `;
 
 /**
@@ -306,11 +334,11 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   const toggleContent = !isNill(leadingElement) ? (
     <SelectedContent>
-      {leadingElement}
-      <span style={{ minWidth: 0 }}>{value}</span>
+      <LeadingElement>{leadingElement}</LeadingElement>
+      <SelectedLabel>{value}</SelectedLabel>
     </SelectedContent>
   ) : (
-    value
+    <SelectedLabel>{value}</SelectedLabel>
   );
 
   return (

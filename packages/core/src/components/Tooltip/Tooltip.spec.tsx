@@ -288,6 +288,15 @@ describe('Tooltip', () => {
       });
     });
 
+    it('Stacks above positioned content it may overlap', () => {
+      const { getByText } = renderTooltip();
+
+      // The FloatingPortal appends to <body> with z-index auto, so without an
+      // explicit z-index anything positioned above 0 paints over the tooltip --
+      // a Dropdown's options list (2) or a ModalDialog (1000) would hide it.
+      expect(getByText(tooltipText)).toHaveStyleRule('z-index', '9999');
+    });
+
     it('Outlines the white surface by default', () => {
       const { getByText } = renderTooltip({ color: 'white' });
 

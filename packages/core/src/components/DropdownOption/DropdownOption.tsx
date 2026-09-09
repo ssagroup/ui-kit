@@ -47,6 +47,13 @@ const multipleStyles = ({ theme, isDisabled }: MultipleStylesProps) => {
 const DropdownOptionBase = styled.li<Omit<DropdownItemProps, 'disabled'>>`
   overflow: hidden;
 
+  /* The row is a fixed 40px but its content (a ~19px line box) is shorter, so
+     as a plain block the text sat flush against the top padding edge and all
+     the leftover space fell below it. Centering it keeps the label aligned
+     with the row's highlight band. */
+  display: flex;
+  align-items: center;
+
   height: 40px;
   padding: 8px 12px;
 

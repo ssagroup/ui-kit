@@ -39,7 +39,7 @@ export type TooltipColor = FloatingSurfaceColor;
  *
  * @example
  * ```tsx
- * <Tooltip placement="top">
+ * <Tooltip enableHover enableClick={false} placement="top">
  *   <TooltipTrigger>
  *     <Button>Hover me</Button>
  *   </TooltipTrigger>
@@ -61,14 +61,23 @@ export interface TooltipProps extends CommonProps {
   placement?: Placement;
 
   /**
-   * Enable tooltip on hover interaction
-   * @default true
+   * Enable tooltip on hover interaction.
+   *
+   * Off by default — despite the component's name, the tooltip opens on click
+   * unless this is set. Pass `enableHover enableClick={false}` for the usual
+   * hover-only behaviour; every call site in the kit does.
+   *
+   * @default false
    */
   enableHover?: boolean;
 
   /**
-   * Enable tooltip on click interaction
-   * @default false
+   * Enable tooltip on click interaction.
+   *
+   * On by default. Set it to `false` alongside `enableHover` when a click on
+   * the trigger has to do something else, such as selecting an item.
+   *
+   * @default true
    */
   enableClick?: boolean;
 
@@ -107,8 +116,12 @@ export interface TooltipProps extends CommonProps {
   hoverCloseDelay?: number;
 
   /**
-   * Size variant of the tooltip content
-   * @default 'medium'
+   * Size variant of the tooltip content.
+   *
+   * Note that `small` is 8px type — intended for dense chart labels rather
+   * than prose. Use `medium` (12px) or `large` (14px) for readable text.
+   *
+   * @default 'small'
    */
   size?: TooltipSize;
 

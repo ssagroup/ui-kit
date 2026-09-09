@@ -385,6 +385,58 @@ export const FullWidth: StoryObj = (args: Args) => {
 
 FullWidth.args = { disabled: false, width: '100%' };
 
+const longItems = [
+  {
+    value: 'long-1',
+    label:
+      'Two lorem ipsum Two lorem ipsum Two lorem ipsum Two lorem ipsum Two lorem ipsum Two lorem ipsum',
+  },
+  { value: 'short', label: 'Short one' },
+  {
+    value: 'long-2',
+    label:
+      'Three lorem ipsum Three lorem ipsum Three lorem ipsum Three lorem ipsum Three lorem ipsum',
+  },
+];
+
+/**
+ * The selected value and the option labels are kept on a single line and
+ * ellipsised. Without this the toggle is a fixed 44px while the label wraps, so
+ * long text spills above and below the border, and the options list — which
+ * used to grow to `max-content` — stretched far past the viewport.
+ *
+ * Nothing grows past its container: the field wrapper, base and toggle are each
+ * capped at `100%`. Resize the 320px dashed container to see the truncation
+ * follow it. Set a `width` to control the size explicitly.
+ */
+export const LongContent: StoryObj = (args: Args) => {
+  return (
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 320px;
+        padding: 16px;
+        border: 1px dashed #c4c4c4;
+        border-radius: 12px;
+      `}>
+      <Dropdown {...args} selectedItem={longItems[0]}>
+        {longItems.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+    </div>
+  );
+};
+
+LongContent.args = { disabled: false };
+
 export const LegacyStyle: StoryObj<Args> = {
   name: 'Legacy (Previous Style)',
   render: (args) => (

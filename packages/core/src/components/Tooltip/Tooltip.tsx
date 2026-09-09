@@ -14,13 +14,17 @@ import { TooltipProps } from './types';
  * positioning with auto-adjustment, and customizable appearance with size
  * variants and optional arrows.
  *
+ * Note that the tooltip opens on **click** by default. For the usual hover
+ * behaviour pass `enableHover enableClick={false}`, as every example below and
+ * every call site in the kit does.
+ *
  * @category Components
  * @subcategory Overlay
  *
  * @example
  * ```tsx
  * // Basic tooltip on hover
- * <Tooltip>
+ * <Tooltip enableHover enableClick={false}>
  *   <TooltipTrigger>
  *     <Button>Hover me</Button>
  *   </TooltipTrigger>
@@ -31,7 +35,7 @@ import { TooltipProps } from './types';
  * @example
  * ```tsx
  * // Tooltip with custom placement
- * <Tooltip placement="bottom" size="large">
+ * <Tooltip enableHover enableClick={false} placement="bottom" size="large">
  *   <TooltipTrigger>
  *     <Icon name="info" />
  *   </TooltipTrigger>
@@ -46,8 +50,8 @@ import { TooltipProps } from './types';
  *
  * @example
  * ```tsx
- * // Click-to-open tooltip
- * <Tooltip enableClick enableHover={false}>
+ * // Click-to-open tooltip — this is the default interaction
+ * <Tooltip>
  *   <TooltipTrigger>
  *     <Button>Click for info</Button>
  *   </TooltipTrigger>
@@ -58,7 +62,7 @@ import { TooltipProps } from './types';
  * @example
  * ```tsx
  * // Dark surface, no shadow
- * <Tooltip color="dark" hasShadow={false}>
+ * <Tooltip enableHover enableClick={false} color="dark" hasShadow={false}>
  *   <TooltipTrigger>
  *     <Button>Hover me</Button>
  *   </TooltipTrigger>
@@ -71,7 +75,7 @@ import { TooltipProps } from './types';
  * @example
  * ```tsx
  * // Tooltip without arrow
- * <Tooltip hasArrow={false}>
+ * <Tooltip enableHover enableClick={false} hasArrow={false}>
  *   <TooltipTrigger>
  *     <span>?</span>
  *   </TooltipTrigger>

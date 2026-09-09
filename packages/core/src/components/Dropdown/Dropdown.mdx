@@ -110,6 +110,28 @@ continues to work: it is spread onto the base element as before, and an inline `
 beats `width`, so a call site can be migrated gradually. `dropdownProps.toggleButton.css` also still
 wins over `width` — it is merged last.
 
+### Long Content
+
+The selected value and the option labels are kept on a single line and ellipsised when they do not
+fit. This is not configurable — the toggle button is a fixed 44px, so a wrapping label spills above
+and below its border rather than being clipped.
+
+Nothing grows past its container either: the field wrapper, the base and the toggle button are each
+capped at `100%`, and the options list is capped at the width of the toggle. Previously the list was
+sized to `max-content`, which let a single long option stretch it far past the viewport.
+
+The practical consequence is that an option longer than the toggle is truncated rather than widening
+the list. Give the dropdown an explicit `width` when the options need more room than the selected
+value does.
+
+Every option row carries a tooltip with its full label, so truncated text stays reachable. It opens
+after a 1s hover — long enough not to fire while the pointer travels down the list — and is capped at
+320px so it wraps instead of becoming as wide as the popup it explains. It sits above the row,
+flipping below when there is no room — sideways placement is unstable, since a dropdown near the
+right edge flips it left and a full-width one gets it clamped back over the list. The tooltip is
+attached to all rows rather than only the truncated ones. The selected value in the toggle button
+does not have one.
+
 ### Viewport-Aware Placement
 
 By default (`dropdownPosition: 'auto'`) the options list opens downward. On every open the component
