@@ -57,12 +57,12 @@ export const Icons: StoryObj<typeof ButtonGroup> = () => {
     <ButtonGroup value={selected} onClick={({ id }) => setSelected(id)}>
       <ButtonGroupButton
         id="list"
-        icon={<Icon name="menu" size={24} />}
+        icon={<Icon name="list" size={24} />}
         aria-label="List view"
       />
       <ButtonGroupButton
         id="columns"
-        icon={<Icon name="dashboard" size={24} />}
+        icon={<Icon name="columns" size={24} />}
         aria-label="Column view"
       />
     </ButtonGroup>
@@ -82,8 +82,8 @@ export const IconsWithText: StoryObj<typeof ButtonGroup> = () => (
   <ButtonGroup
     defaultValue={2}
     items={[
-      { id: 1, icon: <Icon name="menu" size={24} />, text: 'List' },
-      { id: 2, icon: <Icon name="dashboard" size={24} />, text: 'Columns' },
+      { id: 1, icon: <Icon name="list" size={24} />, text: 'List' },
+      { id: 2, icon: <Icon name="columns" size={24} />, text: 'Columns' },
       {
         id: 3,
         icon: <Icon name="calendar" size={24} />,

@@ -91,12 +91,12 @@ const COMPONENTS: Case[] = [
       <ButtonGroup value="list" onClick={() => {}}>
         <ButtonGroupButton
           id="list"
-          icon={<Icon name="menu" size={24} />}
+          icon={<Icon name="list" size={24} />}
           aria-label="List view"
         />
         <ButtonGroupButton
           id="columns"
-          icon={<Icon name="dashboard" size={24} />}
+          icon={<Icon name="columns" size={24} />}
           aria-label="Column view"
         />
       </ButtonGroup>

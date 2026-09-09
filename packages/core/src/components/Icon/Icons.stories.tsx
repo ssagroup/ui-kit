@@ -255,6 +255,8 @@ const ICON_GROUPS: { label: string; icons: string[] }[] = [
       'non-billable',
       'recruitment-team',
       'clear',
+      'list',
+      'columns',
     ],
   },
   {

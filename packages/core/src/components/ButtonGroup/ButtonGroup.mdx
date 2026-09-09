@@ -46,7 +46,7 @@ A button shows whatever it is given — text, an icon, or both:
   {/* icon only — square, and labelled by aria-label */}
   <ButtonGroupButton
     id="list"
-    icon={<Icon name="menu" size={24} />}
+    icon={<Icon name="list" size={24} />}
     aria-label="List view"
   />
 </ButtonGroup>
@@ -72,10 +72,10 @@ The `items` API carries the same three modes — `text`, `icon`, or both, with
 const items: ButtonGroupItemInput[] = [
   {
     id: 'list',
-    icon: <Icon name="menu" size={24} />,
+    icon: <Icon name="list" size={24} />,
     ariaLabel: 'List',
   },
-  { id: 'columns', icon: <Icon name="dashboard" size={24} />, text: 'Columns' },
+  { id: 'columns', icon: <Icon name="columns" size={24} />, text: 'Columns' },
   { id: 'all', text: 'All' },
 ];
 ```

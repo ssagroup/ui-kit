@@ -223,3 +223,5 @@ export * as Billable from './Billable';
 export * as NonBillable from './NonBillable';
 export * as RecruitmentTeam from './RecruitmentTeam';
 export * as Clear from './Clear';
+export * as List from './List';
+export * as Columns from './Columns';
