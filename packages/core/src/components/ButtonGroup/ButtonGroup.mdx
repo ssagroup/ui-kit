@@ -29,11 +29,65 @@ function Demo() {
 }
 ```
 
+## Content Modes
+
+A button shows whatever it is given — text, an icon, or both:
+
+```tsx
+<ButtonGroup defaultValue="all" onClick={({ id }) => setSelected(id)}>
+  {/* text */}
+  <ButtonGroupButton id="all">All</ButtonGroupButton>
+
+  {/* icon + text */}
+  <ButtonGroupButton id="running" icon={<Icon name="clock" size={24} />}>
+    Running
+  </ButtonGroupButton>
+
+  {/* icon only — square, and labelled by aria-label */}
+  <ButtonGroupButton
+    id="list"
+    icon={<Icon name="menu" size={24} />}
+    aria-label="List view"
+  />
+</ButtonGroup>
+```
+
+The mode follows from **which props are set**, not from what the content
+renders to. An `icon` with no children is icon-only; add children and the same
+icon becomes a leading icon. Passing an icon inside `children` still works, but
+the group cannot tell it apart from a label and lays it out as text — use the
+`icon` prop to get the square.
+
+An icon-only button has no text for a screen reader to announce, so
+`aria-label` is required. It doubles as the label the group reports through
+`onClick`.
+
+The button is a 40x40 square whatever icon size it is handed; 24px matches the
+design and fills it to the intended 8px padding.
+
+The `items` API carries the same three modes — `text`, `icon`, or both, with
+`ariaLabel` in place of `aria-label`:
+
+```tsx
+const items: ButtonGroupItemInput[] = [
+  {
+    id: 'list',
+    icon: <Icon name="menu" size={24} />,
+    ariaLabel: 'List',
+  },
+  { id: 'columns', icon: <Icon name="dashboard" size={24} />, text: 'Columns' },
+  { id: 'all', text: 'All' },
+];
+```
+
+`onClick` always reports a full `ButtonGroupItem`, so handlers never have to
+narrow: an icon-only item comes back with its `ariaLabel` in the `text` slot.
+
 ## Composed Usage
 
-When a button needs an icon or any markup an item cannot express, pass
-`ButtonGroupButton` children instead of `items`. Selection stays on the group —
-each button only declares its `id`:
+When a button needs markup an item cannot express, pass `ButtonGroupButton`
+children instead of `items`. Selection stays on the group — each button only
+declares its `id`:
 
 ```tsx
 import { ButtonGroup, ButtonGroupButton, Icon } from '@ssa-ui-kit/core';
@@ -44,8 +98,8 @@ function ComposedDemo() {
   return (
     <ButtonGroup value={selected} onClick={({ id }) => setSelected(id)}>
       <ButtonGroupButton id="all">All</ButtonGroupButton>
-      <ButtonGroupButton id="running" text="Running">
-        <Icon name="clock" size={14} /> Running
+      <ButtonGroupButton id="running" icon={<Icon name="clock" size={24} />}>
+        Running
       </ButtonGroupButton>
       <ButtonGroupButton id="stopped" disabled>
         Stopped
@@ -62,8 +116,21 @@ Two differences from the `items` API worth knowing:
   because it can see the list; children mode cannot.
 - The group's `onClick` reports `{ id, text, disabled }` built from the clicked
   button's props. `id` is always accurate; `text` is filled in only when the
-  button's content is a plain string or its `text` prop is set. Each button can
-  also take its own `onClick`.
+  button's content is a plain string, or its `text` / `aria-label` prop is set.
+  Each button can also take its own `onClick`.
+
+## Appearance
+
+The group follows the PeopleOps design: a flat 40px-tall strip, 8px radius on
+the outer corners only, 1px seams, `palette.secondary.light` at rest and
+`palette.secondary.main` for the selected button, going one step darker on
+hover and focus.
+
+Selection is marked by **label colour alone** — `greyDarker` against
+`greyDarker80` — on top of the background change. The Figma layers also carry a
+larger, heavier face on the selected label, but applying it resizes the button
+as the selection moves, so the strip jumps under the cursor; every button keeps
+one 13.33px/500 face instead.
 
 ## Features
 

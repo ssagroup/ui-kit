@@ -2,8 +2,13 @@ import { useMemo } from 'react';
 import { useControllableState } from '@ssa-ui-kit/hooks';
 import { resolveDisabled, warnDeprecatedProp } from '@utils/deprecation';
 import { ButtonGroupContext } from './ButtonGroupContext';
-import { ButtonGroupButtonBase } from './ButtonGroupButtonBase';
-import { ButtonGroupProps, ButtonGroupItem, ButtonGroupValue } from './types';
+import { ButtonGroupButtonBase, hasLabel } from './ButtonGroupButtonBase';
+import {
+  ButtonGroupProps,
+  ButtonGroupItem,
+  ButtonGroupItemInput,
+  ButtonGroupValue,
+} from './types';
 
 /**
  * `value` / `defaultValue` accept either an item or a bare id — selection is
@@ -13,12 +18,32 @@ const toId = (value?: ButtonGroupValue) =>
   typeof value === 'object' && value !== null ? value.id : value;
 
 /**
+ * `items` lets `text` be omitted (that is the icon-only button), but `onClick`
+ * promises a full item — so an icon-only entry reports its accessible name in
+ * that slot. Items that already carry a label are handed back untouched, by
+ * identity: consumers extend `ButtonGroupItem` with their own fields and read
+ * them off this argument.
+ *
+ * `hasLabel` is the same test the button renders by, so `text: ''` — what a
+ * `label || ''` expression yields — is icon-only in both places rather than an
+ * icon-only button reporting an empty label.
+ */
+const toReportedItem = (item: ButtonGroupItemInput): ButtonGroupItem =>
+  hasLabel(item.text)
+    ? (item as ButtonGroupItem)
+    : { ...item, text: item.ariaLabel ?? '' };
+
+/**
  * ButtonGroup - A row of mutually exclusive buttons.
  *
  * Two ways to declare the buttons:
- * - **Composed** — `ButtonGroupButton` children. Use when a button needs an
- *   icon or custom markup.
- * - **Data-driven** — the `items` prop. Compact, but limited to plain labels.
+ * - **Composed** — `ButtonGroupButton` children. Use when a button needs
+ *   custom markup.
+ * - **Data-driven** — the `items` prop. Compact, and enough for a label, an
+ *   icon, or both.
+ *
+ * A button shows whatever it is given: `text` alone, `icon` alone (square, and
+ * labelled by `ariaLabel`), or the two together.
  *
  * Selection can be controlled (`value`) or left to the group (`defaultValue`).
  * Either accepts a bare `id` or a whole item.
@@ -119,11 +144,10 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
                   !isItemDisabled
                 }
                 disabled={isItemDisabled}
-                // The caller's own item goes back out, not one reassembled
-                // from props — consumers extend `ButtonGroupItem` with their
-                // own fields and read them off this argument.
-                onClick={() => handleSelect(item)}
-                buttonStyles={buttonStyles}>
+                onClick={() => handleSelect(toReportedItem(item))}
+                buttonStyles={buttonStyles}
+                icon={item.icon}
+                ariaLabel={item.ariaLabel}>
                 {item.text}
               </ButtonGroupButtonBase>
             );

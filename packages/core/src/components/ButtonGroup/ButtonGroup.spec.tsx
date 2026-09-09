@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 import Icon from '@components/Icon';
 import { ButtonGroup } from './ButtonGroup';
 import { ButtonGroupButton } from './ButtonGroupButton';
+import theme from '@themes/main';
 import { items } from './helpers';
+import { ButtonItem } from './styles';
 import { ButtonGroupItem, ButtonGroupProps } from './types';
 
 describe('ButtonGroup', () => {
@@ -302,6 +304,265 @@ describe('ButtonGroup', () => {
       ).toThrow('ButtonGroupButton must be rendered inside a ButtonGroup');
 
       consoleError.mockRestore();
+    });
+  });
+  describe('content modes', () => {
+    it('Renders an icon-only button labelled by ariaLabel, with no text', () => {
+      const { getByRole, container } = render(
+        <ButtonGroup
+          items={[
+            { id: 'list', icon: <Icon name="archive" />, ariaLabel: 'List' },
+          ]}
+        />,
+      );
+
+      const buttonEl = getByRole('button', { name: 'List' });
+
+      expect(container.querySelectorAll('svg')).toHaveLength(1);
+      expect(buttonEl.textContent).toBe('');
+    });
+
+    it('Squares an icon-only button off, and keeps label padding otherwise', () => {
+      const { getByRole } = render(
+        <ButtonGroup
+          items={[
+            { id: 'list', icon: <Icon name="archive" />, ariaLabel: 'List' },
+            { id: 'all', text: 'All' },
+          ]}
+        />,
+      );
+
+      const iconOnlyEl = getByRole('button', { name: 'List' });
+      const labelledEl = getByRole('button', { name: 'All' });
+
+      expect(iconOnlyEl).toHaveStyleRule('padding', '8px');
+      expect(iconOnlyEl).toHaveStyleRule('min-width', '40px');
+      expect(iconOnlyEl).toHaveStyleRule('height', '40px');
+      expect(labelledEl).toHaveStyleRule('padding', '8px 16px');
+    });
+
+    it('Renders icon and label together when both are given', () => {
+      const { getByRole, container } = render(
+        <ButtonGroup
+          items={[{ id: 'all', icon: <Icon name="archive" />, text: 'All' }]}
+        />,
+      );
+
+      const buttonEl = getByRole('button', { name: 'All' });
+
+      expect(container.querySelectorAll('svg')).toHaveLength(1);
+      expect(buttonEl.textContent).toBe('All');
+      // Not the icon-only square: the label keeps its horizontal padding.
+      expect(buttonEl).toHaveStyleRule('padding', '8px 16px');
+    });
+
+    it('Reports an icon-only item’s ariaLabel as its text', async () => {
+      const user = userEvent.setup();
+      const onGroupClick = jest.fn();
+      const { getByRole } = render(
+        <ButtonGroup
+          onClick={onGroupClick}
+          items={[
+            { id: 'list', icon: <Icon name="archive" />, ariaLabel: 'List' },
+          ]}
+        />,
+      );
+
+      await user.click(getByRole('button', { name: 'List' }));
+
+      expect(onGroupClick).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'list', text: 'List' }),
+      );
+    });
+
+    it('Reports ariaLabel for an item whose text is an empty string', async () => {
+      const user = userEvent.setup();
+      const onGroupClick = jest.fn();
+      // What `label || ''` yields. It renders as icon-only, so it has to report
+      // as icon-only too.
+      const { getByRole } = render(
+        <ButtonGroup
+          onClick={onGroupClick}
+          items={[
+            {
+              id: 'list',
+              icon: <Icon name="archive" />,
+              text: '',
+              ariaLabel: 'List',
+            },
+          ]}
+        />,
+      );
+
+      const buttonEl = getByRole('button', { name: 'List' });
+      expect(buttonEl).toHaveStyleRule('padding', '8px');
+
+      await user.click(buttonEl);
+
+      expect(onGroupClick).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'list', text: 'List' }),
+      );
+    });
+
+    it('Hands back the caller’s own item object when it has text', async () => {
+      const user = userEvent.setup();
+      const onGroupClick = jest.fn();
+      const ownItem = { id: 'all', text: 'All', href: '/all' };
+      const { getByRole } = render(
+        <ButtonGroup onClick={onGroupClick} items={[ownItem]} />,
+      );
+
+      await user.click(getByRole('button', { name: 'All' }));
+
+      expect(onGroupClick.mock.calls[0][0]).toBe(ownItem);
+    });
+
+    it('Supports icon-only composed children', async () => {
+      const user = userEvent.setup();
+      const onGroupClick = jest.fn();
+      const { getByRole } = render(
+        <ButtonGroup onClick={onGroupClick}>
+          <ButtonGroupButton
+            id="list"
+            icon={<Icon name="archive" />}
+            aria-label="List"
+          />
+        </ButtonGroup>,
+      );
+
+      const buttonEl = getByRole('button', { name: 'List' });
+      expect(buttonEl).toHaveStyleRule('padding', '8px');
+
+      await user.click(buttonEl);
+
+      expect(onGroupClick).toHaveBeenCalledWith({
+        id: 'list',
+        text: 'List',
+        disabled: false,
+      });
+    });
+
+    it('Reports aria-label when a composed button’s text is an empty string', async () => {
+      const user = userEvent.setup();
+      const onGroupClick = jest.fn();
+      const { getByRole } = render(
+        <ButtonGroup onClick={onGroupClick}>
+          <ButtonGroupButton
+            id="list"
+            icon={<Icon name="archive" />}
+            text=""
+            aria-label="List"
+          />
+        </ButtonGroup>,
+      );
+
+      await user.click(getByRole('button', { name: 'List' }));
+
+      expect(onGroupClick).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'list', text: 'List' }),
+      );
+    });
+
+    it('Treats a composed icon with children as icon + label', () => {
+      const { getByRole, container } = render(
+        <ButtonGroup>
+          <ButtonGroupButton id="all" icon={<Icon name="archive" />}>
+            All
+          </ButtonGroupButton>
+        </ButtonGroup>,
+      );
+
+      const buttonEl = getByRole('button', { name: 'All' });
+
+      expect(container.querySelectorAll('svg')).toHaveLength(1);
+      expect(buttonEl).toHaveStyleRule('padding', '8px 16px');
+    });
+
+    it('Falls back to icon-only when a conditional child renders nothing', () => {
+      const showLabel = false;
+
+      const { getByRole } = render(
+        <ButtonGroup>
+          <ButtonGroupButton
+            id="list"
+            icon={<Icon name="archive" />}
+            aria-label="List">
+            {showLabel && <span>List</span>}
+          </ButtonGroupButton>
+        </ButtonGroup>,
+      );
+
+      expect(getByRole('button', { name: 'List' })).toHaveStyleRule(
+        'padding',
+        '8px',
+      );
+    });
+
+    it('Mutes the icon of a disabled button', () => {
+      const { getByRole } = render(
+        <ButtonGroup
+          items={[
+            {
+              id: 'list',
+              icon: <Icon name="archive" />,
+              ariaLabel: 'List',
+              disabled: true,
+            },
+          ]}
+        />,
+      );
+
+      expect(getByRole('button', { name: 'List' })).toHaveStyleRule(
+        'opacity',
+        '0.4',
+        // Only the disabled rule sets opacity on an icon.
+        { target: 'svg' },
+      );
+    });
+  });
+
+  describe('design alignment', () => {
+    // These read the style function rather than the DOM: `toHaveStyleRule`
+    // resolves to the highest-specificity rule matching the element, so a
+    // hover/focus rule always shadows the resting and selected ones it is
+    // meant to sit above.
+    const buttonItemStyles = ButtonItem(theme).styles;
+
+    it('Rounds only the outer corners of the strip', () => {
+      expect(buttonItemStyles).toContain('border-radius: 0;');
+      expect(buttonItemStyles).toMatch(
+        /&:first-of-type\s*\{\s*border-radius: 8px 0 0 8px;/,
+      );
+      expect(buttonItemStyles).toMatch(
+        /&:last-child\s*\{\s*border-radius: 0 8px 8px 0;/,
+      );
+    });
+
+    it('Lightens the unselected buttons and marks the selected one', () => {
+      expect(buttonItemStyles).toContain(
+        `background: ${theme.palette.secondary.light};`,
+      );
+      expect(buttonItemStyles).toMatch(
+        new RegExp(
+          `&\\.active\\s*\\{[^}]*background: ${theme.palette.secondary.main.replace(
+            /[()]/g,
+            '\\$&',
+          )};`,
+        ),
+      );
+    });
+
+    it('Marks the selected label by colour alone, so the strip cannot jump', () => {
+      const [resting, active] = buttonItemStyles.split('&.active');
+
+      expect(resting).toContain('font-size: 13.33px;');
+      expect(resting).toContain('font-weight: 500;');
+      expect(resting).toContain(`color: ${theme.colors.greyDarker80};`);
+
+      expect(active).toContain(`color: ${theme.colors.greyDarker};`);
+      // A face that changes with selection resizes the button under the cursor.
+      expect(active).not.toContain('font-size');
+      expect(active).not.toContain('font-weight');
     });
   });
 });

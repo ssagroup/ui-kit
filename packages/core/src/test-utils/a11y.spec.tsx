@@ -30,6 +30,7 @@ import Checkbox from '@components/Checkbox';
 import { Chip } from '@components/Chip';
 import { Counter } from '@components/Counter';
 import FileAttachment from '@components/FileAttachment';
+import Icon from '@components/Icon';
 import { IconButton } from '@components/IconButton';
 import Modal from '@components/Modal';
 import ModalContent from '@components/ModalContent';
@@ -81,6 +82,23 @@ const COMPONENTS: Case[] = [
       <ButtonGroup value="all" onClick={() => {}}>
         <ButtonGroupButton id="all">All</ButtonGroupButton>
         <ButtonGroupButton id="running">Running</ButtonGroupButton>
+      </ButtonGroup>
+    ),
+  },
+  {
+    name: 'ButtonGroup (icon only)',
+    ui: (
+      <ButtonGroup value="list" onClick={() => {}}>
+        <ButtonGroupButton
+          id="list"
+          icon={<Icon name="menu" size={24} />}
+          aria-label="List view"
+        />
+        <ButtonGroupButton
+          id="columns"
+          icon={<Icon name="dashboard" size={24} />}
+          aria-label="Column view"
+        />
       </ButtonGroup>
     ),
   },
