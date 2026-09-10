@@ -80,6 +80,49 @@ const DropdownOptionBase = styled.li<Omit<DropdownItemProps, 'disabled'>>`
  * Thin wrapper over a styled `<li>`. It exists so that `disabled` can be
  * accepted as the supported prop name without emotion forwarding it to the
  * DOM, where `disabled` is not valid on an `<li>`.
+ *
+ * ### The parent supplies the visible label
+ * Options are not rendered as written: the enclosing dropdown clones each one
+ * and injects the label, resolved as **`children` → `label` → `value`**. So
+ * `<DropdownOption value="Sales" />` displays "Sales" with no children needed,
+ * `label` overrides that for a different display string, and `children` wins
+ * over both when a row needs custom markup.
+ *
+ * The clone also wraps the label for truncation and attaches a tooltip, so put
+ * custom content in `children` rather than styling the `<li>` directly.
+ *
+ * ### Selection state comes from the parent
+ * `isActive`, `isMultiple` and the click wiring are set by `Dropdown` /
+ * `MultipleDropdown`; you supply `value` and let the parent report selection
+ * through its own `onChange`. Note `disabled` is only styled in `isMultiple`
+ * mode.
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * // Label falls back to `value`
+ * <Dropdown onChange={handleChange}>
+ *   {teams.map((team) => (
+ *     <DropdownOption key={team.id} value={team.name} />
+ *   ))}
+ * </Dropdown>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Report an id, display something else
+ * <DropdownOption value={user.id} label={user.fullName} />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Custom row content; `avatar` fills the leading slot
+ * <DropdownOption value={user.id} avatar={<Avatar size={20} image={user.photo} />}>
+ *   {user.fullName} — {user.role}
+ * </DropdownOption>
+ * ```
  */
 const DropdownOption = forwardRef<HTMLLIElement, DropdownItemProps>(
   function DropdownOption({ disabled, isDisabled, value, ...rest }, ref) {
