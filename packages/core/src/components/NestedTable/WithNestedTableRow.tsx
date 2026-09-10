@@ -3,6 +3,45 @@ import { NestedTableRowProvider } from './NestedTableRowContext';
 import { useNestedTableContext } from './hooks/useNestedTableContext';
 import { WithNestedTableRowProps } from './types';
 
+/**
+ * WithNestedTableRow - Groups rows into one collapsible unit.
+ *
+ * Wrap a run of `NestedTableRow` children in it. **Position decides role**: the
+ * first child becomes the sub-header that carries the toggle, and the rest are
+ * the rows it shows and hides. Renders no markup of its own — it only supplies
+ * each child with the group's context — so it is safe between `TableBody` and
+ * the rows.
+ *
+ * A group containing a single row has nothing to toggle, so it renders no icon
+ * and ignores `defaultCollapsed` — otherwise it could start collapsed with no
+ * way to reopen it.
+ *
+ * @category Components
+ * @subcategory Data Display
+ *
+ * @example
+ * ```tsx
+ * // One group per team; each starts expanded
+ * {teams.map((team) => (
+ *   <WithNestedTableRow key={team.id}>
+ *     <NestedTableRow>
+ *       <NestedTableCell>{team.name}</NestedTableCell>
+ *     </NestedTableRow>
+ *     {team.members.map((member) => (
+ *       <NestedTableRow key={member.id}>
+ *         <NestedTableCell>{member.name}</NestedTableCell>
+ *       </NestedTableRow>
+ *     ))}
+ *   </WithNestedTableRow>
+ * ))}
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // Collapse just this group, whatever the table default is
+ * <WithNestedTableRow defaultCollapsed>{rows}</WithNestedTableRow>
+ * ```
+ */
 export const WithNestedTableRow = ({
   children,
   defaultCollapsed,
