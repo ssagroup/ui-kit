@@ -3,6 +3,23 @@ import { forwardRef } from 'react';
 import { resolveDisabled } from '@utils/deprecation';
 import { TableRowProps } from './types';
 
+/* Removed CSS selector `& tr:first-of-type { padding-left: 18px; }` - don't see any diff in nested tables */
+const TableRowBase = styled.tr<Omit<TableRowProps, 'disabled'>>`
+  display: table-row;
+  outline: 0;
+  vertical-align: middle;
+
+  border: none;
+  padding: 0 16px;
+  height: 44px;
+  ${({ isDisabled }) =>
+    isDisabled && {
+      opacity: 0.6,
+      cursor: 'default',
+      userSelect: 'none',
+    }}
+`;
+
 /**
  * TableRow - Table row component for table data
  *
@@ -54,24 +71,6 @@ import { TableRowProps } from './types';
  * - Keyboard accessible when clickable
  * - Proper table structure for screen readers
  */
-
-/* Removed CSS selector `& tr:first-of-type { padding-left: 18px; }` - don't see any diff in nested tables */
-const TableRowBase = styled.tr<Omit<TableRowProps, 'disabled'>>`
-  display: table-row;
-  outline: 0;
-  vertical-align: middle;
-
-  border: none;
-  padding: 0 16px;
-  height: 44px;
-  ${({ isDisabled }) =>
-    isDisabled && {
-      opacity: 0.6,
-      cursor: 'default',
-      userSelect: 'none',
-    }}
-`;
-
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ disabled, isDisabled, ...props }, ref) => {
     const isRowDisabled = resolveDisabled('TableRow', disabled, isDisabled);
