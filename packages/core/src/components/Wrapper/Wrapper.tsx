@@ -1,6 +1,40 @@
 import styled from '@emotion/styled';
 import { CommonProps } from '@global-types/emotion';
 
+/** Flex container direction (maps to CSS flex-direction) */
+export type WrapperDirection =
+  | 'row'
+  | 'row-reverse'
+  | 'column'
+  | 'column-reverse';
+
+/** Cross-axis alignment (maps to CSS align-items) */
+export type WrapperAlignItems =
+  | 'flex-start'
+  | 'center'
+  | 'flex-end'
+  | 'stretch'
+  | 'baseline'
+  | 'start'
+  | 'end'
+  | 'self-start'
+  | 'self-end'
+  | 'normal';
+
+/** Main-axis alignment (maps to CSS justify-content) */
+export type WrapperJustifyContent =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | 'start'
+  | 'end'
+  | 'left'
+  | 'right'
+  | 'normal';
+
 /**
  * Wrapper - Flexible flexbox container component
  *
@@ -51,40 +85,6 @@ import { CommonProps } from '@global-types/emotion';
  * </Wrapper>
  * ```
  */
-/** Flex container direction (maps to CSS flex-direction) */
-export type WrapperDirection =
-  | 'row'
-  | 'row-reverse'
-  | 'column'
-  | 'column-reverse';
-
-/** Cross-axis alignment (maps to CSS align-items) */
-export type WrapperAlignItems =
-  | 'flex-start'
-  | 'center'
-  | 'flex-end'
-  | 'stretch'
-  | 'baseline'
-  | 'start'
-  | 'end'
-  | 'self-start'
-  | 'self-end'
-  | 'normal';
-
-/** Main-axis alignment (maps to CSS justify-content) */
-export type WrapperJustifyContent =
-  | 'flex-start'
-  | 'flex-end'
-  | 'center'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly'
-  | 'start'
-  | 'end'
-  | 'left'
-  | 'right'
-  | 'normal';
-
 const Wrapper = styled.div<
   {
     /**

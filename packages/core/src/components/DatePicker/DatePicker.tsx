@@ -3,6 +3,25 @@ import { DatePickerProps } from './types';
 import { DatePickerContent } from './components';
 import { DatePickerProvider } from './DatePickerContext';
 
+const DatePickerInner = (
+  {
+    format,
+    openCalendarMode = 'icon',
+    showCalendarIcon = true,
+    ...rest
+  }: DatePickerProps,
+  inputRef?: React.ForwardedRef<HTMLInputElement | null>,
+) => (
+  <DatePickerProvider
+    format={format}
+    openCalendarMode={openCalendarMode}
+    inputRef={inputRef}
+    showCalendarIcon={showCalendarIcon}
+    {...rest}>
+    <DatePickerContent />
+  </DatePickerProvider>
+);
+
 /**
  * DatePicker — masked date input with a popover calendar. Use inside **`FormProvider`**
  * (react-hook-form): the field value is the formatted string; **`onChange`** receives a
@@ -60,25 +79,6 @@ import { DatePickerProvider } from './DatePickerContext';
  * - Calendar days use **`aria-disabled`** and **`aria-label`** where applicable
  * - Icon trigger exposes **`aria-label="Calendar"`**
  */
-const DatePickerInner = (
-  {
-    format,
-    openCalendarMode = 'icon',
-    showCalendarIcon = true,
-    ...rest
-  }: DatePickerProps,
-  inputRef?: React.ForwardedRef<HTMLInputElement | null>,
-) => (
-  <DatePickerProvider
-    format={format}
-    openCalendarMode={openCalendarMode}
-    inputRef={inputRef}
-    showCalendarIcon={showCalendarIcon}
-    {...rest}>
-    <DatePickerContent />
-  </DatePickerProvider>
-);
-
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   DatePickerInner,
 );
