@@ -12,9 +12,26 @@
  */
 import ts from 'typescript';
 import { dirname, resolve, relative } from 'path';
-import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'fs';
+import {
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+  existsSync,
+  writeSync,
+} from 'fs';
 
-const PKG_DIR = resolve(process.cwd(), process.argv[2] ?? 'packages/core');
+const argv = process.argv.slice(2);
+/**
+ * `--json` prints the extracted API to stdout instead of writing the map.
+ * `check-public-docs.mjs` consumes it, so the documentation gate and the map
+ * agree on what counts as documented — a doc comment attached to the wrong
+ * symbol is invisible to both.
+ */
+const JSON_MODE = argv.includes('--json');
+const PKG_DIR = resolve(
+  process.cwd(),
+  argv.find((a) => !a.startsWith('--')) ?? 'packages/core',
+);
 const MAX_TYPE_LENGTH = 72;
 const MAX_DOC_LENGTH = 110;
 const MAX_SUMMARY_LENGTH = 170;
@@ -150,6 +167,9 @@ const summaryOf = (symbol, name) => {
   }
   return '';
 };
+
+const hasTag = (symbol, tagName) =>
+  symbol.getJsDocTags(checker).some((t) => t.name === tagName);
 
 const tagOf = (symbol, tagName) => {
   const tag = symbol.getJsDocTags(checker).find((t) => t.name === tagName);
@@ -444,6 +464,7 @@ for (const exported of exportSymbols) {
     name,
     kind,
     summary: summaryOf(symbol, name),
+    hasExample: hasTag(symbol, 'example'),
     file: declarationOf(symbol)?.getSourceFile().fileName ?? '',
   };
 
@@ -463,6 +484,7 @@ for (const exported of exportSymbols) {
         // Members document themselves as `Drawer.Root - …`, so strip the
         // qualified name rather than the bare member name.
         summary: summaryOf(memberSymbol, qualified),
+        hasExample: hasTag(memberSymbol, 'example'),
       };
       if (memberEntry.kind === 'component') {
         describeComponent(memberEntry, memberSymbol, qualified);
@@ -471,6 +493,27 @@ for (const exported of exportSymbols) {
     });
   }
   entries.push(entry);
+}
+
+if (JSON_MODE) {
+  const flat = entries.flatMap(
+    ({ name, kind, summary, hasExample, members }) => [
+      { name, kind, summary, hasExample },
+      ...(members ?? []).map((m) => ({
+        name: m.name,
+        kind: m.kind,
+        summary: m.summary,
+        hasExample: m.hasExample,
+      })),
+    ],
+  );
+  // writeSync, not process.stdout.write: writes to a pipe are async, and
+  // process.exit would truncate the payload mid-flush.
+  writeSync(
+    1,
+    `${JSON.stringify({ package: pkgJson.name, exports: flat }, null, 2)}\n`,
+  );
+  process.exit(0);
 }
 
 /* ------------------------------------------------------------- barrel groups */

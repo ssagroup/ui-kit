@@ -11,6 +11,7 @@
     "lint:fix": "eslint . --fix",
     "lint:styles": "stylelint \"**/*.tsx\"",
     "lint:styles:fix": "stylelint \"**/*.tsx\" --fix",
+    "docs:check": "node scripts/check-public-docs.mjs",
     "fix": "pnpm lint:fix && pnpm lint:styles:fix",
     "build:all": "turbo build",
     "build:utils": "pnpm --filter ./packages/utils build",

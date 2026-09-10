@@ -49,6 +49,9 @@ jobs:
       - name: Lint styles
         run: pnpm lint:styles
 
+      - name: Check public exports are documented
+        run: pnpm docs:check
+
   build:
     runs-on: ubuntu-latest
     env:
