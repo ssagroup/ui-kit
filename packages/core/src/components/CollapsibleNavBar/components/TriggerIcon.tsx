@@ -2,7 +2,10 @@ import { css, useTheme, CSSObject } from '@emotion/react';
 import Wrapper from '@components/Wrapper';
 import Icon from '@components/Icon';
 import type { MapIconsType, SVGProps } from '@components/Icon/types';
-import { useCollapsibleNavBarContext } from '@components';
+// Imported from the module, not the `@components` barrel: going through the
+// barrel puts this file in an import cycle with the package index, which leaves
+// whichever component loses the race evaluating as `undefined`.
+import { useCollapsibleNavBarContext } from '../CollapsibleNavBarContext';
 
 export const TriggerIcon = ({
   iconName,

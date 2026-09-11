@@ -3,32 +3,6 @@ import { css, Theme } from '@emotion/react';
 import NavBarBase from '@components/NavBar/NavBarBase';
 import { CollapsibleNavBarExtendedProps } from '../types';
 
-// TODO: refactor this
-const popupIconsToggle = (isVisible: boolean) => css`
-  & a > button {
-    display: ${isVisible ? 'block' : 'none'};
-  }
-  & > div > div > div > div:first-of-type {
-    display: ${isVisible ? 'block' : 'none'};
-    & > button {
-      display: ${isVisible ? 'block' : 'none'};
-    }
-  }
-`;
-
-// TODO: refactor this
-const staticIconsToggle = (isVisible: boolean) => css`
-  & a > div {
-    display: ${isVisible ? 'flex' : 'none'};
-  }
-  & > div > div > div > div:nth-of-type(2) {
-    display: ${isVisible ? 'flex' : 'none'};
-  }
-  & > div > div > div:nth-of-type(2) {
-    display: ${isVisible ? 'block' : 'none'};
-  }
-`;
-
 const backgroundByTheme = (
   theme: Theme,
   navBarTheme: CollapsibleNavBarExtendedProps['theme'],
@@ -53,10 +27,6 @@ export const CollapsibleNavBarBase = styled(NavBarBase)<{
 }>`
   padding: 15px 0 0 15px;
   position: absolute;
-
-  & li {
-    ${popupIconsToggle(false)}
-  }
 
   &.opened {
     ${({ theme, ...rest }) => backgroundByTheme(theme, rest['data-theme'])}
@@ -122,39 +92,45 @@ export const CollapsibleNavBarBase = styled(NavBarBase)<{
     position: static;
     z-index: 0;
     min-width: unset;
-
-    & li {
-      ${staticIconsToggle(false)}
-      ${popupIconsToggle(true)}
-    }
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
     &.opened {
-      min-width: 240px;
-      width: 291px;
+      min-width: 272px;
+      width: 294px;
 
       & > div:nth-of-type(2) {
-        width: 240px;
+        /* 216px of content between 32px gutters, per the design. The width
+           grows with the right gutter so the rows keep their old column and
+           only full-bleed content — a header picture — stops short of the
+           edge. */
+        width: 272px;
         padding-left: 29.5px;
+        padding-right: 29.5px;
+        box-sizing: border-box;
         & img {
           margin-left: 0;
         }
-        & li {
+        /* Back to full rows: the rail's popover trigger stands down and the
+           icon, label, chevron and in-place subtree return. Selectors are
+           TreeView's stable class names, not DOM positions. */
+        & .nav-rail-trigger,
+        & .nav-rail-trigger button {
+          display: none;
+        }
+
+        & .ssa-tree__row {
           justify-content: flex-start;
-          & button {
-            display: flex;
-          }
-          ${staticIconsToggle(true)}
-          ${popupIconsToggle(false)}
+        }
 
-          & > a > span {
-            display: block;
-          }
+        & .ssa-tree__icon,
+        & .ssa-tree__label,
+        & .ssa-tree__toggle {
+          display: flex;
+        }
 
-          & div > div > div:nth-of-type(2) {
-            display: flex;
-          }
+        & .ssa-tree__group {
+          display: block;
         }
       }
     }

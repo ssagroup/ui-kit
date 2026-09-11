@@ -199,6 +199,59 @@ function NestedNavigation() {
 }
 ```
 
+### Panel header
+
+`header` fills the space above the menu in the expanded panel. Every field is
+optional, which is what covers the design's three variants from one shape —
+headline alone, headline with a small avatar inline beside a name, and
+headline with a full picture above the name. Pass elements rather than urls,
+so the kit's `Avatar` (or anything else) drops straight in:
+
+```tsx
+<CollapsibleNavBar
+  items={items}
+  theme="light"
+  header={{
+    title: 'Headline Text',
+    name: 'Name Surname',
+    avatar: <Avatar size={AvatarSizes.small} />,
+  }}
+/>
+```
+
+The header is hidden in the collapsed rail, which has no room for it.
+`renderLogo` is optional, so a panel can carry a header instead of a logo, or
+both.
+
+### Active colour
+
+The active row — and the group that owns it — is painted with the theme's own
+accent: `blueCool` on the dark sidebar, `primary.dark` on the light one. Pass
+`activeColor` to use the app's brand colour instead; everything else (rest,
+hover, the open group's heading) stays with the theme.
+
+```tsx
+<CollapsibleNavBar items={items} activeColor="#16a34a" />
+```
+
+### How the menu is built
+
+The menu is a [TreeView](/docs/components-treeview--docs) in `list` semantics.
+`CollapsibleNavBar` supplies the routing on top of it: resolving each item's
+`to`, deriving the active row from the current location with `matchPath`, and
+closing the mobile overlay on navigation.
+
+Two consequences worth knowing:
+
+- A group's sub-items are **mounted when the group expands**, not rendered
+  up-front and hidden with CSS.
+- The group that owns the current route **opens automatically**, so a
+  deep-linked sub-route is visible on arrival.
+
+Every part of the menu carries a stable class name (`ssa-tree__row`,
+`ssa-tree__label`, `ssa-tree__toggle`, …), so the `css` prop can reach any
+slot without depending on the DOM's shape.
+
 <Canvas />
 <Controls />
 

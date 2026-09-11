@@ -1,0 +1,169 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TreeViewStories from './TreeView.stories';
+
+<Meta of={TreeViewStories} />
+
+# TreeView
+
+A nestable list of rows, up to three levels deep. It handles expansion,
+selection, indentation and keyboard navigation, and knows nothing about
+routing, files or any other domain — that part arrives through `renderItem`
+and each node's `meta`.
+
+It is the engine behind `CollapsibleNavBar`'s menu, but it is not a navigation
+component: a file browser, a settings tree or a category picker are equally
+valid consumers.
+
+## Default Usage
+
+```tsx
+import { TreeView } from '@ssa-ui-kit/core';
+
+function Example() {
+  return (
+    <TreeView
+      aria-label="Sections"
+      items={[
+        {
+          id: 'education',
+          label: 'Education',
+          iconName: 'education',
+          items: [
+            { id: 'courses', label: 'Courses' },
+            { id: 'exams', label: 'Exams' },
+          ],
+        },
+        { id: 'employee', label: 'Employee', iconName: 'employee' },
+      ]}
+      onSelectedIdsChange={(ids) => console.log(ids)}
+    />
+  );
+}
+```
+
+<Canvas of={TreeViewStories.Default} />
+
+## Three levels, enforced by the type
+
+`items` is typed one level at a time, so a fourth level is a **compile error**
+at the call site rather than a runtime surprise:
+
+```tsx
+// ✗ Type error: level 3 nodes cannot have `items`
+{ id: 'a', label: 'A', items: [{ id: 'b', label: 'B', items: [
+  { id: 'c', label: 'C', items: [{ id: 'd', label: 'D' }] },
+]}]}
+```
+
+`items` is optional at every level, so a flat one-level list is valid too.
+
+## Expansion and selection
+
+Both follow the kit's controllable pattern — pass the `*Ids` prop to own the
+state, `default*Ids` to seed it, and read changes from the `on*Change`
+callback:
+
+| Concern   | Controlled    | Uncontrolled seed     | Change callback        |
+| --------- | ------------- | --------------------- | ---------------------- |
+| Expansion | `expandedIds` | `defaultExpandedIds`  | `onExpandedIdsChange`  |
+| Selection | `selectedIds` | `defaultSelectedIds`  | `onSelectedIdsChange`  |
+
+Selection is **always an array**, even in the default `selectionMode="single"`.
+That is deliberate: a consumer that later needs multi-select flips
+`selectionMode` to `multiple` without an API change.
+
+`autoExpandSelected` (on by default) opens the ancestors of a selected node, on
+mount and whenever the selection moves — so a deep-linked selection is visible
+from the first paint. It steps aside while expansion is controlled.
+
+<Canvas of={TreeViewStories.PreselectedNestedItem} />
+
+## Accessibility: `tree` vs `list`
+
+`semantics` picks between two genuinely different patterns, because a file
+browser and a navigation menu are not the same thing to a screen reader:
+
+- **`tree`** (default) — a real `role="tree"` with `treeitem`s, roving focus
+  and arrow-key navigation. Right for file trees and pickers.
+- **`list`** — plain nested `ul`/`li` with disclosure buttons, leaving focus
+  order to the browser. Right for a menu of links, where each row is already a
+  focusable `NavLink`. This is what `CollapsibleNavBar` uses.
+
+Give the tree an `aria-label` so its purpose is announced.
+
+## Custom rows
+
+`renderItem` replaces the row's **interior only** — the `li`, its ARIA and the
+keyboard handling stay with `TreeView`, so a custom row never has to reproduce
+them. Spread `itemProps` on whatever element you make interactive and
+`toggleProps` on the chevron:
+
+```tsx
+<TreeView
+  items={items}
+  semantics="list"
+  selectedIds={[currentRouteId]}
+  renderItem={({ item, icon, hasItems, isExpanded, itemProps, toggleProps }) => (
+    <NavLink to={item.meta.path} {...itemProps}>
+      {icon}
+      <span>{item.label}</span>
+      {hasItems && (
+        <button {...toggleProps}>{isExpanded ? 'Collapse' : 'Expand'}</button>
+      )}
+    </NavLink>
+  )}
+/>
+```
+
+The render props also carry `isInSelectedPath` — true for the ancestors of the
+selection. That is what keeps levels 1 and 2 emphasised while the selected
+level 3 row is blue.
+
+<Canvas of={TreeViewStories.CustomRow} />
+
+## Styling
+
+Every part carries a stable class name, so the `css` prop can reach any slot
+without depending on the DOM shape:
+
+| Class               | Part                                                       |
+| ------------------- | ---------------------------------------------------------- |
+| `ssa-tree`          | Root `ul`                                                   |
+| `ssa-tree__group`   | Nested `ul`                                                 |
+| `ssa-tree__item`    | `li`, plus `--level-1\|2\|3`, `--selected`, `--expanded`     |
+| `ssa-tree__row`     | The row itself                                              |
+| `ssa-tree__icon`    | Icon slot (rendered empty when `reserveIconSpace` is on)     |
+| `ssa-tree__label`   | Label                                                       |
+| `ssa-tree__toggle`  | Expand/collapse chevron                                     |
+
+```tsx
+<TreeView
+  items={items}
+  css={{ '& .ssa-tree__toggle': { opacity: 0.5 } }}
+/>
+```
+
+A single node can also carry its own `css`. Beyond that, `theme` switches
+between the light and dark colour sets, `activeColor` overrides the selected
+row's colour alone — for an app whose accent isn't the theme's — and
+`renderItem` is the full escape hatch.
+
+<Canvas of={TreeViewStories.DarkTheme} />
+
+## Icons and alignment
+
+Icons are per node (`iconName` for a kit icon, `icon` for any element), so a
+tree can mix them freely. `reserveIconSpace` keeps the icon column on rows
+without one, so their labels stay aligned with icon-bearing siblings. It is off
+by default — a tree whose rows have no icons would otherwise carry an empty
+column — so turn it on for a tree that mixes the two.
+
+<Canvas of={TreeViewStories.TopLevelIconsOnly} />
+
+## Props
+
+<Controls />
+
+## All stories
+
+<Stories />

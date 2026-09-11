@@ -7,11 +7,15 @@ import {
   Subtitle,
   Stories,
 } from '@storybook/addon-docs/blocks';
-import { CollapsibleNavBar } from '@components';
+import { Avatar, AvatarSizes, CollapsibleNavBar } from '@components';
 import { ITEMS } from './consts';
 import { DarkLogo, Logo } from './Logo';
 import { Layout } from './Layout';
 import { CustomIcon, CustomIconWithOwnLogic } from './CustomIcon';
+
+/** Stand-in portrait for the header stories. */
+const PERSON_IMAGE =
+  'https://images.pexels.com/photos/832998/pexels-photo-832998.jpeg?auto=compress&cs=tinysrgb&w=480';
 
 const reactRouterDecorator: Decorator = (Story) => {
   return (
@@ -133,3 +137,56 @@ WithCustomIcons.title = 'With Custom Icons';
 WithCustomIcons.parameters = {
   layout: 'fullscreen',
 };
+
+/**
+ * Headline only — the simplest header variant. The block replaces the logo in
+ * the expanded panel and is hidden in the collapsed rail.
+ */
+export const WithHeadline: StoryObj<typeof CollapsibleNavBar> = () => (
+  <CollapsibleNavBar
+    items={ITEMS}
+    theme="light"
+    defaultExpanded
+    header={{ title: 'Headline Text' }}
+  />
+);
+
+WithHeadline.args = {};
+
+/**
+ * Headline with a small avatar inline beside the name — pass any element, so
+ * the kit's `Avatar` drops straight in.
+ */
+export const WithAvatarAndName: StoryObj<typeof CollapsibleNavBar> = () => (
+  <CollapsibleNavBar
+    items={ITEMS}
+    theme="light"
+    defaultExpanded
+    header={{
+      title: 'Headline Text',
+      name: 'Name Surname',
+      avatar: <Avatar size={AvatarSizes.small} />,
+    }}
+  />
+);
+
+WithAvatarAndName.args = {};
+
+/**
+ * Headline with a full picture above the name. The picture is square with a
+ * 12px radius and covers its box, per the design.
+ */
+export const WithFullImage: StoryObj<typeof CollapsibleNavBar> = () => (
+  <CollapsibleNavBar
+    items={ITEMS}
+    theme="light"
+    defaultExpanded
+    header={{
+      title: 'Headline Text',
+      name: 'Name Surname',
+      image: <img src={PERSON_IMAGE} alt="" />,
+    }}
+  />
+);
+
+WithFullImage.args = {};
