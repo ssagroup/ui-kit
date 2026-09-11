@@ -15,5 +15,11 @@ export const CollapsibleNavBarList = styled(NavBarList)<{
   }
   ${({ theme }) => theme.mediaQueries.lg} {
     margin-top: 84px;
+
+    /* The header already fills the space the logo's 84px was reserving; the
+       design leaves 24px between the header block and the first row. */
+    &.has-header {
+      margin-top: 24px;
+    }
   }
 `;

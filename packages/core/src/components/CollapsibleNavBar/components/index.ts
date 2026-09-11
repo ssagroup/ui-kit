@@ -1,5 +1,3 @@
-export * as ItemWithSubMenu from './ItemWithSubmenu';
-export * as ItemWithoutSubmenu from './ItemWithoutSubmenu';
 export * from './CollapsibleNavBarBase';
 export * from './CollapsibleNavBarLink';
 export * from './CollapsibleNavBarList';
@@ -7,6 +5,8 @@ export * from './CollapsibleNavBarWrapper';
 export * from './CollapsibleNavContentToggle';
 export * from './CollapsibleNavToggle';
 export * from './CollapsibleNavToggleWrapper';
-export * from './NavBarItem';
+export * from './NavHeader';
+export * from './NavTree';
+export * from './NavPopoverContent';
 export * from './NavBarPopover';
 export * from './TriggerIcon';

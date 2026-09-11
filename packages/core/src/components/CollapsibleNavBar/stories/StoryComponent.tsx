@@ -3,7 +3,8 @@ import { CollapsibleNavBar } from '../CollapsibleNavBar';
 import { Logo } from './Logo';
 
 export const StoryComponent = ({
-  items,
+  renderLogo = <Logo />,
+  ...props
 }: Parameters<typeof CollapsibleNavBar>[0]) => (
   <MemoryRouter>
     <Routes>
@@ -12,8 +13,8 @@ export const StoryComponent = ({
         element={
           <div style={{ height: '100vh', position: 'relative' }}>
             <CollapsibleNavBar
-              items={items}
-              renderLogo={<Logo />}
+              {...props}
+              renderLogo={renderLogo}
               onChange={(isChecked) => {
                 console.log('>>>checked ', isChecked);
               }}
