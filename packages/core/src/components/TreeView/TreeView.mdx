@@ -63,10 +63,10 @@ Both follow the kit's controllable pattern — pass the `*Ids` prop to own the
 state, `default*Ids` to seed it, and read changes from the `on*Change`
 callback:
 
-| Concern   | Controlled    | Uncontrolled seed     | Change callback        |
-| --------- | ------------- | --------------------- | ---------------------- |
-| Expansion | `expandedIds` | `defaultExpandedIds`  | `onExpandedIdsChange`  |
-| Selection | `selectedIds` | `defaultSelectedIds`  | `onSelectedIdsChange`  |
+| Concern   | Controlled    | Uncontrolled seed    | Change callback       |
+| --------- | ------------- | -------------------- | --------------------- |
+| Expansion | `expandedIds` | `defaultExpandedIds` | `onExpandedIdsChange` |
+| Selection | `selectedIds` | `defaultSelectedIds` | `onSelectedIdsChange` |
 
 Selection is **always an array**, even in the default `selectionMode="single"`.
 That is deliberate: a consumer that later needs multi-select flips
@@ -103,7 +103,14 @@ them. Spread `itemProps` on whatever element you make interactive and
   items={items}
   semantics="list"
   selectedIds={[currentRouteId]}
-  renderItem={({ item, icon, hasItems, isExpanded, itemProps, toggleProps }) => (
+  renderItem={({
+    item,
+    icon,
+    hasItems,
+    isExpanded,
+    itemProps,
+    toggleProps,
+  }) => (
     <NavLink to={item.meta.path} {...itemProps}>
       {icon}
       <span>{item.label}</span>
@@ -126,21 +133,25 @@ level 3 row is blue.
 Every part carries a stable class name, so the `css` prop can reach any slot
 without depending on the DOM shape:
 
-| Class               | Part                                                       |
-| ------------------- | ---------------------------------------------------------- |
-| `ssa-tree`          | Root `ul`                                                   |
-| `ssa-tree__group`   | Nested `ul`                                                 |
-| `ssa-tree__item`    | `li`, plus `--level-1\|2\|3`, `--selected`, `--expanded`     |
-| `ssa-tree__row`     | The row itself                                              |
-| `ssa-tree__icon`    | Icon slot (rendered empty when `reserveIconSpace` is on)     |
-| `ssa-tree__label`   | Label                                                       |
-| `ssa-tree__toggle`  | Expand/collapse chevron                                     |
+| Class              | Part                                                     |
+| ------------------ | -------------------------------------------------------- |
+| `ssa-tree`         | Root `ul`                                                |
+| `ssa-tree__group`  | Nested `ul`                                              |
+| `ssa-tree__item`   | `li`, plus `--level-1\|2\|3`, `--selected`, `--expanded` |
+| `ssa-tree__row`    | The row itself                                           |
+| `ssa-tree__icon`   | Icon slot (rendered empty when `reserveIconSpace` is on) |
+| `ssa-tree__label`  | Label                                                    |
+| `ssa-tree__toggle` | Expand/collapse chevron                                  |
+
+`ssa-tree__icon-glyph` is the one class you add rather than read: put it on any
+element of your own that holds a second copy of a row's glyph, and it picks up
+the same rest/hover/selected colouring `ssa-tree__icon` gets. `renderItem` that
+draws the icon twice — `CollapsibleNavBar`'s collapsed rail swaps the row for a
+popover trigger carrying its own copy — needs this, or the extra copy keeps
+whatever colour it was rendered with.
 
 ```tsx
-<TreeView
-  items={items}
-  css={{ '& .ssa-tree__toggle': { opacity: 0.5 } }}
-/>
+<TreeView items={items} css={{ '& .ssa-tree__toggle': { opacity: 0.5 } }} />
 ```
 
 A single node can also carry its own `css`. Beyond that, `theme` switches

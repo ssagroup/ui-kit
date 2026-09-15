@@ -131,8 +131,12 @@ export const NavTree = ({
 
     // The rail shows this popover in place of the row; its trigger sits inside
     // the row so that clicking the collapsed icon still follows the link.
+    // `ssa-tree__icon-glyph` opts this second copy of the glyph into
+    // `TreeView`'s row colouring. Without it the rail's icons keep
+    // `TriggerIcon`'s own colour and read several shades lighter than the same
+    // icons in the expanded panel.
     const popover = iconElement ? (
-      <span className="nav-rail-trigger">
+      <span className="nav-rail-trigger ssa-tree__icon-glyph">
         <CollapsibleNavBarPopover
           triggerIcon={iconElement}
           title={String(item.label)}

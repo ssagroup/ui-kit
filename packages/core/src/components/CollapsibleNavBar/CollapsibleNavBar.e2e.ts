@@ -66,6 +66,32 @@ test.describe('Widgets: CollapsibleNavBar', () => {
     ).not.toBeVisible();
   });
 
+  test('[1920] Rows should not move when the side menu is expanded', async ({
+    page,
+  }) => {
+    // The rail's rows used to measure 45-47px against the expanded panel's
+    // 42px, because the popover trigger was an inline box and its line box
+    // reserved descender space. The error compounded down the menu, so the
+    // whole list jumped on expand.
+    await page.setViewportSize(SCREEN_SIZES[1920]);
+    await gotoPage(page);
+
+    const rowTops = () =>
+      page
+        .locator('.ssa-tree__item--level-1 .ssa-tree__row')
+        .evaluateAll((rows) =>
+          rows.map((row) => Math.round(row.getBoundingClientRect().top)),
+        );
+
+    const collapsed = await rowTops();
+    expect(collapsed.length).toBeGreaterThan(1);
+
+    await page.getByTestId('collapsible-nav-content-toggle-label').click();
+    await expect(page.getByText('Dashboard')).toBeVisible();
+
+    expect(await rowTops()).toEqual(collapsed);
+  });
+
   test('[1920] Statistics submenu should be showed after Statistics item clicked (expanded state)', async ({
     page,
   }) => {

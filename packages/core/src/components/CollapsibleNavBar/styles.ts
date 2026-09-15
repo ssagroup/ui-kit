@@ -94,12 +94,17 @@ export const NavTreeStyles = (theme: Theme) => css`
       padding-left: 0;
     }
 
+    /* Both are block-level flex on purpose. As an inline box the trigger sat
+       on a text baseline, and the line box reserved descender space under it —
+       the rail's rows measured 45-47px against the expanded panel's 42px, so
+       every row shifted down a little more than the last and the menu jumped
+       on expand. */
     & .nav-rail-trigger {
-      display: block;
+      display: flex;
     }
 
     & .nav-rail-trigger button {
-      display: inline-flex;
+      display: flex;
     }
 
     & .ssa-tree__icon,

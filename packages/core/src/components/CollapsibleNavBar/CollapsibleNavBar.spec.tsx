@@ -234,6 +234,22 @@ describe('CollapsibleNavBar', () => {
       expect(balanceLink).not.toHaveClass('active');
     });
   });
+  it('Should opt the rail trigger into the tree’s icon colouring', () => {
+    // The rail hides `.ssa-tree__icon` and shows the popover trigger's own
+    // copy of the glyph instead. Without this class that copy keeps
+    // `TriggerIcon`'s colour and the collapsed icons read lighter than the
+    // same icons in the expanded panel.
+    const { container } = render(
+      <StoryComponent items={ITEMS} renderLogo={<Logo />} />,
+    );
+
+    const triggers = container.querySelectorAll('.nav-rail-trigger');
+    expect(triggers.length).toBeGreaterThan(0);
+    triggers.forEach((trigger) => {
+      expect(trigger).toHaveClass('ssa-tree__icon-glyph');
+    });
+  });
+
   describe('header', () => {
     it('Should render the headline, avatar, name and image it is given', () => {
       const { getByText, getByAltText } = render(

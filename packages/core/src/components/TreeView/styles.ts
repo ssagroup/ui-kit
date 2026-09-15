@@ -144,7 +144,12 @@ export const row = (
     // Kit icons paint with `fill` on paths and `stroke` on circles, so both
     // are driven here rather than through Icon's `color` prop — hover has to
     // move the colour without a re-render.
-    '& .ssa-tree__icon svg': {
+    //
+    // `.ssa-tree__icon-glyph` is the opt-in hook for a second copy of the
+    // glyph rendered outside the icon slot: `CollapsibleNavBar`'s collapsed
+    // rail hides `.ssa-tree__icon` and shows a popover trigger carrying its
+    // own copy, which would otherwise keep whatever colour it was born with.
+    '& .ssa-tree__icon svg, & .ssa-tree__icon-glyph svg': {
       '& path': {
         fill: isSelected || isEngaged ? colors.engaged : colors.icon,
       },
@@ -160,7 +165,7 @@ export const row = (
           '& .ssa-tree__toggle svg path': {
             fill: isSelected ? colors.selected : colors.engaged,
           },
-          '& .ssa-tree__icon svg': {
+          '& .ssa-tree__icon svg, & .ssa-tree__icon-glyph svg': {
             '& path': { fill: colors.engaged },
             '& circle': { stroke: colors.engaged },
           },
