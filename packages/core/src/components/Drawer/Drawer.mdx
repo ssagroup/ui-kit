@@ -90,22 +90,91 @@ Render the drawer in a portal (for overlays) or within a container:
 
 ### Header with Title and Close Button
 
-Add structured headers with optional close functionality:
+Compose the header from its parts:
 
 ```tsx
-const drawer = useDrawer({
-  title: 'Drawer Title',
-  withCloseButton: true,
-});
+const drawer = useDrawer();
 
 <Drawer.Content>
   <Drawer.Header>
     <Drawer.Title>Custom Title</Drawer.Title>
     <Drawer.CloseButton />
   </Drawer.Header>
-  <div css={{ padding: '16px' }}>Main content here</div>
+  <div>Main content here</div>
 </Drawer.Content>;
 ```
+
+> **`title` and `withCloseButton` are deprecated.** Passing either makes
+> `Drawer.Content` build a header for you, which predates these parts and
+> cannot hold anything besides a title and a close button — a drawer needing a
+> save button or a search field has to abandon it. They keep working and warn
+> in development; they are removed in the next major release.
+
+### Header Actions
+
+`Drawer.Actions` is the header's right-hand control group — 20px apart,
+vertically centred. It lays the controls out and nothing more, so each one is
+an ordinary kit component whose label, variant and disabled state stay yours.
+
+```tsx
+<Drawer.Header>
+  <Drawer.Title>Filters</Drawer.Title>
+  <Drawer.Actions>
+    <Button variant="primary" text="Save" onClick={handleSave} />
+    <Drawer.CloseButton />
+  </Drawer.Actions>
+</Drawer.Header>
+```
+
+Swap the button for a search field and the same group carries it:
+
+```tsx
+<Drawer.Actions>
+  <Input name="search" placeholder="Search" onChange={handleSearch} />
+  <Drawer.CloseButton />
+</Drawer.Actions>
+```
+
+> **Compose the header yourself, or let the store build it — not both.**
+> Passing `title`/`withCloseButton` to `useDrawer` makes `Drawer.Content`
+> render its own header. Writing your own means leaving both unset, or the
+> drawer draws two.
+
+### Footer Actions
+
+`Drawer.Footer` is a sticky bar across the bottom of the panel, above a
+full-width divider. It stays put whether the body is short or scrolling.
+Place it as the last child of `Drawer.Content`.
+
+```tsx
+<Drawer.Content>
+  <Drawer.Header>
+    <Drawer.Title>Filters</Drawer.Title>
+    <Drawer.CloseButton />
+  </Drawer.Header>
+  {fields}
+  <Drawer.Footer>
+    <Button variant="custom" text="Clear" onClick={handleClear} />
+    <Button variant="primary" text="View leads" onClick={handleSubmit} />
+  </Drawer.Footer>
+</Drawer.Content>
+```
+
+### Panel Width
+
+`left`/`right` drawers are 400px wide by default. `top`/`bottom` span the
+overlay and ignore the option.
+
+```tsx
+const drawer = useDrawer({ position: 'right', width: 572 });
+```
+
+### The Toggle Glyph
+
+`Drawer.CloseButton` picks its icon from `position`: the side drawers use
+`panelLeft`/`panelRight`, which point at the edge the drawer is anchored to, so
+the button reads as "collapse towards this side" rather than as a generic
+arrow. `top`/`bottom` keep `carrot-up`/`carrot-down`.
 
 ### Controlled State
 
@@ -188,15 +257,18 @@ const handleOpen = () => drawer.toggle(true);
 const handleClose = () => drawer.toggle(false);
 ```
 
-### Within Container with Overlap
+### Within a Container
 
-Create overlapping drawers within specific containers:
+Leaving out `Drawer.Portal` keeps the drawer in the DOM where you wrote it, so
+it anchors to its container instead of the viewport. The container needs
+`position: relative` and a height of its own:
 
 ```tsx
 <div
   style={{
     position: 'relative',
     overflow: 'hidden',
+    height: '360px',
     border: '1px solid #ddd',
     borderRadius: '8px',
   }}>
@@ -204,14 +276,7 @@ Create overlapping drawers within specific containers:
 
   <Drawer.Root store={drawer}>
     <Drawer.Overlay>
-      <Drawer.Content
-        css={{
-          position: 'absolute',
-          backgroundColor: 'white',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-        }}>
-        Overlapping drawer content
-      </Drawer.Content>
+      <Drawer.Content>Drawer content</Drawer.Content>
     </Drawer.Overlay>
   </Drawer.Root>
 </div>

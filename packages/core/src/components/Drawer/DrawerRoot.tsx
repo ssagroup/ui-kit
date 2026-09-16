@@ -21,7 +21,7 @@ export interface DrawerProps extends UseDrawerOptions {
  *         └── Drawer.Content  — the panel itself
  *             ├── Drawer.Header
  *             │   ├── Drawer.Title
- *             │   └── Drawer.CloseButton
+ *             │   └── Drawer.Actions   — save/search + Drawer.CloseButton
  *             └── …your content
  * ```
  * Each layer reads context from the one above, so skipping a level (Content
@@ -40,7 +40,9 @@ export interface DrawerProps extends UseDrawerOptions {
  * across open/close belongs above the drawer, not inside it.
  *
  * Note `opened`/`defaultOpened` are the legacy spelling of `open`/`defaultOpen`;
- * prefer the latter.
+ * prefer the latter. `title`/`withCloseButton` are likewise deprecated — they
+ * build a header that cannot hold anything else; compose `Drawer.Header`
+ * yourself instead.
  *
  * @category Components
  * @subcategory Overlay
@@ -48,14 +50,18 @@ export interface DrawerProps extends UseDrawerOptions {
  * @example
  * ```tsx
  * // Controlled: the trigger lives outside the drawer
- * const drawer = useDrawer({ title: 'Settings', withCloseButton: true });
+ * const drawer = useDrawer();
  *
  * <>
  *   <Button {...drawer.interactions.getReferenceProps()} text="Settings" />
  *   <Drawer.Root store={drawer}>
  *     <Drawer.Portal>
  *       <Drawer.Overlay>
- *         <Drawer.Content css={{ maxWidth: 400, padding: 24 }}>
+ *         <Drawer.Content>
+ *           <Drawer.Header>
+ *             <Drawer.Title>Settings</Drawer.Title>
+ *             <Drawer.CloseButton />
+ *           </Drawer.Header>
  *           {form}
  *         </Drawer.Content>
  *       </Drawer.Overlay>

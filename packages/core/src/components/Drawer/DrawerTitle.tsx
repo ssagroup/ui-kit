@@ -2,9 +2,11 @@ import { forwardRef } from 'react';
 import styled from '@emotion/styled';
 
 const StyledDrawerTitle = styled.h2`
+  margin: 0;
+  font-family: Manrope, sans-serif;
   font-weight: 600;
   font-size: 20px;
-  text-align: center;
+  color: ${({ theme }) => theme.colors.greyDarker};
 `;
 
 export interface DrawerTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {

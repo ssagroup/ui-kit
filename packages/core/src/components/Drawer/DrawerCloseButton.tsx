@@ -16,12 +16,33 @@ const StyledDrawerCloseButton = styled(Button)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
-  width: 32px;
-  background: ${({ theme }) => theme.colors.greyFocused};
+  flex-shrink: 0;
+  height: 34px;
+  width: 34px;
+  border-radius: 12px;
+
+  /* The design's "pressed" fill: this button only ever renders inside an open
+     drawer, and the open state is the pressed one. The closed-state styling
+     (white fill, grey stroke, dark glyph) belongs to whatever trigger the
+     consumer renders, since Drawer.Root unmounts while shut. */
+  background: ${({ theme }) => theme.colors.greyDropdownFocused};
+  border: 1px solid ${({ theme }) => theme.colors.white};
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.palette.primary.main};
+    outline-offset: 2px;
+  }
 `;
 
 const notReachable = (_: never): never => _;
+/**
+ * The side drawers use the panel glyphs, which point at the edge the drawer is
+ * anchored to — `panelLeft` mirrors `panelRight`, so the button reads as
+ * "collapse towards this side" rather than as a generic arrow.
+ *
+ * `top`/`bottom` keep the carrots: the design only covers left and right, and
+ * the icon set has no panel-up/panel-down equivalent.
+ */
 const getIconName = (position: Position): IconProps['name'] => {
   switch (position) {
     case 'top':
@@ -29,9 +50,9 @@ const getIconName = (position: Position): IconProps['name'] => {
     case 'bottom':
       return 'carrot-down';
     case 'left':
-      return 'carrot-left';
+      return 'panelLeft';
     case 'right':
-      return 'carrot-right';
+      return 'panelRight';
     default:
       return notReachable(position);
   }
@@ -51,9 +72,7 @@ export const DrawerCloseButton = forwardRef<
   return (
     <StyledDrawerCloseButton
       data-testid="drawer-close-button"
-      startIcon={
-        <Icon name={iconName} size={18} color={theme.colors.greyDarker} />
-      }
+      startIcon={<Icon name={iconName} size={18} color={theme.colors.white} />}
       ref={ref}
       onClick={() => ctx.store.toggle(false)}
       {...props}>

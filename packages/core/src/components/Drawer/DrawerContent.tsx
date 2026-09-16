@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useMergeRefs } from '@floating-ui/react';
 
 import { Position } from './useDrawer';
+import { PANEL_PADDING_TOP, PANEL_PADDING_X } from './constants';
 import { useDrawerContext } from './DrawerProvider';
 import { DrawerHeader } from './DrawerHeader';
 import { DrawerTitle } from './DrawerTitle';
@@ -37,15 +38,52 @@ const getTransform = (position: Position, open: boolean) => {
   return open ? 'translate(0)' : closedTransforms[position];
 };
 
+/**
+ * `left`/`right` drawers take their width from the store; `top`/`bottom` span
+ * the overlay as they always have, so `width` leaves them alone.
+ */
+const getSizing = (position: Position, width: number | string) => {
+  if (position === 'top' || position === 'bottom') {
+    return 'flex: 1;';
+  }
+  return `
+    flex: 0 0 auto;
+    width: ${typeof width === 'number' ? `${width}px` : width};
+    max-width: 100%;
+  `;
+};
+
 const StyledDrawerContent = styled.div<{
   duration: number;
   position: Position;
+  drawerWidth: number | string;
 }>`
-  flex: 1;
-  background-color: #f4f5f9;
+  background-color: ${({ theme }) => theme.palette.secondary.light};
   height: 100%;
+  box-sizing: border-box;
   pointer-events: auto;
   transition: transform ${({ duration }) => duration}ms ease-in-out;
+
+  /* Column flex so a Drawer.Footer can pin itself to the bottom with
+     margin-top: auto. Deliberately no gap — it would space out every child a
+     consumer passes; the design's 24px header-to-body distance lives on
+     DrawerHeader instead. */
+  display: flex;
+  flex-direction: column;
+
+  /* The panel is the scroll container. Without this the body simply overflows
+     the fixed-height panel: in a portalled drawer the spill is unreachable
+     because the overlay does not scroll, and in a contained one there is no
+     scrolling ancestor at all. It is also what makes the sticky positioning on
+     DrawerHeader and DrawerFooter do anything — sticky needs a scrollport, and
+     until now neither had one. */
+  overflow-y: auto;
+
+  /* Design: 24px above the header, 32px gutters. The footer is full-bleed and
+     cancels the side padding itself. */
+  padding: ${PANEL_PADDING_TOP}px ${PANEL_PADDING_X}px 0;
+
+  ${({ position, drawerWidth }) => getSizing(position, drawerWidth)}
 
   ${({ position, theme }) => getBorderStyle(position, theme.colors.greyFocused)}
 
@@ -66,6 +104,7 @@ export const DrawerContent = forwardRef<
     withCloseButton,
     position,
     duration,
+    width,
     transition,
     interactions,
     setFloating,
@@ -81,6 +120,7 @@ export const DrawerContent = forwardRef<
         data-position={position}
         position={position}
         duration={duration}
+        drawerWidth={width}
         {...interactions.getFloatingProps(props)}>
         {hasHeader && (
           <DrawerHeader>
