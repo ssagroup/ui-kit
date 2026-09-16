@@ -76,12 +76,17 @@ test.describe('Widgets: CollapsibleNavBar', () => {
     await page.setViewportSize(SCREEN_SIZES[1920]);
     await gotoPage(page);
 
+    const rows = page.locator('.ssa-tree__item--level-1 .ssa-tree__row');
+    // `evaluateAll` does not auto-wait — it resolves against whatever matches
+    // the moment it runs, so measuring straight after `goto` races the render
+    // and reads an empty list. Every assertion below has to be gated on the
+    // rows actually existing.
+    await expect(rows.first()).toBeVisible();
+
     const rowTops = () =>
-      page
-        .locator('.ssa-tree__item--level-1 .ssa-tree__row')
-        .evaluateAll((rows) =>
-          rows.map((row) => Math.round(row.getBoundingClientRect().top)),
-        );
+      rows.evaluateAll((elements) =>
+        elements.map((row) => Math.round(row.getBoundingClientRect().top)),
+      );
 
     const collapsed = await rowTops();
     expect(collapsed.length).toBeGreaterThan(1);
@@ -89,7 +94,10 @@ test.describe('Widgets: CollapsibleNavBar', () => {
     await page.getByTestId('collapsible-nav-content-toggle-label').click();
     await expect(page.getByText('Dashboard')).toBeVisible();
 
-    expect(await rowTops()).toEqual(collapsed);
+    // Polled rather than read once: the panel animates open, and a single
+    // measurement can land mid-transition. A row that settles anywhere other
+    // than where it started still fails.
+    await expect.poll(rowTops).toEqual(collapsed);
   });
 
   test('[1920] Statistics submenu should be showed after Statistics item clicked (expanded state)', async ({
