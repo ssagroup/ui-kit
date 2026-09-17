@@ -94,6 +94,20 @@ export * as JsonSchema from './JsonSchemaForm';
 // Components for presenting data and content
 
 export { default as Table } from './Table';
+export {
+  ColumnResizeHandle,
+  useColumnResize,
+  useColumnResizeContext,
+} from './Table';
+export type {
+  ColumnResizeApi,
+  ColumnResizeHandleProps,
+  ColumnResizeMode,
+  ColumnResizeOptions,
+  ResizeHandleProps,
+  TableProps,
+  UseColumnResizeOptions,
+} from './Table';
 export { default as TableBody } from './TableBody';
 export { default as TableCell } from './TableCell';
 export { default as TableCellHeader } from './TableCellHeader';

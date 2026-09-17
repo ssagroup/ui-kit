@@ -1,5 +1,7 @@
 import React from 'react';
 import TableCell from '@components/TableCell/TableCell';
+import ColumnResizeHandle from '@components/Table/ColumnResizeHandle';
+import { useColumnResizeContext } from '@components/Table/ColumnResizeContext';
 import { TableCellHeaderProps } from './types';
 
 /**
@@ -55,6 +57,7 @@ import { TableCellHeaderProps } from './types';
  * @see {@link TableRow} - Row component (use in TableHead)
  * @see {@link TableCell} - Data cell component (use in TableBody)
  * @see {@link TableBody} - Body section component
+ * @see {@link ColumnResizeHandle} - the handle rendered inside resizable headers
  *
  * @accessibility
  * - Semantic HTML th element (renders as th)
@@ -64,11 +67,25 @@ import { TableCellHeaderProps } from './types';
  */
 const TableCellHeader = ({
   children,
+  resizable = true,
   ...props
-}: React.PropsWithChildren<TableCellHeaderProps>) => (
-  <TableCell as="th" {...props}>
-    {children}
-  </TableCell>
-);
+}: React.PropsWithChildren<TableCellHeaderProps>) => {
+  // Null in every table that has not opted into resizing, which is the common
+  // case — the header cell then stays exactly what it was before.
+  const columnResize = useColumnResizeContext();
+
+  return (
+    <TableCell
+      as="th"
+      // Read back by useColumnResize, which refuses to make a pinned column pay
+      // for its the next column's growth, and by the stylesheet rule that drops the
+      // handle to its left.
+      data-column-pinned={columnResize && !resizable ? 'true' : undefined}
+      {...props}>
+      {children}
+      {columnResize && resizable && <ColumnResizeHandle />}
+    </TableCell>
+  );
+};
 
 export default TableCellHeader;

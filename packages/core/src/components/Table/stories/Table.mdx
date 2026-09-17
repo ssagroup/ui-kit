@@ -1,5 +1,6 @@
 import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
 import * as TableStories from './Table.stories';
+import { DOCUMENTED_TABLE_PROPS } from './consts';
 
 <Meta of={TableStories} />
 
@@ -488,6 +489,7 @@ function EmptyStateTable() {
 ```
 
 <Canvas />
-<Controls />
+{/* Unfiltered, this lists every DOM attribute of a table — see consts.ts */}
+<Controls include={DOCUMENTED_TABLE_PROPS} />
 
 <Stories includePrimary={false} />

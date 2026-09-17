@@ -19,7 +19,14 @@ import TableCell from '@components/TableCell';
 import TableBody from '@components/TableBody';
 import TableCellHeader from '@components/TableCellHeader';
 import { SortableTable } from './SortableTable';
+import {
+  ControlledResizableTable,
+  ExpandingResizableTable,
+  ResizableTable,
+} from './ResizableTable';
+import { CustomHeaderResizableTable } from './CustomHeaderResizableTable';
 import { SortInfo } from './types';
+import { DOCUMENTED_TABLE_PROPS } from './consts';
 import { StyledTableStory } from './StyledTable/StoryComponent';
 
 export default {
@@ -29,7 +36,7 @@ export default {
     backgrounds: { value: 'main' },
   },
   parameters: {
-    controls: { disable: true },
+    controls: { disable: true, include: DOCUMENTED_TABLE_PROPS },
     backgrounds: {
       options: {
         main: { name: 'Main', value: '#D0D1D6' },
@@ -105,3 +112,80 @@ TableSorting.args = {};
 
 export const StyledTable: StoryObj<typeof Table> = () => <StyledTableStory />;
 StyledTable.args = {};
+
+export const TableResizableColumns: StoryObj<typeof Table> = () => (
+  <ResizableTable />
+);
+
+TableResizableColumns.storyName = 'Resizable columns';
+TableResizableColumns.args = {};
+TableResizableColumns.parameters = {
+  docs: {
+    description: {
+      story:
+        'Drag the right edge of any header cell to resize its column. Width ' +
+        'is traded with the column to the right, so the table stays exactly ' +
+        'as wide as it was and nothing around it reflows — the last column ' +
+        'has nothing to trade with and so has no handle. The handles are ' +
+        'keyboard operable: Tab to one, then Left/Right to resize in 8px ' +
+        'steps, Shift + Left/Right in 40px steps, and Enter — or a double ' +
+        'click — to restore the width it started at.',
+    },
+  },
+};
+
+export const TableExpandingColumns: StoryObj<typeof Table> = () => (
+  <ExpandingResizableTable />
+);
+
+TableExpandingColumns.storyName = 'Resizable columns (expand mode)';
+TableExpandingColumns.args = {};
+TableExpandingColumns.parameters = {
+  docs: {
+    description: {
+      story:
+        'With `columnResizeMode="expand"` every column keeps the width the ' +
+        'user gave it and the table grows instead, so every column — the ' +
+        'last one included — has a handle. The table then needs a parent it ' +
+        'can scroll sideways in.',
+    },
+  },
+};
+
+export const TableCustomHeaderResizing: StoryObj<typeof Table> = () => (
+  <CustomHeaderResizableTable />
+);
+
+TableCustomHeaderResizing.storyName = 'Resizable columns (custom header)';
+TableCustomHeaderResizing.args = {};
+TableCustomHeaderResizing.parameters = {
+  docs: {
+    description: {
+      story:
+        'The headless path. `resizableColumns` is not set — instead the story ' +
+        'calls `useColumnResize` itself and owns the header markup, the ' +
+        'colgroup, the `table-layout: fixed` rule, the cell truncation and ' +
+        'the look of the handles. Each handle is told its column index, so ' +
+        'nothing is inferred from the DOM and the last column simply has no ' +
+        'handle. The header also sorts, to show a click target and a drag ' +
+        'target living in the same cell.',
+    },
+  },
+};
+
+export const TableControlledColumnWidths: StoryObj<typeof Table> = () => (
+  <ControlledResizableTable />
+);
+
+TableControlledColumnWidths.storyName = 'Controlled column widths';
+TableControlledColumnWidths.args = {};
+TableControlledColumnWidths.parameters = {
+  docs: {
+    description: {
+      story:
+        'Widths held by the caller and echoed above the table — this is the ' +
+        'shape persistence takes, since the kit stores nothing itself. The ' +
+        'Actions column sets `resizable={false}`, so it has no handle.',
+    },
+  },
+};
