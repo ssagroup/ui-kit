@@ -10,9 +10,9 @@ const NavBarWrapper = styled.div`
 
   border-radius: 12px 12px 0 0;
   background: linear-gradient(
-    108.3deg,
-    ${({ theme }) => theme.colors.greyDarker} -0.36%,
-    ${({ theme }) => theme.colors.greyDarker} 100%
+    91.74deg,
+    ${({ theme }) => theme.colors.greyDarker} 0.36%,
+    ${({ theme }) => theme.colors.greyDark} 100%
   );
 
   transform: translateY(-300vh);

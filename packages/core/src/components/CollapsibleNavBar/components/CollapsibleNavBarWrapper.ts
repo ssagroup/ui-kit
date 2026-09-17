@@ -9,6 +9,10 @@ export const CollapsibleNavBarWrapper = styled(NavBarWrapper)<{
   transition: unset;
   position: static;
 
+  /* NavBarWrapper carries NavBar's own two-stop gradient. This rail is a
+     different design, so pin the flat dark fill rather than inheriting it. */
+  background: ${({ theme }) => theme.colors.greyDarker};
+
   display: none;
   width: 100%;
 

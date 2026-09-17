@@ -5,6 +5,13 @@ import { CollapsibleNavBarExtendedProps } from '../types';
 export const CollapsibleNavBarList = styled(NavBarList)<{
   navBarTheme?: CollapsibleNavBarExtendedProps['theme'];
 }>`
+  /* NavBarList is a 42px-gap column sized for NavBar's icon rail. This list
+     holds a single NavTree child that has to stretch to the full rail width,
+     so reset back to the row/wrap layout it was built against. */
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0;
+
   height: auto;
   padding: 0 0 0 15px;
   margin: 14px 0 0 0;
