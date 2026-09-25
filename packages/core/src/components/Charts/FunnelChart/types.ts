@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
 import { TooltipProps } from '@components/Tooltip/types';
 
+/** Shape of a FunnelChart: an inverted funnel with a stem, or a pyramid */
 export type FunnelChartType = 'funnel' | 'triangle';
 
+/** One level of a FunnelChart, listed top to bottom in `data` */
 export interface FunnelChartItem {
   /** Name of the stage — shown in the default tooltip and accessible label */
   label: string;
@@ -19,6 +21,7 @@ export type FunnelChartRender = (
   index: number,
 ) => ReactNode;
 
+/** Props for the FunnelChart component */
 export interface FunnelChartProps {
   /** Levels from top to bottom. Every level has the same height. */
   data: FunnelChartItem[];
