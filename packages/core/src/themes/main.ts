@@ -128,6 +128,16 @@ const main: Theme = {
     blueRoyal16: 'rgba(72, 125, 225, 0.16)', //#487DE1
     blueRoyal12: 'rgba(72, 125, 225, 0.12)', //#487DE1
     cyanTeal: 'rgba(85, 214, 210, 1)', //#55D6D2
+    // Chart palette — FunnelChart levels
+    blueCornflower: 'rgba(91, 141, 236, 1)', // #5B8DEC
+    blueSky: 'rgba(76, 191, 253, 1)', // #4CBFFD
+    blueSoft: 'rgba(107, 163, 255, 1)', // #6BA3FF
+    blueVivid: 'rgba(66, 134, 245, 1)', // #4286F5
+    greenLime: 'rgba(153, 225, 118, 1)', // #99E176
+    yellowButter: 'rgba(253, 228, 125, 1)', // #FDE47D
+    orangePeach: 'rgba(253, 198, 125, 1)', // #FDC67D
+    orangeCoral: 'rgba(255, 160, 105, 1)', // #FFA069
+    redSalmon: 'rgba(255, 115, 121, 1)', // #FF7379
     dangerShades300: 'rgb(253, 128, 122)', //#FD807A
     dangerShades500: 'rgb(223, 90, 96)', //#DF5A60
     dangerShades700: 'rgb(187, 68, 80)', //#BB4450
