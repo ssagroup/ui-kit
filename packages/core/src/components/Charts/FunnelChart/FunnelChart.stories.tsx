@@ -1,4 +1,5 @@
 import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+import { useTheme } from '@emotion/react';
 
 import { FunnelChart } from './';
 import { FunnelChartItem } from './types';
@@ -133,6 +134,35 @@ export const ZeroValues: Story = {
       { label: 'Interviewed', value: 0 },
       { label: 'Hired', value: 0 },
     ],
+  },
+};
+
+/**
+ * Colour empty stages grey by mapping `data` — `color` on an item overrides
+ * the palette for that level only.
+ */
+export const ZeroValuesGreyedOut: Story = {
+  args: {
+    withPointer: true,
+    renderPointerLabel: (item) => formatNumber(item.value),
+  },
+  render: function Render(args) {
+    const theme = useTheme();
+    return (
+      <FunnelChart
+        {...args}
+        data={[
+          { label: 'Visitors', value: 12400 },
+          { label: 'Sign-ups', value: 3100 },
+          { label: 'Trials', value: 940 },
+          { label: 'Qualified', value: 0 },
+          { label: 'Proposals', value: 0 },
+          { label: 'Customers', value: 0 },
+        ].map((item) =>
+          item.value === 0 ? { ...item, color: theme.colors.grey } : item,
+        )}
+      />
+    );
   },
 };
 
