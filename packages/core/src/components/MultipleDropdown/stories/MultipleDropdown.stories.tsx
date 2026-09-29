@@ -250,7 +250,7 @@ PlaceholderHidden.args = {
 
 export const Single: StoryObj = (args: Args) => {
   return (
-    <MultipleDropdown disabled={args.isDisabled} isMultiple={args.isMultiple}>
+    <MultipleDropdown disabled={args.disabled} isMultiple={args.isMultiple}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -332,7 +332,7 @@ export const Custom: StoryObj = (args: Args) => {
 
   return (
     <MultipleDropdown
-      disabled={args.isDisabled}
+      disabled={args.disabled}
       selectedItems={[items[2]]}
       label="Strategy"
       css={css`

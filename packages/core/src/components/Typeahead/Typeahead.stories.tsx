@@ -73,7 +73,7 @@ export const Basic: StoryObj = (args: TypeaheadProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typeahead
           defaultValue={[items[2].id]}
-          disabled={args.isDisabled}
+          disabled={args.disabled}
           onEmptyChange={(isEmpty) => {
             console.log('>>>onEmptyChange event', isEmpty);
           }}
@@ -109,7 +109,7 @@ export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
         <Wrapper
           css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
           <Typeahead
-            disabled={args.isDisabled}
+            disabled={args.disabled}
             onEmptyChange={(isEmpty) => {
               console.log('>>>onEmptyChange event', isEmpty);
             }}
@@ -127,7 +127,7 @@ export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
             ))}
           </Typeahead>
           <Typeahead
-            disabled={args.isDisabled}
+            disabled={args.disabled}
             isMultiple
             defaultValue={[items[1].id]}
             onEmptyChange={(isEmpty) => {
@@ -189,7 +189,7 @@ export const Multiple: StoryObj = (args: TypeaheadProps) => {
         <Typeahead
           defaultValue={[items[2].id, items[1].id]}
           isMultiple
-          disabled={args.isDisabled}
+          disabled={args.disabled}
           onEmptyChange={(isEmpty) => {
             console.log('>>>onEmptyChange event', isEmpty);
           }}
@@ -261,7 +261,7 @@ export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
       <Typeahead
         defaultValue={[imageItems[2].id, imageItems[1].id]}
         isMultiple
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name={'typeahead-dropdown'}
         label="Label"
         startIcon={<Icon name="user" size={16} />}
@@ -303,7 +303,7 @@ export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
         css={{ width: 420 }}
         defaultValue={[managerOptions[0].id, managerOptions[2].id]}
         isMultiple
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name="typeahead-managers"
         label="Select managers"
         placeholder="Select managers..."
@@ -343,7 +343,7 @@ export const WithError: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <Typeahead
         defaultValue={[]}
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name={fieldName}
         label="Label"
         validationSchema={{
@@ -368,7 +368,7 @@ export const WithSuccess: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <Typeahead
         defaultValue={[items[2].id]}
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name={'typeahead-dropdown'}
         label="Label"
         validationSchema={{
@@ -394,7 +394,7 @@ export const Opened: StoryObj = (args: TypeaheadProps) => {
   return (
     <FormProvider {...useFormResult}>
       <Typeahead
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name={'typeahead-dropdown'}
         label="Label"
         isOpen
@@ -619,7 +619,7 @@ export const Disabled: StoryObj = (args: TypeaheadProps) => {
       <Typeahead
         defaultValue={[items[2].id, items[1].id]}
         isMultiple
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name={'typeahead-dropdown'}
         label="Label"
         startIcon={<Icon name="user" size={16} color={theme.colors.grey} />}
@@ -631,7 +631,7 @@ export const Disabled: StoryObj = (args: TypeaheadProps) => {
           <React.Fragment>
             <TypeaheadItemIcon
               name={getIconNameByValue(Number(value))}
-              color={args.isDisabled ? theme.colors.grey : '#000'}
+              color={args.disabled ? theme.colors.grey : '#000'}
               size={18}
             />
             {highlightInputMatch(label, input)}
@@ -642,7 +642,7 @@ export const Disabled: StoryObj = (args: TypeaheadProps) => {
             <TypeaheadItemIcon
               name={iconName as IconProps['name']}
               size={18}
-              color={args.isDisabled ? theme.colors.grey : '#000'}
+              color={args.disabled ? theme.colors.grey : '#000'}
             />
             {label || value}
           </TypeaheadOption>
@@ -660,7 +660,7 @@ export const NoItems: StoryObj = (args: TypeaheadProps) => {
     <FormProvider {...useFormResult}>
       <Typeahead
         isMultiple
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         name={'typeahead-dropdown'}
         label="Label"
         css={{
@@ -691,7 +691,7 @@ export const CustomValues: StoryObj = (args: TypeaheadProps) => {
             defaultValue={[items[0].id, items[1].id, items[2].id, 'four']}
             isMultiple
             allowCustomValues={true}
-            disabled={args.isDisabled}
+            disabled={args.disabled}
             onEmptyChange={(isEmpty) => {
               console.log('>>>onEmptyChange event', isEmpty);
             }}

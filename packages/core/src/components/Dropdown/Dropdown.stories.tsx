@@ -231,7 +231,7 @@ export const Basic: StoryObj = (args: Args) => {
     <Dropdown
       dropdownProps={args.dropdownProps}
       selectedItem={items[2]}
-      disabled={args.isDisabled}>
+      disabled={args.disabled}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -307,7 +307,7 @@ WithAvatars.args = { disabled: false };
 
 export const CustomWidth: StoryObj = (args: Args) => {
   return (
-    <Dropdown disabled={args.isDisabled} selectedItem={items[0]} width={320}>
+    <Dropdown disabled={args.disabled} selectedItem={items[0]} width={320}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value} label={item.label}>
           {item.label}
@@ -454,7 +454,7 @@ LegacyStyle.args = { disabled: false };
 
 export const Simple: StoryObj = (args: Args) => {
   return (
-    <Dropdown disabled={args.isDisabled}>
+    <Dropdown disabled={args.disabled}>
       {items.map((item) => (
         <DropdownOption
           key={item.value}
@@ -499,7 +499,7 @@ export const Custom: StoryObj = (args: Args) => {
 
   return (
     <Dropdown
-      disabled={args.isDisabled}
+      disabled={args.disabled}
       selectedItem={items[2]}
       css={css`
         background: #ff947b;
@@ -633,7 +633,7 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
   return (
     <div>
       <Dropdown
-        disabled={args.isDisabled}
+        disabled={args.disabled}
         selectedItem={items[selectedIndex]}
         onChange={handleChange}>
         {items.map((item) => (
