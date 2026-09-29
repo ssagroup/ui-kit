@@ -391,4 +391,149 @@ describe('Typeahead Component', () => {
       expect(customOption).toBeInTheDocument();
     });
   });
+
+  describe('Option tooltips', () => {
+    it('makes every option label a hover tooltip trigger', async () => {
+      const { user } = setup({ renderOption: undefined });
+      await user.click(screen.getByRole('combobox'));
+
+      const label = within(screen.getByRole('listbox')).getByText('First');
+      expect(label).toHaveAttribute('aria-haspopup', 'dialog');
+      expect(label).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('falls back to the label when renderOption returns markup', async () => {
+      const { user } = setup();
+      await user.click(screen.getByRole('combobox'));
+
+      const input = screen
+        .getAllByRole('textbox')
+        .find((el) => !el.hasAttribute('readonly'));
+      await user.type(input!, 'Fou');
+
+      // highlightInputMatch wraps the match in <b>, so the children are not
+      // text; the tooltip trigger is the ellipsised label box around them.
+      const option = within(screen.getByRole('listbox')).getByRole('option');
+      expect(
+        option.querySelector('[aria-haspopup="dialog"]'),
+      ).toHaveTextContent('Fourth Label');
+    });
+  });
+
+  describe('singleLine', () => {
+    const allSelected = items.map(({ id }) => id);
+
+    const mockLayout = ({
+      line,
+      chip,
+      counter = 24,
+    }: {
+      line: number;
+      chip: number;
+      counter?: number;
+    }) =>
+      jest
+        .spyOn(Element.prototype, 'getBoundingClientRect')
+        .mockImplementation(function (this: Element) {
+          const width = this.hasAttribute('data-typeahead-counter')
+            ? counter
+            : this.hasAttribute('data-typeahead-chip')
+              ? chip
+              : this.querySelector(':scope > [data-typeahead-chip]')
+                ? line / 2
+                : this.querySelector(':scope > [data-testid="typeahead-input"]')
+                  ? line / 2
+                  : 0;
+          return { width } as DOMRect;
+        });
+
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('shows the chips that fit and a counter for the rest', () => {
+      // 300px line - 50px input reserve = 250px: two 100px chips plus the
+      // counter fit (100 + 8 + 100 + 8 + 24), a third does not.
+      mockLayout({ line: 300, chip: 100 });
+      setup({ isMultiple: true, singleLine: true, defaultValue: allSelected });
+
+      const chips = document.querySelectorAll('[data-typeahead-chip]');
+      expect(chips).toHaveLength(4);
+      expect(chips[0]).not.toHaveAttribute('aria-hidden');
+      expect(chips[1]).not.toHaveAttribute('aria-hidden');
+      expect(chips[2]).toHaveAttribute('aria-hidden', 'true');
+      expect(chips[3]).toHaveAttribute('aria-hidden', 'true');
+      const counter = screen.getByTestId('typeahead-selected-counter');
+      expect(counter).toHaveTextContent(/^2$/);
+      expect(counter).toHaveAttribute('aria-label', '2 more selected');
+      expect(screen.getByRole('combobox')).toHaveAttribute(
+        'data-single-line',
+        'true',
+      );
+    });
+
+    it('re-measures with the real counter width once it appears', () => {
+      // The 24px placeholder fits two chips (240 <= 250), but the rendered
+      // counter is 60px wide: 100 + 8 + 100 + 8 + 60 = 276 no longer does.
+      mockLayout({ line: 300, chip: 100, counter: 60 });
+      setup({ isMultiple: true, singleLine: true, defaultValue: allSelected });
+
+      const chips = document.querySelectorAll('[data-typeahead-chip]');
+      expect(chips[0]).not.toHaveAttribute('aria-hidden');
+      expect(chips[1]).toHaveAttribute('aria-hidden', 'true');
+      expect(
+        screen.getByTestId('typeahead-selected-counter'),
+      ).toHaveTextContent(/^3$/);
+    });
+
+    it('keeps one truncated chip when even the first does not fit', () => {
+      mockLayout({ line: 200, chip: 400 });
+      setup({ isMultiple: true, singleLine: true, defaultValue: allSelected });
+
+      const chips = document.querySelectorAll('[data-typeahead-chip]');
+      expect(chips[0]).not.toHaveAttribute('aria-hidden');
+      expect(chips[0]).toHaveStyleRule('flex-shrink', '1');
+      expect(
+        screen.getByTestId('typeahead-selected-counter'),
+      ).toHaveTextContent(/^3$/);
+    });
+
+    it('shows every chip and no counter until the trigger is laid out', () => {
+      setup({ isMultiple: true, singleLine: true, defaultValue: allSelected });
+
+      document
+        .querySelectorAll('[data-typeahead-chip]')
+        .forEach((chip) => expect(chip).not.toHaveAttribute('aria-hidden'));
+      expect(
+        screen.queryByTestId('typeahead-selected-counter'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('gives selected chips a tooltip only on a single line', () => {
+      const { unmount } = setup({
+        isMultiple: true,
+        singleLine: true,
+        defaultValue: [1],
+        renderOption: undefined,
+      });
+      expect(screen.getByText('First')).toHaveAttribute(
+        'aria-haspopup',
+        'dialog',
+      );
+      unmount();
+
+      setup({ isMultiple: true, defaultValue: [1], renderOption: undefined });
+      expect(screen.getByText('First')).not.toHaveAttribute('aria-haspopup');
+      expect(
+        document.querySelector('[data-typeahead-chip]'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('is ignored in single-select mode', () => {
+      setup({ singleLine: true, defaultValue: [1] });
+      expect(screen.getByRole('combobox')).not.toHaveAttribute(
+        'data-single-line',
+      );
+    });
+  });
 });

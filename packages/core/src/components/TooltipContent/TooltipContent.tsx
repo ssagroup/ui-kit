@@ -76,11 +76,20 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
   ) {
     const tooltipCtx = useTooltipContext();
     const ref = useMergeRefs([tooltipCtx?.refs.setFloating, refProp]);
+    const hoverOnly = tooltipCtx?.enableClick === false;
 
     return (
       <FloatingPortal>
         {tooltipCtx?.isOpen && (
-          <FloatingFocusManager context={tooltipCtx.context} modal={false}>
+          // A tooltip that only opens on hover must not take focus: moving it
+          // off a focused field reads as a blur there, which is enough to
+          // close a surrounding popup (Typeahead options, #681). Click-opened
+          // tooltips keep the focus move for keyboard users.
+          <FloatingFocusManager
+            context={tooltipCtx.context}
+            modal={false}
+            initialFocus={hoverOnly ? -1 : undefined}
+            returnFocus={!hoverOnly}>
             <TooltipContentBase
               tooltipColor={tooltipCtx.color}
               hasBorder={tooltipCtx.hasBorder}

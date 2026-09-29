@@ -195,7 +195,7 @@ interface RefObject<T> {
 export type UseTooltip = (props?: UseTooltipArgs) => Required<
   Pick<TooltipProps, 'color' | 'hasBorder' | 'hasShadow'>
 > &
-  Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'> & {
+  Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps' | 'enableClick'> & {
     arrowRef: RefObject<null>;
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -209,7 +209,7 @@ export type TooltipContextType =
         isOpen: boolean;
         setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
       } & Required<Pick<TooltipProps, 'color' | 'hasBorder' | 'hasShadow'>> &
-      Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps'>)
+      Pick<TooltipProps, 'size' | 'hasArrow' | 'arrowProps' | 'enableClick'>)
   | null;
 
 export type TooltipArrowProps = Omit<

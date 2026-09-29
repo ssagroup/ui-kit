@@ -725,3 +725,59 @@ export const CustomValues: StoryObj = (args: TypeaheadProps) => {
 };
 
 CustomValues.args = { disabled: false };
+
+const certifications = [
+  'Adobe Certified Expert - Adobe Commerce Developer',
+  'Adobe Certified Professional - Adobe Commerce Business Practitioner',
+  'Adobe Certified Professional - Adobe Commerce Developer',
+  'Android Certified Application Developer',
+  'AWS Certified Solutions Architect',
+  'Google Cloud Professional Data Engineer',
+];
+
+export const SingleLine: StoryObj = (args: TypeaheadProps) => {
+  const useFormResult = useForm<FieldValues>();
+  return (
+    <FormProvider {...useFormResult}>
+      {/* Drag the bottom-right corner to see chips move in and out of the counter */}
+      <div
+        style={{
+          resize: 'horizontal',
+          overflow: 'hidden',
+          width: 400,
+          minWidth: 160,
+          maxWidth: '100%',
+          padding: 4,
+          border: '1px dashed #ccc',
+        }}>
+        <Typeahead
+          name="certifications"
+          label="Certifications"
+          isMultiple
+          singleLine
+          width="100%"
+          disabled={args.disabled}
+          defaultValue={certifications.slice(0, 4)}
+          renderOption={({ label, input }) =>
+            highlightInputMatch(label, input)
+          }>
+          {certifications.map((name) => (
+            <TypeaheadOption key={name} value={name} label={name}>
+              {name}
+            </TypeaheadOption>
+          ))}
+        </Typeahead>
+      </div>
+    </FormProvider>
+  );
+};
+
+SingleLine.args = { disabled: false };
+SingleLine.parameters = {
+  docs: {
+    description: {
+      story:
+        'With `singleLine` the trigger never grows vertically: it shows as many selected items as fit, then a `+N` counter. Selected items are truncated and show the full label in a tooltip.',
+    },
+  },
+};

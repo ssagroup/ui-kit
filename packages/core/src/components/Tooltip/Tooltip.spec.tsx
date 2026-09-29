@@ -1,4 +1,4 @@
-import { fireEvent } from '../../../customTest';
+import { fireEvent, waitFor } from '../../../customTest';
 import { act } from 'react';
 import type { LineSeries, Point } from '@nivo/line';
 import userEvent from '@testing-library/user-event';
@@ -120,6 +120,46 @@ describe('Tooltip', () => {
     await user.hover(buttonEl);
     getByText(tooltipText);
     getByTestId('floating-arrow');
+  });
+
+  it('leaves focus where it was when a hover-only tooltip opens', async () => {
+    // Moving focus into the tooltip blurred the field under the pointer, which
+    // closed the surrounding Typeahead popup (#681).
+    const { user, getByText, getByRole } = setup(
+      <>
+        <input aria-label="field" />
+        <Tooltip enableClick={false} enableHover>
+          <TooltipTrigger>
+            <span>Hover over me!</span>
+          </TooltipTrigger>
+          <TooltipContent>{tooltipText}</TooltipContent>
+        </Tooltip>
+      </>,
+    );
+
+    const input = getByRole('textbox');
+    input.focus();
+    await user.hover(getByText('Hover over me!'));
+    getByText(tooltipText);
+
+    // The focus manager moves focus on a later frame, so wait past it.
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(input).toHaveFocus();
+  });
+
+  it('moves focus into a tooltip opened by click', async () => {
+    const { user, getByRole } = setup(
+      <Tooltip>
+        <TooltipTrigger>
+          <Button size="medium" text="Click me!" />
+        </TooltipTrigger>
+        <TooltipContent>{tooltipText}</TooltipContent>
+      </Tooltip>,
+    );
+
+    await user.click(getByRole('button'));
+
+    await waitFor(() => expect(getByRole('dialog')).toHaveFocus());
   });
 
   it('respects hoverOpenDelay and hoverCloseDelay', () => {

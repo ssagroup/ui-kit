@@ -5,6 +5,7 @@ import { UseTypeaheadResult } from './useTypeahead';
 export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   optionsWithKey: {},
   isMultiple: false,
+  singleLine: false,
   selectedItems: [],
   typeaheadId: '',
   firstSuggestion: '',

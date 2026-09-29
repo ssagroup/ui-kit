@@ -92,6 +92,9 @@ export const TypeaheadInputWrapper = css`
 export const TypeaheadItem = styled.div<{
   isDisabled?: boolean;
   isCustomValue?: boolean;
+  singleLine?: boolean;
+  isOutOfFlow?: boolean;
+  canShrink?: boolean;
 }>`
   display: flex;
   gap: 6px;
@@ -113,6 +116,20 @@ export const TypeaheadItem = styled.div<{
   padding: 4px 8px 4px 12px;
   user-select: none;
   overflow: hidden;
+  ${({ singleLine, canShrink }) =>
+    singleLine && {
+      flexShrink: canShrink ? 1 : 0,
+      minWidth: 0,
+    }}
+  ${({ isOutOfFlow }) =>
+    isOutOfFlow && {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: 'max-content',
+      visibility: 'hidden',
+      pointerEvents: 'none',
+    }}
 `;
 
 export const TypeaheadItemAvatar = styled.span`
@@ -124,6 +141,7 @@ export const TypeaheadItemAvatar = styled.span`
 export const TypeaheadItemLabel = styled.div<{
   isDisabled?: boolean;
   isCustomValue?: boolean;
+  singleLine?: boolean;
 }>`
   color: ${({ theme, isDisabled, isCustomValue }) =>
     isDisabled
@@ -138,7 +156,43 @@ export const TypeaheadItemLabel = styled.div<{
   cursor: default;
   overflow: hidden;
   text-overflow: ellipsis;
+  ${({ singleLine }) =>
+    singleLine && {
+      display: 'block',
+      whiteSpace: 'nowrap',
+      minWidth: 0,
+    }}
 `;
+
+/*
+  Holds the chips and the counter on a single-line trigger. It shrinks before
+  the input group does, and clips chips that overflow for the one frame before
+  the visible count is re-measured.
+*/
+export const TypeaheadSelectedRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+`;
+
+export const TypeaheadSelectedCounter = styled.div`
+  flex-shrink: 0;
+`;
+
+/*
+  Counter is a pill sized by horizontal padding, so a single digit comes out
+  wider than tall. A min-width equal to its small height keeps it a circle up
+  to two digits; only the clamped 99+ label grows into a pill.
+*/
+export const TypeaheadCounterCircle = {
+  boxSizing: 'border-box',
+  width: 'auto',
+  minWidth: 24,
+  padding: '0 4px',
+} as const;
 
 export const TypeaheadItemCross = styled(Button)<{
   isCustomValue?: boolean;
@@ -162,11 +216,13 @@ export const TypeaheadItemCross = styled(Button)<{
 
 export const TypeaheadInputsGroupWrapper = styled(Wrapper)<{
   isOpen: boolean;
+  singleLine?: boolean;
 }>`
   position: relative;
-  flex: 1 1 0;
+  flex: ${({ singleLine }) => (singleLine ? '1 0 50px' : '1 1 0')};
   min-height: 32px;
-  min-width: ${({ isOpen }) => (isOpen ? '50px' : 'auto')};
+  min-width: ${({ isOpen, singleLine }) =>
+    isOpen || singleLine ? '50px' : 'auto'};
   flex-direction: column !important;
 `;
 
@@ -190,6 +246,10 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   padding: 5px 28px 5px 14px;
   width: 100%;
   flex-wrap: wrap;
+  &[data-single-line='true'] {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
   border-color: ${({ isOpen, theme, status }) =>
     isOpen &&
     (status === 'error'

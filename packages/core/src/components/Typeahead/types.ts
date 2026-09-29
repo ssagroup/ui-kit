@@ -69,6 +69,16 @@ export interface TypeaheadProps {
   isMultiple?: boolean;
 
   /**
+   * Keep the multiple-selection trigger on a single line.
+   * Shows as many selected items as fit, then a `+N` counter for the rest,
+   * instead of wrapping onto new lines. Selected items are truncated with an
+   * ellipsis and show their full label in a tooltip.
+   * Has no effect unless `isMultiple` is set.
+   * @default false
+   */
+  singleLine?: boolean;
+
+  /**
    * Whether the component is disabled
    * Disabled typeahead cannot be interacted with
    * @default false
@@ -248,6 +258,7 @@ export type UseTypeaheadProps = Pick<
   | 'isDisabled'
   | 'children'
   | 'isMultiple'
+  | 'singleLine'
   | 'onChange'
   | 'onClearAll'
   | 'onRemoveSelectedClick'

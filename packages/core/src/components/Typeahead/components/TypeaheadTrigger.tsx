@@ -16,6 +16,7 @@ export const TypeaheadTrigger = () => {
       status={context.status}
       aria-labelledby={`typeahead-label-${context.typeaheadId}`}
       aria-controls={`typeahead-popup-${context.typeaheadId}`}
+      data-single-line={context.singleLine || undefined}
       startIcon={context.startIcon}
       startIconClassName={context.startIconClassName}
       endIcon={context.endIcon}
