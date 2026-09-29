@@ -166,6 +166,9 @@ export * from './Charts';
 
 export * from './ImageItem';
 
+export * from './Carousel';
+export type * from './Carousel/types';
+
 export { default as ResponsiveImage } from './ResponsiveImage';
 export * from './ResponsiveImage';
 export type * from './ResponsiveImage/types';
