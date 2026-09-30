@@ -18,6 +18,11 @@ const setup = (ui: React.ReactElement) => ({
   ...render(ui),
 });
 
+// Slide → track → viewport; walked from the slide so wrappers can change.
+const getTrack = () =>
+  screen.getAllByRole('group', { hidden: true })[0].parentElement!;
+const getViewport = () => getTrack().parentElement!;
+
 const activeSlide = () =>
   screen
     .getAllByRole('group', { hidden: true })
@@ -114,6 +119,23 @@ describe('Carousel', () => {
     expect(activeSlide()).toHaveAttribute('aria-label', '1 of 3');
   });
 
+  it('renders controls over the slide by default and below it on request', () => {
+    const { rerender } = render(<Carousel items={items} thumbnails="left" />);
+    const next = () => screen.getByRole('button', { name: 'Next slide' });
+    const viewport = getViewport;
+
+    expect(viewport()).toContainElement(next());
+
+    rerender(
+      <Carousel items={items} thumbnails="left" controlsPosition="below" />,
+    );
+    expect(viewport()).not.toContainElement(next());
+    // The side strip shares a row with the slide only, not with the controls.
+    const strip = screen.getByLabelText('Slide thumbnails');
+    expect(viewport().parentElement).toContainElement(strip);
+    expect(viewport().parentElement).not.toContainElement(next());
+  });
+
   it('opens the full-size image in a new tab', () => {
     render(<Carousel items={items} allowOpenFull />);
 
@@ -133,8 +155,7 @@ describe('Carousel', () => {
 
   it('sizes the slide from aspectRatio, or from height when given', () => {
     const { rerender } = render(<Carousel items={items} aspectRatio={4 / 3} />);
-    const viewport = () =>
-      screen.getByRole('region').firstElementChild as HTMLElement;
+    const viewport = getViewport;
     expect(viewport().style.aspectRatio).toBe(String(4 / 3));
 
     rerender(<Carousel items={items} height={240} />);
@@ -144,8 +165,7 @@ describe('Carousel', () => {
 
   it('applies the transition duration to the track', () => {
     render(<Carousel items={items} transitionDuration={750} />);
-    const track = screen.getByRole('region').firstElementChild!
-      .firstElementChild as HTMLElement;
+    const track = getTrack();
 
     expect(track.style.transitionDuration).toBe('750ms');
   });
@@ -198,8 +218,7 @@ describe('Carousel', () => {
 
     it('does not announce slide changes while playing', () => {
       render(<Carousel items={items} autoPlay />);
-      const track = screen.getByRole('region').firstElementChild!
-        .firstElementChild as HTMLElement;
+      const track = getTrack();
 
       expect(track).toHaveAttribute('aria-live', 'off');
     });

@@ -1,21 +1,29 @@
 import { css, Theme } from '@emotion/react';
 
-import { CarouselFit, CarouselThumbnailsPosition } from './types';
+import {
+  CarouselControlsPosition,
+  CarouselFit,
+  CarouselThumbnailsPosition,
+} from './types';
 
 export const THUMB_SIZE = 52;
 const GAP = 16;
+const CONTROLS_GAP = 12;
 
-const DIRECTION = {
-  left: 'row-reverse',
-  right: 'row',
-  bottom: 'column',
-} as const;
-
-export const root = (thumbnails: CarouselThumbnailsPosition) => css`
+export const root = css`
   display: flex;
-  flex-direction: ${thumbnails ? DIRECTION[thumbnails] : 'row'};
-  gap: ${GAP}px;
+  flex-direction: column;
   width: 100%;
+`;
+
+/**
+ * The slide plus a vertical thumbnail strip. Kept apart from the controls row
+ * so a left/right strip is only ever as tall as the slide.
+ */
+export const stage = (thumbnails: CarouselThumbnailsPosition) => css`
+  display: flex;
+  flex-direction: ${thumbnails === 'left' ? 'row-reverse' : 'row'};
+  gap: ${GAP}px;
 `;
 
 export const viewport = (theme: Theme) => css`
@@ -74,22 +82,41 @@ export const placeholder = (theme: Theme) => css`
   background: ${theme.colors.greyFocused};
 `;
 
-// Insets are measured inside the 1px border, so 11px lands 12px from the edge.
-export const controls = css`
-  position: absolute;
-  right: 11px;
-  bottom: 11px;
-  left: 11px;
+const controlsBase = css`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   height: 32px;
+`;
+
+// Insets are measured inside the 1px border, so 11px lands 12px from the edge.
+const controlsOverlay = css`
+  position: absolute;
+  right: 11px;
+  bottom: 11px;
+  left: 11px;
   pointer-events: none;
 
   & > * {
     pointer-events: auto;
   }
 `;
+
+// Below the slide the row lines up with the slide, not with a side strip.
+const controlsBelow = (thumbnails: CarouselThumbnailsPosition) => css`
+  position: relative;
+  margin-top: ${CONTROLS_GAP}px;
+  ${thumbnails === 'left' && `margin-left: ${THUMB_SIZE + GAP}px;`}
+  ${thumbnails === 'right' && `margin-right: ${THUMB_SIZE + GAP}px;`}
+`;
+
+export const controls = (
+  position: CarouselControlsPosition,
+  thumbnails: CarouselThumbnailsPosition,
+) => [
+  controlsBase,
+  position === 'below' ? controlsBelow(thumbnails) : controlsOverlay,
+];
 
 export const dots = css`
   position: absolute;
@@ -176,7 +203,7 @@ export const openFull = css`
 export const thumbStripWrapper = (vertical: boolean) => css`
   position: relative;
   flex: 0 0 auto;
-  ${vertical ? `width: ${THUMB_SIZE}px;` : 'width: 100%;'}
+  ${vertical ? `width: ${THUMB_SIZE}px;` : `width: 100%; margin-top: ${GAP}px;`}
 `;
 
 export const thumbStrip = (vertical: boolean) => css`

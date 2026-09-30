@@ -31,6 +31,12 @@ export type CarouselItem = {
 export type CarouselThumbnailsPosition = 'left' | 'right' | 'bottom' | false;
 
 /**
+ * Where the dots and arrows sit: over the bottom of the slide, or in their
+ * own row under it.
+ */
+export type CarouselControlsPosition = 'overlay' | 'below';
+
+/**
  * How an image fills the slide frame. Mirrors CSS `object-fit`.
  */
 export type CarouselFit = 'contain' | 'cover';
@@ -51,15 +57,23 @@ export type CarouselProps = {
    */
   thumbnails?: CarouselThumbnailsPosition;
   /**
-   * Show the dot indicators over the bottom of the slide.
+   * Show the dot indicators (see `controlsPosition`).
    * @default true
    */
   showDots?: boolean;
   /**
-   * Show the previous/next buttons over the bottom-right of the slide.
+   * Show the previous/next buttons (see `controlsPosition`).
    * @default true
    */
   showArrows?: boolean;
+  /**
+   * Where the dots and arrows sit. `overlay` draws them over the bottom of
+   * the slide; `below` puts them in a 32px row 12px under it, aligned with
+   * the slide (not with a side thumbnail strip). The open-full-size button
+   * always stays on the slide.
+   * @default 'overlay'
+   */
+  controlsPosition?: CarouselControlsPosition;
   /**
    * Show a button that opens the current image (`fullSrc ?? src`) in a new
    * tab. It appears when the slide is hovered or focused.

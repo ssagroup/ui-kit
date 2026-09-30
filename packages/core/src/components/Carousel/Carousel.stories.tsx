@@ -32,6 +32,10 @@ const meta: Meta<typeof Carousel> = {
       options: [false, 'left', 'right', 'bottom'],
       control: { type: 'inline-radio' },
     },
+    controlsPosition: {
+      options: ['overlay', 'below'],
+      control: { type: 'inline-radio' },
+    },
     fit: {
       options: ['contain', 'cover'],
       control: { type: 'inline-radio' },
@@ -45,6 +49,7 @@ const meta: Meta<typeof Carousel> = {
     thumbnails: false,
     showDots: true,
     showArrows: true,
+    controlsPosition: 'overlay',
     allowOpenFull: false,
     aspectRatio: 1,
     fit: 'contain',
@@ -102,6 +107,40 @@ export const Placeholders: Story = {
 export const WithoutControls: Story = {
   args: { showDots: false, showArrows: false, thumbnails: 'bottom' },
   decorators: ThumbnailsBottom.decorators,
+};
+
+export const ControlsBelow: Story = {
+  args: { controlsPosition: 'below' },
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        gap: 40,
+        alignItems: 'flex-start',
+      }}>
+      <div style={{ width: 324, flexShrink: 0 }}>
+        <Carousel {...args} aria-label="No thumbnails" />
+      </div>
+      <div style={{ width: 392, flexShrink: 0 }}>
+        <Carousel {...args} thumbnails="left" aria-label="Thumbnails left" />
+      </div>
+      <div style={{ width: 324, flexShrink: 0 }}>
+        <Carousel
+          {...args}
+          thumbnails="bottom"
+          aria-label="Thumbnails bottom"
+        />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`controlsPosition="below"` moves the dots and arrows into their own row under the slide. The row lines up with the slide, so a side thumbnail strip stays as tall as the slide itself.',
+      },
+    },
+  },
 };
 
 export const OpenFullSize: Story = {

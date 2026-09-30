@@ -69,6 +69,10 @@ const describe = (item: CarouselItem | undefined, index: number) =>
  * the slide and a `bottom` strip exactly as wide; extra thumbnails scroll and
  * the active one is kept in view.
  *
+ * ### Controls
+ * Dots and arrows sit over the bottom of the slide (`controlsPosition="overlay"`)
+ * or in their own row under it (`controlsPosition="below"`).
+ *
  * ### Navigation
  * Arrows, dots, thumbnails and the ←/→/Home/End keys (while focus is
  * anywhere inside the carousel) all move between slides. Without `loop` the arrows stop at both
@@ -117,6 +121,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       thumbnails = false,
       showDots = true,
       showArrows = true,
+      controlsPosition = 'overlay',
       allowOpenFull = false,
       aspectRatio = 1,
       height,
@@ -266,6 +271,87 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const currentItem = items[current];
     const fullHref = currentItem?.fullSrc ?? currentItem?.src;
 
+    const controls = count > 1 && (showDots || showArrows) && (
+      <div css={S.controls(controlsPosition, thumbnails)}>
+        {showDots && (
+          <div css={S.dots}>
+            {items.map((item, i) => (
+              <button
+                key={i}
+                type="button"
+                css={(t) => S.dot(t, i === current)}
+                aria-label={`Go to slide ${describe(item, i)}`}
+                aria-current={i === current ? 'true' : undefined}
+                onClick={() => goTo(i)}
+              />
+            ))}
+          </div>
+        )}
+        {showArrows && (
+          <div css={S.arrows}>
+            <button
+              type="button"
+              css={S.squareButton}
+              aria-label="Previous slide"
+              disabled={!hasPrev}
+              onClick={() => goTo(current - 1)}>
+              <Icon
+                name="carrot-left"
+                size={16}
+                color={theme.colors.greyDarker80}
+              />
+            </button>
+            <button
+              type="button"
+              css={S.squareButton}
+              aria-label="Next slide"
+              disabled={!hasNext}
+              onClick={() => goTo(current + 1)}>
+              <Icon
+                name="carrot-right"
+                size={16}
+                color={theme.colors.greyDarker80}
+              />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+
+    const thumbStrip = thumbnails && count > 0 && (
+      <div css={S.thumbStripWrapper(vertical)}>
+        <div
+          ref={stripRef}
+          css={S.thumbStrip(vertical)}
+          aria-label="Slide thumbnails">
+          {items.map((item, i) => {
+            const src = item.thumbnailSrc ?? item.src;
+            return (
+              <button
+                key={i}
+                type="button"
+                css={(t) => S.thumb(t, i === current)}
+                aria-label={`Show slide ${describe(item, i)}`}
+                aria-current={i === current ? 'true' : undefined}
+                onClick={() => goTo(i)}>
+                {src && !failed.has(src) ? (
+                  <img
+                    src={src}
+                    alt=""
+                    draggable={false}
+                    loading="lazy"
+                    onError={() => markFailed(src)}
+                  />
+                ) : (
+                  placeholder(16)
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+
     return (
       <div
         ref={mergedRef}
@@ -273,146 +359,75 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         aria-roledescription="carousel"
         aria-label={ariaLabel}
         className={className}
-        css={S.root(thumbnails)}>
-        <div
-          css={S.viewport}
-          style={
-            height !== undefined ? { height } : { aspectRatio: aspectRatio }
-          }>
+        css={S.root}>
+        <div css={S.stage(thumbnails)}>
           <div
-            css={S.track}
-            aria-live={isPlaying ? 'off' : 'polite'}
-            style={{
-              transform: `translateX(-${current * 100}%)`,
-              transitionDuration: `${transitionDuration}ms`,
-            }}>
-            {items.map((item, i) => {
-              const active = i === current;
-              return (
-                <div
-                  key={i}
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`${i + 1} of ${count}`}
-                  aria-hidden={!active}
-                  inert={!active}
-                  css={S.slide}>
-                  {renderItem ? (
-                    renderItem(item, i)
-                  ) : item.src && !failed.has(item.src) ? (
-                    <img
-                      src={item.src}
-                      alt={item.alt ?? ''}
-                      css={S.image(fit)}
-                      draggable={false}
-                      loading={Math.abs(i - current) <= 1 ? 'eager' : 'lazy'}
-                      onError={() => markFailed(item.src!)}
-                    />
-                  ) : (
-                    placeholder(24)
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          {allowOpenFull && fullHref && (
-            <a
-              href={fullHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open full size image in a new tab"
-              className="carousel-open-full"
-              css={[S.squareButton, S.openFull]}>
-              <Icon
-                name="follow-link"
-                size={16}
-                color={theme.colors.greyDarker80}
-              />
-            </a>
-          )}
-
-          {count > 1 && (showDots || showArrows) && (
-            <div css={S.controls}>
-              {showDots && (
-                <div css={S.dots}>
-                  {items.map((item, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      css={(t) => S.dot(t, i === current)}
-                      aria-label={`Go to slide ${describe(item, i)}`}
-                      aria-current={i === current ? 'true' : undefined}
-                      onClick={() => goTo(i)}
-                    />
-                  ))}
-                </div>
-              )}
-              {showArrows && (
-                <div css={S.arrows}>
-                  <button
-                    type="button"
-                    css={S.squareButton}
-                    aria-label="Previous slide"
-                    disabled={!hasPrev}
-                    onClick={() => goTo(current - 1)}>
-                    <Icon
-                      name="carrot-left"
-                      size={16}
-                      color={theme.colors.greyDarker80}
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    css={S.squareButton}
-                    aria-label="Next slide"
-                    disabled={!hasNext}
-                    onClick={() => goTo(current + 1)}>
-                    <Icon
-                      name="carrot-right"
-                      size={16}
-                      color={theme.colors.greyDarker80}
-                    />
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {thumbnails && count > 0 && (
-          <div css={S.thumbStripWrapper(vertical)}>
+            css={S.viewport}
+            style={
+              height !== undefined ? { height } : { aspectRatio: aspectRatio }
+            }>
             <div
-              ref={stripRef}
-              css={S.thumbStrip(vertical)}
-              aria-label="Slide thumbnails">
+              css={S.track}
+              aria-live={isPlaying ? 'off' : 'polite'}
+              style={{
+                transform: `translateX(-${current * 100}%)`,
+                transitionDuration: `${transitionDuration}ms`,
+              }}>
               {items.map((item, i) => {
-                const src = item.thumbnailSrc ?? item.src;
+                const active = i === current;
                 return (
-                  <button
+                  <div
                     key={i}
-                    type="button"
-                    css={(t) => S.thumb(t, i === current)}
-                    aria-label={`Show slide ${describe(item, i)}`}
-                    aria-current={i === current ? 'true' : undefined}
-                    onClick={() => goTo(i)}>
-                    {src && !failed.has(src) ? (
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`${i + 1} of ${count}`}
+                    aria-hidden={!active}
+                    inert={!active}
+                    css={S.slide}>
+                    {renderItem ? (
+                      renderItem(item, i)
+                    ) : item.src && !failed.has(item.src) ? (
                       <img
-                        src={src}
-                        alt=""
+                        src={item.src}
+                        alt={item.alt ?? ''}
+                        css={S.image(fit)}
                         draggable={false}
-                        loading="lazy"
-                        onError={() => markFailed(src)}
+                        loading={Math.abs(i - current) <= 1 ? 'eager' : 'lazy'}
+                        onError={() => markFailed(item.src!)}
                       />
                     ) : (
-                      placeholder(16)
+                      placeholder(24)
                     )}
-                  </button>
+                  </div>
                 );
               })}
             </div>
+
+            {allowOpenFull && fullHref && (
+              <a
+                href={fullHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open full size image in a new tab"
+                className="carousel-open-full"
+                css={[S.squareButton, S.openFull]}>
+                <Icon
+                  name="follow-link"
+                  size={16}
+                  color={theme.colors.greyDarker80}
+                />
+              </a>
+            )}
+
+            {controlsPosition === 'overlay' && controls}
           </div>
-        )}
+
+          {vertical && thumbStrip}
+        </div>
+
+        {controlsPosition === 'below' && controls}
+
+        {thumbnails === 'bottom' && thumbStrip}
       </div>
     );
   },
