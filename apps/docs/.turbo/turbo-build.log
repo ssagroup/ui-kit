@@ -10,9 +10,9 @@ https://nextjs.org/telemetry
 
    ▲ Next.js 15.5.19
 
-[MDX] updated map file in 355.67761799999994ms
+[MDX] updated map file in 207.49034399999994ms
    Creating an optimized production build ...
- ✓ Compiled successfully in 48s
+ ✓ Compiled successfully in 28.2s
    Skipping linting
    Checking validity of types ...
    Collecting page data ...

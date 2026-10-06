@@ -2,7 +2,7 @@
 > @ssa-ui-kit/fitness-dashboard@0.0.0 build /home/runner/work/ui-kit/ui-kit/examples/fitness-dashboard
 > webpack --mode=production --node-env=production
 
-Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 assets by status [1m[33m1.24 MiB[39m[22m [1m[33m[big][39m[22m
@@ -31,4 +31,4 @@ Entrypoints:
       main.fe52d99adc778c78d44f.js
 [39m[22m
 
-webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 31141 ms
+webpack 5.103.0 compiled with [1m[33m2 warnings[39m[22m in 17505 ms
