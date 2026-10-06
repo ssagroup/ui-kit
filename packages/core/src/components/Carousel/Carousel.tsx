@@ -401,6 +401,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
                   </div>
                 );
               })}
+              {count === 0 && <div css={S.slide}>{placeholder(24)}</div>}
             </div>
 
             {allowOpenFull && fullHref && (

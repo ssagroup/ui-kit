@@ -46,7 +46,8 @@ export type CarouselFit = 'contain' | 'cover';
  */
 export type CarouselProps = {
   /**
-   * Slides to show, in order.
+   * Slides to show, in order. When empty, a single picture placeholder is
+   * shown in place of the slide.
    */
   items: CarouselItem[];
   /**

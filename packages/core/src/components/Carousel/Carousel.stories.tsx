@@ -104,6 +104,18 @@ export const Placeholders: Story = {
   },
 };
 
+export const Empty: Story = {
+  args: { items: [], thumbnails: 'left' },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'With no items the carousel keeps its size and shows the same placeholder; thumbnails and controls are hidden.',
+      },
+    },
+  },
+};
+
 export const WithoutControls: Story = {
   args: { showDots: false, showArrows: false, thumbnails: 'bottom' },
   decorators: ThumbnailsBottom.decorators,
@@ -195,9 +207,11 @@ export const Responsive: Story = {
     (Story) => (
       <div
         style={{
-          width: 480,
+          // Fixed cap rather than 100%: the meta decorator's 392px wrapper
+          // would otherwise stop the box from growing.
+          width: 392,
           minWidth: 200,
-          maxWidth: '100%',
+          maxWidth: 1200,
           resize: 'horizontal',
           overflow: 'auto',
           padding: 8,
@@ -211,7 +225,7 @@ export const Responsive: Story = {
     docs: {
       description: {
         story:
-          'Drag the bottom-right corner: width follows the container, height follows `aspectRatio`.',
+          'Drag the bottom-right corner to shrink or grow the container (200–1200px): width follows the container, height follows `aspectRatio`.',
       },
     },
   },

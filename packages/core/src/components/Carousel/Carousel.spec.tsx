@@ -153,6 +153,13 @@ describe('Carousel', () => {
     expect(screen.getAllByTestId('carousel-placeholder')).toHaveLength(2);
   });
 
+  it('renders a single placeholder when there are no items', () => {
+    render(<Carousel items={[]} thumbnails="left" />);
+
+    expect(screen.getAllByTestId('carousel-placeholder')).toHaveLength(1);
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
   it('sizes the slide from aspectRatio, or from height when given', () => {
     const { rerender } = render(<Carousel items={items} aspectRatio={4 / 3} />);
     const viewport = getViewport;
