@@ -1,6 +1,8 @@
 import { forwardRef, Ref } from 'react';
 import { ColumnResizeContext } from './ColumnResizeContext';
+import { ColumnFreezeContext } from './ColumnFreezeContext';
 import { useColumnResize } from './hooks/useColumnResize';
+import { useColumnFreeze } from './hooks/useColumnFreeze';
 import TableBase from './TableBase';
 import { TableProps } from './types';
 
@@ -157,6 +159,11 @@ const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
     minColumnWidth,
     maxColumnWidth,
     columnResizeMode = 'fit',
+    frozenColumns,
+    defaultFrozenColumns,
+    onFrozenColumnsChange,
+    freezeControls = false,
+    stickyHeader = false,
     children,
     style,
     ...rest
@@ -176,13 +183,23 @@ const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
     controlled: 'columnWidths' in props,
   });
 
-  if (!resizableColumns) {
-    return (
-      <TableBase ref={ref} style={style} {...rest}>
-        {children}
-      </TableBase>
-    );
-  }
+  // Shares the resize hook's ref: both measure the same header cells.
+  const { api: freeze, indices: frozenIndices } = useColumnFreeze({
+    tableRef: api.tableRef,
+    frozenColumns,
+    defaultFrozenColumns,
+    onFrozenColumnsChange,
+    freezeControls,
+    controlled: 'frozenColumns' in props,
+  });
+  const hasFreezing =
+    freezeControls ||
+    freeze.frozenColumns.start.length + freeze.frozenColumns.end.length > 0;
+
+  const setRef = (node: HTMLTableElement | null) => {
+    api.tableRef.current = node;
+    assignRef(ref, node);
+  };
 
   const { columnWidths: widths } = api;
 
@@ -190,31 +207,34 @@ const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
   // frame of a drag, and anything interpolated into an emotion template leaves
   // a stylesheet rule behind per distinct value. See TableBase.
   const widthStyle =
-    columnResizeMode === 'expand' && widths.length
+    resizableColumns && columnResizeMode === 'expand' && widths.length
       ? { width: widths.reduce((total, width) => total + width, 0) }
       : undefined;
 
+  // Both providers are always rendered, with `null` when off, so turning a
+  // feature on or off never remounts the table underneath.
   return (
-    <ColumnResizeContext.Provider value={api}>
-      <TableBase
-        ref={(node) => {
-          api.tableRef.current = node;
-          assignRef(ref, node);
-        }}
-        isResizable
-        hasColumnWidths={widths.length > 0}
-        columnResizeMode={columnResizeMode}
-        style={{ ...widthStyle, ...style }}
-        {...rest}>
-        {widths.length > 0 && (
-          <colgroup>
-            {widths.map((width, index) => (
-              <col key={index} style={{ width }} />
-            ))}
-          </colgroup>
-        )}
-        {children}
-      </TableBase>
+    <ColumnResizeContext.Provider value={resizableColumns ? api : null}>
+      <ColumnFreezeContext.Provider value={hasFreezing ? freeze : null}>
+        <TableBase
+          ref={setRef}
+          isResizable={resizableColumns}
+          hasColumnWidths={resizableColumns && widths.length > 0}
+          columnResizeMode={resizableColumns ? columnResizeMode : undefined}
+          frozenIndices={frozenIndices}
+          stickyHeader={stickyHeader}
+          style={widthStyle ? { ...widthStyle, ...style } : style}
+          {...rest}>
+          {resizableColumns && widths.length > 0 && (
+            <colgroup>
+              {widths.map((width, index) => (
+                <col key={index} style={{ width }} />
+              ))}
+            </colgroup>
+          )}
+          {children}
+        </TableBase>
+      </ColumnFreezeContext.Provider>
     </ColumnResizeContext.Provider>
   );
 });

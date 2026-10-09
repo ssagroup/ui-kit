@@ -2,6 +2,8 @@ import React from 'react';
 import TableCell from '@components/TableCell/TableCell';
 import ColumnResizeHandle from '@components/Table/ColumnResizeHandle';
 import { useColumnResizeContext } from '@components/Table/ColumnResizeContext';
+import ColumnFreezeMenu from '@components/Table/ColumnFreezeMenu';
+import { useColumnFreezeContext } from '@components/Table/ColumnFreezeContext';
 import { TableCellHeaderProps } from './types';
 
 /**
@@ -58,6 +60,7 @@ import { TableCellHeaderProps } from './types';
  * @see {@link TableCell} - Data cell component (use in TableBody)
  * @see {@link TableBody} - Body section component
  * @see {@link ColumnResizeHandle} - the handle rendered inside resizable headers
+ * @see {@link ColumnFreezeMenu} - the menu rendered when the table has `freezeControls`
  *
  * @accessibility
  * - Semantic HTML th element (renders as th)
@@ -68,11 +71,14 @@ import { TableCellHeaderProps } from './types';
 const TableCellHeader = ({
   children,
   resizable = true,
+  freezable = true,
+  columnId,
   ...props
 }: React.PropsWithChildren<TableCellHeaderProps>) => {
   // Null in every table that has not opted into resizing, which is the common
   // case — the header cell then stays exactly what it was before.
   const columnResize = useColumnResizeContext();
+  const columnFreeze = useColumnFreezeContext();
 
   return (
     <TableCell
@@ -81,8 +87,13 @@ const TableCellHeader = ({
       // for its the next column's growth, and by the stylesheet rule that drops the
       // handle to its left.
       data-column-pinned={columnResize && !resizable ? 'true' : undefined}
+      // Read back by Table, which matches frozenColumns against it.
+      data-column-id={columnId === undefined ? undefined : String(columnId)}
       {...props}>
       {children}
+      {columnFreeze?.freezeControls && freezable && (
+        <ColumnFreezeMenu columnId={columnId} />
+      )}
       {columnResize && resizable && <ColumnResizeHandle />}
     </TableCell>
   );

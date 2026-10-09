@@ -95,15 +95,22 @@ export * as JsonSchema from './JsonSchemaForm';
 
 export { default as Table } from './Table';
 export {
+  ColumnFreezeMenu,
   ColumnResizeHandle,
+  useColumnFreezeContext,
   useColumnResize,
   useColumnResizeContext,
 } from './Table';
 export type {
+  ColumnFreezeApi,
+  ColumnFreezeMenuProps,
+  ColumnFreezeOptions,
+  ColumnId,
   ColumnResizeApi,
   ColumnResizeHandleProps,
   ColumnResizeMode,
   ColumnResizeOptions,
+  FrozenColumns,
   ResizeHandleProps,
   TableProps,
   UseColumnResizeOptions,
@@ -111,6 +118,8 @@ export type {
 export { default as TableBody } from './TableBody';
 export { default as TableCell } from './TableCell';
 export { default as TableCellHeader } from './TableCellHeader';
+export { default as TableContainer } from './TableContainer';
+export type { TableContainerProps } from './TableContainer';
 export * from './TableFilters';
 export { default as TableHead } from './TableHead';
 export { default as TableRow } from './TableRow';

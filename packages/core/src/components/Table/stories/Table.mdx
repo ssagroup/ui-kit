@@ -388,6 +388,43 @@ function ResponsiveTable() {
 }
 ```
 
+### Frozen Columns and Sticky Header
+
+Wrap the table in `TableContainer` so it scrolls inside its parent instead of
+overflowing it. `frozenColumns` freezes any column to the left or right edge:
+it stays where it is until scrolling would take it out of view, then sticks
+to that edge while the columns in between slide underneath. `stickyHeader`
+keeps the header row in view while the table scrolls down. `freezeControls`
+adds a menu to every header cell so the user can freeze and unfreeze columns
+themselves; it works with or without `frozenColumns`.
+
+```tsx
+import { TableContainer } from '@ssa-ui-kit/core';
+
+<TableContainer maxHeight={480}>
+  <Table
+    stickyHeader
+    freezeControls
+    defaultFrozenColumns={{ start: ['name'], end: ['actions'] }}
+    onFrozenColumnsChange={saveFrozenColumns}>
+    <TableHead>
+      <TableRow>
+        <TableCellHeader columnId="name">Name</TableCellHeader>
+        <TableCellHeader columnId="email">Email</TableCellHeader>
+        <TableCellHeader columnId="actions">Actions</TableCellHeader>
+      </TableRow>
+    </TableHead>
+    <TableBody>{/* ... */}</TableBody>
+  </Table>
+</TableContainer>
+```
+
+Columns are named by the `columnId` of their header cells, so frozen state
+follows a column when the app hides or reorders columns. Without `columnId` a
+column is named by its zero-based position. Cells in frozen columns must not
+use `colSpan`. Set `freezable={false}` on a `TableCellHeader` to leave its
+menu out.
+
 ### Table with Disabled Rows
 
 Handle disabled states and conditional styling:

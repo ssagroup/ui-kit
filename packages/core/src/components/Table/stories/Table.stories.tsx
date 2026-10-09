@@ -25,6 +25,11 @@ import {
   ResizableTable,
 } from './ResizableTable';
 import { CustomHeaderResizableTable } from './CustomHeaderResizableTable';
+import {
+  DeveloperFrozenTable,
+  FreezableResizableTable,
+  FreezableTable,
+} from './FrozenTable';
 import { SortInfo } from './types';
 import { DOCUMENTED_TABLE_PROPS } from './consts';
 import { StyledTableStory } from './StyledTable/StoryComponent';
@@ -186,6 +191,61 @@ TableControlledColumnWidths.parameters = {
         'Widths held by the caller and echoed above the table — this is the ' +
         'shape persistence takes, since the kit stores nothing itself. The ' +
         'Actions column sets `resizable={false}`, so it has no handle.',
+    },
+  },
+};
+
+export const TableFrozenColumns: StoryObj<typeof Table> = () => (
+  <FreezableTable />
+);
+
+TableFrozenColumns.storyName = 'Frozen columns';
+TableFrozenColumns.args = {};
+TableFrozenColumns.parameters = {
+  docs: {
+    description: {
+      story:
+        'Hover a header cell and open its menu to freeze that column to the ' +
+        'left or right edge. A frozen column stays where it is until ' +
+        'scrolling would take it out of view, then sticks to its edge while ' +
+        'the columns between slide underneath; it shows a lock instead of the ' +
+        'menu dots. A shadow marks the edge only while content is scrolled ' +
+        'under it. `stickyHeader` keeps the header row in view inside the ' +
+        '400px `TableContainer`.',
+    },
+  },
+};
+
+export const TableDeveloperFrozenColumns: StoryObj<typeof Table> = () => (
+  <DeveloperFrozenTable />
+);
+
+TableDeveloperFrozenColumns.storyName = 'Frozen columns (no user controls)';
+TableDeveloperFrozenColumns.args = {};
+TableDeveloperFrozenColumns.parameters = {
+  docs: {
+    description: {
+      story:
+        'Freezing without `freezeControls`: the app decides which columns are ' +
+        'frozen through `frozenColumns` — here from the checkboxes above — ' +
+        'and the user cannot change it from the table. Columns are named by ' +
+        'the `columnId` of their header cells.',
+    },
+  },
+};
+
+export const TableFrozenResizableColumns: StoryObj<typeof Table> = () => (
+  <FreezableResizableTable />
+);
+
+TableFrozenResizableColumns.storyName = 'Frozen and resizable columns';
+TableFrozenResizableColumns.args = {};
+TableFrozenResizableColumns.parameters = {
+  docs: {
+    description: {
+      story:
+        'Freezing combined with `resizableColumns` in expand mode. Resizing ' +
+        'a frozen column moves the frozen edge with it.',
     },
   },
 };

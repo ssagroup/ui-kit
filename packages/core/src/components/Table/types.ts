@@ -141,10 +141,109 @@ export interface ColumnResizeApi {
 }
 
 /**
+ * Identifies a table column: the `columnId` of its `TableCellHeader`, or its
+ * zero-based position when the header has none. Ids are compared as strings,
+ * so `3` and `'3'` are the same column.
+ */
+export type ColumnId = string | number;
+
+/**
+ * Which columns of a {@link Table} are frozen, and to which edge.
+ *
+ * A frozen column stays where it is until scrolling would take it out of view;
+ * from then on it sticks to its edge and the columns between it and the edge
+ * slide underneath. Several frozen columns on one edge stack up in column
+ * order.
+ *
+ * Give the header cells a `columnId` so the frozen state follows the column
+ * when the app hides or reorders columns; without one, a column is
+ * identified by its position.
+ *
+ * @example
+ * ```tsx
+ * const frozen: FrozenColumns = { start: ['name', 'status'], end: ['actions'] };
+ * ```
+ */
+export interface FrozenColumns {
+  /**
+   * Columns that stick to the left edge.
+   * @default []
+   */
+  start?: ColumnId[];
+  /**
+   * Columns that stick to the right edge.
+   * @default []
+   */
+  end?: ColumnId[];
+}
+
+/** Which columns, by position, are frozen to each edge, in column order. */
+export interface FrozenColumnIndices {
+  start: number[];
+  end: number[];
+}
+
+/** Options for freezing columns and the header row of a `Table`. */
+export interface ColumnFreezeOptions {
+  /**
+   * Columns frozen to each edge. Passing this prop puts freezing into
+   * controlled mode — hold the value in state and update it from
+   * `onFrozenColumnsChange`, or the header controls will have no effect.
+   */
+  frozenColumns?: FrozenColumns;
+
+  /** Columns frozen to each edge to begin with, for the uncontrolled case. */
+  defaultFrozenColumns?: FrozenColumns;
+
+  /**
+   * Called whenever the user freezes or unfreezes columns from the header
+   * controls. Always receives both lists.
+   */
+  onFrozenColumnsChange?: (frozenColumns: Required<FrozenColumns>) => void;
+
+  /**
+   * Gives every `TableCellHeader` a menu to freeze its column to either edge,
+   * or unfreeze it. Independent of `frozenColumns` — a table can have frozen
+   * columns without letting the user change them.
+   *
+   * @default false
+   */
+  freezeControls?: boolean;
+
+  /**
+   * Keeps the header row in view while the table scrolls vertically. Needs a
+   * scroll container with a height limit, such as `TableContainer` with
+   * `maxHeight`.
+   *
+   * @default false
+   */
+  stickyHeader?: boolean;
+}
+
+/** Props for {@link ColumnFreezeMenu}. */
+export interface ColumnFreezeMenuProps {
+  /**
+   * The column the menu freezes. Defaults to the `data-column-id` of the
+   * header cell it sits in, or that cell's position.
+   */
+  columnId?: ColumnId;
+}
+
+/** What the freezing context hands to header cells. */
+export interface ColumnFreezeApi {
+  /** Current frozen columns, both lists always present. */
+  frozenColumns: Required<FrozenColumns>;
+  /** Replaces the frozen columns and notifies `onFrozenColumnsChange`. */
+  setFrozenColumns: (frozenColumns: Required<FrozenColumns>) => void;
+  /** Whether header cells should render the freeze menu. */
+  freezeControls: boolean;
+}
+
+/**
  * Props for the {@link Table} component.
  *
  * Every attribute of a `table` element, plus the column-resizing options that
- * `resizableColumns` turns on.
+ * `resizableColumns` turns on and the column-freezing options.
  *
  * @example
  * ```tsx
@@ -157,6 +256,7 @@ export interface TableProps
   extends
     CommonProps,
     ColumnResizeOptions,
+    ColumnFreezeOptions,
     TableHTMLAttributes<HTMLTableElement> {
   /**
    * Lets columns be resized by dragging the right edge of each header cell.

@@ -22,4 +22,9 @@ export const DOCUMENTED_TABLE_PROPS = [
   'onColumnWidthsChange',
   'minColumnWidth',
   'maxColumnWidth',
+  'frozenColumns',
+  'defaultFrozenColumns',
+  'onFrozenColumnsChange',
+  'freezeControls',
+  'stickyHeader',
 ];

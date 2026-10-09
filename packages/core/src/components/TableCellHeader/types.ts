@@ -1,4 +1,5 @@
 import { TableCellProps } from '../TableCell/types';
+import { ColumnId } from '../Table/types';
 
 /**
  * Props for the TableCellHeader component
@@ -43,4 +44,22 @@ export interface TableCellHeaderProps extends TableCellProps {
    * @default true
    */
   resizable?: boolean;
+
+  /**
+   * Whether this header cell offers the freeze menu inside a `Table` with
+   * `freezeControls`. Set it to `false` for columns the user should not
+   * freeze, such as a checkbox column. The app can still freeze it through
+   * `frozenColumns`.
+   *
+   * @default true
+   */
+  freezable?: boolean;
+
+  /**
+   * Stable id for this column, used by `frozenColumns` on the `Table`. Give
+   * every header one when the app can hide or reorder columns, so frozen
+   * state follows the column rather than its position. Without it the column
+   * is identified by its zero-based position.
+   */
+  columnId?: ColumnId;
 }
