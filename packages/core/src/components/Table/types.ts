@@ -117,6 +117,12 @@ export interface UseColumnResizeOptions extends ColumnResizeOptions {
 export interface ColumnResizeApi {
   /** Current width of each column, in pixels. Empty until measured. */
   columnWidths: number[];
+  /**
+   * Positions of the columns the table added on its own, such as the toggle
+   * column of a `NestedTable`. In `fit` mode they keep their width exactly,
+   * and only the other columns share out any space the table has to spare.
+   */
+  fixedColumns: number[];
   /** Attach to the `table` element so the hook can measure its columns. */
   tableRef: RefObject<HTMLTableElement | null>;
   /** Whether a drag is in progress. */

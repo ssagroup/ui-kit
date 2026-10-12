@@ -13,6 +13,11 @@ import {
   NestedTableDefaultStory,
   NestedTableStory,
 } from './NestedTableStory';
+import {
+  NestedTableFrozenResizableStory,
+  NestedTableFrozenStory,
+  NestedTableResizableStory,
+} from './NestedTableColumnsStory';
 
 export default {
   title: 'Components/NestedTable',
@@ -57,3 +62,18 @@ export const CollapsedByDefault: StoryObj<typeof Table> = () => (
   <NestedTableCollapsedStory />
 );
 CollapsedByDefault.args = {};
+
+export const ResizableColumns: StoryObj<typeof Table> = () => (
+  <NestedTableResizableStory />
+);
+ResizableColumns.args = {};
+
+export const FrozenColumns: StoryObj<typeof Table> = () => (
+  <NestedTableFrozenStory />
+);
+FrozenColumns.args = {};
+
+export const FrozenResizableColumns: StoryObj<typeof Table> = () => (
+  <NestedTableFrozenResizableStory />
+);
+FrozenResizableColumns.args = {};

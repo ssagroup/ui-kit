@@ -13,7 +13,7 @@ import {
   FrozenColumnIndices,
   FrozenColumns,
 } from '../types';
-import { getHeaderCells } from '../utils';
+import { getColumnKeys, getHeaderCells } from '../utils';
 
 /** Custom property holding the sticky offset of the column at `index`. */
 export const frozenOffsetVar = (index: number) => `--ssa-table-frozen-${index}`;
@@ -46,20 +46,27 @@ const normalize = (value?: FrozenColumns): Required<FrozenColumns> => {
   };
 };
 
-/** The id a header cell answers to: its `columnId`, else its position. */
-export const getColumnKey = (cell: HTMLTableCellElement, index: number) =>
-  cell.dataset.columnId ?? String(index);
-
 const resolveIndices = (
   cells: HTMLTableCellElement[],
   frozen: Required<FrozenColumns>,
 ): FrozenColumnIndices => {
   const start = new Set(frozen.start.map(String));
   const end = new Set(frozen.end.map(String));
-  const keys = cells.map(getColumnKey);
+  const keys = getColumnKeys(cells);
   const indicesOf = (set: Set<string>) =>
-    keys.flatMap((key, index) => (set.has(key) ? [index] : []));
-  return { start: indicesOf(start), end: indicesOf(end) };
+    keys.flatMap((key, index) => (key !== null && set.has(key) ? [index] : []));
+  const startIndices = indicesOf(start);
+  // An expander belongs to the column right after it, and freezes to the
+  // start only together with that column; otherwise it scrolls away.
+  const expanders = keys.flatMap((key, index) => {
+    if (key !== null) return [];
+    const owner = keys.findIndex((other, at) => at > index && other !== null);
+    return startIndices.includes(owner) ? [index] : [];
+  });
+  return {
+    start: [...expanders, ...startIndices].sort((a, b) => a - b),
+    end: indicesOf(end),
+  };
 };
 
 const sameIndices = (a: FrozenColumnIndices, b: FrozenColumnIndices) =>

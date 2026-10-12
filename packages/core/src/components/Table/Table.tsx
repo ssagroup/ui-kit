@@ -206,10 +206,35 @@ const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
   // An inline style, not a styled-component prop: the width changes with every
   // frame of a drag, and anything interpolated into an emotion template leaves
   // a stylesheet rule behind per distinct value. See TableBase.
+  const totalWidth = widths.reduce((total, width) => total + width, 0);
+
+  // In fit mode fixed layout spreads spare width over every column in
+  // proportion, a fixed one included. So when there are fixed columns, the
+  // others are given percentages instead: the browser sizes those from the
+  // width left after the fixed columns, which keep theirs exactly. Not calc()
+  // of a percentage and pixels — a column with one of those is treated as
+  // auto, and auto columns split spare width evenly. The minimum width keeps
+  // the table overflowing, rather than squeezing, in a narrow parent.
+  const fixedColumns =
+    resizableColumns && columnResizeMode === 'fit' ? api.fixedColumns : [];
+  const flexibleTotal = widths.reduce(
+    (total, width, index) =>
+      fixedColumns.includes(index) ? total : total + width,
+    0,
+  );
+  const colWidth = (width: number, index: number) =>
+    fixedColumns.length && flexibleTotal && !fixedColumns.includes(index)
+      ? `${(width / flexibleTotal) * 100}%`
+      : width;
+
   const widthStyle =
-    resizableColumns && columnResizeMode === 'expand' && widths.length
-      ? { width: widths.reduce((total, width) => total + width, 0) }
-      : undefined;
+    !resizableColumns || !widths.length
+      ? undefined
+      : columnResizeMode === 'expand'
+        ? { width: totalWidth }
+        : fixedColumns.length
+          ? { minWidth: totalWidth }
+          : undefined;
 
   // Both providers are always rendered, with `null` when off, so turning a
   // feature on or off never remounts the table underneath.
@@ -228,7 +253,7 @@ const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
           {resizableColumns && widths.length > 0 && (
             <colgroup>
               {widths.map((width, index) => (
-                <col key={index} style={{ width }} />
+                <col key={index} style={{ width: colWidth(width, index) }} />
               ))}
             </colgroup>
           )}

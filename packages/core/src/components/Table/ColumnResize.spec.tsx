@@ -156,6 +156,19 @@ describe('Table column resizing', () => {
       expect(cols).toHaveLength(3);
       expect(cols[0]).toHaveStyle({ width: '200px' });
     });
+
+    it('Keeps plain pixel widths when no column is fixed', () => {
+      const { container } = render(<ResizableTable />);
+
+      const cols = Array.from(container.querySelectorAll('col'));
+
+      expect(cols.map((col) => col.style.width)).toEqual([
+        '200px',
+        '200px',
+        '200px',
+      ]);
+      expect(screen.getByRole('table').style.minWidth).toBe('');
+    });
   });
 
   describe('Dragging in the default fit mode', () => {

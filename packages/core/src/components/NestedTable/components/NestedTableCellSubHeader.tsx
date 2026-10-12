@@ -1,5 +1,6 @@
 import { HTMLAttributes } from 'react';
 import Icon from '@components/Icon';
+import { EXPANDER_ATTR } from '@components/Table/utils';
 import { NestedTableCell } from './NestedTableCell';
 import { useNestedTableContext, useNestedTableRowContext } from '../hooks';
 
@@ -35,6 +36,9 @@ export const NestedTableCellSubHeader = ({
     <NestedTableCell
       css={{ width: 20, '& div': { width: 20 } }}
       as={isHeader ? 'th' : 'td'}
+      // Tells the table this column is its own, not the app's: it is not
+      // numbered, and it freezes with the columns frozen to the left.
+      {...{ [EXPANDER_ATTR]: 'true' }}
       {...props}>
       {content}
     </NestedTableCell>

@@ -1,9 +1,7 @@
-import { HTMLAttributes } from 'react';
-import { Interpolation, Theme } from '@emotion/react';
-import { CommonProps } from '@global-types/emotion';
-import TableCell from '@components/TableCell';
-import Wrapper from '@components/Wrapper';
-import { useNestedTableRowContext } from '../hooks/useNestedTableRowContext';
+import {
+  NestedTableCellBase,
+  NestedTableCellBaseProps,
+} from './NestedTableCellBase';
 
 /**
  * NestedTableCell - Cell for a `NestedTableRow`.
@@ -38,38 +36,6 @@ import { useNestedTableRowContext } from '../hooks/useNestedTableRowContext';
  * <NestedTableCell as="th">Headcount</NestedTableCell>
  * ```
  */
-export const NestedTableCell = ({
-  children,
-  ...props
-}: React.PropsWithChildren<HTMLAttributes<HTMLTableCellElement>> &
-  CommonProps) => {
-  const { isCollapsed, isSubHeader } = useNestedTableRowContext();
-  const notSubHeaderCSS: Interpolation<Theme> =
-    !isSubHeader && isCollapsed
-      ? {
-          padding: 0,
-          '& div': {
-            maxHeight: 0,
-            transition: 'max-height 1s ease-in-out',
-            visibility: 'hidden',
-          },
-        }
-      : {
-          '& div': {
-            transition: 'max-height 1s ease-in-out',
-          },
-        };
-
-  return (
-    <TableCell
-      css={{
-        borderRight: 'none',
-        borderBottom: 'none',
-        background: 'transparent',
-        ...notSubHeaderCSS,
-      }}
-      {...props}>
-      <Wrapper>{children}</Wrapper>
-    </TableCell>
-  );
-};
+export const NestedTableCell = (
+  props: Omit<NestedTableCellBaseProps, 'adornment' | 'trailing'>,
+) => <NestedTableCellBase {...props} />;

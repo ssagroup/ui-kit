@@ -10,6 +10,7 @@ import {
 } from '@components/Popover';
 import { ColumnFreezeMenuProps, ColumnId, FrozenColumns } from './types';
 import { useColumnFreezeContext } from './ColumnFreezeContext';
+import { getColumnIdOf } from './utils';
 
 const Anchor = styled.span`
   display: inline-flex;
@@ -162,7 +163,7 @@ export const ColumnFreezeMenu = ({ columnId }: ColumnFreezeMenuProps) => {
       | null
       | undefined;
     if (!cell) return;
-    const next = cell.dataset.columnId ?? cell.cellIndex;
+    const next = getColumnIdOf(cell);
     if (next !== cellId) setCellId(next);
   });
 

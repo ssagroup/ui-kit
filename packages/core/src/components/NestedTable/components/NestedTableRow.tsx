@@ -2,7 +2,7 @@ import { HTMLAttributes } from 'react';
 import { Interpolation, Theme, useTheme } from '@emotion/react';
 import TableRow from '@components/TableRow';
 import { NestedTableCellSubHeader } from './NestedTableCellSubHeader';
-import { useNestedTableRowContext } from '../hooks/useNestedTableRowContext';
+import { useNestedTableContext, useNestedTableRowContext } from '../hooks';
 
 /**
  * NestedTableRow - One row inside a `WithNestedTableRow` group.
@@ -58,11 +58,16 @@ export const NestedTableRow = ({
   } & HTMLAttributes<HTMLTableRowElement>
 >) => {
   const theme = useTheme();
+  const { opaqueCells } = useNestedTableContext();
   const { isCollapsed, isSubHeader, childRowsCount, setIsCollapsed } =
     useNestedTableRowContext();
   const headerCSS: Interpolation<Theme> = isSubHeader
     ? {
-        background: theme.colors.greyLighter60,
+        // The shade is translucent. Cells that can stick paint the row's
+        // background over scrolled content, so it gets a white base there.
+        background: opaqueCells
+          ? `linear-gradient(${theme.colors.greyLighter60}, ${theme.colors.greyLighter60}), ${theme.colors.white}`
+          : theme.colors.greyLighter60,
         '& td': {
           fontWeight: 700,
         },

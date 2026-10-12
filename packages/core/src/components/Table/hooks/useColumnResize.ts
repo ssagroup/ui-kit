@@ -19,7 +19,7 @@ import {
   ResizeHandleProps,
   UseColumnResizeOptions,
 } from '../types';
-import { getHeaderCells } from '../utils';
+import { getHeaderCells, isExpanderCell } from '../utils';
 
 /**
  * Whether a column has been pinned by its header cell.
@@ -37,25 +37,32 @@ const clamp = (value: number, min: number, max?: number) => {
   return max === undefined ? lower : Math.min(lower, max);
 };
 
+const sum = (values: number[]) => values.reduce((total, v) => total + v, 0);
+
 /**
- * Rendered pixels per unit of stored width.
+ * Rendered pixels per unit of stored width, for the columns that scale.
  *
  * One when the two spaces agree, which is the case whenever the widths were
- * measured from the DOM or the table is sized to their sum.
+ * measured from the DOM or the table is sized to their sum. Fixed columns
+ * render at their stored width whatever the scale, so they are left out.
  */
-const renderScaleOf = (table: HTMLTableElement | null, storedTotal: number) => {
+const renderScaleOf = (
+  table: HTMLTableElement | null,
+  widths: number[],
+  fixedColumns: number[],
+) => {
+  const isFlexible = (_: unknown, index: number) =>
+    !fixedColumns.includes(index);
+  const storedTotal = sum(widths.filter(isFlexible));
   if (!storedTotal) return 1;
-  const renderedTotal = getHeaderCells(table).reduce(
-    (total, cell) => total + cell.getBoundingClientRect().width,
-    0,
-  );
+  const renderedTotal = getHeaderCells(table)
+    .filter(isFlexible)
+    .reduce((total, cell) => total + cell.getBoundingClientRect().width, 0);
   // No layout engine (jsdom) or a table that is not displayed: the only honest
   // answer is to assume the spaces agree.
   if (!renderedTotal) return 1;
   return renderedTotal / storedTotal;
 };
-
-const sum = (values: number[]) => values.reduce((total, v) => total + v, 0);
 
 const replaceAt = (widths: number[], index: number, width: number) => {
   const next = widths.slice();
@@ -257,12 +264,35 @@ export const useColumnResize = (
     setWidths(measured);
   });
 
+  // Columns the table adds on its own, such as NestedTable's toggle column.
+  // In fit mode they keep their width while the rest share out the table's.
+  const [fixedColumns, setFixedColumns] = useState<number[]>([]);
+  const fixedColumnsRef = useRef(fixedColumns);
+  fixedColumnsRef.current = fixedColumns;
+
+  useLayoutEffect(() => {
+    if (!enabled) return;
+    const next = getHeaderCells(tableRef.current).flatMap((cell, index) =>
+      isExpanderCell(cell) ? [index] : [],
+    );
+    // Returning the same array bails out, so a drag frame never re-renders
+    // for this.
+    setFixedColumns((current) =>
+      current.join() === next.join() ? current : next,
+    );
+  });
+
   const dragRef = useRef({ startX: 0, startWidth: 0, index: -1, scale: 1 });
 
   /** Converts a distance the pointer moved into stored width units. */
   const toWidthUnits = useCallback(
     (pixels: number) =>
-      pixels / renderScaleOf(tableRef.current, sum(widthsRef.current)),
+      pixels /
+      renderScaleOf(
+        tableRef.current,
+        widthsRef.current,
+        fixedColumnsRef.current,
+      ),
     [],
   );
 
@@ -303,7 +333,11 @@ export const useColumnResize = (
         // Captured once for the gesture. In fit mode the stored total does not
         // change while dragging, so the scale cannot drift; recomputing it per
         // move would let the widths feed back into their own conversion.
-        scale: renderScaleOf(tableRef.current, sum(widthsRef.current)),
+        scale: renderScaleOf(
+          tableRef.current,
+          widthsRef.current,
+          fixedColumnsRef.current,
+        ),
       };
       setResizingColumnIndex(index);
       setDragCursor(true);
@@ -387,6 +421,7 @@ export const useColumnResize = (
 
   return {
     columnWidths: widths,
+    fixedColumns,
     tableRef: tableRef as RefObject<HTMLTableElement | null>,
     isResizing: resizingColumnIndex !== null,
     resizingColumnIndex,
