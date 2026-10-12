@@ -142,6 +142,8 @@ type Colors = MakeColors<
     'orangePeach',
     'orangeCoral',
     'redSalmon',
+    'purpleVivid',
+    'greenJade',
     'dangerShades300',
     'dangerShades500',
     'dangerShades700',

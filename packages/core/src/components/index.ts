@@ -177,6 +177,8 @@ export * from './ImageItem';
 
 export * from './Carousel';
 export type * from './Carousel/types';
+export * from './Calendar';
+export type * from './Calendar/types';
 
 export { default as ResponsiveImage } from './ResponsiveImage';
 export * from './ResponsiveImage';

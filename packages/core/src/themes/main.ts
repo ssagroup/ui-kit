@@ -138,6 +138,9 @@ const main: Theme = {
     orangePeach: 'rgba(253, 198, 125, 1)', // #FDC67D
     orangeCoral: 'rgba(255, 160, 105, 1)', // #FFA069
     redSalmon: 'rgba(255, 115, 121, 1)', // #FF7379
+    // Calendar whole-day outlines — holiday and sick leave
+    purpleVivid: 'rgba(146, 96, 252, 1)', // #9260FC
+    greenJade: 'rgba(44, 187, 151, 1)', // #2CBB97
     dangerShades300: 'rgb(253, 128, 122)', //#FD807A
     dangerShades500: 'rgb(223, 90, 96)', //#DF5A60
     dangerShades700: 'rgb(187, 68, 80)', //#BB4450
