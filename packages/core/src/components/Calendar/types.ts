@@ -56,10 +56,14 @@ export type CalendarEvent<TData = unknown> = {
    */
   start: CalendarDateInput;
   /**
-   * When a timed entry ends. Defaults to 30 minutes after `start`.
-   * Ignored for `allDay` entries. An entry that ends on a later day is
-   * listed on its start day in the month grid, and shows on every day it
-   * covers in the day view.
+   * When the entry ends. Defaults to 30 minutes after `start` for a timed
+   * entry, and to its start day for an `allDay` one — whose `end` is the
+   * last day it covers (inclusive; only the date part counts).
+   *
+   * An `allDay` entry over several days, or a timed one lasting 24 hours or
+   * more, is repeated on each day it covers (up to a year). A shorter timed
+   * entry that crosses midnight stays on its start day in the month grid,
+   * and continues on the next day's timeline in the day view.
    */
   end?: CalendarDateInput;
   /**
@@ -138,7 +142,8 @@ export type CalendarWeek<TData = unknown> = {
   days: Date[];
   /**
    * Events of the row's days that fall in the displayed month — the ones a
-   * weekly total would normally add up.
+   * weekly total would normally add up. Each event is listed once, even
+   * one repeated over several of the days.
    */
   events: CalendarEvent<TData>[];
 };
@@ -150,6 +155,13 @@ export type CalendarEventSlotContext = {
   view: CalendarView;
   /** `true` inside the "+N more" popover. */
   inPopover: boolean;
+  /**
+   * Which day of a multi-day entry this is, from 1. Always 1 for a
+   * single-day entry.
+   */
+  dayOfSpan: number;
+  /** Days a multi-day entry is repeated on; 1 for a single-day entry. */
+  spanDays: number;
 };
 
 /**

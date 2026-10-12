@@ -424,6 +424,64 @@ describe('Calendar', () => {
     });
   });
 
+  describe('multi-day entries', () => {
+    const conference: CalendarEvent = {
+      id: 'conf',
+      title: 'Conference',
+      start: '2026-10-12T09:00',
+      end: '2026-10-14T17:00',
+    };
+
+    it('repeats the entry on each day, with the time on the first only', () => {
+      setup(<Calendar date={NOW} events={[conference]} />);
+      const monday = within(day(/Monday, 12 October/));
+      expect(monday.getByText('09:00')).toBeInTheDocument();
+      expect(monday.getByText(', day 1 of 3')).toBeInTheDocument();
+
+      const tuesday = within(day(/Tuesday, 13 October/));
+      expect(tuesday.getByText('Conference')).toBeInTheDocument();
+      expect(tuesday.queryByText('09:00')).not.toBeInTheDocument();
+      expect(
+        within(day(/Wednesday, 14 October/)).getByText(', day 3 of 3'),
+      ).toBeInTheDocument();
+      expect(
+        within(day(/Thursday, 15 October/)).queryByText('Conference'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('hands the span to renderEvent and counts it once in a week total', () => {
+      const renderWeekTotal = jest.fn(
+        (week: CalendarWeek) => week.events.length,
+      );
+      setup(
+        <Calendar
+          date={NOW}
+          variant="timeTracker"
+          events={[conference]}
+          renderWeekTotal={renderWeekTotal}
+          renderEvent={(_, { dayOfSpan, spanDays }) => (
+            <span>{`${dayOfSpan}/${spanDays}`}</span>
+          )}
+        />,
+      );
+      expect(screen.getByText('2/3')).toBeInTheDocument();
+      const week = renderWeekTotal.mock.calls
+        .map(([w]) => w)
+        .find((w) => w.events.length > 0);
+      expect(week?.events).toEqual([conference]);
+    });
+
+    it('lists it with the untimed entries on a day it fills', () => {
+      setup(<Calendar view="day" date="2026-10-13" events={[conference]} />);
+      // A row above the timeline (the only kind that says which day of the
+      // span it is), not a box placed on it.
+      expect(
+        within(screen.getByTitle('Conference')).getByText(', day 2 of 3'),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/09:00 –/)).not.toBeInTheDocument();
+    });
+  });
+
   describe('navigation', () => {
     it('opens a day from its number and goes back to the month', async () => {
       const onViewChange = jest.fn();

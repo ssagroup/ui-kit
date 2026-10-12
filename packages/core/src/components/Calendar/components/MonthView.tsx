@@ -213,13 +213,18 @@ export const MonthView = ({
                     start: week.days[0].date.toJSDate(),
                     end: week.days[week.days.length - 1].date.toJSDate(),
                     days: week.days.map((day) => day.date.toJSDate()),
-                    events: week.days.flatMap((day) =>
-                      day.isCurrentMonth
-                        ? (eventsByDay.get(day.key) ?? []).map(
-                            (item) => item.event,
-                          )
-                        : [],
-                    ),
+                    // A Set, so a multi-day event counts once.
+                    events: [
+                      ...new Set(
+                        week.days.flatMap((day) =>
+                          day.isCurrentMonth
+                            ? (eventsByDay.get(day.key) ?? []).map(
+                                (item) => item.event,
+                              )
+                            : [],
+                        ),
+                      ),
+                    ],
                   })}
                 </div>
               )}

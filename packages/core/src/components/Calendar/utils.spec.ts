@@ -5,7 +5,9 @@ import {
   formatHourLabel,
   formatTime,
   groupEventsByDay,
+  isWholeDay,
   layoutDayEvents,
+  MAX_SPAN_DAYS,
   normalizeEvent,
 } from './utils';
 
@@ -83,6 +85,126 @@ describe('Calendar utils', () => {
       'late',
     ]);
     expect(byDay.get('2026-10-13')).toHaveLength(1);
+  });
+
+  describe('multi-day entries', () => {
+    const days = (byDay: Map<string, { dayOfSpan: number }[]>) =>
+      [...byDay].map(([key, list]) => [key, list[0].dayOfSpan]);
+
+    it('repeats an untimed entry up to its end day, inclusive', () => {
+      const byDay = groupEventsByDay([
+        {
+          id: 1,
+          title: 'Conference',
+          start: '2026-10-12',
+          end: '2026-10-14',
+          allDay: true,
+        },
+      ]);
+      expect(days(byDay)).toEqual([
+        ['2026-10-12', 1],
+        ['2026-10-13', 2],
+        ['2026-10-14', 3],
+      ]);
+      expect(byDay.get('2026-10-13')![0].spanDays).toBe(3);
+    });
+
+    it('keeps an untimed entry with an earlier end on its start day', () => {
+      const item = normalizeEvent({
+        id: 1,
+        title: 'A',
+        start: '2026-10-12',
+        end: '2026-10-10',
+        allDay: true,
+      });
+      expect(item?.spanDays).toBe(1);
+    });
+
+    it('repeats timed entries of 24 hours or more, not shorter ones', () => {
+      const byDay = groupEventsByDay([
+        {
+          id: 'trip',
+          title: 'Trip',
+          start: '2026-10-12T18:00',
+          end: '2026-10-14T09:00',
+        },
+        {
+          id: 'shift',
+          title: 'Night shift',
+          start: '2026-10-12T22:00',
+          end: '2026-10-13T06:00',
+        },
+      ]);
+      expect(byDay.get('2026-10-14')!.map((i) => i.event.id)).toEqual(['trip']);
+      expect(byDay.get('2026-10-13')!.map((i) => i.event.id)).toEqual(['trip']);
+    });
+
+    it('does not reach into a day it ends at the start of', () => {
+      const byDay = groupEventsByDay([
+        {
+          id: 1,
+          title: 'Two days',
+          start: '2026-10-12T00:00',
+          end: '2026-10-14T00:00',
+        },
+      ]);
+      expect([...byDay.keys()]).toEqual(['2026-10-12', '2026-10-13']);
+    });
+
+    it('caps how many days an entry is repeated on', () => {
+      const byDay = groupEventsByDay([
+        {
+          id: 1,
+          title: 'Typo',
+          start: '2026-10-12',
+          end: '2126-10-12',
+          allDay: true,
+        },
+      ]);
+      expect(byDay.size).toBe(MAX_SPAN_DAYS);
+    });
+
+    it('lists continuing entries first on later days', () => {
+      const byDay = groupEventsByDay([
+        { id: 'log', title: 'Log', start: '2026-10-13', allDay: true },
+        { id: 'early', title: 'Early', start: '2026-10-13T08:00' },
+        {
+          id: 'trip',
+          title: 'Trip',
+          start: '2026-10-12',
+          end: '2026-10-13',
+          allDay: true,
+        },
+      ]);
+      expect(byDay.get('2026-10-13')!.map((i) => i.event.id)).toEqual([
+        'trip',
+        'log',
+        'early',
+      ]);
+    });
+
+    it('keeps days it fills off the timeline', () => {
+      const day = DateTime.fromISO('2026-10-13');
+      const items = groupEventsByDay([
+        {
+          id: 'trip',
+          title: 'Trip',
+          start: '2026-10-12T18:00',
+          end: '2026-10-14T09:00',
+        },
+      ]);
+      const [middle] = items.get('2026-10-13')!;
+      expect(isWholeDay(middle, day)).toBe(true);
+      expect(layoutDayEvents([middle], day)).toHaveLength(0);
+
+      const [last] = items.get('2026-10-14')!;
+      const lastDay = DateTime.fromISO('2026-10-14');
+      expect(isWholeDay(last, lastDay)).toBe(false);
+      expect(layoutDayEvents([last], lastDay)[0]).toMatchObject({
+        startMinutes: 0,
+        durationMinutes: 9 * 60,
+      });
+    });
   });
 
   it('formats times and hour labels for both clocks', () => {

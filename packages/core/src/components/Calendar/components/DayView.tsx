@@ -23,6 +23,7 @@ import {
   clockMinutes,
   formatHourLabel,
   hasContent,
+  isWholeDay,
   formatTime,
   layoutDayEvents,
   NormalizedEvent,
@@ -111,6 +112,8 @@ const DayEventCard = ({ entry, onClick }: DayEventCardProps) => {
   const actions = renderEventActions?.(event, {
     view: 'day',
     inPopover: false,
+    dayOfSpan: item.dayOfSpan,
+    spanDays: item.spanDays,
   });
   const withActions = hasContent(actions);
   const extra = getEventProps?.(event);
@@ -203,6 +206,8 @@ const DayEvent = ({ entry }: { entry: PositionedEvent }) => {
   const custom = renderEvent?.(item.event, {
     view: 'day',
     inPopover: false,
+    dayOfSpan: item.dayOfSpan,
+    spanDays: item.spanDays,
     defaultContent,
     onClick,
   });
@@ -236,7 +241,7 @@ export const DayView = ({
   const highlight = dayProps?.highlight;
   const canAdd = canAddOn(date) && !dayProps?.disableAdd;
 
-  const untimed = items.filter((item) => item.allDay);
+  const untimed = items.filter((item) => isWholeDay(item, date));
   const positioned = layoutDayEvents(items, date);
 
   const dayKey = date.toISODate();

@@ -50,48 +50,66 @@ const workdays = (except: number[] = []) => {
 
 const meetingTitles = ['Standup', 'Design review', 'Planning', '1:1', 'Retro'];
 
-const regularEvents: CalendarEvent[] = workdays().flatMap((day, index) => {
-  const list: CalendarEvent[] = [
+const regularEvents: CalendarEvent[] = workdays()
+  .flatMap((day, index) => {
+    const list: CalendarEvent[] = [
+      {
+        id: `standup-${day.day}`,
+        title: 'Standup',
+        start: at(day, '09:30'),
+        end: at(day, '09:45'),
+        color: 'purple',
+      },
+    ];
+    if (index % 2 === 0) {
+      list.push({
+        id: `meeting-${day.day}`,
+        title: meetingTitles[index % meetingTitles.length],
+        start: at(day, '13:00'),
+        end: at(day, '14:00'),
+        color: COLORS[(index + 1) % COLORS.length],
+      });
+    }
+    if (index % 3 === 0) {
+      list.push({
+        id: `task-${day.day}`,
+        title: 'Send report',
+        start: day.toISODate() ?? '',
+        allDay: true,
+        kind: 'task',
+        completed: index % 2 === 0,
+        color: 'green',
+      });
+    }
+    if (index === 4) {
+      list.push(
+        ...['Interview', 'Demo', 'Coffee chat', 'Workshop'].map((title, i) => ({
+          id: `busy-${i}`,
+          title,
+          start: at(day, `${15 + i}:00`),
+          color: COLORS[i + 3],
+        })),
+      );
+    }
+    return list;
+  })
+  .concat([
     {
-      id: `standup-${day.day}`,
-      title: 'Standup',
-      start: at(day, '09:30'),
-      end: at(day, '09:45'),
-      color: 'purple',
-    },
-  ];
-  if (index % 2 === 0) {
-    list.push({
-      id: `meeting-${day.day}`,
-      title: meetingTitles[index % meetingTitles.length],
-      start: at(day, '13:00'),
-      end: at(day, '14:00'),
-      color: COLORS[(index + 1) % COLORS.length],
-    });
-  }
-  if (index % 3 === 0) {
-    list.push({
-      id: `task-${day.day}`,
-      title: 'Send report',
-      start: day.toISODate() ?? '',
+      id: 'offsite',
+      title: 'Team offsite',
+      start: monthStart.plus({ days: 13 }).toISODate() ?? '',
+      end: monthStart.plus({ days: 15 }).toISODate() ?? '',
       allDay: true,
-      kind: 'task',
-      completed: index % 2 === 0,
-      color: 'green',
-    });
-  }
-  if (index === 4) {
-    list.push(
-      ...['Interview', 'Demo', 'Coffee chat', 'Workshop'].map((title, i) => ({
-        id: `busy-${i}`,
-        title,
-        start: at(day, `${15 + i}:00`),
-        color: COLORS[i + 3],
-      })),
-    );
-  }
-  return list;
-});
+      color: 'turquoise',
+    },
+    {
+      id: 'trip',
+      title: 'Business trip',
+      start: at(monthStart.plus({ days: 20 }), '18:00'),
+      end: at(monthStart.plus({ days: 22 }), '12:00'),
+      color: 'orange',
+    },
+  ]);
 
 const meta: Meta<typeof Calendar> = {
   title: 'Components/Calendar',
@@ -117,8 +135,9 @@ type Story = StoryObj<typeof Calendar>;
 
 /**
  * A plain calendar. Timed entries lead with their start time; tasks get a
- * checkbox; a busy day collapses into "+N more". Hover a day for its add
- * button.
+ * checkbox; a busy day collapses into "+N more". Multi-day entries (the
+ * offsite, the business trip) repeat on each day, with chevrons where they
+ * continue. Hover a day for its add button.
  */
 export const Events: Story = {
   render: function Render(args) {

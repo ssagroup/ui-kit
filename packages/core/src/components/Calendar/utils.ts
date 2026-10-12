@@ -7,6 +7,11 @@ import { CalendarDateInput, CalendarEvent } from './types';
 export const DEFAULT_EVENT_MINUTES = 30;
 
 const MINUTES_PER_DAY = 24 * 60;
+/**
+ * Most days an entry is repeated on. A mistyped `end` years away would
+ * otherwise fill every cell up to it.
+ */
+export const MAX_SPAN_DAYS = 366;
 
 /** `Date` or ISO string → luxon, in local time. */
 export const toDateTime = (value: CalendarDateInput): DateTime =>
@@ -21,9 +26,13 @@ export const toDayKey = (value: DateTime): string => value.toISODate() ?? '';
 export type NormalizedEvent<TData = unknown> = {
   event: CalendarEvent<TData>;
   start: DateTime;
-  /** Same as `start` for untimed events. */
+  /** For untimed events, the start of the last day (inclusive). */
   end: DateTime;
   allDay: boolean;
+  /** Days the entry is repeated on: 1 unless it spans several. */
+  spanDays: number;
+  /** Which of those days this copy is on, from 1. */
+  dayOfSpan: number;
 };
 
 export const normalizeEvent = <TData>(
@@ -32,31 +41,71 @@ export const normalizeEvent = <TData>(
   const start = toDateTime(event.start);
   if (!start.isValid) return undefined;
 
-  const allDay = Boolean(event.allDay);
-  if (allDay) return { event, start, end: start, allDay };
-
   const parsedEnd = event.end ? toDateTime(event.end) : undefined;
+  const firstDay = start.startOf('day');
+
+  if (event.allDay) {
+    const lastDay = parsedEnd?.isValid ? parsedEnd.startOf('day') : firstDay;
+    const end = lastDay > firstDay ? lastDay : firstDay;
+    return {
+      event,
+      start,
+      end,
+      allDay: true,
+      spanDays: Math.min(daysBetween(firstDay, end) + 1, MAX_SPAN_DAYS),
+      dayOfSpan: 1,
+    };
+  }
+
   const end =
     parsedEnd?.isValid && parsedEnd > start
       ? parsedEnd
       : start.plus({ minutes: DEFAULT_EVENT_MINUTES });
+  // Shorter ones stay on their start day: a night shift isn't a multi-day
+  // event. An end at midnight doesn't reach into that day.
+  const lastDay = end.minus({ milliseconds: 1 }).startOf('day');
+  const spanDays =
+    end.diff(start, 'hours').hours >= 24
+      ? Math.min(daysBetween(firstDay, lastDay) + 1, MAX_SPAN_DAYS)
+      : 1;
 
-  return { event, start, end, allDay };
+  return { event, start, end, allDay: false, spanDays, dayOfSpan: 1 };
+};
+
+/** Calendar days from one day's start to another's; DST-proof. */
+const daysBetween = (from: DateTime, to: DateTime) =>
+  Math.round(to.diff(from, 'days').days);
+
+/**
+ * Whether an entry fills a day: untimed, or timed and running from before
+ * the day starts to after it ends. Such entries are listed above the day
+ * view's timeline rather than placed on it.
+ */
+export const isWholeDay = (item: NormalizedEvent, day: DateTime) => {
+  if (item.allDay) return true;
+  const dayStart = day.startOf('day');
+  return item.start <= dayStart && item.end >= dayStart.plus({ days: 1 });
 };
 
 /**
- * Untimed entries first, then timed ones by start time. Entries starting
- * together keep the order they were passed in.
+ * Entries continuing from an earlier day first (by start, so they keep
+ * their order from day to day), then untimed ones, then timed ones by start
+ * time. Entries otherwise equal keep the order they were passed in.
  */
+const rank = (item: NormalizedEvent) =>
+  item.dayOfSpan > 1 ? 0 : item.allDay ? 1 : 2;
+
 const compareEvents = (a: NormalizedEvent, b: NormalizedEvent) => {
-  if (a.allDay !== b.allDay) return a.allDay ? -1 : 1;
-  if (a.allDay) return 0;
+  const byRank = rank(a) - rank(b);
+  if (byRank !== 0) return byRank;
+  if (rank(a) === 1) return 0;
   return a.start.toMillis() - b.start.toMillis();
 };
 
 /**
- * Groups events by the day they start on (`yyyy-MM-dd`), each day sorted for
- * display. Events with an unparsable `start` are dropped.
+ * Groups events by day (`yyyy-MM-dd`), each day sorted for display. An event
+ * spanning several days (see `NormalizedEvent.spanDays`) is repeated on
+ * each, with its `dayOfSpan`. Events with an unparsable `start` are dropped.
  */
 export const groupEventsByDay = <TData>(
   events: CalendarEvent<TData>[],
@@ -66,10 +115,15 @@ export const groupEventsByDay = <TData>(
   for (const event of events) {
     const normalized = normalizeEvent(event);
     if (!normalized) continue;
-    const key = toDayKey(normalized.start);
-    const list = byDay.get(key);
-    if (list) list.push(normalized);
-    else byDay.set(key, [normalized]);
+    const firstDay = normalized.start.startOf('day');
+    for (let index = 0; index < normalized.spanDays; index += 1) {
+      const item =
+        index === 0 ? normalized : { ...normalized, dayOfSpan: index + 1 };
+      const key = toDayKey(firstDay.plus({ days: index }));
+      const list = byDay.get(key);
+      if (list) list.push(item);
+      else byDay.set(key, [item]);
+    }
   }
 
   for (const list of byDay.values()) list.sort(compareEvents);
@@ -201,7 +255,7 @@ export const layoutDayEvents = <TData>(
   };
 
   for (const item of items) {
-    if (item.allDay) continue;
+    if (isWholeDay(item, day)) continue;
     const startsBefore = item.start < dayStart;
     if (!startsBefore && !item.start.hasSame(dayStart, 'day')) continue;
     if (item.end <= dayStart) continue;

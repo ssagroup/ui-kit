@@ -1,6 +1,8 @@
 import { MouseEvent } from 'react';
 import { useTheme } from '@emotion/react';
 
+import Icon from '@components/Icon';
+
 import { useCalendarContext } from '../CalendarContext';
 import { getEventColor } from '../consts';
 import { CalendarView } from '../types';
@@ -38,8 +40,10 @@ const DefaultEventSlot = ({
   const { event } = item;
 
   const stripe = getEventColor(theme, event.color ?? 'blue');
+  const chevronColor = theme.colors.greyDarker60;
   const isTask = event.kind === 'task';
-  const actions = renderEventActions?.(event, { view, inPopover });
+  const span = { dayOfSpan: item.dayOfSpan, spanDays: item.spanDays };
+  const actions = renderEventActions?.(event, { view, inPopover, ...span });
   const withActions = hasContent(actions);
   const extra = getEventProps?.(event);
   const rootProps = {
@@ -52,10 +56,21 @@ const DefaultEventSlot = ({
   const content = (
     <span css={S.slotContent}>
       <span css={S.slotMain}>
-        {!item.allDay && (
+        {item.dayOfSpan > 1 && (
+          <Icon name="carrot-left" size={12} color={chevronColor} />
+        )}
+        {!item.allDay && item.dayOfSpan === 1 && (
           <span css={S.slotTime}>{formatTime(item.start, timeFormat)}</span>
         )}
         <span css={S.slotTitle}>{event.title}</span>
+        {item.spanDays > 1 && (
+          <span css={S.visuallyHidden}>
+            {`, day ${item.dayOfSpan} of ${item.spanDays}`}
+          </span>
+        )}
+        {item.dayOfSpan < item.spanDays && (
+          <Icon name="carrot-right" size={12} color={chevronColor} />
+        )}
       </span>
       {hasContent(event.trailing) && (
         <span css={S.slotTrailing}>{event.trailing}</span>
@@ -122,6 +137,8 @@ export const EventSlot = ({
   const custom = renderEvent?.(item.event, {
     view,
     inPopover,
+    dayOfSpan: item.dayOfSpan,
+    spanDays: item.spanDays,
     defaultContent,
     onClick,
   });

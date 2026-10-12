@@ -144,22 +144,20 @@ const CalendarInner = <TData,>(
 
   const eventsByDay = useMemo(() => groupEventsByDay(events), [events]);
 
-  // The day view also shows the rest of timed entries that started on an
-  // earlier day — a night shift continues on the next day's timeline.
+  // Entries of a day or more are already on every day they cover. The day
+  // view also shows the rest of shorter ones from the day before — a night
+  // shift continues on the next day's timeline.
   const dayItems = useMemo(() => {
-    const dayKey = toDayKey(current);
-    const own = eventsByDay.get(dayKey) ?? NO_EVENTS;
+    const own = eventsByDay.get(toDayKey(current)) ?? NO_EVENTS;
     if (view !== 'day') return own;
-    const carried: NormalizedEvent<TData>[] = [];
-    for (const [key, list] of eventsByDay) {
-      if (key >= dayKey) continue;
-      for (const item of list) {
-        if (!item.allDay && item.end > current) carried.push(item);
-      }
-    }
-    if (carried.length === 0) return own;
-    carried.sort((a, b) => a.start.toMillis() - b.start.toMillis());
-    return [...carried, ...own];
+    const carried: NormalizedEvent<TData>[] = (
+      eventsByDay.get(toDayKey(current.minus({ days: 1 }))) ?? []
+    )
+      .filter(
+        (item) => !item.allDay && item.spanDays === 1 && item.end > current,
+      )
+      .map((item) => ({ ...item, spanDays: 2, dayOfSpan: 2 }));
+    return carried.length === 0 ? own : [...carried, ...own];
   }, [eventsByDay, current, view]);
 
   // Compared as yyyy-MM-dd keys, which sort like the dates they name.
@@ -360,8 +358,13 @@ const CalendarInner = <TData,>(
  * ### Day view
  * Untimed entries are listed above 00:00; timed ones are placed on the hour
  * timeline, side by side where they overlap. A timed entry that runs past
- * midnight continues on the next days' timelines; the month grid lists it on
- * its start day only. Today shows a line at the current time.
+ * midnight continues on the next day's timeline. Today shows a line at the
+ * current time.
+ *
+ * ### Multi-day entries
+ * An untimed entry with an `end`, or a timed one lasting 24 hours or more,
+ * is repeated on every day it covers, with chevrons where it continues. On
+ * the days it fills, it's listed with the untimed entries.
  *
  * ### Navigation
  * Left alone, the calendar navigates itself: a day number opens that day,
