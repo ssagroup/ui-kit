@@ -542,13 +542,17 @@ For detailed component documentation, examples, and API references, visit our [S
 
 ## 🤖 Using the kit with a coding agent
 
-Every published build ships an **AI source map** — a single-file index of the
-whole public API, generated from the TypeScript program so it can never drift
-from the real exports:
+Every published package ships an **AI source map** — a single-file index of its
+public API, generated from the TypeScript program so it can never drift from the
+real exports:
 
 ```
 node_modules/@ssa-ui-kit/core/dist/ai/source-map.md
 node_modules/@ssa-ui-kit/utils/dist/ai/source-map.md
+node_modules/@ssa-ui-kit/hooks/dist/ai/source-map.md
+node_modules/@ssa-ui-kit/widgets/dist/ai/source-map.md
+node_modules/@ssa-ui-kit/templates/dist/ai/source-map.md
+node_modules/@ssa-ui-kit/infra-dash/dist/ai/source-map.md
 ```
 
 It lists every component grouped by area, each one's library-specific props with
@@ -556,19 +560,20 @@ their literal unions and defaults, plus the hooks, contexts and exported types.
 The alternative is grepping ~940 `.d.ts` files, so pointing your agent at this
 file first is considerably cheaper.
 
-Agents do not look inside `node_modules` on their own. To make it discoverable,
-add one line to your project's `CLAUDE.md` (Claude Code) or `AGENTS.md` (Codex):
+Agents can read `node_modules`, but their search tools skip it by default, so
+they won't find the map unless told where it is. Add one line to your project's
+`CLAUDE.md` (Claude Code) or `AGENTS.md` (Codex):
 
 ```md
-When using @ssa-ui-kit, read node_modules/@ssa-ui-kit/core/dist/ai/source-map.md
-(and .../utils/dist/ai/source-map.md) for the component and prop index before
-writing UI code.
+When using @ssa-ui-kit, read node_modules/@ssa-ui-kit/<package>/dist/ai/source-map.md
+for each @ssa-ui-kit package the app depends on (core, utils, hooks, widgets,
+templates, infra-dash) for the component and prop index before writing UI code.
 ```
 
 Start from the **Component roster** near the top to see what exists, then search
 the file for `#### <ComponentName>` to get that component's props. For full prop
-documentation and usage examples, read the matching `.d.ts` under
-`dist/components/<ComponentName>/`.
+documentation and usage examples, read the matching `.d.ts` under the package's
+`dist/` folder (e.g. `dist/components/<ComponentName>/` in core).
 
 ## 🤝 Want to contribute?
 
