@@ -93,6 +93,7 @@ const DefaultEventSlot = ({
 
   return (
     <div {...rootProps} css={S.slot(theme, stripe)}>
+      {isTask && <TaskCheckbox event={event} />}
       {onClick ? (
         <button type="button" css={S.slotContentButton} onClick={onClick}>
           {content}
@@ -101,7 +102,6 @@ const DefaultEventSlot = ({
         content
       )}
       {withActions && <span css={S.slotActions}>{actions}</span>}
-      {isTask && <TaskCheckbox event={event} />}
     </div>
   );
 };

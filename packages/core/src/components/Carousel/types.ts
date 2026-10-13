@@ -93,7 +93,7 @@ export type CarouselProps = {
   height?: CSSProperties['height'];
   /**
    * How images fill the slide frame.
-   * @default 'contain'
+   * @default 'cover'
    */
   fit?: CarouselFit;
   /**

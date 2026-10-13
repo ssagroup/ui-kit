@@ -112,7 +112,7 @@ const regularEvents: CalendarEvent[] = workdays()
   ]);
 
 const meta: Meta<typeof Calendar> = {
-  title: 'Components/Calendar',
+  title: 'Widgets/Calendar',
   component: Calendar,
   argTypes: {
     view: { options: ['month', 'day'], control: { type: 'inline-radio' } },

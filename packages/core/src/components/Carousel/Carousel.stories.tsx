@@ -52,7 +52,7 @@ const meta: Meta<typeof Carousel> = {
     controlsPosition: 'overlay',
     allowOpenFull: false,
     aspectRatio: 1,
-    fit: 'contain',
+    fit: 'cover',
     loop: false,
     autoPlay: false,
     autoPlayInterval: 5000,
@@ -180,7 +180,7 @@ export const AutoPlay: Story = {
 };
 
 export const AspectRatioAndFit: Story = {
-  args: { aspectRatio: 16 / 9, fit: 'cover', thumbnails: 'bottom' },
+  args: { aspectRatio: 16 / 9, fit: 'contain', thumbnails: 'bottom' },
   decorators: [
     (Story) => (
       <div style={{ width: 640 }}>

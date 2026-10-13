@@ -62,8 +62,8 @@ const describe = (item: CarouselItem | undefined, index: number) =>
  * The carousel always fills its container's width. The slide's height comes
  * from `aspectRatio` (square by default, as in the design) or from a fixed
  * `height`, never from the images — so the layout does not jump between
- * slides or while images load. Images are letterboxed inside the frame
- * (`fit="contain"`) or cropped to fill it (`fit="cover"`).
+ * slides or while images load. Images are cropped to fill the frame
+ * (`fit="cover"`, the default) or letterboxed inside it (`fit="contain"`).
  *
  * Thumbnails are a fixed 52px. A `left`/`right` strip is exactly as tall as
  * the slide and a `bottom` strip exactly as wide; extra thumbnails scroll and
@@ -125,7 +125,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       allowOpenFull = false,
       aspectRatio = 1,
       height,
-      fit = 'contain',
+      fit = 'cover',
       index,
       defaultIndex,
       onIndexChange,
