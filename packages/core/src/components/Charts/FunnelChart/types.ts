@@ -23,13 +23,23 @@ export type FunnelChartRender = (
 
 /** Props for the FunnelChart component */
 export interface FunnelChartProps {
-  /** Levels from top to bottom. Every level has the same height. */
+  /**
+   * Levels from top to bottom. Every level has the same height unless
+   * `proportional` is set.
+   */
   data: FunnelChartItem[];
   /**
    * Shape of the chart
    * @default 'funnel'
    */
   type?: FunnelChartType;
+  /**
+   * Size each level's height in proportion to its value, so bigger values
+   * get bigger levels. Zero and tiny values keep a minimum height (40% of
+   * an equal level) so their labels still fit; non-numeric values count as 0.
+   * @default false
+   */
+  proportional?: boolean;
   /**
    * Render a leader line and a label beside each level
    * @default false

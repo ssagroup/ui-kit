@@ -19,7 +19,7 @@ export type CarouselItem = {
    */
   thumbnailSrc?: string;
   /**
-   * Full-size image opened in a new tab when `allowOpenFull` is set.
+   * Full-size image opened by the `allowOpenFull` button.
    * Falls back to `src`.
    */
   fullSrc?: string;
@@ -35,6 +35,12 @@ export type CarouselThumbnailsPosition = 'left' | 'right' | 'bottom' | false;
  * own row under it.
  */
 export type CarouselControlsPosition = 'overlay' | 'below';
+
+/**
+ * Where the `allowOpenFull` button opens the image: a new browser tab, or a
+ * modal over the current page.
+ */
+export type CarouselOpenFullMode = 'newTab' | 'modal';
 
 /**
  * How an image fills the slide frame. Mirrors CSS `object-fit`.
@@ -76,11 +82,19 @@ export type CarouselProps = {
    */
   controlsPosition?: CarouselControlsPosition;
   /**
-   * Show a button that opens the current image (`fullSrc ?? src`) in a new
-   * tab. It appears when the slide is hovered or focused.
+   * Show a button that opens the current image (`fullSrc ?? src`), in a new
+   * tab or a modal (see `openFullMode`). It appears when the slide is hovered
+   * or focused.
    * @default false
    */
   allowOpenFull?: boolean;
+  /**
+   * Where the `allowOpenFull` button opens the image. `modal` shows it over a
+   * dimmed page at its natural size, capped at 80% of the viewport's width
+   * and height; autoplay pauses while it is open.
+   * @default 'newTab'
+   */
+  openFullMode?: CarouselOpenFullMode;
   /**
    * Width-to-height ratio of the slide. The slide always fills the
    * container's width; this sets its height. Ignored when `height` is set.

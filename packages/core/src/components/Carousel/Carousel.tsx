@@ -6,6 +6,7 @@ import { useCallbackRef, useControllableState } from '@ssa-ui-kit/hooks';
 import Icon from '@components/Icon';
 
 import { CarouselItem, CarouselProps } from './types';
+import { FullImageModal } from './FullImageModal';
 import * as S from './styles';
 
 const DEFAULT_AUTO_PLAY_INTERVAL = 5000;
@@ -104,6 +105,12 @@ const describe = (item: CarouselItem | undefined, index: number) =>
  *
  * @example
  * ```tsx
+ * // Open full size in a modal on the same page
+ * <Carousel items={items} allowOpenFull openFullMode="modal" />
+ * ```
+ *
+ * @example
+ * ```tsx
  * // Autoplay: 3s per slide, 600ms slide animation
  * <Carousel items={items} autoPlay autoPlayInterval={3000} transitionDuration={600} />
  * ```
@@ -123,6 +130,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       showArrows = true,
       controlsPosition = 'overlay',
       allowOpenFull = false,
+      openFullMode = 'newTab',
       aspectRatio = 1,
       height,
       fit = 'cover',
@@ -171,9 +179,17 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const [focused, setFocused] = useState(false);
     const pageVisible = usePageVisible();
     const reducedMotion = usePrefersReducedMotion();
+    // Slide whose image is open in the full-size modal.
+    const [fullIndex, setFullIndex] = useState<number | null>(null);
+    const fullItem = fullIndex === null ? undefined : items[fullIndex];
+    const fullItemHref = fullItem?.fullSrc ?? fullItem?.src;
+    // Close for good if that slide or its image goes away while open, so it
+    // neither keeps autoplay paused nor reopens when the items come back.
+    if (fullIndex !== null && !fullItemHref) setFullIndex(null);
     const isPlaying =
       autoPlay &&
       count > 1 &&
+      !fullItemHref &&
       !hovered &&
       !focused &&
       pageVisible &&
@@ -268,8 +284,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       </span>
     );
 
-    const currentItem = items[current];
-    const fullHref = currentItem?.fullSrc ?? currentItem?.src;
+    const fullHref = items[current]?.fullSrc ?? items[current]?.src;
 
     const controls = count > 1 && (showDots || showArrows) && (
       <div css={S.controls(controlsPosition, thumbnails)}>
@@ -404,7 +419,22 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
               {count === 0 && <div css={S.slide}>{placeholder(24)}</div>}
             </div>
 
-            {allowOpenFull && fullHref && (
+            {allowOpenFull && fullHref && openFullMode === 'modal' && (
+              <button
+                type="button"
+                aria-haspopup="dialog"
+                aria-label="Open full size image"
+                className="carousel-open-full"
+                css={[S.squareButton, S.openFull]}
+                onClick={() => setFullIndex(current)}>
+                <Icon
+                  name="follow-link"
+                  size={16}
+                  color={theme.colors.greyDarker80}
+                />
+              </button>
+            )}
+            {allowOpenFull && fullHref && openFullMode === 'newTab' && (
               <a
                 href={fullHref}
                 target="_blank"
@@ -429,6 +459,14 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         {controlsPosition === 'below' && controls}
 
         {thumbnails === 'bottom' && thumbStrip}
+
+        {fullItemHref && (
+          <FullImageModal
+            src={fullItemHref}
+            alt={fullItem?.alt}
+            onClose={() => setFullIndex(null)}
+          />
+        )}
       </div>
     );
   },

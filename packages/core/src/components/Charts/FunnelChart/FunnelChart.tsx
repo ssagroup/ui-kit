@@ -7,7 +7,12 @@ import TooltipTrigger from '@components/TooltipTrigger';
 import TooltipContent from '@components/TooltipContent';
 
 import { FunnelChartProps, FunnelChartRender } from './types';
-import { DESIGN_HEIGHT, getDefaultColors, getGeometry } from './utils';
+import {
+  DESIGN_HEIGHT,
+  getDefaultColors,
+  getGeometry,
+  getProportionalHeights,
+} from './utils';
 import * as S from './styles';
 
 const POINTER_LABEL_GAP = 12;
@@ -42,8 +47,9 @@ const defaultRenderTooltip: FunnelChartRender = (item) =>
 /**
  * FunnelChart - Stage diagram drawn as a funnel or a triangle
  *
- * Every level has the same height regardless of its value, so zero or
- * non-decreasing values never collapse or distort the shape. The chart scales
+ * By default every level has the same height regardless of its value, so zero
+ * or non-decreasing values never collapse or distort the shape. Set
+ * `proportional` to size levels by value instead. The chart scales
  * to fit its container — give the container a height, or it falls back to the
  * shape's own aspect ratio.
  *
@@ -64,6 +70,7 @@ const defaultRenderTooltip: FunnelChartRender = (item) =>
 export const FunnelChart = ({
   data,
   type = 'funnel',
+  proportional = false,
   withPointer = false,
   withTooltip = true,
   withLabels = true,
@@ -96,7 +103,16 @@ export const FunnelChart = ({
     return <div ref={containerRef} className={className} css={S.root} />;
   }
 
-  const geometry = getGeometry(type, data.length);
+  const geometry = getGeometry(
+    type,
+    data.length,
+    proportional
+      ? getProportionalHeights(
+          data.map((item) => item.value),
+          DESIGN_HEIGHT,
+        )
+      : undefined,
+  );
   const defaultColors = getDefaultColors(theme, type, data.length);
   const center = geometry.width / 2;
   const pointerEdges = geometry.bands.map(

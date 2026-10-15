@@ -14,6 +14,7 @@ import {
 } from '@floating-ui/react';
 import { useTheme } from '@emotion/react';
 
+import { DETAILS_DISPLAY_ATTRIBUTE } from '../consts';
 import * as S from '../styles';
 
 type EventDetailsLayerProps = {
@@ -67,6 +68,7 @@ export const EventDetailsLayer = ({
       <div
         ref={refs.setFloating}
         aria-label={label}
+        {...{ [DETAILS_DISPLAY_ATTRIBUTE]: display }}
         css={S.detailsLayer}
         style={isModal ? undefined : floatingStyles}
         {...getFloatingProps()}>

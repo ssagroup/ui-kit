@@ -125,6 +125,25 @@ export const HiddenLabels: Story = {
   },
 };
 
+/**
+ * `proportional` sizes each level's height by its value, so a level with
+ * twice the value is twice as tall. Zero and tiny values keep a minimum
+ * height so their labels still fit.
+ */
+export const Proportional: Story = {
+  args: {
+    proportional: true,
+    withPointer: true,
+    data: [
+      { label: 'Leads', value: 500 },
+      { label: 'Contacted', value: 320 },
+      { label: 'Meetings', value: 180 },
+      { label: 'Proposals', value: 90 },
+      { label: 'Won', value: 0 },
+    ],
+  },
+};
+
 export const ZeroValues: Story = {
   args: {
     withPointer: true,

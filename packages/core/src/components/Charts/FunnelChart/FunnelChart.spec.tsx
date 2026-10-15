@@ -2,7 +2,12 @@ import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@emotion/react';
 import theme from '@themes/main';
 import { FunnelChart } from './';
-import { getDefaultColors, getGeometry, DESIGN_HEIGHT } from './utils';
+import {
+  getDefaultColors,
+  getGeometry,
+  getProportionalHeights,
+  DESIGN_HEIGHT,
+} from './utils';
 
 const data = [
   { label: 'Visitors', value: 120 },
@@ -34,6 +39,28 @@ describe('FunnelChart', () => {
     // Levels overlap the next one by half a unit to hide seams.
     expect(heights[0]).toBeCloseTo(heights[2] + 0.5);
     expect(heights[1]).toBeCloseTo(heights[2] + 0.5);
+  });
+
+  it('Should size levels by value when proportional', () => {
+    const { getAllByTestId } = render(
+      <FunnelChart
+        type="triangle"
+        proportional
+        withTooltip={false}
+        data={[
+          { label: 'A', value: 300 },
+          { label: 'B', value: 200 },
+          { label: 'C', value: 100 },
+        ]}
+      />,
+    );
+
+    const heights = getAllByTestId('funnel-chart-level').map((level) =>
+      Number(level.getAttribute('height')),
+    );
+    expect(heights[0] - 0.5).toBeCloseTo((DESIGN_HEIGHT * 3) / 6);
+    expect(heights[1] - 0.5).toBeCloseTo((DESIGN_HEIGHT * 2) / 6);
+    expect(heights[2]).toBeCloseTo(DESIGN_HEIGHT / 6);
   });
 
   it('Should expose levels through the accessible name', () => {
@@ -206,6 +233,32 @@ describe('FunnelChart utils', () => {
   it('Should repeat the palette beyond six levels', () => {
     expect(getDefaultColors(theme, 'triangle', 8)).toHaveLength(8);
     expect(getDefaultColors(theme, 'funnel', 8).every(Boolean)).toBe(true);
+  });
+
+  describe('getProportionalHeights', () => {
+    it('Should split the total in proportion to the values', () => {
+      expect(getProportionalHeights([3, '1'], 100)).toEqual([75, 25]);
+    });
+
+    it('Should keep zero and tiny levels at the minimum height', () => {
+      // Minimum is 40% of an equal level: 100 / 4 * 0.4 = 10.
+      const heights = getProportionalHeights([1000, 10, 0, 'n/a'], 100);
+
+      expect(heights.slice(1)).toEqual([10, 10, 10]);
+      expect(heights[0]).toBeCloseTo(70);
+    });
+
+    it('Should split equally when no value is positive', () => {
+      expect(getProportionalHeights([0, -5, 'x'], 90)).toEqual([30, 30, 30]);
+    });
+  });
+
+  it('Should end proportional funnel bands at the bottom of the frame', () => {
+    const heights = getProportionalHeights([5, 3, 2], DESIGN_HEIGHT);
+    const { bands } = getGeometry('funnel', 3, heights);
+
+    expect(bands[2].bottom).toBeCloseTo(DESIGN_HEIGHT);
+    expect(bands[0].bottom - bands[0].top).toBeCloseTo(DESIGN_HEIGHT / 2);
   });
 
   it('Should end the funnel stem at the bottom of the frame', () => {

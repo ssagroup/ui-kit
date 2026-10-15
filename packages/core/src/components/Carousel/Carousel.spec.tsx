@@ -145,6 +145,79 @@ describe('Carousel', () => {
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
+  it('opens the full-size image in a modal and closes it', async () => {
+    const { user } = setup(
+      <Carousel items={items} allowOpenFull openFullMode="modal" />,
+    );
+    expect(
+      screen.queryByRole('link', { name: /open full size/i }),
+    ).not.toBeInTheDocument();
+
+    const open = screen.getByRole('button', { name: 'Open full size image' });
+    await user.click(open);
+    const dialog = screen.getByRole('dialog', { name: 'A' });
+    expect(dialog.querySelector('img')).toHaveAttribute('src', '/a-full.jpg');
+
+    await user.click(
+      screen.getByRole('button', { name: 'Close full size image' }),
+    );
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await user.click(open);
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('pauses autoplay while the full-size modal is open', () => {
+    jest.useFakeTimers();
+    try {
+      render(
+        <Carousel
+          items={items}
+          allowOpenFull
+          openFullMode="modal"
+          autoPlay
+          autoPlayInterval={1000}
+        />,
+      );
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Open full size image' }),
+      );
+      act(() => jest.advanceTimersByTime(3000));
+      expect(activeSlide()).toHaveAttribute('aria-label', '1 of 3');
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  it('closes the modal and resumes autoplay when its slide goes away', () => {
+    jest.useFakeTimers();
+    try {
+      const props = {
+        allowOpenFull: true,
+        openFullMode: 'modal',
+        autoPlay: true,
+        autoPlayInterval: 1000,
+      } as const;
+      const { rerender } = render(<Carousel items={items} {...props} />);
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Open full size image' }),
+      );
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+      rerender(<Carousel items={[{}, ...items.slice(1)]} {...props} />);
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      act(() => jest.advanceTimersByTime(1000));
+      expect(activeSlide()).toHaveAttribute('aria-label', '2 of 3');
+
+      // Does not reopen when the image comes back.
+      rerender(<Carousel items={items} {...props} />);
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('renders placeholders for missing and broken images', () => {
     render(<Carousel items={[{}, { src: '/broken.jpg', alt: 'Broken' }]} />);
 

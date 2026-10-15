@@ -24,6 +24,8 @@ export const HOUR_GUTTER_WIDTH = 64;
 export const DAY_EVENT_GAP = 5;
 /** Shortest an event is drawn, however brief. */
 export const DAY_EVENT_MIN_HEIGHT = 15;
+/** Set on the details layer to its `eventDetailsDisplay`, for styling. */
+export const DETAILS_DISPLAY_ATTRIBUTE = 'data-calendar-details';
 
 /** Stripe colour per palette entry. */
 export const getEventColor = (theme: Theme, color: CalendarColor) =>

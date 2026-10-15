@@ -2,6 +2,7 @@ import { css, keyframes, Theme } from '@emotion/react';
 
 import {
   DAY_EVENT_MIN_HEIGHT,
+  DETAILS_DISPLAY_ATTRIBUTE,
   DAY_SCROLL_HEIGHT,
   HOUR_GUTTER_WIDTH,
   HOUR_HEIGHT,
@@ -834,6 +835,10 @@ export const details = (theme: Theme) =>
     background: theme.colors.white,
     boxShadow: `0 10px 40px 0 ${theme.colors.greyShadow}`,
     color: theme.colors.greyDarker,
+    // Over the white grid a popover needs an edge; the modal has the dimmed page.
+    [`[${DETAILS_DISPLAY_ATTRIBUTE}="popover"] > &`]: {
+      border: `1px solid ${theme.colors.greyOutline}`,
+    },
   });
 
 export const detailsHeader = css({

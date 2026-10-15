@@ -615,6 +615,29 @@ describe('Calendar', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
 
+    it('borders the details card in a popover but not in a modal', async () => {
+      const details = () => <CalendarEventDetails title="Standup" />;
+      const card = async () =>
+        (await screen.findByRole('dialog')).firstElementChild!;
+      const { user, rerender } = setup(
+        <Calendar date={NOW} events={events} renderEventDetails={details} />,
+      );
+      await user.click(screen.getByRole('button', { name: /Standup/ }));
+      expect(getComputedStyle(await card()).borderTopWidth).toBe('1px');
+      await user.keyboard('{Escape}');
+
+      rerender(
+        <Calendar
+          date={NOW}
+          events={events}
+          renderEventDetails={details}
+          eventDetailsDisplay="modal"
+        />,
+      );
+      await user.click(screen.getByRole('button', { name: /Standup/ }));
+      expect(getComputedStyle(await card()).borderTopWidth).toBe('');
+    });
+
     it('closes the details when their event is removed', async () => {
       const details = () => <span>details</span>;
       const { user, rerender } = setup(

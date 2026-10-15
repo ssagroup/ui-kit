@@ -184,6 +184,33 @@ export const squareButton = (theme: Theme) => css`
   }
 `;
 
+export const fullOverlay = (theme: Theme) => css`
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${theme.colors.grey20};
+`;
+
+/** Shrinks to the image, which stops at 80% of the viewport either way. */
+export const fullDialog = css`
+  position: relative;
+  outline: none;
+`;
+
+export const fullImage = css`
+  display: block;
+  max-width: 80vw;
+  max-height: 80vh;
+  border-radius: 12px;
+`;
+
+export const fullClose = css`
+  position: absolute;
+  top: 11px;
+  right: 11px;
+`;
+
 export const openFull = css`
   position: absolute;
   top: 11px;

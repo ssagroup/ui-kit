@@ -79,6 +79,57 @@ export const roundedPolygonPath = (points: Point[]) => {
   return `${segments.join(' ')} Z`;
 };
 
+// In proportional mode no level is drawn thinner than this share of an
+// equal level, so zeros and tiny values keep room for their label.
+const MIN_PROPORTIONAL_SHARE = 0.4;
+
+/**
+ * Splits `total` between levels in proportion to `values`. Levels that would
+ * fall below the minimum get the minimum, and the rest share what is left in
+ * proportion to their values. Non-numeric and negative values count as 0;
+ * when nothing is positive every level gets the same height.
+ */
+export const getProportionalHeights = (
+  values: (number | string)[],
+  total: number,
+) => {
+  const levels = values.length;
+  const weights = values.map((value) => {
+    const number = Number(value);
+    return Number.isFinite(number) && number > 0 ? number : 0;
+  });
+  const min = (total / levels) * MIN_PROPORTIONAL_SHARE;
+  const floored = new Set<number>();
+  for (;;) {
+    const free = weights
+      .map((_, index) => index)
+      .filter((index) => !floored.has(index));
+    const weightSum = free.reduce((sum, index) => sum + weights[index], 0);
+    const room = total - floored.size * min;
+    if (weightSum === 0) {
+      return weights.map((_, index) =>
+        floored.has(index) ? min : room / free.length,
+      );
+    }
+    const heights = weights.map((weight, index) =>
+      floored.has(index) ? min : (weight / weightSum) * room,
+    );
+    const tooThin = free.filter((index) => heights[index] < min);
+    if (tooThin.length === 0) return heights;
+    tooThin.forEach((index) => floored.add(index));
+  }
+};
+
+/** Consecutive bands of the given heights, starting at the top */
+const stackBands = (heights: number[]) => {
+  let top = 0;
+  return heights.map((height) => {
+    const band = { top, bottom: top + height };
+    top = band.bottom;
+    return band;
+  });
+};
+
 export interface FunnelBand {
   top: number;
   bottom: number;
@@ -94,9 +145,13 @@ export interface FunnelGeometry {
   halfWidthAt: (y: number) => number;
 }
 
-const getTriangleGeometry = (levels: number): FunnelGeometry => {
+const getTriangleGeometry = (
+  levels: number,
+  heights?: number[],
+): FunnelGeometry => {
   const width = TRIANGLE_WIDTH;
   const bandHeight = DESIGN_HEIGHT / levels;
+  const bands = stackBands(heights ?? Array(levels).fill(bandHeight));
   const radius = TRIANGLE_CORNER_RADIUS;
   return {
     width,
@@ -105,17 +160,20 @@ const getTriangleGeometry = (levels: number): FunnelGeometry => {
       { x: width, y: DESIGN_HEIGHT, radius },
       { x: 0, y: DESIGN_HEIGHT, radius },
     ]),
-    bands: Array.from({ length: levels }, (_, index) => ({
-      top: index * bandHeight,
-      bottom: (index + 1) * bandHeight,
+    bands: bands.map((band, index) => ({
+      ...band,
       // The apex band is a triangle, so its label goes to the centroid.
-      labelY: index === 0 ? (bandHeight * 2) / 3 : (index + 0.5) * bandHeight,
+      labelY:
+        index === 0 ? (band.bottom * 2) / 3 : (band.top + band.bottom) / 2,
     })),
     halfWidthAt: (y) => (y / DESIGN_HEIGHT) * (width / 2),
   };
 };
 
-const getFunnelGeometry = (levels: number): FunnelGeometry => {
+const getFunnelGeometry = (
+  levels: number,
+  heights?: number[],
+): FunnelGeometry => {
   const bandHeight = DESIGN_HEIGHT / (levels + FUNNEL_STEM_HEIGHT_RATIO);
   const coneHeight = levels * bandHeight;
   const stemHalfWidth = (bandHeight * FUNNEL_STEM_WIDTH_RATIO) / 2;
@@ -133,16 +191,30 @@ const getFunnelGeometry = (levels: number): FunnelGeometry => {
       { x: center - stemHalfWidth, y: DESIGN_HEIGHT, radius: stemRadius },
       { x: center - stemHalfWidth, y: coneHeight, radius: 0 },
     ]),
-    // The last band runs through the stem as well.
-    bands: Array.from({ length: levels }, (_, index) => {
-      const top = index * bandHeight;
-      const bottom = index === levels - 1 ? DESIGN_HEIGHT : top + bandHeight;
-      return { top, bottom, labelY: (top + bottom) / 2 };
-    }),
+    // The last band runs through the stem as well. Proportional heights
+    // share the whole frame, stem included.
+    bands: stackBands(
+      heights ??
+        Array.from({ length: levels }, (_, index) =>
+          index === levels - 1
+            ? DESIGN_HEIGHT - index * bandHeight
+            : bandHeight,
+        ),
+    ).map((band) => ({ ...band, labelY: (band.top + band.bottom) / 2 })),
     halfWidthAt: (y) =>
       y >= coneHeight ? stemHalfWidth : topHalfWidth - FUNNEL_SIDE_SLOPE * y,
   };
 };
 
-export const getGeometry = (type: FunnelChartType, levels: number) =>
-  type === 'triangle' ? getTriangleGeometry(levels) : getFunnelGeometry(levels);
+/**
+ * Shape and level bands. Pass `heights` (summing to `DESIGN_HEIGHT`) to size
+ * the levels; otherwise they are equal.
+ */
+export const getGeometry = (
+  type: FunnelChartType,
+  levels: number,
+  heights?: number[],
+) =>
+  type === 'triangle'
+    ? getTriangleGeometry(levels, heights)
+    : getFunnelGeometry(levels, heights);

@@ -36,6 +36,10 @@ const meta: Meta<typeof Carousel> = {
       options: ['overlay', 'below'],
       control: { type: 'inline-radio' },
     },
+    openFullMode: {
+      options: ['newTab', 'modal'],
+      control: { type: 'inline-radio' },
+    },
     fit: {
       options: ['contain', 'cover'],
       control: { type: 'inline-radio' },
@@ -51,6 +55,7 @@ const meta: Meta<typeof Carousel> = {
     showArrows: true,
     controlsPosition: 'overlay',
     allowOpenFull: false,
+    openFullMode: 'newTab',
     aspectRatio: 1,
     fit: 'cover',
     loop: false,
@@ -162,6 +167,18 @@ export const OpenFullSize: Story = {
       description: {
         story:
           'Hover or focus the slide to reveal the button that opens `fullSrc` (or `src`) in a new tab.',
+      },
+    },
+  },
+};
+
+export const OpenFullSizeInModal: Story = {
+  args: { allowOpenFull: true, openFullMode: 'modal' },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`openFullMode="modal"` opens the image over the page instead. The modal fits the image, up to 80% of the viewport in either direction; Escape, a click outside or the close button close it.',
       },
     },
   },
