@@ -195,6 +195,8 @@ export { default as NavBar } from './NavBar';
 export * from './NavBar';
 
 export * from './CollapsibleNavBar';
+export * from './Header';
+export type * from './Header/types';
 
 export * from './TreeView';
 
