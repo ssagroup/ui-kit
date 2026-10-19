@@ -8,6 +8,8 @@ export type * from './Button/types';
 export * from './ButtonGroup';
 
 export * from './IconButton';
+export * from './FloatingActionButton';
+export type * from './FloatingActionButton/types';
 
 export * from './Breadcrumbs';
 

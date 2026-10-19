@@ -147,3 +147,40 @@ export function getContrastColor(
 ): string {
   return isColorDark(bgColor) ? lightText : darkText;
 }
+
+/** WCAG 2.x contrast ratio between two relative luminances. */
+const getContrastRatio = (a: number, b: number): number => {
+  const [hi, lo] = a > b ? [a, b] : [b, a];
+  return (hi + 0.05) / (lo + 0.05);
+};
+
+/**
+ * Returns whichever of `darkText` / `lightText` has the higher WCAG contrast
+ * ratio against `bgColor`.
+ *
+ * Unlike {@link getContrastColor}, which uses a fixed luminance threshold
+ * tuned for pure black, this measures both candidates — so mid-tone
+ * backgrounds such as the theme `blue` get white text, matching the design.
+ *
+ * Falls back to `darkText` when any of the colors cannot be parsed.
+ *
+ * @param bgColor - The background color to contrast against.
+ * @param darkText - Candidate for light backgrounds. Defaults to `greyDarker`.
+ * @param lightText - Candidate for dark backgrounds. Defaults to white.
+ */
+export const getReadableColor = (
+  bgColor: string,
+  darkText = 'rgba(43, 45, 49, 1)',
+  lightText = 'rgba(255, 255, 255, 1)',
+): string => {
+  const bg = parseRgb(bgColor);
+  const dark = parseRgb(darkText);
+  const light = parseRgb(lightText);
+  if (!bg || !dark || !light) return darkText;
+
+  const bgL = getRelativeLuminance(bg);
+  return getContrastRatio(bgL, getRelativeLuminance(light)) >
+    getContrastRatio(bgL, getRelativeLuminance(dark))
+    ? lightText
+    : darkText;
+};
