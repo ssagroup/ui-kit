@@ -74,9 +74,10 @@ interface HeaderMobileMenuProps {
 }
 
 /**
- * The navigation below 900px: a full-width drawer holding a `TreeView`, the
- * same engine as CollapsibleNavBar's menu. The tree owns expansion and opens
- * the group holding the current page; this module owns the routing.
+ * The navigation below 900px: a 400px drawer (full width on phones) holding
+ * a `TreeView`, the same engine as CollapsibleNavBar's menu. The tree owns
+ * expansion and opens the group holding the current page; this module owns
+ * the routing.
  */
 export const HeaderMobileMenu = ({
   store,

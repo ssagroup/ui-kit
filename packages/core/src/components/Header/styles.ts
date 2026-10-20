@@ -10,6 +10,17 @@ export const SIZES: Record<HeaderSize, { height: number; logo: number }> = {
 
 export const MENU_WIDTH = 164;
 
+/** From this header width up the bar shows the nav; below it, the burger. */
+export const DESKTOP_MIN_WIDTH = 900;
+
+/**
+ * A container query, not a media query: the layout follows the header's own
+ * width, so a Header in a narrow region of a page — or in a fixed-width
+ * story frame, where Storybook's viewport does not reach — goes mobile too.
+ * Same 900px as `theme.mediaQueries.md`.
+ */
+const desktop = `@container ssa-header (min-width: ${DESKTOP_MIN_WIDTH}px)`;
+
 /** Design: dropdowns sit 6px below their trigger and flyouts 6px aside. */
 export const MENU_OFFSET = 6;
 
@@ -77,11 +88,19 @@ const resetButton = css`
   cursor: pointer;
 `;
 
-export const root = (
-  theme: Theme,
-  palette: HeaderPalette,
-  size: HeaderSize,
-) => css`
+/**
+ * The query container. It is the `header` itself, so consumer styles such
+ * as `position: sticky` land on the outermost element; the layout that
+ * the query switches lives on the bar inside.
+ */
+export const container = (palette: HeaderPalette) => css`
+  container: ssa-header / inline-size;
+  display: block;
+  width: 100%;
+  background: ${palette.background};
+`;
+
+export const bar = (size: HeaderSize) => css`
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -90,9 +109,8 @@ export const root = (
   width: 100%;
   height: ${SIZES[size].height}px;
   padding: 0 16px;
-  background: ${palette.background};
 
-  ${theme.mediaQueries.md} {
+  ${desktop} {
     grid-template-columns: auto minmax(0, 1fr) auto;
     column-gap: 24px;
     padding: 0 40px;
@@ -116,14 +134,14 @@ export const burger = (theme: Theme, palette: HeaderPalette) => css`
 
   ${focusRing(theme)};
 
-  ${theme.mediaQueries.md} {
+  ${desktop} {
     display: none;
   }
 `;
 
 /** Holds the burger's column when there is no menu, so the logo stays centred. */
-export const burgerPlaceholder = (theme: Theme) => css`
-  ${theme.mediaQueries.md} {
+export const burgerPlaceholder = css`
+  ${desktop} {
     display: none;
   }
 `;
@@ -149,12 +167,12 @@ export const logo = (size: HeaderSize) => css`
  * The scroll container. Dropdowns are portalled, so the overflow here does
  * not clip them.
  */
-export const nav = (theme: Theme) => css`
+export const nav = css`
   display: none;
   overflow-x: auto;
   scrollbar-width: thin;
 
-  ${theme.mediaQueries.md} {
+  ${desktop} {
     display: block;
   }
 `;
@@ -283,9 +301,13 @@ export const drawerContent = (palette: HeaderPalette) => css`
   }
 `;
 
-/** Chevron of a mobile group row; flips while the group is open. */
+/**
+ * Chevron of a mobile group row; flips while the group is open. Pushed to the
+ * row's end so every chevron shares one vertical line.
+ */
 export const mobileToggle = (expanded: boolean) => css`
   display: inline-flex;
+  margin-left: auto;
   transform: rotate(${expanded ? 180 : 0}deg);
   transition: transform 0.15s ease;
 `;

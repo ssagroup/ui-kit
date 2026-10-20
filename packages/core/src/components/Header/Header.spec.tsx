@@ -3,7 +3,7 @@ import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 import { Header } from './Header';
 import { HeaderNavItem, HeaderProps } from './types';
-import { screen, waitFor, within } from '../../../customTest';
+import { act, screen, waitFor, within } from '../../../customTest';
 import { checkA11y } from '../../test-utils/axe';
 
 const items: HeaderNavItem[] = [
@@ -58,11 +58,11 @@ const renderHeader = (
   );
 
 /**
- * jsdom ignores media queries, so the desktop nav keeps its mobile
+ * jsdom ignores container queries, so the desktop nav keeps its mobile
  * `display: none` there; query it directly, including hidden elements.
  */
 const desktopNav = () =>
-  within(document.querySelector<HTMLElement>('header > nav')!);
+  within(document.querySelector<HTMLElement>('header > div > nav')!);
 
 describe('Header', () => {
   it('renders the logo, links and right side', () => {
@@ -80,9 +80,9 @@ describe('Header', () => {
 
   it('leaves the logo box empty without a logo', () => {
     const { container } = renderHeader();
-    const header = container.querySelector('header')!;
+    const bar = container.querySelector('header > div')!;
     // burger, logo box, nav, right side
-    expect(header.children[1]).toBeEmptyDOMElement();
+    expect(bar.children[1]).toBeEmptyDOMElement();
   });
 
   it('marks the current page and highlights its groups', () => {
@@ -255,6 +255,44 @@ describe('Header', () => {
           screen.getAllByRole('navigation', { hidden: true }),
         ).toHaveLength(1),
       );
+    });
+
+    it('closes the drawer once the header grows to desktop width', async () => {
+      let resize: ResizeObserverCallback = () => {};
+      const original = global.ResizeObserver;
+      global.ResizeObserver = class {
+        constructor(callback: ResizeObserverCallback) {
+          resize = callback;
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      };
+      try {
+        const user = userEvent.setup();
+        renderHeader();
+        await user.click(screen.getByRole('button', { name: 'Open menu' }));
+        await waitFor(() =>
+          expect(
+            screen.getAllByRole('navigation', { hidden: true }),
+          ).toHaveLength(2),
+        );
+
+        act(() =>
+          resize(
+            [{ contentRect: { width: 900 } } as ResizeObserverEntry],
+            {} as ResizeObserver,
+          ),
+        );
+
+        await waitFor(() =>
+          expect(
+            screen.getAllByRole('navigation', { hidden: true }),
+          ).toHaveLength(1),
+        );
+      } finally {
+        global.ResizeObserver = original;
+      }
     });
 
     it('has no burger when there are no items', () => {

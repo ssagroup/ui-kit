@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import { useMergeRefs } from '@floating-ui/react';
 
 import Icon from '@components/Icon';
 import { useDrawer } from '@components/Drawer';
@@ -9,9 +10,6 @@ import { HeaderProps } from './types';
 import { HeaderNavEntry } from './HeaderNavMenu';
 import { HeaderMobileMenu } from './HeaderMobileMenu';
 import * as S from './styles';
-
-/** Matches `theme.mediaQueries.md`, where the burger hands over to the bar. */
-const DESKTOP_QUERY = '(min-width: 900px)';
 
 /**
  * Header - The application's top bar: logo, main navigation and a free slot
@@ -25,10 +23,10 @@ const DESKTOP_QUERY = '(min-width: 900px)';
  * further. Following a link closes them.
  *
  * ### Layout
- * From 900px the navigation is centred between the logo and the right side,
- * and scrolls sideways when it does not fit. Below 900px it moves into a
- * drawer opened by a burger button, the logo is centred and `rightSide`
- * stays as it is.
+ * The layout follows the Header's own width, not the window's. From 900px
+ * the navigation is centred between the logo and the right side, and scrolls
+ * sideways when it does not fit. Below 900px it moves into a drawer opened
+ * by a burger button, the logo is centred and `rightSide` stays as it is.
  *
  * ### Selected state
  * The design sets the selected item in bold. The kit marks it by color
@@ -72,69 +70,75 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(function Header(
   const palette = S.resolvePalette(theme, headerTheme);
   const drawer = useDrawer({
     position: 'left',
-    width: '100%',
+    // Capped at the viewport by Drawer, so phones still get the full width.
+    width: 400,
     dismissable: true,
   });
   // useDrawer hands out a new `toggle` every render; reading it through a
-  // ref keeps the media listener below subscribed once.
+  // ref keeps the observer below subscribed once.
   const toggleRef = useRef(drawer.toggle);
   useEffect(() => {
     toggleRef.current = drawer.toggle;
   });
 
-  // The drawer is mobile-only; growing past the breakpoint must not leave it
-  // covering the desktop bar. Effects never run on the server, so `window`
-  // is there; `matchMedia` may not be (jsdom).
+  const headerRef = useRef<HTMLElement>(null);
+  const mergedRef = useMergeRefs([headerRef, ref]);
+
+  // The drawer is mobile-only; a header growing past the breakpoint must not
+  // leave it open over the desktop bar. Effects never run on the server;
+  // ResizeObserver may still be missing (jsdom).
   useEffect(() => {
-    if (!window.matchMedia) {
+    const element = headerRef.current;
+    if (!element || typeof ResizeObserver === 'undefined') {
       return;
     }
-    const query = window.matchMedia(DESKTOP_QUERY);
-    const handleChange = (event: MediaQueryListEvent) => {
-      if (event.matches) {
+    const observer = new ResizeObserver(([entry]) => {
+      if (entry.contentRect.width >= S.DESKTOP_MIN_WIDTH) {
         toggleRef.current(false);
       }
-    };
-    query.addEventListener('change', handleChange);
-    return () => query.removeEventListener('change', handleChange);
+    });
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   const hasItems = items.length > 0;
 
   return (
-    <header ref={ref} css={S.root(theme, palette, size)} {...props}>
-      {hasItems ? (
-        <button
-          type="button"
-          css={S.burger(theme, palette)}
-          aria-label={menuButtonLabel}
-          aria-expanded={drawer.open}
-          {...drawer.interactions.getReferenceProps()}>
-          <Icon name="menu" size={24} color="currentColor" />
-        </button>
-      ) : (
-        <span css={S.burgerPlaceholder(theme)} />
-      )}
-      <div css={S.logo(size)}>{logo}</div>
-      {hasItems ? (
-        <nav css={S.nav(theme)} aria-label={navLabel}>
-          <ul css={S.navList}>
-            {items.map((item) => (
-              <li key={item.id}>
-                <HeaderNavEntry
-                  item={item}
-                  depth={0}
-                  palette={palette}
-                  pathname={pathname}
-                />
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ) : (
-        <span css={S.nav(theme)} />
-      )}
-      <div css={S.rightSide}>{rightSide}</div>
+    <header ref={mergedRef} css={S.container(palette)} {...props}>
+      <div css={S.bar(size)}>
+        {hasItems ? (
+          <button
+            type="button"
+            css={S.burger(theme, palette)}
+            aria-label={menuButtonLabel}
+            aria-expanded={drawer.open}
+            {...drawer.interactions.getReferenceProps()}>
+            <Icon name="menu" size={24} color="currentColor" />
+          </button>
+        ) : (
+          <span css={S.burgerPlaceholder} />
+        )}
+        <div css={S.logo(size)}>{logo}</div>
+        {hasItems ? (
+          <nav css={S.nav} aria-label={navLabel}>
+            <ul css={S.navList}>
+              {items.map((item) => (
+                <li key={item.id}>
+                  <HeaderNavEntry
+                    item={item}
+                    depth={0}
+                    palette={palette}
+                    pathname={pathname}
+                  />
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ) : (
+          <span css={S.nav} />
+        )}
+        <div css={S.rightSide}>{rightSide}</div>
+      </div>
       {hasItems && (
         <HeaderMobileMenu
           store={drawer}

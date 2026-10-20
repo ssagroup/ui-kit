@@ -227,10 +227,21 @@ export const ManyItems: Story = {
   ),
 };
 
-/** Below 900px the menu moves into a drawer behind the burger. */
+/**
+ * Below 900px of header width the menu moves into a drawer behind the
+ * burger. The frame stands in for a phone: the Header follows its own width,
+ * so this works in the docs page and the composed Storybook alike, where the
+ * viewport toolbar does not reach.
+ */
 export const Mobile: Story = {
-  ...WithIcons,
-  globals: {
-    viewport: { value: 'mobile2', isRotated: false },
-  },
+  render: (args) => (
+    <div style={{ width: 390, maxWidth: '100%' }}>
+      <Header
+        {...args}
+        logo={<Logo headerTheme={args.theme} />}
+        items={itemsWithIcons}
+        rightSide={<RightSide headerTheme={args.theme} size={args.size} />}
+      />
+    </div>
+  ),
 };
