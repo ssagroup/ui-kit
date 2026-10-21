@@ -71,7 +71,7 @@ describe('Dropdown', () => {
     await user.click(dropdownToggleEl);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(items.length);
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
@@ -85,9 +85,7 @@ describe('Dropdown', () => {
 
       expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       const itemListValue = getListItemValue(listItem);
-      expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-        itemListValue,
-      );
+      expect(listItemEl).toHaveTextContent(itemListValue);
       await within(listItemEl).findByText(itemListValue);
     }
   });
@@ -116,7 +114,7 @@ describe('Dropdown', () => {
     await user.click(dropdownToggleEl);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(items.length);
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
@@ -132,13 +130,11 @@ describe('Dropdown', () => {
       const itemListValue = getListItemValue(listItem);
 
       await within(listItemEl).findByText(itemListValue);
-      expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-        itemListValue,
-      );
+      expect(listItemEl).toHaveTextContent(itemListValue);
 
       if (listItem.id === selectedItem.id) {
         expect(listItemEl).toHaveAttribute('aria-selected', 'true');
-        expect(listItemEl).toHaveStyle('background: #DEE1EC');
+        expect(listItemEl).toHaveStyle('background: rgba(65, 120, 225, 0.12)');
       } else {
         expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       }
@@ -169,7 +165,7 @@ describe('Dropdown', () => {
     await user.click(dropdownToggleEl);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
@@ -182,13 +178,11 @@ describe('Dropdown', () => {
       const itemListValue = getListItemValue(listItem);
 
       await within(listItemEl).findByText(itemListValue);
-      expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-        itemListValue,
-      );
+      expect(listItemEl).toHaveTextContent(itemListValue);
 
       if (listItem.id === selectedItem.id) {
         expect(listItemEl).toHaveAttribute('aria-selected', 'true');
-        expect(listItemEl).toHaveStyle('background: #DEE1EC');
+        expect(listItemEl).toHaveStyle('background: rgba(65, 120, 225, 0.12)');
       } else {
         expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       }
@@ -234,10 +228,8 @@ describe('Dropdown', () => {
 
     listboxEl = getByRole('listbox');
 
-    const listItemEl = within(listboxEl).getByRole('listitem');
-
-    expect(listItemEl).toHaveAttribute('aria-selected', 'false');
-    within(listItemEl).getByText('No items');
+    expect(within(listboxEl).queryByRole('option')).not.toBeInTheDocument();
+    within(listboxEl).getByText('No items');
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
@@ -246,8 +238,8 @@ describe('Dropdown', () => {
 
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
-    // Items list hides when clicked
-    await userEvent.click(within(listItemEl).getByRole('button'));
+    // The toggle closes the empty list
+    await userEvent.click(dropdownToggleEl);
 
     expect(queryByRole('listbox')).not.toBeInTheDocument();
 
@@ -269,7 +261,7 @@ describe('Dropdown', () => {
 
     await user.click(dropdownToggleEl);
 
-    const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    const listItemEls = within(getByRole('listbox')).getAllByRole('option');
 
     await user.click(listItemEls[0]);
 
@@ -309,7 +301,7 @@ describe('Dropdown', () => {
 
     await user.click(dropdownToggleEl);
 
-    const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    const listItemEls = within(getByRole('listbox')).getAllByRole('option');
 
     await user.click(listItemEls[2]);
 
@@ -649,10 +641,10 @@ describe('Dropdown', () => {
 
       await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
 
-      const [row] = within(getByRole('listbox')).getAllByRole('listitem');
+      const [row] = within(getByRole('listbox')).getAllByRole('option');
 
-      // The row is a fixed 40px but its line box is ~19px; as a plain block the
-      // text sat against the top padding edge with all the slack below it.
+      // The row is a fixed height but its line box is shorter; as a plain
+      // block the text sat against the top padding edge.
       expect(row).toHaveStyleRule('display', 'flex');
       expect(row).toHaveStyleRule('align-items', 'center');
     });
@@ -738,6 +730,128 @@ describe('Dropdown', () => {
       expect(tooltip).toHaveTextContent(items[0].value);
 
       jest.useRealTimers();
+    });
+  });
+  describe('keyboard', () => {
+    const activeOption = (toggle: HTMLElement) => {
+      const id = toggle.getAttribute('aria-activedescendant');
+      return id ? document.getElementById(id) : null;
+    };
+
+    it('ArrowDown opens on the first option; arrows move; Enter selects and closes', async () => {
+      const { user, mockOnChange, getByRole, queryByRole } = setup();
+      const toggle = getByRole('combobox');
+      toggle.focus();
+
+      await user.keyboard('{ArrowDown}');
+      expect(getByRole('listbox')).toBeInTheDocument();
+      expect(toggle).toHaveAttribute('aria-controls', getByRole('listbox').id);
+      expect(activeOption(toggle)).toHaveTextContent('First Item');
+
+      await user.keyboard('{ArrowDown}{ArrowDown}');
+      expect(activeOption(toggle)).toHaveTextContent('Third Item');
+      await user.keyboard('{End}');
+      expect(activeOption(toggle)).toHaveTextContent('Seventh Item');
+      await user.keyboard('{ArrowDown}');
+      expect(activeOption(toggle)).toHaveTextContent('First Item');
+
+      await user.keyboard('{Enter}');
+      expect(mockOnChange).toHaveBeenCalledWith(
+        expect.objectContaining({ value: 'First Item' }),
+      );
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(toggle).toHaveFocus();
+    });
+
+    it('opens on the selected option', async () => {
+      const { user, getByRole } = setup({ selectedItem: items[3] });
+      const toggle = getByRole('combobox');
+      toggle.focus();
+
+      await user.keyboard('{ArrowUp}');
+      expect(activeOption(toggle)).toHaveTextContent('Fourth Item');
+    });
+
+    it('Space selects without reopening the list', async () => {
+      const { user, mockOnChange, getByRole, queryByRole } = setup();
+      const toggle = getByRole('combobox');
+      toggle.focus();
+
+      await user.keyboard('{ArrowDown}{ArrowDown}');
+      await user.keyboard(' ');
+      expect(mockOnChange).toHaveBeenCalledWith(
+        expect.objectContaining({ value: 'Second Item' }),
+      );
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('Enter and Space on a closed toggle open the list', async () => {
+      const { user, getByRole, queryByRole } = setup();
+      const toggle = getByRole('combobox');
+      toggle.focus();
+
+      await user.keyboard('{Enter}');
+      expect(getByRole('listbox')).toBeInTheDocument();
+      await user.keyboard('{Escape}');
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      await user.keyboard(' ');
+      expect(getByRole('listbox')).toBeInTheDocument();
+    });
+
+    it('Escape and Tab close without selecting', async () => {
+      const { user, mockOnChange, getByRole, queryByRole } = setup();
+      const toggle = getByRole('combobox');
+      toggle.focus();
+
+      await user.keyboard('{ArrowDown}{Escape}');
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(toggle).not.toHaveAttribute('aria-activedescendant');
+
+      await user.keyboard('{ArrowDown}');
+      await user.tab();
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it('skips disabled options, which also ignore clicks', async () => {
+      const mockOnChange = jest.fn();
+      const user = userEvent.setup();
+      const { getByRole } = render(
+        <Dropdown onChange={mockOnChange}>
+          <DropdownOption value="a" />
+          <DropdownOption value="b" disabled />
+          <DropdownOption value="c" />
+        </Dropdown>,
+      );
+      const toggle = getByRole('combobox');
+      toggle.focus();
+
+      await user.keyboard('{ArrowDown}{ArrowDown}');
+      expect(activeOption(toggle)).toHaveTextContent('c');
+
+      await user.click(getByRole('option', { name: 'b' }));
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it('clicking an option keeps focus on the toggle', async () => {
+      const { user, getByRole } = setup();
+      const toggle = getByRole('combobox');
+
+      await user.click(toggle);
+      await user.click(getByRole('option', { name: 'Second Item' }));
+      expect(toggle).toHaveFocus();
+    });
+
+    it('forwards className and data-testid from DropdownOption to the row', async () => {
+      const user = userEvent.setup();
+      const { getByRole, getByTestId } = render(
+        <Dropdown onChange={jest.fn()}>
+          <DropdownOption value="a" className="row-a" data-testid="row-a" />
+        </Dropdown>,
+      );
+
+      await user.click(getByRole('combobox'));
+      expect(getByTestId('row-a')).toHaveClass('row-a');
     });
   });
 });

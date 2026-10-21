@@ -1,4 +1,5 @@
 import React, {
+  KeyboardEvent,
   useState,
   useEffect,
   useLayoutEffect,
@@ -14,6 +15,11 @@ import { isNill } from '@ssa-ui-kit/utils';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
+import { toDropdownMenuItems } from '@components/DropdownOptions/utils';
+import {
+  getContextMenuOptionId,
+  getNextActiveValue,
+} from '@components/ContextMenu';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import Icon from '@components/Icon';
 import Label from '@components/Label';
@@ -221,11 +227,23 @@ const Dropdown = <T extends DropdownOptionProps>({
   const [colors, setColors] = useState<Array<string | undefined>>([]);
   const [activeItem, setActiveItem] = useState<T | undefined>(selectedItem);
   const [placement, setPlacement] = useState<'top' | 'bottom'>('bottom');
+  // Highlighted option. Focus stays on the toggle (the combobox), which
+  // drives the list and points at the option with aria-activedescendant.
+  const [activeValue, setActiveValue] = useState<string | number | null>(null);
+  // Set when the toggle's keydown already acted on Space, so the click the
+  // browser fires on keyup does not toggle the list straight back.
+  const spaceHandled = useRef(false);
+  const listId = `dropdown-popup-${dropdownId}`;
+
+  const close = () => {
+    setIsOpen(false);
+    setActiveValue(null);
+  };
 
   const onChange: DropdownContextType['onChange'] = (item) => {
     const innerItem = options.filter((option) => option.value === item)[0];
 
-    setIsOpen(false);
+    close();
 
     if (isDropdownDisabled || !innerItem) {
       return;
@@ -241,7 +259,7 @@ const Dropdown = <T extends DropdownOptionProps>({
     }
   };
 
-  useClickOutside(dropdownRef, () => isOpen && setIsOpen(false));
+  useClickOutside(dropdownRef, () => isOpen && close());
 
   useEffect(() => {
     if (isDropdownDisabled) {
@@ -259,7 +277,7 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   useEffect(() => {
     if (isDropdownDisabled && isOpen) {
-      setIsOpen(false);
+      close();
     }
   }, [isDropdownDisabled]);
 
@@ -292,9 +310,80 @@ const Dropdown = <T extends DropdownOptionProps>({
     },
   );
 
+  const menuItems = toDropdownMenuItems(childrenArray);
+
+  /** Opens with the selected option highlighted, else per the key pressed. */
+  const open = (key = 'ArrowDown') => {
+    setIsOpen(true);
+    const selected = menuItems.find(
+      (item) => !item.disabled && item.value === activeItem?.value,
+    );
+    setActiveValue(
+      selected?.value ?? getNextActiveValue(menuItems, null, key) ?? null,
+    );
+  };
+
+  const handleToggleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    componentProps?.toggleButton?.onKeyDown?.(event);
+    if (event.defaultPrevented || isDropdownDisabled) return;
+
+    if (!isOpen) {
+      // Enter and Space open through the button's own click.
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        open(event.key);
+      }
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+      case 'ArrowUp':
+      case 'Home':
+      case 'End': {
+        event.preventDefault();
+        const next = getNextActiveValue(menuItems, activeValue, event.key);
+        if (next != null) setActiveValue(next);
+        break;
+      }
+      case 'Enter':
+      case ' ':
+        // Cancels the button click Enter fires on keydown; Space's is
+        // cancelled on keyup.
+        event.preventDefault();
+        spaceHandled.current = event.key === ' ';
+        if (activeValue === null) close();
+        else onChange(activeValue as string);
+        break;
+      case 'Escape':
+        event.preventDefault();
+        close();
+        break;
+      case 'Tab':
+        close();
+        break;
+    }
+  };
+
+  const handleToggleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+    componentProps?.toggleButton?.onKeyUp?.(event);
+    if (event.key === ' ' && spaceHandled.current) {
+      spaceHandled.current = false;
+      event.preventDefault();
+    }
+  };
+
   const contextValue: DropdownContextType = React.useMemo(
-    () => ({ onChange, activeItem, maxHeight, listRef, placement }),
-    [onChange, activeItem, maxHeight, placement],
+    () => ({
+      onChange,
+      activeItem,
+      maxHeight,
+      listRef,
+      placement,
+      activeValue,
+      setActiveValue,
+    }),
+    [onChange, activeItem, maxHeight, placement, activeValue],
   );
 
   const value = (
@@ -357,11 +446,20 @@ const Dropdown = <T extends DropdownOptionProps>({
             isOpen={isOpen}
             disabled={isDropdownDisabled}
             status={status}
-            onClick={setIsOpen.bind(null, !isOpen)}
+            onClick={() => (isOpen ? close() : open())}
+            onKeyDown={handleToggleKeyDown}
+            onKeyUp={handleToggleKeyUp}
             onFocus={setIsFocused.bind(null, true)}
             colors={colors}
             aria-labelledby={`dropdown-label-${dropdownId}`}
-            aria-controls={`dropdown-popup-${dropdownId}`}>
+            aria-controls={listId}
+            aria-activedescendant={
+              isOpen &&
+              activeValue !== null &&
+              menuItems.some((item) => item.value === activeValue)
+                ? getContextMenuOptionId(listId, activeValue)
+                : undefined
+            }>
             {toggleContent}
             <DropdownArrow
               {...componentProps?.toggleButtonArrow}
@@ -369,7 +467,9 @@ const Dropdown = <T extends DropdownOptionProps>({
             />
           </DropdownToggle>
 
-          {isOpen ? <DropdownOptions>{items}</DropdownOptions> : null}
+          {isOpen ? (
+            <DropdownOptions id={listId}>{items}</DropdownOptions>
+          ) : null}
         </DropdownBase>
       </DropdownContext.Provider>
       {helperText || errors ? (

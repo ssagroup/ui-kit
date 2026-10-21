@@ -409,7 +409,7 @@ describe('Pagination', () => {
       await user.click(screen.getByRole('combobox'));
 
       const listboxEl = screen.getByRole('listbox');
-      await user.click(within(listboxEl).getByRole('button', { name: '50' }));
+      await user.click(within(listboxEl).getByRole('option', { name: '50' }));
 
       expect(onPerPageChange).toHaveBeenCalledWith(50);
     });

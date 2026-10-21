@@ -90,7 +90,7 @@ describe('MealNutrients', () => {
       await user.click(dropdownToggleEl);
 
       const listboxEl = getByRole('listbox');
-      const listItemElToChoose = within(listboxEl).getAllByRole('listitem')[1];
+      const listItemElToChoose = within(listboxEl).getAllByRole('option')[1];
 
       await user.click(listItemElToChoose);
 

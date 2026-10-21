@@ -10,6 +10,7 @@ const DropdownContext = React.createContext<DropdownContextType>({
   maxHeight: 200,
   listRef: undefined,
   placement: 'bottom',
+  activeValue: null,
 });
 
 export function useDropdownContext(): DropdownContextType {

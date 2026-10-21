@@ -54,7 +54,7 @@ describe('MealPlanner', () => {
     await user.click(dropdownToggleEl);
 
     const listItemEls = within(screen.getByRole('listbox')).getAllByRole(
-      'button',
+      'option',
     );
 
     await user.click(listItemEls[1]);

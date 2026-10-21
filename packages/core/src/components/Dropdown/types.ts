@@ -270,4 +270,13 @@ export interface DropdownContextType {
    * Computed by Dropdown based on dropdownPosition prop and available viewport space
    */
   placement?: 'top' | 'bottom';
+
+  /**
+   * Option highlighted by the keyboard or the pointer. Focus stays on the
+   * toggle, so the list is driven from there.
+   */
+  activeValue?: string | number | null;
+
+  /** Moves the highlight; called by the list on pointer moves. */
+  setActiveValue?: (value: string | number | null) => void;
 }

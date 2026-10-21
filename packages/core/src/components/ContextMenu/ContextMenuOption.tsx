@@ -158,6 +158,8 @@ export const ContextMenuOption = <V extends ContextMenuValue>({
       id={id}
       role={role}
       css={S.option}
+      className={item.className}
+      data-testid={item['data-testid']}
       aria-selected={role === 'option' ? selected : undefined}
       aria-disabled={disabled || undefined}
       data-active={active || undefined}

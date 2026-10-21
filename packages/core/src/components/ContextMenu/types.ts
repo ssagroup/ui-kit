@@ -40,6 +40,10 @@ export interface ContextMenuItem<
    * filter group.
    */
   selectOnly?: boolean;
+  /** Class name added to the option's `<li>`. */
+  className?: string;
+  /** Test id set on the option's `<li>`. */
+  'data-testid'?: string;
 }
 
 /** A titled group of options. The title is not selectable. */

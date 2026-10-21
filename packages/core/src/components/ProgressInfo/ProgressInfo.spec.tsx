@@ -55,7 +55,7 @@ describe('ProgressInfo', () => {
 
       await fireEvent.click(dropdownToggleEl);
 
-      const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+      const listItemEls = within(getByRole('listbox')).getAllByRole('option');
 
       await fireEvent.click(listItemEls[2]);
 
