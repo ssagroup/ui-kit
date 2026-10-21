@@ -1,142 +1,42 @@
-import styled from '@emotion/styled';
-import { useTheme } from '@emotion/react';
-
-import Button from '@components/Button';
-import Icon from '@components/Icon';
-import { MapIconsType } from '@components/Icon/types';
-
-import { useFiltersMultiSelectContext } from '../FiltersMultiSelectProvider';
-import { Filter, SelectedFilter } from '../useFiltersMultiSelect';
-
-const FiltersMultiSelectOptionBase = styled.div`
-  padding: 12px;
-  height: 42px;
-
-  font-weight: 500;
-  font-size: 13.33px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.blueRoyal6};
-  }
-`;
-
-const FilterButton = styled(Button)`
-  padding: 0 4px;
-
-  &:not(:disabled):hover {
-    svg {
-      path {
-        stroke-width: 2;
-      }
-    }
-  }
-`;
+import { Filter } from '../useFiltersMultiSelect';
 
 export interface FiltersMultiSelectOptionProps {
+  /** The filter this row adds. `group: true` makes it a select-only row. */
   filter: Filter;
+  /** Row content. */
   children: React.ReactNode;
+  /**
+   * @deprecated Ignored — the row's state comes from the store's selected
+   * filters. Removed in the next major release.
+   */
   selected?: boolean;
 }
 
-export const FiltersMultiSelectOption = ({
-  filter,
-  children,
-  selected,
-}: FiltersMultiSelectOptionProps) => {
-  const theme = useTheme();
-  const { store } = useFiltersMultiSelectContext();
-  const { id, label, group } = filter;
-
-  const selectedFilter = store.isSelected(filter.id);
-
-  const selectFilters = (type: SelectedFilter['type']) => {
-    store.selectFilters({ id, label, type });
-  };
-
-  const getIconName = (type: SelectedFilter['type']) => {
-    let iconName: keyof MapIconsType;
-    switch (type) {
-      case 'group':
-        iconName = 'check-circle';
-        break;
-      case 'include':
-        iconName = 'plus-circle';
-        break;
-      case 'exclude':
-        iconName = 'minus-circle';
-        break;
-    }
-
-    if (selectedFilter?.type === type) {
-      iconName += '-inverted';
-    }
-
-    return iconName as keyof MapIconsType;
-  };
-
-  const Controls = () => (
-    <div
-      css={{
-        display: 'flex',
-        justifyContent: 'space-between',
-      }}>
-      {group ? (
-        <FilterButton
-          variant="tertiary"
-          disabled={selectedFilter?.type === 'group'}
-          endIcon={
-            <Icon
-              name={getIconName('group')}
-              color={theme.colors.blue}
-              size={20}
-              tooltip="Add filter group"
-            />
-          }
-          onClick={() => selectFilters('group')}
-        />
-      ) : (
-        <>
-          <FilterButton
-            variant="tertiary"
-            disabled={selectedFilter?.type === 'include'}
-            endIcon={
-              <Icon
-                name={getIconName('include')}
-                color={theme.colors.greenDark}
-                size={20}
-                tooltip="Add include filter"
-              />
-            }
-            onClick={() => selectFilters('include')}
-          />
-          <FilterButton
-            variant="tertiary"
-            disabled={selectedFilter?.type === 'exclude'}
-            endIcon={
-              <Icon
-                name={getIconName('exclude')}
-                color={theme.colors.redDark}
-                size={20}
-                tooltip="Add exclude filter"
-              />
-            }
-            onClick={() => selectFilters('exclude')}
-          />
-        </>
-      )}
-    </div>
-  );
-
-  return (
-    <FiltersMultiSelectOptionBase
-      aria-selected={selected ?? !!selectedFilter}
-      role="option">
-      <span css>{children}</span>
-      <Controls />
-    </FiltersMultiSelectOptionBase>
-  );
-};
+/**
+ * FiltersMultiSelectOption - One filter row of a `FiltersMultiSelect`.
+ *
+ * Declarative: `FiltersMultiSelectOptions` reads its props and renders the
+ * row, so it renders nothing on its own. Regular filters get + (include) and
+ * − (exclude) controls; `group` filters get a single check-circle.
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * <FiltersMultiSelectOptions>
+ *   <FiltersMultiSelectOption filter={{ id: '1', label: 'Active' }}>
+ *     Active
+ *   </FiltersMultiSelectOption>
+ *   <FiltersMultiSelectOption filter={{ id: 'g', label: 'Saved', group: true }}>
+ *     Saved
+ *   </FiltersMultiSelectOption>
+ * </FiltersMultiSelectOptions>
+ * ```
+ *
+ * @see {@link FiltersMultiSelectOptions} - The list that renders it
+ */
+export const FiltersMultiSelectOption = (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _props: FiltersMultiSelectOptionProps,
+) => null;

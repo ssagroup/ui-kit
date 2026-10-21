@@ -27,7 +27,7 @@ describe('Filters', () => {
     await fireEvent.click(dropdownToggleEl);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(5);
 
     const logSpy = jest.spyOn(console, 'log');

@@ -74,7 +74,7 @@ describe('MultipleDropdown', () => {
     await user.click(dropdownToggleEl);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(items.length);
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
@@ -87,9 +87,7 @@ describe('MultipleDropdown', () => {
       const listItemEl = listItemEls[i];
       expect(listItemEl).toHaveAttribute('aria-selected', 'false');
       const itemListValue = getListItemValue(listItem);
-      expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-        itemListValue,
-      );
+      expect(listItemEl).toHaveTextContent(itemListValue);
       await within(listItemEl).findByText(itemListValue);
     }
   });
@@ -120,7 +118,7 @@ describe('MultipleDropdown', () => {
     await user.click(dropdownToggleEl);
 
     listboxEl = getByRole('listbox');
-    const listItemEls = within(listboxEl).getAllByRole('listitem');
+    const listItemEls = within(listboxEl).getAllByRole('option');
     expect(listItemEls.length).toBe(items.length);
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
@@ -136,9 +134,7 @@ describe('MultipleDropdown', () => {
       const itemListValue = getListItemValue(listItem);
 
       await within(listItemEl).findByText(itemListValue);
-      expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-        itemListValue,
-      );
+      expect(listItemEl).toHaveTextContent(itemListValue);
 
       if (selectedItemsValues.includes(listItem.value)) {
         expect(listItemEl).toHaveAttribute('aria-selected', 'true');
@@ -177,10 +173,8 @@ describe('MultipleDropdown', () => {
 
     listboxEl = getByRole('listbox');
 
-    const listItemEl = within(listboxEl).getByRole('listitem');
-
-    expect(listItemEl).toHaveAttribute('aria-selected', 'false');
-    within(listItemEl).getByText('No items');
+    expect(within(listboxEl).queryByRole('option')).not.toBeInTheDocument();
+    within(listboxEl).getByText('No items');
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
@@ -189,12 +183,8 @@ describe('MultipleDropdown', () => {
 
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-up');
 
-    // Items list hides when clicked
-    await userEvent.click(within(listItemEl).getByRole('button'));
-
-    expect(within(listItemEl).getByRole('button')).toHaveTextContent(
-      'No items',
-    );
+    // Clicking the empty state picks nothing
+    await userEvent.click(within(listboxEl).getByText('No items'));
 
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
 
@@ -215,7 +205,7 @@ describe('MultipleDropdown', () => {
 
     await user.click(dropdownToggleEl);
 
-    const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    const listItemEls = within(getByRole('listbox')).getAllByRole('option');
 
     await user.click(listItemEls[0]);
 
@@ -243,7 +233,7 @@ describe('MultipleDropdown', () => {
 
     await user.click(dropdownToggleEl);
 
-    const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    const listItemEls = within(getByRole('listbox')).getAllByRole('option');
 
     await user.click(listItemEls[0]);
 
@@ -284,7 +274,7 @@ describe('MultipleDropdown', () => {
 
     await user.click(dropdownToggleEl);
 
-    const listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    const listItemEls = within(getByRole('listbox')).getAllByRole('option');
 
     await user.click(listItemEls[2]);
 
@@ -400,7 +390,7 @@ describe('MultipleDropdown', () => {
     let dropdownToggleEl = within(dropdownEl).getByRole('combobox');
     await userEvent.click(dropdownToggleEl);
 
-    let listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    let listItemEls = within(getByRole('listbox')).getAllByRole('option');
     expect(listItemEls.length).toEqual(3);
 
     const updateItemsButton = getByText('Update items');
@@ -409,8 +399,119 @@ describe('MultipleDropdown', () => {
     dropdownToggleEl = within(dropdownEl).getByRole('combobox');
     await userEvent.click(dropdownToggleEl);
 
-    listItemEls = within(getByRole('listbox')).getAllByRole('button');
+    listItemEls = within(getByRole('listbox')).getAllByRole('option');
     expect(listItemEls.length).toEqual(4);
+  });
+
+  describe('keyboard', () => {
+    it('ArrowDown opens on the first selected option; arrows move', async () => {
+      const { user, getByRole } = setup({ selectedItems });
+      const toggle = getByRole('combobox');
+
+      toggle.focus();
+      await user.keyboard('{ArrowDown}');
+
+      const options = within(getByRole('listbox')).getAllByRole('option');
+      expect(toggle).toHaveAttribute('aria-activedescendant', options[2].id);
+
+      await user.keyboard('{ArrowDown}');
+      expect(toggle).toHaveAttribute('aria-activedescendant', options[3].id);
+
+      await user.keyboard('{Home}');
+      expect(toggle).toHaveAttribute('aria-activedescendant', options[0].id);
+
+      await user.keyboard('{End}');
+      expect(toggle).toHaveAttribute('aria-activedescendant', options[6].id);
+      expect(toggle).toHaveFocus();
+    });
+
+    it('Enter and Space toggle the highlighted option and keep the list open', async () => {
+      const { user, mockOnChange, getByRole } = setup({ selectedItems });
+      const toggle = getByRole('combobox');
+
+      toggle.focus();
+      await user.keyboard('{ArrowDown}');
+      await user.keyboard('{Enter}');
+      expect(mockOnChange).toHaveBeenLastCalledWith(3, false);
+      expect(getByRole('listbox')).toBeInTheDocument();
+
+      await user.keyboard('{ArrowDown}');
+      await user.keyboard(' ');
+      expect(mockOnChange).toHaveBeenLastCalledWith(4, true);
+      expect(getByRole('listbox')).toBeInTheDocument();
+
+      const options = within(getByRole('listbox')).getAllByRole('option');
+      expect(options[2]).toHaveAttribute('aria-selected', 'false');
+      expect(options[3]).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('Enter picks and closes in single-select mode', async () => {
+      const { user, mockOnChange, getByRole, queryByRole } = setup({
+        isMultiple: false,
+      });
+      const toggle = getByRole('combobox');
+
+      toggle.focus();
+      await user.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+
+      expect(mockOnChange).toHaveBeenCalledWith(2, true);
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(toggle).toHaveTextContent('Second Item');
+    });
+
+    it('Enter closes instead of picking an option that is no longer listed', async () => {
+      const { user, mockOnChange, getByRole, queryByRole, rerender } = setup();
+      const toggle = getByRole('combobox');
+
+      toggle.focus();
+      await user.keyboard('{ArrowDown}');
+      // The highlighted first option disappears while the list is open.
+      rerender(
+        <MultipleDropdown isMultiple onChange={mockOnChange}>
+          {items.slice(1).map((item) => (
+            <DropdownOption key={item.value} value={item.value}>
+              {item.label}
+            </DropdownOption>
+          ))}
+        </MultipleDropdown>,
+      );
+      expect(toggle).not.toHaveAttribute('aria-activedescendant');
+
+      await user.keyboard('{Enter}');
+      expect(mockOnChange).not.toHaveBeenCalled();
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('Escape and Tab close the list', async () => {
+      const { user, getByRole, queryByRole } = setup();
+      const toggle = getByRole('combobox');
+
+      toggle.focus();
+      await user.keyboard('{ArrowDown}');
+      await user.keyboard('{Escape}');
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(toggle).not.toHaveAttribute('aria-activedescendant');
+
+      await user.keyboard('{ArrowDown}');
+      await user.tab();
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('wires the toggle to the list it controls', async () => {
+      const { user, getByRole } = setup();
+      const toggle = getByRole('combobox');
+
+      await user.click(toggle);
+
+      expect(getByRole('listbox')).toHaveAttribute(
+        'id',
+        toggle.getAttribute('aria-controls'),
+      );
+      expect(getByRole('listbox')).toHaveAttribute(
+        'aria-multiselectable',
+        'true',
+      );
+    });
   });
 
   describe('width', () => {

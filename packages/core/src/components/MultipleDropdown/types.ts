@@ -136,4 +136,14 @@ export interface DropdownContextType<T extends DropdownOptionProps> {
    * Max height (px) of the options list
    */
   maxHeight?: number;
+
+  /**
+   * Highlighted option, driven by the toggle's keyboard and the pointer
+   */
+  activeValue?: string | number | null;
+
+  /**
+   * Updates the highlighted option
+   */
+  setActiveValue?: (value: string | number | null) => void;
 }

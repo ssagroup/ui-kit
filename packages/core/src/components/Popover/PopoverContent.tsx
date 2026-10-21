@@ -93,6 +93,15 @@ export const PopoverContent = React.forwardRef<
 
   const hidden = keepMounted && !floatingContext.open;
 
+  // A popover the pointer opened by hovering must not take focus, as with
+  // hover-only tooltips (#681): it would blur whatever the user is typing in.
+  // Opened by click or keyboard, focus still moves in.
+  const openEventType = floatingContext.dataRef.current.openEvent?.type;
+  const openedByHover =
+    openEventType === 'mouseenter' ||
+    openEventType === 'pointerenter' ||
+    openEventType === 'mousemove';
+
   const { color, size, hasBorder, hasShadow, hasArrow, arrowProps } = context;
 
   // The rounded corner belongs to any surface the popover draws itself, not
@@ -111,7 +120,8 @@ export const PopoverContent = React.forwardRef<
       <FloatingFocusManager
         context={floatingContext}
         modal={context.modal}
-        disabled={isFocusManagerDisabled}>
+        disabled={isFocusManagerDisabled}
+        initialFocus={openedByHover ? -1 : undefined}>
         <Wrapper
           ref={ref}
           css={[

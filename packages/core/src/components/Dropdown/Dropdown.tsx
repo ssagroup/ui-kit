@@ -1,5 +1,4 @@
 import React, {
-  KeyboardEvent,
   useState,
   useEffect,
   useLayoutEffect,
@@ -16,10 +15,8 @@ import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
 import { toDropdownMenuItems } from '@components/DropdownOptions/utils';
-import {
-  getContextMenuOptionId,
-  getNextActiveValue,
-} from '@components/ContextMenu';
+import { useToggleListKeys } from '@components/DropdownOptions/useToggleListKeys';
+import { getNextActiveValue } from '@components/ContextMenu';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import Icon from '@components/Icon';
 import Label from '@components/Label';
@@ -230,9 +227,6 @@ const Dropdown = <T extends DropdownOptionProps>({
   // Highlighted option. Focus stays on the toggle (the combobox), which
   // drives the list and points at the option with aria-activedescendant.
   const [activeValue, setActiveValue] = useState<string | number | null>(null);
-  // Set when the toggle's keydown already acted on Space, so the click the
-  // browser fires on keyup does not toggle the list straight back.
-  const spaceHandled = useRef(false);
   const listId = `dropdown-popup-${dropdownId}`;
 
   const close = () => {
@@ -323,55 +317,19 @@ const Dropdown = <T extends DropdownOptionProps>({
     );
   };
 
-  const handleToggleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    componentProps?.toggleButton?.onKeyDown?.(event);
-    if (event.defaultPrevented || isDropdownDisabled) return;
-
-    if (!isOpen) {
-      // Enter and Space open through the button's own click.
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault();
-        open(event.key);
-      }
-      return;
-    }
-
-    switch (event.key) {
-      case 'ArrowDown':
-      case 'ArrowUp':
-      case 'Home':
-      case 'End': {
-        event.preventDefault();
-        const next = getNextActiveValue(menuItems, activeValue, event.key);
-        if (next != null) setActiveValue(next);
-        break;
-      }
-      case 'Enter':
-      case ' ':
-        // Cancels the button click Enter fires on keydown; Space's is
-        // cancelled on keyup.
-        event.preventDefault();
-        spaceHandled.current = event.key === ' ';
-        if (activeValue === null) close();
-        else onChange(activeValue as string);
-        break;
-      case 'Escape':
-        event.preventDefault();
-        close();
-        break;
-      case 'Tab':
-        close();
-        break;
-    }
-  };
-
-  const handleToggleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
-    componentProps?.toggleButton?.onKeyUp?.(event);
-    if (event.key === ' ' && spaceHandled.current) {
-      spaceHandled.current = false;
-      event.preventDefault();
-    }
-  };
+  const toggleKeys = useToggleListKeys({
+    listId,
+    isOpen,
+    disabled: isDropdownDisabled,
+    menuItems,
+    activeValue,
+    setActiveValue,
+    open,
+    close,
+    onPick: (value) => onChange(value as string),
+    onKeyDown: componentProps?.toggleButton?.onKeyDown,
+    onKeyUp: componentProps?.toggleButton?.onKeyUp,
+  });
 
   const contextValue: DropdownContextType = React.useMemo(
     () => ({
@@ -447,19 +405,11 @@ const Dropdown = <T extends DropdownOptionProps>({
             disabled={isDropdownDisabled}
             status={status}
             onClick={() => (isOpen ? close() : open())}
-            onKeyDown={handleToggleKeyDown}
-            onKeyUp={handleToggleKeyUp}
+            {...toggleKeys}
             onFocus={setIsFocused.bind(null, true)}
             colors={colors}
             aria-labelledby={`dropdown-label-${dropdownId}`}
-            aria-controls={listId}
-            aria-activedescendant={
-              isOpen &&
-              activeValue !== null &&
-              menuItems.some((item) => item.value === activeValue)
-                ? getContextMenuOptionId(listId, activeValue)
-                : undefined
-            }>
+            aria-controls={listId}>
             {toggleContent}
             <DropdownArrow
               {...componentProps?.toggleButtonArrow}

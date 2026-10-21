@@ -142,7 +142,7 @@ describe('NestedTable columns', () => {
 
       await userEvent.click(triggers()[0]);
       await userEvent.click(
-        screen.getByRole('button', { name: 'Freeze to the left' }),
+        screen.getByRole('menuitem', { name: 'Freeze to the left' }),
       );
 
       expect(onFrozenColumnsChange).toHaveBeenLastCalledWith({

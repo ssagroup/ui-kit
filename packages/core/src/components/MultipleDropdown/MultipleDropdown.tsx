@@ -8,6 +8,12 @@ import DropdownBase from '@components/DropdownBase';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
+import {
+  OptionValue,
+  toDropdownMenuItems,
+} from '@components/DropdownOptions/utils';
+import { useToggleListKeys } from '@components/DropdownOptions/useToggleListKeys';
+import { getNextActiveValue } from '@components/ContextMenu';
 import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 import { resolveDisabled } from '@utils/deprecation';
@@ -72,7 +78,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, T>
   >({});
-  const [items, setItems] = useState<Array<React.ReactElement>>([]);
+  // Highlighted option. Focus stays on the toggle (the combobox), which
+  // drives the list and points at the option with aria-activedescendant.
+  const [activeValue, setActiveValue] = useState<OptionValue | null>(null);
+  const listId = `dropdown-popup-${dropdownId}`;
   const [values, setValues] = useState<Array<unknown>>([]);
   const [valuesWithoutPlaceholder, setValuesWithoutPlaceholder] = useState<
     Array<unknown>
@@ -83,11 +92,31 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     [JSON.stringify(selectedItems)],
   );
 
+  const childrenArray = React.Children.toArray(children).filter(Boolean);
+  const menuItems = toDropdownMenuItems(childrenArray);
+
+  const close = () => {
+    setIsOpen(false);
+    setActiveValue(null);
+  };
+
+  /** Opens with the first selected option highlighted, else per the key pressed. */
+  const open = (key = 'ArrowDown') => {
+    setIsOpen(true);
+    const selected = menuItems.find(
+      (item) => !item.disabled && optionsWithKey[item.value]?.isSelected,
+    );
+    setActiveValue(
+      selected?.value ?? getNextActiveValue(menuItems, null, key) ?? null,
+    );
+  };
+
   const onChange = (item: DropdownOptionProps) => {
     if (isDropdownDisabled || !item) {
       return;
     }
     if (!isMultiple && optionsWithKey[item.value].isSelected) {
+      close();
       return;
     }
     let newOptionsWithKey = {};
@@ -111,7 +140,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
         optionsWithKey,
       );
       setOptionsWithKey(newOptionsWithKey);
-      setIsOpen(false);
+      close();
     }
 
     if (handleChange) {
@@ -119,40 +148,40 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     }
   };
 
-  useClickOutside(dropdownBaseRef, () => isOpen && setIsOpen(false));
+  useClickOutside(dropdownBaseRef, () => isOpen && close());
 
   useEffect(() => {
     if (isDropdownDisabled && isOpen) {
-      setIsOpen(false);
+      close();
     }
   }, [isDropdownDisabled]);
 
   useEffect(() => {
-    const childrenArray = React.Children.toArray(children).filter(Boolean);
-    const newOptions: T[] = [];
     const keyedOptions: Record<number | string, T> = {};
-    const childItems = (childrenArray as React.ReactElement<T>[]).map(
-      (child, index) => {
-        const newOption = {
-          ...child.props,
-          isSelected: !!memoSelectedItems.find(
-            (selectedItem) => selectedItem.value === child.props.value,
-          ),
-        };
-        newOptions.push(newOption);
-        keyedOptions[newOption.value] = newOption;
-
-        return React.cloneElement(child, {
-          index,
-          onClick: onChange.bind(null),
-          ...child.props,
-        });
-      },
-    );
+    (childrenArray as React.ReactElement<T>[]).forEach((child) => {
+      keyedOptions[child.props.value] = {
+        ...child.props,
+        isSelected: !!memoSelectedItems.find(
+          (selectedItem) => selectedItem.value === child.props.value,
+        ),
+      };
+    });
 
     setOptionsWithKey(keyedOptions);
-    setItems(childItems);
   }, [memoSelectedItems, children]);
+
+  const toggleKeys = useToggleListKeys({
+    listId,
+    isOpen,
+    disabled: isDropdownDisabled,
+    menuItems,
+    activeValue,
+    setActiveValue,
+    open,
+    close,
+    // Toggles the option; the list stays open in multi-select mode.
+    onPick: (value) => onChange(optionsWithKey[value]),
+  });
 
   const contextValue: DropdownContextType<DropdownOptionProps> = React.useMemo(
     () => ({
@@ -160,8 +189,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
       allItems: optionsWithKey,
       isMultiple,
       maxHeight,
+      activeValue,
+      setActiveValue,
     }),
-    [onChange, optionsWithKey, isMultiple, maxHeight],
+    [onChange, optionsWithKey, isMultiple, maxHeight, activeValue],
   );
 
   useEffect(() => {
@@ -184,9 +215,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
           className={className}
           isOpen={isOpen}
           disabled={isDropdownDisabled}
-          onClick={setIsOpen.bind(null, !isOpen)}
+          onClick={() => (isOpen ? close() : open())}
+          {...toggleKeys}
           aria-labelledby={`dropdown-label-${dropdownId}`}
-          aria-controls={`dropdown-popup-${dropdownId}`}
+          aria-controls={listId}
           isMultiple={isMultiple}
           selectedCount={valuesWithoutPlaceholder.length}>
           {isMultiple ? (
@@ -213,7 +245,9 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
         </DropdownToggle>
 
         {isOpen ? (
-          <MultipleDropdownOptions>{items}</MultipleDropdownOptions>
+          <MultipleDropdownOptions id={listId}>
+            {childrenArray}
+          </MultipleDropdownOptions>
         ) : null}
       </DropdownBase>
     </MultipleDropdownContext.Provider>
@@ -287,7 +321,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
  *
  * @accessibility
  * - ARIA attributes set according to WAI-ARIA combobox pattern
- * - Keyboard navigation (Arrow keys, Enter, Escape)
+ * - Focus stays on the toggle, which points at the highlighted option with
+ *   `aria-activedescendant`
+ * - Arrow keys, Home and End move the highlight; Enter or Space toggles it
+ *   (picks and closes in single-select mode); Escape and Tab close
  * - Click outside to close
  * - Screen reader friendly with aria-expanded and aria-controls
  *

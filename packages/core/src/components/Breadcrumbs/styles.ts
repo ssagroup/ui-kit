@@ -67,35 +67,20 @@ export const crumbCurrent = css`
 `;
 
 export const menu = css`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
   min-width: 140px;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  background: ${theme.colors.white};
-  border: 1px solid ${theme.colors.grey20};
-  border-radius: 8px;
-  box-shadow: 0 8px 24px ${theme.colors.greyDarker14};
 `;
 
-export const menuItem = css`
-  ${fontBase};
-  font-weight: 500;
+/* Fills the whole row (cancelling its padding), so a click anywhere on the
+   row lands on the link. */
+export const menuLink = css`
+  flex: 1;
   display: block;
-  padding: 6px 10px;
-  border-radius: 6px;
-  color: ${theme.colors.greyDarker80};
+  min-width: 0;
+  margin: -8px -12px;
+  padding: 8px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: inherit;
   text-decoration: none;
-  cursor: pointer;
-  transition:
-    color 0.15s ease,
-    background-color 0.15s ease;
-
-  &:hover,
-  &:focus-visible {
-    color: ${theme.colors.greyDarker};
-    background-color: ${theme.colors.blue6};
-  }
 `;

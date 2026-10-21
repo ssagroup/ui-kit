@@ -45,7 +45,16 @@ export const getTextValue = <V extends ContextMenuValue>(
 
 /**
  * Where Enter moves an `includeExclude` row: none → include → exclude → none,
- * or none ⇄ selected for `selectOnly` rows.
+ * or none ⇄ selected for `selectOnly` rows. For driving that cycle from an
+ * input that keeps focus while it highlights rows.
+ *
+ * @example
+ * ```ts
+ * nextIncludeExcludeType(undefined, false); // 'include'
+ * nextIncludeExcludeType('include', false); // 'exclude'
+ * nextIncludeExcludeType('exclude', false); // undefined
+ * nextIncludeExcludeType(undefined, true); // 'selected'
+ * ```
  */
 export const nextIncludeExcludeType = (
   current: ContextMenuIncludeExcludeType | undefined,

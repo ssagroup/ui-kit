@@ -2,6 +2,7 @@ import { MouseEvent, useLayoutEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import Icon from '@components/Icon';
+import { ContextMenu } from '@components/ContextMenu';
 import {
   Popover,
   PopoverContent,
@@ -64,29 +65,6 @@ const Trigger = styled.button`
   }
 `;
 
-const MenuItem = styled.button`
-  display: block;
-  width: 100%;
-  padding: 8px 12px;
-
-  border: none;
-  border-radius: 6px;
-  background: none;
-  color: ${({ theme }) => theme.colors.greyDarker};
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
-  white-space: nowrap;
-  cursor: pointer;
-
-  &:hover,
-  &:focus-visible {
-    outline: none;
-    background: ${({ theme }) => theme.colors.greyLighter};
-  }
-`;
-
 type MenuEntry = { label: string; next: Required<FrozenColumns> };
 
 // Header cells are often clickable (sorting). The menu lives in a portal,
@@ -94,7 +72,7 @@ type MenuEntry = { label: string; next: Required<FrozenColumns> };
 const stop = (event: MouseEvent) => event.stopPropagation();
 
 /** Lives inside the popover so it can close it. */
-const MenuItems = ({
+const Menu = ({
   items,
   onSelect,
 }: {
@@ -102,18 +80,20 @@ const MenuItems = ({
   onSelect: (next: Required<FrozenColumns>) => void;
 }) => {
   const { setOpen } = usePopoverContext();
-  return items.map(({ label, next }) => (
-    <MenuItem
-      key={label}
-      type="button"
-      onClick={(event) => {
-        stop(event);
-        onSelect(next);
+  return (
+    <ContextMenu<string>
+      aria-label="Freeze column"
+      css={{ minWidth: 180 }}
+      items={items.map(({ label }) => ({ value: label, label }))}
+      onAction={(label) => {
+        const entry = items.find((item) => item.label === label);
+        if (!entry) return;
+        onSelect(entry.next);
         setOpen(false);
-      }}>
-      {label}
-    </MenuItem>
-  ));
+      }}
+      onClick={stop}
+    />
+  );
 };
 
 const without = (ids: ColumnId[], id: ColumnId) =>
@@ -147,6 +127,8 @@ const without = (ids: ColumnId[], id: ColumnId) =>
  *
  * @accessibility
  * - The trigger is a labelled button, reachable by keyboard even while hidden
+ * - Opening moves focus into the menu (`role="menu"`): arrows, Home, End and
+ *   type-to-find move the highlight, Enter or Space picks, Escape closes
  * - Clicks inside the menu do not reach the header cell, so they never sort
  */
 export const ColumnFreezeMenu = ({ columnId }: ColumnFreezeMenuProps) => {
@@ -200,7 +182,7 @@ export const ColumnFreezeMenu = ({ columnId }: ColumnFreezeMenuProps) => {
 
   return (
     <Anchor ref={anchorRef}>
-      <Popover placement="bottom-end" color="white" hasShadow>
+      <Popover placement="bottom-end">
         <PopoverTrigger asChild>
           <Trigger
             type="button"
@@ -214,8 +196,9 @@ export const ColumnFreezeMenu = ({ columnId }: ColumnFreezeMenuProps) => {
             />
           </Trigger>
         </PopoverTrigger>
-        <PopoverContent css={{ padding: 4, minWidth: 180 }}>
-          <MenuItems items={items} onSelect={columnFreeze.setFrozenColumns} />
+        {/* No surface here: the menu draws its own. */}
+        <PopoverContent>
+          <Menu items={items} onSelect={columnFreeze.setFrozenColumns} />
         </PopoverContent>
       </Popover>
     </Anchor>

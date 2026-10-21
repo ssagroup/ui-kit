@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import Table from '@components/Table';
@@ -69,7 +70,7 @@ const openMenu = async (column: number) => {
 };
 
 const choose = (name: string) =>
-  userEvent.click(screen.getByRole('button', { name }));
+  userEvent.click(screen.getByRole('menuitem', { name }));
 
 const isSticky = (cell: HTMLElement) =>
   getComputedStyle(cell).position === 'sticky';
@@ -185,7 +186,7 @@ describe('Table column freezing', () => {
     // Normalised to start; the menu offers to unfreeze, not to freeze again.
     await openMenu(1);
     expect(
-      screen.getByRole('button', { name: 'Unfreeze column' }),
+      screen.getByRole('menuitem', { name: 'Unfreeze column' }),
     ).toBeInTheDocument();
   });
 
@@ -202,6 +203,21 @@ describe('Table column freezing', () => {
 
     expect(onFrozenColumnsChange).toHaveBeenCalledWith({ start: [0], end: [] });
     expect(triggers()[0]).not.toHaveAttribute('data-frozen');
+  });
+
+  it('is keyboard operable: focus moves into the menu, Enter picks', async () => {
+    const onFrozenColumnsChange = jest.fn();
+    renderTable({ freezeControls: true, onFrozenColumnsChange });
+
+    triggers()[2].focus();
+    await userEvent.keyboard('{Enter}');
+
+    const menu = screen.getByRole('menu');
+    await waitFor(() => expect(menu).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+
+    expect(onFrozenColumnsChange).toHaveBeenCalledWith({ start: [], end: [2] });
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
   it('keeps menu clicks away from the header cell', async () => {

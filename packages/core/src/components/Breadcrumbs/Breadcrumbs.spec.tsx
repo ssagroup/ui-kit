@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { Breadcrumbs } from './Breadcrumbs';
 import { BreadcrumbItem } from './types';
@@ -105,6 +105,61 @@ describe('Component: Breadcrumbs', () => {
       );
       getByRole('link', { name: 'Engineering' });
       getByRole('link', { name: 'Frontend' });
+    });
+
+    it('follows the highlighted link with Enter', async () => {
+      const onNavigate = jest.fn();
+      const Location = () => {
+        onNavigate(useLocation().pathname);
+        return null;
+      };
+      const { user, getByRole } = setup(
+        <>
+          <Breadcrumbs items={longItems} maxItems={3} />
+          <Location />
+        </>,
+      );
+
+      await user.click(
+        getByRole('button', { name: 'Show hidden breadcrumbs' }),
+      );
+      const menu = getByRole('menu');
+      expect(getByRole('menuitem', { name: 'People' })).toContainElement(
+        getByRole('link', { name: 'People' }),
+      );
+
+      menu.focus();
+      await user.keyboard('{ArrowDown}{Enter}');
+
+      expect(onNavigate).toHaveBeenLastCalledWith('/engineering');
+    });
+
+    it('leaves focus where it was when a sibling menu opens on hover', async () => {
+      const { user, getByRole, findByRole } = setup(
+        <>
+          <input aria-label="search" />
+          <Breadcrumbs
+            items={[
+              { label: 'Home', to: '/' },
+              {
+                label: 'People',
+                to: '/people',
+                siblings: [{ label: 'Teams', to: '/teams' }],
+              },
+              { label: 'Jane Doe' },
+            ]}
+          />
+        </>,
+      );
+      const input = getByRole('textbox', { name: 'search' });
+      input.focus();
+
+      await user.hover(getByRole('link', { name: 'People' }));
+      await findByRole('menu');
+      // The focus manager moves focus on a later frame, so wait past it.
+      await new Promise((resolve) => setTimeout(resolve, 50));
+
+      expect(input).toHaveFocus();
     });
 
     it('does not collapse when items are within maxItems', () => {

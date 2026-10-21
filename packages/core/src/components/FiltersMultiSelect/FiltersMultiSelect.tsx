@@ -1,4 +1,4 @@
-import { useId, useRef } from 'react';
+import { KeyboardEvent, useEffect, useId, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { UseFormReturn } from 'react-hook-form';
 import { useResizeObserver } from '@ssa-ui-kit/hooks';
@@ -23,6 +23,12 @@ import {
 import { FiltersMultiSelectProvider } from './FiltersMultiSelectProvider';
 import { FilterBadge } from './components/FilterBadge';
 import { FiltersMultiSelectEmpty } from './components/FiltersMultiSelectEmpty';
+import {
+  getContextMenuOptionId,
+  getNextActiveValue,
+  nextIncludeExcludeType,
+} from '@components/ContextMenu';
+import { FilterMenuItem, getMenuType, setFilterType } from './utils';
 
 export interface FiltersMultiSelectProps extends Pick<
   FieldProps,
@@ -83,12 +89,69 @@ export const FiltersMultiSelect = ({
 
   const { selectedFilters } = store;
 
+  const listId = `filters-multi-select-list-${id}`;
+  const itemsRef = useRef<FilterMenuItem[]>([]);
+  // Highlighted option. Focus stays in the search input, which drives the
+  // list and points at the option with aria-activedescendant.
+  const [activeValue, setActiveValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!store.open) setActiveValue(null);
+  }, [store.open]);
+
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    inputProps?.onKeyDown?.(event);
+    if (event.defaultPrevented || disabled) return;
+    const items = itemsRef.current;
+
+    switch (event.key) {
+      case 'ArrowDown':
+      case 'ArrowUp': {
+        // Home / End stay with the input's caret.
+        event.preventDefault();
+        if (!store.open) {
+          store.toggleDropdown(true);
+          return;
+        }
+        const next = getNextActiveValue(items, activeValue, event.key);
+        if (next != null) setActiveValue(next);
+        break;
+      }
+      case 'Enter': {
+        const item = items.find((entry) => entry.value === activeValue);
+        if (!store.open || !item) return;
+        // none → include → exclude → none; groups: none ⇄ selected.
+        event.preventDefault();
+        setFilterType(
+          store,
+          item.filter,
+          nextIncludeExcludeType(
+            getMenuType(store, item.filter.id),
+            !!item.filter.group,
+          ),
+        );
+        break;
+      }
+      case 'Tab':
+        if (store.open) store.toggleDropdown(false);
+        break;
+    }
+  };
+
   const emptyNode = controlledEmptyNode || (
     <FiltersMultiSelectEmpty>No Items Found</FiltersMultiSelectEmpty>
   );
 
   return (
-    <FiltersMultiSelectProvider value={{ store, emptyNode }}>
+    <FiltersMultiSelectProvider
+      value={{
+        store,
+        emptyNode,
+        listId,
+        activeValue,
+        setActiveValue,
+        itemsRef,
+      }}>
       <Field.Root disabled={disabled} status={status} {...fieldProps}>
         {label && (
           <Field.Label htmlFor={`formElement-search-${id}`}>
@@ -143,7 +206,10 @@ export const FiltersMultiSelect = ({
                       disabled={disabled}
                       status="custom"
                       inputProps={{
-                        onChange: (e) => store.setSearch(e.target.value),
+                        onChange: (e) => {
+                          store.setSearch(e.target.value);
+                          setActiveValue(null);
+                        },
                         onFocus: () => store.toggleDropdown(true),
                         onKeyUp: (e) => {
                           if (e.key === 'Escape') {
@@ -151,7 +217,13 @@ export const FiltersMultiSelect = ({
                           }
                         },
                         autoComplete: 'off',
+                        'aria-controls': store.open ? listId : undefined,
+                        'aria-activedescendant':
+                          store.open && activeValue !== null
+                            ? getContextMenuOptionId(listId, activeValue)
+                            : undefined,
                         ...inputProps,
+                        onKeyDown: handleInputKeyDown,
                       }}
                       ref={inputRef}
                       wrapperClassName={css`
