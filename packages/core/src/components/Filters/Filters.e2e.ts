@@ -65,11 +65,11 @@ test('Widgets: Filters - More button count notification should be changed', asyn
   await expect(page.getByTestId('trigger-notification')).toHaveText('2');
 
   await page.getByText('Status: Running').click();
-  await page.getByRole('button', { name: 'Stopped' }).click();
+  await page.getByRole('option', { name: 'Stopped' }).click();
   await expect(page.getByText('Status: Running+1')).toBeVisible();
 
   await page.getByText('Strategy #3').click();
-  await page.getByRole('button', { name: 'strategy #3 checkbox1' }).click();
+  await page.getByRole('option', { name: 'strategy #3 checkbox1' }).click();
 
   triggerButton = page.getByTestId('trigger-button');
   beforeContent = await triggerButton.evaluate((el) => {
