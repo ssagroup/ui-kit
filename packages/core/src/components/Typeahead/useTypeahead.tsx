@@ -5,10 +5,17 @@ import { useElementSize, useUncontrolled } from '@ssa-ui-kit/hooks';
 import { isNill } from '@ssa-ui-kit/utils';
 import { resolveDisabled } from '@utils/deprecation';
 import {
+  ContextMenuItem,
+  getContextMenuOptionId,
+  getNextActiveValue,
+} from '@components/ContextMenu';
+import {
+  TypeaheadItemProps,
   TypeaheadOptionProps,
   TypeaheadValue,
   UseTypeaheadProps,
 } from './types';
+import * as S from './styles';
 
 type HandleChangeParams = {
   value?: string | number;
@@ -26,6 +33,18 @@ const findExactMatch = (
     return labelText === normalizedInput;
   });
 };
+
+/**
+ * Options in order, with fragments unwrapped: consumers commonly map their
+ * options inside a `<>...</>`, which `React.Children` treats as one child.
+ */
+const toOptionArray = (children: React.ReactNode): React.ReactNode[] =>
+  React.Children.toArray(children).flatMap((child) =>
+    React.isValidElement<{ children?: React.ReactNode }>(child) &&
+    child.type === React.Fragment
+      ? toOptionArray(child.props.children)
+      : [child],
+  );
 
 export const useTypeahead = ({
   name = 'typeahead-input',
@@ -101,7 +120,7 @@ export const useTypeahead = ({
 
   const optionsWithKey = useMemo(() => {
     const opts: Record<string | number, TypeaheadOptionProps> = {};
-    React.Children.forEach(children, (child) => {
+    toOptionArray(children).forEach((child) => {
       if (React.isValidElement<TypeaheadOptionProps>(child)) {
         opts[child.props.value] = child.props;
       }
@@ -137,10 +156,10 @@ export const useTypeahead = ({
 
   const filteredChildren = useMemo(() => {
     // if filtering is disabled, or there's no input, show all
-    if (!filterOptions || !inputValue) return React.Children.toArray(children);
+    if (!filterOptions || !inputValue) return toOptionArray(children);
 
     const needle = inputValue.toLowerCase();
-    return React.Children.toArray(children).filter((child) => {
+    return toOptionArray(children).filter((child) => {
       if (!React.isValidElement(child)) return false;
       const { label, value } = child.props as TypeaheadOptionProps;
       const text = (label ?? value)?.toString().toLowerCase() || '';
@@ -148,47 +167,89 @@ export const useTypeahead = ({
     });
   }, [children, inputValue]);
 
-  const items = useMemo(() => {
-    return filteredChildren.map((child, index) => {
-      if (!React.isValidElement(child)) return null;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const childElement = child as React.ReactElement<any>;
-      const isActive = selectedItems.includes(childElement.props.value);
-      const { value, label, id } = childElement.props;
-      const isDisabled = resolveDisabled(
-        'TypeaheadOption',
-        childElement.props.disabled,
-        childElement.props.isDisabled,
-      );
+  const listId = `typeahead-popup-${typeaheadId}`;
 
-      return React.cloneElement(childElement, {
-        ...childElement.props,
-        index,
-        isActive,
-        isDisabled,
-        role: 'option',
-        'aria-selected': isActive,
-        'aria-labelledby': `typeahead-label-${name}`,
-        onClick: (e: React.BaseSyntheticEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (!isDisabled) {
-            const shouldClose = !isMultiple;
-            handleChange({ value, shouldClose });
-          }
-        },
-        children:
-          renderOption?.({
-            value: id || value,
-            input: inputValue as string,
-            label,
-          }) ??
-          childElement.props.children ??
-          label ??
-          value,
-      });
+  const customOptionValue =
+    allowCustomValues && inputValue.trim() ? inputValue.trim() : null;
+
+  // Everything the list shows, in order: selected custom values, the value
+  // being typed (when custom values are allowed), then the filtered options.
+  // Built here rather than in the list so keyboard navigation in the input
+  // walks exactly what is on screen.
+  const menuItems = useMemo(() => {
+    const customItem = (
+      value: TypeaheadValue,
+    ): ContextMenuItem<TypeaheadValue> => ({
+      value,
+      label: <S.CustomValueLabel>{value}</S.CustomValueLabel>,
+      textValue: String(value),
     });
-  }, [children, selectedItems, inputValue]);
+
+    const selectedCustom = selectedItems
+      .filter((item) => !optionsWithKey[item])
+      .map(customItem);
+    const typedCustom =
+      customOptionValue &&
+      !selectedItems.includes(customOptionValue) &&
+      !optionsWithKey[customOptionValue]
+        ? [customItem(customOptionValue)]
+        : [];
+
+    const options = filteredChildren.flatMap(
+      (child): ContextMenuItem<TypeaheadValue>[] => {
+        if (!React.isValidElement<TypeaheadItemProps>(child)) return [];
+        const { value, label, avatar, children: content } = child.props;
+        const { id } = child.props as { id?: TypeaheadValue };
+        if (isNill(value)) return [];
+        const disabled = resolveDisabled(
+          'TypeaheadOption',
+          child.props.disabled,
+          child.props.isDisabled,
+        );
+        return [
+          {
+            value,
+            label:
+              renderOption?.({
+                value: id || value,
+                input: inputValue as string,
+                // Passed through as given, as before the ContextMenu move.
+                label: label as string,
+              }) ??
+              content ??
+              label ??
+              value,
+            textValue: String(label ?? value),
+            avatar: avatar ? (
+              <S.TypeaheadItemAvatar data-testid="typeahead-option-avatar">
+                {avatar}
+              </S.TypeaheadItemAvatar>
+            ) : undefined,
+            disabled,
+          },
+        ];
+      },
+    );
+
+    return [...selectedCustom, ...typedCustom, ...options];
+  }, [
+    filteredChildren,
+    selectedItems,
+    optionsWithKey,
+    customOptionValue,
+    inputValue,
+    renderOption,
+  ]);
+
+  // The highlighted option. Focus stays in the input, so the list is driven
+  // from here and announced through aria-activedescendant.
+  const [rawActiveValue, setActiveValue] = useState<TypeaheadValue | null>(
+    null,
+  );
+  // Filtering can remove the highlighted option; it is then no longer active.
+  const activeValue = menuItems.some((item) => item.value === rawActiveValue)
+    ? rawActiveValue
+    : null;
 
   const firstSuggestion = useMemo(() => {
     if (!inputValue) return '';
@@ -211,6 +272,7 @@ export const useTypeahead = ({
   const setIsOpen = (open: boolean) => {
     if (!open) {
       form.trigger(name);
+      setActiveValue(null);
     }
     _setIsOpen(open);
   };
@@ -270,6 +332,7 @@ export const useTypeahead = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setRawInput(input);
+    setActiveValue(null);
     if (!autoSelect || !filterOptions) return;
     const match = findExactMatch(input, optionsWithKey);
     if (match) {
@@ -295,12 +358,36 @@ export const useTypeahead = ({
     }
   };
 
-  const customOptionValue =
-    allowCustomValues && inputValue.trim() ? inputValue.trim() : null;
-
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     e,
   ) => {
+    // Arrows walk the list without leaving the input; Home / End stay with the
+    // input's caret.
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (isDisabled) return;
+      if (!isOpen) {
+        setIsOpen(true);
+        const selected = menuItems.find(
+          (item) => !item.disabled && selectedItems.includes(item.value),
+        );
+        setActiveValue(
+          selected?.value ?? getNextActiveValue(menuItems, null, e.key) ?? null,
+        );
+        return;
+      }
+      setActiveValue(getNextActiveValue(menuItems, activeValue, e.key) ?? null);
+      return;
+    }
+
+    // Enter on a highlighted option chooses it, ahead of the custom value and
+    // first-suggestion shortcuts below.
+    if (e.key === 'Enter' && isOpen && activeValue !== null) {
+      e.preventDefault();
+      handleChange({ value: activeValue, shouldClose: !isMultiple });
+      return;
+    }
+
     const isEnterOrTab = ['Enter', 'Tab'].includes(e.code);
 
     // Enter: add custom value when it's the first option
@@ -339,6 +426,19 @@ export const useTypeahead = ({
     if (!isOpen && firstSuggestion !== inputValue) {
       setIsOpen(true);
     }
+  };
+
+  /** An option chosen in the list, by click or Enter. */
+  const handleOptionAction = (value: TypeaheadValue) => {
+    handleChange({ value, shouldClose: !isMultiple });
+  };
+
+  const inputAriaProps = {
+    'aria-controls': isOpen ? listId : undefined,
+    'aria-activedescendant':
+      isOpen && activeValue !== null
+        ? getContextMenuOptionId(listId, activeValue)
+        : undefined,
   };
 
   const handleRemoveSelectedClick =
@@ -397,8 +497,13 @@ export const useTypeahead = ({
     status,
     error: error ?? form.formState.errors[name],
     placeholder,
-    options: items,
+    listId,
+    menuItems,
+    activeValue,
+    setActiveValue,
+    inputAriaProps,
     customOptionValue,
+    handleOptionAction,
     handleChange,
     useFormResult: form,
     register,

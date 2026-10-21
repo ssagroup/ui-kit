@@ -41,6 +41,9 @@ export type { RadioProps } from './Radio/types';
 export { default as RadioGroup } from './RadioGroup';
 export type * from './RadioGroup/types';
 
+export * from './ContextMenu';
+export type * from './ContextMenu/types';
+
 export { default as Dropdown } from './Dropdown';
 export type * from './Dropdown/types';
 export { default as DropdownArrow } from './DropdownArrow';

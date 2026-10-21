@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import {
   Popover,
   PopoverContent,
@@ -226,7 +225,6 @@ export const Typeahead = ({
   onRemoveSelectedClick,
   renderOption,
 }: TypeaheadProps) => {
-  const theme = useTheme();
   const isTypeaheadDisabled = resolveDisabled(
     'Typeahead',
     disabled,
@@ -303,17 +301,15 @@ export const Typeahead = ({
               <TypeaheadTrigger />
               <PopoverContent
                 className={popoverClassName}
+                // No shadow here: the list draws its own, with rounded corners.
                 css={{
                   width: hookResult.triggerRef.current?.clientWidth,
-                  boxShadow: `-4px 4px 14px 0px ${theme.colors.greyDarker14}`,
                   zIndex: 1100,
                 }}
                 isFocusManagerDisabled>
                 <PopoverDescription css={{ width: '100%' }}>
                   {hookResult.isOpen ? (
-                    <TypeaheadOptions className={optionsClassName}>
-                      {children}
-                    </TypeaheadOptions>
+                    <TypeaheadOptions className={optionsClassName} />
                   ) : null}
                 </PopoverDescription>
               </PopoverContent>

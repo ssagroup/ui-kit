@@ -23,8 +23,20 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   validationSchema: {},
   status: 'basic',
   isDisabled: false,
-  options: [],
+  listId: '',
+  menuItems: [],
+  activeValue: null,
+  setActiveValue: () => {
+    /* no-op */
+  },
+  inputAriaProps: {
+    'aria-controls': undefined,
+    'aria-activedescendant': undefined,
+  },
   customOptionValue: null,
+  handleOptionAction: () => {
+    /* no-op */
+  },
   handleChange: () => {
     /* no-op */
   },

@@ -1,81 +1,56 @@
-import React from 'react';
-import { NoOptions } from './NoOptions';
-import { TypeaheadOption } from './TypeaheadOption';
-import { TypeaheadItemsListProps } from '../types';
-import { useTypeaheadContext } from '../Typeahead.context';
-import * as S from '../styles';
+import { MouseEvent } from 'react';
 
+import { ContextMenu, ContextMenuProps } from '@components/ContextMenu';
+
+import { TypeaheadItemsListProps, TypeaheadValue } from '../types';
+import { useTypeaheadContext } from '../Typeahead.context';
+
+/** Matches the list's previous fixed cap. */
+const MAX_HEIGHT = 350;
+
+// Focus has to stay in the input while the list is used with the pointer, so
+// pressing inside the list must not move it.
+const keepInputFocus = (event: MouseEvent) => event.preventDefault();
+
+/**
+ * TypeaheadOptions - The Typeahead's option list: a `ContextMenu` driven from
+ * the Typeahead's input. The options themselves come from the `TypeaheadOption`
+ * children of `Typeahead`, filtered by the typed text. Rendered by
+ * `Typeahead` itself; reads everything from the Typeahead context.
+ *
+ * @example
+ * ```tsx
+ * // Inside a Typeahead's popup
+ * <TypeaheadOptions noItemsMessage="Nobody matches" />
+ * ```
+ */
 export const TypeaheadOptions = ({
   noItemsMessage = 'No matches found',
-  children,
+  className,
 }: TypeaheadItemsListProps) => {
   const context = useTypeaheadContext();
 
-  const createCustomOption = (
-    value: string | number,
-    isActive: boolean,
-    key: string,
-  ) => (
-    <TypeaheadOption
-      key={key}
-      value={value}
-      label={value}
-      isCustomValue
-      isActive={isActive}
-      role="option"
-      aria-selected={isActive}
-      onClick={(e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!context.isDisabled) {
-          context.handleChange({
-            value,
-            shouldClose: !context.isMultiple,
-          });
-        }
-      }}>
-      {value}
-    </TypeaheadOption>
-  );
-
-  const selectedCustomValues = context.selectedItems.filter(
-    (item) => !context.optionsWithKey[item],
-  );
-
-  const selectedCustomOptions = selectedCustomValues.map((value) =>
-    createCustomOption(value, true, `typeahead-selected-custom-${value}`),
-  );
-
-  const hasTypedCustomValue =
-    context.customOptionValue &&
-    !context.selectedItems.includes(context.customOptionValue);
-
-  const typedCustomOption = hasTypedCustomValue
-    ? createCustomOption(
-        context.customOptionValue!,
-        false,
-        'typeahead-custom-value',
-      )
-    : null;
-
-  const hasNoOptions =
-    !context.options?.length &&
-    React.Children.toArray(children).filter(Boolean).length === 0;
-
-  const noOptionsFallback = hasNoOptions ? (
-    <NoOptions key="no-items" aria-selected={false}>
-      {noItemsMessage}
-    </NoOptions>
-  ) : null;
-
-  const options = [
-    ...selectedCustomOptions,
-    typedCustomOption,
-    ...(context.options || []),
-    noOptionsFallback,
-  ].filter(Boolean);
+  const selection = (
+    context.isMultiple
+      ? { selectionMode: 'multiple', value: context.selectedItems }
+      : { selectionMode: 'single', value: context.selectedItems[0] ?? null }
+  ) as ContextMenuProps<TypeaheadValue>;
 
   return (
-    <S.TypeaheadOptionsBase role="listbox">{options}</S.TypeaheadOptionsBase>
+    <ContextMenu<TypeaheadValue>
+      {...selection}
+      id={context.listId}
+      className={className}
+      items={context.menuItems}
+      indicator="check"
+      activeValue={context.activeValue}
+      onActiveValueChange={context.setActiveValue}
+      onAction={context.handleOptionAction}
+      emptyState={noItemsMessage}
+      maxHeight={MAX_HEIGHT}
+      // Not a tab stop: the keyboard is handled by the input.
+      tabIndex={-1}
+      onMouseDown={keepInputFocus}
+    />
   );
 };

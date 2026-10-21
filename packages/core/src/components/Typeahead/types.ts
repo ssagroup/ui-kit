@@ -284,6 +284,12 @@ export type UseTypeaheadProps = Pick<
  * Props for TypeaheadOptions container component
  */
 export interface TypeaheadItemsListProps extends CommonProps {
+  /**
+   * Ignored: the options come from the `TypeaheadOption` children of
+   * `Typeahead`, through context.
+   *
+   * @deprecated Has no effect. Removed in the next major release.
+   */
   children?: React.ReactNode;
   noItemsMessage?: string;
 }

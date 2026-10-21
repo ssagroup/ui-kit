@@ -184,6 +184,7 @@ export const MultipleTrigger = () => {
             inputProps={{
               onClick: context.handleInputClick,
               onKeyDown: context.handleInputKeyDown,
+              ...context.inputAriaProps,
               onChange: context.handleInputChange,
               value: context.inputValue,
               autoComplete: 'off',

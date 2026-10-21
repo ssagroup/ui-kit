@@ -291,3 +291,8 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
       }}
   }
 `;
+
+/** A user-typed value that is not one of the options. */
+export const CustomValueLabel = styled.span`
+  color: ${({ theme }) => theme.palette.primary.main};
+`;

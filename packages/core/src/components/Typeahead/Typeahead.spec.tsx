@@ -536,4 +536,94 @@ describe('Typeahead Component', () => {
       );
     });
   });
+  describe('Keyboard navigation', () => {
+    const getInput = () =>
+      document.querySelector(
+        'input.typeahead-input:not([readonly])',
+      ) as HTMLInputElement;
+    const activeOption = () => {
+      const id = getInput().getAttribute('aria-activedescendant');
+      return id ? document.getElementById(id) : null;
+    };
+
+    it('ArrowDown opens the list and highlights the first option; focus stays in the input', async () => {
+      const { user } = setup();
+      getInput().focus();
+
+      await user.keyboard('{ArrowDown}');
+
+      const listbox = screen.getByRole('listbox');
+      expect(getInput()).toHaveFocus();
+      expect(getInput()).toHaveAttribute('aria-controls', listbox.id);
+      expect(activeOption()).toHaveTextContent('First');
+    });
+
+    it('arrows move the highlight and wrap; Enter selects and closes in single mode', async () => {
+      const { user, mockOnChange } = setup();
+      getInput().focus();
+
+      await user.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}');
+      expect(activeOption()).toHaveTextContent('Third');
+      await user.keyboard('{ArrowUp}');
+      expect(activeOption()).toHaveTextContent('Second');
+      await user.keyboard('{ArrowUp}{ArrowUp}');
+      expect(activeOption()).toHaveTextContent('Fourth');
+
+      await user.keyboard('{Enter}');
+      expect(mockOnChange).toHaveBeenCalledWith(4, true);
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('ArrowDown on a closed list starts from the selected option', async () => {
+      const { user } = setup({ defaultValue: [3] });
+      getInput().focus();
+
+      await user.keyboard('{ArrowDown}');
+      expect(activeOption()).toHaveTextContent('Third');
+    });
+
+    it('Enter toggles the highlighted option and keeps the list open in multiple mode', async () => {
+      const { user, mockOnChange } = setup({ isMultiple: true });
+      getInput().focus();
+
+      await user.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+      expect(mockOnChange).toHaveBeenLastCalledWith(2, true);
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+      expect(activeOption()).toHaveTextContent('Second');
+
+      await user.keyboard('{Enter}');
+      expect(mockOnChange).toHaveBeenLastCalledWith(2, false);
+    });
+
+    it('typing clears the highlight and the list is walked as filtered', async () => {
+      const { user } = setup();
+      getInput().focus();
+
+      await user.keyboard('{ArrowDown}');
+      await user.keyboard('t');
+      expect(activeOption()).toBeNull();
+
+      // "t" matches First, Third and Fourth Label.
+      await user.keyboard('{ArrowDown}{ArrowDown}');
+      expect(activeOption()).toHaveTextContent('Third');
+    });
+
+    it('pointer hover moves the highlight', async () => {
+      const { user } = setup();
+      getInput().focus();
+      await user.keyboard('{ArrowDown}');
+
+      await user.hover(screen.getByRole('option', { name: /Third/ }));
+      expect(activeOption()).toHaveTextContent('Third');
+    });
+
+    it('clicking an option keeps focus in the input', async () => {
+      const { user } = setup({ isMultiple: true });
+      getInput().focus();
+      await user.keyboard('{ArrowDown}');
+
+      await user.click(screen.getByRole('option', { name: /Second/ }));
+      expect(getInput()).toHaveFocus();
+    });
+  });
 });
