@@ -65,7 +65,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
@@ -109,7 +109,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
@@ -162,7 +162,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
@@ -323,7 +323,7 @@ describe('MultipleDropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     expect(dropdownToggleEl).toHaveAttribute('disabled');
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 

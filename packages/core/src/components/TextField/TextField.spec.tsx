@@ -169,3 +169,53 @@ describe('TextField', () => {
     expect(icon).not.toBeInTheDocument();
   });
 });
+
+describe('TextField labelBadge', () => {
+  it('shows the badge and describes the input with it', () => {
+    render(
+      <TextField
+        label="Email"
+        name="email"
+        register={register}
+        labelBadge={{ text: 'mapped', color: 'primary' }}
+        inputProps={{ 'aria-describedby': 'hint' }}
+      />,
+    );
+
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveAccessibleName('Email');
+    expect(input).toHaveAttribute(
+      'aria-describedby',
+      'hint formElement-email-badge',
+    );
+  });
+
+  it('describes the textarea in multirow mode', () => {
+    render(
+      <TextField
+        multirow
+        label="Bio"
+        name="bio"
+        register={register}
+        labelBadge={{ text: 'not present in the CV', color: '#ff8a00' }}
+      />,
+    );
+
+    expect(screen.getByRole('textbox')).toHaveAccessibleDescription(
+      'not present in the CV',
+    );
+  });
+
+  it('renders no badge without a label', () => {
+    render(
+      <TextField
+        name="x"
+        register={register}
+        labelBadge={{ text: 'mapped' }}
+      />,
+    );
+
+    expect(screen.queryByText('mapped')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-describedby');
+  });
+});

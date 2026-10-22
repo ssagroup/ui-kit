@@ -8,6 +8,7 @@ export const TypeaheadContext = React.createContext<UseTypeaheadResult>({
   singleLine: false,
   selectedItems: [],
   typeaheadId: '',
+  labelId: undefined,
   firstSuggestion: '',
   inputRef: { current: null },
   triggerRef: { current: null },

@@ -321,3 +321,70 @@ Focused.parameters = {
     focus: true,
   },
 };
+
+export const WithLabelBadge: StoryObj<typeof TextField> = () => (
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+    <div>
+      <TextField
+        label="First Name"
+        name="badge-first-name"
+        placeholder="Sofia"
+        labelBadge={{ text: 'mapped', color: 'primary' }}
+      />
+    </div>
+    <div>
+      <TextField
+        label="Location"
+        name="badge-location"
+        placeholder="Kyiv, Ukraine"
+      />
+    </div>
+    <div>
+      <TextField
+        label="LinkedIn URL"
+        name="badge-linkedin"
+        placeholder="linkedin.com/in/name"
+        labelBadge={{ text: 'not present in the CV', color: 'warning' }}
+      />
+    </div>
+    <div>
+      <TextField
+        label="Messenger"
+        name="badge-messenger"
+        placeholder="@name"
+        labelBadge={{ text: 'default' }}
+      />
+    </div>
+    <div>
+      <TextField
+        label="Theme color key"
+        name="badge-theme-key"
+        labelBadge={{ text: 'purple', color: 'purple' }}
+      />
+    </div>
+    <div>
+      <TextField
+        label="Custom hex"
+        name="badge-hex"
+        labelBadge={{ text: '#14b8a6', color: '#14b8a6' }}
+      />
+    </div>
+    <div style={{ gridColumn: '1 / -1' }}>
+      <TextField
+        multirow
+        rows={3}
+        label="Summary"
+        name="badge-summary"
+        labelBadge={{ text: 'mapped', color: 'primary' }}
+      />
+    </div>
+  </div>
+);
+WithLabelBadge.parameters = {
+  docs: {
+    description: {
+      story:
+        "`labelBadge` adds a status pill to the right of the label: a Chip color (`primary`, `warning`…), any theme color key or a CSS color. A field with a badge stays aligned with one without. The badge is announced as the input's description, not as part of its name.",
+    },
+  },
+};

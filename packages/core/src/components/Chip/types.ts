@@ -1,4 +1,4 @@
-import { CommonProps } from '@global-types/emotion';
+import { ColorsKeys, CommonProps } from '@global-types/emotion';
 import { Interpolation, Theme } from '@emotion/react';
 import { ReactNode, MouseEventHandler } from 'react';
 import { IconProps } from '@components/Icon/types';
@@ -103,10 +103,13 @@ export interface ChipProps extends CommonProps {
 
   /**
    * Color theme for the chip. Semantic colors read from `theme.palette`,
-   * so palette overrides in a custom theme apply automatically.
+   * so palette overrides in a custom theme apply automatically. Any other
+   * theme color key (e.g. `'purple'`) or CSS color (e.g. `'#ff8a00'`) is
+   * used as is: border and text in `outlined`, background in `filled`, with
+   * the text color picked for contrast.
    * @default 'default'
    */
-  color?: ChipColor;
+  color?: ChipColor | ColorsKeys | (string & {});
 
   /**
    * Size of the chip
@@ -171,4 +174,9 @@ export interface ChipProps extends CommonProps {
    * Custom Emotion CSS styles
    */
   css?: Interpolation<Theme>;
+
+  /**
+   * `id` of the chip element, e.g. for a control's `aria-describedby`
+   */
+  id?: string;
 }

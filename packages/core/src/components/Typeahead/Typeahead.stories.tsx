@@ -781,3 +781,26 @@ SingleLine.parameters = {
     },
   },
 };
+
+const TypeaheadWithLabelBadge = () => {
+  const useFormResult = useForm<FieldValues>();
+  return (
+    <FormProvider {...useFormResult}>
+      <Typeahead
+        name="typeahead-label-badge"
+        label="Recruiter"
+        labelBadge={{ text: 'default' }}
+        defaultValue={[items[2].id]}>
+        {items.map(({ label, value, id }) => (
+          <TypeaheadOption key={id} value={id} label={label || value}>
+            {label || value}
+          </TypeaheadOption>
+        ))}
+      </Typeahead>
+    </FormProvider>
+  );
+};
+
+export const WithLabelBadge: StoryObj = {
+  render: () => <TypeaheadWithLabelBadge />,
+};

@@ -127,6 +127,11 @@ export interface TextareaProps extends Partial<
   id?: string;
 
   /**
+   * Ids of the elements describing the textarea — a label badge, helper text
+   */
+  'aria-describedby'?: string;
+
+  /**
    * Paste event handler
    * Fired when content is pasted into the textarea
    */

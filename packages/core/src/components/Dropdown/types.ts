@@ -4,6 +4,7 @@ import { Interpolation, Theme } from '@emotion/react';
 import { DropdownOptionProps } from '@components/DropdownOptions';
 import { CommonProps } from '@global-types/emotion';
 import { IconProps } from '@components/Icon/types';
+import { LabelBadge } from '@components/Label/types';
 
 export enum DropdownPositions {
   top = 'top',
@@ -132,6 +133,13 @@ export interface DropdownProps<
    * Label text displayed above the dropdown
    */
   label?: string;
+
+  /**
+   * Status badge to the right of the label, e.g.
+   * `{ text: 'default', color: 'grey' }`. Announced as the toggle's
+   * description. Needs a `label`.
+   */
+  labelBadge?: LabelBadge;
 
   /**
    * Helper text displayed below the dropdown

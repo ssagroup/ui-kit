@@ -315,4 +315,29 @@ describe('Chip', () => {
       expect(chip).toHaveStyleRule('background-color', 'blue');
     });
   });
+
+  describe('Custom colors', () => {
+    it('uses a hex color for border and text in outlined', () => {
+      render(<Chip label="Hex" color="#ff8a00" variant="outlined" />);
+
+      const chip = screen.getByText('Hex').closest('div');
+      expect(chip).toHaveStyleRule('border', '1px solid #ff8a00');
+      expect(chip).toHaveStyleRule('color', '#ff8a00');
+    });
+
+    it('resolves a theme color key and picks readable filled text', () => {
+      render(<Chip label="Key" color="purple" />);
+
+      const chip = screen.getByText('Key').closest('div');
+      expect(chip).toHaveStyleRule('background-color', theme.colors.purple);
+      expect(chip).toHaveStyleRule('color', theme.colors.white);
+    });
+
+    it('picks dark filled text on a light custom color', () => {
+      render(<Chip label="Light" color="#fff3c4" />);
+
+      const chip = screen.getByText('Light').closest('div');
+      expect(chip).toHaveStyleRule('color', theme.colors.greyDarker);
+    });
+  });
 });

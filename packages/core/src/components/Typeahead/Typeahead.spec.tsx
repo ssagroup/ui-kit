@@ -626,4 +626,30 @@ describe('Typeahead Component', () => {
       expect(getInput()).toHaveFocus();
     });
   });
+
+  it('shows a label badge and describes the input with it', () => {
+    setup({ label: 'Recruiter', labelBadge: { text: 'default' } });
+
+    expect(screen.getByText('default')).toBeInTheDocument();
+    // The focusable input inside the combobox carries the description.
+    const input = document.getElementById('formElement-test-typeahead-text');
+    expect(input).toHaveAccessibleDescription('default');
+  });
+
+  it('names the combobox and its input by the label', async () => {
+    const { user } = setup({ label: 'Recruiter' });
+
+    expect(screen.getByRole('combobox')).toHaveAccessibleName('Recruiter');
+    const input = screen.getByLabelText('Recruiter', { selector: 'input' });
+    expect(input).toHaveAttribute('id', 'formElement-test-typeahead-text');
+
+    await user.click(screen.getByText('Recruiter'));
+    expect(input).toHaveFocus();
+  });
+
+  it('leaves aria-labelledby off without a label', () => {
+    setup();
+
+    expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-labelledby');
+  });
 });

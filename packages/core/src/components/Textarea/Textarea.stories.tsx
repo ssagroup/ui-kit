@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Textarea from '@components/Textarea';
+import { Field } from '@components/Field';
+import { getLabelBadgeId } from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 
 type Args = Parameters<typeof Textarea>[0];
@@ -240,3 +242,33 @@ export const AllStatuses: StoryObj<typeof Textarea> = () => {
   );
 };
 AllStatuses.storyName = 'All statuses';
+
+/**
+ * Textarea has no label of its own: label it with `Field.Label`, whose
+ * `badge` works the same as the fields' `labelBadge`. Point the textarea's
+ * `aria-describedby` at `getLabelBadgeId(id)` so the badge is announced.
+ */
+const TextareaWithLabelBadge = () => {
+  const { register } = useForm<FieldValues>();
+
+  return (
+    <Field.Root>
+      <Field.Label
+        htmlFor="bio"
+        badge={{ text: 'not present in the CV', color: 'warning' }}>
+        Bio
+      </Field.Label>
+      <Textarea
+        id="bio"
+        name="bio"
+        rows={4}
+        register={register}
+        aria-describedby={getLabelBadgeId('bio')}
+      />
+    </Field.Root>
+  );
+};
+
+export const WithLabelBadge: StoryObj<typeof Textarea> = {
+  render: () => <TextareaWithLabelBadge />,
+};

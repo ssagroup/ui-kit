@@ -217,7 +217,6 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
           disabled={isDropdownDisabled}
           onClick={() => (isOpen ? close() : open())}
           {...toggleKeys}
-          aria-labelledby={`dropdown-label-${dropdownId}`}
           aria-controls={listId}
           isMultiple={isMultiple}
           selectedCount={valuesWithoutPlaceholder.length}>

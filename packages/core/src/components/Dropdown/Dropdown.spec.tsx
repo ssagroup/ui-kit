@@ -62,7 +62,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
@@ -105,7 +105,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
@@ -217,7 +217,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
     let listboxEl = queryByRole('listbox');
@@ -334,7 +334,7 @@ describe('Dropdown', () => {
     expect(dropdownToggleEl).toHaveAttribute('aria-expanded', 'false');
     expect(dropdownToggleEl).toHaveAttribute('aria-haspopup', 'listbox');
     expect(dropdownToggleEl).toHaveAttribute('aria-controls');
-    expect(dropdownToggleEl).toHaveAttribute('aria-labelledby');
+    expect(dropdownToggleEl).not.toHaveAttribute('aria-labelledby');
     expect(dropdownToggleEl).toHaveAttribute('disabled');
     await within(dropdownToggleEl).findByTestId('dropdown-arrow-down');
 
@@ -853,5 +853,21 @@ describe('Dropdown', () => {
       await user.click(getByRole('combobox'));
       expect(getByTestId('row-a')).toHaveClass('row-a');
     });
+  });
+
+  it('shows a label badge and describes the toggle with it', () => {
+    const { getByRole, getByText } = setup({
+      label: 'Channel',
+      labelBadge: { text: 'default', color: 'grey' },
+    });
+
+    expect(getByText('default')).toBeInTheDocument();
+    expect(getByRole('combobox')).toHaveAccessibleDescription('default');
+  });
+
+  it('names the toggle by its label', () => {
+    const { getByRole } = setup({ label: 'Channel' });
+
+    expect(getByRole('combobox')).toHaveAccessibleName('Channel');
   });
 });

@@ -159,6 +159,7 @@ export { default as Avatar } from './Avatar';
 export * from './Avatar/types';
 
 export { default as Label } from './Label';
+export { getLabelBadgeId } from './Label';
 export type * from './Label/types';
 
 export { default as Indicator } from './Indicator';
@@ -200,6 +201,8 @@ export * from './NavBar';
 export * from './CollapsibleNavBar';
 export * from './Header';
 export type * from './Header/types';
+export * from './Footer';
+export type * from './Footer/types';
 
 export * from './TreeView';
 

@@ -55,3 +55,40 @@ describe('Label', () => {
     expect(mockOnMouseEnter).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('Label badge', () => {
+  it('renders the badge next to the label, outside its accessible name', () => {
+    render(
+      <>
+        <Label htmlFor="email" badge={{ text: 'mapped', color: 'primary' }}>
+          Email
+        </Label>
+        <input id="email" />
+      </>,
+    );
+
+    const badge = screen.getByText('mapped').closest('[id]');
+    expect(badge).toHaveAttribute('id', 'email-badge');
+    expect(screen.getByText('Email').contains(badge)).toBe(false);
+    expect(screen.getByRole('textbox')).toHaveAccessibleName('Email');
+  });
+
+  it('takes an explicit badge id and generates one without htmlFor', () => {
+    const { rerender } = render(
+      <Label badge={{ text: 'default', id: 'custom' }}>Recruiter</Label>,
+    );
+    expect(screen.getByText('default').closest('[id]')).toHaveAttribute(
+      'id',
+      'custom',
+    );
+
+    rerender(<Label badge={{ text: 'default' }}>Recruiter</Label>);
+    expect(screen.getByText('default').closest('[id]')?.id).toMatch(/-badge$/);
+  });
+
+  it('renders no wrapper without a badge', () => {
+    const { container } = render(<Label htmlFor="x">Plain</Label>);
+
+    expect(container.firstElementChild?.tagName).toBe('LABEL');
+  });
+});

@@ -180,6 +180,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   maxHeight = 200,
   avatarBorder = false,
   label,
+  labelBadge,
   helperText,
   errors,
   success,
@@ -217,6 +218,13 @@ const Dropdown = <T extends DropdownOptionProps>({
   const listRef = useRef<HTMLUListElement>(null);
 
   const dropdownId = useId();
+  // Names the toggle; left out without a label, so it never points at a
+  // missing element.
+  const labelId = label ? `dropdown-label-${dropdownId}` : undefined;
+  const badge =
+    label && labelBadge
+      ? { ...labelBadge, id: `dropdown-badge-${dropdownId}` }
+      : undefined;
   const options: T[] = [];
 
   const [isFocused, setIsFocused] = useState(false);
@@ -390,7 +398,11 @@ const Dropdown = <T extends DropdownOptionProps>({
 
   return (
     <DropdownFieldWrapper {...wrapperCssProps}>
-      {label ? <Label disabled={isDropdownDisabled}>{label}</Label> : null}
+      {label ? (
+        <Label id={labelId} disabled={isDropdownDisabled} badge={badge}>
+          {label}
+        </Label>
+      ) : null}
       <DropdownContext.Provider value={contextValue}>
         <DropdownBase
           {...componentProps?.base}
@@ -408,7 +420,8 @@ const Dropdown = <T extends DropdownOptionProps>({
             {...toggleKeys}
             onFocus={setIsFocused.bind(null, true)}
             colors={colors}
-            aria-labelledby={`dropdown-label-${dropdownId}`}
+            aria-labelledby={labelId}
+            {...(badge && { 'aria-describedby': badge.id })}
             aria-controls={listId}>
             {toggleContent}
             <DropdownArrow

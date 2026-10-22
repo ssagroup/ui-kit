@@ -1,5 +1,5 @@
 import React from 'react';
-import Label from '@components/Label';
+import Label, { getLabelBadgeId } from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 import Input from '@components/Input';
 import Textarea from '@components/Textarea';
@@ -85,6 +85,7 @@ const TextField = ({
   multirow,
   name,
   label,
+  labelBadge,
   errors,
   helperText,
   success,
@@ -107,9 +108,19 @@ const TextField = ({
     props.onKeyUp?.(e);
   };
 
+  const controlId = `formElement-${name}`;
+  const badge =
+    label && labelBadge
+      ? { ...labelBadge, id: getLabelBadgeId(controlId) }
+      : undefined;
+  const describedBy =
+    [props.inputProps?.['aria-describedby'], badge?.id]
+      .filter(Boolean)
+      .join(' ') || undefined;
+
   return (
     <>
-      <Label htmlFor={`formElement-${name}`} disabled={disabled}>
+      <Label htmlFor={controlId} disabled={disabled} badge={badge}>
         {label}
       </Label>
 
@@ -120,6 +131,7 @@ const TextField = ({
           disabled={disabled}
           maxLength={maxLength}
           setCountChar={handleCount}
+          aria-describedby={badge?.id}
           {...props}
         />
       ) : (
@@ -131,6 +143,7 @@ const TextField = ({
           showStatusIcon={false}
           onKeyUp={handleInputKeyUp}
           {...props}
+          inputProps={{ ...props.inputProps, 'aria-describedby': describedBy }}
         />
       )}
 

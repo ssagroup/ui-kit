@@ -1,5 +1,6 @@
 import { CommonProps } from '@global-types/emotion';
 import { FieldError } from 'react-hook-form';
+import { LabelBadge } from '@components/Label/types';
 
 /**
  * Allowed value types for Typeahead options
@@ -164,6 +165,13 @@ export interface TypeaheadProps {
   label?: string;
 
   /**
+   * Status badge to the right of the label, e.g.
+   * `{ text: 'mapped', color: 'primary' }`. Announced as the input's
+   * description. Needs a `label`.
+   */
+  labelBadge?: LabelBadge;
+
+  /**
    * Helper text displayed below the input
    */
   helperText?: string;
@@ -278,6 +286,7 @@ export type UseTypeaheadProps = Pick<
   | 'filterOptions'
   | 'autoSelect'
   | 'allowCustomValues'
+  | 'label'
 >;
 
 /**

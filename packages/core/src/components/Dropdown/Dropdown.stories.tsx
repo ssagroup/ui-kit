@@ -652,3 +652,19 @@ export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
 };
 
 DynamicallyChangedSelectedItem.args = { disabled: false };
+
+export const WithLabelBadge: StoryObj<Args> = {
+  render: (args) => (
+    <Dropdown
+      {...args}
+      label="Preferred Contact Channel"
+      labelBadge={{ text: 'default' }}
+      selectedItem={items[0]}>
+      {items.slice(0, 5).map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  ),
+};

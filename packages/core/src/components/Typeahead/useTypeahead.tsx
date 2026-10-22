@@ -72,6 +72,7 @@ export const useTypeahead = ({
   onRemoveSelectedClick,
   onEmptyChange,
   renderOption,
+  label,
 }: UseTypeaheadProps) => {
   const inputName = `${name}-text`;
 
@@ -168,6 +169,9 @@ export const useTypeahead = ({
   }, [children, inputValue]);
 
   const listId = `typeahead-popup-${typeaheadId}`;
+  // Names the combobox; left out without a label, so it never points at a
+  // missing element.
+  const labelId = label ? `typeahead-label-${typeaheadId}` : undefined;
 
   const customOptionValue =
     allowCustomValues && inputValue.trim() ? inputValue.trim() : null;
@@ -484,6 +488,7 @@ export const useTypeahead = ({
     isMultiple,
     singleLine: !!isMultiple && singleLine,
     typeaheadId,
+    labelId,
     triggerRef,
     className,
     startIcon,

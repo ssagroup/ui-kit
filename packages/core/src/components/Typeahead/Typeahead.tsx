@@ -5,7 +5,7 @@ import {
 } from '@components/Popover';
 import FormHelperText from '@components/FormHelperText';
 import Wrapper from '@components/Wrapper';
-import Label from '@components/Label';
+import Label, { getLabelBadgeId } from '@components/Label';
 import { resolveDeprecatedProp, resolveDisabled } from '@utils/deprecation';
 import { TypeaheadContext } from './Typeahead.context';
 import { useTypeahead } from './useTypeahead';
@@ -192,6 +192,7 @@ import { TypeaheadProps } from './types';
 export const Typeahead = ({
   name = 'typeahead-search',
   label,
+  labelBadge,
   value,
   defaultValue,
   selectedItems,
@@ -270,10 +271,27 @@ export const Typeahead = ({
     renderOption,
     onRemoveSelectedClick,
     onClearAll,
+    label,
   });
 
+  // Input renders its control with this id.
+  const inputId = `formElement-${hookResult.inputName}`;
+  const badge =
+    label && labelBadge
+      ? { ...labelBadge, id: getLabelBadgeId(inputId) }
+      : undefined;
+  const contextValue = badge
+    ? {
+        ...hookResult,
+        inputAriaProps: {
+          ...hookResult.inputAriaProps,
+          'aria-describedby': badge.id,
+        },
+      }
+    : hookResult;
+
   return (
-    <TypeaheadContext.Provider value={hookResult}>
+    <TypeaheadContext.Provider value={contextValue}>
       <Wrapper
         css={{
           flexDirection: 'column',
@@ -284,7 +302,9 @@ export const Typeahead = ({
         data-testid="typeahead">
         {label && (
           <Label
-            htmlFor={hookResult.inputName}
+            id={hookResult.labelId}
+            htmlFor={inputId}
+            badge={badge}
             disabled={isTypeaheadDisabled}
             data-testid="typeahead-label">
             {label}

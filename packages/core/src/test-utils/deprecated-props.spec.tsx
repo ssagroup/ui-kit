@@ -770,14 +770,14 @@ describe('deprecated props => camelCase ARIA → native ARIA', () => {
 
   it('wires Dropdown to its listbox with native ARIA, without warning', () => {
     render(
-      <Dropdown>
+      <Dropdown label="Fruit">
         <DropdownOption value="apple">Apple</DropdownOption>
       </Dropdown>,
     );
 
     const toggle = screen.getByRole('combobox');
 
-    expect(toggle).toHaveAttribute('aria-labelledby');
+    expect(toggle).toHaveAccessibleName('Fruit');
     expect(toggle).toHaveAttribute('aria-controls');
     expect(deprecationWarnings(warnSpy)).toHaveLength(0);
   });

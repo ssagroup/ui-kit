@@ -1,9 +1,11 @@
 import { css, Theme } from '@emotion/react';
-import { ChipProps } from './types';
+import { ColorsKeys } from '@global-types/emotion';
+import { getReadableColor } from '@utils/colorUtils';
+import { ChipColor, ChipProps } from './types';
 import { filled, outlined, filledDisabled, outlinedDisabled } from './styles';
 import { VARIANTS, COLORS, OUTLINED_BG_OPACITY } from './constants';
 
-type SemanticColor = Exclude<ChipProps['color'], 'default' | undefined>;
+type SemanticColor = Exclude<ChipColor, 'default'>;
 
 type ColorConfig = {
   /** Solid background for filled variant / border + text for outlined */
@@ -14,6 +16,25 @@ type ColorConfig = {
   dark: string;
   /** When true, filled variant uses dark text instead of white (e.g. light grey bg) */
   darkText?: boolean;
+};
+
+const isSemanticColor = (theme: Theme, color: string): color is SemanticColor =>
+  color in colorMap(theme);
+
+/**
+ * A theme color key or CSS color: one color for border, tint and text, the
+ * filled text picked for contrast — as FloatingActionButton does.
+ */
+const customColorConfig = (theme: Theme, color: string): ColorConfig => {
+  const main = (theme.colors[color as ColorsKeys] as string) ?? color;
+  return {
+    main,
+    bg: main,
+    dark: main,
+    darkText:
+      getReadableColor(main, theme.colors.greyDarker, theme.colors.white) ===
+      theme.colors.greyDarker,
+  };
 };
 
 export const colorMap = (theme: Theme): Record<SemanticColor, ColorConfig> => ({
@@ -111,7 +132,9 @@ export const getVariantColors = (
     };
   }
 
-  const palette = colorMap(theme)[colorKey as SemanticColor];
+  const palette = isSemanticColor(theme, colorKey)
+    ? colorMap(theme)[colorKey]
+    : customColorConfig(theme, colorKey);
   const chipStyles = getVariantColorBlock(
     theme,
     variantKey,

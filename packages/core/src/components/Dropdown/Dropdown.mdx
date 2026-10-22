@@ -59,7 +59,7 @@ You can pass props to different parts of the Dropdown component using the `dropd
       name: 'my-toggle',
     },
     toggleButtonArrow: {
-      'data-custom-attribute': 'my-attribute'
+      'data-custom-attribute': 'my-attribute',
     },
   }}
   selectedItem={items[0]}
@@ -141,7 +141,9 @@ is not enough room, preventing it from being clipped by the viewport edge.
 Use `'top'` or `'bottom'` to force a fixed direction regardless of available space.
 
 ```tsx
-{/* Always opens upward — useful when the dropdown is near the bottom of the page */}
+{
+  /* Always opens upward — useful when the dropdown is near the bottom of the page */
+}
 <Dropdown
   selectedItem={items[0]}
   onChange={handleChange}
@@ -151,9 +153,11 @@ Use `'top'` or `'bottom'` to force a fixed direction regardless of available spa
       {item.value}
     </DropdownOption>
   ))}
-</Dropdown>
+</Dropdown>;
 
-{/* Automatic flip based on available viewport space (default) */}
+{
+  /* Automatic flip based on available viewport space (default) */
+}
 <Dropdown
   selectedItem={items[0]}
   onChange={handleChange}
@@ -163,9 +167,8 @@ Use `'top'` or `'bottom'` to force a fixed direction regardless of available spa
       {item.value}
     </DropdownOption>
   ))}
-</Dropdown>
+</Dropdown>;
 ```
-
 
 ### Simple Value Options
 

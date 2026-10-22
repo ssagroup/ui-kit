@@ -1,5 +1,6 @@
 import type { UseFormReturn, FieldError } from 'react-hook-form';
 import { InputProps } from '@components/Input/types';
+import { LabelBadge } from '@components/Label/types';
 
 /**
  * Props for the TextField component
@@ -57,6 +58,13 @@ export interface TextFieldProps
    * Label text displayed above the input field
    */
   label?: string;
+
+  /**
+   * Status badge to the right of the label, e.g.
+   * `{ text: 'mapped', color: 'primary' }`. Announced as the field's
+   * description. Needs a `label`.
+   */
+  labelBadge?: LabelBadge;
 
   /**
    * React Hook Form field error object
