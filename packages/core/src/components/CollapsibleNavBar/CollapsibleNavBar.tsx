@@ -101,13 +101,14 @@ export const CollapsibleNavBar = (props: CollapsibleNavBarExtendedProps) => {
   const showHeader = hasHeaderContent(header);
 
   // Collapse whenever the viewport changes size — but not on mount, which
-  // would immediately undo `defaultExpanded`.
-  const hasMeasured = useRef(false);
+  // would immediately undo `defaultExpanded`. Compared against the last width
+  // rather than a run-once flag, so StrictMode's repeated mount run is a no-op.
+  const lastWidth = useRef(width);
   useEffect(() => {
-    if (!hasMeasured.current) {
-      hasMeasured.current = true;
+    if (lastWidth.current === width) {
       return;
     }
+    lastWidth.current = width;
     setChecked(false);
   }, [width]);
 

@@ -1,4 +1,8 @@
+import { ReactElement, StrictMode, act } from 'react';
+import { ThemeProvider } from '@emotion/react';
 import { fireEvent } from '@testing-library/dom';
+import { render as rtlRender } from '@testing-library/react';
+import theme from '@themes/main';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { ITEMS } from './stories/consts';
 import { StoryComponent } from './stories/StoryComponent';
@@ -170,6 +174,58 @@ describe('CollapsibleNavBar', () => {
 
       expect(onToggle).toHaveBeenCalledWith(true);
       expect(onChange).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('viewport resize', () => {
+    const originalWidth = window.innerWidth;
+
+    afterEach(() => {
+      window.innerWidth = originalWidth;
+    });
+
+    // StrictMode runs mount effects twice; neither run is a resize. It has to
+    // be the root element, as in an app — under any wrapper (the global
+    // `render`'s theme provider included) React 19 skips the re-run.
+    const renderStrict = (ui: ReactElement) =>
+      rtlRender(
+        <StrictMode>
+          <ThemeProvider theme={theme}>{ui}</ThemeProvider>
+        </StrictMode>,
+      );
+
+    it('Should keep defaultExpanded under StrictMode', () => {
+      const { container } = renderStrict(
+        <StoryComponent items={ITEMS} defaultExpanded />,
+      );
+
+      expect(container.querySelector('.opened')).not.toBeNull();
+    });
+
+    it('Should keep a controlled isOpen under StrictMode', () => {
+      const onChange = jest.fn();
+      const { container } = renderStrict(
+        <StoryComponent items={ITEMS} isOpen onChange={onChange} />,
+      );
+
+      expect(container.querySelector('.opened')).not.toBeNull();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('Should collapse when the viewport actually resizes', () => {
+      const onToggle = jest.fn();
+      const { container } = render(
+        <StoryComponent items={ITEMS} defaultExpanded onToggle={onToggle} />,
+      );
+      expect(container.querySelector('.opened')).not.toBeNull();
+
+      act(() => {
+        window.innerWidth = originalWidth - 100;
+        window.dispatchEvent(new Event('resize'));
+      });
+
+      expect(container.querySelector('.opened')).toBeNull();
+      expect(onToggle).not.toHaveBeenCalled();
     });
   });
 
