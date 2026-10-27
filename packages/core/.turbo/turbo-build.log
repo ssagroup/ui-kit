@@ -1,5 +1,5 @@
 
-> @ssa-ui-kit/core@3.26.1 build /home/runner/work/ui-kit/ui-kit/packages/core
+> @ssa-ui-kit/core@3.26.2 build /home/runner/work/ui-kit/ui-kit/packages/core
 > node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && node ../../scripts/verify-esm-bundle.mjs && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json && node ../../scripts/ai-source-map.mjs .
 
 clean(core): nothing to remove
@@ -38,7 +38,7 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 17343 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 13867 ms
 
 asset [1m[33mindex.mjs[39m[22m [1m[33m10.3 MiB[39m[22m [1m[32m[emitted][39m[22m [javascript module] [1m[33m[big][39m[22m (name: main)
 orphan modules 10 MiB [1m[33m[orphan][39m[22m 1433 modules
@@ -72,7 +72,7 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 17330 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 13858 ms
 verify-esm-bundle(core): ok — 19 externals, 288 exports load without a bundler
 [1mresolve-tspaths:[22m changed 376 file(s)
-ai-source-map: dist/ai/source-map.md — 161.0KB, 194 components (98 with a summary), 7 groups
+ai-source-map: dist/ai/source-map.md — 161.3KB, 194 components (98 with a summary), 7 groups

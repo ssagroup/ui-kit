@@ -8,11 +8,11 @@ This information is used to shape Next.js' roadmap and prioritize features.
 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
 https://nextjs.org/telemetry
 
-[MDX] updated map file in 87.06431399999997ms
    ▲ Next.js 15.5.19
 
+[MDX] updated map file in 132.03197499999987ms
    Creating an optimized production build ...
- ✓ Compiled successfully in 48s
+ ✓ Compiled successfully in 37.7s
    Skipping linting
    Checking validity of types ...
    Collecting page data ...
