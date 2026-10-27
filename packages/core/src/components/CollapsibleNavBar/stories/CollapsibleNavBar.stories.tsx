@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import { Meta, StoryObj, type Decorator } from '@storybook/react-webpack5';
 import {
@@ -7,7 +7,7 @@ import {
   Subtitle,
   Stories,
 } from '@storybook/addon-docs/blocks';
-import { Avatar, AvatarSizes, CollapsibleNavBar } from '@components';
+import { Avatar, AvatarSizes, Button, CollapsibleNavBar } from '@components';
 import { ITEMS } from './consts';
 import { DarkLogo, Logo } from './Logo';
 import { Layout } from './Layout';
@@ -190,3 +190,37 @@ export const WithFullImage: StoryObj<typeof CollapsibleNavBar> = () => (
 );
 
 WithFullImage.args = {};
+
+/**
+ * Controlled: the parent owns the expanded state through `isOpen` and applies
+ * every move reported by `onChange`. Only user toggles (`onToggle`) are
+ * persisted to `localStorage`, so a resize collapse doesn't overwrite the
+ * saved choice. The button closes the bar from outside.
+ */
+export const Controlled: StoryObj<typeof CollapsibleNavBar> = () => {
+  const [isOpen, setIsOpen] = useState(
+    () => localStorage.getItem('collapsible-nav-bar-open') === 'true',
+  );
+  return (
+    <>
+      <CollapsibleNavBar
+        items={ITEMS}
+        renderLogo={<Logo />}
+        isOpen={isOpen}
+        onChange={setIsOpen}
+        onToggle={(next) =>
+          localStorage.setItem('collapsible-nav-bar-open', String(next))
+        }
+      />
+      <Button
+        size="small"
+        variant="secondary"
+        css={{ position: 'absolute', right: 20, top: 20 }}
+        onClick={() => setIsOpen(false)}>
+        Close from outside
+      </Button>
+    </>
+  );
+};
+
+Controlled.args = {};

@@ -78,8 +78,22 @@ export interface CollapsibleNavBarExtendedProps<
    * loses a group.
    */
   useMatchPattern?: (prefix: string) => string | PathPattern<string>;
-  /** Called when the sidebar expand/collapse state changes. */
+  /**
+   * Called when the sidebar expand/collapse state changes — on user toggles,
+   * the collapse on viewport resize, and the mobile overlay closing on
+   * navigation.
+   *
+   * Uncontrolled, it also fires once on mount with the initial state.
+   * Controlled (`isOpen` passed), it never fires on mount and only reports a
+   * value that differs from `isOpen`.
+   */
   onChange?: (isChecked: boolean) => void;
+  /**
+   * Called when the user opens or closes the panel with its toggle. Unlike
+   * `onChange`, it does not fire on mount, on the resize collapse, on mobile
+   * navigation, or when `isOpen` changes from outside.
+   */
+  onToggle?: (isOpen: boolean) => void;
   /**
    * If true, only exact path matches will be considered active.
    * If false, sub-routes will also be considered active.
@@ -91,4 +105,13 @@ export interface CollapsibleNavBarExtendedProps<
    * @default false
    */
   defaultExpanded?: boolean;
+  /**
+   * Controlled expanded state. When passed, the sidebar renders from it and
+   * keeps no state of its own; toggles are reported through `onChange` for the
+   * caller to apply. Omit it for the uncontrolled `defaultExpanded` behaviour.
+   *
+   * The bar still asks to collapse (`onChange(false)`) when the viewport
+   * resizes, as it does uncontrolled.
+   */
+  isOpen?: boolean;
 }

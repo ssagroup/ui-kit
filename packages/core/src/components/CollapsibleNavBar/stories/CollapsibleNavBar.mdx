@@ -93,6 +93,25 @@ function BasicNavigation() {
 
 The sidebar has two states: **collapsed** (icons only) and **expanded** (icon + text next to each item). This is the same component — use the toggle (hamburger/chevron) to switch. There is no separate “variant” for icon+text; the **Expanded** story shows the sidebar open by default (`defaultExpanded`) so you can see that state in the docs.
 
+### Controlled state
+
+Pass `isOpen` to own the expanded state — for example to remember it across reloads. The bar renders from the prop and reports every move through `onChange`; apply it to update `isOpen`. Without `isOpen` the bar keeps its own state, seeded by `defaultExpanded`. See the **Controlled** story.
+
+`onChange` also reports the collapse on window resize and the mobile overlay closing on navigation. To persist the user's choice, save it from `onToggle`, which fires only when the user opens or closes the panel with its toggle.
+
+```tsx
+const [isOpen, setIsOpen] = useState(
+  () => localStorage.getItem('nav-open') === 'true',
+);
+
+<CollapsibleNavBar
+  items={items}
+  isOpen={isOpen}
+  onChange={setIsOpen}
+  onToggle={(next) => localStorage.setItem('nav-open', String(next))}
+/>
+```
+
 ### Responsive Design with Mobile Toggle
 
 Automatically adapts between desktop sidebar and mobile hamburger menu:

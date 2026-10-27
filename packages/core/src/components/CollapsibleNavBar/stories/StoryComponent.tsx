@@ -13,11 +13,11 @@ export const StoryComponent = ({
         element={
           <div style={{ height: '100vh', position: 'relative' }}>
             <CollapsibleNavBar
-              {...props}
-              renderLogo={renderLogo}
               onChange={(isChecked) => {
                 console.log('>>>checked ', isChecked);
               }}
+              {...props}
+              renderLogo={renderLogo}
             />
           </div>
         }

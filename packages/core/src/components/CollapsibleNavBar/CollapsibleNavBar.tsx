@@ -1,6 +1,6 @@
 import { useState, useId, useEffect, useMemo, useRef } from 'react';
 
-import { useWindowSize } from '@ssa-ui-kit/hooks';
+import { useControllableState, useWindowSize } from '@ssa-ui-kit/hooks';
 
 import Wrapper from '@components/Wrapper';
 
@@ -55,24 +55,42 @@ import { SCREEN_SIZES } from '../../consts';
  *   onChange={(isExpanded) => console.log(isExpanded)}
  * />
  * ```
+ *
+ * Pass `isOpen` to own the expanded state (e.g. to persist it): the bar then
+ * renders from it and reports toggles through `onChange` for you to apply.
  */
-export const CollapsibleNavBar = ({
-  items,
-  renderLogo,
-  header,
-  theme = 'default',
-  activeColor,
-  subMenuMaxWidth,
-  showIconTooltip = false,
-  className,
-  useMatchPattern,
-  onChange,
-  exactMatch = false,
-  defaultExpanded = false,
-}: CollapsibleNavBarExtendedProps) => {
+export const CollapsibleNavBar = (props: CollapsibleNavBarExtendedProps) => {
+  const {
+    items,
+    renderLogo,
+    header,
+    theme = 'default',
+    activeColor,
+    subMenuMaxWidth,
+    showIconTooltip = false,
+    className,
+    useMatchPattern,
+    onChange,
+    onToggle,
+    exactMatch = false,
+    defaultExpanded = false,
+    isOpen,
+  } = props;
   const toggleId = useId();
   const { width } = useWindowSize();
-  const [isChecked, onToggle] = useState(defaultExpanded);
+  // Controlled by the prop's presence, per the kit convention — see
+  // `useControllableState`. Uncontrolled mode reports through the effect below
+  // (which also fires on mount, as it always has), so the hook only notifies
+  // when controlled.
+  const controlled = 'isOpen' in props;
+  const [rawChecked, setChecked] = useControllableState<boolean>({
+    controlled,
+    value: isOpen,
+    defaultValue: defaultExpanded,
+    finalValue: false,
+    onChange: controlled ? onChange : undefined,
+  });
+  const isChecked = Boolean(rawChecked);
   const isMobile = width < SCREEN_SIZES['900'].width;
 
   const treeItems = useMemo(() => toTreeItems(items), [items]);
@@ -90,16 +108,18 @@ export const CollapsibleNavBar = ({
       hasMeasured.current = true;
       return;
     }
-    onToggle(false);
+    setChecked(false);
   }, [width]);
 
   useEffect(() => {
-    onChange?.(isChecked);
+    if (!controlled) {
+      onChange?.(isChecked);
+    }
   }, [isChecked]);
 
   const handleCloseMobileMenu = () => {
     if (isMobile) {
-      onToggle(!isChecked);
+      setChecked(!isChecked);
     }
   };
 
@@ -117,7 +137,8 @@ export const CollapsibleNavBar = ({
           id={toggleId}
           checked={isChecked}
           onChange={() => {
-            onToggle(!isChecked);
+            setChecked(!isChecked);
+            onToggle?.(!isChecked);
           }}
         />
 

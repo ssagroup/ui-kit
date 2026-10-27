@@ -67,6 +67,112 @@ describe('CollapsibleNavBar', () => {
     );
   });
 
+  describe('isOpen prop', () => {
+    const renderControlled = (isOpen: boolean, onChange = jest.fn()) => {
+      const utils = render(
+        <StoryComponent items={ITEMS} isOpen={isOpen} onChange={onChange} />,
+      );
+      const rerender = (next: boolean) =>
+        utils.rerender(
+          <StoryComponent items={ITEMS} isOpen={next} onChange={onChange} />,
+        );
+      return { ...utils, rerender, onChange };
+    };
+
+    const getToggle = (getByTestId: (id: string) => HTMLElement) =>
+      getByTestId('collapsible-nav-content-toggle-label');
+
+    it('Should start open when isOpen is true', () => {
+      const { getByTestId, container } = renderControlled(true);
+
+      expect(getToggle(getByTestId)).toHaveAttribute('aria-expanded', 'true');
+      expect(container.querySelector('.opened')).not.toBeNull();
+      expect(container.querySelector('input[type="checkbox"]')).toBeChecked();
+    });
+
+    it('Should follow an external close', () => {
+      const { getByTestId, container, rerender } = renderControlled(true);
+
+      rerender(false);
+
+      expect(getToggle(getByTestId)).toHaveAttribute('aria-expanded', 'false');
+      expect(container.querySelector('.opened')).toBeNull();
+      expect(
+        container.querySelector('input[type="checkbox"]'),
+      ).not.toBeChecked();
+    });
+
+    it('Should report a toggle without moving on its own', () => {
+      const { getByTestId, onChange } = renderControlled(false);
+
+      fireEvent.click(getToggle(getByTestId));
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith(true);
+      expect(getToggle(getByTestId)).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('Should not report on mount', () => {
+      const { onChange } = renderControlled(true);
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('Should keep reporting on mount when uncontrolled', () => {
+      const onChange = jest.fn();
+      render(
+        <StoryComponent items={ITEMS} defaultExpanded onChange={onChange} />,
+      );
+
+      expect(onChange).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('onToggle prop', () => {
+    it('Should fire when the user opens and closes the panel', () => {
+      const onToggle = jest.fn();
+      const { getByTestId } = render(
+        <StoryComponent items={ITEMS} onToggle={onToggle} />,
+      );
+
+      fireEvent.click(getByTestId('collapsible-nav-content-toggle-label'));
+      fireEvent.click(getByTestId('collapsible-nav-content-toggle-label'));
+
+      expect(onToggle.mock.calls).toEqual([[true], [false]]);
+    });
+
+    it('Should not fire on mount or on an external change', () => {
+      const onToggle = jest.fn();
+      const { rerender } = render(
+        <StoryComponent items={ITEMS} isOpen onToggle={onToggle} />,
+      );
+
+      rerender(
+        <StoryComponent items={ITEMS} isOpen={false} onToggle={onToggle} />,
+      );
+
+      expect(onToggle).not.toHaveBeenCalled();
+    });
+
+    it('Should fire alongside onChange when controlled', () => {
+      const onToggle = jest.fn();
+      const onChange = jest.fn();
+      const { getByTestId } = render(
+        <StoryComponent
+          items={ITEMS}
+          isOpen={false}
+          onChange={onChange}
+          onToggle={onToggle}
+        />,
+      );
+
+      fireEvent.click(getByTestId('collapsible-nav-content-toggle-label'));
+
+      expect(onToggle).toHaveBeenCalledWith(true);
+      expect(onChange).toHaveBeenCalledWith(true);
+    });
+  });
+
   describe('exactMatch prop', () => {
     const testItems: CollapsibleNavBarExtendedProps['items'] = [
       { path: 'bots', iconName: 'robot', iconSize: 20, title: 'Bots' },
