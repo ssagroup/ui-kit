@@ -1,4 +1,6 @@
+import type { FieldError } from 'react-hook-form';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
+import { LabelBadge } from '@components/Label/types';
 
 /**
  * Props for the MultipleDropdown component
@@ -22,8 +24,9 @@ import { DropdownOptionProps } from '@components/DropdownOptions/types';
  */
 export type DropdownProps<P extends DropdownOptionProps> = {
   /**
-   * List of currently selected items
-   * Each entry must match one of the DropdownOption values
+   * Selected options, matched to the `DropdownOption`s by `value`.
+   * Seeds the internal selection and resets it whenever it changes or the
+   * parent re-renders, so keep it in state and update it from `onChange`.
    * @default []
    */
   selectedItems?: P[];
@@ -56,14 +59,17 @@ export type DropdownProps<P extends DropdownOptionProps> = {
   placeholder?: string;
 
   /**
-   * When `true` the placeholder value is included in the displayed list.
-   * Set to `false` to hide it and show only the badge count.
+   * When nothing is selected, shows `placeholder` after the `label`.
+   * Set to `false` to show the `label` alone. Has no effect once something
+   * is selected.
    * @default true
    */
   showPlaceholder?: boolean;
 
   /**
-   * DropdownOption components to render as selectable items
+   * `DropdownOption` elements, optionally wrapped in `DropdownOptionGroup`s.
+   * They are read as data, not rendered: `styled()`/`css` on an option has
+   * no effect.
    */
   children?: React.ReactNode;
 
@@ -74,15 +80,48 @@ export type DropdownProps<P extends DropdownOptionProps> = {
   className?: string;
 
   /**
-   * Controlled open state — when provided, overrides internal open/close logic
+   * Initial open state. Read on mount only — later changes are ignored.
+   * @default false
    */
   isOpen?: boolean;
 
   /**
    * Label prefix shown in the toggle button before the selected value(s)
-   * e.g. `label="Strategy"` renders "Strategy: Value"
+   * e.g. `label="Strategy"` renders "Strategy: Value". Multi-select mode
+   * only — with `isMultiple={false}` the toggle shows the value alone.
    */
   label?: string;
+
+  /**
+   * Field label displayed above the dropdown, and the toggle's accessible
+   * name. Not the same as `label`, which is the prefix inside the toggle.
+   */
+  fieldLabel?: string;
+
+  /**
+   * Status badge to the right of the field label, e.g.
+   * `{ text: 'default', color: 'grey' }`. Announced as the toggle's
+   * description. Needs a `fieldLabel`.
+   */
+  labelBadge?: LabelBadge;
+
+  /**
+   * Helper text displayed below the dropdown. Replaced by the error message
+   * while `errors` is set.
+   */
+  helperText?: string;
+
+  /**
+   * React Hook Form field error. Shows the error border and its `message`
+   * below the dropdown.
+   */
+  errors?: FieldError;
+
+  /**
+   * Shows the success border.
+   * @default false
+   */
+  success?: boolean;
 
   /**
    * Callback fired when an option is toggled
@@ -101,9 +140,10 @@ export type DropdownProps<P extends DropdownOptionProps> = {
    * Width of the dropdown.
    * Can be a number (pixels) or a string (any CSS value, e.g. `'100%'`).
    *
-   * The value is applied to the positioning base; the toggle button is
-   * stretched to fill it, so a relative width like `'60%'` resolves against the
-   * surrounding container instead of compounding. It also clears the base's
+   * The value is applied to the outer field wrapper; the positioning base and
+   * the toggle button are stretched to fill it, so a relative width like
+   * `'60%'` resolves against the surrounding container instead of compounding.
+   * Extra room is filled with more selected values before the `+N` badge. It also clears the base's
    * default `min-width` and the toggle's `max-width`, which would otherwise cap
    * the value.
    *

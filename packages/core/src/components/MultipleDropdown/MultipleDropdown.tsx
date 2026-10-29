@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useId, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import styled from '@emotion/styled';
 import { useClickOutside } from '@ssa-ui-kit/hooks';
 import { mapObjIndexed } from '@ssa-ui-kit/utils';
@@ -7,6 +13,8 @@ import { useMergeRefs } from '@floating-ui/react';
 import DropdownBase from '@components/DropdownBase';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
+import Label from '@components/Label';
+import FormHelperText from '@components/FormHelperText';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
 import {
   OptionValue,
@@ -21,13 +29,58 @@ import { DropdownOptionProps } from '@components/DropdownOptions/types';
 import { resolveDisabled } from '@utils/deprecation';
 
 import { DropdownContextType, DropdownProps } from './types';
-import { getActiveItems } from '@components/MultipleDropdown/utils';
+import {
+  BADGE_SPACE,
+  getActiveItems,
+  getFitCount,
+} from '@components/MultipleDropdown/utils';
 import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
 
+/*
+ * Mirrors Dropdown's field wrapper: label above, helper text below. Shrinks to
+ * fit like the base it wraps, with max-width so the toggle can still clip.
+ */
+const DropdownFieldWrapper = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+`;
+
+/*
+ * Takes the free space so the +N badge sits next to the arrow, not halfway
+ * across a wide toggle (the toggle spreads its children with space-between).
+ */
 const DropdownPlaceholderLabel = styled.div`
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
   white-space: nowrap;
+`;
+
+const FirstValue = styled.span`
+  flex: 0 1 auto;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+/*
+ * The second and later values. Zero width and basis, so they never add to the
+ * toggle's own size: a toggle sized to its content looks as it always has, and
+ * the values only fill room an explicit width leaves free. Every value stays
+ * laid out, clipped if need be, so its width can be measured.
+ */
+const ExtraValues = styled.span`
+  display: flex;
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+
+  & > span {
+    flex: none;
+  }
 `;
 
 function MultipleDropdownInner<T extends DropdownOptionProps>(
@@ -45,6 +98,11 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     className,
     maxHeight = 200,
     width,
+    fieldLabel,
+    labelBadge,
+    helperText,
+    errors,
+    success,
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
@@ -56,22 +114,32 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
   const dropdownId = useId();
-  // `width` has no default — without it the base and the toggle both
-  // shrink-wrap, which is the historical behaviour. When set it has to clear
-  // the base's `min-width` and the multiple toggle's `max-width`, otherwise
-  // those caps silently win over the explicit value.
+  const status = success ? 'success' : errors ? 'error' : 'basic';
+  // Names the toggle; left out without a field label, so it never points at
+  // a missing element.
+  const labelId = fieldLabel ? `dropdown-label-${dropdownId}` : undefined;
+  const badge =
+    fieldLabel && labelBadge
+      ? { ...labelBadge, id: `dropdown-badge-${dropdownId}` }
+      : undefined;
+  // `width` has no default — without it every level shrink-wraps, which is
+  // the historical behaviour. When set it has to clear the base's `min-width`
+  // and the multiple toggle's `max-width`, otherwise those caps silently win
+  // over the explicit value.
   //
-  // Only the outer base gets the requested value; the toggle gets 100%.
-  // Repeating the value would compound relative units: `width="60%"` would
-  // otherwise render the toggle at 60% of an already-60% base.
+  // Only the outer wrapper gets the requested value; the base and the toggle
+  // get 100%. Repeating the value would compound relative units:
+  // `width="60%"` would otherwise render the toggle at 60% of an already-60%
+  // base.
   //
   // Spread rather than passed as `css={...}`: Emotion wraps an element whenever
   // `css` is present in its props, even when its value is undefined, and that
   // re-serializes any incoming `className` (e.g. from
   // `styled(MultipleDropdown)`). Omitting the key keeps the no-width path
   // identical to writing no `css` prop.
+  const wrapperCssProps = width === undefined ? undefined : { css: { width } };
   const baseCssProps =
-    width === undefined ? undefined : { css: { width, minWidth: 0 } };
+    width === undefined ? undefined : { css: { width: '100%', minWidth: 0 } };
   const toggleCssProps =
     width === undefined
       ? undefined
@@ -199,6 +267,53 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     [onChange, optionsWithKey, isMultiple, maxHeight, activeValue],
   );
 
+  // How many of the values after the first fit next to it; the rest are
+  // counted in the +N badge. The values are only rendered while the toggle
+  // has spare room (an explicit `width`): a toggle sized to its content, or
+  // one that is not laid out (jsdom), keeps the first value + badge and the
+  // exact text content it had before auto-fit.
+  // Only a `label` prefix is followed by a colon; without one the value
+  // starts the toggle text.
+  const separator = label ? ': ' : '';
+  const extraValuesRef = useRef<HTMLSpanElement>(null);
+  const [hasRoom, setHasRoom] = useState(false);
+  const [fitCount, setFitCount] = useState(0);
+  const extraValues = isMultiple && hasRoom ? values.slice(1) : [];
+  const visibleCount = Math.min(fitCount, extraValues.length);
+  const hiddenCount = (isMultiple ? values.length - 1 : 0) - visibleCount;
+
+  useLayoutEffect(() => {
+    const container = extraValuesRef.current;
+    if (!container) {
+      return;
+    }
+    const measure = () => {
+      const room = container.getBoundingClientRect().width > 0;
+      setHasRoom(room);
+      if (!room) {
+        setFitCount(0);
+        return;
+      }
+      const widths = Array.from(container.children).map(
+        (child) => child.getBoundingClientRect().width,
+      );
+      if (!widths.length || widths.every((width) => width === 0)) {
+        return;
+      }
+      // The room the values have plus the badge's, while it is shown, so the
+      // answer is the same with and without it on screen.
+      const available =
+        container.getBoundingClientRect().width +
+        (hiddenCount > 0 ? BADGE_SPACE : 0);
+      setFitCount(getFitCount(widths, available, BADGE_SPACE));
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [values, hiddenCount, hasRoom]);
+
   useEffect(() => {
     const newValues = getActiveItems({ allItems: optionsWithKey, placeholder });
     const newValuesWithoutPlaceholder = newValues.filter(
@@ -209,51 +324,83 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   }, [optionsWithKey]);
 
   return (
-    <MultipleDropdownContext.Provider value={contextValue}>
-      <DropdownBase
-        {...baseCssProps}
-        ref={useMergeRefs([dropdownBaseRef, ref])}
-        data-testid="dropdown">
-        <DropdownToggle
-          {...toggleCssProps}
-          className={className}
-          isOpen={isOpen}
-          disabled={isDropdownDisabled}
-          onClick={() => (isOpen ? close() : open())}
-          {...toggleKeys}
-          aria-controls={listId}
-          isMultiple={isMultiple}
-          selectedCount={valuesWithoutPlaceholder.length}>
-          {isMultiple ? (
-            <>
-              <DropdownPlaceholderLabel>
-                {label}
-                {showPlaceholder
-                  ? values.length > 0 && `: ${values[0]}`
-                  : valuesWithoutPlaceholder.length > 0 &&
-                    `: ${valuesWithoutPlaceholder[0]}`}
-              </DropdownPlaceholderLabel>
-              {values.length > 1 ? (
-                <MultipleDropdownNotification as={'div'}>
-                  +{values.length - 1}
-                </MultipleDropdownNotification>
-              ) : (
-                ''
-              )}
-            </>
-          ) : (
-            values.join('')
-          )}
-          <DropdownArrow isUp={isOpen} />
-        </DropdownToggle>
+    <DropdownFieldWrapper {...wrapperCssProps}>
+      {fieldLabel ? (
+        <Label id={labelId} disabled={isDropdownDisabled} badge={badge}>
+          {fieldLabel}
+        </Label>
+      ) : null}
+      <MultipleDropdownContext.Provider value={contextValue}>
+        <DropdownBase
+          {...baseCssProps}
+          ref={useMergeRefs([dropdownBaseRef, ref])}
+          data-testid="dropdown">
+          <DropdownToggle
+            {...toggleCssProps}
+            className={className}
+            isOpen={isOpen}
+            disabled={isDropdownDisabled}
+            status={status}
+            onClick={() => (isOpen ? close() : open())}
+            {...toggleKeys}
+            aria-controls={listId}
+            aria-labelledby={labelId}
+            {...(badge && { 'aria-describedby': badge.id })}
+            isMultiple={isMultiple}
+            selectedCount={valuesWithoutPlaceholder.length}>
+            {isMultiple ? (
+              <>
+                <DropdownPlaceholderLabel>
+                  <FirstValue>
+                    {label}
+                    {showPlaceholder
+                      ? values.length > 0 && `${separator}${values[0]}`
+                      : valuesWithoutPlaceholder.length > 0 &&
+                        `${separator}${valuesWithoutPlaceholder[0]}`}
+                  </FirstValue>
+                  <ExtraValues ref={extraValuesRef}>
+                    {extraValues.map((value, index) => (
+                      <span
+                        key={index}
+                        {...(index >= visibleCount && {
+                          'aria-hidden': true,
+                          style: { visibility: 'hidden' },
+                        })}>
+                        , {value as React.ReactNode}
+                      </span>
+                    ))}
+                  </ExtraValues>
+                </DropdownPlaceholderLabel>
+                {hiddenCount > 0 ? (
+                  <MultipleDropdownNotification as={'div'}>
+                    +{hiddenCount}
+                  </MultipleDropdownNotification>
+                ) : (
+                  ''
+                )}
+              </>
+            ) : (
+              values.join('')
+            )}
+            <DropdownArrow isUp={isOpen} />
+          </DropdownToggle>
 
-        {isOpen ? (
-          <MultipleDropdownOptions id={listId}>
-            {childrenArray}
-          </MultipleDropdownOptions>
-        ) : null}
-      </DropdownBase>
-    </MultipleDropdownContext.Provider>
+          {isOpen ? (
+            <MultipleDropdownOptions id={listId}>
+              {childrenArray}
+            </MultipleDropdownOptions>
+          ) : null}
+        </DropdownBase>
+      </MultipleDropdownContext.Provider>
+      {helperText || errors ? (
+        <FormHelperText
+          role="status"
+          status={status}
+          disabled={isDropdownDisabled}>
+          {errors?.message || helperText}
+        </FormHelperText>
+      ) : null}
+    </DropdownFieldWrapper>
   );
 }
 
@@ -267,21 +414,33 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
  * Forwards its ref to the root container div.
  *
  * Component structure:
- * - MultipleDropdown (root container with context)
+ * - Field wrapper: `fieldLabel` above, `helperText` / error message below
+ * - MultipleDropdown base (positioning container with context)
  *   - DropdownToggle (button that opens/closes the menu)
  *   - MultipleDropdownOptions (menu container rendered when open)
- *     - DropdownOption (individual selectable items)
+ *     - DropdownOption / DropdownOptionGroup children, read as data into
+ *       ContextMenu rows and groups
  *
  * @category Form Controls
  * @subcategory Selection
  *
  * @example
  * ```tsx
- * // Basic multi-select
+ * // Multi-select; keep the selection in state and write back
+ * const [selected, setSelected] = useState<DropdownOptionProps[]>([
+ *   { value: 'apple' },
+ * ]);
+ *
  * <MultipleDropdown
  *   label="Fruits"
- *   selectedItems={[{ value: 'apple' }]}
- *   onChange={(value, isSelected) => handleChange(value, isSelected)}
+ *   selectedItems={selected}
+ *   onChange={(value, isSelected) =>
+ *     setSelected((prev) =>
+ *       isSelected
+ *         ? [...prev, { value }]
+ *         : prev.filter((item) => item.value !== value),
+ *     )
+ *   }
  * >
  *   <DropdownOption value="apple">Apple</DropdownOption>
  *   <DropdownOption value="banana">Banana</DropdownOption>
@@ -291,12 +450,13 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
  *
  * @example
  * ```tsx
- * // Single-select mode (closes on pick)
+ * // Single-select mode: closes on pick, shows the value without `label`
+ * const [country, setCountry] = useState<string | number>('us');
+ *
  * <MultipleDropdown
- *   label="Country"
  *   isMultiple={false}
- *   selectedItems={selected}
- *   onChange={handleChange}
+ *   selectedItems={[{ value: country }]}
+ *   onChange={(value) => setCountry(value)}
  * >
  *   <DropdownOption value="us">United States</DropdownOption>
  *   <DropdownOption value="uk">United Kingdom</DropdownOption>
@@ -305,16 +465,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
  *
  * @example
  * ```tsx
- * // Hide placeholder text, only show badge count
- * <MultipleDropdown
- *   label="Tags"
- *   showPlaceholder={false}
- *   selectedItems={tags}
- *   onChange={handleChange}
- * >
- *   {tags.map(tag => (
- *     <DropdownOption key={tag.value} value={tag.value}>{tag.label}</DropdownOption>
- *   ))}
+ * // Show only "Tags" (no placeholder) while nothing is selected
+ * <MultipleDropdown label="Tags" showPlaceholder={false}>
+ *   <DropdownOption value="new" label="New" />
+ *   <DropdownOption value="urgent" label="Urgent" />
  * </MultipleDropdown>
  * ```
  *
@@ -330,6 +484,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
  *   (picks and closes in single-select mode); Escape and Tab close
  * - Click outside to close
  * - Screen reader friendly with aria-expanded and aria-controls
+ * - `fieldLabel` names the toggle (aria-labelledby); `labelBadge` describes it
  *
  * @see https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-select-only.html
  */

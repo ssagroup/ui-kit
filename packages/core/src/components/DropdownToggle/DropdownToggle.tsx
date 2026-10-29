@@ -76,8 +76,22 @@ const singleDropdownStyles = ({
   `;
 };
 
-const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
-  const borderColor = isOpen ? theme.palette.primary.main : theme.colors.grey;
+const multipleStyles = ({
+  theme,
+  isOpen,
+  status = 'basic',
+}: MultipleStylesProps) => {
+  // Basic keeps the multiple toggle's own colours; error and success use the
+  // same palette as the single toggle and Input.
+  const colors =
+    status === 'basic'
+      ? {
+          default: theme.colors.grey,
+          hover: theme.colors.greyDarker80,
+          accent: theme.palette.primary.main,
+        }
+      : statusBorderColors(theme)[status];
+  const borderColor = isOpen ? colors.accent : colors.default;
 
   return css`
     height: 40px;
@@ -106,13 +120,11 @@ const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
     }
 
     &:focus:not(:disabled) {
-      border-color: ${theme.palette.primary.main};
+      border-color: ${colors.accent};
     }
 
     &:hover:not(:disabled) {
-      border-color: ${isOpen
-        ? theme.palette.primary.main
-        : theme.colors.greyDarker80};
+      border-color: ${isOpen ? colors.accent : colors.hover};
     }
   `;
 };
@@ -156,11 +168,12 @@ export const DropdownToggleBase = styled.button<
     !isMultiple && singleDropdownStyles({ theme, isOpen, disabled, status })}
 
   /* Multiple dropdown: overrides above and adds its own border/background */
-  ${({ isMultiple, isOpen, theme }) =>
+  ${({ isMultiple, isOpen, status, theme }) =>
     isMultiple &&
     multipleStyles({
       theme,
       isOpen,
+      status,
     })}
 `;
 

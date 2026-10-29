@@ -1,11 +1,15 @@
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 
 import DropdownOption from '@components/DropdownOption';
 import DropdownOptionGroup from '@components/DropdownOptionGroup';
+import Button from '@components/Button';
 
 import MultipleDropdown from '.';
-import { DynamicallyChangedItems } from './stories/MultipleDropdown.stories';
+import { DropdownProps } from './types';
+import { getFitCount } from './utils';
+import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 interface Item {
   value: number;
@@ -27,6 +31,35 @@ const selectedItemsValues = selectedItems.map((item) => item.value);
 const placeholder = 'Strategy';
 
 const getListItemValue = (item: Item) => item.label;
+
+/** Adds an option on each click of "Update items". */
+const DynamicallyChangedItems = (props: DropdownProps<DropdownOptionProps>) => {
+  const [localItems, setLocalItems] = useState(items.slice(0, 3));
+  const handleUpdate = () =>
+    setLocalItems((state) => [
+      ...state,
+      {
+        value: state[state.length - 1].value + 1,
+        label: `Item ${state[state.length - 1].value + 1}`,
+        subText: 'subtext',
+      },
+    ]);
+
+  return (
+    <div>
+      <MultipleDropdown {...props}>
+        {localItems.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+      <Button variant="primary" onClick={handleUpdate}>
+        Update items
+      </Button>
+    </div>
+  );
+};
 
 describe('MultipleDropdown', () => {
   function setup(props = {}) {
@@ -528,12 +561,13 @@ describe('MultipleDropdown', () => {
       expect(dropdownToggleEl).toHaveStyleRule('max-width', '250px');
     });
 
-    it('applies width to the base and stretches the toggle to fill it', () => {
+    it('applies width to the wrapper and stretches the base and toggle', () => {
       const { getByTestId } = setup({ width: '100%' });
 
       const dropdownBaseEl = getByTestId('dropdown');
       const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
 
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '100%');
       expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
       expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
     });
@@ -545,7 +579,8 @@ describe('MultipleDropdown', () => {
       const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
 
       // Repeating '60%' would render the toggle at 60% of an already-60% base.
-      expect(dropdownBaseEl).toHaveStyleRule('width', '60%');
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '60%');
+      expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
       expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
     });
 
@@ -555,10 +590,84 @@ describe('MultipleDropdown', () => {
       const dropdownBaseEl = getByTestId('dropdown');
       const dropdownToggleEl = within(dropdownBaseEl).getByRole('combobox');
 
-      expect(dropdownBaseEl).toHaveStyleRule('width', '120px');
+      expect(dropdownBaseEl.parentElement).toHaveStyleRule('width', '120px');
+      expect(dropdownBaseEl).toHaveStyleRule('width', '100%');
       expect(dropdownBaseEl).toHaveStyleRule('min-width', '0');
       expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
       expect(dropdownToggleEl).toHaveStyleRule('max-width', 'none');
+    });
+  });
+
+  describe('form field', () => {
+    it('names the toggle with fieldLabel and keeps label as the prefix', () => {
+      const { getByRole, getByText } = setup({
+        fieldLabel: 'Departments',
+        label: 'Strategy',
+        selectedItems: [items[0]],
+      });
+
+      const toggle = getByRole('combobox', { name: 'Departments' });
+      expect(getByText('Departments')).toBeInTheDocument();
+      expect(toggle).toHaveTextContent('Strategy: First Item');
+    });
+
+    it('shows the value without a colon when there is no label', () => {
+      const { getByRole } = setup({ selectedItems: [items[0]] });
+
+      expect(getByRole('combobox')).toHaveTextContent(/^First Item$/);
+    });
+
+    it('leaves the toggle unlabelled without a fieldLabel', () => {
+      const { getByRole } = setup({ labelBadge: { text: 'default' } });
+
+      const toggle = getByRole('combobox');
+      expect(toggle).not.toHaveAttribute('aria-labelledby');
+      expect(toggle).not.toHaveAttribute('aria-describedby');
+    });
+
+    it('describes the toggle with the label badge', () => {
+      const { getByRole } = setup({
+        fieldLabel: 'Departments',
+        labelBadge: { text: 'default' },
+      });
+
+      expect(getByRole('combobox')).toHaveAccessibleDescription('default');
+    });
+
+    it('shows helper text, replaced by the error message', () => {
+      const { getByRole, rerender } = setup({
+        helperText: 'Pick at least one',
+      });
+      expect(getByRole('status')).toHaveTextContent('Pick at least one');
+
+      rerender(
+        <MultipleDropdown
+          helperText="Pick at least one"
+          errors={{ type: 'required', message: 'Required' }}>
+          <DropdownOption value={1}>One</DropdownOption>
+        </MultipleDropdown>,
+      );
+      expect(getByRole('status')).toHaveTextContent('Required');
+    });
+  });
+
+  describe('getFitCount', () => {
+    it('fits every value without reserving the badge', () => {
+      expect(getFitCount([50, 50], 100, 26)).toBe(2);
+    });
+
+    it('reserves the badge while values are left out', () => {
+      // 26 + 50 = 76 fits; a second value would need 126.
+      expect(getFitCount([50, 50, 50], 125, 26)).toBe(1);
+      expect(getFitCount([50, 50, 50], 126, 26)).toBe(2);
+    });
+
+    it('can fit none', () => {
+      expect(getFitCount([80, 10], 40, 26)).toBe(0);
+    });
+
+    it('keeps order, stopping at the first value that does not fit', () => {
+      expect(getFitCount([30, 200, 10], 100, 26)).toBe(1);
     });
   });
 

@@ -48,4 +48,5 @@ export interface DropdownToggleProps
 export interface MultipleStylesProps {
   theme: Theme;
   isOpen?: boolean;
+  status?: 'basic' | 'error' | 'success';
 }

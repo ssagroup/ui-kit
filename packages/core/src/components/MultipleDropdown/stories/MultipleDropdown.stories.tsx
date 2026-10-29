@@ -1,440 +1,44 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import styled from '@emotion/styled';
+import { fn } from 'storybook/test';
 import { css } from '@emotion/react';
 
 import DropdownOption from '@components/DropdownOption';
 import DropdownOptionGroup from '@components/DropdownOptionGroup';
 import Button from '@components/Button';
-import { focusOutline } from '@styles/safari-focus-outline';
+import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import MultipleDropdown from '../MultipleDropdown';
-import { items } from './consts';
+import { DropdownProps } from '../types';
 
-/**
- * Recreates the MultipleDropdown look from before the "dropdown styles" commit.
- * Key differences vs the new design:
- *   - border-radius: 5px (was 12px)
- *   - border: greyDropdownMain (was grey → primary)
- *   - color: greyDropdownText (was greyDarker)
- *   - blue background when items are selected (blueDropdownWithSelectedItems)
- *   - focus ring via ::before pseudo-element with greyDropdownFocused
- *
- * The blue background is shown statically here since the story always has
- * pre-selected items (it was selection-state-dependent in the old component).
- * Uses &&& (triple class selector) to exceed the specificity of the new
- * hover/focus rules (which use pseudo-classes like :hover:not(:disabled),
- * giving them specificity 0,2,0 — three repeated classes gives us 0,3,0).
- */
-const LegacyMultipleDropdown = styled(MultipleDropdown)`
-  &&& {
-    border-radius: 5px;
-    color: ${({ theme }) => theme.colors.greyDropdownText};
-    border: 1px solid ${({ theme }) => theme.colors.greyDropdownMain};
-    background: ${({ theme }) =>
-      theme.colors.blueDropdownWithSelectedItems ?? theme.colors.white};
-  }
+type Args = DropdownProps<DropdownOptionProps>;
+type Item = { value: string | number; label: string; subText?: string };
 
-  ${({ theme }) => focusOutline(theme, 'greyDropdownFocused', '5px')}
+const items: Item[] = [
+  { value: 1, label: 'Design', subText: '12 members' },
+  { value: 2, label: 'Engineering', subText: '48 members' },
+  { value: 3, label: 'Finance', subText: '6 members' },
+  { value: 4, label: 'Human Resources', subText: '9 members' },
+  { value: 5, label: 'Legal', subText: '4 members' },
+  { value: 6, label: 'Marketing', subText: '15 members' },
+  { value: 7, label: 'Operations', subText: '21 members' },
+  { value: 8, label: 'Product', subText: '11 members' },
+  { value: 9, label: 'Sales', subText: '30 members' },
+  { value: 10, label: 'Support', subText: '18 members' },
+];
 
-  &&&:focus {
-    border-color: ${({ theme }) => theme.colors.greyDropdownFocused};
-  }
-
-  &&&:focus::before {
-    border-color: ${({ theme }) => theme.colors.greyDropdownFocused};
-  }
-
-  &&&:hover:not(:disabled) {
-    border-color: ${({ theme }) => theme.colors.greyDropdownMain};
-  }
-`;
-
-/*
- * styled(MultipleDropdown) only forwards className to DropdownToggle —
- * it cannot reach the options list. This wrapper restores the old 2px
- * checkbox border-radius that was in DropdownOptionButton before the refactor.
- */
-const LegacyCheckboxWrapper = styled.div`
-  & label input + div,
-  & label input + div::before {
-    border-radius: 2px;
-  }
-`;
-
-type Args = Parameters<typeof MultipleDropdown>[0];
-
-export default {
-  title: 'Components/MultipleDropdown',
-  component: MultipleDropdown,
-  argTypes: {
-    selectedItems: {
-      description:
-        'List of currently selected items. Each entry must match one of the DropdownOption values.',
-      control: { disable: true },
-      table: {
-        type: { summary: 'DropdownOptionProps[]' },
-        defaultValue: { summary: '[]' },
-      },
-    },
-    isMultiple: {
-      description:
-        'Enables multi-select mode — each option toggles independently. When `false` the dropdown behaves like a single-select and closes on pick.',
-      control: 'boolean',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-      },
-    },
-    disabled: {
-      description: 'Disables the dropdown, preventing any user interaction.',
-      control: 'boolean',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    placeholder: {
-      description: 'Text shown in the toggle button when no item is selected.',
-      control: 'text',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: "'Select something'" },
-      },
-    },
-    width: {
-      description:
-        'Width of the dropdown. Sizes the base, with the toggle button stretched to fill it, and clears their default `min-width` / `max-width`. Number values are treated as pixels. Omit it to keep the dropdown sized to its content.',
-      control: 'text',
-      table: {
-        type: { summary: 'string | number' },
-        defaultValue: { summary: 'undefined (sized to content)' },
-      },
-    },
-    showPlaceholder: {
-      description:
-        'When `true` the placeholder value is included in the displayed list. Set to `false` to hide it and only show the badge count.',
-      control: 'boolean',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'true' },
-      },
-    },
-    isOpen: {
-      description:
-        'Controlled open state. When provided, overrides the internal open/close logic.',
-      control: 'boolean',
-      table: { type: { summary: 'boolean' } },
-    },
-    label: {
-      description:
-        'Label prefix shown in the toggle button before the selected value(s), e.g. `label="Strategy"` renders "Strategy: Value".',
-      control: 'text',
-      table: { type: { summary: 'string' } },
-    },
-    onChange: {
-      description:
-        'Callback fired when an option is toggled. Receives the option value and whether it was selected or deselected.',
-      control: { disable: true },
-    },
-    className: {
-      description:
-        'Custom CSS class forwarded to the toggle button. Useful for styling via `styled(MultipleDropdown)`.',
-      table: { type: { summary: 'StyledComponent' } },
-      control: { disable: true },
-    },
+const longItems: Item[] = [
+  {
+    value: 'long-1',
+    label:
+      'Regional Operations and Customer Success — Central and Eastern Europe',
   },
-  decorators: [
-    (Story, { args }) => {
-      const noop = () => {
-        /* no-op */
-      };
-      return (
-        <div style={{ paddingBottom: 200 }}>
-          {Story({ ...args, onChange: noop })}
-        </div>
-      );
-    },
-  ],
-} as Meta<typeof MultipleDropdown>;
-
-export const Basic: StoryObj = (args: Args) => {
-  return (
-    <MultipleDropdown {...args}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </MultipleDropdown>
-  );
-};
-
-Basic.args = {
-  disabled: false,
-  isMultiple: true,
-  selectedItems: [items[0], items[2]],
-  label: 'Strategy',
-};
-
-/**
- * `width="100%"` makes the dropdown fill its container. It also clears the
- * base's default `min-width: 180px` and the toggle's `max-width: 250px`, which
- * would otherwise silently cap the value.
- *
- * The value carries on the base only — the toggle is set to `100%` — so the
- * `60%` example below is 60% of the dashed box rather than 60% of an
- * already-60% base.
- */
-export const FullWidth: StoryObj = (args: Args) => {
-  return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 520px;
-        padding: 16px;
-        border: 1px dashed #c4c4c4;
-        border-radius: 12px;
-      `}>
-      <MultipleDropdown {...args} width="100%" label="Fills the container">
-        {items.map((item) => (
-          <DropdownOption key={item.value} value={item.value}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </MultipleDropdown>
-      <MultipleDropdown {...args} width="60%" label="60% of the container">
-        {items.map((item) => (
-          <DropdownOption key={item.value} value={item.value}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </MultipleDropdown>
-      <MultipleDropdown {...args} label="Sized to content">
-        {items.map((item) => (
-          <DropdownOption key={item.value} value={item.value}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </MultipleDropdown>
-    </div>
-  );
-};
-
-FullWidth.args = {
-  disabled: false,
-  isMultiple: true,
-  selectedItems: [items[0], items[2]],
-};
-
-export const PlaceholderHidden: StoryObj = (args: Args) => {
-  return (
-    <MultipleDropdown {...args}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </MultipleDropdown>
-  );
-};
-
-PlaceholderHidden.args = {
-  disabled: false,
-  isMultiple: true,
-  selectedItems: [],
-  showPlaceholder: false,
-  label: 'Strategy',
-};
-
-export const Single: StoryObj = (args: Args) => {
-  return (
-    <MultipleDropdown disabled={args.disabled} isMultiple={args.isMultiple}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </MultipleDropdown>
-  );
-};
-
-Single.args = {
-  disabled: false,
-  isMultiple: false,
-  selectedItems: [items[0]],
-};
-
-export const Opened: StoryObj = (args: Args) => {
-  return (
-    <MultipleDropdown
-      selectedItems={args.selectedItems}
-      isMultiple={args.isMultiple}
-      label={args.label}
-      {...args}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </MultipleDropdown>
-  );
-};
-
-Opened.args = {
-  isOpen: true,
-  disabled: false,
-  label: 'Strategy',
-  isMultiple: true,
-  selectedItems: [items[1]],
-};
-
-export const Simple: StoryObj = (args: Args) => {
-  return (
-    <MultipleDropdown {...args}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value} />
-      ))}
-    </MultipleDropdown>
-  );
-};
-
-Simple.args = { disabled: false, label: 'Strategy', selectedItems: [] };
-
-export const NoItems: StoryObj = () => {
-  return <MultipleDropdown label="Strategy">{null}</MultipleDropdown>;
-};
-
-NoItems.args = { disabled: false, selectedItems: [] };
-
-export const Custom: StoryObj = (args: Args) => {
-  // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
-  const CustomOption = styled(DropdownOption)`
-    width: auto;
-    padding: 10px;
-
-    text-align: left;
-    line-height: 18px;
-    font-size: 16px;
-
-    background: hotpink;
-    color: white;
-
-    :hover {
-      background: pink;
-    }
-
-    b {
-      color: white;
-    }
-  `;
-
-  return (
-    <MultipleDropdown
-      disabled={args.disabled}
-      selectedItems={[items[2]]}
-      label="Strategy"
-      css={css`
-        background: #ff947b;
-        :focus {
-          background: #ffb566;
-        }
-        &[aria-expanded='true'] {
-          color: #975875;
-
-          svg {
-            path {
-              stroke: #975875;
-            }
-          }
-        }
-      `}>
-      {items.map((item) => (
-        <CustomOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-          &nbsp;|&nbsp;
-          <b>{item.subText}</b>
-        </CustomOption>
-      ))}
-    </MultipleDropdown>
-  );
-};
-
-Custom.args = {
-  disabled: false,
-};
-
-export const LegacyStyle: StoryObj<Args> = {
-  name: 'Legacy (Previous Style)',
-  render: (args) => (
-    <LegacyCheckboxWrapper>
-      <LegacyMultipleDropdown
-        {...args}
-        selectedItems={[items[0], items[2]]}
-        label="Strategy">
-        {items.map((item) => (
-          <DropdownOption key={item.value} value={item.value}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </LegacyMultipleDropdown>
-    </LegacyCheckboxWrapper>
-  ),
-};
-
-LegacyStyle.args = { disabled: false, isMultiple: true };
-
-export const Disabled: StoryObj<Args> = {
-  render: () => (
-    <MultipleDropdown label="Strategy" disabled selectedItems={[items[0]]}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </MultipleDropdown>
-  ),
-};
-
-Disabled.args = { disabled: true };
-
-export const DynamicallyChangedItems = (args: Args) => {
-  const [localItems, setLocalItems] = useState(items);
-
-  const handleUpdate = () => {
-    setLocalItems((state) => [
-      ...state,
-      {
-        value: state[state.length - 1].value + 1,
-        label: `#${state[state.length - 1].value + 1} lorem ipsum`,
-        subText: 'subtext',
-      },
-    ]);
-  };
-  return (
-    <div>
-      <MultipleDropdown {...args}>
-        {localItems.map((item) => (
-          <DropdownOption key={item.value} value={item.value}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </MultipleDropdown>
-      <Button variant="primary" css={{ marginLeft: 10 }} onClick={handleUpdate}>
-        Update items
-      </Button>
-    </div>
-  );
-};
-
-DynamicallyChangedItems.args = {
-  disabled: false,
-  isMultiple: true,
-  selectedItems: [items[0], items[2]],
-  label: 'Strategy2',
-};
+  { value: 'short', label: 'Short one' },
+  {
+    value: 'long-2',
+    label: 'Platform Infrastructure, Reliability and Developer Experience',
+  },
+];
 
 const groupedItems = [
   {
@@ -455,30 +59,375 @@ const groupedItems = [
   },
 ];
 
+const dashedContainer = (width: number) => css`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: ${width}px;
+  padding: 16px;
+  border: 1px dashed #c4c4c4;
+  border-radius: 12px;
+`;
+
+export default {
+  title: 'Components/MultipleDropdown',
+  component: MultipleDropdown,
+  args: {
+    onChange: fn(),
+  },
+  argTypes: {
+    selectedItems: { control: false },
+    onChange: { control: false },
+    children: { control: false },
+    className: { control: false },
+    isDisabled: { control: false },
+    errors: { control: false },
+    isOpen: {
+      description:
+        'Initial open state. Read on mount only — later changes are ignored.',
+    },
+    width: { control: 'text' },
+    maxHeight: { control: 'number' },
+  },
+  parameters: {
+    // Show each story's own source rather than the rendered element tree,
+    // which expands every option and leaks story-only props such as `key`.
+    docs: { source: { type: 'code' } },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ paddingBottom: 240 }}>
+        <Story />
+      </div>
+    ),
+  ],
+} as Meta<typeof MultipleDropdown>;
+
 /**
- * Wrap options in `DropdownOptionGroup` to show them under a title. Titles
- * are not selectable and keyboard navigation skips them.
+ * The toggle shows `label`, the first selected option and a `+N` badge for
+ * the rest. `selectedItems` is matched to options by `value`. `onChange`
+ * receives the toggled option's `value` and whether it is now selected.
+ *
+ * With `isMultiple={false}` it picks one option and closes; the toggle then
+ * shows only the selected value (no `label`), and picking the selected option
+ * again just closes the list. For a single choice, prefer `Dropdown`.
+ *
+ * Every prop in the Controls panel applies here. `isOpen` opens the list on
+ * mount; it is read once and is not a controlled prop, so this story remounts
+ * the dropdown when the control changes.
  */
-export const Groups: StoryObj = (args: Args) => (
-  <MultipleDropdown {...args}>
-    {groupedItems.map((group) => (
-      <DropdownOptionGroup key={group.label} label={group.label}>
-        {group.items.map((item) => (
+export const Default: StoryObj<Args> = {
+  args: {
+    label: 'Departments',
+    selectedItems: [items[0], items[2]],
+    isMultiple: true,
+    disabled: false,
+    isOpen: false,
+  },
+  render: (args) => (
+    <MultipleDropdown key={String(args.isOpen)} {...args}>
+      {items.map((item) => (
+        <DropdownOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
+      ))}
+    </MultipleDropdown>
+  ),
+};
+
+/**
+ * `fieldLabel`, `helperText`, `errors` (a react-hook-form `FieldError`) and
+ * `success` give the dropdown the same field chrome as `Dropdown` and the other
+ * form controls. `fieldLabel` sits above the toggle and is its accessible name;
+ * it is separate from `label`, the prefix inside the toggle. `labelBadge` adds
+ * a status badge next to the field label and is announced as the toggle's
+ * description — it needs a `fieldLabel`.
+ */
+export const FormField: StoryObj<Args> = {
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <MultipleDropdown
+        {...args}
+        fieldLabel="Departments"
+        helperText="Choose every department that applies"
+        selectedItems={[items[0], items[2]]}>
+        {items.map((item) => (
           <DropdownOption
             key={item.value}
             value={item.value}
             label={item.label}
-            disabled={item.disabled}
           />
         ))}
-      </DropdownOptionGroup>
-    ))}
-  </MultipleDropdown>
-);
+      </MultipleDropdown>
+      <MultipleDropdown
+        {...args}
+        fieldLabel="Departments"
+        errors={{ type: 'required', message: 'Pick at least one department' }}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown
+        {...args}
+        fieldLabel="Departments"
+        success
+        helperText="Looks good!"
+        selectedItems={[items[1]]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown
+        {...args}
+        fieldLabel="Notification channels"
+        labelBadge={{ text: 'default' }}
+        label="Channels"
+        selectedItems={[items[0]]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+    </div>
+  ),
+};
 
-Groups.args = {
-  disabled: false,
-  isMultiple: true,
-  selectedItems: [groupedItems[0].items[0], groupedItems[1].items[0]],
-  label: 'Ingredients',
+/**
+ * With nothing selected the toggle reads `label: placeholder`.
+ * `showPlaceholder={false}` drops the placeholder and shows the `label` alone.
+ * Once something is selected both look the same.
+ */
+export const Placeholder: StoryObj<Args> = {
+  args: { label: 'Departments', placeholder: 'Any' },
+  render: (args) => (
+    <div style={{ display: 'flex', gap: 16 }}>
+      <MultipleDropdown {...args} selectedItems={[]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown {...args} selectedItems={[]} showPlaceholder={false}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+    </div>
+  ),
+};
+
+/**
+ * Wrap options in `DropdownOptionGroup` to show them under a title — the same
+ * component `Dropdown` uses. Titles are not selectable and keyboard navigation
+ * skips them. `selectedItems` and `onChange` work with option values exactly
+ * as without groups. `DropdownOptionGroup` must be a direct child of the
+ * `MultipleDropdown`.
+ */
+export const Groups: StoryObj<Args> = {
+  args: { label: 'Ingredients', width: 260 },
+  render: (args) => (
+    <MultipleDropdown
+      {...args}
+      selectedItems={[{ value: 'apple' }, { value: 'carrot' }]}>
+      {groupedItems.map((group) => (
+        <DropdownOptionGroup key={group.label} label={group.label}>
+          {group.items.map((item) => (
+            <DropdownOption
+              key={item.value}
+              value={item.value}
+              label={item.label}
+              disabled={item.disabled}
+            />
+          ))}
+        </DropdownOptionGroup>
+      ))}
+    </MultipleDropdown>
+  ),
+};
+
+/**
+ * Without `width` the dropdown is sized to its content and shows the first
+ * selected value and a `+N` badge. A number is pixels and any CSS length is
+ * used as-is, so `width="100%"` fills the surrounding container and
+ * `width="60%"` is 60% of it. The extra room is filled with as many further
+ * values as fit, re-measured on resize; the badge counts the rest.
+ *
+ * Use the prop rather than a `css` override: `className` and `css` land on the
+ * toggle button only, and the prop also clears the base's default
+ * `min-width: 180px` and the toggle's `max-width: 250px`, which would
+ * otherwise cap the value.
+ *
+ * Edit the `width` control to try values against the 520px dashed container;
+ * the other two dropdowns stay fixed for comparison.
+ */
+export const Width: StoryObj<Args> = {
+  args: { width: '100%' },
+  render: (args) => (
+    <div css={dashedContainer(520)}>
+      <MultipleDropdown
+        {...args}
+        label={`width="${args.width ?? ''}"`}
+        selectedItems={items.slice(0, 7)}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown
+        {...args}
+        width={320}
+        label="width={320}"
+        selectedItems={items.slice(0, 7)}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown
+        {...args}
+        width={undefined}
+        label="No width"
+        selectedItems={items.slice(0, 7)}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+    </div>
+  ),
+};
+
+/**
+ * The toggle text stays on one line and is ellipsised before the `+N` badge;
+ * option labels are ellipsised too, with a tooltip holding the full label
+ * (after a 1s hover). Give the dropdown an explicit `width` when the options
+ * need more room. `maxHeight` (200px by default) caps the list; longer lists
+ * scroll.
+ */
+export const LongContent: StoryObj<Args> = {
+  args: { label: 'Teams', maxHeight: 200 },
+  render: (args) => (
+    <div css={dashedContainer(320)}>
+      <MultipleDropdown {...args} selectedItems={longItems}>
+        {longItems.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </MultipleDropdown>
+    </div>
+  ),
+};
+
+/**
+ * The dropdown keeps the selection internally, seeded from `selectedItems`,
+ * and resets it to `selectedItems` whenever the parent re-renders. So keep the
+ * selection in state and write back from `onChange` — here the buttons also
+ * change it from outside the dropdown.
+ */
+export const Controlled: StoryObj<Args> = {
+  args: { label: 'Departments' },
+  render: function Render(args) {
+    const [selected, setSelected] = useState<Item[]>([items[1]]);
+
+    return (
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <MultipleDropdown
+          {...args}
+          selectedItems={selected}
+          onChange={(value, isSelected) => {
+            setSelected((prev) =>
+              isSelected
+                ? [...prev, ...items.filter((item) => item.value === value)]
+                : prev.filter((item) => item.value !== value),
+            );
+            args.onChange?.(value, isSelected);
+          }}>
+          {items.map((item) => (
+            <DropdownOption
+              key={item.value}
+              value={item.value}
+              label={item.label}
+            />
+          ))}
+        </MultipleDropdown>
+        <Button variant="primary" onClick={() => setSelected(items)}>
+          Select all
+        </Button>
+        <Button variant="secondary" onClick={() => setSelected([])}>
+          Clear
+        </Button>
+      </div>
+    );
+  },
+};
+
+/**
+ * `css` and `className` are applied to the toggle button; style the open and
+ * focus states through `&[aria-expanded='true']` and `:focus`.
+ *
+ * Options are not rendered as elements — the dropdown reads their props — so
+ * `styled(DropdownOption)` and a `css` prop on an option have no effect. Put
+ * custom content in the option's `children` instead, and keep `label` set to
+ * plain text: that is what the toggle shows once the option is selected.
+ */
+export const CustomStyling: StoryObj<Args> = {
+  args: { label: 'Departments' },
+  render: (args) => (
+    <MultipleDropdown
+      {...args}
+      selectedItems={[items[2]]}
+      css={css`
+        background: #ff947b;
+        :focus {
+          background: #ffb566;
+        }
+        &[aria-expanded='true'] {
+          color: #975875;
+
+          svg path {
+            stroke: #975875;
+          }
+        }
+      `}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+          &nbsp;|&nbsp;
+          <b>{item.subText}</b>
+        </DropdownOption>
+      ))}
+    </MultipleDropdown>
+  ),
 };
