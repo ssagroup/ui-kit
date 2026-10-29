@@ -10,10 +10,12 @@ import DropdownArrow from '@components/DropdownArrow';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
 import {
   OptionValue,
+  flattenDropdownOptions,
   toDropdownMenuItems,
 } from '@components/DropdownOptions/utils';
 import { useToggleListKeys } from '@components/DropdownOptions/useToggleListKeys';
 import { getNextActiveValue } from '@components/ContextMenu';
+import { flattenItems } from '@components/ContextMenu/utils';
 import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 import { resolveDisabled } from '@utils/deprecation';
@@ -103,7 +105,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   /** Opens with the first selected option highlighted, else per the key pressed. */
   const open = (key = 'ArrowDown') => {
     setIsOpen(true);
-    const selected = menuItems.find(
+    const selected = flattenItems(menuItems).find(
       (item) => !item.disabled && optionsWithKey[item.value]?.isSelected,
     );
     setActiveValue(
@@ -158,14 +160,16 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
 
   useEffect(() => {
     const keyedOptions: Record<number | string, T> = {};
-    (childrenArray as React.ReactElement<T>[]).forEach((child) => {
-      keyedOptions[child.props.value] = {
-        ...child.props,
-        isSelected: !!memoSelectedItems.find(
-          (selectedItem) => selectedItem.value === child.props.value,
-        ),
-      };
-    });
+    (flattenDropdownOptions(childrenArray) as React.ReactElement<T>[]).forEach(
+      (child) => {
+        keyedOptions[child.props.value] = {
+          ...child.props,
+          isSelected: !!memoSelectedItems.find(
+            (selectedItem) => selectedItem.value === child.props.value,
+          ),
+        };
+      },
+    );
 
     setOptionsWithKey(keyedOptions);
   }, [memoSelectedItems, children]);

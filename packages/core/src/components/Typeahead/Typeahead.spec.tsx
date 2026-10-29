@@ -5,6 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import { Typeahead } from './Typeahead';
 import { TypeaheadOption } from '@components';
+import { TypeaheadOptionGroup } from './components/TypeaheadOptionGroup';
 import { highlightInputMatch } from './utils';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 
@@ -651,5 +652,90 @@ describe('Typeahead Component', () => {
     setup();
 
     expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-labelledby');
+  });
+
+  describe('groups', () => {
+    const renderGrouped = (onChange = jest.fn()) => {
+      const { container } = render(
+        <Typeahead name="food" label="Food" onChange={onChange}>
+          <TypeaheadOptionGroup label="Fruits">
+            <TypeaheadOption value="apple" label="Apple">
+              Apple
+            </TypeaheadOption>
+            <TypeaheadOption value="banana" label="Banana">
+              Banana
+            </TypeaheadOption>
+          </TypeaheadOptionGroup>
+          <TypeaheadOptionGroup label="Vegetables">
+            <TypeaheadOption value="carrot" label="Carrot">
+              Carrot
+            </TypeaheadOption>
+          </TypeaheadOptionGroup>
+        </Typeahead>,
+      );
+      const input = container.querySelector(
+        '.typeahead-input',
+      ) as HTMLInputElement;
+      return { user: userEvent.setup(), onChange, input };
+    };
+
+    it('renders titled groups of options', async () => {
+      const { user } = renderGrouped();
+
+      await user.click(screen.getByRole('combobox'));
+
+      const groups = screen.getAllByRole('group');
+      expect(groups).toHaveLength(2);
+      expect(groups[0]).toHaveAccessibleName('Fruits');
+      expect(groups[1]).toHaveAccessibleName('Vegetables');
+    });
+
+    it('hides a group with no matching options', async () => {
+      const { user, input } = renderGrouped();
+
+      await user.type(input, 'car');
+
+      const groups = screen.getAllByRole('group');
+      expect(groups).toHaveLength(1);
+      expect(groups[0]).toHaveAccessibleName('Vegetables');
+      expect(screen.queryByText('Fruits')).not.toBeInTheDocument();
+    });
+
+    it('gives a group inside a fragment its own id', async () => {
+      const user = userEvent.setup();
+      const { container } = render(
+        <Typeahead name="food" label="Food">
+          <TypeaheadOptionGroup label="Fruits">
+            <TypeaheadOption value="apple" label="Apple">
+              Apple
+            </TypeaheadOption>
+          </TypeaheadOptionGroup>
+          <>
+            <TypeaheadOptionGroup label="Vegetables">
+              <TypeaheadOption value="carrot" label="Carrot">
+                Carrot
+              </TypeaheadOption>
+            </TypeaheadOptionGroup>
+          </>
+        </Typeahead>,
+      );
+
+      await user.click(
+        container.querySelector('.typeahead-input') as HTMLInputElement,
+      );
+
+      const groups = screen.getAllByRole('group');
+      expect(groups[0]).toHaveAccessibleName('Fruits');
+      expect(groups[1]).toHaveAccessibleName('Vegetables');
+    });
+
+    it('walks options across groups with the keyboard', async () => {
+      const { user, onChange, input } = renderGrouped();
+
+      input.focus();
+      await user.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}{Enter}');
+
+      expect(onChange).toHaveBeenCalledWith('carrot', true);
+    });
   });
 });

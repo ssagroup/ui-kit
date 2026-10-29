@@ -49,6 +49,8 @@ export type * from './Dropdown/types';
 export { default as DropdownArrow } from './DropdownArrow';
 export { default as DropdownBase } from './DropdownBase';
 export { default as DropdownOption } from './DropdownOption';
+export { default as DropdownOptionGroup } from './DropdownOptionGroup';
+export type { DropdownOptionGroupProps } from './DropdownOptionGroup';
 export { default as DropdownOptions } from './DropdownOptions';
 export type { DropdownOptionProps } from './DropdownOptions';
 export { default as DropdownToggle } from './DropdownToggle';

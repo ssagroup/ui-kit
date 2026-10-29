@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 import DropdownOption from '@components/DropdownOption';
+import DropdownOptionGroup from '@components/DropdownOptionGroup';
 import Button from '@components/Button';
 import { focusOutline } from '@styles/safari-focus-outline';
 
@@ -433,4 +434,51 @@ DynamicallyChangedItems.args = {
   isMultiple: true,
   selectedItems: [items[0], items[2]],
   label: 'Strategy2',
+};
+
+const groupedItems = [
+  {
+    label: 'Fruits',
+    items: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+    ],
+  },
+  {
+    label: 'Vegetables',
+    items: [
+      { value: 'carrot', label: 'Carrot' },
+      { value: 'potato', label: 'Potato' },
+      { value: 'onion', label: 'Onion', disabled: true },
+    ],
+  },
+];
+
+/**
+ * Wrap options in `DropdownOptionGroup` to show them under a title. Titles
+ * are not selectable and keyboard navigation skips them.
+ */
+export const Groups: StoryObj = (args: Args) => (
+  <MultipleDropdown {...args}>
+    {groupedItems.map((group) => (
+      <DropdownOptionGroup key={group.label} label={group.label}>
+        {group.items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+            disabled={item.disabled}
+          />
+        ))}
+      </DropdownOptionGroup>
+    ))}
+  </MultipleDropdown>
+);
+
+Groups.args = {
+  disabled: false,
+  isMultiple: true,
+  selectedItems: [groupedItems[0].items[0], groupedItems[1].items[0]],
+  label: 'Ingredients',
 };

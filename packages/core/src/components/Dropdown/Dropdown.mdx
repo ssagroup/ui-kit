@@ -279,6 +279,31 @@ Create rich option content with custom elements:
 </Dropdown>
 ```
 
+### Groups
+
+Wrap options in `DropdownOptionGroup` to show them under a title. Titles are not
+selectable and keyboard navigation skips them; groups are separated by a divider.
+Options outside any group can sit next to groups. `DropdownOptionGroup` must be
+a direct child of the `Dropdown`.
+
+```tsx
+import {
+  Dropdown,
+  DropdownOption,
+  DropdownOptionGroup,
+} from '@ssa-ui-kit/core';
+
+<Dropdown selectedItem={selected} onChange={setSelected}>
+  <DropdownOptionGroup label="Fruits">
+    <DropdownOption value="apple" label="Apple" />
+    <DropdownOption value="banana" label="Banana" />
+  </DropdownOptionGroup>
+  <DropdownOptionGroup label="Vegetables">
+    <DropdownOption value="carrot" label="Carrot" />
+  </DropdownOptionGroup>
+</Dropdown>;
+```
+
 ### Empty State
 
 Handle dropdowns with no options:

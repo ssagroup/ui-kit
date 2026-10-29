@@ -2,6 +2,7 @@ import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
 import DropdownOption from '@components/DropdownOption';
+import DropdownOptionGroup from '@components/DropdownOptionGroup';
 
 import MultipleDropdown from '.';
 import { DynamicallyChangedItems } from './stories/MultipleDropdown.stories';
@@ -558,6 +559,44 @@ describe('MultipleDropdown', () => {
       expect(dropdownBaseEl).toHaveStyleRule('min-width', '0');
       expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
       expect(dropdownToggleEl).toHaveStyleRule('max-width', 'none');
+    });
+  });
+
+  describe('groups', () => {
+    it('renders groups and toggles options inside them', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      const { getByRole, getAllByRole } = render(
+        <MultipleDropdown
+          label="Food"
+          selectedItems={[{ value: 'apple' }]}
+          onChange={onChange}>
+          <DropdownOptionGroup label="Fruits">
+            <DropdownOption value="apple" label="Apple" />
+            <DropdownOption value="banana" label="Banana" />
+          </DropdownOptionGroup>
+          <DropdownOptionGroup label="Vegetables">
+            <DropdownOption value="carrot" label="Carrot" />
+          </DropdownOptionGroup>
+        </MultipleDropdown>,
+      );
+
+      expect(getByRole('combobox')).toHaveTextContent('Food: Apple');
+
+      await user.click(getByRole('combobox'));
+      expect(getAllByRole('group')).toHaveLength(2);
+      expect(getByRole('option', { name: 'Apple' })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+
+      await user.click(getByRole('option', { name: 'Carrot' }));
+
+      expect(onChange).toHaveBeenCalledWith('carrot', true);
+      expect(getByRole('option', { name: 'Carrot' })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
     });
   });
 });

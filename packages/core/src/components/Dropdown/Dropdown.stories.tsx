@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
+import DropdownOptionGroup from '@components/DropdownOptionGroup';
 import Button from '@components/Button';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
@@ -667,4 +668,52 @@ export const WithLabelBadge: StoryObj<Args> = {
       ))}
     </Dropdown>
   ),
+};
+
+const groupedItems = [
+  {
+    label: 'Fruits',
+    items: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+    ],
+  },
+  {
+    label: 'Vegetables',
+    items: [
+      { value: 'carrot', label: 'Carrot' },
+      { value: 'potato', label: 'Potato' },
+      { value: 'onion', label: 'Onion', disabled: true },
+    ],
+  },
+];
+
+/**
+ * Wrap options in `DropdownOptionGroup` to show them under a title. Titles
+ * are not selectable and keyboard navigation skips them; groups are separated
+ * by a divider.
+ */
+export const Groups: StoryObj<Args> = {
+  render: (args) => (
+    <Dropdown
+      {...args}
+      selectedItem={{ value: 'banana', label: 'Banana' }}
+      placeholder="Select an ingredient"
+      width={240}>
+      {groupedItems.map((group) => (
+        <DropdownOptionGroup key={group.label} label={group.label}>
+          {group.items.map((item) => (
+            <DropdownOption
+              key={item.value}
+              value={item.value}
+              label={item.label}
+              disabled={item.disabled}
+            />
+          ))}
+        </DropdownOptionGroup>
+      ))}
+    </Dropdown>
+  ),
+  args: { disabled: false },
 };

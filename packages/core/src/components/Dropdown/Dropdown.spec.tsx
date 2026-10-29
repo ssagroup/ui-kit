@@ -4,6 +4,7 @@ import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import DropdownOption from '@components/DropdownOption';
+import DropdownOptionGroup from '@components/DropdownOptionGroup';
 
 import Dropdown from './index';
 
@@ -869,5 +870,58 @@ describe('Dropdown', () => {
     const { getByRole } = setup({ label: 'Channel' });
 
     expect(getByRole('combobox')).toHaveAccessibleName('Channel');
+  });
+
+  describe('groups', () => {
+    const renderGrouped = (onChange = jest.fn()) => ({
+      user: userEvent.setup(),
+      onChange,
+      ...render(
+        <Dropdown onChange={onChange}>
+          <DropdownOptionGroup label="Fruits">
+            <DropdownOption value="apple" label="Apple" />
+            <DropdownOption value="banana" label="Banana" />
+          </DropdownOptionGroup>
+          <DropdownOptionGroup label="Vegetables">
+            <DropdownOption value="carrot" label="Carrot" />
+          </DropdownOptionGroup>
+        </Dropdown>,
+      ),
+    });
+
+    it('renders titled groups of options', async () => {
+      const { user, getByRole, getAllByRole } = renderGrouped();
+
+      await user.click(getByRole('combobox'));
+
+      const groups = getAllByRole('group');
+      expect(groups).toHaveLength(2);
+      expect(groups[0]).toHaveAccessibleName('Fruits');
+      expect(within(groups[0]).getAllByRole('option')).toHaveLength(2);
+      expect(groups[1]).toHaveAccessibleName('Vegetables');
+    });
+
+    it('selects an option inside a group', async () => {
+      const { user, onChange, getByRole } = renderGrouped();
+
+      await user.click(getByRole('combobox'));
+      await user.click(getByRole('option', { name: 'Carrot' }));
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({ value: 'carrot' }),
+      );
+      expect(getByRole('combobox')).toHaveTextContent('Carrot');
+    });
+
+    it('walks options across groups with the keyboard', async () => {
+      const { user, onChange, getByRole } = renderGrouped();
+
+      getByRole('combobox').focus();
+      await user.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}{Enter}');
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({ value: 'carrot' }),
+      );
+    });
   });
 });
