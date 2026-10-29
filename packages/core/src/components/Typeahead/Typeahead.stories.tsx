@@ -1,19 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  FieldError,
-  FieldValues,
-  FormProvider,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
-import { useTheme } from '@emotion/react';
-import { css } from '@emotion/css';
+import { useState } from 'react';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { fn } from 'storybook/test';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import Icon from '@components/Icon';
 import { IconProps } from '@components/Icon/types';
 import Button from '@components/Button';
-import Wrapper from '@components/Wrapper';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 import { Typeahead } from '.';
 import { TypeaheadProps, TypeaheadValue } from './types';
@@ -24,711 +16,36 @@ import {
   TypeaheadOptionGroup,
 } from './components';
 
-const items = [
-  { id: 1, value: 'First' },
-  { id: 2, value: 'Second' },
-  { id: 3, value: 'Third' },
-  { id: 4, label: 'Fourth', value: 4 },
-  { id: 5, value: 'Fifth' },
-  { id: 6, value: 'Sixth' },
+type Item = { value: number; label: string };
+
+const items: Item[] = [
+  { value: 1, label: 'Design' },
+  { value: 2, label: 'Engineering' },
+  { value: 3, label: 'Finance' },
+  { value: 4, label: 'Human Resources' },
+  { value: 5, label: 'Legal' },
+  { value: 6, label: 'Marketing' },
+  { value: 7, label: 'Operations' },
+  { value: 8, label: 'Product' },
+  { value: 9, label: 'Sales' },
+  { value: 10, label: 'Support' },
 ];
 
-export default {
-  title: 'Components/Typeahead',
-  component: Typeahead,
-  argTypes: {
-    onChange: {
-      control: {
-        disable: true,
-      },
-    },
-    className: {
-      description: 'Used in order to overwrite the default style',
-      table: {
-        type: {
-          summary: 'StyledComponent',
-        },
-      },
-      control: {
-        disable: true,
-      },
-    },
-  },
-  parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
-  },
-  decorators: [
-    (Story, { args }) => {
-      return <div style={{ paddingBottom: 200 }}>{Story({ ...args })}</div>;
-    },
-  ],
-} as Meta<typeof Typeahead>;
+const people = ['Alice Smith', 'Bob Jones', 'Carol White', 'David Brown'].map(
+  (name, index) => ({
+    value: index + 1,
+    label: name,
+    avatar: getStorybookAvatar(index),
+  }),
+);
 
-export const Basic: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  const { handleSubmit } = useFormResult;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Typeahead
-          defaultValue={[items[2].id]}
-          disabled={args.disabled}
-          onEmptyChange={(isEmpty) => {
-            console.log('>>>onEmptyChange event', isEmpty);
-          }}
-          name={'typeahead-dropdown'}
-          label="Label"
-          helperText="Helper Text"
-          renderOption={({ label, input }) =>
-            highlightInputMatch(label, input)
-          }>
-          {items.map(({ label, value, id }) => (
-            <TypeaheadOption key={id} value={id} label={label || value}>
-              {label || value}
-            </TypeaheadOption>
-          ))}
-        </Typeahead>
-        <Button type="submit" css={{ marginTop: 5 }}>
-          Submit
-        </Button>
-      </form>
-    </FormProvider>
-  );
-};
-
-Basic.args = { disabled: false };
-
-export const AutoSelectDisabled: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  const { handleSubmit } = useFormResult;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Wrapper
-          css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
-          <Typeahead
-            disabled={args.disabled}
-            onEmptyChange={(isEmpty) => {
-              console.log('>>>onEmptyChange event', isEmpty);
-            }}
-            name={'typeahead-autoselect-disabled'}
-            label="AutoSelect disabled (single)"
-            helperText='Type exact option text (e.g. "First") and it should NOT auto-select'
-            autoSelect={false}
-            renderOption={({ label, input }) =>
-              highlightInputMatch(label, input)
-            }>
-            {items.map(({ label, value, id }) => (
-              <TypeaheadOption key={id} value={id} label={label || value}>
-                {label || value}
-              </TypeaheadOption>
-            ))}
-          </Typeahead>
-          <Typeahead
-            disabled={args.disabled}
-            isMultiple
-            defaultValue={[items[1].id]}
-            onEmptyChange={(isEmpty) => {
-              console.log('>>>onEmptyChange event (multiple)', isEmpty);
-            }}
-            name={'typeahead-autoselect-disabled-multiple'}
-            label="AutoSelect disabled (multiple)"
-            helperText="In multiple mode, typing exact text should also NOT auto-select"
-            autoSelect={false}
-            renderOption={({ label, input }) =>
-              highlightInputMatch(label, input)
-            }>
-            {items.map(({ label, value, id }) => (
-              <TypeaheadOption key={id} value={id} label={label || value}>
-                {label || value}
-              </TypeaheadOption>
-            ))}
-          </Typeahead>
-        </Wrapper>
-        <Button type="submit" css={{ marginTop: 5 }}>
-          Submit
-        </Button>
-      </form>
-    </FormProvider>
-  );
-};
-
-AutoSelectDisabled.args = { disabled: false };
-
-export const Multiple: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  const {
-    handleSubmit,
-    setError,
-    clearErrors,
-    watch,
-    formState: { isDirty },
-  } = useFormResult;
-  const fieldName = 'typeahead-dropdown';
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-  const fieldWatch = watch(fieldName);
-  useEffect(() => {
-    if (isDirty) {
-      if (Array.isArray(fieldWatch) && !fieldWatch.length) {
-        setError(fieldName, {
-          message: 'Required field',
-          type: 'required',
-        });
-      } else {
-        clearErrors(fieldName);
-      }
-    }
-  }, [fieldWatch, isDirty]);
-
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Typeahead
-          defaultValue={[items[2].id, items[1].id]}
-          isMultiple
-          disabled={args.disabled}
-          onEmptyChange={(isEmpty) => {
-            console.log('>>>onEmptyChange event', isEmpty);
-          }}
-          label="Label"
-          helperText="Helper Text"
-          validationSchema={{
-            required: 'Required',
-          }}
-          name={fieldName}
-          renderOption={({ label, input }) =>
-            highlightInputMatch(label, input)
-          }>
-          {items.map(({ label, value, id }) => (
-            <TypeaheadOption key={id} value={id} label={label || value}>
-              {label || value}
-            </TypeaheadOption>
-          ))}
-        </Typeahead>
-        <Button type="submit" css={{ marginTop: 5 }}>
-          Submit
-        </Button>
-      </form>
-    </FormProvider>
-  );
-};
-
-Multiple.args = { disabled: false };
-
-const imageItems = [
-  { id: 1, label: 'First', value: 1, iconName: 'cogwheel' },
-  { id: 2, label: 'Second', value: 2, iconName: 'information' },
-  { id: 3, label: 'Third', value: 3, iconName: 'notification' },
-  { id: 4, label: 'Fourth', value: 4, iconName: 'roles' },
-  { id: 5, label: 'Fifth', value: 5, iconName: 'settings' },
-  { id: 6, label: 'Sixth', value: 6, iconName: 'user' },
+const tools: Array<Item & { icon: IconProps['name'] }> = [
+  { value: 1, label: 'Settings', icon: 'cogwheel' },
+  { value: 2, label: 'Information', icon: 'information' },
+  { value: 3, label: 'Notifications', icon: 'notification' },
+  { value: 4, label: 'Roles', icon: 'roles' },
+  { value: 5, label: 'Users', icon: 'user' },
 ];
-
-const getIconNameByValue = (value: number) =>
-  (imageItems.find((item) => item.value === value)?.iconName ||
-    'user') as IconProps['name'];
-
-const managerOptions = [
-  {
-    id: '1',
-    name: 'John Doe',
-    avatar: getStorybookAvatar(0),
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    avatar: getStorybookAvatar(1),
-  },
-  {
-    id: '3',
-    name: 'Bob Johnson',
-    avatar: getStorybookAvatar(2),
-  },
-  {
-    id: '4',
-    name: 'Alice Williams',
-    avatar: getStorybookAvatar(3),
-  },
-] as const;
-
-export const WithImageAndStartIcon: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        defaultValue={[imageItems[2].id, imageItems[1].id]}
-        isMultiple
-        disabled={args.disabled}
-        name={'typeahead-dropdown'}
-        label="Label"
-        startIcon={<Icon name="user" size={16} />}
-        startIconClassName={css`
-          position: absolute;
-          left: 14px;
-        `}
-        css={{
-          width: 500,
-          paddingLeft: 38,
-        }}
-        renderOption={({ label, input, value }) => (
-          <React.Fragment>
-            <TypeaheadItemIcon
-              name={getIconNameByValue(Number(value))}
-              size={18}
-            />
-            {highlightInputMatch(label, input)}
-          </React.Fragment>
-        )}>
-        {imageItems.map(({ label, value, id, iconName }) => (
-          <TypeaheadOption key={id} value={id} label={label || value}>
-            <TypeaheadItemIcon name={iconName as IconProps['name']} size={18} />
-            {label || value}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-WithImageAndStartIcon.args = { disabled: false };
-
-export const WithAvatars: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        css={{ width: 420 }}
-        defaultValue={[managerOptions[0].id, managerOptions[2].id]}
-        isMultiple
-        disabled={args.disabled}
-        name="typeahead-managers"
-        label="Select managers"
-        placeholder="Select managers..."
-        renderOption={({ label, input }) => highlightInputMatch(label, input)}
-        {...args}>
-        {managerOptions.map(({ id, name, avatar }) => (
-          <TypeaheadOption
-            key={id}
-            value={id}
-            label={name}
-            avatar={<Avatar size={AvatarSizes.small} image={avatar} />}>
-            {name}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-WithAvatars.args = { disabled: false };
-
-const mockError: FieldError = {
-  type: 'required',
-  message: 'Required field',
-};
-
-export const WithError: StoryObj = (args: TypeaheadProps) => {
-  const fieldName = 'typeahead-dropdown';
-  const useFormResult = useForm<FieldValues>();
-  const { setError } = useFormResult;
-
-  useEffect(() => {
-    setError(fieldName, mockError);
-  }, []);
-
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        defaultValue={[]}
-        disabled={args.disabled}
-        name={fieldName}
-        label="Label"
-        validationSchema={{
-          required: mockError.message,
-        }}
-        renderOption={({ label, input }) => highlightInputMatch(label, input)}>
-        {items.map(({ label, value, id }) => (
-          <TypeaheadOption key={id} value={id} label={label || value}>
-            {label || value}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-WithError.args = { disabled: false };
-
-export const WithSuccess: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        defaultValue={[items[2].id]}
-        disabled={args.disabled}
-        name={'typeahead-dropdown'}
-        label="Label"
-        validationSchema={{
-          required: 'Required',
-        }}
-        success
-        helperText="Helper text"
-        renderOption={({ label, input }) => highlightInputMatch(label, input)}>
-        {items.map(({ label, value, id }) => (
-          <TypeaheadOption key={id} value={id} label={label || value}>
-            {label || value}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-WithSuccess.args = { disabled: false };
-
-export const Opened: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        disabled={args.disabled}
-        name={'typeahead-dropdown'}
-        label="Label"
-        isOpen
-        renderOption={({ label, input }) => highlightInputMatch(label, input)}>
-        {items.map(({ label, value, id }) => (
-          <TypeaheadOption key={id} value={id} label={label || value}>
-            {label || value}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-Opened.args = { disabled: false };
-
-export const DynamicallyChangedItems = (args: TypeaheadProps) => {
-  const [localItems, setLocalItems] = useState(items);
-
-  const handleUpdate = () => {
-    setLocalItems((state) => [
-      ...state,
-      {
-        id: state[state.length - 1].id + 1,
-        label: `New item #${state[state.length - 1].id + 1}`,
-        value: state[state.length - 1].id + 1,
-      },
-    ]);
-  };
-
-  const useFormResult = useForm<FieldValues>();
-  const { handleSubmit } = useFormResult;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Wrapper
-          css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
-          <Typeahead
-            defaultValue={[localItems[2].id]}
-            isMultiple
-            name={'typeahead-dropdown'}
-            label="Label"
-            validationSchema={{
-              required: 'Required',
-            }}
-            renderOption={({ label, input }) =>
-              highlightInputMatch(label, input)
-            }
-            {...args}>
-            {localItems.map(({ label, value, id }) => (
-              <TypeaheadOption key={id} value={id} label={label || value}>
-                {label || value}
-              </TypeaheadOption>
-            ))}
-          </Typeahead>
-          <Button variant="primary" onClick={handleUpdate}>
-            Update items
-          </Button>
-          <Button type="submit" variant="primary">
-            Submit
-          </Button>
-        </Wrapper>
-      </form>
-    </FormProvider>
-  );
-};
-
-DynamicallyChangedItems.args = { disabled: false };
-
-export const DynamicallyChangedSelectedItems = (args: TypeaheadProps) => {
-  const selectedItemIndex = useRef(0);
-  const [selectedItems, setSelectedItems] = useState([items[0].id]);
-
-  const handleUpdate = () => {
-    const newSelectedIndex =
-      selectedItemIndex.current + 1 >= items.length
-        ? 0
-        : selectedItemIndex.current + 1;
-    selectedItemIndex.current = newSelectedIndex;
-    setSelectedItems(() => {
-      return newSelectedIndex === items.length - 1
-        ? []
-        : [items[selectedItemIndex.current].id];
-    });
-  };
-
-  const handleOnChange = (
-    selectedItem: TypeaheadValue,
-    isSelected: boolean,
-  ) => {
-    if (isSelected) {
-      setSelectedItems((prev) => [...prev, Number(selectedItem)]);
-    } else {
-      setSelectedItems((prev) => prev.filter((item) => item !== selectedItem));
-    }
-  };
-
-  const useFormResult = useForm<FieldValues>();
-  const { handleSubmit } = useFormResult;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Wrapper
-          css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
-          <Typeahead
-            value={selectedItems}
-            isMultiple
-            name={'typeahead-dropdown'}
-            label="Label"
-            onChange={handleOnChange}
-            validationSchema={{
-              required: 'Required',
-            }}
-            onClearAll={() => {
-              console.log('>>>onClearAll event');
-              setSelectedItems([]);
-            }}
-            onRemoveSelectedClick={(selectedItem) => {
-              console.log('>>>onRemoveSelectedClick event', selectedItem);
-            }}
-            onEmptyChange={(isEmpty) => {
-              console.log('>>>onEmptyChange event', isEmpty);
-            }}
-            renderOption={({ label, input }) =>
-              highlightInputMatch(label, input)
-            }
-            {...args}>
-            {items.map(({ label, value, id }) => (
-              <TypeaheadOption key={id} value={id} label={label || value}>
-                {label || value}
-              </TypeaheadOption>
-            ))}
-          </Typeahead>
-          <Button variant="primary" onClick={handleUpdate}>
-            Update selected items
-          </Button>
-          <Button type="submit" variant="primary">
-            Submit
-          </Button>
-        </Wrapper>
-      </form>
-    </FormProvider>
-  );
-};
-
-DynamicallyChangedSelectedItems.args = { disabled: false };
-
-export const WithFormState = (args: TypeaheadProps) => {
-  const selectedItemIndex = useRef(0);
-
-  const fieldName = 'typeahead-dropdown';
-  const useFormResult = useForm<FieldValues>({
-    defaultValues: { [fieldName]: [items[0].id] },
-  });
-  const { handleSubmit } = useFormResult;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-
-  const handleUpdate = () => {
-    const newSelectedIndex =
-      selectedItemIndex.current + 1 >= items.length
-        ? 0
-        : selectedItemIndex.current + 1;
-    selectedItemIndex.current = newSelectedIndex;
-    useFormResult.setValue(
-      fieldName,
-      newSelectedIndex === items.length - 1
-        ? []
-        : [items[selectedItemIndex.current].id],
-      { shouldValidate: true },
-    );
-  };
-
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Wrapper
-          css={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
-          <Typeahead
-            isMultiple
-            name={fieldName}
-            label="Label"
-            validationSchema={{
-              required: 'Required',
-            }}
-            onRemoveSelectedClick={(selectedItem) => {
-              console.log('>>>onRemoveSelectedClick event', selectedItem);
-            }}
-            onEmptyChange={(isEmpty) => {
-              console.log('>>>onEmptyChange event', isEmpty);
-            }}
-            renderOption={({ label, input }) =>
-              highlightInputMatch(label, input)
-            }
-            {...args}>
-            {items.map(({ label, value, id }) => (
-              <TypeaheadOption key={id} value={id} label={label || value}>
-                {label || value}
-              </TypeaheadOption>
-            ))}
-          </Typeahead>
-          <Button variant="primary" onClick={handleUpdate}>
-            Update selected items
-          </Button>
-          <Button type="submit" variant="primary">
-            Submit
-          </Button>
-        </Wrapper>
-      </form>
-    </FormProvider>
-  );
-};
-
-WithFormState.args = { disabled: false };
-
-export const Disabled: StoryObj = (args: TypeaheadProps) => {
-  const theme = useTheme();
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        defaultValue={[items[2].id, items[1].id]}
-        isMultiple
-        disabled={args.disabled}
-        name={'typeahead-dropdown'}
-        label="Label"
-        startIcon={<Icon name="user" size={16} color={theme.colors.grey} />}
-        css={{
-          width: 500,
-        }}
-        helperText="Helper text"
-        renderOption={({ label, input, value }) => (
-          <React.Fragment>
-            <TypeaheadItemIcon
-              name={getIconNameByValue(Number(value))}
-              color={args.disabled ? theme.colors.grey : '#000'}
-              size={18}
-            />
-            {highlightInputMatch(label, input)}
-          </React.Fragment>
-        )}>
-        {imageItems.map(({ label, value, id, iconName }) => (
-          <TypeaheadOption key={id} value={id} label={label || value}>
-            <TypeaheadItemIcon
-              name={iconName as IconProps['name']}
-              size={18}
-              color={args.disabled ? theme.colors.grey : '#000'}
-            />
-            {label || value}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-Disabled.args = { disabled: true };
-
-export const NoItems: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        isMultiple
-        disabled={args.disabled}
-        name={'typeahead-dropdown'}
-        label="Label"
-        css={{
-          width: 500,
-        }}
-        helperText="Helper text">
-        {null}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-NoItems.args = { disabled: false };
-
-export const CustomValues: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  const { handleSubmit, watch } = useFormResult;
-  const fieldName = 'typeahead-dropdown';
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
-  const fieldWatch = watch(fieldName);
-
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Wrapper css={{ alignItems: 'flex-start', flexDirection: 'column' }}>
-          <Typeahead
-            defaultValue={[items[0].id, items[1].id, items[2].id, 'four']}
-            isMultiple
-            allowCustomValues={true}
-            disabled={args.disabled}
-            onEmptyChange={(isEmpty) => {
-              console.log('>>>onEmptyChange event', isEmpty);
-            }}
-            label="Select options or type custom values"
-            helperText="Type a custom value (e.g. 'four', 'five') and press Enter or select it from the dropdown. Custom values appear in blue."
-            name={fieldName}
-            css={{
-              width: 500,
-            }}
-            renderOption={({ label, input }) =>
-              highlightInputMatch(label, input)
-            }>
-            {items.map(({ label, value, id }) => (
-              <TypeaheadOption key={id} value={id} label={label || value}>
-                {label || value}
-              </TypeaheadOption>
-            ))}
-          </Typeahead>
-          <Button type="submit" css={{ marginTop: 5 }}>
-            Submit
-          </Button>
-          {fieldWatch && (
-            <div style={{ marginTop: 10, fontSize: 12, color: '#666' }}>
-              Selected: {JSON.stringify(fieldWatch)}
-            </div>
-          )}
-        </Wrapper>
-      </form>
-    </FormProvider>
-  );
-};
-
-CustomValues.args = { disabled: false };
 
 const certifications = [
   'Adobe Certified Expert - Adobe Commerce Developer',
@@ -738,76 +55,6 @@ const certifications = [
   'AWS Certified Solutions Architect',
   'Google Cloud Professional Data Engineer',
 ];
-
-export const SingleLine: StoryObj = (args: TypeaheadProps) => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      {/* Drag the bottom-right corner to see chips move in and out of the counter */}
-      <div
-        style={{
-          resize: 'horizontal',
-          overflow: 'hidden',
-          width: 400,
-          minWidth: 160,
-          maxWidth: '100%',
-          padding: 4,
-          border: '1px dashed #ccc',
-        }}>
-        <Typeahead
-          name="certifications"
-          label="Certifications"
-          isMultiple
-          singleLine
-          width="100%"
-          disabled={args.disabled}
-          defaultValue={certifications.slice(0, 4)}
-          renderOption={({ label, input }) =>
-            highlightInputMatch(label, input)
-          }>
-          {certifications.map((name) => (
-            <TypeaheadOption key={name} value={name} label={name}>
-              {name}
-            </TypeaheadOption>
-          ))}
-        </Typeahead>
-      </div>
-    </FormProvider>
-  );
-};
-
-SingleLine.args = { disabled: false };
-SingleLine.parameters = {
-  docs: {
-    description: {
-      story:
-        'With `singleLine` the trigger never grows vertically: it shows as many selected items as fit, then a `+N` counter. Selected items are truncated and show the full label in a tooltip.',
-    },
-  },
-};
-
-const TypeaheadWithLabelBadge = () => {
-  const useFormResult = useForm<FieldValues>();
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        name="typeahead-label-badge"
-        label="Recruiter"
-        labelBadge={{ text: 'default' }}
-        defaultValue={[items[2].id]}>
-        {items.map(({ label, value, id }) => (
-          <TypeaheadOption key={id} value={id} label={label || value}>
-            {label || value}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-};
-
-export const WithLabelBadge: StoryObj = {
-  render: () => <TypeaheadWithLabelBadge />,
-};
 
 const groupedItems = [
   {
@@ -828,35 +75,443 @@ const groupedItems = [
   },
 ];
 
+export default {
+  title: 'Components/Typeahead',
+  component: Typeahead,
+  args: {
+    onChange: fn(),
+    onClearAll: fn(),
+    onRemoveSelectedClick: fn(),
+    onEmptyChange: fn(),
+  },
+  argTypes: {
+    value: { control: false },
+    defaultValue: { control: false },
+    selectedItems: { control: false },
+    defaultSelectedItems: { control: false },
+    isDisabled: { control: false },
+    children: { control: false },
+    error: { control: false },
+    validationSchema: { control: false },
+    renderOption: { control: false },
+    startIcon: { control: false },
+    endIcon: { control: false },
+    onChange: { control: false },
+    onClearAll: { control: false },
+    onRemoveSelectedClick: { control: false },
+    onEmptyChange: { control: false },
+    isOpen: {
+      description:
+        'Initial open state. Read on mount only — later changes are ignored.',
+    },
+    width: { control: 'text' },
+  },
+  parameters: {
+    // Show each story's own source rather than the rendered element tree,
+    // which expands every option and leaks story-only props such as `key`.
+    docs: { source: { type: 'code' } },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ paddingBottom: 240 }}>
+        <Story />
+      </div>
+    ),
+  ],
+} as Meta<typeof Typeahead>;
+
 /**
- * Wrap options in `TypeaheadOptionGroup` to show them under a title. Typing
- * filters the options inside each group; a group with no match is hidden,
- * title included.
+ * Typing filters the options by `label` (falling back to `value`) and
+ * suggests the rest of the first match inline; `Tab` or `Enter` accepts it.
+ * With `autoSelect` (the default) typing an option's full label selects it.
+ * `filterOptions={false}` always shows every option and turns `autoSelect`
+ * off too.
+ *
+ * The selection is an array of option values, also in single-select mode:
+ * seed it with `defaultValue`, or own it with `value` (see Controlled
+ * Selection). `onChange` receives the option's `value` and whether it is now
+ * selected; picking the selected option again in single-select mode clears
+ * it.
+ *
+ * Every prop in the Controls panel applies here. `isOpen` opens the list on
+ * mount; it is read once and is not a controlled prop, so this story remounts
+ * the typeahead when the control changes.
  */
-export const Groups: StoryObj = (args: TypeaheadProps) => (
-  <Typeahead
-    {...args}
-    label="Ingredients"
-    placeholder="Search ingredients"
-    helperText="Try typing “o”">
-    {groupedItems.map((group) => (
-      <TypeaheadOptionGroup key={group.label} label={group.label}>
-        {group.items.map((item) => (
+export const Default: StoryObj<TypeaheadProps> = {
+  args: {
+    name: 'department',
+    label: 'Department',
+    placeholder: 'Search departments',
+    defaultValue: [2],
+    isMultiple: false,
+    disabled: false,
+    isOpen: false,
+  },
+  render: (args) => (
+    <Typeahead key={String(args.isOpen)} {...args}>
+      {items.map((item) => (
+        <TypeaheadOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
+      ))}
+    </Typeahead>
+  ),
+};
+
+/**
+ * With `isMultiple` each pick adds a chip to the trigger and the list stays
+ * open. A chip's cross removes it (`onChange` with `false`, then
+ * `onRemoveSelectedClick`); `Backspace` in an empty input removes the last
+ * one. The cross at the end clears everything and fires `onClearAll` only —
+ * not `onChange`. `onEmptyChange` reports whenever the selection becomes
+ * empty or non-empty.
+ */
+export const Multiple: StoryObj<TypeaheadProps> = {
+  args: {
+    name: 'departments',
+    label: 'Departments',
+    placeholder: 'Search departments',
+    isMultiple: true,
+    defaultValue: [1, 3, 6],
+    width: 420,
+  },
+  render: (args) => (
+    <Typeahead {...args}>
+      {items.map((item) => (
+        <TypeaheadOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
+      ))}
+    </Typeahead>
+  ),
+};
+
+/**
+ * `label`, `helperText`, `error` (a react-hook-form `FieldError`) and `success`
+ * give the typeahead the same field chrome as the other form controls; the
+ * error message replaces the helper text. `labelBadge` adds a status badge
+ * next to the label and is announced as the input's description — it needs a
+ * `label`.
+ *
+ * Inside a `FormProvider` the field's own validation error is shown as well;
+ * see React Hook Form.
+ */
+export const FormField: StoryObj<TypeaheadProps> = {
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <Typeahead
+        {...args}
+        name="field-helper"
+        label="Department"
+        helperText="Choose the employee's department"
+        defaultValue={[2]}>
+        {items.map((item) => (
           <TypeaheadOption
             key={item.value}
             value={item.value}
             label={item.label}
-            disabled={item.disabled}>
-            {item.label}
-          </TypeaheadOption>
+          />
         ))}
-      </TypeaheadOptionGroup>
-    ))}
-  </Typeahead>
-);
+      </Typeahead>
+      <Typeahead
+        {...args}
+        name="field-error"
+        label="Department"
+        error={{ type: 'required', message: 'Department is required' }}>
+        {items.map((item) => (
+          <TypeaheadOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Typeahead>
+      <Typeahead
+        {...args}
+        name="field-success"
+        label="Department"
+        success
+        helperText="Looks good!"
+        defaultValue={[2]}>
+        {items.map((item) => (
+          <TypeaheadOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Typeahead>
+      <Typeahead
+        {...args}
+        name="field-badge"
+        label="Recruiter"
+        labelBadge={{ text: 'default' }}
+        defaultValue={[3]}>
+        {people.map((person) => (
+          <TypeaheadOption
+            key={person.value}
+            value={person.value}
+            label={person.label}
+          />
+        ))}
+      </Typeahead>
+    </div>
+  ),
+};
 
-Groups.args = {
-  disabled: false,
-  isMultiple: true,
-  defaultValue: ['banana'],
+/**
+ * An option's row shows its `children`, falling back to `label`; `label`
+ * stays the text that is filtered on and shown once selected, so keep it
+ * plain. `avatar` fills the leading slot of the row.
+ *
+ * `renderOption` replaces every row's content and receives the option's
+ * `value` and `label` and the current `input` — here with
+ * `highlightInputMatch`, which bolds the typed text. `startIcon` sits at the
+ * start of the trigger.
+ */
+export const OptionContent: StoryObj<TypeaheadProps> = {
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <Typeahead
+        {...args}
+        name="managers"
+        label="Managers"
+        isMultiple
+        width={420}
+        defaultValue={[1, 3]}>
+        {people.map((person) => (
+          <TypeaheadOption
+            key={person.value}
+            value={person.value}
+            label={person.label}
+            avatar={<Avatar size={AvatarSizes.small} image={person.avatar} />}
+          />
+        ))}
+      </Typeahead>
+      <Typeahead
+        {...args}
+        name="tool"
+        label="Tool"
+        placeholder="Type to search"
+        startIcon={<Icon name="search" size={16} />}
+        renderOption={({ label, input, value }) => (
+          <>
+            <TypeaheadItemIcon
+              name={tools.find((tool) => tool.value === value)?.icon ?? 'user'}
+              size={18}
+            />
+            {highlightInputMatch(label, input)}
+          </>
+        )}>
+        {tools.map((tool) => (
+          <TypeaheadOption
+            key={tool.value}
+            value={tool.value}
+            label={tool.label}
+          />
+        ))}
+      </Typeahead>
+    </div>
+  ),
+};
+
+/**
+ * Wrap options in `TypeaheadOptionGroup` to show them under a title. Typing
+ * filters the options inside each group; a group with no match is hidden,
+ * title included. Titles are not selectable and arrow keys skip them.
+ */
+export const Groups: StoryObj<TypeaheadProps> = {
+  args: {
+    name: 'ingredients',
+    label: 'Ingredients',
+    placeholder: 'Search ingredients',
+    helperText: 'Try typing “o”',
+    isMultiple: true,
+    defaultValue: ['banana'],
+  },
+  render: (args) => (
+    <Typeahead {...args}>
+      {groupedItems.map((group) => (
+        <TypeaheadOptionGroup key={group.label} label={group.label}>
+          {group.items.map((item) => (
+            <TypeaheadOption
+              key={item.value}
+              value={item.value}
+              label={item.label}
+              disabled={item.disabled}
+            />
+          ))}
+        </TypeaheadOptionGroup>
+      ))}
+    </Typeahead>
+  ),
+};
+
+/**
+ * With `singleLine` the multiple-selection trigger never grows vertically: it
+ * shows as many chips as fit, then a counter for the rest. Chips are
+ * truncated and show their full label in a tooltip. Drag the dashed box's
+ * corner to resize it.
+ */
+export const SingleLine: StoryObj<TypeaheadProps> = {
+  args: {
+    name: 'certifications',
+    label: 'Certifications',
+    isMultiple: true,
+    singleLine: true,
+    width: '100%',
+    defaultValue: certifications.slice(0, 4),
+  },
+  render: (args) => (
+    <div
+      style={{
+        resize: 'horizontal',
+        overflow: 'hidden',
+        width: 400,
+        minWidth: 160,
+        maxWidth: '100%',
+        padding: 4,
+        border: '1px dashed #ccc',
+      }}>
+      <Typeahead {...args}>
+        {certifications.map((name) => (
+          <TypeaheadOption key={name} value={name} label={name} />
+        ))}
+      </Typeahead>
+    </div>
+  ),
+};
+
+/**
+ * `allowCustomValues` lets the user add a value that is not an option: what
+ * they type is offered first in the list and added with `Enter`. Custom values
+ * are shown in the primary colour and kept in the selection as typed.
+ */
+export const CustomValues: StoryObj<TypeaheadProps> = {
+  args: {
+    name: 'skills',
+    label: 'Skills',
+    placeholder: 'Pick or type a skill',
+    helperText: 'Type a skill that is not listed and press Enter',
+    isMultiple: true,
+    allowCustomValues: true,
+    width: 420,
+    defaultValue: ['React', 'GraphQL'],
+  },
+  render: (args) => (
+    <Typeahead {...args}>
+      {['React', 'TypeScript', 'Node.js', 'PostgreSQL'].map((skill) => (
+        <TypeaheadOption key={skill} value={skill} label={skill} />
+      ))}
+    </Typeahead>
+  ),
+};
+
+/**
+ * Pass `value` to own the selection and update it from `onChange`. Clearing
+ * everything with the trigger's cross fires `onClearAll`, not `onChange`, so
+ * handle both. The buttons change the selection from outside the typeahead.
+ */
+export const Controlled: StoryObj<TypeaheadProps> = {
+  args: {
+    name: 'controlled',
+    label: 'Departments',
+    isMultiple: true,
+    width: 420,
+  },
+  render: function Render(args) {
+    const [selected, setSelected] = useState<TypeaheadValue[]>([2]);
+
+    return (
+      <div style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
+        <Typeahead
+          {...args}
+          value={selected}
+          onChange={(value, isSelected) => {
+            setSelected((prev) =>
+              isSelected
+                ? [...prev, value]
+                : prev.filter((item) => item !== value),
+            );
+            args.onChange?.(value, isSelected);
+          }}
+          onClearAll={() => {
+            setSelected([]);
+            args.onClearAll?.();
+          }}>
+          {items.map((item) => (
+            <TypeaheadOption
+              key={item.value}
+              value={item.value}
+              label={item.label}
+            />
+          ))}
+        </Typeahead>
+        <Button
+          variant="primary"
+          onClick={() => setSelected(items.map((item) => item.value))}>
+          Select all
+        </Button>
+        <Button variant="secondary" onClick={() => setSelected([])}>
+          Clear
+        </Button>
+      </div>
+    );
+  },
+};
+
+/**
+ * Inside a `FormProvider` the typeahead registers itself under `name`: the
+ * form's value for that field is the selection — an array with `isMultiple`,
+ * a single value otherwise — and `validationSchema` takes react-hook-form
+ * rules. Without `value` or `defaultValue` the selection follows the form, so
+ * `defaultValues` and `setValue` drive it. Validation runs when the list
+ * closes and on submit.
+ */
+export const ReactHookForm: StoryObj<TypeaheadProps> = {
+  args: { label: 'Departments', isMultiple: true, width: 420 },
+  render: function Render(args) {
+    const form = useForm<FieldValues>({
+      defaultValues: { departments: [1, 2] },
+    });
+    const [submitted, setSubmitted] = useState<FieldValues>();
+
+    return (
+      <FormProvider {...form}>
+        <form
+          onSubmit={form.handleSubmit(setSubmitted)}
+          style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <Typeahead
+            {...args}
+            name="departments"
+            validationSchema={{ required: 'Pick at least one department' }}>
+            {items.map((item) => (
+              <TypeaheadOption
+                key={item.value}
+                value={item.value}
+                label={item.label}
+              />
+            ))}
+          </Typeahead>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Button
+              variant="secondary"
+              onClick={() =>
+                form.setValue('departments', [9, 10], { shouldValidate: true })
+              }>
+              Set Sales and Support
+            </Button>
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
+          </div>
+          {submitted && <code>{JSON.stringify(submitted)}</code>}
+        </form>
+      </FormProvider>
+    );
+  },
 };

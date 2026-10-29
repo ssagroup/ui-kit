@@ -39,7 +39,9 @@ export type TypeaheadOptionProps = Record<string, TypeaheadValue>;
 export interface TypeaheadProps {
   /**
    * Controlled selected values (array, even in single-select mode).
-   * When provided, controls the selection externally.
+   * When provided, controls the selection externally: update it from
+   * `onChange`, and from `onClearAll`, which clearing all does not report
+   * through `onChange`.
    */
   value?: Array<TypeaheadValue>;
 
@@ -95,13 +97,14 @@ export interface TypeaheadProps {
   isDisabled?: boolean;
 
   /**
-   * TypeaheadOption components as children
-   * Each child should be a TypeaheadOption component
+   * `TypeaheadOption` elements, optionally wrapped in `TypeaheadOptionGroup`s.
+   * They are read as data, not rendered.
    */
   children?: React.ReactNode;
 
   /**
-   * Custom CSS class name for the trigger input
+   * Custom CSS class name for the trigger (the bordered box around the
+   * chips and the input). A `css` prop lands here too.
    */
   className?: string;
 
@@ -121,15 +124,16 @@ export interface TypeaheadProps {
   wrapperClassName?: string;
 
   /**
-   * Width of the component
-   * Can be a number (pixels) or string (CSS value)
+   * Width of the whole field (label, trigger and helper text).
+   * Can be a number (pixels) or string (CSS value). Use this rather than a
+   * `css` width, which only sizes the trigger.
    * @default 300
    */
   width?: string | number;
 
   /**
-   * Controlled open state
-   * When provided, controls dropdown open/closed state externally
+   * Initial open state. Read on mount only — later changes are ignored.
+   * @default false
    */
   isOpen?: boolean;
 
@@ -154,7 +158,9 @@ export interface TypeaheadProps {
   endIconClassName?: string;
 
   /**
-   * Form field name (required for React Hook Form integration)
+   * Form field name. Inside a `FormProvider` the selection is registered
+   * under it; it also builds the input's id, so give every typeahead on a
+   * page its own.
    * @default 'typeahead-search'
    */
   name?: string;
@@ -177,7 +183,9 @@ export interface TypeaheadProps {
   helperText?: string;
 
   /**
-   * Field error from React Hook Form
+   * Field error from React Hook Form. Shows the error border and its
+   * `message` in place of the helper text. Inside a `FormProvider` the
+   * field's own error is shown as well.
    */
   error?: FieldError;
 
@@ -188,26 +196,29 @@ export interface TypeaheadProps {
   success?: boolean;
 
   /**
-   * Validation schema for React Hook Form
-   * Used for form validation rules
+   * React Hook Form rules for the field, e.g. `{ required: 'Required' }`.
+   * Validated when the list closes and on submit.
    */
   validationSchema?: Record<string, unknown>;
 
   /**
-   * Placeholder text for the input
+   * Placeholder text for the input; `null` for none
    * @default 'Select something'
    */
   placeholder?: string | null;
 
   /**
-   * Whether to filter options based on input
-   * When false, all options are always shown
+   * Whether to filter options by the typed text (matched against `label`,
+   * falling back to `value`). When false, all options are always shown and
+   * `autoSelect` is off.
    * @default true
    */
   filterOptions?: boolean;
 
   /**
-   * Whether to automatically select the first option on filter
+   * Selects an option as soon as the typed text equals its label
+   * (case-insensitive). In single-select mode, typing anything else clears
+   * the selection. Needs `filterOptions`.
    * @default true
    */
   autoSelect?: boolean;
@@ -216,23 +227,27 @@ export interface TypeaheadProps {
    * Allow adding custom values not in the options list.
    * When true, the current input is shown as the first dropdown option (highlighted)
    * and can be selected or added with Enter.
-   * @default true
+   * @default false
    */
   allowCustomValues?: boolean;
 
   /**
    * Callback fired when an option is selected/deselected
-   * Receives the selected item value and whether it's selected
+   * Receives the option value and whether it is now selected. In
+   * single-select mode picking another option reports only the new one;
+   * picking the selected option again deselects it.
    */
   onChange?: (selectedItem: TypeaheadValue, isSelected: boolean) => void;
 
   /**
-   * Callback fired when "Clear All" is clicked (multiple mode)
+   * Callback fired when the trigger's clear button (the cross at the end)
+   * is clicked. `onChange` is not called for the cleared values.
    */
   onClearAll?: () => void;
 
   /**
-   * Callback fired when a selected item's remove button is clicked
+   * Callback fired when a chip's remove button is clicked (multiple mode),
+   * after `onChange` has reported the removal
    * Receives the item value to be removed
    */
   onRemoveSelectedClick?: (selectedItem: TypeaheadValue) => void;
@@ -244,9 +259,9 @@ export interface TypeaheadProps {
   onEmptyChange?: (isEmpty?: boolean) => void;
 
   /**
-   * Custom render function for options
-   * Allows customizing the appearance of each option
-   * Receives value, input text, and label
+   * Custom render function for options. Replaces every row's content
+   * (including an option's `children`); receives the option's value and
+   * label and the current input text.
    */
   renderOption?: (data: {
     value: string | number;
@@ -336,8 +351,9 @@ export interface TypeaheadItemProps extends CommonProps {
   label?: string | number;
 
   /**
-   * Content to display in the option
-   * Can be custom React nodes
+   * Content of the option's row, instead of `label`.
+   * Can be custom React nodes; `label` stays the text that is filtered on
+   * and shown once selected.
    */
   children?: React.ReactNode;
 
@@ -347,7 +363,8 @@ export interface TypeaheadItemProps extends CommonProps {
   avatar?: React.ReactNode;
 
   /**
-   * Click handler for the option
+   * Ignored: options are read as data and never mounted. Use the
+   * Typeahead's `onChange`.
    */
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 

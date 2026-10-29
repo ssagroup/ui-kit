@@ -24,6 +24,11 @@ import { TypeaheadProps } from './types';
  * filtering, custom rendering, custom values (user-typed values not in options list),
  * and integrates seamlessly with React Hook Form for validation and form management.
  *
+ * Works on its own or inside a react-hook-form `FormProvider`, where it
+ * registers under `name`. Options are read as data: their props are used,
+ * the elements are never rendered, so `styled()`/`css` on an option has no
+ * effect.
+ *
  * Component structure:
  * - Typeahead (root container with context)
  *   - TypeaheadTrigger (search input with selected items display)
@@ -64,9 +69,7 @@ import { TypeaheadProps } from './types';
  *   value={selected}
  *   onChange={(item, isSelected) => handleToggle(item, isSelected)}>
  *   {options.map(opt => (
- *     <TypeaheadOption key={opt.id} value={opt.id}>
- *       {opt.label}
- *     </TypeaheadOption>
+ *     <TypeaheadOption key={opt.id} value={opt.id} label={opt.label} />
  *   ))}
  * </Typeahead>
  * ```
@@ -80,9 +83,7 @@ import { TypeaheadProps } from './types';
  *   allowCustomValues={true}
  *   label="Tags">
  *   {options.map(opt => (
- *     <TypeaheadOption key={opt.id} value={opt.id}>
- *       {opt.label}
- *     </TypeaheadOption>
+ *     <TypeaheadOption key={opt.id} value={opt.id} label={opt.label} />
  *   ))}
  * </Typeahead>
  * // Users can type "custom-tag" and press Enter to add it
@@ -95,12 +96,7 @@ import { TypeaheadProps } from './types';
  * <Typeahead
  *   name="users"
  *   label="Select User"
- *   renderOption={({ value, label, input }) => (
- *     <div>
- *       <Avatar src={users[value].avatar} />
- *       <span>{highlightMatch(label, input)}</span>
- *     </div>
- *   )}>
+ *   renderOption={({ label, input }) => highlightInputMatch(label, input)}>
  *   {users.map(user => (
  *     <TypeaheadOption key={user.id} value={user.id} label={user.name} />
  *   ))}
@@ -142,9 +138,7 @@ import { TypeaheadProps } from './types';
  *     required: 'Language is required',
  *   }}>
  *   {options.map(opt => (
- *     <TypeaheadOption key={opt.id} value={opt.id}>
- *       {opt.label}
- *     </TypeaheadOption>
+ *     <TypeaheadOption key={opt.id} value={opt.id} label={opt.label} />
  *   ))}
  * </Typeahead>
  *
@@ -162,9 +156,7 @@ import { TypeaheadProps } from './types';
  *     },
  *   }}>
  *   {options.map(opt => (
- *     <TypeaheadOption key={opt.id} value={opt.id}>
- *       {opt.label}
- *     </TypeaheadOption>
+ *     <TypeaheadOption key={opt.id} value={opt.id} label={opt.label} />
  *   ))}
  * </Typeahead>
  * ```

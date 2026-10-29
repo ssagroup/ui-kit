@@ -1,248 +1,82 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
 import * as TypeaheadStories from './Typeahead.stories';
 
 <Meta of={TypeaheadStories} />
 
 # Typeahead
 
+A searchable select: an input that filters a list of `TypeaheadOption`s as
+the user types, for one value or (with `isMultiple`) several shown as chips.
+It works on its own or as a react-hook-form field. For a short list with no
+search use `Dropdown` or `MultipleDropdown`.
+
 ## Default Usage
 
-The Typeahead component provides an advanced autocomplete search interface with dropdown functionality. It supports both single and multiple selections, filtering, custom rendering, and integrates seamlessly with React Hook Form for validation and form management:
+<Description of={TypeaheadStories.Default} />
 
 ```tsx
 import { Typeahead, TypeaheadOption } from '@ssa-ui-kit/core';
-import { useForm, FormProvider } from 'react-hook-form';
 
-function BasicTypeahead() {
-  const useFormResult = useForm();
-  const { handleSubmit } = useFormResult;
+const items = [
+  { value: 1, label: 'Design' },
+  { value: 2, label: 'Engineering' },
+  { value: 3, label: 'Finance' },
+];
 
-  const options = [
-    { id: 1, label: 'JavaScript' },
-    { id: 2, label: 'TypeScript' },
-    { id: 3, label: 'Python' },
-    { id: 4, label: 'Java' },
-    { id: 5, label: 'C#' },
-  ];
-
-  const onSubmit = (data: any) => {
-    console.log('Selected:', data);
-  };
-
-  return (
-    <FormProvider {...useFormResult}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Typeahead
-          name="language"
-          label="Programming Language"
-          placeholder="Select a language"
-          helperText="Choose your preferred programming language">
-          {options.map((option) => (
-            <TypeaheadOption
-              key={option.id}
-              value={option.id}
-              label={option.label}>
-              {option.label}
-            </TypeaheadOption>
-          ))}
-        </Typeahead>
-      </form>
-    </FormProvider>
-  );
-}
+<Typeahead
+  name="department"
+  label="Department"
+  defaultValue={[2]}
+  onChange={(value, isSelected) => console.log(value, isSelected)}>
+  {items.map((item) => (
+    <TypeaheadOption key={item.value} value={item.value} label={item.label} />
+  ))}
+</Typeahead>;
 ```
 
-## Features
+<Canvas of={TypeaheadStories.Default} />
 
-### Single Selection
+## Multiple Selection
 
-Basic single-value selection with search functionality:
+<Description of={TypeaheadStories.Multiple} />
+<Canvas of={TypeaheadStories.Multiple} />
+
+## Form Field
+
+<Description of={TypeaheadStories.FormField} />
+<Canvas of={TypeaheadStories.FormField} />
+
+## Option Content
+
+<Description of={TypeaheadStories.OptionContent} />
 
 ```tsx
-function SingleSelection() {
-  const useFormResult = useForm();
+import {
+  Typeahead,
+  TypeaheadOption,
+  highlightInputMatch,
+} from '@ssa-ui-kit/core';
 
-  const countries = [
-    { id: 'us', label: 'United States' },
-    { id: 'ca', label: 'Canada' },
-    { id: 'uk', label: 'United Kingdom' },
-    { id: 'de', label: 'Germany' },
-    { id: 'fr', label: 'France' },
-    { id: 'jp', label: 'Japan' },
-  ];
-
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        name="country"
-        label="Country"
-        placeholder="Search and select a country"
-        defaultValue={[countries[0].id]}
-        filterOptions={true}
-        helperText="Start typing to filter options">
-        {countries.map((country) => (
-          <TypeaheadOption
-            key={country.id}
-            value={country.id}
-            label={country.label}>
-            {country.label}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-}
+// `items` as in Default Usage
+<Typeahead
+  name="department"
+  renderOption={({ label, input }) => highlightInputMatch(label, input)}>
+  {items.map((item) => (
+    <TypeaheadOption key={item.value} value={item.value} label={item.label} />
+  ))}
+</Typeahead>;
 ```
 
-### Multiple Selection
+<Canvas of={TypeaheadStories.OptionContent} />
 
-Allow users to select multiple options:
+## Groups
 
-```tsx
-function MultipleSelection() {
-  const useFormResult = useForm();
-
-  const skills = [
-    { id: 1, label: 'React' },
-    { id: 2, label: 'Vue.js' },
-    { id: 3, label: 'Angular' },
-    { id: 4, label: 'Node.js' },
-    { id: 5, label: 'Express' },
-    { id: 6, label: 'MongoDB' },
-    { id: 7, label: 'PostgreSQL' },
-    { id: 8, label: 'Docker' },
-  ];
-
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        name="skills"
-        label="Technical Skills"
-        placeholder="Select multiple skills"
-        isMultiple={true}
-        defaultValue={[skills[0].id, skills[3].id]}
-        filterOptions={true}
-        helperText="You can select multiple skills"
-        onClearAll={() => console.log('All selections cleared')}
-        onRemoveSelectedClick={(value) => console.log('Removed:', value)}>
-        {skills.map((skill) => (
-          <TypeaheadOption key={skill.id} value={skill.id} label={skill.label}>
-            {skill.label}
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-}
-```
-
-### Custom Option Rendering
-
-Enhance options with icons, highlighting, and custom layouts:
-
-```tsx
-import { Icon } from '@ssa/ui-kit';
-
-function CustomOptionRendering() {
-  const useFormResult = useForm();
-
-  const tools = [
-    {
-      id: 1,
-      label: 'Settings',
-      iconName: 'cogwheel',
-      description: 'Configure application settings',
-    },
-    {
-      id: 2,
-      label: 'Users',
-      iconName: 'user',
-      description: 'Manage user accounts',
-    },
-    {
-      id: 3,
-      label: 'Notifications',
-      iconName: 'notification',
-      description: 'Setup alerts and notifications',
-    },
-    {
-      id: 4,
-      label: 'Reports',
-      iconName: 'chart',
-      description: 'View analytics and reports',
-    },
-    {
-      id: 5,
-      label: 'Security',
-      iconName: 'lock',
-      description: 'Security and permissions',
-    },
-  ];
-
-  const highlightMatch = (text: string, input: string) => {
-    if (!input) return text;
-
-    const parts = text.split(new RegExp(`(${input})`, 'gi'));
-    return parts.map((part, index) =>
-      part.toLowerCase() === input.toLowerCase() ? (
-        <strong key={index} style={{ background: '#ffeb3b' }}>
-          {part}
-        </strong>
-      ) : (
-        part
-      ),
-    );
-  };
-
-  return (
-    <FormProvider {...useFormResult}>
-      <Typeahead
-        name="tools"
-        label="Admin Tools"
-        placeholder="Search tools"
-        filterOptions={true}
-        width={400}
-        renderOption={({ label, input, value }) => {
-          const tool = tools.find((t) => t.id === Number(value));
-          return (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Icon name={tool?.iconName} size={18} />
-              <div>
-                <div style={{ fontWeight: 600 }}>
-                  {highlightMatch(label, input)}
-                </div>
-                <div style={{ fontSize: '12px', color: '#666' }}>
-                  {tool?.description}
-                </div>
-              </div>
-            </div>
-          );
-        }}>
-        {tools.map((tool) => (
-          <TypeaheadOption key={tool.id} value={tool.id} label={tool.label}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Icon name={tool.iconName} size={18} />
-              <div>
-                <div style={{ fontWeight: 600 }}>{tool.label}</div>
-                <div style={{ fontSize: '12px', color: '#666' }}>
-                  {tool.description}
-                </div>
-              </div>
-            </div>
-          </TypeaheadOption>
-        ))}
-      </Typeahead>
-    </FormProvider>
-  );
-}
-```
-
-### Groups
-
-Wrap options in `TypeaheadOptionGroup` to show them under a title. Typing
-filters the options inside each group, and a group with no matching option is
-hidden together with its title. Titles are not selectable and arrow keys skip
-them.
+<Description of={TypeaheadStories.Groups} />
 
 ```tsx
 import {
@@ -253,100 +87,121 @@ import {
 
 <Typeahead name="ingredients" label="Ingredients" isMultiple>
   <TypeaheadOptionGroup label="Fruits">
-    <TypeaheadOption value="apple" label="Apple">
-      Apple
-    </TypeaheadOption>
-    <TypeaheadOption value="banana" label="Banana">
-      Banana
-    </TypeaheadOption>
+    <TypeaheadOption value="apple" label="Apple" />
+    <TypeaheadOption value="banana" label="Banana" />
   </TypeaheadOptionGroup>
   <TypeaheadOptionGroup label="Vegetables">
-    <TypeaheadOption value="carrot" label="Carrot">
-      Carrot
-    </TypeaheadOption>
+    <TypeaheadOption value="carrot" label="Carrot" />
   </TypeaheadOptionGroup>
 </Typeahead>;
 ```
 
-### Event Handling
+<Canvas of={TypeaheadStories.Groups} />
 
-Handle various events and user interactions:
+## Single Line
+
+<Description of={TypeaheadStories.SingleLine} />
+<Canvas of={TypeaheadStories.SingleLine} />
+
+## Custom Values
+
+<Description of={TypeaheadStories.CustomValues} />
+<Canvas of={TypeaheadStories.CustomValues} />
+
+## Controlled Selection
+
+<Description of={TypeaheadStories.Controlled} />
 
 ```tsx
-function EventHandling() {
-  const useFormResult = useForm();
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(true);
+import { useState } from 'react';
+import {
+  Typeahead,
+  TypeaheadOption,
+  type TypeaheadValue,
+} from '@ssa-ui-kit/core';
 
-  const categories = [
-    { id: 'web', label: 'Web Development' },
-    { id: 'mobile', label: 'Mobile Development' },
-    { id: 'desktop', label: 'Desktop Applications' },
-    { id: 'ai', label: 'Artificial Intelligence' },
-    { id: 'cloud', label: 'Cloud Computing' },
-  ];
+// `items` as in Default Usage
+const [selected, setSelected] = useState<TypeaheadValue[]>([2]);
 
-  const handleChange = (value: any, isSelected: boolean) => {
-    console.log(`Item ${value} ${isSelected ? 'selected' : 'deselected'}`);
-
-    if (isSelected) {
-      setSelectedItems((prev) => [...prev, value]);
-    } else {
-      setSelectedItems((prev) => prev.filter((item) => item !== value));
-    }
-  };
-
-  const handleClearAll = () => {
-    console.log('All items cleared');
-    setSelectedItems([]);
-  };
-
-  const handleRemoveItem = (value: any) => {
-    console.log('Removed item:', value);
-    setSelectedItems((prev) => prev.filter((item) => item !== value));
-  };
-
-  return (
-    <FormProvider {...useFormResult}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <Typeahead
-          name="categories"
-          label="Development Categories"
-          placeholder="Select categories"
-          isMultiple={true}
-          value={selectedItems}
-          onChange={handleChange}
-          onClearAll={handleClearAll}
-          onRemoveSelectedClick={handleRemoveItem}
-          onEmptyChange={setIsEmpty}
-          helperText={`${selectedItems.length} categories selected`}>
-          {categories.map((category) => (
-            <TypeaheadOption
-              key={category.id}
-              value={category.id}
-              label={category.label}>
-              {category.label}
-            </TypeaheadOption>
-          ))}
-        </Typeahead>
-
-        <div
-          style={{
-            padding: '12px',
-            background: '#f5f5f5',
-            borderRadius: '4px',
-          }}>
-          <h4>Event Log:</h4>
-          <p>Selected items: {JSON.stringify(selectedItems)}</p>
-          <p>Is empty: {isEmpty ? 'Yes' : 'No'}</p>
-        </div>
-      </div>
-    </FormProvider>
-  );
-}
+<Typeahead
+  name="departments"
+  isMultiple
+  value={selected}
+  onChange={(value, isSelected) =>
+    setSelected((prev) =>
+      isSelected ? [...prev, value] : prev.filter((item) => item !== value),
+    )
+  }
+  onClearAll={() => setSelected([])}>
+  {items.map((item) => (
+    <TypeaheadOption key={item.value} value={item.value} label={item.label} />
+  ))}
+</Typeahead>;
 ```
 
-<Canvas />
-<Controls />
+<Canvas of={TypeaheadStories.Controlled} />
 
-<Stories includePrimary={false} />
+## React Hook Form
+
+<Description of={TypeaheadStories.ReactHookForm} />
+
+```tsx
+import { FormProvider, useForm } from 'react-hook-form';
+import { Typeahead, TypeaheadOption } from '@ssa-ui-kit/core';
+
+// `items` as in Default Usage
+const form = useForm({ defaultValues: { departments: [1, 2] } });
+
+<FormProvider {...form}>
+  <form onSubmit={form.handleSubmit((data) => console.log(data.departments))}>
+    <Typeahead
+      name="departments"
+      label="Departments"
+      isMultiple
+      validationSchema={{ required: 'Pick at least one department' }}>
+      {items.map((item) => (
+        <TypeaheadOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
+      ))}
+    </Typeahead>
+  </form>
+</FormProvider>;
+```
+
+<Canvas of={TypeaheadStories.ReactHookForm} />
+
+## Styling
+
+- `width` sizes the whole field (300px by default); a `css` width only sizes
+  the trigger.
+- `className` (and `css`) land on the trigger; `wrapperClassName`,
+  `popoverClassName` and `optionsClassName` reach the field wrapper, the
+  popover and the options list.
+- `startIcon` / `endIcon` sit inside the trigger, with `startIconClassName` /
+  `endIconClassName` for their wrappers.
+- Options are read as data and never rendered as elements, so
+  `styled(TypeaheadOption)` and a `css` prop on an option have no effect; use
+  `children`, `avatar` or `renderOption`.
+
+## Keyboard and Accessibility
+
+The input is a `combobox` that keeps focus while the list is open; the
+highlighted option is announced through `aria-activedescendant`.
+
+| Key                     | Action                                                     |
+| ----------------------- | ---------------------------------------------------------- |
+| `ArrowDown` / `ArrowUp` | Open the list; move the highlight                          |
+| `Enter`                 | Pick the highlighted option, or add the typed custom value |
+| `Enter` / `Tab`         | Accept the inline suggestion for the first match           |
+| `Backspace`             | In an empty input with `isMultiple`, remove the last chip  |
+| `Escape`                | Close the list                                             |
+
+`label` is wired to the input; without a visible label the combobox has no
+accessible name, so always pass one.
+
+## Props
+
+<Controls of={TypeaheadStories.Default} />
