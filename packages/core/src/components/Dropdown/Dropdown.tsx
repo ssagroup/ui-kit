@@ -14,9 +14,13 @@ import { isNill } from '@ssa-ui-kit/utils';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
-import { toDropdownMenuItems } from '@components/DropdownOptions/utils';
+import {
+  flattenDropdownOptions,
+  toDropdownMenuItems,
+} from '@components/DropdownOptions/utils';
 import { useToggleListKeys } from '@components/DropdownOptions/useToggleListKeys';
 import { getNextActiveValue } from '@components/ContextMenu';
+import { flattenItems } from '@components/ContextMenu/utils';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import Icon from '@components/Icon';
 import Label from '@components/Label';
@@ -225,7 +229,6 @@ const Dropdown = <T extends DropdownOptionProps>({
     label && labelBadge
       ? { ...labelBadge, id: `dropdown-badge-${dropdownId}` }
       : undefined;
-  const options: T[] = [];
 
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
@@ -298,12 +301,14 @@ const Dropdown = <T extends DropdownOptionProps>({
   }, [isOpen]);
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
+  // Groups unwrapped: what `onChange` can pick from.
+  const options = flattenDropdownOptions(childrenArray).map(
+    (option) => option.props as unknown as T,
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const items = (childrenArray as React.ReactElement<any>[]).map(
     (child, index) => {
-      options.push(child.props);
-
       return React.cloneElement(child, {
         index,
         onClick: onChange.bind(this),
@@ -317,7 +322,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   /** Opens with the selected option highlighted, else per the key pressed. */
   const open = (key = 'ArrowDown') => {
     setIsOpen(true);
-    const selected = menuItems.find(
+    const selected = flattenItems(menuItems).find(
       (item) => !item.disabled && item.value === activeItem?.value,
     );
     setActiveValue(

@@ -237,6 +237,37 @@ function CustomOptionRendering() {
 }
 ```
 
+### Groups
+
+Wrap options in `TypeaheadOptionGroup` to show them under a title. Typing
+filters the options inside each group, and a group with no matching option is
+hidden together with its title. Titles are not selectable and arrow keys skip
+them.
+
+```tsx
+import {
+  Typeahead,
+  TypeaheadOption,
+  TypeaheadOptionGroup,
+} from '@ssa-ui-kit/core';
+
+<Typeahead name="ingredients" label="Ingredients" isMultiple>
+  <TypeaheadOptionGroup label="Fruits">
+    <TypeaheadOption value="apple" label="Apple">
+      Apple
+    </TypeaheadOption>
+    <TypeaheadOption value="banana" label="Banana">
+      Banana
+    </TypeaheadOption>
+  </TypeaheadOptionGroup>
+  <TypeaheadOptionGroup label="Vegetables">
+    <TypeaheadOption value="carrot" label="Carrot">
+      Carrot
+    </TypeaheadOption>
+  </TypeaheadOptionGroup>
+</Typeahead>;
+```
+
 ### Event Handling
 
 Handle various events and user interactions:

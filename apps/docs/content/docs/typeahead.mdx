@@ -50,3 +50,6 @@ export function Example() {
   so validation and submission work without extra wiring.
 - `renderOption` lets you customize how each option is displayed — here
   `highlightInputMatch` bolds the matched substring as you type.
+- Wrap options in `TypeaheadOptionGroup` (`label` prop) to show them under
+  titled sections. Filtering applies inside each group, and a group with no
+  matching option is hidden along with its title.

@@ -18,7 +18,11 @@ import { getStorybookAvatar } from '@storybook-assets/avatars';
 import { Typeahead } from '.';
 import { TypeaheadProps, TypeaheadValue } from './types';
 import { highlightInputMatch } from './utils';
-import { TypeaheadItemIcon, TypeaheadOption } from './components';
+import {
+  TypeaheadItemIcon,
+  TypeaheadOption,
+  TypeaheadOptionGroup,
+} from './components';
 
 const items = [
   { id: 1, value: 'First' },
@@ -803,4 +807,56 @@ const TypeaheadWithLabelBadge = () => {
 
 export const WithLabelBadge: StoryObj = {
   render: () => <TypeaheadWithLabelBadge />,
+};
+
+const groupedItems = [
+  {
+    label: 'Fruits',
+    items: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+    ],
+  },
+  {
+    label: 'Vegetables',
+    items: [
+      { value: 'carrot', label: 'Carrot' },
+      { value: 'potato', label: 'Potato' },
+      { value: 'onion', label: 'Onion', disabled: true },
+    ],
+  },
+];
+
+/**
+ * Wrap options in `TypeaheadOptionGroup` to show them under a title. Typing
+ * filters the options inside each group; a group with no match is hidden,
+ * title included.
+ */
+export const Groups: StoryObj = (args: TypeaheadProps) => (
+  <Typeahead
+    {...args}
+    label="Ingredients"
+    placeholder="Search ingredients"
+    helperText="Try typing “o”">
+    {groupedItems.map((group) => (
+      <TypeaheadOptionGroup key={group.label} label={group.label}>
+        {group.items.map((item) => (
+          <TypeaheadOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+            disabled={item.disabled}>
+            {item.label}
+          </TypeaheadOption>
+        ))}
+      </TypeaheadOptionGroup>
+    ))}
+  </Typeahead>
+);
+
+Groups.args = {
+  disabled: false,
+  isMultiple: true,
+  defaultValue: ['banana'],
 };

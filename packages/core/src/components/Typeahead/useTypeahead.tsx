@@ -5,10 +5,16 @@ import { useElementSize, useUncontrolled } from '@ssa-ui-kit/hooks';
 import { isNill } from '@ssa-ui-kit/utils';
 import { resolveDisabled } from '@utils/deprecation';
 import {
+  ContextMenuEntry,
   ContextMenuItem,
   getContextMenuOptionId,
   getNextActiveValue,
 } from '@components/ContextMenu';
+import { flattenItems } from '@components/ContextMenu/utils';
+import {
+  TypeaheadOptionGroup,
+  TypeaheadOptionGroupProps,
+} from './components/TypeaheadOptionGroup';
 import {
   TypeaheadItemProps,
   TypeaheadOptionProps,
@@ -35,15 +41,36 @@ const findExactMatch = (
 };
 
 /**
- * Options in order, with fragments unwrapped: consumers commonly map their
- * options inside a `<>...</>`, which `React.Children` treats as one child.
+ * Options and groups in order, with fragments unwrapped: consumers commonly
+ * map their options inside a `<>...</>`, which `React.Children` treats as one
+ * child.
  */
+const toOptionEntries = (
+  children: React.ReactNode,
+  keyPrefix = '',
+): React.ReactNode[] =>
+  React.Children.toArray(children).flatMap((child) => {
+    if (!React.isValidElement<{ children?: React.ReactNode }>(child)) {
+      return [child];
+    }
+    // Keys restart inside each fragment, so they are prefixed with the
+    // fragment's own key to stay unique; group ids are built from them.
+    const key = `${keyPrefix}${child.key}`;
+    if (child.type === React.Fragment) {
+      return toOptionEntries(child.props.children, `${key}/`);
+    }
+    return [keyPrefix ? React.cloneElement(child, { key }) : child];
+  });
+
+const isOptionGroup = (
+  child: React.ReactNode,
+): child is React.ReactElement<TypeaheadOptionGroupProps> =>
+  React.isValidElement(child) && child.type === TypeaheadOptionGroup;
+
+/** Options in order, with fragments and groups unwrapped. */
 const toOptionArray = (children: React.ReactNode): React.ReactNode[] =>
-  React.Children.toArray(children).flatMap((child) =>
-    React.isValidElement<{ children?: React.ReactNode }>(child) &&
-    child.type === React.Fragment
-      ? toOptionArray(child.props.children)
-      : [child],
+  toOptionEntries(children).flatMap((child) =>
+    isOptionGroup(child) ? toOptionEntries(child.props.children) : [child],
   );
 
 export const useTypeahead = ({
@@ -155,18 +182,32 @@ export const useTypeahead = ({
       : '';
   }, [isMultiple, rawInput, selectedItems, optionsWithKey]);
 
-  const filteredChildren = useMemo(() => {
+  // Options and groups left after filtering; a group keeps only its matching
+  // options and is dropped, title and all, when none match.
+  const filteredEntries = useMemo(() => {
     // if filtering is disabled, or there's no input, show all
-    if (!filterOptions || !inputValue) return toOptionArray(children);
+    if (!filterOptions || !inputValue) return toOptionEntries(children);
 
     const needle = inputValue.toLowerCase();
-    return toOptionArray(children).filter((child) => {
+    const matches = (child: React.ReactNode) => {
       if (!React.isValidElement(child)) return false;
       const { label, value } = child.props as TypeaheadOptionProps;
       const text = (label ?? value)?.toString().toLowerCase() || '';
       return text.includes(needle);
+    };
+    return toOptionEntries(children).flatMap((child) => {
+      if (!isOptionGroup(child)) return matches(child) ? [child] : [];
+      const options = toOptionEntries(child.props.children).filter(matches);
+      return options.length
+        ? [React.cloneElement(child, { children: options })]
+        : [];
     });
   }, [children, inputValue]);
+
+  const filteredChildren = useMemo(
+    () => toOptionArray(filteredEntries),
+    [filteredEntries],
+  );
 
   const listId = `typeahead-popup-${typeaheadId}`;
   // Names the combobox; left out without a label, so it never points at a
@@ -199,45 +240,59 @@ export const useTypeahead = ({
         ? [customItem(customOptionValue)]
         : [];
 
-    const options = filteredChildren.flatMap(
-      (child): ContextMenuItem<TypeaheadValue>[] => {
-        if (!React.isValidElement<TypeaheadItemProps>(child)) return [];
-        const { value, label, avatar, children: content } = child.props;
-        const { id } = child.props as { id?: TypeaheadValue };
-        if (isNill(value)) return [];
-        const disabled = resolveDisabled(
-          'TypeaheadOption',
-          child.props.disabled,
-          child.props.isDisabled,
-        );
-        return [
-          {
+    const toItem = (
+      child: React.ReactNode,
+    ): ContextMenuItem<TypeaheadValue>[] => {
+      if (!React.isValidElement<TypeaheadItemProps>(child)) return [];
+      const { value, label, avatar, children: content } = child.props;
+      const { id } = child.props as { id?: TypeaheadValue };
+      if (isNill(value)) return [];
+      const disabled = resolveDisabled(
+        'TypeaheadOption',
+        child.props.disabled,
+        child.props.isDisabled,
+      );
+      return [
+        {
+          value,
+          label:
+            renderOption?.({
+              value: id || value,
+              input: inputValue as string,
+              // Passed through as given, as before the ContextMenu move.
+              label: label as string,
+            }) ??
+            content ??
+            label ??
             value,
-            label:
-              renderOption?.({
-                value: id || value,
-                input: inputValue as string,
-                // Passed through as given, as before the ContextMenu move.
-                label: label as string,
-              }) ??
-              content ??
-              label ??
-              value,
-            textValue: String(label ?? value),
-            avatar: avatar ? (
-              <S.TypeaheadItemAvatar data-testid="typeahead-option-avatar">
-                {avatar}
-              </S.TypeaheadItemAvatar>
-            ) : undefined,
-            disabled,
-          },
-        ];
-      },
+          textValue: String(label ?? value),
+          avatar: avatar ? (
+            <S.TypeaheadItemAvatar data-testid="typeahead-option-avatar">
+              {avatar}
+            </S.TypeaheadItemAvatar>
+          ) : undefined,
+          disabled,
+        },
+      ];
+    };
+
+    const options = filteredEntries.flatMap(
+      (child): ContextMenuEntry<TypeaheadValue>[] =>
+        isOptionGroup(child)
+          ? [
+              {
+                // From the element key, so it holds while filtering.
+                id: child.props.id ?? `group-${String(child.key)}`,
+                label: child.props.label,
+                items: toOptionEntries(child.props.children).flatMap(toItem),
+              },
+            ]
+          : toItem(child),
     );
 
     return [...selectedCustom, ...typedCustom, ...options];
   }, [
-    filteredChildren,
+    filteredEntries,
     selectedItems,
     optionsWithKey,
     customOptionValue,
@@ -251,7 +306,9 @@ export const useTypeahead = ({
     null,
   );
   // Filtering can remove the highlighted option; it is then no longer active.
-  const activeValue = menuItems.some((item) => item.value === rawActiveValue)
+  const activeValue = flattenItems(menuItems).some(
+    (item) => item.value === rawActiveValue,
+  )
     ? rawActiveValue
     : null;
 
@@ -372,7 +429,7 @@ export const useTypeahead = ({
       if (isDisabled) return;
       if (!isOpen) {
         setIsOpen(true);
-        const selected = menuItems.find(
+        const selected = flattenItems(menuItems).find(
           (item) => !item.disabled && selectedItems.includes(item.value),
         );
         setActiveValue(

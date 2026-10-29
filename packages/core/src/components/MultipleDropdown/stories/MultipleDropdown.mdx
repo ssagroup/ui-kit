@@ -284,6 +284,31 @@ function CustomOptionsExample() {
 }
 ```
 
+### Groups
+
+Wrap options in `DropdownOptionGroup` to show them under a title — the same
+component `Dropdown` uses. Titles are not selectable and keyboard navigation
+skips them. `selectedItems` and `onChange` work with option values exactly as
+without groups.
+
+```tsx
+import {
+  MultipleDropdown,
+  DropdownOption,
+  DropdownOptionGroup,
+} from '@ssa-ui-kit/core';
+
+<MultipleDropdown label="Ingredients" onChange={handleChange}>
+  <DropdownOptionGroup label="Fruits">
+    <DropdownOption value="apple" label="Apple" />
+    <DropdownOption value="banana" label="Banana" />
+  </DropdownOptionGroup>
+  <DropdownOptionGroup label="Vegetables">
+    <DropdownOption value="carrot" label="Carrot" />
+  </DropdownOptionGroup>
+</MultipleDropdown>;
+```
+
 ### Dynamic Item Updates
 
 Add or remove items dynamically:

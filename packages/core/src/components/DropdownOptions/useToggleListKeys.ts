@@ -1,10 +1,11 @@
 import { KeyboardEvent, useRef } from 'react';
 
 import {
-  ContextMenuItem,
+  ContextMenuEntry,
   getContextMenuOptionId,
   getNextActiveValue,
 } from '@components/ContextMenu';
+import { flattenItems } from '@components/ContextMenu/utils';
 
 import { OptionValue } from './utils';
 
@@ -14,7 +15,7 @@ export interface UseToggleListKeysOptions {
   listId: string;
   isOpen: boolean;
   disabled?: boolean;
-  menuItems: ContextMenuItem<OptionValue>[];
+  menuItems: ContextMenuEntry<OptionValue>[];
   /** Highlighted option. */
   activeValue: OptionValue | null;
   setActiveValue: (value: OptionValue | null) => void;
@@ -53,7 +54,7 @@ export const useToggleListKeys = ({
   // The highlight can outlive its option when the list changes while open.
   const isActiveListed =
     activeValue !== null &&
-    menuItems.some((item) => item.value === activeValue);
+    flattenItems(menuItems).some((item) => item.value === activeValue);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
