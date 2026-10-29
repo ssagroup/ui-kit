@@ -11,7 +11,7 @@ export interface DropdownItemProps
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   isActive?: boolean;
   isMultiple?: boolean;
-  /** Whether this option is disabled. Only styled in `isMultiple` mode. */
+  /** Whether this option is disabled. Disabled options can't be picked and keyboard navigation skips them. */
   disabled?: boolean;
   /**
    * Whether this option is disabled.
@@ -77,25 +77,23 @@ const DropdownOptionBase = styled.li<Omit<DropdownItemProps, 'disabled'>>`
  * DropdownOption - A single selectable row inside `Dropdown` or
  * `MultipleDropdown`.
  *
- * Thin wrapper over a styled `<li>`. It exists so that `disabled` can be
- * accepted as the supported prop name without emotion forwarding it to the
- * DOM, where `disabled` is not valid on an `<li>`.
- *
- * ### The parent supplies the visible label
- * Options are not rendered as written: the enclosing dropdown clones each one
- * and injects the label, resolved as **`children` → `label` → `value`**. So
- * `<DropdownOption value="Sales" />` displays "Sales" with no children needed,
+ * ### Options are descriptions, not rendered elements
+ * The enclosing dropdown reads each option's props and renders the row
+ * itself (through the shared `ContextMenu` list), so the option element is
+ * never mounted. The visible label resolves as **`children` → `label` →
+ * `value`**: `<DropdownOption value="Sales" />` displays "Sales",
  * `label` overrides that for a different display string, and `children` wins
- * over both when a row needs custom markup.
+ * over both when a row needs custom markup. Keep `label` set to plain text
+ * when `children` is markup — it is what the toggle shows once selected.
  *
- * The clone also wraps the label for truncation and attaches a tooltip, so put
- * custom content in `children` rather than styling the `<li>` directly.
+ * The row wraps the label for truncation and attaches a tooltip. Only
+ * `value`, `label`, `children`, `avatar`, `disabled`, a literal `className`
+ * and `data-testid` are read — styles from `styled(DropdownOption)` or a `css`
+ * prop on the option are not applied.
  *
  * ### Selection state comes from the parent
- * `isActive`, `isMultiple` and the click wiring are set by `Dropdown` /
- * `MultipleDropdown`; you supply `value` and let the parent report selection
- * through its own `onChange`. Note `disabled` is only styled in `isMultiple`
- * mode.
+ * You supply `value` and let `Dropdown` / `MultipleDropdown` report selection
+ * through its own `onChange`.
  *
  * @category Form Controls
  * @subcategory Selection

@@ -44,15 +44,11 @@ const listPosition = (placement: 'top' | 'bottom') => css`
  *
  * @example
  * ```tsx
- * // Used within Dropdown component
+ * // Rendered by Dropdown itself — pass options straight to Dropdown
  * <Dropdown selectedItem={selected} onChange={handleChange}>
- *   <DropdownOptions>
- *     {items.map(item => (
- *       <DropdownOption key={item.id} value={item.id}>
- *         {item.label}
- *       </DropdownOption>
- *     ))}
- *   </DropdownOptions>
+ *   {items.map(item => (
+ *     <DropdownOption key={item.value} value={item.value} label={item.label} />
+ *   ))}
  * </Dropdown>
  * ```
  *

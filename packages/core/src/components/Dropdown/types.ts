@@ -39,8 +39,8 @@ export type ControlledButtonProps =
  * @example
  * ```tsx
  * const items = [
- *   { id: 1, value: 'Option 1' },
- *   { id: 2, value: 'Option 2' },
+ *   { value: 1, label: 'Option 1' },
+ *   { value: 2, label: 'Option 2' },
  * ];
  *
  * <Dropdown
@@ -49,9 +49,7 @@ export type ControlledButtonProps =
  *   placeholder="Select an option"
  * >
  *   {items.map(item => (
- *     <DropdownOption key={item.id} value={item.id}>
- *       {item.value}
- *     </DropdownOption>
+ *     <DropdownOption key={item.value} value={item.value} label={item.label} />
  *   ))}
  * </Dropdown>
  * ```
@@ -102,8 +100,8 @@ export interface DropdownProps<
   placeholder?: string;
 
   /**
-   * DropdownOption components as children
-   * Each child must be a DropdownOption component
+   * `DropdownOption` elements, optionally wrapped in `DropdownOptionGroup`.
+   * Groups must be direct children.
    */
   children?: React.ReactNode;
 
@@ -113,8 +111,7 @@ export interface DropdownProps<
   className?: string;
 
   /**
-   * Controlled open state
-   * When provided, controls dropdown open/closed state externally
+   * Initial open state. Read on mount only — changing it later has no effect.
    */
   isOpen?: boolean;
 

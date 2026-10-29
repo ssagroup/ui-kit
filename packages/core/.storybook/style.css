@@ -5,8 +5,18 @@
 
   box-sizing: border-box;
   font-family: 'Manrope', sans-serif;
+}
 
+/* Kept off code blocks so untokenised text can inherit; :where() keeps the
+   specificity at zero, same as the bare * it replaces. */
+:where(*:not(pre.prismjs, pre.prismjs *)) {
   color: #2b2d31;
+}
+
+/* The dark source panel under each Canvas takes its text colour from a
+   wrapper the reset above repaints, so restore it on the panel itself. */
+#storybook-docs .sbdocs-preview pre.prismjs {
+  color: #ededed;
 }
 
 *::after,

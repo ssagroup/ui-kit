@@ -46,6 +46,7 @@ export type * from './ContextMenu/types';
 
 export { default as Dropdown } from './Dropdown';
 export type * from './Dropdown/types';
+export { DropdownPositions } from './Dropdown/types';
 export { default as DropdownArrow } from './DropdownArrow';
 export { default as DropdownBase } from './DropdownBase';
 export { default as DropdownOption } from './DropdownOption';

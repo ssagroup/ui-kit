@@ -95,7 +95,8 @@ const LeadingElement = styled.span`
  * - Dropdown (root container with context)
  *   - DropdownToggle (button that opens/closes dropdown)
  *   - DropdownOptions (menu container that appears when open)
- *     - DropdownOption (individual selectable items)
+ *     - DropdownOptionGroup (optional titled section)
+ *       - DropdownOption (individual selectable items)
  *
  * @category Form Controls
  * @subcategory Selection
@@ -103,9 +104,9 @@ const LeadingElement = styled.span`
  * @example
  * ```tsx
  * const items = [
- *   { id: 1, value: 'Apple' },
- *   { id: 2, value: 'Banana' },
- *   { id: 3, value: 'Cherry' },
+ *   { value: 1, label: 'Apple' },
+ *   { value: 2, label: 'Banana' },
+ *   { value: 3, label: 'Cherry' },
  * ];
  *
  * <Dropdown
@@ -114,19 +115,16 @@ const LeadingElement = styled.span`
  *   placeholder="Select a fruit"
  * >
  *   {items.map(item => (
- *     <DropdownOption key={item.id} value={item.id}>
- *       {item.value}
- *     </DropdownOption>
+ *     <DropdownOption key={item.value} value={item.value} label={item.label} />
  *   ))}
  * </Dropdown>
  * ```
  *
  * @example
  * ```tsx
- * // Controlled open state
- * const [isOpen, setIsOpen] = useState(false);
+ * // Open on mount (`isOpen` is read once, not controlled)
  * <Dropdown
- *   isOpen={isOpen}
+ *   isOpen
  *   onChange={handleChange}
  *   selectedItem={selected}
  * >

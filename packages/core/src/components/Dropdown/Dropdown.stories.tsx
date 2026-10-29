@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import styled from '@emotion/styled';
+import { fn } from 'storybook/test';
 import { css } from '@emotion/react';
 import DropdownOption from '@components/DropdownOption';
 import DropdownOptionGroup from '@components/DropdownOptionGroup';
@@ -8,667 +8,45 @@ import Button from '@components/Button';
 import Avatar, { AvatarSizes } from '@components/Avatar';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
 import Dropdown from './Dropdown';
-import { DropdownProps } from './types';
+import { DropdownPositions, DropdownProps } from './types';
 import { DropdownOptionProps } from '../..';
 
-/**
- * Recreates the look from before the "dropdown styles" commit.
- * Grey pill background when closed, dark gradient when open.
- * Uses styled(Dropdown) so theme tokens can be interpolated.
- * The generated className is forwarded to DropdownToggle via className prop.
- */
-const LegacyStyledDropdown = styled(Dropdown)`
-  background: ${({ theme }) => theme.colors.greyLighter};
-  border: none;
-  color: ${({ theme }) => theme.colors.greyDarker};
-
-  svg path {
-    stroke: ${({ theme }) => theme.colors.greyDarker};
-  }
-
-  /*
-   * Use && to double the class selector specificity (0,3,0), which beats the
-   * internal singleDropdownStyles :focus:not(:disabled) rule at (0,2,0).
-   * Without this, clicking to open causes white text on a white background.
-   */
-  &&[aria-expanded='true'] {
-    background: linear-gradient(
-      108.3deg,
-      ${({ theme }) => theme.colors.greyDarker} -0.36%,
-      ${({ theme }) => theme.colors.greyDark} 100%
-    );
-    color: ${({ theme }) => theme.colors.white};
-
-    svg path {
-      stroke: ${({ theme }) => theme.colors.white};
-    }
-  }
-
-  &:focus:not([aria-expanded='true'], :disabled) {
-    background: ${({ theme }) => theme.colors.greyFocused};
-    color: ${({ theme }) => theme.colors.greyDarker};
-  }
-
-  &&:disabled {
-    background: ${({ theme }) => theme.colors.grey};
-    border: none;
-    color: ${({ theme }) => theme.colors.greyDarker60};
-    cursor: default;
-
-    svg path {
-      stroke: ${({ theme }) => theme.colors.grey20};
-    }
-  }
-`;
-
 type Args = DropdownProps<DropdownOptionProps>;
+type Item = { value: string | number; label: string; subText?: string };
 
-const managerOptions = [
-  {
-    id: 1,
-    value: 1,
-    name: 'Alice Smith',
-    label: 'Alice Smith',
-    avatar: getStorybookAvatar(0),
-  },
-  {
-    id: 2,
-    value: 2,
-    name: 'Bob Jones',
-    label: 'Bob Jones',
-    avatar: getStorybookAvatar(1),
-  },
-  {
-    id: 3,
-    value: 3,
-    name: 'Carol White',
-    label: 'Carol White',
-    avatar: getStorybookAvatar(2),
-  },
-  {
-    id: 4,
-    value: 4,
-    name: 'David Brown',
-    label: 'David Brown',
-    avatar: getStorybookAvatar(3),
-  },
+const items: Item[] = [
+  { value: 1, label: 'Design', subText: '12 members' },
+  { value: 2, label: 'Engineering', subText: '48 members' },
+  { value: 3, label: 'Finance', subText: '6 members' },
+  { value: 4, label: 'Human Resources', subText: '9 members' },
+  { value: 5, label: 'Legal', subText: '4 members' },
+  { value: 6, label: 'Marketing', subText: '15 members' },
+  { value: 7, label: 'Operations', subText: '21 members' },
+  { value: 8, label: 'Product', subText: '11 members' },
+  { value: 9, label: 'Sales', subText: '30 members' },
+  { value: 10, label: 'Support', subText: '18 members' },
 ];
 
-const items = [
-  { value: 0, label: 'Zero lorem ipsum ipsum', subText: 'subtext' },
-  { value: 1, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 2, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 3, label: 'Three lorem ipsum', subText: 'subtext' },
-  { value: 10, label: 'Zero lorem ipsum', subText: 'subtext' },
-  { value: 11, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 12, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 13, label: 'Three lorem ipsum', subText: 'subtext' },
-  { value: 110, label: 'Zero lorem ipsum', subText: 'subtext' },
-  { value: 111, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 112, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 113, label: 'Three lorem ipsum', subText: 'subtext' },
-  { value: 110, label: 'Zero lorem ipsum', subText: 'subtext' },
-  { value: 111, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 112, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 113, label: 'Three lorem ipsum', subText: 'subtext' },
-  { value: 210, label: 'Zero lorem ipsum', subText: 'subtext' },
-  { value: 211, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 122, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 123, label: 'Three lorem ipsum', subText: 'subtext' },
-  { value: 1210, label: 'Zero lorem ipsum', subText: 'subtext' },
-  { value: 1211, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 1122, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 1123, label: 'Three lorem ipsum', subText: 'subtext' },
-  { value: 1120, label: 'Zero lorem ipsum', subText: 'subtext' },
-  { value: 1121, label: 'One lorem ipsum', subText: 'subtext' },
-  { value: 1122, label: 'Two lorem ipsum', subText: 'subtext' },
-  { value: 1132, label: 'Three lorem ipsum', subText: 'subtext' },
-];
+const people = ['Alice Smith', 'Bob Jones', 'Carol White', 'David Brown'].map(
+  (name, index) => ({
+    value: index + 1,
+    label: name,
+    avatar: getStorybookAvatar(index),
+  }),
+);
 
-export default {
-  title: 'Components/Dropdown',
-  component: Dropdown,
-  argTypes: {
-    selectedItem: {
-      description:
-        'Currently selected item. When provided, its label (or value) is shown in the toggle button.',
-      control: { disable: true },
-      table: { type: { summary: 'DropdownOptionProps' } },
-    },
-    disabled: {
-      description: 'Disables the dropdown, preventing any user interaction.',
-      control: 'boolean',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    placeholder: {
-      description: 'Text shown in the toggle button when no item is selected.',
-      control: 'text',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: "'Select something'" },
-      },
-    },
-    isOpen: {
-      description:
-        'Controlled open state. When provided, overrides the internal open/close logic.',
-      control: 'boolean',
-      table: { type: { summary: 'boolean' } },
-    },
-    onChange: {
-      description:
-        'Callback fired when an option is selected. Receives the selected DropdownOptionProps object.',
-      control: { disable: true },
-    },
-    className: {
-      description:
-        'Custom CSS class forwarded to the toggle button. Useful for styling via `styled(Dropdown)`.',
-      table: { type: { summary: 'StyledComponent' } },
-      control: { disable: true },
-    },
-    width: {
-      description:
-        'Width of the dropdown. Sizes the outer field wrapper, with the base and toggle button stretched to fill it, so relative units resolve against the surrounding container. Number values are treated as pixels. Omit it to keep the dropdown sized to its content.',
-      control: 'text',
-      table: {
-        type: { summary: 'string | number' },
-        defaultValue: { summary: 'undefined (sized to content)' },
-      },
-    },
-    'dropdownProps.toggleButton.name': {
-      description: 'Custom name attribute for dropdown div.',
-      control: { type: 'text' },
-      table: {
-        type: { summary: 'string' },
-        category: 'dropdownProps',
-      },
-    },
-    'dropdownProps.base.name': {
-      description: 'Custom name attribute for the underlying button.',
-      control: { type: 'text' },
-      table: {
-        type: { summary: 'string' },
-        category: 'dropdownProps',
-      },
-    },
-    'dropdownProps.toggleButtonArrow.data-testId': {
-      description: 'Custom name attribute for the arrow icon.',
-      control: { type: 'text' },
-      table: {
-        type: { summary: 'string' },
-        category: 'dropdownProps',
-      },
-    },
-    'dropdownProps.dropdownPosition': {
-      description:
-        "Controls the opening direction of the options list. 'auto' flips upward automatically when there is insufficient space below the toggle in the viewport.",
-      control: { type: 'select' },
-      options: ['auto', 'top', 'bottom'],
-      table: {
-        type: { summary: "'auto' | 'top' | 'bottom'" },
-        defaultValue: { summary: "'auto'" },
-        category: 'dropdownProps',
-      },
-    },
-  },
-  decorators: [
-    (Story, { args }) => {
-      const noop = () => {
-        /* no-op */
-      };
-      return (
-        <div style={{ paddingBottom: 200 }}>
-          {Story({ ...args, onChange: noop })}
-        </div>
-      );
-    },
-  ],
-} as Meta<typeof Dropdown>;
-
-export const Basic: StoryObj = (args: Args) => {
-  return (
-    <Dropdown
-      dropdownProps={args.dropdownProps}
-      selectedItem={items[2]}
-      disabled={args.disabled}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  );
-};
-
-Basic.args = {
-  disabled: false,
-  dropdownProps: {
-    base: {
-      name: 'dropdown',
-    },
-    toggleButton: {
-      name: 'dropdownToggleName',
-    },
-    toggleButtonArrow: {
-      'data-testId': 'test-attr',
-    },
-  },
-};
-
-export const Opened: StoryObj = (args: Args) => {
-  return (
-    <Dropdown selectedItem={items[2]} {...args}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  );
-};
-
-Opened.args = { isOpen: true, disabled: false };
-
-export const Disabled: StoryObj<Args> = {
-  render: () => (
-    <Dropdown selectedItem={items[2]} disabled>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  ),
-};
-
-export const WithAvatars: StoryObj<Args> = {
-  render: (args) => (
-    <Dropdown
-      {...args}
-      selectedItem={managerOptions[1]}
-      placeholder="Select a person...">
-      {managerOptions.map(({ id, name, avatar }) => (
-        <DropdownOption
-          key={id}
-          value={id}
-          label={name}
-          avatar={
-            <Avatar size={AvatarSizes.small} image={avatar} border={false} />
-          }>
-          {name}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  ),
-};
-
-WithAvatars.args = { disabled: false };
-
-export const CustomWidth: StoryObj = (args: Args) => {
-  return (
-    <Dropdown disabled={args.disabled} selectedItem={items[0]} width={320}>
-      {items.map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  );
-};
-
-CustomWidth.args = { disabled: false };
-
-/**
- * `width="100%"` makes the dropdown fill whatever container it is placed in —
- * the usual case for a form column or a filter bar.
- *
- * It has to be a prop rather than a `css` override: the control is three nested
- * elements deep (field wrapper -> base -> toggle button), and each one sizes
- * itself to its content. Stretching only the toggle via `css` / `className`
- * resolves `100%` against a base that is itself shrink-wrapped, so nothing
- * moves.
- *
- * The prop sizes all three, but only the outer wrapper carries the value — the
- * base and toggle are set to `100%` — so relative units resolve against the
- * container instead of compounding.
- *
- * Edit the `width` control to try other values against the fixed 520px dashed
- * container: `60%` lands at 312px (not 60% of 60% of 60%), `320px` and
- * `fit-content` work too. The second dropdown has no `width` prop and stays
- * sized to its content for comparison.
- */
-export const FullWidth: StoryObj = (args: Args) => {
-  return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 520px;
-        padding: 16px;
-        border: 1px dashed #c4c4c4;
-        border-radius: 12px;
-      `}>
-      <Dropdown
-        {...args}
-        label={
-          args.width ? `width="${args.width}"` : 'No width (sized to content)'
-        }
-        selectedItem={items[0]}>
-        {items.map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-      <Dropdown
-        {...args}
-        width={undefined}
-        label="Sized to content (no width prop)"
-        selectedItem={items[0]}>
-        {items.map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-    </div>
-  );
-};
-
-FullWidth.args = { disabled: false, width: '100%' };
-
-const longItems = [
+const longItems: Item[] = [
   {
     value: 'long-1',
     label:
-      'Two lorem ipsum Two lorem ipsum Two lorem ipsum Two lorem ipsum Two lorem ipsum Two lorem ipsum',
+      'Regional Operations and Customer Success — Central and Eastern Europe',
   },
   { value: 'short', label: 'Short one' },
   {
     value: 'long-2',
-    label:
-      'Three lorem ipsum Three lorem ipsum Three lorem ipsum Three lorem ipsum Three lorem ipsum',
+    label: 'Platform Infrastructure, Reliability and Developer Experience',
   },
 ];
-
-/**
- * The selected value and the option labels are kept on a single line and
- * ellipsised. Without this the toggle is a fixed 44px while the label wraps, so
- * long text spills above and below the border, and the options list — which
- * used to grow to `max-content` — stretched far past the viewport.
- *
- * Nothing grows past its container: the field wrapper, base and toggle are each
- * capped at `100%`. Resize the 320px dashed container to see the truncation
- * follow it. Set a `width` to control the size explicitly.
- */
-export const LongContent: StoryObj = (args: Args) => {
-  return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 320px;
-        padding: 16px;
-        border: 1px dashed #c4c4c4;
-        border-radius: 12px;
-      `}>
-      <Dropdown {...args} selectedItem={longItems[0]}>
-        {longItems.map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-    </div>
-  );
-};
-
-LongContent.args = { disabled: false };
-
-export const LegacyStyle: StoryObj<Args> = {
-  name: 'Legacy (Previous Style)',
-  render: (args) => (
-    <LegacyStyledDropdown {...args} selectedItem={items[2]}>
-      {items.slice(0, 5).map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </LegacyStyledDropdown>
-  ),
-};
-
-LegacyStyle.args = { disabled: false };
-
-export const Simple: StoryObj = (args: Args) => {
-  return (
-    <Dropdown disabled={args.disabled}>
-      {items.map((item) => (
-        <DropdownOption
-          key={item.value}
-          value={item.value}
-          label={item.label}
-        />
-      ))}
-    </Dropdown>
-  );
-};
-
-Simple.args = { disabled: false };
-
-export const NoItems: StoryObj = () => {
-  return <Dropdown>{null}</Dropdown>;
-};
-
-NoItems.args = { disabled: false };
-
-export const Custom: StoryObj = (args: Args) => {
-  // Color palette: https://mycolor.space/?hex=%23FF69B4&sub=1
-  const CustomOption = styled(DropdownOption)`
-    width: auto;
-    height: auto;
-    padding: 10px;
-
-    text-align: left;
-    line-height: 18px;
-    font-size: 16px;
-
-    background: hotpink;
-    color: white;
-
-    :hover {
-      background: pink;
-    }
-
-    b {
-      color: white;
-    }
-  `;
-
-  return (
-    <Dropdown
-      disabled={args.disabled}
-      selectedItem={items[2]}
-      css={css`
-        background: #ff947b;
-        :focus {
-          background: #ffb566;
-        }
-        &[aria-expanded='true'] {
-          color: #975875;
-
-          svg {
-            path {
-              stroke: #975875;
-            }
-          }
-        }
-      `}>
-      {items.map((item) => (
-        <CustomOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-          &nbsp;|&nbsp;
-          <b>{item.subText}</b>
-        </CustomOption>
-      ))}
-    </Dropdown>
-  );
-};
-
-Custom.args = {
-  disabled: false,
-};
-
-export const PositionAuto: StoryObj<Args> = {
-  name: 'Position: Auto (near bottom of viewport)',
-  decorators: [
-    (Story) => (
-      <div style={{ position: 'fixed', bottom: 16, left: 16 }}>{Story()}</div>
-    ),
-  ],
-  render: (args) => (
-    <Dropdown {...args} selectedItem={items[2]}>
-      {items.slice(0, 5).map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  ),
-};
-
-PositionAuto.args = { disabled: false };
-
-export const WithLabelAndHelperText: StoryObj<Args> = {
-  render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Dropdown
-        {...args}
-        label="Manager"
-        helperText="Choose the team's manager"
-        selectedItem={items[2]}>
-        {items.slice(0, 5).map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-
-      <Dropdown
-        {...args}
-        label="Manager"
-        icon="user"
-        placeholder="Select a manager">
-        {items.slice(0, 5).map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-
-      <Dropdown
-        {...args}
-        label="Manager"
-        errors={{ type: 'required', message: 'Manager is required' }}>
-        {items.slice(0, 5).map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-
-      <Dropdown
-        {...args}
-        label="Manager"
-        success
-        helperText="Looks good!"
-        selectedItem={items[2]}>
-        {items.slice(0, 5).map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}>
-            {item.label}
-          </DropdownOption>
-        ))}
-      </Dropdown>
-    </div>
-  ),
-};
-
-WithLabelAndHelperText.args = { disabled: false };
-
-export const DynamicallyChangedSelectedItem: StoryObj = (args: Args) => {
-  const [selectedIndex, setSelectedIndex] = useState(1);
-
-  const handleUpdate = () => {
-    const newIndex = selectedIndex < items.length - 1 ? selectedIndex + 1 : 0;
-    setSelectedIndex(newIndex);
-  };
-  const handleChange = (item: (typeof items)[0]) => {
-    const newIndex = items.findIndex((i) => i.value === item.value);
-    setSelectedIndex(newIndex);
-  };
-  return (
-    <div>
-      <Dropdown
-        disabled={args.disabled}
-        selectedItem={items[selectedIndex]}
-        onChange={handleChange}>
-        {items.map((item) => (
-          <DropdownOption
-            key={item.value}
-            value={item.value}
-            label={item.label}
-          />
-        ))}
-      </Dropdown>
-      <Button variant="primary" css={{ marginLeft: 10 }} onClick={handleUpdate}>
-        Update selected item
-      </Button>
-    </div>
-  );
-};
-
-DynamicallyChangedSelectedItem.args = { disabled: false };
-
-export const WithLabelBadge: StoryObj<Args> = {
-  render: (args) => (
-    <Dropdown
-      {...args}
-      label="Preferred Contact Channel"
-      labelBadge={{ text: 'default' }}
-      selectedItem={items[0]}>
-      {items.slice(0, 5).map((item) => (
-        <DropdownOption key={item.value} value={item.value} label={item.label}>
-          {item.label}
-        </DropdownOption>
-      ))}
-    </Dropdown>
-  ),
-};
 
 const groupedItems = [
   {
@@ -689,18 +67,191 @@ const groupedItems = [
   },
 ];
 
+const dashedContainer = (width: number) => css`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: ${width}px;
+  padding: 16px;
+  border: 1px dashed #c4c4c4;
+  border-radius: 12px;
+`;
+
+export default {
+  title: 'Components/Dropdown',
+  component: Dropdown,
+  args: {
+    onChange: fn(),
+  },
+  argTypes: {
+    selectedItem: { control: false },
+    onChange: { control: false },
+    children: { control: false },
+    className: { control: false },
+    isOpen: {
+      description:
+        'Initial open state. Read on mount only — later changes are ignored.',
+    },
+    width: { control: 'text' },
+  },
+  parameters: {
+    // Show each story's own source rather than the rendered element tree,
+    // which expands every option and leaks story-only props such as `key`.
+    docs: { source: { type: 'code' } },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ paddingBottom: 240 }}>
+        <Story />
+      </div>
+    ),
+  ],
+} as Meta<typeof Dropdown>;
+
 /**
- * Wrap options in `DropdownOptionGroup` to show them under a title. Titles
- * are not selectable and keyboard navigation skips them; groups are separated
- * by a divider.
+ * `selectedItem` is matched to an option by `value`, so pass an object whose
+ * `value` equals the option's. `onChange` receives the picked option's props
+ * (`value`, `label`, …).
+ *
+ * Every prop in the Controls panel applies here. `isOpen` opens the list on
+ * mount; it is read once and is not a controlled prop, so this story remounts
+ * the dropdown when the control changes.
+ */
+export const Default: StoryObj<Args> = {
+  args: {
+    placeholder: 'Select a department',
+    selectedItem: items[1],
+    disabled: false,
+    isOpen: false,
+  },
+  render: (args) => (
+    <Dropdown key={String(args.isOpen)} {...args}>
+      {items.map((item) => (
+        <DropdownOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
+      ))}
+    </Dropdown>
+  ),
+};
+
+/**
+ * `label`, `helperText`, `icon` (shown in the toggle while no selected option
+ * has an avatar), `errors` (a react-hook-form `FieldError`) and `success` give
+ * the dropdown the same field chrome as the other form controls. `labelBadge`
+ * adds a status badge next to the label and is announced as the toggle's
+ * description — it needs a `label`.
+ */
+export const FormField: StoryObj<Args> = {
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <Dropdown
+        {...args}
+        label="Department"
+        helperText="Choose the employee's department"
+        selectedItem={items[1]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        label="Department"
+        icon="user"
+        placeholder="Select a department">
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        label="Department"
+        errors={{ type: 'required', message: 'Department is required' }}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        label="Department"
+        success
+        helperText="Looks good!"
+        selectedItem={items[1]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        label="Preferred contact channel"
+        labelBadge={{ text: 'default' }}
+        selectedItem={items[0]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+    </div>
+  ),
+};
+
+/**
+ * The visible label of an option resolves as **`children` → `label` →
+ * `value`**, so `<DropdownOption value="Sales" />` is enough for a plain list.
+ *
+ * `avatar` fills the leading slot of the row, and the selected option's avatar
+ * is repeated in the toggle (`avatarBorder` adds a border there). `disabled`
+ * options can't be picked and are skipped by the keyboard.
+ */
+export const WithAvatars: StoryObj<Args> = {
+  args: { placeholder: 'Select a person' },
+  render: (args) => (
+    <Dropdown {...args} selectedItem={people[1]}>
+      {people.map(({ value, label, avatar }) => (
+        <DropdownOption
+          key={value}
+          value={value}
+          label={label}
+          avatar={
+            <Avatar size={AvatarSizes.small} image={avatar} border={false} />
+          }
+        />
+      ))}
+    </Dropdown>
+  ),
+};
+
+/**
+ * Wrap options in `DropdownOptionGroup` to show them under a title. Titles are
+ * not selectable and keyboard navigation skips them; groups are separated by a
+ * divider. Options outside any group can sit next to groups.
+ * `DropdownOptionGroup` must be a direct child of the `Dropdown`.
  */
 export const Groups: StoryObj<Args> = {
+  args: { placeholder: 'Select an ingredient', width: 240 },
   render: (args) => (
-    <Dropdown
-      {...args}
-      selectedItem={{ value: 'banana', label: 'Banana' }}
-      placeholder="Select an ingredient"
-      width={240}>
+    <Dropdown {...args} selectedItem={{ value: 'banana', label: 'Banana' }}>
       {groupedItems.map((group) => (
         <DropdownOptionGroup key={group.label} label={group.label}>
           {group.items.map((item) => (
@@ -715,5 +266,195 @@ export const Groups: StoryObj<Args> = {
       ))}
     </Dropdown>
   ),
-  args: { disabled: false },
+};
+
+/**
+ * Without `width` the dropdown is sized to its content. A number is pixels and
+ * any CSS length is used as-is, so `width="100%"` fills the surrounding
+ * container and `width="60%"` is 60% of it.
+ *
+ * Use the prop rather than a `css` override: `className` and `css` land on the
+ * toggle button only, which sits inside two wrappers that are themselves sized
+ * to content. `dropdownProps.base.style` and `dropdownProps.toggleButton.css`
+ * still win over `width` when both are set.
+ *
+ * Edit the `width` control to try values against the 520px dashed container;
+ * the other two dropdowns stay fixed for comparison.
+ */
+export const Width: StoryObj<Args> = {
+  args: { width: '100%' },
+  render: (args) => (
+    <div css={dashedContainer(520)}>
+      <Dropdown
+        {...args}
+        label={`width="${args.width ?? ''}"`}
+        selectedItem={items[0]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        width={320}
+        label="width={320}"
+        selectedItem={items[0]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+      <Dropdown
+        {...args}
+        width={undefined}
+        label="No width (sized to content)"
+        selectedItem={items[0]}>
+        {items.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+    </div>
+  ),
+};
+
+/**
+ * The selected value and option labels stay on one line and are ellipsised;
+ * nothing grows past its container, and the list is capped at the toggle's
+ * width. Every option row has a tooltip with its full label (after a 1s
+ * hover). Give the dropdown an explicit `width` when the options need more
+ * room than the selected value does.
+ */
+export const LongContent: StoryObj<Args> = {
+  render: (args) => (
+    <div css={dashedContainer(320)}>
+      <Dropdown {...args} selectedItem={longItems[0]}>
+        {longItems.map((item) => (
+          <DropdownOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+          />
+        ))}
+      </Dropdown>
+    </div>
+  ),
+};
+
+/**
+ * With the default `dropdownProps.dropdownPosition` of
+ * `DropdownPositions.auto` the list opens downward and flips upward on open
+ * when there is not enough room below — as here, near the bottom of the
+ * viewport. Pass `DropdownPositions.top` or `DropdownPositions.bottom` to
+ * force a direction.
+ */
+export const PositionAuto: StoryObj<Args> = {
+  name: 'Position: Auto (near bottom of viewport)',
+  decorators: [
+    (Story) => (
+      <div style={{ position: 'fixed', bottom: 16, left: 16 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <Dropdown
+      {...args}
+      selectedItem={items[2]}
+      dropdownProps={{ dropdownPosition: DropdownPositions.auto }}>
+      {items.slice(0, 5).map((item) => (
+        <DropdownOption
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        />
+      ))}
+    </Dropdown>
+  ),
+};
+
+/**
+ * The dropdown keeps the selection internally, seeded from `selectedItem`, and
+ * follows `selectedItem` whenever it changes. To own the selection, keep it in
+ * state and write back from `onChange` — here the button also changes it from
+ * outside the dropdown.
+ */
+export const Controlled: StoryObj<Args> = {
+  render: function Render(args) {
+    const [selected, setSelected] = useState<Item>(items[0]);
+    const selectNext = () => {
+      const index = items.findIndex((item) => item.value === selected.value);
+      setSelected(items[(index + 1) % items.length]);
+    };
+
+    return (
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <Dropdown
+          {...args}
+          selectedItem={selected}
+          onChange={(item) => {
+            setSelected(item as Item);
+            args.onChange?.(item);
+          }}>
+          {items.map((item) => (
+            <DropdownOption
+              key={item.value}
+              value={item.value}
+              label={item.label}
+            />
+          ))}
+        </Dropdown>
+        <Button variant="primary" onClick={selectNext}>
+          Select next
+        </Button>
+      </div>
+    );
+  },
+};
+
+/**
+ * `css` and `className` are applied to the toggle button; style the open and
+ * focus states through `&[aria-expanded='true']` and `:focus`.
+ *
+ * Options are not rendered as elements — the dropdown reads their props — so
+ * `styled(DropdownOption)` and a `css` prop on an option have no effect. Put
+ * custom content in the option's `children` instead, and keep `label` set to
+ * plain text: that is what the toggle shows once the option is selected.
+ */
+export const CustomStyling: StoryObj<Args> = {
+  render: (args) => (
+    <Dropdown
+      {...args}
+      selectedItem={items[2]}
+      css={css`
+        background: #ff947b;
+        :focus {
+          background: #ffb566;
+        }
+        &[aria-expanded='true'] {
+          color: #975875;
+
+          svg path {
+            stroke: #975875;
+          }
+        }
+      `}>
+      {items.map((item) => (
+        <DropdownOption key={item.value} value={item.value} label={item.label}>
+          {item.label}
+          &nbsp;|&nbsp;
+          <b>{item.subText}</b>
+        </DropdownOption>
+      ))}
+    </Dropdown>
+  ),
 };
