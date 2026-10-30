@@ -15,23 +15,29 @@ export interface SwitchContext {
   toggle: () => void;
 }
 
+// Kept as a named object so Switch can tell "no provider above me" apart from
+// a real provider by identity.
+export const defaultSwitchContext: SwitchContext = {
+  isOn: false,
+  toggle: () => {
+    /* default no-op */
+  },
+};
+
 /**
  * Default context value for SwitchContext
  * Used as fallback when context is accessed outside SwitchContextProvider
  * @default isOn: false - Switch defaults to off state
  */
-export const SwitchContext = createContext<SwitchContext>({
-  isOn: false,
-  toggle: () => {
-    /* default no-op */
-  },
-});
+export const SwitchContext = createContext<SwitchContext>(defaultSwitchContext);
 
 /**
  * Hook to access Switch context
  *
+ * Outside a SwitchContextProvider it does not throw: it returns an off state
+ * whose `toggle` does nothing.
+ *
  * @returns Switch context with isOn state and toggle function
- * @throws Error if used outside SwitchContextProvider
  */
 export const useSwitchContext = () => useContext(SwitchContext);
 
@@ -45,8 +51,10 @@ const useSwitch = (initialState = false): [boolean, () => void] => {
 /**
  * SwitchContextProvider - Context provider for Switch component
  *
- * Provides switch state management and toggle functionality to child Switch
- * components. Manages the on/off state internally and exposes it via context.
+ * Holds the on/off state for the Switch inside it and exposes it via context,
+ * so other children can read it with `useSwitchContext`. Every Switch inside
+ * shares the one state. For a single switch, prefer Switch's own
+ * `defaultChecked` / `checked` props.
  *
  * @category Form Controls
  * @subcategory Context
@@ -57,15 +65,7 @@ const useSwitch = (initialState = false): [boolean, () => void] => {
  *   <Switch label="Enable feature" />
  * </SwitchContextProvider>
  * ```
- *
- * @example
- * ```tsx
- * // Multiple switches sharing state (if needed)
- * <SwitchContextProvider initialState={true}>
- *   <Switch label="Switch 1" />
- *   <Switch label="Switch 2" />
- * </SwitchContextProvider>
- * ```
+
  *
  * @see {@link Switch} - Component that consumes this context
  */

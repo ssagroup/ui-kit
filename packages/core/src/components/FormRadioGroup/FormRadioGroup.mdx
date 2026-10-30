@@ -1,0 +1,103 @@
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
+import * as FormRadioGroupStories from './FormRadioGroup.stories';
+
+<Meta of={FormRadioGroupStories} />
+
+# FormRadioGroup
+
+`RadioGroup` bound to a react-hook-form field. It takes the same `Radio`
+children, layout and `color`, swaps `onChange` for `name` and `control`, and
+writes the picked value into the form. Outside a react-hook-form form use
+`RadioGroup`.
+
+## Default Usage
+
+<Description of={FormRadioGroupStories.Default} />
+
+```tsx
+import { useForm } from 'react-hook-form';
+import {
+  Button,
+  FormHelperText,
+  FormRadioGroup,
+  Radio,
+} from '@ssa-ui-kit/core';
+
+type Values = { tree: string };
+
+const TreeForm = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Values>();
+  return (
+    <form noValidate onSubmit={handleSubmit((values) => console.log(values))}>
+      <fieldset>
+        <legend>Favourite tree</legend>
+        <FormRadioGroup name="tree" control={control} isRequired>
+          <Radio id="tree-oak" value="oak" text="Oak" />
+          <Radio id="tree-spruce" value="spruce" text="Spruce" />
+        </FormRadioGroup>
+        {errors.tree && (
+          <FormHelperText status="error" role="alert">
+            Pick a tree
+          </FormHelperText>
+        )}
+      </fieldset>
+      <Button type="submit" text="Submit" />
+    </form>
+  );
+};
+```
+
+<Canvas of={FormRadioGroupStories.Default} />
+
+## With a Default Value
+
+<Description of={FormRadioGroupStories.WithDefaultValue} />
+
+```tsx
+// imports and Values as in Default Usage
+const { control } = useForm<Values>({ defaultValues: { tree: 'spruce' } });
+
+<FormRadioGroup name="tree" control={control} defaultValue="spruce">
+  <Radio id="tree-oak" value="oak" text="Oak" />
+  <Radio id="tree-spruce" value="spruce" text="Spruce" />
+</FormRadioGroup>;
+```
+
+<Canvas of={FormRadioGroupStories.WithDefaultValue} />
+
+## Keyboard and Accessibility
+
+Keyboard behaviour is RadioGroup's: one Tab stop, the arrow keys move and
+select, Space selects.
+
+- **Name the group** with a `<fieldset>` and `<legend>` — the
+  `role="radiogroup"` wrapper has no name of its own.
+- `isRequired` adds a `required` validation rule and sets `aria-required` on
+  the group. Render the error message yourself, ideally with `role="alert"`
+  so it is announced.
+- The field's `ref` is not attached, so `setFocus('tree')` and
+  `shouldFocusError` do not move focus to the group.
+
+## Props
+
+<Controls
+  of={FormRadioGroupStories.Default}
+  include={[
+    'name',
+    'control',
+    'isRequired',
+    'defaultValue',
+    'color',
+    'children',
+    'className',
+  ]}
+/>

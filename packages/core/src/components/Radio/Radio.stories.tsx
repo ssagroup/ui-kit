@@ -1,139 +1,141 @@
-import { Fragment } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-
+import { fn } from 'storybook/test';
 import Typography from '@components/Typography';
-
 import Radio from './Radio';
+import { RadioProps } from './types';
 
-type Args = Parameters<typeof Radio>[0];
+type Args = RadioProps;
 
 export default {
   title: 'Components/Radio Buttons/Radio',
   component: Radio,
   args: {
-    text: 'label',
-    color: 'primary',
+    onChange: fn(),
   },
   argTypes: {
     color: {
       options: ['primary', 'success', 'custom'],
       control: { type: 'select' },
     },
-    className: {
-      control: { disable: true },
-    },
-    colors: {
-      control: { disable: true },
-    },
+    id: { control: false },
+    onChange: { control: false },
+    className: { control: false },
+    isChecked: { table: { disable: true } },
+    isDisabled: { table: { disable: true } },
   },
   parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
+    docs: { source: { type: 'code' } },
   },
 } as Meta<typeof Radio>;
 
-export const Default: StoryObj<typeof Radio> = (args: Args) => (
-  <Fragment>
-    <Typography variant="h5">Standalone Radio</Typography>
-    <Radio {...args} />
-    <Typography variant="h5" css={{ marginTop: 10 }}>
-      Checked Radio
-    </Typography>
-    <Radio {...args} checked />
-  </Fragment>
-);
-Default.storyName = 'Radio';
-
-const colorVariants: Array<{ color: Args['color']; label: string }> = [
-  { color: 'primary', label: 'Primary (blue)' },
-  { color: 'success', label: 'Success (green)' },
-];
-
-export const Colors = () => (
-  <Fragment>
-    {colorVariants.map(({ color, label }) => (
-      <Fragment key={color}>
-        <Typography variant="h6" css={{ marginTop: 16 }}>
-          {label}
-        </Typography>
-        <div css={{ display: 'flex', gap: 24 }}>
-          <Radio
-            id={`${color}-unchecked`}
-            name={`${color}-group`}
-            value="unchecked"
-            text="Unchecked"
-            color={color}
-            onChange={() => {}}
-          />
-          <Radio
-            id={`${color}-checked`}
-            name={`${color}-group`}
-            value="checked"
-            text="Checked"
-            color={color}
-            checked
-            onChange={() => {}}
-          />
-          <Radio
-            id={`${color}-disabled`}
-            name={`${color}-group`}
-            value="disabled"
-            text="Disabled"
-            color={color}
-            disabled
-            onChange={() => {}}
-          />
-        </div>
-      </Fragment>
-    ))}
-  </Fragment>
-);
-
-const customColors = {
-  default: '#9333ea',
-  hovered: '#6b21a8',
-  disabled: '#dcdcdc',
+/**
+ * A single radio button. The icon follows the `checked` prop only, so Radio
+ * is effectively controlled: a click calls `onChange(value)` and nothing
+ * changes until the parent passes `checked` back. In practice let
+ * `RadioGroup` do that — it injects `name`, `checked` and `onChange` into each
+ * child.
+ *
+ * Every prop in the Controls panel applies here; toggle `checked` to see the
+ * selected icon.
+ */
+export const Default: StoryObj<Args> = {
+  args: {
+    name: 'billing',
+    value: 'monthly',
+    text: 'Monthly billing',
+    checked: false,
+    disabled: false,
+    color: 'primary',
+  },
+  render: (args) => <Radio {...args} />,
 };
 
-export const CustomColors = () => (
-  <Fragment>
-    <Typography variant="h6" css={{ marginTop: 16 }}>
-      Custom (purple)
-    </Typography>
-    <div css={{ display: 'flex', gap: 24 }}>
+/**
+ * Both palette colours in every state. Disabled radios use `greyFocused40`
+ * whether or not they are checked; the filled icon keeps a checked one
+ * readable.
+ */
+export const States: StoryObj<Args> = {
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {(['primary', 'success'] as const).map((color) => (
+        <div key={color}>
+          <Typography variant="h6" css={{ textTransform: 'capitalize' }}>
+            {color}
+          </Typography>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+            <Radio
+              {...args}
+              color={color}
+              name={`${color}-unchecked`}
+              value="unchecked"
+              text="Unchecked"
+            />
+            <Radio
+              {...args}
+              color={color}
+              name={`${color}-checked`}
+              value="checked"
+              text="Checked"
+              checked
+            />
+            <Radio
+              {...args}
+              color={color}
+              name={`${color}-disabled`}
+              value="disabled"
+              text="Disabled"
+              disabled
+            />
+            <Radio
+              {...args}
+              color={color}
+              name={`${color}-disabled-checked`}
+              value="disabled-checked"
+              text="Disabled checked"
+              checked
+              disabled
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+/**
+ * `color="custom"` draws the icon from the `colors` object: `default` for the
+ * resting and checked icon, `hovered` and `disabled` for those states. Any
+ * colour left out falls back to the primary palette. `colors` is ignored for
+ * `primary` and `success`.
+ */
+export const CustomColors: StoryObj<Args> = {
+  args: {
+    color: 'custom',
+    colors: { default: '#9333ea', hovered: '#6b21a8', disabled: '#dcdcdc' },
+  },
+  render: (args) => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
       <Radio
-        id="custom-unchecked"
-        name="custom-group"
+        {...args}
+        name="custom-unchecked"
         value="unchecked"
         text="Unchecked"
-        color="custom"
-        colors={customColors}
-        onChange={() => {}}
       />
       <Radio
-        id="custom-checked"
-        name="custom-group"
+        {...args}
+        name="custom-checked"
         value="checked"
         text="Checked"
-        color="custom"
-        colors={customColors}
         checked
-        onChange={() => {}}
       />
       <Radio
-        id="custom-disabled"
-        name="custom-group"
+        {...args}
+        name="custom-disabled"
         value="disabled"
         text="Disabled"
-        color="custom"
-        colors={customColors}
         disabled
-        onChange={() => {}}
       />
     </div>
-  </Fragment>
-);
-CustomColors.storyName = 'Custom Colors';
+  ),
+};

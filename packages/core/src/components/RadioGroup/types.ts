@@ -4,15 +4,17 @@ import { RadioProps } from '@components/Radio/types';
  * Props for the RadioGroup component
  *
  * Orchestrates a set of Radio buttons so only one can be selected at a time.
- * The group manages the active value in internal state, syncs with `externalState`,
- * and injects `name`, `isChecked`, and `onChange` into every Radio child via
- * `cloneElement`. Individual Radio components can still override the group's
- * `color` prop with their own `color` prop.
+ * Uncontrolled by default (`defaultValue`); pass `value` to control it. The
+ * group injects `name`, `checked`, `onChange`, `isRequired` and `color` into
+ * every direct Radio child via `cloneElement`; a child's own `color` wins.
  *
  * @example
  * ```tsx
- * // Basic radio group
- * <RadioGroup name="fruit" onChange={(value) => console.log(value)}>
+ * // Uncontrolled radio group
+ * <RadioGroup
+ *   name="fruit"
+ *   defaultValue="apple"
+ *   onChange={(value) => console.log(value)}>
  *   <Radio id="r1" value="apple" text="Apple" />
  *   <Radio id="r2" value="orange" text="Orange" />
  *   <Radio id="r3" value="banana" text="Banana" disabled />
@@ -21,12 +23,12 @@ import { RadioProps } from '@components/Radio/types';
  *
  * @example
  * ```tsx
- * // Controlled with external state and success color
- * const [selected, setSelected] = useState('apple');
+ * // Controlled, success color
+ * const [selected, setSelected] = useState<string | number>('apple');
  * <RadioGroup
  *   name="fruit"
  *   color="success"
- *   externalState={selected}
+ *   value={selected}
  *   onChange={setSelected}>
  *   <Radio id="r1" value="apple" text="Apple" />
  *   <Radio id="r2" value="orange" text="Orange" />
@@ -34,7 +36,16 @@ import { RadioProps } from '@components/Radio/types';
  * ```
  */
 export interface RadioGroupProps {
+  /**
+   * Shared `name` given to every Radio child. Radios with one name form a
+   * single Tab stop and are navigated with the arrow keys.
+   */
   name: string;
+
+  /**
+   * Sets `aria-required` on the group and `required` on every radio
+   * @default false
+   */
   isRequired?: boolean;
 
   /**
@@ -57,8 +68,22 @@ export interface RadioGroupProps {
    * ignores `onChange`. `value` is fully controlled.
    */
   externalState?: string | number;
+
+  /**
+   * Class name for the group's wrapper `<div>`. RadioGroup has no layout of
+   * its own — use this (or `css`) for a row or a column.
+   */
   className?: string;
+
+  /**
+   * Called with the picked radio's `value` when the user selects it
+   */
   onChange: (value: string | number) => void;
+
+  /**
+   * Radio elements. Only direct `Radio` children render — fragments, wrappers
+   * and other elements are dropped.
+   */
   children?: React.ReactElement<RadioProps>[] | React.ReactElement<RadioProps>;
   /**
    * Palette-based color variant applied to every Radio child.

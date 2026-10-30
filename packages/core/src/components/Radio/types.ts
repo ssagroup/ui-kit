@@ -2,8 +2,8 @@
  * Props for the Radio component
  *
  * Radio button component for single selection from a group of options.
- * Supports controlled and uncontrolled states, palette-based color variants,
- * and full accessibility. Typically used within RadioGroup for managing
+ * The icon follows the `checked` prop only, so pass `checked` (or let
+ * RadioGroup inject it); palette-based color variants. Typically used within RadioGroup for managing
  * selection state.
  *
  * Colors are driven by `theme.palette`:
@@ -75,8 +75,8 @@ export interface RadioProps {
   name?: string;
 
   /**
-   * Whether the radio button is checked
-   * Use for controlled component pattern
+   * Whether the radio button is checked. The icon is drawn from this prop
+   * only, so pass it for every radio (RadioGroup does this for its children).
    */
   checked?: boolean;
 
@@ -120,7 +120,7 @@ export interface RadioProps {
   text?: string;
 
   /**
-   * Custom CSS class name
+   * Class name for the outer `<label>`
    */
   className?: string;
 

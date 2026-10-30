@@ -1,380 +1,308 @@
-import { useState } from 'react';
-import { type StoryObj, type Meta } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { fn } from 'storybook/test';
 import validator from '@rjsf/validator-ajv8';
-import TextField from '@components/TextField';
-import Icon from '@components/Icon';
-import Button from '@components/Button';
-import { applyHiddenWidget, getFieldsToHide } from './utils';
-import { Form } from './';
 import { AccordionGroupContextProvider } from '@components/AccordionGroup';
 import { getStorybookAvatar } from '@storybook-assets/avatars';
+import { Form } from './';
 
 type FormProps = Omit<React.ComponentProps<typeof Form>, 'validator'>;
 
-const managerOptions = [
-  {
-    id: '1',
-    name: 'John Doe',
-    avatar: getStorybookAvatar(0),
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    avatar: getStorybookAvatar(1),
-  },
-  {
-    id: '3',
-    name: 'Bob Johnson',
-    avatar: getStorybookAvatar(2),
-  },
-  {
-    id: '4',
-    name: 'Alice Williams',
-    avatar: getStorybookAvatar(3),
-  },
-];
+const managers = [
+  'John Doe',
+  'Jane Smith',
+  'Bob Johnson',
+  'Alice Williams',
+].map((name, index) => ({
+  const: String(index + 1),
+  title: name,
+  avatar: getStorybookAvatar(index),
+}));
 
 const meta = {
-  title: 'Forms/FormBuilder',
+  title: 'Forms/JsonSchemaForm',
   render: (args) => <Form {...args} validator={validator} />,
   args: {
-    onSubmit: (data) => {
-      console.log('Form submitted:', data.formData);
-    },
-    onChange: (data) => {
-      console.log('Form changed:', data.formData);
-    },
-    onError: (errors) => {
-      console.log('Validation errors:', errors);
-    },
+    onSubmit: fn(),
+    onChange: fn(),
+    onError: fn(),
   },
-  tags: ['autodocs'],
+  argTypes: {
+    onSubmit: { control: false },
+    onChange: { control: false },
+    onError: { control: false },
+  },
+  parameters: {
+    docs: { source: { type: 'code' } },
+  },
 } satisfies Meta<FormProps>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * `JsonSchema.Form` is `@rjsf/core`'s Form with the kit's theme: fields render
+ * as kit components, and the submit button is a kit Button. Pass `schema`,
+ * an optional `uiSchema` and `formData`, and a `validator` from
+ * `@rjsf/validator-ajv8`; everything else is the standard rjsf API.
+ *
+ * Each schema type maps to a kit widget:
+ * `string` → TextField, `boolean` → Checkbox, an `enum` → Typeahead (or
+ * RadioGroup with `'ui:widget': 'radio'`), an array of unique enum items →
+ * multi-select Typeahead (or Checkboxes with `'ui:widget': 'checkboxes'`).
+ * `oneOf` options may carry an `avatar` URL, shown in the Typeahead.
+ */
 export const Default: Story = {
   args: {
-    formData: {
-      stringField: 'String field value',
-      arrayField: ['Item 1', 'Item 2'],
-      checkboxField: true,
-      radioField: 'Option 1',
-      checkboxesField: ['foo', 'bar'],
-      selectField: 'Option 2',
-      selectMultipleField: ['Option 1', 'Option 2', 'Option 3'],
-      managerSelectField: [managerOptions[1].id],
-      passwordField: 'password',
-      dateRangeField: {
-        start: '01/15/2025',
-        end: '01/25/2025',
-      },
-      dateField: '2025-01-15',
-    },
     schema: {
-      title: 'Test Form',
-      description: 'Test Form Description',
+      title: 'Employee profile',
       type: 'object',
       properties: {
-        stringField: {
-          title: 'String field title',
-          type: 'string',
-        },
-        arrayField: {
+        fullName: { type: 'string', title: 'Full name' },
+        nicknames: {
           type: 'array',
-          title: 'Array field title',
-          description: 'Array field description',
-          items: {
-            type: 'string',
-          },
+          title: 'Nicknames',
+          items: { type: 'string' },
         },
-        checkboxField: {
-          type: 'boolean',
-          title: 'Checkbox field title',
-        },
-        radioField: {
+        remote: { type: 'boolean', title: 'Works remotely' },
+        seniority: {
           type: 'string',
-          title: 'Radio field title',
-          enum: ['Option 1', 'Option 2'],
+          title: 'Seniority',
+          enum: ['Junior', 'Middle', 'Senior'],
         },
-        checkboxesField: {
+        languages: {
           type: 'array',
-          title: 'Checkboxes field title',
-          items: {
-            type: 'string',
-            enum: ['foo', 'bar', 'fuzz', 'qux'],
-          },
+          title: 'Languages',
           uniqueItems: true,
+          items: { type: 'string', enum: ['English', 'French', 'German'] },
         },
-        selectField: {
+        department: {
           type: 'string',
-          title: 'Select field title',
-          default: 'Option 1',
-          enum: ['Option 1', 'Option 2'],
+          title: 'Department',
+          enum: ['Engineering', 'Marketing', 'Sales'],
         },
-        selectMultipleField: {
+        skills: {
           type: 'array',
-          title: 'Select multiple fields title',
-          default: ['Option 1', 'Option 2', 'Option 3'],
-          items: {
-            type: 'string',
-            enum: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
-          },
-          uniqueItems: true,
-        },
-        managerSelectField: {
-          type: 'array',
-          title: 'Select managers',
+          title: 'Skills',
           uniqueItems: true,
           items: {
             type: 'string',
-            oneOf: managerOptions.map((manager) => ({
-              const: manager.id,
-              title: manager.name,
-              avatar: manager.avatar,
-            })),
+            enum: ['React', 'TypeScript', 'Node.js', 'Design'],
           },
         },
-        passwordField: {
-          type: 'string',
-          title: 'Password field title',
+        managers: {
+          type: 'array',
+          title: 'Managers',
+          uniqueItems: true,
+          items: { type: 'string', oneOf: managers },
         },
-        dateRangeField: {
-          type: 'object',
-          title: 'Date Range field-1',
-          properties: {
-            start: {
-              type: 'string',
-            },
-            end: {
-              type: 'string',
-            },
-          },
-        },
-        dateRangeField2: {
-          type: 'object',
-          title: 'Date Range field-2',
-          properties: {
-            start: {
-              type: 'string',
-            },
-            end: {
-              type: 'string',
-            },
-          },
-        },
-        dateField: {
-          type: 'string',
-          title: 'Date picker',
-        },
+        password: { type: 'string', title: 'Password' },
       },
     },
     uiSchema: {
-      stringField: {
-        'ui:help': 'String field help',
-        'ui:placeholder': 'String field placeholder',
+      fullName: {
+        'ui:placeholder': 'Jane Doe',
+        'ui:help': 'As shown on the badge',
       },
-      checkboxField: {
-        'ui:help': 'checkbox',
-      },
-      radioField: {
+      seniority: {
         'ui:widget': 'radio',
-        'ui:options': {
-          inline: true,
-        },
+        'ui:options': { inline: true },
       },
-      checkboxesField: {
-        'ui:widget': 'checkboxes',
-        'ui:help': 'Checkboxes field help',
-      },
-      passwordField: {
-        'ui:widget': 'password',
-        'ui:help': 'Password field help',
-      },
-      dateRangeField: {
-        'ui:field': 'daterange',
-        'ui:help': 'First date range picker example',
-        'ui:options': {
-          outputFormat: 'mm/dd/yyyy',
-        },
-      },
-      dateRangeField2: {
-        'ui:field': 'daterange',
-        'ui:help':
-          'Date range picker example with European format (dd/mm/yyyy)',
-        'ui:options': {
-          showPresentOption: true,
-          format: 'dd/mm/yyyy',
-          outputFormat: 'yyyy-MM-dd',
-        },
-      },
-      dateField: {
-        'ui:widget': 'date',
-        'ui:options': {
-          outputFormat: 'yyyy-MM-dd',
-        },
-      },
-      selectField: {
-        'ui:placeholder': 'Choose an option',
-      },
-      selectMultipleField: {
-        'ui:placeholder': 'Please select multiple options',
-      },
-      managerSelectField: {
-        'ui:widget': 'select',
+      languages: { 'ui:widget': 'checkboxes' },
+      department: { 'ui:placeholder': 'Choose a department' },
+      skills: { 'ui:placeholder': 'Pick skills' },
+      managers: {
         'ui:placeholder': 'Select managers',
-        'ui:options': {
-          typeaheadAvatarSize: 'small',
+        'ui:options': { typeaheadAvatarSize: 'small' },
+      },
+      password: { 'ui:widget': 'password' },
+    },
+    formData: {
+      fullName: 'Jane Smith',
+      nicknames: ['Janie'],
+      remote: true,
+      seniority: 'Senior',
+      languages: ['English'],
+      department: 'Engineering',
+      skills: ['React', 'TypeScript'],
+      managers: ['1'],
+      password: 'secret',
+    },
+  },
+};
+
+/**
+ * List required properties in the schema's `required` array (and
+ * `minItems: 1` for a multi-select). Errors show under each field after the
+ * first submit; `showErrorList: false` hides rjsf's summary at the top.
+ * Messages are rjsf's own and quote the field's title ("must have required
+ * property 'Manager'") — pass `transformErrors` to reword them. The theme
+ * adds no required marker to labels.
+ *
+ * Extra `ui:options` on a select go straight to the Typeahead. Here
+ * `autoSelect: false` stops it from selecting an option the moment the typed
+ * text matches a label, so the user has to pick one explicitly.
+ *
+ * By default rjsf (5.24+) fills a `oneOf` field with its first option's
+ * `const`, so a required select is never empty.
+ * `experimental_defaultFormStateBehavior: { constAsDefaults: 'skipOneOf' }`
+ * turns that off.
+ */
+export const Validation: Story = {
+  args: {
+    showErrorList: false,
+    experimental_defaultFormStateBehavior: { constAsDefaults: 'skipOneOf' },
+    schema: {
+      type: 'object',
+      required: ['fullName', 'manager', 'reviewers', 'startDate'],
+      properties: {
+        fullName: { type: 'string', title: 'Full name' },
+        manager: {
+          type: 'string',
+          title: 'Manager',
+          oneOf: managers,
         },
+        reviewers: {
+          type: 'array',
+          title: 'Reviewers',
+          minItems: 1,
+          uniqueItems: true,
+          items: { type: 'string', oneOf: managers },
+        },
+        startDate: { type: 'string', title: 'Start date' },
+      },
+    },
+    uiSchema: {
+      manager: {
+        'ui:placeholder': 'Select a manager',
+        'ui:options': { typeaheadAvatarSize: 'small', autoSelect: false },
+      },
+      reviewers: {
+        'ui:placeholder': 'Select reviewers',
+        'ui:options': { typeaheadAvatarSize: 'small', autoSelect: false },
+      },
+      startDate: {
+        'ui:widget': 'date',
+        'ui:options': { outputFormat: 'yyyy-MM-dd' },
       },
     },
   },
 };
 
-export const Accordion: Story = {
-  render: (args) => {
-    const [search, setSearch] = useState('');
-    const [formData, setFormData] = useState<Record<string, unknown>>({
-      employmentDetails: {
-        employmentStartDate: {
-          start: '2024-01-15',
-          end: '2024-12-31',
-        },
-      },
-      companyAndWorkConditions: {
-        projectPeriod: {
-          start: '2024-06-01',
-          end: '2024-08-31',
-        },
-      },
-    });
-
-    const searchResults = search ? getFieldsToHide(args.schema, search) : [];
-    const updatedUiSchema = applyHiddenWidget(
-      args.uiSchema || {},
-      searchResults,
-    );
-
-    if (search) {
-      Object.values(updatedUiSchema).forEach((field) => {
-        field!['ui:options']!.collapsed = false;
-      });
-    }
-
-    return (
-      <>
-        <TextField
-          name="search"
-          placeholder="Search"
-          inputProps={{
-            value: search,
-            onChange: (e) => setSearch(e.target.value),
-          }}
-          startElement={<Icon name="search" />}
-        />
-        <AccordionGroupContextProvider>
-          <Form
-            {...args}
-            css={{ marginTop: '10px' }}
-            formContext={{
-              onAccordionChange: (id: string, value: boolean) => {
-                updatedUiSchema[id]['ui:options'].collapsed = value;
-              },
-            }}
-            formData={formData}
-            onChange={(data) => {
-              setFormData(data.formData as Record<string, unknown>);
-              // Example: Access both date ranges from form data
-              const formDataObj = data.formData as {
-                employmentDetails?: {
-                  employmentStartDate?: { start?: string; end?: string };
-                };
-                companyAndWorkConditions?: {
-                  projectPeriod?: { start?: string; end?: string };
-                };
-              };
-              if (formDataObj.employmentDetails?.employmentStartDate) {
-                console.log(
-                  'Employment period:',
-                  formDataObj.employmentDetails.employmentStartDate,
-                );
-              }
-              if (formDataObj.companyAndWorkConditions?.projectPeriod) {
-                console.log(
-                  'Project period:',
-                  formDataObj.companyAndWorkConditions.projectPeriod,
-                );
-              }
-            }}
-            uiSchema={updatedUiSchema}
-            validator={validator}>
-            <Button variant="primary" onClick={() => setFormData({})}>
-              Clear
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              css={{ marginLeft: '10px' }}
-              onClick={() => {
-                // Example: Access both date ranges on submit
-                const formDataObj = formData as {
-                  employmentDetails?: {
-                    employmentStartDate?: { start?: string; end?: string };
-                  };
-                  companyAndWorkConditions?: {
-                    projectPeriod?: { start?: string; end?: string };
-                  };
-                };
-                const employmentPeriod =
-                  formDataObj.employmentDetails?.employmentStartDate;
-                const projectPeriod =
-                  formDataObj.companyAndWorkConditions?.projectPeriod;
-                console.log('Employment period:', employmentPeriod);
-                console.log('Project period:', projectPeriod);
-              }}>
-              Submit
-            </Button>
-          </Form>
-        </AccordionGroupContextProvider>
-      </>
-    );
-  },
+/**
+ * `'ui:widget': 'date'` renders a DatePicker on a `string` property;
+ * `'ui:field': 'daterange'` renders a DateRangePicker on an object property
+ * with `start` and `end` strings.
+ *
+ * `format` is what the user types and sees, `outputFormat` what lands in
+ * `formData`. A range picks days by default; `rangePickerType: 'months'` or
+ * `'years'` switches the calendar, and `showPresentOption` adds a "Present"
+ * button for an open-ended end date.
+ */
+export const DateFields: Story = {
   args: {
     schema: {
       type: 'object',
       properties: {
-        employmentDetails: {
+        birthday: { type: 'string', title: 'Birthday' },
+        vacation: {
           type: 'object',
-          title: 'Employment Details',
+          title: 'Vacation',
+          properties: { start: { type: 'string' }, end: { type: 'string' } },
+        },
+        employment: {
+          type: 'object',
+          title: 'Employment',
+          properties: { start: { type: 'string' }, end: { type: 'string' } },
+        },
+        contract: {
+          type: 'object',
+          title: 'Contract (months)',
+          properties: { start: { type: 'string' }, end: { type: 'string' } },
+        },
+        education: {
+          type: 'object',
+          title: 'Education (years)',
+          properties: { start: { type: 'string' }, end: { type: 'string' } },
+        },
+      },
+    },
+    uiSchema: {
+      birthday: {
+        'ui:widget': 'date',
+        'ui:options': { format: 'dd/mm/yyyy', outputFormat: 'yyyy-MM-dd' },
+      },
+      vacation: {
+        'ui:field': 'daterange',
+        'ui:options': { outputFormat: 'yyyy-MM-dd' },
+      },
+      employment: {
+        'ui:field': 'daterange',
+        'ui:help': 'Click "Present" for an ongoing job',
+        'ui:options': {
+          format: 'dd/mm/yyyy',
+          outputFormat: 'yyyy-MM-dd',
+          showPresentOption: true,
+        },
+      },
+      contract: {
+        'ui:field': 'daterange',
+        'ui:options': {
+          rangePickerType: 'months',
+          format: 'mm/yyyy',
+          outputFormat: 'yyyy-MM',
+        },
+      },
+      education: {
+        'ui:field': 'daterange',
+        'ui:options': {
+          rangePickerType: 'years',
+          format: 'yyyy',
+          outputFormat: 'yyyy',
+        },
+      },
+    },
+    formData: {
+      vacation: { start: '2025-07-01', end: '2025-07-14' },
+    },
+  },
+};
+
+/**
+ * `'ui:field': 'accordion'` turns an object property into a collapsible
+ * section. It needs `'ui:options': { targetField: 'ObjectField' }` (it throws
+ * without it) and an `AccordionGroupContextProvider` around the form, which
+ * holds the open state. `collapsed: false` opens a section on mount; after
+ * that the user owns it.
+ */
+export const Accordion: Story = {
+  render: (args) => (
+    <AccordionGroupContextProvider>
+      <Form {...args} validator={validator} />
+    </AccordionGroupContextProvider>
+  ),
+  args: {
+    schema: {
+      type: 'object',
+      properties: {
+        employment: {
+          type: 'object',
+          title: 'Employment details',
           properties: {
-            employmentStatus: {
+            status: {
               type: 'string',
-              title: 'Employment status',
+              title: 'Status',
               enum: ['Employed', 'Unemployed'],
             },
-            employmentType: {
+            type: {
               type: 'string',
-              title: 'Employment type',
+              title: 'Type',
               enum: ['Full-time', 'Part-time', 'Contract'],
-            },
-            employmentStartDate: {
-              type: 'object',
-              title: 'Employment start date',
-              properties: {
-                start: {
-                  type: 'string',
-                },
-                end: {
-                  type: 'string',
-                },
-              },
             },
           },
         },
-        companyAndWorkConditions: {
+        conditions: {
           type: 'object',
-          title: 'Company & Work Conditions',
+          title: 'Work conditions',
           properties: {
             department: {
               type: 'string',
@@ -384,218 +312,22 @@ export const Accordion: Story = {
             workMode: {
               type: 'string',
               title: 'Work mode',
-              enum: ['remote-id', 'on-site-id'],
-            },
-            projectPeriod: {
-              type: 'object',
-              title: 'Project period',
-              properties: {
-                start: {
-                  type: 'string',
-                },
-                end: {
-                  type: 'string',
-                },
-              },
+              enum: ['remote', 'on-site'],
             },
           },
         },
       },
     },
     uiSchema: {
-      employmentDetails: {
+      employment: {
         'ui:field': 'accordion',
-        'ui:options': {
-          targetField: 'ObjectField',
-          collapsed: true,
-        },
-        employmentStartDate: {
-          'ui:field': 'daterange',
-        },
+        'ui:options': { targetField: 'ObjectField', collapsed: true },
       },
-      companyAndWorkConditions: {
+      conditions: {
         'ui:field': 'accordion',
-        'ui:options': {
-          targetField: 'ObjectField',
-          collapsed: false,
-        },
-        workMode: {
-          'ui:enumNames': ['Remote', 'On-site'],
-        },
-        projectPeriod: {
-          'ui:field': 'daterange',
-          'ui:options': {
-            outputFormat: 'yyyy-MM-dd',
-          },
-        },
+        'ui:options': { targetField: 'ObjectField', collapsed: false },
+        workMode: { 'ui:enumNames': ['Remote', 'On-site'] },
       },
-    },
-  },
-};
-
-export const WithValidation: Story = {
-  args: {
-    formData: {
-      singleSelectTypeahead: undefined,
-      multipleSelectTypeahead: undefined,
-    },
-    showErrorList: false,
-    schema: {
-      title: 'Form with Validation',
-      description: 'Date picker and date range picker - all fields required',
-      type: 'object',
-      required: [
-        'dateField',
-        'dateRangeField',
-        'dateRangeField2',
-        'dateRangeField3',
-        'singleSelectTypeahead',
-        'multipleSelectTypeahead',
-      ],
-      properties: {
-        dateField: {
-          type: 'string',
-          title: 'Date picker *',
-        },
-        dateRangeField: {
-          type: 'object',
-          title: 'Date Range field *',
-          required: ['start', 'end'],
-          properties: {
-            start: {
-              type: 'string',
-            },
-            end: {
-              type: 'string',
-            },
-          },
-        },
-        dateRangeField2: {
-          type: 'object',
-          title: 'Date Range field-2 *',
-          required: ['start', 'end'],
-          properties: {
-            start: {
-              type: 'string',
-            },
-            end: {
-              type: 'string',
-            },
-          },
-        },
-        dateRangeField3: {
-          type: 'object',
-          title: 'Date Range field-3 *',
-          required: ['start', 'end'],
-          properties: {
-            start: {
-              type: 'string',
-            },
-            end: {
-              type: 'string',
-            },
-          },
-        },
-        singleSelectTypeahead: {
-          type: 'string',
-          title: 'Single Select Typeahead (AutoSelect disabled) *',
-          oneOf: managerOptions.map((manager) => ({
-            const: manager.id,
-            title: manager.name,
-            avatar: manager.avatar,
-          })),
-        },
-        multipleSelectTypeahead: {
-          type: 'array',
-          title: 'Multiple Select Typeahead (AutoSelect disabled) *',
-          minItems: 1,
-          uniqueItems: true,
-          items: {
-            type: 'string',
-            oneOf: managerOptions.map((manager) => ({
-              const: manager.id,
-              title: manager.name,
-              avatar: manager.avatar,
-            })),
-          },
-        },
-      },
-    },
-    uiSchema: {
-      dateField: {
-        'ui:widget': 'date',
-        'ui:options': {
-          outputFormat: 'yyyy-MM-dd',
-        },
-      },
-      dateRangeField: {
-        'ui:field': 'daterange',
-        'ui:help':
-          'Date range picker with "Present" option - click "Present" button to set end date as ongoing',
-        'ui:options': {
-          format: 'dd/mm/yyyy',
-          outputFormat: 'yyyy-MM-dd',
-          showPresentOption: true,
-        },
-      },
-      dateRangeField2: {
-        'ui:field': 'daterange',
-        'ui:help': 'Month range picker example (mm/yyyy)',
-        'ui:options': {
-          rangePickerType: 'months',
-          format: 'mm/yyyy',
-          outputFormat: 'yyyy-MM',
-        },
-      },
-      dateRangeField3: {
-        'ui:field': 'daterange',
-        'ui:help': 'Year range picker example (yyyy)',
-        'ui:options': {
-          rangePickerType: 'years',
-          format: 'yyyy',
-          outputFormat: 'yyyy',
-        },
-      },
-      singleSelectTypeahead: {
-        'ui:widget': 'select',
-        'ui:placeholder': 'Select a manager',
-        'ui:options': {
-          typeaheadAvatarSize: 'small',
-          autoSelect: false,
-        },
-      },
-      multipleSelectTypeahead: {
-        'ui:widget': 'select',
-        'ui:placeholder': 'Select multiple managers',
-        'ui:options': {
-          typeaheadAvatarSize: 'small',
-          autoSelect: false,
-        },
-      },
-    },
-    onChange: (data) => {
-      console.log('=== Form Changed ===');
-      console.log('Form data:', data.formData);
-      console.log('Validation errors:', data.errors);
-      console.log('Form state:', {
-        formData: data.formData,
-        errors: data.errors,
-        schema: data.schema,
-      });
-    },
-    onError: (errors) => {
-      console.log('=== Validation Errors ===');
-      console.log('Errors:', errors);
-    },
-    onSubmit: (data) => {
-      console.log('=== Form Submitted ===');
-      console.log('Form data:', data.formData);
-      console.log('Validation errors:', data.errors);
-      console.log('Form state:', {
-        formData: data.formData,
-        errors: data.errors,
-        schema: data.schema,
-      });
     },
   },
 };

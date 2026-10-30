@@ -14,10 +14,11 @@ import { CheckboxProps } from './types';
 /**
  * Checkbox - Form control for selecting one or more options
  *
- * A flexible checkbox component that supports controlled and uncontrolled states,
- * indeterminate state, React Hook Form integration, and full accessibility.
- * The component automatically manages indeterminate state and provides visual
- * feedback through icons (checkmark or minus for indeterminate).
+ * A native `<input type="checkbox">` inside a `<label>`, so the whole label is
+ * the click target. Uncontrolled by default (`defaultChecked`); pass `checked`
+ * to control it. `isIndeterminate` shows a minus instead of a tick and also
+ * sets the input's `indeterminate` property. For react-hook-form, use
+ * `FormCheckbox`.
  *
  * Colors are driven by `theme.palette`:
  * - `primary` (default) — blue; uses `palette.primary.light/main/dark` for
@@ -54,23 +55,11 @@ import { CheckboxProps } from './types';
  *
  * @example
  * ```tsx
- * // With React Hook Form
- * const { register } = useForm();
- * <Checkbox
- *   name="newsletter"
- *   text="Subscribe to newsletter"
- *   register={register}
- *   isRequired
- * />
- * ```
- *
- * @example
- * ```tsx
  * // Controlled checkbox
  * const [checked, setChecked] = useState(false);
  * <Checkbox
  *   text="Controlled checkbox"
- *   externalState={checked}
+ *   checked={checked}
  *   onChange={setChecked}
  * />
  * ```
@@ -80,22 +69,21 @@ import { CheckboxProps } from './types';
  * // Indeterminate state (e.g., "select all")
  * <Checkbox
  *   text="Select all items"
+ *   checked={allSelected}
  *   isIndeterminate={someSelected && !allSelected}
- *   initialState={allSelected}
  *   onChange={handleSelectAll}
  * />
  * ```
  *
  * @see {@link Field} - Use Field.Root to wrap Checkbox for labels and validation
- * @see {@link FormCheckbox} - Alternative checkbox component with form integration
+ * @see {@link FormCheckbox} - Checkbox bound to react-hook-form via `control`
  *
  * @accessibility
- * - Fully keyboard accessible (Space to toggle)
- * - Supports ARIA attributes via HTML input element
- * - Proper label association via htmlFor/id
- * - Screen reader friendly with proper roles
- *
- * @requires React Hook Form when using `register` prop
+ * - Native checkbox: Tab to focus, Space to toggle
+ * - `text` is the accessible name (the input sits inside the `<label>`);
+ *   without `text` the input has no name
+ * - Extra props (`className`, `css`, `aria-*`) land on the `<label>`, not the
+ *   input; `ref` points at the input
  */
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   function Checkbox(props, ref) {

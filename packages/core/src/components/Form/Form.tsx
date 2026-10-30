@@ -15,8 +15,9 @@ import { CommonProps } from '@global-types/emotion';
  * every native attribute (`onSubmit`, `noValidate`, `id`, `method`) works as-is.
  *
  * ### Layout
- * Children flow in a wrapping row. For a stacked form, override the direction
- * with `css` rather than reaching for a different component.
+ * Children flow in a wrapping row. Put each row in a `FormGroup` (full width)
+ * and the buttons in a `FormAction`; for a stacked form without groups,
+ * override the direction with `css`.
  *
  * @category Form Structure
  * @subcategory Layout
@@ -24,11 +25,20 @@ import { CommonProps } from '@global-types/emotion';
  * @example
  * ```tsx
  * // State lives in react-hook-form; Form only lays the fields out
- * const { register, handleSubmit, formState } = useForm<Values>();
+ * // (TextField expects the untyped useForm(), hence the FieldError cast)
+ * const { register, handleSubmit, formState } = useForm();
  *
  * <Form onSubmit={handleSubmit(onSubmit)}>
- *   <TextField name="title" register={register} errors={formState.errors.title} />
- *   <Button type="submit" variant="primary" text="Save" />
+ *   <FormGroup>
+ *     <TextField
+ *       name="title"
+ *       register={register}
+ *       errors={formState.errors.title as FieldError}
+ *     />
+ *   </FormGroup>
+ *   <FormAction>
+ *     <Button type="submit" variant="primary" text="Save" />
+ *   </FormAction>
  * </Form>
  * ```
  *

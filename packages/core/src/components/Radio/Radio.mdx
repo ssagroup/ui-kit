@@ -1,263 +1,87 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
 import * as RadioStories from './Radio.stories';
 
 <Meta of={RadioStories} />
 
 # Radio
 
+A single radio button with a label. Radios are almost always used inside
+`RadioGroup`, which owns the selected value and wires up every child — see
+its page for layouts, controlled groups and form use. Use a standalone Radio
+only when you manage `checked` for each button yourself.
+
 ## Default Usage
 
-The Radio component provides a single radio button that should typically be used within a RadioGroup for mutually exclusive selections. Here's how to use individual Radio buttons:
+<Description of={RadioStories.Default} />
 
 ```tsx
+import { useState } from 'react';
 import { Radio, RadioGroup } from '@ssa-ui-kit/core';
 
-// Single radio button (rarely used alone)
-function SingleRadio() {
-  const handleChange = (value: string) => {
-    console.log('Selected value:', value);
-  };
-
+const Billing = () => {
+  const [plan, setPlan] = useState<string | number>('monthly');
   return (
-    <Radio
-      id="single-radio"
-      value="option1"
-      text="Single Option"
-      onChange={handleChange}
-    />
-  );
-}
-
-// Radio group (recommended usage)
-function RadioGroupExample() {
-  const [selectedValue, setSelectedValue] = useState('orange');
-
-  const handleChange = (value: string) => {
-    setSelectedValue(value);
-  };
-
-  return (
-    <RadioGroup
-      name="fruit"
-      value={selectedValue}
-      onChange={handleChange}>
-      <Radio id="radio1" value="apple" text="Apple" />
-      <Radio id="radio2" value="orange" text="Orange" />
-      <Radio id="radio3" value="banana" text="Banana" />
+    <RadioGroup name="billing" value={plan} onChange={setPlan}>
+      <Radio id="billing-monthly" value="monthly" text="Monthly billing" />
+      <Radio id="billing-yearly" value="yearly" text="Yearly billing" />
     </RadioGroup>
   );
-}
+};
 ```
 
-## Features
+<Canvas of={RadioStories.Default} />
 
-### Checked State
+## States
 
-Control whether a radio button is selected:
+<Description of={RadioStories.States} />
 
-```tsx
-// Checked radio
-<Radio
-  id="checked-radio"
-  value="checked"
-  text="Checked Option"
-  checked={true}
-  onChange={handleChange}
+| `color`               | Resting / checked | Hover            | Disabled          |
+| --------------------- | ----------------- | ---------------- | ----------------- |
+| `primary` _(default)_ | `primary.main`    | `primary.dark`   | `greyFocused40`   |
+| `success`             | `success.main`    | `success.dark`   | `greyFocused40`   |
+| `custom`              | `colors.default`  | `colors.hovered` | `colors.disabled` |
+
+Set `color` on `RadioGroup` to apply it to every child; a `color` on a single
+Radio wins over the group's.
+
+<Canvas of={RadioStories.States} />
+
+## Custom Colors
+
+<Description of={RadioStories.CustomColors} />
+<Canvas of={RadioStories.CustomColors} />
+
+## Keyboard and Accessibility
+
+Radio is a native `<input type="radio">` inside a `<label>`.
+
+- **`text` is the accessible name.** Without it the radio has no name.
+- Radios that share a `name` form one Tab stop; the arrow keys move between
+  them and select the one they land on. RadioGroup sets the shared `name`.
+- The input is visually hidden and no focus ring is drawn yet, so keyboard
+  focus is not visible.
+- `disabled` removes the radio from keyboard navigation.
+
+## Props
+
+<Controls
+  of={RadioStories.Default}
+  include={[
+    'value',
+    'text',
+    'name',
+    'checked',
+    'onChange',
+    'disabled',
+    'isRequired',
+    'color',
+    'colors',
+    'id',
+    'className',
+  ]}
 />
-
-// Unchecked radio
-<Radio
-  id="unchecked-radio"
-  value="unchecked"
-  text="Unchecked Option"
-  checked={false}
-  onChange={handleChange}
-/>
-```
-
-### Disabled State
-
-Disable radio buttons when they shouldn't be selectable:
-
-```tsx
-<Radio
-  id="disabled-radio"
-  value="disabled"
-  text="Disabled Option"
-  disabled={true}
-  onChange={handleChange}
-/>
-```
-
-### Without Label Text
-
-Use radio buttons without text labels when the context is clear:
-
-```tsx
-<Radio id="no-text-radio" value="no-text" onChange={handleChange} />
-```
-
-### Color Variants
-
-The `color` prop controls the icon and focus-ring colors. Colors are sourced
-from `theme.palette` for consistency with Button, Checkbox, and Chip.
-
-| Value | Palette key | Resting / Checked | Hover |
-|-------|-------------|-------------------|-------|
-| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.dark` |
-| `success` | `palette.success` | `success.main` | `success.dark` |
-| `custom` | — | via `colors.default` | via `colors.hovered` |
-
-```tsx
-// Default — primary (blue)
-<Radio id="r1" value="r1" text="Primary option" onChange={handleChange} />
-
-// Success (green)
-<Radio
-  id="r2"
-  value="r2"
-  text="Success option"
-  color="success"
-  onChange={handleChange}
-/>
-
-// Custom escape hatch
-<Radio
-  id="r3"
-  value="r3"
-  text="Custom option"
-  color="custom"
-  colors={{
-    default: '#ff0000',
-    hovered: '#cc0000',
-    disabled: '#cccccc',
-  }}
-  onChange={handleChange}
-/>
-```
-
-The `color` prop can also be set on `RadioGroup` to apply the same variant to
-all child radio buttons at once:
-
-```tsx
-<RadioGroup name="fruit" color="success" onChange={handleChange}>
-  <Radio id="r1" value="apple" text="Apple" />
-  <Radio id="r2" value="orange" text="Orange" />
-</RadioGroup>
-```
-
-### Form Integration
-
-Use radio buttons in forms with proper naming and validation:
-
-```tsx
-<form onSubmit={handleSubmit}>
-  <fieldset>
-    <legend>Select your preferred contact method:</legend>
-
-    <Radio
-      id="contact-email"
-      name="contact-method"
-      value="email"
-      text="Email"
-      isRequired={true}
-      onChange={handleChange}
-    />
-
-    <Radio
-      id="contact-phone"
-      name="contact-method"
-      value="phone"
-      text="Phone"
-      isRequired={true}
-      onChange={handleChange}
-    />
-
-    <Radio
-      id="contact-mail"
-      name="contact-method"
-      value="mail"
-      text="Mail"
-      isRequired={true}
-      onChange={handleChange}
-    />
-  </fieldset>
-
-  <button type="submit">Submit</button>
-</form>
-```
-
-### Horizontal Radio Group
-
-Display radio buttons in a horizontal layout:
-
-```tsx
-<RadioGroup
-  name="fruit-horizontal"
-  value={selectedValue}
-  onChange={handleChange}
-  css={{
-    display: 'flex',
-    gap: '16px',
-    marginTop: '10px',
-  }}>
-  <Radio id="h-radio1" value="apple" text="Apple" />
-  <Radio id="h-radio2" value="orange" text="Orange" />
-  <Radio id="h-radio3" value="banana" text="Banana" />
-</RadioGroup>
-```
-
-### Vertical Radio Group
-
-Display radio buttons in a vertical layout:
-
-```tsx
-<RadioGroup
-  name="fruit-vertical"
-  value={selectedValue}
-  onChange={handleChange}
-  css={{
-    marginTop: '10px',
-    '> label': {
-      display: 'flex',
-      marginBottom: '8px',
-    },
-  }}>
-  <Radio id="v-radio1" value="apple" text="Apple" />
-  <Radio id="v-radio2" value="orange" text="Orange" />
-  <Radio id="v-radio3" value="banana" text="Banana" />
-</RadioGroup>
-```
-
-### Custom Styling
-
-Apply custom styles to radio buttons:
-
-```tsx
-<Radio
-  id="styled-radio"
-  value="styled"
-  text="Custom Styled Radio"
-  className="custom-radio"
-  css={{
-    padding: '12px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-
-    '&:hover': {
-      backgroundColor: '#f8f9fa',
-    },
-
-    'input:checked + span': {
-      fontWeight: 'bold',
-      color: '#007bff',
-    },
-  }}
-  onChange={handleChange}
-/>
-```
-
-<Canvas />
-<Controls />
-
-<Stories includePrimary={false} />

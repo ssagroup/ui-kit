@@ -11,8 +11,8 @@ import { RadioProps } from './types';
  * Radio - Radio button component for single selection
  *
  * A radio button component for selecting a single option from a group.
- * Supports controlled and uncontrolled states, palette-based color variants,
- * and full accessibility. Displays a radio icon that changes appearance based
+ * The icon follows the `checked` prop only, so pass `checked` (or let
+ * RadioGroup inject it); palette-based color variants. Displays a radio icon that changes appearance based
  * on checked state and hover interactions.
  *
  * Colors are sourced from `theme.palette` for consistency with Button and
@@ -69,10 +69,9 @@ import { RadioProps } from './types';
  * @see {@link RadioGroup} - For managing groups of radio buttons
  *
  * @accessibility
- * - Full keyboard navigation (Arrow keys to navigate group, Space to select)
- * - Proper ARIA attributes (role="radio", aria-checked)
- * - Screen reader friendly
- * - Focus management with visible focus indicators
+ * - Native `<input type="radio">` inside a `<label>`; `text` is its accessible name
+ * - Radios sharing a `name` form one Tab stop; arrow keys move and select
+ * - The input is visually hidden and there is no focus ring yet
  */
 const Radio = ({
   id,

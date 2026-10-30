@@ -1,120 +1,118 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
 import * as SwitchStories from './Switch.stories';
 
 <Meta of={SwitchStories} />
 
 # Switch
 
+An on/off toggle for a setting that takes effect immediately. For a choice
+that is only applied on submit, or one of several independent options, use
+`Checkbox`.
+
 ## Default Usage
 
-The Switch component provides a toggle control that allows users to switch between two states (on/off, enabled/disabled). It's commonly used for settings, preferences, and feature toggles with clear visual feedback:
+<Description of={SwitchStories.Default} />
 
 ```tsx
-import { Switch, SwitchContextProvider } from '@ssa-ui-kit/core';
+import { Switch } from '@ssa-ui-kit/core';
 
-function BasicSwitch() {
-  return (
-    <SwitchContextProvider initialState={false}>
-      <Switch label="Enable notifications" />
-    </SwitchContextProvider>
-  );
-}
-```
-
-## Features
-
-### Color Variants
-
-The `color` prop controls the on-state background, hover color, and the
-off-state focus outline. Colors are sourced from `theme.palette`.
-
-| Value | Palette key | On background | On hover | Off outline |
-|-------|-------------|---------------|----------|-------------|
-| `primary` *(default)* | `palette.primary` | `primary.main` | `primary.dark` | `primary.light` |
-| `success` | `palette.success` | `success.main` | `success.dark` | `success.light` |
-| `custom` | — | via `colors.on` | `rgba(0,0,0,0.15)` overlay | via `colors.offOutline` |
-
-The off state always shows a neutral grey background (`greyFocused`) regardless
-of color variant. When disabled, the off state uses `greySelectedMenuItem`, while
-the on state keeps its color — see [Disabled State](#disabled-state).
-
-```tsx
-// Default — primary (blue)
-<SwitchContextProvider initialState={false}>
-  <Switch label="Enable feature" />
-</SwitchContextProvider>
-
-// Success (green)
-<SwitchContextProvider initialState={false}>
-  <Switch label="Enable feature" color="success" />
-</SwitchContextProvider>
-
-// Custom escape hatch
-<SwitchContextProvider initialState={false}>
+const Notifications = () => (
   <Switch
-    label="Custom toggle"
-    color="custom"
-    colors={{ on: '#ff0000', offOutline: '#ff9999' }}
+    label="Email notifications"
+    defaultChecked
+    onChange={(checked) => console.log(checked)}
   />
-</SwitchContextProvider>
+);
 ```
 
-### Disabled State
+<Canvas of={SwitchStories.Default} />
 
-Disabled switches cannot be toggled, and the two positions stay visually
-distinct:
+## States
 
-- **Disabled + on** keeps the variant's on-color, muted by a white overlay, so a
-  locked-on setting still reads as on. This works the same for `primary`,
-  `success`, and `custom` — a custom `colors.on` is dimmed by the same overlay,
-  with no extra prop to set.
-- **Disabled + off** uses a solid `greySelectedMenuItem` background.
+<Description of={SwitchStories.States} />
 
-The knob stays fully opaque in both cases, so its position remains a reliable
-state cue.
+| `color`               | On track       | Hover (on)        | Off outline (hover/focus) |
+| --------------------- | -------------- | ----------------- | ------------------------- |
+| `primary` _(default)_ | `primary.main` | `primary.dark`    | `primary.light`           |
+| `success`             | `success.main` | `success.dark`    | `success.light`           |
+| `custom`              | `colors.on`    | darkening overlay | `colors.offOutline`       |
 
-```tsx
-// Muted blue — still reads as "on"
-<SwitchContextProvider initialState={true}>
-  <Switch label="Locked feature" disabled />
-</SwitchContextProvider>
+<Canvas of={SwitchStories.States} />
 
-// Solid grey
-<SwitchContextProvider initialState={false}>
-  <Switch label="Unavailable feature" disabled />
-</SwitchContextProvider>
-```
+## Controlled
 
-### Basic Toggle Functionality
-
-Simple on/off switch with context provider:
+<Description of={SwitchStories.Controlled} />
 
 ```tsx
 import { useState } from 'react';
+import { Switch } from '@ssa-ui-kit/core';
 
-function BasicToggleExample() {
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <SwitchContextProvider initialState={isEnabled}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Switch label="Dark mode" />
-          <span>Dark mode</span>
-        </div>
-      </SwitchContextProvider>
-      <SwitchContextProvider initialState={true}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Switch label="Auto-save" />
-          <span>Auto-save enabled</span>
-        </div>
-      </SwitchContextProvider>
-    </div>
-  );
-}
+const DarkMode = () => {
+  const [isOn, setIsOn] = useState(true);
+  return <Switch label="Dark mode" checked={isOn} onChange={setIsOn} />;
+};
 ```
 
-<Canvas />
-<Controls />
+<Canvas of={SwitchStories.Controlled} />
 
-<Stories includePrimary={false} />
+## SwitchContextProvider
+
+The original API, still supported. The provider holds the state; a Switch
+inside it without `checked` or `defaultChecked` reads it, and `onChange`
+still fires. Other children can read the state with `useSwitchContext()`.
+Every Switch inside one provider shares the same state.
+
+```tsx
+import {
+  Switch,
+  SwitchContextProvider,
+  Typography,
+  useSwitchContext,
+} from '@ssa-ui-kit/core';
+
+const Status = () => {
+  const { isOn } = useSwitchContext();
+  return <Typography variant="body1">{isOn ? 'On' : 'Off'}</Typography>;
+};
+
+const WithProvider = () => (
+  <SwitchContextProvider initialState={false}>
+    <Switch label="Email notifications" />
+    <Status />
+  </SwitchContextProvider>
+);
+```
+
+A Switch with no provider and none of `checked`, `defaultChecked` or
+`onChange` stays off and ignores clicks.
+
+## Keyboard and Accessibility
+
+Switch is a `<button role="switch">` with `aria-checked`: Tab focuses it,
+Space or Enter toggles it.
+
+- **`label` is the accessible name** (`aria-label`) and is not rendered.
+  Show a visible label next to it and keep the two in sync.
+- `disabled` removes it from the tab order; a disabled switch also gets
+  `aria-readonly`.
+- The focus outline only appears while the switch is off.
+
+## Props
+
+<Controls
+  of={SwitchStories.Default}
+  include={[
+    'label',
+    'checked',
+    'defaultChecked',
+    'onChange',
+    'disabled',
+    'color',
+    'colors',
+  ]}
+/>

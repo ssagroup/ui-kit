@@ -1,0 +1,114 @@
+import { Meta, Canvas, Description } from '@storybook/addon-docs/blocks';
+import * as JsonSchemaFormStories from './Form.stories';
+
+<Meta of={JsonSchemaFormStories} />
+
+# JsonSchemaForm
+
+A [react-jsonschema-form](https://rjsf-team.github.io/react-jsonschema-form/docs/)
+theme built from kit components: describe the form as a JSON schema and it
+renders kit fields, validation messages and a kit submit button. Use it for
+forms whose shape comes from data; for a hand-built form use `Form` with
+react-hook-form.
+
+It needs `@rjsf/core`, `@rjsf/utils` and `@rjsf/validator-ajv8` (v5) next to
+`@ssa-ui-kit/core`. Everything is exported under the `JsonSchema` namespace.
+
+## Default Usage
+
+<Description of={JsonSchemaFormStories.Default} />
+
+```tsx
+import validator from '@rjsf/validator-ajv8';
+import type { RJSFSchema, UiSchema } from '@rjsf/utils';
+import { JsonSchema } from '@ssa-ui-kit/core';
+
+const schema: RJSFSchema = {
+  type: 'object',
+  required: ['fullName'],
+  properties: {
+    fullName: { type: 'string', title: 'Full name' },
+    seniority: {
+      type: 'string',
+      title: 'Seniority',
+      enum: ['Junior', 'Middle', 'Senior'],
+    },
+  },
+};
+
+const uiSchema: UiSchema = {
+  seniority: { 'ui:widget': 'radio', 'ui:options': { inline: true } },
+};
+
+const Profile = () => (
+  <JsonSchema.Form
+    schema={schema}
+    uiSchema={uiSchema}
+    validator={validator}
+    onSubmit={({ formData }) => console.log(formData)}
+  />
+);
+```
+
+<Canvas of={JsonSchemaFormStories.Default} />
+
+## Validation
+
+<Description of={JsonSchemaFormStories.Validation} />
+<Canvas of={JsonSchemaFormStories.Validation} />
+
+## Date Fields
+
+<Description of={JsonSchemaFormStories.DateFields} />
+<Canvas of={JsonSchemaFormStories.DateFields} />
+
+## Accordion
+
+<Description of={JsonSchemaFormStories.Accordion} />
+
+```tsx
+import { AccordionGroupContextProvider, JsonSchema } from '@ssa-ui-kit/core';
+// validator, schema as in Default Usage
+
+const uiSchema = {
+  employment: {
+    'ui:field': 'accordion',
+    'ui:options': { targetField: 'ObjectField', collapsed: false },
+  },
+};
+
+<AccordionGroupContextProvider>
+  <JsonSchema.Form schema={schema} uiSchema={uiSchema} validator={validator} />
+</AccordionGroupContextProvider>;
+```
+
+<Canvas of={JsonSchemaFormStories.Accordion} />
+
+## Widgets and `ui:options`
+
+| Selected by                                  | Renders               | Kit-specific `ui:options`                                                                                                          |
+| -------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `string`                                     | TextField             | rjsf's standard options (`ui:placeholder`, `ui:help`, …)                                                                           |
+| `boolean`                                    | Checkbox              | —                                                                                                                                  |
+| `enum` / `oneOf`, or `'ui:widget': 'select'` | Typeahead             | `typeaheadAvatarSize`, `typeaheadAvatarBorder`, plus any Typeahead prop (e.g. `autoSelect`); `avatar` on `oneOf` items             |
+| `'ui:widget': 'radio'`                       | RadioGroup            | `inline` — one row instead of a column                                                                                             |
+| `'ui:widget': 'checkboxes'`                  | Checkbox list         | —                                                                                                                                  |
+| `'ui:widget': 'password'`                    | TextField + show/hide | —                                                                                                                                  |
+| `'ui:widget': 'date'`                        | DatePicker            | `format`, `outputFormat`, `pickerType`, `dateMin`, `dateMax`, `validationSchema`                                                   |
+| `'ui:field': 'daterange'`                    | DateRangePicker       | `format`, `outputFormat`, `rangePickerType`, `showPresentOption`, `label`, `disabled`, `defaultValue`, other DateRangePicker props |
+| `'ui:field': 'accordion'`                    | Accordion section     | `targetField` (required), `collapsed`                                                                                              |
+
+## Known limitations
+
+- Checkbox, Checkboxes and Date widgets read their value on mount only:
+  replacing `formData` later (a "Clear" button, a reset) does not update
+  them. Remount the form with a new `key` instead.
+- The Date and Checkbox widgets ignore `ui:disabled` and `ui:readonly`.
+- The `range` widget does not show the current value; avoid it for now.
+
+## Typed forms
+
+`JsonSchema.Form` is typed for `unknown` form data. For typed `formData` and
+`formContext`, build your own with
+`JsonSchema.generateForm<Data, Schema, Context>()` — or take
+`JsonSchema.Theme` / `generateTheme()` and pass it to rjsf's `withTheme`.

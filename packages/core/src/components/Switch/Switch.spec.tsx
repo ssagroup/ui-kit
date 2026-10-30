@@ -233,4 +233,104 @@ describe('Switch', () => {
 
     expect(switchEl).toHaveAttribute('aria-checked', 'false');
   });
+  describe('standalone props', () => {
+    it('is uncontrolled with defaultChecked and reports each toggle', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      const { getByRole } = render(
+        <Switch label={TEST_LABEL} defaultChecked onChange={onChange} />,
+      );
+
+      const switchEl = getByRole('switch');
+      expect(switchEl).toHaveAttribute('aria-checked', 'true');
+
+      await user.click(switchEl);
+      expect(switchEl).toHaveAttribute('aria-checked', 'false');
+      expect(onChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it('keeps its own state, starting off, with only onChange and no provider', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      const { getByRole } = render(
+        <Switch label={TEST_LABEL} onChange={onChange} />,
+      );
+
+      await user.click(getByRole('switch'));
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+      expect(onChange).toHaveBeenCalledWith(true);
+    });
+
+    it('is fully controlled with checked', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      const { getByRole, rerender } = render(
+        <Switch label={TEST_LABEL} checked={false} onChange={onChange} />,
+      );
+
+      await user.click(getByRole('switch'));
+      expect(onChange).toHaveBeenCalledWith(true);
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+
+      rerender(<Switch label={TEST_LABEL} checked onChange={onChange} />);
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+    });
+
+    it('prefers checked over a provider', () => {
+      const { getByRole } = setup(
+        <Switch label={TEST_LABEL} checked={false} />,
+        true,
+      );
+
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+    });
+
+    it('stays on the provider when defaultChecked is undefined', async () => {
+      const { user, getByRole } = setup(
+        <Switch label={TEST_LABEL} defaultChecked={undefined} />,
+        true,
+      );
+
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+      await user.click(getByRole('switch'));
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+    });
+
+    it('fires onChange while the provider owns the state', async () => {
+      const onChange = jest.fn();
+      const { user, getByRole } = setup(
+        <Switch label={TEST_LABEL} onChange={onChange} />,
+        false,
+      );
+
+      await user.click(getByRole('switch'));
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+      expect(onChange).toHaveBeenCalledWith(true);
+    });
+
+    it('does not toggle or report when disabled', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      const { getByRole } = render(
+        <Switch
+          label={TEST_LABEL}
+          defaultChecked
+          disabled
+          onChange={onChange}
+        />,
+      );
+
+      await user.click(getByRole('switch'));
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('stays inert with no provider and none of the new props', async () => {
+      const user = userEvent.setup();
+      const { getByRole } = render(<Switch label={TEST_LABEL} />);
+
+      await user.click(getByRole('switch'));
+      expect(getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+    });
+  });
 });

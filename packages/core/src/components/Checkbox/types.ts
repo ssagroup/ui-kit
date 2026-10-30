@@ -10,8 +10,8 @@ import {
  * Props for the Checkbox component
  *
  * A form control that allows users to select one or more options from a set.
- * Supports checked, unchecked, indeterminate, and disabled states. Can be used
- * standalone or integrated with React Hook Form for form validation.
+ * Supports checked, unchecked, indeterminate, and disabled states. For
+ * react-hook-form, use `FormCheckbox`.
  *
  * @example
  * ```tsx
@@ -25,22 +25,11 @@ import {
  *
  * @example
  * ```tsx
- * // Checkbox with React Hook Form
- * const { register } = useForm();
- * <Checkbox
- *   name="newsletter"
- *   text="Subscribe to newsletter"
- *   register={register}
- * />
- * ```
- *
- * @example
- * ```tsx
  * // Controlled checkbox
  * const [checked, setChecked] = useState(false);
  * <Checkbox
  *   text="Controlled checkbox"
- *   externalState={checked}
+ *   checked={checked}
  *   onChange={setChecked}
  * />
  * ```
@@ -126,8 +115,7 @@ export interface CheckboxProps extends Partial<
   isIndeterminate?: boolean;
 
   /**
-   * Name attribute for form submission and React Hook Form integration
-   * Required when using with React Hook Form
+   * Name attribute of the native input, used in native form submission
    * @default ''
    */
   name?: string;
@@ -155,12 +143,13 @@ export interface CheckboxProps extends Partial<
   color?: 'primary' | 'success' | 'custom';
 
   /**
-   * Custom element type to render as (for composition)
+   * Element type for the outer label. Replaces the `<label>` entirely, so the
+   * label no longer toggles the input on click.
    */
   as?: React.ElementType;
 
   /**
-   * Custom CSS class name
+   * Class name for the outer `<label>`
    */
   className?: string;
 }

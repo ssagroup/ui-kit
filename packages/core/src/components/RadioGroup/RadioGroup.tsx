@@ -7,6 +7,33 @@ import { resolveDisabled, warnDeprecatedProp } from '@utils/deprecation';
 import { RadioGroupBase } from './RadioGroupBase';
 import { RadioGroupProps } from './types';
 
+/**
+ * RadioGroup - Single choice from a set of Radio buttons
+ *
+ * Owns the selected value and wires up its direct `Radio` children: shared
+ * `name`, `checked`, `onChange`, `isRequired` and `color`. Uncontrolled with
+ * `defaultValue`, controlled with `value`; for react-hook-form use
+ * `FormRadioGroup`.
+ *
+ * @category Form Controls
+ * @subcategory Input
+ *
+ * @example
+ * ```tsx
+ * <RadioGroup name="billing" defaultValue="monthly" onChange={setPlan}>
+ *   <Radio id="billing-monthly" value="monthly" text="Monthly" />
+ *   <Radio id="billing-yearly" value="yearly" text="Yearly" />
+ * </RadioGroup>
+ * ```
+ *
+ * @see {@link Radio}
+ * @see {@link FormRadioGroup}
+ *
+ * @accessibility
+ * - Renders `role="radiogroup"` with no accessible name of its own — wrap it
+ *   in a `<fieldset>` with a `<legend>`
+ * - Native radios: one Tab stop, arrow keys move and select
+ */
 const RadioGroup = (props: RadioGroupProps) => {
   const {
     name,

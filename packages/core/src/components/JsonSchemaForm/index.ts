@@ -7,6 +7,17 @@ import Templates, { generateTemplates } from './templates';
 import Widgets, { generateWidgets } from './widgets';
 import Fields, { generateFields } from './fields';
 
+/**
+ * Builds the kit's rjsf theme (templates, widgets and fields) for the given
+ * form data, schema and form-context types. Pass it to rjsf's `withTheme`.
+ *
+ * @example
+ * ```tsx
+ * import { withTheme } from '@rjsf/core';
+ *
+ * const ProfileForm = withTheme<Profile>(JsonSchema.generateTheme<Profile>());
+ * ```
+ */
 export function generateTheme<
   T = unknown,
   S extends StrictRJSFSchema = RJSFSchema,
@@ -19,8 +30,22 @@ export function generateTheme<
   };
 }
 
+/** The kit's rjsf theme for untyped forms — see `generateTheme`. */
 const Theme = generateTheme();
 
+/**
+ * Builds a themed rjsf Form component typed for the given form data, schema
+ * and form-context types. Use it instead of `Form` when you want typed
+ * `formData`.
+ *
+ * @example
+ * ```tsx
+ * type Profile = { fullName: string };
+ * const ProfileForm = JsonSchema.generateForm<Profile>();
+ *
+ * <ProfileForm schema={schema} validator={validator} />
+ * ```
+ */
 export function generateForm<
   T = unknown,
   S extends StrictRJSFSchema = RJSFSchema,
@@ -30,6 +55,28 @@ export function generateForm<
 }
 
 const UnstyledForm = generateForm();
+/**
+ * JsonSchemaForm - `@rjsf/core` Form rendered with kit components
+ *
+ * Takes the standard rjsf props: `schema`, `uiSchema`, `formData`,
+ * `validator` (from `@rjsf/validator-ajv8`), `onSubmit`, `onChange`… Adds
+ * 16px between top-level fields.
+ *
+ * @category Form Structure
+ * @subcategory Generated
+ *
+ * @example
+ * ```tsx
+ * import validator from '@rjsf/validator-ajv8';
+ * import { JsonSchema } from '@ssa-ui-kit/core';
+ *
+ * <JsonSchema.Form
+ *   schema={{ type: 'object', properties: { name: { type: 'string' } } }}
+ *   validator={validator}
+ *   onSubmit={({ formData }) => save(formData)}
+ * />
+ * ```
+ */
 const Form = styled(UnstyledForm)`
   .form-group {
     margin-bottom: 16px;
