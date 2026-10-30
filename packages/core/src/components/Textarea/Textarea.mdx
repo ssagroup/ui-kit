@@ -1,137 +1,116 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
 import * as TextareaStories from './Textarea.stories';
 
 <Meta of={TextareaStories} />
 
 # Textarea
 
+A bare multi-line text field wired to react-hook-form through `register`. It
+renders no label, helper text or counter — for a complete field use
+`TextField multirow`; reach for Textarea when you lay out the label and
+messages yourself.
+
 ## Default Usage
 
-The Textarea component provides a multi-line text input area designed specifically for React Hook Form integration. It offers a clean, modern design with hover and focus states, and must be used within a form context with the register function:
+<Description of={TextareaStories.Default} />
 
 ```tsx
-import { useForm } from 'react-hook-form';
 import { Textarea } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
 
-function BasicTextarea() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data: any) => {
-    console.log('Form data:', data);
-  };
-
+const MessageBox = () => {
+  const { register } = useForm();
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Textarea
-        name="description"
-        placeholder="Enter your description here..."
-        register={register}
-        validationSchema={{
-          required: 'Description is required',
-          minLength: { value: 10, message: 'Minimum 10 characters required' },
-        }}
-        rows={6}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <Textarea
+      name="message"
+      placeholder="Write a message"
+      rows={4}
+      register={register}
+      validationSchema={{ required: 'Write a message first' }}
+    />
   );
-}
+};
 ```
 
-## Features
+<Canvas of={TextareaStories.Default} />
 
-### Basic Textarea
+## Resize
 
-Simple textarea with placeholder and validation:
+<Description of={TextareaStories.Resize} />
+<Canvas of={TextareaStories.Resize} />
+
+## Character Counter
+
+<Description of={TextareaStories.CharacterCounter} />
 
 ```tsx
-function BasicTextareaExample() {
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
+import { useState } from 'react';
+import { FormHelperText, Textarea } from '@ssa-ui-kit/core';
+import { useForm } from 'react-hook-form';
 
+const Bio = () => {
+  const { register } = useForm();
+  const [count, setCount] = useState(0);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div>
       <Textarea
-        name="comments"
-        placeholder="Enter your comments..."
+        name="bio"
+        maxLength={200}
         register={register}
-        validationSchema={{
-          required: 'Comments are required',
-        }}
-        rows={4}
+        setCountChar={(event) =>
+          setCount((event.target as HTMLTextAreaElement).value.length)
+        }
       />
-
-      <Textarea
-        name="feedback"
-        placeholder="Share your feedback with us..."
-        register={register}
-        validationSchema={{
-          maxLength: { value: 500, message: 'Maximum 500 characters allowed' },
-        }}
-        rows={6}
-        maxLength={500}
-      />
+      <FormHelperText>{count} / 200</FormHelperText>
     </div>
   );
-}
+};
 ```
 
-### Disabled and Read-Only States
+<Canvas of={TextareaStories.CharacterCounter} />
 
-Handle different interaction states:
+## Label
 
-```tsx
-function TextareaStates() {
-  const { register } = useForm({
-    defaultValues: {
-      disabled: 'This content cannot be edited',
-      readonly: 'This content is read-only but can be selected and copied',
-    },
-  });
+<Description of={TextareaStories.WithLabel} />
+<Canvas of={TextareaStories.WithLabel} />
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Disabled textarea */}
-      <div>
-        <label
-          style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-          Disabled Textarea
-        </label>
-        <Textarea
-          name="disabled"
-          placeholder="This textarea is disabled"
-          register={register}
-          disabled={true}
-          rows={4}
-        />
-      </div>
+## Keyboard and Accessibility
 
-      {/* Read-only textarea */}
-      <div>
-        <label
-          style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-          Read-Only Textarea
-        </label>
-        <Textarea
-          name="readonly"
-          placeholder="This textarea is read-only"
-          register={register}
-          readOnly={true}
-          rows={4}
-        />
-      </div>
-    </div>
-  );
-}
-```
+Textarea is a native `<textarea>`: it takes focus with Tab, Enter adds a new
+line, and it has no keyboard handling of its own.
 
-<Canvas />
-<Controls />
+- **Label it.** Textarea renders no `<label>`. Point a `<label htmlFor>` or
+  `Field.Label` at its `id` (`formElement-{name}` unless you pass `id`).
+- `aria-describedby` passes through, for a label badge or your own helper
+  text.
+- `status="error"` only colours the border; it does not set `aria-invalid`.
+- `readOnly` keeps the text focusable and selectable; `disabled` removes it
+  from the tab order.
 
-<Stories includePrimary={false} />
+## Props
+
+<Controls
+  of={TextareaStories.Default}
+  include={[
+    'name',
+    'placeholder',
+    'register',
+    'validationSchema',
+    'status',
+    'disabled',
+    'readOnly',
+    'rows',
+    'maxLength',
+    'setCountChar',
+    'onPaste',
+    'id',
+    'aria-describedby',
+    'title',
+    'className',
+  ]}
+/>

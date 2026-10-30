@@ -28,9 +28,9 @@ export interface FieldErrorProps {
  * @example
  * ```tsx
  * <Field.Root status={errors.email ? 'error' : 'basic'}>
- *   <Field.Label htmlFor="email">Email</Field.Label>
+ *   <Field.Label htmlFor="formElement-email">Email</Field.Label>
  *   <Field.Control>
- *     <Input id="email" name="email" />
+ *     <Input name="email" />
  *   </Field.Control>
  *   <Field.Error>
  *     {errors.email?.message || 'Email is required'}
@@ -39,8 +39,9 @@ export interface FieldErrorProps {
  * ```
  *
  * @accessibility
- * - Uses role="status" for screen reader announcements
  * - Visible only when status is 'error'
+ * - Sets no live-region role and is not linked to the control with
+ *   `aria-describedby`
  */
 export const FieldError = ({ children }: FieldErrorProps) => {
   const ctx = useFieldContext();

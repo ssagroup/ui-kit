@@ -45,8 +45,10 @@ import type { UseFormReturn } from 'react-hook-form';
  * />
  * ```
  *
- * @note React Hook Form integration is optional. If `register` is not provided,
- * the component will still work but validation features will be unavailable.
+ * @note React Hook Form integration is optional, but without `register` the
+ * textarea has no `name` attribute, no value/onChange props (read it through
+ * the ref, or `setCountChar` for changes) and logs a console warning.
+ * `register` expects an untyped `useForm()`.
  */
 export interface TextareaProps extends Partial<
   Pick<UseFormReturn, 'register'>
@@ -89,8 +91,8 @@ export interface TextareaProps extends Partial<
   rows?: number;
 
   /**
-   * Maximum character length for the textarea
-   * Use with setCountChar callback to track character count
+   * Maximum character length, set on the `<textarea>`: typing stops at the
+   * limit. Textarea shows no counter; build one with `setCountChar`.
    */
   maxLength?: number;
 
@@ -99,13 +101,13 @@ export interface TextareaProps extends Partial<
    * - `basic`: default border/outline (theme.colors grey)
    * - `error`: error state (theme.palette.error)
    * - `success`: success state (theme.palette.success)
-   * - `custom`: same as basic (no palette styling)
+   * - `custom`: same as basic
    * @default 'basic'
    */
   status?: 'basic' | 'error' | 'success' | 'custom';
 
   /**
-   * Custom element type to render as (for composition)
+   * Element to render instead of `<textarea>` (Emotion `as`).
    */
   as?: React.ElementType;
 
@@ -138,9 +140,9 @@ export interface TextareaProps extends Partial<
   onPaste?: React.ClipboardEventHandler<HTMLTextAreaElement>;
 
   /**
-   * Callback function to track character count
-   * Called with the event when content changes
-   * Useful for displaying character count UI
+   * Called with the change event on every edit, before the registered
+   * `onChange`. Use it to drive a character counter, or to read the value
+   * without react-hook-form.
    */
   setCountChar?: ReactEventHandler;
 }

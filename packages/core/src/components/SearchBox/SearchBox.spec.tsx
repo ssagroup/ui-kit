@@ -1,6 +1,29 @@
 import { useState, act } from 'react';
 import { fireEvent } from '@testing-library/dom';
-import { StoryComponent } from './stories/StoryComponent';
+import { FieldValues, useForm } from 'react-hook-form';
+import { SearchBox } from '.';
+
+const StoryComponent = ({
+  handleCallback,
+}: {
+  handleCallback?: (searchTerm: string) => void;
+}) => {
+  const { register, control, resetField } = useForm<FieldValues>();
+
+  const onCallback = (searchTerm: string) => {
+    console.log('Searching for the term...', searchTerm);
+  };
+
+  return (
+    <SearchBox
+      register={register}
+      control={control}
+      resetField={resetField}
+      callback={handleCallback || onCallback}
+      name={'search'}
+    />
+  );
+};
 
 describe('SearchBox', () => {
   beforeEach(() => {

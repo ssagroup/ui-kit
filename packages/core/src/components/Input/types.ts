@@ -44,19 +44,18 @@ interface ExtendedInputProps extends React.InputHTMLAttributes<HTMLInputElement>
  *
  * @example
  * ```tsx
- * // Input with icons and helper text
+ * // Without React Hook Form: value and onChange go through inputProps
  * <Input
  *   name="search"
  *   placeholder="Search products..."
  *   startElement={<Icon name="search" />}
- *   endElement={<Icon name="clear" onClick={handleClear} />}
- *   helperText="Type to search"
- *   showHelperText
+ *   inputProps={{ value, onChange: (e) => setValue(e.target.value) }}
  * />
  * ```
  *
- * @note React Hook Form integration is optional. If `register` is not provided,
- * the component will still work but validation features will be unavailable.
+ * @note React Hook Form integration is optional. Without `register` there is
+ * no validation, value and change handler go through `inputProps`, and a
+ * console warning is logged. `control` and `setValue` are accepted but unused.
  */
 export interface InputProps extends Partial<
   Pick<UseFormReturn, 'register' | 'control' | 'setValue'>
@@ -71,7 +70,7 @@ export interface InputProps extends Partial<
    * - `basic`: Default state, no validation feedback
    * - `error`: Error state with red border and error icon
    * - `success`: Success state with green border and success icon
-   * - `custom`: Custom styling (no default status styling)
+   * - `custom`: no status border colours and no status icon
    * @default 'basic'
    */
   status?: keyof InputStatusColors;
@@ -117,7 +116,7 @@ export interface InputProps extends Partial<
   helperClassName?: string;
 
   /**
-   * Custom element type to render as (for composition)
+   * Not used: has no effect.
    */
   as?: React.ElementType;
 
@@ -128,8 +127,8 @@ export interface InputProps extends Partial<
   startElement?: React.ReactElement;
 
   /**
-   * React element to display after the input (e.g., icon or action button)
-   * Commonly an Icon component or clear button
+   * React element to display after the input (e.g., icon or action button).
+   * Replaces the status icon.
    */
   endElement?: React.ReactElement;
 
@@ -139,14 +138,17 @@ export interface InputProps extends Partial<
   css?: Interpolation<Theme>;
 
   /**
-   * Additional props to pass directly to the underlying input element
-   * Includes all standard HTML input attributes
+   * Props passed straight to the `<input>`: `id` (default
+   * `formElement-{name}`), `aria-*`, `autoComplete`, and — without `register` —
+   * `value` / `onChange`. With `register`, its `onChange` is overridden by the
+   * registered one.
    */
   inputProps?: ExtendedInputProps;
 
   /**
-   * Tooltip text to display when hovering over error icon
-   * Only visible when status is 'error' and showStatusIcon is true
+   * Tooltip text to display when hovering over the error icon.
+   * Only shown when status is 'error', showStatusIcon is true and there is no
+   * endElement.
    */
   errorTooltip?: string;
 
@@ -177,14 +179,15 @@ export interface InputProps extends Partial<
   showBorders?: boolean;
 
   /**
-   * Helper text to display below the input
-   * Only shown when showHelperText is true and no errors are present
+   * Helper text to display below the input.
+   * Only shown when showHelperText is true; `errors.message` replaces it.
    */
   helperText?: string;
 
   /**
-   * Maximum character length for the input
-   * When provided with showHelperText, displays character count (e.g., "45 / 100")
+   * Shows a `count / maxLength` counter in the helper row (needs
+   * showHelperText). Display-only: it is not set on the `<input>`, so it does
+   * not limit typing. The count updates on key-up.
    */
   maxLength?: number;
 
@@ -195,20 +198,20 @@ export interface InputProps extends Partial<
   errors?: FieldError;
 
   /**
-   * Keyboard event handler for keyup events
-   * Also used internally for character counting when maxLength is provided
+   * Keyboard event handler for keyup events. Called after the character
+   * counter updates.
    */
   onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
 
   /**
-   * Click handler for the start element
-   * Useful for making start icons interactive (e.g., toggle password visibility)
+   * Not used: has no effect. Put `onClick` on the element passed as
+   * `startElement`.
    */
   onStartElementClick?: (event: BaseSyntheticEvent) => void;
 
   /**
-   * Click handler for the end element
-   * Useful for making end icons interactive (e.g., clear button)
+   * Not used: has no effect. Put `onClick` on the element passed as
+   * `endElement`.
    */
   onEndElementClick?: (event: BaseSyntheticEvent) => void;
 }

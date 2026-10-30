@@ -82,6 +82,13 @@ describe('ContextMenu', () => {
       expect(getContextMenuOptionId('m', 'a b')).not.toMatch(/\s/);
     });
 
+    it('getContextMenuOptionId keeps the number 1 and the string "1" apart', () => {
+      expect(getContextMenuOptionId('m', 1)).not.toBe(
+        getContextMenuOptionId('m', '1'),
+      );
+      expect(getContextMenuOptionId('m', -1.5)).toMatch(/^[\w-]+$/);
+    });
+
     it('cycles include → exclude → none, and toggles selectOnly rows', () => {
       expect(nextIncludeExcludeType(undefined, false)).toBe('include');
       expect(nextIncludeExcludeType('include', false)).toBe('exclude');
@@ -200,6 +207,47 @@ describe('ContextMenu', () => {
         .getAllByRole('option')
         .filter((o) => o.getAttribute('aria-selected') === 'true'),
     ).toHaveLength(0);
+  });
+
+  it.each(['multiple', 'includeExclude'] as const)(
+    '%s: a controlled value of undefined reads as nothing selected',
+    async (selectionMode) => {
+      const onChange = jest.fn();
+      render(
+        <ContextMenu
+          aria-label="Fruit"
+          selectionMode={selectionMode}
+          items={items}
+          value={undefined}
+          onChange={onChange}
+        />,
+      );
+
+      expect(
+        screen
+          .getAllByRole('option')
+          .filter((o) => o.getAttribute('aria-selected') === 'true'),
+      ).toHaveLength(0);
+      // Enter works in both modes (an include / exclude row body ignores clicks).
+      screen.getByRole('listbox').focus();
+      await userEvent.keyboard('{Enter}');
+      expect(onChange).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  it('renders the number 1 and the string "1" as separate options', () => {
+    render(
+      <ContextMenu<string | number>
+        aria-label="Mixed"
+        selectionMode="single"
+        items={[
+          { value: 1, label: 'Number one' },
+          { value: '1', label: 'String one' },
+        ]}
+      />,
+    );
+    const [first, second] = screen.getAllByRole('option');
+    expect(first.id).not.toBe(second.id);
   });
 
   describe('keyboard', () => {

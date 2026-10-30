@@ -54,6 +54,7 @@ export interface ContextMenuGroup<
   id: string;
   /** Group title. */
   label: ReactNode;
+  /** Options in the group, in display order. Groups do not nest. */
   items: ContextMenuItem<V>[];
 }
 
@@ -64,7 +65,8 @@ export type ContextMenuEntry<V extends ContextMenuValue = ContextMenuValue> =
 
 /**
  * How a selected option is marked. Selected rows also get the selected
- * background, except in `includeExclude` mode.
+ * background, except with `checkCircle` and in `includeExclude` mode, where
+ * the filled icon alone marks the choice.
  * - `check`: a check mark at the end of selected rows
  * - `checkbox`: a checkbox at the start of every row
  * - `checkCircle`: a blue check-circle at the end of every row, filled when selected
@@ -83,7 +85,9 @@ export type ContextMenuIncludeExcludeType = 'include' | 'exclude' | 'selected';
 export interface ContextMenuIncludeExcludeEntry<
   V extends ContextMenuValue = ContextMenuValue,
 > {
+  /** The chosen option's `value`. */
   value: V;
+  /** Whether the option is included, excluded or (for `selectOnly` rows) selected. */
   type: ContextMenuIncludeExcludeType;
 }
 
@@ -93,6 +97,7 @@ export interface ContextMenuItemState {
   selected: boolean;
   /** The option is highlighted by the pointer or the keyboard. */
   active: boolean;
+  /** The option's `disabled` flag. */
   disabled: boolean;
   /** `includeExclude` mode only. */
   includeExcludeType?: ContextMenuIncludeExcludeType;
@@ -166,10 +171,15 @@ export interface ContextMenuBaseProps<V extends ContextMenuValue> extends Omit<
   indicator?: ContextMenuIndicator;
   /**
    * Fires when an option is chosen by click, Enter or Space, in every mode —
-   * the hook for closing a popup.
+   * the hook for closing a popup. In `includeExclude` mode it also fires for
+   * clicks on the + / − / check-circle controls.
    */
   onAction?: (value: V) => void;
-  /** Controlled highlighted option (pointer or keyboard). */
+  /**
+   * Controlled highlighted option (pointer or keyboard). Lets a host that keeps
+   * focus elsewhere (e.g. in an input) drive the list — see
+   * `getNextActiveValue` and `getContextMenuOptionId`.
+   */
   activeValue?: V | null;
   /** Initially highlighted option when uncontrolled. */
   defaultActiveValue?: V | null;

@@ -49,40 +49,22 @@ import { TextareaBase } from './TextareaBase';
  *
  * @example
  * ```tsx
- * // Using with Field component
+ * // Labelled with Field.Label (Textarea renders no label of its own)
  * <Field.Root>
  *   <Field.Label htmlFor="comments">Comments</Field.Label>
- *   <Field.Control>
- *     <Textarea
- *       id="comments"
- *       name="comments"
- *       register={register}
- *       rows={6}
- *       css={{ width: '100%', border: '0 !important' }}
- *     />
- *   </Field.Control>
+ *   <Textarea id="comments" name="comments" register={register} rows={6} />
  *   <Field.Description>Optional feedback or notes</Field.Description>
  * </Field.Root>
  * ```
  *
- * @example
- * ```tsx
- * // Standalone textarea without React Hook Form
- * <Textarea
- *   name="notes"
- *   placeholder="Enter notes..."
- *   rows={5}
- *   onChange={(e) => handleChange(e.target.value)}
- * />
- * ```
  *
  * @see {@link Field} - Use Field.Root to wrap Textarea for labels and validation
  * @see {@link Input} - For single-line text input
  *
  * @accessibility
- * - Full keyboard navigation support
- * - Screen reader friendly
- * - ARIA attributes via React Hook Form (when register is provided)
+ * - Renders no label: pair it with a `<label htmlFor>` / `Field.Label`
+ *   matching `id` (default `formElement-{name}`)
+ * - `status="error"` only colours the border; it does not set `aria-invalid`
  * - Respects disabled and readOnly states
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(

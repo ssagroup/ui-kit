@@ -29,9 +29,9 @@ export interface FieldDescriptionProps {
  * @example
  * ```tsx
  * <Field.Root>
- *   <Field.Label htmlFor="password">Password</Field.Label>
+ *   <Field.Label htmlFor="formElement-password">Password</Field.Label>
  *   <Field.Control>
- *     <Input id="password" name="password" type="password" />
+ *     <Input name="password" type="password" />
  *   </Field.Control>
  *   <Field.Description>
  *     Must be at least 8 characters with one number

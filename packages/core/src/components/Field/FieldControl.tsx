@@ -66,8 +66,11 @@ export interface FieldControlProps extends Omit<
   'children'
 > {
   /**
-   * Optional ref to a specific element to focus when control is clicked
-   * If not provided, will attempt to focus the first child input element
+   * Element to focus when the control box is clicked. Always applied, even
+   * when `forwardFocus` is off. Without it, focus goes to the child only
+   * when `forwardFocus` is on and there is a single `forwardRef` child (such
+   * as the kit's `Input` or `Textarea`); a native `<input>` or several
+   * children need `controlRef`.
    */
   controlRef?: React.RefObject<HTMLElement | null>;
 
@@ -94,8 +97,9 @@ const isForwardRefComponent = (component: React.ReactElement): boolean => {
  *
  * Provides a styled container for form inputs with automatic focus forwarding,
  * validation state styling (error/success borders), and consistent layout.
- * Clicking anywhere in the control area will focus the contained input when
- * forwardFocus is enabled in Field.Root.
+ * Clicking anywhere in the control box focuses the control: the element in
+ * `controlRef` if given, otherwise a single `forwardRef` child when
+ * `forwardFocus` is on in Field.Root. Draws its own border, so give the control inside `border: 0`.
  *
  * @category Form Controls
  * @subcategory Layout
@@ -103,9 +107,9 @@ const isForwardRefComponent = (component: React.ReactElement): boolean => {
  * @example
  * ```tsx
  * <Field.Root>
- *   <Field.Label htmlFor="username">Username</Field.Label>
+ *   <Field.Label htmlFor="formElement-username">Username</Field.Label>
  *   <Field.Control>
- *     <Input id="username" name="username" />
+ *     <Input name="username" css={{ width: '100%', border: '0 !important' }} />
  *   </Field.Control>
  * </Field.Root>
  * ```

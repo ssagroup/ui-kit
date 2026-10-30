@@ -28,17 +28,18 @@ export interface FieldSuccessProps {
  * @example
  * ```tsx
  * <Field.Root status={isValid ? 'success' : 'basic'}>
- *   <Field.Label htmlFor="username">Username</Field.Label>
+ *   <Field.Label htmlFor="formElement-username">Username</Field.Label>
  *   <Field.Control>
- *     <Input id="username" name="username" />
+ *     <Input name="username" />
  *   </Field.Control>
  *   <Field.Success>Username is available!</Field.Success>
  * </Field.Root>
  * ```
  *
  * @accessibility
- * - Uses role="status" for screen reader announcements
  * - Visible only when status is 'success'
+ * - Sets no live-region role and is not linked to the control with
+ *   `aria-describedby`
  */
 export const FieldSuccess = ({ children }: FieldSuccessProps) => {
   const ctx = useFieldContext();

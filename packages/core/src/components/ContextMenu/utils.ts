@@ -102,9 +102,19 @@ export const escapeId = (value: string) =>
   );
 
 /**
+ * An id-safe string that tells a value's type apart, so the number `1` and the
+ * string `'1'` never share a key or id. Strings keep their escaped form; numbers
+ * get an `_n` prefix, which no escaped string can start with (escapes are
+ * `_<hex>_`).
+ */
+export const valueKey = (value: ContextMenuValue) =>
+  typeof value === 'number' ? `_n${escapeId(String(value))}` : escapeId(value);
+
+/**
  * DOM id of an option, for `aria-activedescendant` on an element outside the
  * list (e.g. a combobox input). `menuId` is the `id` given to the ContextMenu.
- * Characters not allowed in an id are escaped, so any value is safe.
+ * Characters not allowed in an id are escaped, so any value is safe, and the
+ * number `1` and the string `'1'` get different ids.
  *
  * @example
  * ```tsx
@@ -120,7 +130,7 @@ export const escapeId = (value: string) =>
 export const getContextMenuOptionId = (
   menuId: string,
   value: ContextMenuValue,
-) => `${menuId}-option-${escapeId(String(value))}`;
+) => `${menuId}-option-${valueKey(value)}`;
 
 /**
  * Where a navigation key moves the highlight: ArrowDown / ArrowUp step over

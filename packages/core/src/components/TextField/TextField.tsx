@@ -58,7 +58,7 @@ import { TextFieldProps } from './types';
  *
  * @example
  * ```tsx
- * // Success state
+ * // Success state (takes precedence over errors)
  * <TextField
  *   name="username"
  *   label="Username"
@@ -72,14 +72,17 @@ import { TextFieldProps } from './types';
  * @see {@link Textarea} - For multi-line textarea component
  * @see {@link Field} - For more advanced field layout with Field.Root
  *
- * @note React Hook Form integration is optional. If `register` is not provided,
- * the component will still work but validation features will be unavailable.
+ * @note React Hook Form integration is optional. Without `register` there is
+ * no validation; on a single-line field pass `value` / `onChange` (and `name`,
+ * for a native form submit) through `inputProps`. A console warning is logged.
+ * `register` expects an untyped `useForm()`; cast `formState.errors.x` with
+ * `as FieldError`.
  *
  * @accessibility
- * - Full keyboard navigation support
- * - Screen reader friendly with proper labels
- * - ARIA attributes via React Hook Form (when register is provided)
- * - Error messages announced to screen readers
+ * - The label is linked to the control (`formElement-{name}`)
+ * - `labelBadge` is announced as the control's description
+ * - The helper row is `role="status"`; it is not linked to the control with
+ *   `aria-describedby`, and errors do not set `aria-invalid`
  */
 const TextField = ({
   multirow,

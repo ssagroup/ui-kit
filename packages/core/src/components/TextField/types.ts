@@ -49,13 +49,18 @@ import { LabelBadge } from '@components/Label/types';
  * />
  * ```
  *
- * @note React Hook Form integration is optional. If `register` is not provided,
- * the component will still work but validation features will be unavailable.
+ * @note React Hook Form integration is optional. Without `register` there is
+ * no validation; on a single-line field pass `value` / `onChange` (and `name`,
+ * for a native form submit) through `inputProps`. A console warning is logged.
+ * `register` expects an untyped `useForm()`; cast `formState.errors.x` with
+ * `as FieldError`.
  */
 export interface TextFieldProps
   extends InputProps, Partial<Pick<UseFormReturn, 'register'>> {
   /**
-   * Label text displayed above the input field
+   * Label text displayed above the field, linked to it via
+   * `htmlFor="formElement-{name}"`. Without it an empty `<label>` still
+   * renders; name the field with `inputProps['aria-label']` instead.
    */
   label?: string;
 
@@ -67,28 +72,27 @@ export interface TextFieldProps
   labelBadge?: LabelBadge;
 
   /**
-   * React Hook Form field error object
-   * Used to display validation error messages
+   * React Hook Form field error. Sets the error status (unless `success` is
+   * set) and shows `errors.message` in place of `helperText`.
    */
   errors?: FieldError;
 
   /**
-   * Whether to display success state styling
-   * When true, status is set to 'success'
+   * Sets the success status. Takes precedence over `errors`: with both set,
+   * the error message shows in green.
    * @default false
    */
   success?: boolean;
 
   /**
-   * Helper text displayed below the input
-   * Shown when no errors are present
+   * Helper text displayed below the field. Replaced by `errors.message` when
+   * `errors` is set.
    */
   helperText?: string;
 
   /**
-   * Number of rows for multi-row text fields
-   * Only applies when `multirow` is true
-   * @default undefined (uses Textarea default)
+   * Number of rows. Only applies when `multirow` is true.
+   * @default 10
    */
   rows?: number;
 
@@ -100,8 +104,11 @@ export interface TextFieldProps
   multirow?: boolean;
 
   /**
-   * Maximum character length
-   * When provided, displays character count (e.g., "45 / 500")
+   * Shows a `count / maxLength` counter in the helper row. On a single-line
+   * field it is display-only (typing is not limited) and updates on key-up;
+   * on a multirow field it is also set on the `<textarea>`. The count starts
+   * at 0 for a prefilled value. On a single-line field, passing your own
+   * `onKeyUp` stops the counter from updating.
    */
   maxLength?: number;
 }

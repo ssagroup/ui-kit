@@ -1,0 +1,238 @@
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
+import * as ContextMenuStories from './ContextMenu.stories';
+
+<Meta of={ContextMenuStories} />
+
+# ContextMenu
+
+The list of options inside a dropdown, typeahead, filter or action menu. It
+renders only the list: the trigger, open state and positioning belong to the
+host, which places it inline or inside a `Popover`. `Dropdown`,
+`MultipleDropdown`, `Typeahead` and `FiltersMultiSelect` already use it, so
+reach for ContextMenu directly only when you build a new host or a menu those
+don't cover.
+
+## Default Usage
+
+<Description of={ContextMenuStories.Default} />
+
+```tsx
+import { useState } from 'react';
+import { ContextMenu, ContextMenuItem } from '@ssa-ui-kit/core';
+
+const departments: ContextMenuItem<string>[] = [
+  { value: 'design', label: 'Design' },
+  { value: 'engineering', label: 'Engineering' },
+  { value: 'legal', label: 'Legal', disabled: true },
+];
+
+const DepartmentList = () => {
+  const [value, setValue] = useState<string | null>('design');
+  return (
+    <ContextMenu
+      aria-label="Department"
+      selectionMode="single"
+      items={departments}
+      value={value}
+      onChange={setValue}
+    />
+  );
+};
+```
+
+| `selectionMode`  | `value` shape          | Default `indicator` | Role      |
+| ---------------- | ---------------------- | ------------------- | --------- |
+| `none` (default) | —                      | `none`              | `menu`    |
+| `single`         | `V \| null`            | `check`             | `listbox` |
+| `multiple`       | `V[]`                  | `checkbox`          | `listbox` |
+| `includeExclude` | `{ value: V, type }[]` | — (+ / − controls)  | `listbox` |
+
+<Canvas of={ContextMenuStories.Default} />
+
+## Item Anatomy
+
+<Description of={ContextMenuStories.ItemAnatomy} />
+<Canvas of={ContextMenuStories.ItemAnatomy} />
+
+## Groups
+
+<Description of={ContextMenuStories.Groups} />
+
+```tsx
+import { ContextMenu, ContextMenuEntry } from '@ssa-ui-kit/core';
+
+const members: ContextMenuEntry<string>[] = [
+  {
+    id: 'project',
+    label: 'Project members',
+    items: [
+      { value: 'alice', label: 'Alice Smith' },
+      { value: 'bob', label: 'Bob Jones' },
+    ],
+  },
+  {
+    id: 'staff',
+    label: 'Staff members',
+    items: [{ value: 'carol', label: 'Carol White' }],
+  },
+];
+
+<ContextMenu aria-label="Members" selectionMode="single" items={members} />;
+```
+
+<Canvas of={ContextMenuStories.Groups} />
+
+## Include / Exclude
+
+<Description of={ContextMenuStories.IncludeExclude} />
+
+```tsx
+import { useState } from 'react';
+import { ContextMenu, ContextMenuIncludeExcludeEntry } from '@ssa-ui-kit/core';
+
+const Filters = () => {
+  const [filters, setFilters] = useState<
+    ContextMenuIncludeExcludeEntry<string>[]
+  >([{ value: 'remote', type: 'include' }]);
+  return (
+    <ContextMenu
+      aria-label="Filters"
+      selectionMode="includeExclude"
+      items={[
+        { value: 'remote', label: 'Remote' },
+        { value: 'my-team', label: 'My team', selectOnly: true },
+      ]}
+      value={filters}
+      onChange={setFilters}
+    />
+  );
+};
+```
+
+<Canvas of={ContextMenuStories.IncludeExclude} />
+
+## Action Menu
+
+<Description of={ContextMenuStories.ActionMenu} />
+<Canvas of={ContextMenuStories.ActionMenu} />
+
+## Custom Rendering
+
+<Description of={ContextMenuStories.CustomRender} />
+<Canvas of={ContextMenuStories.CustomRender} />
+
+## Driving From an Input
+
+<Description of={ContextMenuStories.DrivenFromInput} />
+
+```tsx
+import { KeyboardEvent, useState } from 'react';
+import {
+  ContextMenu,
+  getContextMenuOptionId,
+  getNextActiveValue,
+} from '@ssa-ui-kit/core';
+
+const items = [
+  { value: 'design', label: 'Design' },
+  { value: 'engineering', label: 'Engineering' },
+];
+
+const DepartmentSearch = () => {
+  const [active, setActive] = useState<string | null>(null);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    const next = getNextActiveValue(items, active, event.key);
+    if (next === undefined) return; // not a navigation key
+    event.preventDefault();
+    setActive(next);
+  };
+
+  return (
+    <>
+      <input
+        role="combobox"
+        aria-label="Department"
+        aria-expanded
+        aria-controls="department-menu"
+        aria-activedescendant={
+          active == null
+            ? undefined
+            : getContextMenuOptionId('department-menu', active)
+        }
+        onKeyDown={handleKeyDown}
+      />
+      <ContextMenu
+        id="department-menu"
+        aria-label="Departments"
+        tabIndex={-1}
+        onMouseDown={(event) => event.preventDefault()}
+        selectionMode="single"
+        items={items}
+        activeValue={active}
+        onActiveValueChange={setActive}
+      />
+    </>
+  );
+};
+```
+
+<Canvas of={ContextMenuStories.DrivenFromInput} />
+
+## Keyboard and Accessibility
+
+When the list itself has focus:
+
+| Key            | Action                                                                    |
+| -------------- | ------------------------------------------------------------------------- |
+| Tab            | Moves focus to / from the list (a single tab stop)                        |
+| ArrowDown / Up | Moves the highlight, skipping disabled options and wrapping at the ends   |
+| Home / End     | Highlights the first / last enabled option                                |
+| Enter / Space  | Chooses the highlighted option (`includeExclude`: cycles the row's state) |
+| Printable keys | Jump to the next option starting with the typed text                      |
+| Escape         | Not handled — the host closes its popup                                   |
+
+- Focusing the list highlights the selected option, else the first enabled
+  one. Options are never focused themselves: the list points at the
+  highlighted one through `aria-activedescendant`.
+- Typed keys within 500 ms build one query; Space extends a query in progress
+  instead of choosing.
+- A highlight set by the pointer clears when the pointer leaves the list; one
+  set from the keyboard stays.
+- The list is `role="listbox"` (`aria-multiselectable` in `multiple` and
+  `includeExclude` modes) or `role="menu"` in `none` mode. Selected options get
+  `aria-selected`. Groups render as `role="group"` labelled by their title.
+- In `includeExclude` mode a row's accessible name ends with ", included",
+  ", excluded" or ", selected".
+- Give the list an accessible name with `aria-label` or `aria-labelledby`. A
+  host that owns focus (e.g. a combobox input) sets `aria-controls` to the
+  list's `id`.
+
+## Props
+
+Props not listed pass through to the `<ul>`.
+
+<Controls
+  of={ContextMenuStories.Default}
+  include={[
+    'items',
+    'selectionMode',
+    'indicator',
+    'value',
+    'defaultValue',
+    'onChange',
+    'onAction',
+    'activeValue',
+    'defaultActiveValue',
+    'onActiveValueChange',
+    'renderItem',
+    'renderGroupLabel',
+    'emptyState',
+    'maxHeight',
+  ]}
+/>

@@ -12,9 +12,9 @@ import { FieldProvider, FieldContextValue } from './FieldProvider';
  * @example
  * ```tsx
  * <Field.Root status="error">
- *   <Field.Label htmlFor="email">Email</Field.Label>
+ *   <Field.Label htmlFor="formElement-email">Email</Field.Label>
  *   <Field.Control>
- *     <Input id="email" name="email" />
+ *     <Input name="email" />
  *   </Field.Control>
  *   <Field.Error>Invalid email address</Field.Error>
  * </Field.Root>
@@ -23,8 +23,9 @@ import { FieldProvider, FieldContextValue } from './FieldProvider';
 export interface FieldRootProps
   extends Partial<FieldContextValue>, HTMLAttributes<HTMLDivElement> {
   /**
-   * If true, renders without a wrapper div (asChild pattern)
-   * Useful for semantic HTML (e.g., wrapping with fieldset)
+   * If true, renders no wrapper div, so the children (e.g. a `<fieldset>`)
+   * sit directly in the parent. Not a true slot: `className`, `css`, `id`
+   * and other div props are dropped rather than passed to the child
    * @default false
    */
   asChild?: boolean;
@@ -56,9 +57,9 @@ export interface FieldRootProps
  * ```tsx
  * // Basic field
  * <Field.Root>
- *   <Field.Label htmlFor="username">Username</Field.Label>
+ *   <Field.Label htmlFor="formElement-username">Username</Field.Label>
  *   <Field.Control>
- *     <Input id="username" name="username" />
+ *     <Input name="username" />
  *   </Field.Control>
  * </Field.Root>
  * ```
@@ -67,9 +68,9 @@ export interface FieldRootProps
  * ```tsx
  * // Field with validation
  * <Field.Root status={hasError ? 'error' : 'basic'}>
- *   <Field.Label htmlFor="email">Email</Field.Label>
+ *   <Field.Label htmlFor="formElement-email">Email</Field.Label>
  *   <Field.Control>
- *     <Input id="email" name="email" />
+ *     <Input name="email" />
  *   </Field.Control>
  *   <Field.Error>Email is required</Field.Error>
  * </Field.Root>
@@ -80,9 +81,9 @@ export interface FieldRootProps
  * // Using asChild pattern with fieldset
  * <Field.Root asChild status="error">
  *   <fieldset>
- *     <Field.Label htmlFor="age">Age</Field.Label>
+ *     <Field.Label htmlFor="formElement-age">Age</Field.Label>
  *     <Field.Control>
- *       <Input id="age" name="age" type="number" />
+ *       <Input name="age" type="number" />
  *     </Field.Control>
  *   </fieldset>
  * </Field.Root>
@@ -95,7 +96,10 @@ export interface FieldRootProps
  * @see {@link Field.Success} - For success messages
  *
  * @accessibility
- * - Label/control association via htmlFor on Field.Label
+ * - Label/control association via htmlFor on Field.Label (`formElement-{name}`
+ *   for the kit's Input and Textarea)
+ * - No generated ids, `aria-describedby` or `aria-invalid`: messages are not
+ *   linked to the control
  * - Status (error/success) and disabled flow from context to child components
  * - Optional focus forwarding from Field.Control to the inner input
  */

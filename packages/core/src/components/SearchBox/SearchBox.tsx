@@ -8,19 +8,22 @@ import { SearchBoxCrossIcon } from '.';
 import { SearchBoxProps } from './types';
 
 /**
- * SearchBox - Search input component with debounced callbacks
+ * SearchBox - Compact search field with a debounced callback
  *
- * A specialized search input component that combines Input functionality with
- * search-specific features like debounced callbacks, clear button, and search
- * icon. Automatically triggers search callbacks as the user types (with debounce)
- * or immediately when Enter key is pressed.
+ * A search input for toolbars and table headers. Calls `callback` with the
+ * term once the user stops typing (`callbackDelay`, default 500 ms) or right
+ * away on Enter.
  *
  * Features:
- * - Debounced search callbacks to reduce API calls
- * - Visual feedback: search icon when empty, clear icon when has value
- * - Enter key for immediate search execution
- * - Configurable auto-search trigger
- * - React Hook Form integration for form state management
+ * - Debounced `callback`; Enter cancels the pending call and calls it at once
+ * - Search icon when empty, clear button once the field has text
+ * - `autoSearchTrigger={false}` to search on Enter only
+ * - Fixed width: 139px, 180px from the `md` breakpoint
+ *
+ * Driven by react-hook-form: pass `register`, `control` and `resetField`
+ * from `useForm()`. No `FormProvider` is needed. SearchBox watches the whole
+ * form, so keep it in its own `useForm()`; changes to other fields re-send
+ * the current term.
  *
  * @category Form Controls
  * @subcategory Input
@@ -35,37 +38,17 @@ import { SearchBoxProps } from './types';
  *   control={control}
  *   register={register}
  *   resetField={resetField}
- *   callback={(term) => {
- *     console.log('Searching for:', term);
- *     // Perform search API call
- *   }}
- *   callbackDelay={500}
- * />
- * ```
- *
- * @example
- * ```tsx
- * // Manual search only (no auto-trigger)
- * <SearchBox
- *   name="query"
- *   control={control}
- *   register={register}
- *   resetField={resetField}
- *   callback={handleSearch}
- *   autoSearchTrigger={false}
- *   placeholder="Press Enter to search"
+ *   callback={(term) => setQuery(term)}
+ *   inputProps={{ 'aria-label': 'Search products' }}
  * />
  * ```
  *
  * @see {@link Input} - Base input component used internally
  *
- * @requires React Hook Form - Must be used within FormProvider context
- *
  * @accessibility
- * - Full keyboard navigation support
- * - Enter key triggers search
- * - Clear button accessible via keyboard
- * - Screen reader friendly
+ * - Renders no label: pass `inputProps={{ 'aria-label': '...' }}`
+ * - Enter searches immediately
+ * - The clear button is focusable but has no accessible name
  */
 export const SearchBox = ({
   name,

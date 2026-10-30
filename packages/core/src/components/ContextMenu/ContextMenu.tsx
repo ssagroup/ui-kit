@@ -29,6 +29,7 @@ import {
   getTextValue,
   isGroup,
   nextIncludeExcludeType,
+  valueKey,
 } from './utils';
 import * as S from './styles';
 
@@ -93,12 +94,15 @@ const ContextMenuInner = <V extends ContextMenuValue>(
     ? null
     : (indicatorProp ?? defaultIndicator(selectionMode));
 
-  const [selection, setSelection] = useControllableState<unknown>({
+  const [rawSelection, setSelection] = useControllableState<unknown>({
     controlled: 'value' in props,
     value,
     defaultValue,
     finalValue: emptySelection(selectionMode),
   });
+  // A host forwarding an optional `value` is controlled with `undefined`;
+  // read that as "nothing selected" rather than calling array methods on it.
+  const selection = rawSelection ?? emptySelection(selectionMode);
 
   const [activeValue, setActiveValue] = useControllableState<V | null>({
     controlled: 'activeValue' in props,
@@ -311,7 +315,7 @@ const ContextMenuInner = <V extends ContextMenuValue>(
     const index = flatIndex++;
     return (
       <ContextMenuOption<V>
-        key={String(item.value)}
+        key={valueKey(item.value)}
         id={optionId(item.value)}
         item={item}
         role={isMenu ? 'menuitem' : 'option'}
@@ -402,14 +406,18 @@ const ContextMenuInner = <V extends ContextMenuValue>(
  * Each option can carry an avatar, a status dot, a right-hand description and
  * free start / end content. Text labels ellipsise and show the full text in a
  * tooltip after a hover. Pass a `ContextMenuGroup` among `items` for a titled
- * section; groups are separated by a divider.
+ * section; a divider separates two groups that sit next to each other.
  *
  * ### Keyboard
- * The list is a single tab stop. Arrow keys, Home and End move the highlight
- * (announced through `aria-activedescendant`), Enter or Space choose, and
- * typing jumps to the next option starting with the typed text. Escape is left
- * to the host. A host that keeps focus elsewhere (e.g. in an input) can drive
- * the highlight with `activeValue` / `onActiveValueChange`.
+ * The list is a single tab stop; focusing it highlights the selected option,
+ * else the first enabled one. Arrow keys, Home and End move the highlight
+ * (announced through `aria-activedescendant`), skipping disabled options and
+ * wrapping. Enter or Space choose, and typing jumps to the next option starting
+ * with the typed text (Space extends a query typed within the last 500 ms).
+ * Escape is left to the host. A pointer highlight clears when the pointer
+ * leaves the list; a keyboard one stays. A host that keeps focus elsewhere
+ * (e.g. in an input) can drive the highlight with `activeValue` /
+ * `onActiveValueChange`.
  *
  * @category Components
  *

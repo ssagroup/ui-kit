@@ -7,7 +7,8 @@ import { useFieldContext } from './FieldProvider';
  * Props for Field.Label component
  *
  * Accessible label component that automatically respects the disabled state
- * from Field.Root context. Should be associated with form controls via htmlFor prop.
+ * from Field.Root context. Associate it with the control through `htmlFor`; the kit's `Input`
+ * and `Textarea` use the id `formElement-{name}`.
  */
 export interface FieldLabelProps extends LabelProps {
   /**
@@ -34,9 +35,9 @@ export interface FieldLabelProps extends LabelProps {
  * @example
  * ```tsx
  * <Field.Root>
- *   <Field.Label htmlFor="email">Email Address</Field.Label>
+ *   <Field.Label htmlFor="formElement-email">Email Address</Field.Label>
  *   <Field.Control>
- *     <Input id="email" name="email" />
+ *     <Input name="email" />
  *   </Field.Control>
  * </Field.Root>
  * ```
@@ -44,7 +45,6 @@ export interface FieldLabelProps extends LabelProps {
  * @accessibility
  * - Properly associated with form controls via htmlFor/id
  * - Respects disabled state from Field context
- * - Screen reader friendly
  */
 export const FieldLabel = ({ children, ...props }: FieldLabelProps) => {
   const ctx = useFieldContext();

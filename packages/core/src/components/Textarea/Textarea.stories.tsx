@@ -1,274 +1,188 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { FieldValues, useForm } from 'react-hook-form';
+import { fn } from 'storybook/test';
+import { useForm } from 'react-hook-form';
 
-import Textarea from '@components/Textarea';
 import { Field } from '@components/Field';
-import { getLabelBadgeId } from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
+import { getLabelBadgeId } from '@components/Label';
+import Textarea from './Textarea';
+import { TextareaProps } from './types';
 
-type Args = Parameters<typeof Textarea>[0];
+type Args = TextareaProps;
 
 export default {
   title: 'Components/Textarea',
   component: Textarea,
+  args: {
+    onPaste: fn(),
+  },
   argTypes: {
-    validationSchema: {
-      control: {
-        disable: true,
-      },
-    },
-    register: {
-      control: {
-        disable: true,
-      },
-    },
-    setCountChar: {
-      control: {
-        disable: true,
-      },
-    },
     status: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['basic', 'error', 'success', 'custom'],
-      description: 'Visual validation status (palette: error/success/primary)',
     },
+    register: { control: false },
+    validationSchema: { control: false },
+    setCountChar: { control: false },
+    onPaste: { control: false },
+    as: { control: false },
   },
-} as Meta<typeof Textarea>;
-
-export const Basic: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-
-Basic.args = {
-  placeholder: 'Textarea',
-  title: 'Textarea title',
-  name: 'textarea',
-  validationSchema: {
-    required: 'Required',
+  parameters: {
+    // Show each story's own source rather than the rendered element tree.
+    docs: { source: { type: 'code' } },
   },
-};
-Basic.storyName = 'Textarea';
-
-export const VerticalResize: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-
-VerticalResize.storyName = 'Resize — Vertical';
-VerticalResize.args = {
-  placeholder: 'Textarea',
-  title: 'Textarea title',
-  name: 'textarea',
-  css: { resize: 'vertical' },
-  validationSchema: {
-    required: 'Required',
-  },
-};
-VerticalResize.parameters = {
-  docs: {
-    description: {
-      story:
-        'Vertical-only resize. Pass `css={{ resize: "vertical" }}` to restrict the user to resizing only the height.',
-    },
-  },
-};
-
-export const HorizontalResize: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-
-HorizontalResize.storyName = 'Resize — Horizontal';
-HorizontalResize.args = {
-  placeholder: 'Textarea',
-  title: 'Textarea title',
-  name: 'textarea',
-  css: { resize: 'horizontal' },
-  validationSchema: {
-    required: 'Required',
-  },
-};
-HorizontalResize.parameters = {
-  docs: {
-    description: {
-      story:
-        'Horizontal-only resize. Pass `css={{ resize: "horizontal" }}` to restrict the user to resizing only the width.',
-    },
-  },
-};
-
-export const ResizeDisabled: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-
-ResizeDisabled.storyName = 'Resize — Disabled';
-ResizeDisabled.args = {
-  placeholder: 'Textarea',
-  title: 'Textarea title',
-  name: 'textarea',
-  css: { resize: 'none' },
-  validationSchema: {
-    required: 'Required',
-  },
-};
-ResizeDisabled.parameters = {
-  docs: {
-    description: {
-      story:
-        'Resize fully disabled. Pass `css={{ resize: "none" }}` to remove the resize handle entirely.',
-    },
-  },
-};
-
-export const Focused: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-Focused.args = {
-  ...Basic.args,
-};
-
-Focused.parameters = {
-  pseudo: {
-    focus: true,
-  },
-};
-
-export const Disabled: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-
-Disabled.args = {
-  ...Basic.args,
-  disabled: true,
-};
-
-export const ReadOnly: StoryObj<typeof Textarea> = (args: Args) => {
-  const { register } = useForm<FieldValues>();
-
-  return <Textarea {...args} register={register} />;
-};
-
-ReadOnly.args = {
-  ...Basic.args,
-  readOnly: true,
-};
-
-export const AllStatuses: StoryObj<typeof Textarea> = () => {
-  const { register } = useForm<FieldValues>();
-  const baseProps = {
-    register,
-    rows: 3,
-    validationSchema: { required: 'Required' },
-  };
-  return (
-    <div css={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <div>
-        <label
-          htmlFor="sb-status-basic"
-          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
-          Basic
-        </label>
-        <Textarea
-          {...baseProps}
-          name="sb-status-basic"
-          id="sb-status-basic"
-          status="basic"
-          placeholder="Basic (default)"
-        />
-        <FormHelperText status="basic">
-          Default state, no validation feedback.
-        </FormHelperText>
+  decorators: [
+    (Story) => (
+      <div style={{ width: 400 }}>
+        <Story />
       </div>
-      <div>
-        <label
-          htmlFor="sb-status-error"
-          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
-          Error
-        </label>
-        <Textarea
-          {...baseProps}
-          name="sb-status-error"
-          id="sb-status-error"
-          status="error"
-          placeholder="Error state"
-        />
-        <FormHelperText status="error">
-          Validation failed. Please fix the errors.
-        </FormHelperText>
-      </div>
-      <div>
-        <label
-          htmlFor="sb-status-success"
-          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
-          Success
-        </label>
-        <Textarea
-          {...baseProps}
-          name="sb-status-success"
-          id="sb-status-success"
-          status="success"
-          placeholder="Success state"
-        />
-        <FormHelperText status="success">Looks good!</FormHelperText>
-      </div>
-      <div>
-        <label
-          htmlFor="sb-status-custom"
-          css={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
-          Custom
-        </label>
-        <Textarea
-          {...baseProps}
-          name="sb-status-custom"
-          id="sb-status-custom"
-          status="custom"
-          placeholder="Custom (same as basic)"
-        />
-        <FormHelperText status="basic">
-          Custom status, same styling as basic.
-        </FormHelperText>
-      </div>
-    </div>
-  );
-};
-AllStatuses.storyName = 'All statuses';
+    ),
+  ],
+} as Meta<Args>;
 
 /**
- * Textarea has no label of its own: label it with `Field.Label`, whose
- * `badge` works the same as the fields' `labelBadge`. Point the textarea's
- * `aria-describedby` at `getLabelBadgeId(id)` so the badge is announced.
+ * Textarea is the bare multi-line field: a bordered `<textarea>` with status
+ * borders and no label or helper text. For a labelled field with helper text
+ * and a counter, use `TextField multirow`.
+ *
+ * Pass `register` from react-hook-form and the textarea registers itself under
+ * `name` with `validationSchema` as its rules. Its id is `id`, or
+ * `formElement-{name}` by default.
+ *
+ * Every prop in the Controls panel applies here:
+ *
+ * - `status` only colours the border (`custom` looks the same as `basic`);
+ * - `disabled` mutes it and removes the resize handle;
+ * - `readOnly` keeps it focusable and scrollable, without hover or focus
+ *   colours;
+ * - `rows` sets the initial height (default 10);
+ * - `maxLength` stops typing at the limit.
  */
-const TextareaWithLabelBadge = () => {
-  const { register } = useForm<FieldValues>();
-
-  return (
-    <Field.Root>
-      <Field.Label
-        htmlFor="bio"
-        badge={{ text: 'not present in the CV', color: 'warning' }}>
-        Bio
-      </Field.Label>
-      <Textarea
-        id="bio"
-        name="bio"
-        rows={4}
-        register={register}
-        aria-describedby={getLabelBadgeId('bio')}
-      />
-    </Field.Root>
-  );
+export const Default: StoryObj<Args> = {
+  args: {
+    name: 'message',
+    placeholder: 'Write a message',
+    status: 'basic',
+    disabled: false,
+    readOnly: false,
+    rows: 4,
+  },
+  render: function Render(args) {
+    const { register } = useForm();
+    return <Textarea {...args} register={register} />;
+  },
 };
 
-export const WithLabelBadge: StoryObj<typeof Textarea> = {
-  render: () => <TextareaWithLabelBadge />,
+/**
+ * The textarea can be resized in both directions by default. Restrict it with
+ * the `css` prop: `resize: 'vertical'`, `'horizontal'` or `'none'`. A
+ * disabled textarea is never resizable.
+ *
+ * Two layout rules decide how far it can be dragged:
+ *
+ * - it fills its container's width (`max-width: 100%`), so it can only grow
+ *   wider if you give it a smaller starting `width`;
+ * - it is a flex item (`flex: 1 100%`): directly inside a flex column, the
+ *   flex basis wins over a dragged height. Wrap it in its own element there,
+ *   as here.
+ */
+export const Resize: StoryObj<Args> = {
+  render: function Render(args) {
+    const { register } = useForm();
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div>
+          <Textarea
+            {...args}
+            name="vertical"
+            placeholder="resize: vertical"
+            rows={3}
+            register={register}
+            css={{ resize: 'vertical' }}
+          />
+        </div>
+        <div>
+          <Textarea
+            {...args}
+            name="horizontal"
+            placeholder="resize: horizontal"
+            rows={3}
+            register={register}
+            css={{ resize: 'horizontal', width: 240 }}
+          />
+        </div>
+        <div>
+          <Textarea
+            {...args}
+            name="none"
+            placeholder="resize: none"
+            rows={3}
+            register={register}
+            css={{ resize: 'none' }}
+          />
+        </div>
+      </div>
+    );
+  },
+};
+
+/**
+ * Textarea shows no counter itself. `setCountChar` is called with the change
+ * event on every edit, so keep the length in state and render the counter
+ * yourself; `maxLength` stops typing at the limit. (`TextField multirow`
+ * does all of this for you.)
+ */
+export const CharacterCounter: StoryObj<Args> = {
+  render: function Render(args) {
+    const { register } = useForm();
+    const [count, setCount] = useState(0);
+    return (
+      <div>
+        <Textarea
+          {...args}
+          name="bio"
+          placeholder="Tell us about yourself"
+          rows={4}
+          maxLength={200}
+          register={register}
+          setCountChar={(event) =>
+            setCount((event.target as HTMLTextAreaElement).value.length)
+          }
+        />
+        <FormHelperText css={{ textAlign: 'right' }}>
+          {count} / 200
+        </FormHelperText>
+      </div>
+    );
+  },
+};
+
+/**
+ * Textarea renders no label. Pair it with a `Field.Label` whose `htmlFor`
+ * matches the textarea's `id`; the label's `badge` works like the fields'
+ * `labelBadge`. Point the textarea's `aria-describedby` at
+ * `getLabelBadgeId(id)` so the badge is announced as its description.
+ */
+export const WithLabel: StoryObj<Args> = {
+  render: function Render(args) {
+    const { register } = useForm();
+    return (
+      <Field.Root>
+        <Field.Label
+          htmlFor="bio"
+          badge={{ text: 'not present in the CV', color: 'warning' }}>
+          Bio
+        </Field.Label>
+        <Textarea
+          {...args}
+          id="bio"
+          name="bio"
+          rows={4}
+          register={register}
+          aria-describedby={getLabelBadgeId('bio')}
+        />
+      </Field.Root>
+    );
+  },
 };

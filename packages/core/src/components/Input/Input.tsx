@@ -160,21 +160,20 @@ const InputInner = (
  *
  * @example
  * ```tsx
- * // Input with icons and helper text (without React Hook Form)
+ * // Without React Hook Form: value and onChange go through inputProps
  * <Input
  *   name="search"
  *   placeholder="Search products..."
  *   startElement={<Icon name="search" />}
- *   endElement={<Icon name="clear" onClick={handleClear} />}
  *   helperText="Type to search"
  *   showHelperText
- *   onChange={(e) => handleSearch(e.target.value)}
+ *   inputProps={{ value, onChange: (e) => setValue(e.target.value) }}
  * />
  * ```
  *
  * @example
  * ```tsx
- * // Input with character count
+ * // Input with a character counter (display-only, does not limit typing)
  * <Input
  *   name="bio"
  *   placeholder="Tell us about yourself"
@@ -189,10 +188,9 @@ const InputInner = (
  * ```tsx
  * // Using with Field component
  * <Field.Root status={errors.email ? 'error' : 'basic'}>
- *   <Field.Label htmlFor="email">Email</Field.Label>
+ *   <Field.Label htmlFor="formElement-email">Email</Field.Label>
  *   <Field.Control>
  *     <Input
- *       id="email"
  *       name="email"
  *       register={register}
  *       css={{ width: '100%', border: '0 !important' }}
@@ -207,10 +205,10 @@ const InputInner = (
  * @see {@link TextField} - Alternative text input component
  *
  * @accessibility
- * - Full keyboard navigation support
- * - Screen reader friendly with proper labels
- * - ARIA attributes via React Hook Form
- * - Error messages announced to screen readers
+ * - Input renders no label: label it with TextField, Field.Label
+ *   (`htmlFor="formElement-{name}"`) or `inputProps['aria-label']`
+ * - The helper row is `role="status"`; it is not linked to the input with
+ *   `aria-describedby`, and `status="error"` does not set `aria-invalid`
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(InputInner);
 

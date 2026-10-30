@@ -15,15 +15,16 @@ export interface FieldContextValue {
   status: 'error' | 'success' | 'basic';
 
   /**
-   * Whether the field is disabled
-   * Disabled fields appear muted and cannot be interacted with
+   * Whether the field is disabled. Greys out the label and the control box;
+   * it does not disable the control itself, so pass `disabled` to it too
    * @default false
    */
   disabled: boolean;
 
   /**
-   * If true, clicking on FieldControl will forward focus to its child input element
-   * This enables clicking anywhere in the control area to focus the input
+   * If true, clicking anywhere in Field.Control focuses its single
+   * `forwardRef` child. Does not affect `controlRef`, which Field.Control
+   * always focuses on click
    * @default true
    */
   forwardFocus: boolean;
