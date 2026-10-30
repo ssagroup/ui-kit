@@ -2,12 +2,17 @@ import { useControllableState, useUncontrolled } from '@ssa-ui-kit/hooks';
 
 import { resolveOpenState } from '@utils/deprecation';
 
+/** One option of a FiltersMultiSelect. */
 export type Filter = {
+  /** Unique id; selected filters are matched by it. */
   id: string;
+  /** Text of the row and of its badge once selected. */
   label: string;
+  /** A select-only row (one check instead of include / exclude). */
   group?: true;
 };
 
+/** A picked filter: `'group'` for group rows, otherwise include or exclude. */
 export type SelectedFilter = Omit<Filter, 'group'> & {
   type: 'include' | 'exclude' | 'group';
 };
@@ -43,16 +48,44 @@ export interface UseFiltersMultiSelectOptions {
    * next major release.
    */
   onOpenedChange?: (open: boolean) => void;
+  /** Controlled selection; update it from `onChange`. */
   selectedFilters?: SelectedFilter[];
+  /** Initial selection, for uncontrolled use. */
   defaultSelectedFilters?: SelectedFilter[];
+  /** Controlled search text; update it from `onSearchChange`. */
   search?: string;
+  /** Initial search text, for uncontrolled use. */
   defaultSearch?: string;
+  /** Called with the whole new selection on every change. */
   onChange?: (value: SelectedFilter[]) => void;
+  /** Called when the list closes. */
   onDropdownClose?: () => void;
+  /** Called when the list opens. */
   onDropdownOpen?: () => void;
+  /** Called with the new search text as the user types. */
   onSearchChange?: (search: string) => void;
 }
 
+/**
+ * useFilterMultiSelect - State for a `FiltersMultiSelect`: selection, search
+ * text and open state, each controlled or uncontrolled.
+ *
+ * Returns the store to pass as the component's `store`:
+ * - `selectedFilters`, `search`, `open` — current state
+ * - `selectFilters(...filters)` — adds filters, or changes their `type`
+ * - `unselectFilters(...filters)` — removes the given entries; matched by
+ *   reference, so pass entries from `selectedFilters`
+ * - `isSelected(id)` — the selected entry for `id`, if any
+ * - `setSearch(text)`, `toggleDropdown(open?)`
+ *
+ * @example
+ * ```tsx
+ * const store = useFilterMultiSelect({
+ *   defaultSelectedFilters: [{ id: 'active', label: 'Active', type: 'include' }],
+ *   onChange: (filters) => console.log(filters),
+ * });
+ * ```
+ */
 export function useFilterMultiSelect(
   options: UseFiltersMultiSelectOptions = {},
 ) {

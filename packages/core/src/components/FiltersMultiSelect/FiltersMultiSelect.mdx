@@ -1,13 +1,23 @@
-import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import {
+  Meta,
+  Canvas,
+  Controls,
+  Description,
+} from '@storybook/addon-docs/blocks';
 import * as FiltersMultiSelectStories from './FiltersMultiSelect.stories';
 
 <Meta of={FiltersMultiSelectStories} />
 
 # FiltersMultiSelect
 
+A search field for building a filter set: each option can be **included** or
+**excluded**, and `group` options (saved sets, say) are simply selected. The
+picked filters show as coloured badges inside the field. For a plain
+multi-select use `MultipleDropdown` or `Typeahead`.
+
 ## Default Usage
 
-FiltersMultiSelect is a powerful filtering component that allows users to select multiple filters with include/exclude/group functionality. Perfect for data filtering interfaces where users need fine-grained control over their search criteria:
+<Description of={FiltersMultiSelectStories.Default} />
 
 ```tsx
 import {
@@ -15,113 +25,100 @@ import {
   FiltersMultiSelectOptions,
   FiltersMultiSelectOption,
   useFilterMultiSelect,
-  Filter,
+  type Filter,
 } from '@ssa-ui-kit/core';
 
-function BasicFiltersExample() {
-  const filters: Filter[] = [
-    { id: '1', label: 'Active Users' },
-    { id: '2', label: 'Premium Accounts' },
-    { id: '3', label: 'Recent Signups' },
-    { id: '4', label: 'Marketing Segment', group: true },
-    { id: '5', label: 'Mobile Users' },
-    { id: '6', label: 'High Value Customers' },
-  ];
+const filters: Filter[] = [
+  { id: 'active', label: 'Active users' },
+  { id: 'churned', label: 'Churned' },
+  { id: 'saved-vip', label: 'Saved: VIP customers', group: true },
+];
 
-  const store = useFilterMultiSelect({
-    defaultSelectedFilters: [
-      { id: '1', label: 'Active Users', type: 'include' },
-      { id: '2', label: 'Premium Accounts', type: 'exclude' },
-    ],
-    onChange: (selectedFilters) => {
-      console.log('Filters changed:', selectedFilters);
-    },
-  });
+const store = useFilterMultiSelect({
+  onChange: (selected) => console.log(selected),
+});
 
-  const filtersToShow = filters.filter((filter) =>
-    filter.label.toLowerCase().includes(store.search.toLowerCase()),
-  );
-
-  return (
-    <FiltersMultiSelect
-      store={store}
-      label="User Filters"
-      placeholder="Search filters..."
-      description="Select filters to refine your user search">
-      <FiltersMultiSelectOptions>
-        {filtersToShow.map((filter) => (
-          <FiltersMultiSelectOption key={filter.id} filter={filter}>
-            {filter.label}
-          </FiltersMultiSelectOption>
-        ))}
-      </FiltersMultiSelectOptions>
-    </FiltersMultiSelect>
-  );
-}
+<FiltersMultiSelect store={store} label="User filters">
+  <FiltersMultiSelectOptions>
+    {filters
+      .filter((filter) =>
+        filter.label.toLowerCase().includes(store.search.toLowerCase()),
+      )
+      .map((filter) => (
+        <FiltersMultiSelectOption key={filter.id} filter={filter}>
+          {filter.label}
+        </FiltersMultiSelectOption>
+      ))}
+  </FiltersMultiSelectOptions>
+</FiltersMultiSelect>;
 ```
 
-## Features
+<Canvas of={FiltersMultiSelectStories.Default} />
 
-### Include, Exclude, and Group Filters
+## Custom Content
 
-Create sophisticated filtering logic with three filter types:
+<Description of={FiltersMultiSelectStories.CustomContent} />
+<Canvas of={FiltersMultiSelectStories.CustomContent} />
+
+## Controlled Selection
+
+<Description of={FiltersMultiSelectStories.Controlled} />
 
 ```tsx
-function AdvancedFiltersExample() {
-  const productFilters: Filter[] = [
-    { id: 'electronics', label: 'Electronics' },
-    { id: 'clothing', label: 'Clothing' },
-    { id: 'books', label: 'Books' },
-    { id: 'featured', label: 'Featured Products', group: true },
-    { id: 'on-sale', label: 'On Sale' },
-    { id: 'out-of-stock', label: 'Out of Stock' },
-    { id: 'new-arrivals', label: 'New Arrivals' },
-    { id: 'clearance', label: 'Clearance Items' },
-  ];
+import { useState } from 'react';
+import { useFilterMultiSelect, type SelectedFilter } from '@ssa-ui-kit/core';
 
-  const store = useFilterMultiSelect({
-    defaultSelectedFilters: [
-      { id: 'electronics', label: 'Electronics', type: 'include' }, // Include electronics
-      { id: 'out-of-stock', label: 'Out of Stock', type: 'exclude' }, // Exclude out-of-stock
-      { id: 'featured', label: 'Featured Products', type: 'group' }, // Group featured
-    ],
-    onChange: (filters) => {
-      // Process filters for API call
-      const includeFilters = filters.filter((f) => f.type === 'include');
-      const excludeFilters = filters.filter((f) => f.type === 'exclude');
-      const groupFilters = filters.filter((f) => f.type === 'group');
+const [selected, setSelected] = useState<SelectedFilter[]>([
+  { id: 'active', label: 'Active users', type: 'include' },
+]);
+const store = useFilterMultiSelect({
+  selectedFilters: selected,
+  onChange: setSelected,
+});
 
-      console.log('Query logic:', {
-        includeFilters,
-        excludeFilters,
-        groupFilters,
-      });
-    },
-  });
-
-  return (
-    <FiltersMultiSelect
-      store={store}
-      label="Product Filters"
-      placeholder="Search categories and filters..."
-      description="Use + for include, - for exclude, and ✓ for grouped filters">
-      <FiltersMultiSelectOptions>
-        {productFilters
-          .filter((filter) =>
-            filter.label.toLowerCase().includes(store.search.toLowerCase()),
-          )
-          .map((filter) => (
-            <FiltersMultiSelectOption key={filter.id} filter={filter}>
-              {filter.label}
-            </FiltersMultiSelectOption>
-          ))}
-      </FiltersMultiSelectOptions>
-    </FiltersMultiSelect>
-  );
-}
+// Render <FiltersMultiSelect store={store}> as in Default Usage
 ```
 
-<Canvas />
-<Controls />
+<Canvas of={FiltersMultiSelectStories.Controlled} />
 
-<Stories includePrimary={false} />
+## The Store
+
+`useFilterMultiSelect` holds the selection, the search text and the open
+state; each can be controlled (`selectedFilters` / `search` / `open` with
+`onChange` / `onSearchChange` / `onOpenChange`) or seeded
+(`defaultSelectedFilters` / `defaultSearch` / `defaultOpen`).
+`onDropdownOpen` and `onDropdownClose` report the list opening and closing.
+
+| Member                        | Does                                                                        |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `selectedFilters`             | Current selection, `{ id, label, type }[]`                                  |
+| `search`                      | Current search text — filter the options with it                            |
+| `open`                        | Whether the list is open                                                    |
+| `selectFilters(...filters)`   | Adds filters, or changes the `type` of ones already selected                |
+| `unselectFilters(...filters)` | Removes entries — matched by reference, so pass ones from `selectedFilters` |
+| `isSelected(id)`              | The selected entry for `id`, if any                                         |
+| `setSearch(text)`             | Sets the search text                                                        |
+| `toggleDropdown(open?)`       | Opens, closes or toggles the list                                           |
+
+The component's own `selectedFilters` and `onChange` props drive a built-in
+store and are ignored once you pass `store`.
+
+## Keyboard and Accessibility
+
+Focus stays in the search input while the list is open; the highlighted row
+is announced through `aria-activedescendant`.
+
+| Key                     | Action                                                                      |
+| ----------------------- | --------------------------------------------------------------------------- |
+| `ArrowDown` / `ArrowUp` | Open the list; move the highlight                                           |
+| `Enter`                 | Cycle the highlighted row: none → include → exclude → none (groups: on/off) |
+| `Escape`                | Close the list and leave the input                                          |
+| `Tab`                   | Close the list and move focus on                                            |
+
+`label` names the search input. With `searchable={false}` there is no input,
+so the list can only be opened with the pointer (the badges' remove buttons
+and the clear button stay reachable with `Tab`).
+
+## Props
+
+<Controls of={FiltersMultiSelectStories.Default} />

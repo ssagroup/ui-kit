@@ -30,30 +30,113 @@ import {
 } from '@components/ContextMenu';
 import { FilterMenuItem, getMenuType, setFilterType } from './utils';
 
+/**
+ * Props for the FiltersMultiSelect component.
+ */
 export interface FiltersMultiSelectProps extends Pick<
   FieldProps,
   'status' | 'disabled'
 > {
+  /** A `FiltersMultiSelectOptions` with the `FiltersMultiSelectOption` rows. */
   children: React.ReactNode;
+  /** Helper text below the field, shown while `status` is `'basic'`. */
   description?: string;
+  /**
+   * Shown in the list when it has no options.
+   * @default 'No Items Found'
+   */
   emptyNode?: React.ReactNode;
+  /** Error message below the field, shown while `status` is `'error'`. */
   error?: string;
+  /** Element at the start of the field, before the badges. */
   icon?: React.ReactNode;
+  /**
+   * Props for the search `<input>`. `onKeyDown` runs before the component's
+   * own keyboard handling; `onChange` and `onFocus` replace the component's
+   * handlers, so the search and opening on focus stop working.
+   */
   inputProps?: InputProps['inputProps'];
+  /** Props for the underlying `Field.Root`. */
   fieldProps?: FieldProps;
+  /** Label above the field; names the search input. */
   label?: string;
+  /** Placeholder of the search input. */
   placeholder?: string;
+  /**
+   * Shows the search input. Without it the list can only be opened with the
+   * pointer.
+   * @default true
+   */
   searchable?: boolean;
+  /**
+   * Controlled selection for the built-in store. Ignored when `store` is
+   * passed — give it to `useFilterMultiSelect` instead.
+   */
   selectedFilters?: SelectedFilter[];
+  /**
+   * Store from `useFilterMultiSelect`. Needed to read `store.search` and
+   * filter the options, and to change the selection or open state from
+   * outside. Without it the component keeps its own store.
+   */
   store?: UseFiltersMultiSelectStore;
+  /** Success message below the field, shown while `status` is `'success'`. */
   success?: string;
+  /** Class name for every selected-filter badge. */
   badgeClassName?: string;
+  /** Class name for the search input. */
   inputClassName?: string;
+  /** Class name for the bordered box around the badges and the input. */
   wrapperClassName?: string;
+  /**
+   * Called with the whole new selection on every change, for the built-in
+   * store. Ignored when `store` is passed — give it to `useFilterMultiSelect`
+   * instead.
+   */
   onChange?: (value: SelectedFilter[]) => void;
+  /** React Hook Form `register`, applied to the search input. */
   register?: UseFormReturn['register'];
 }
 
+/**
+ * FiltersMultiSelect - Search field for building an include / exclude filter
+ * set.
+ *
+ * Each `FiltersMultiSelectOption` row can be included (+) or excluded (−);
+ * `group` rows are selected with a single check. The selection shows as
+ * badges coloured by type inside the field. The component does not filter
+ * the options: read `store.search` from a `useFilterMultiSelect` store and
+ * render the matching rows.
+ *
+ * @category Form Controls
+ * @subcategory Selection
+ *
+ * @example
+ * ```tsx
+ * const store = useFilterMultiSelect({ onChange: setSelected });
+ *
+ * <FiltersMultiSelect store={store} label="Filters">
+ *   <FiltersMultiSelectOptions>
+ *     {filters
+ *       .filter((filter) => filter.label.includes(store.search))
+ *       .map((filter) => (
+ *         <FiltersMultiSelectOption key={filter.id} filter={filter}>
+ *           {filter.label}
+ *         </FiltersMultiSelectOption>
+ *       ))}
+ *   </FiltersMultiSelectOptions>
+ * </FiltersMultiSelect>
+ * ```
+ *
+ * @see {@link useFilterMultiSelect} - The store
+ * @see {@link FiltersMultiSelectOptions} - The options list
+ *
+ * @accessibility
+ * - Focus stays in the search input; the highlighted row is announced
+ *   through `aria-activedescendant`
+ * - Arrow keys open the list and move the highlight; Enter cycles the row
+ *   none → include → exclude → none (group rows: none ⇄ selected)
+ * - Escape and Tab close the list
+ */
 export const FiltersMultiSelect = ({
   children,
   description,
