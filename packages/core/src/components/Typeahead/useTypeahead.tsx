@@ -10,7 +10,7 @@ import {
   getContextMenuOptionId,
   getNextActiveValue,
 } from '@components/ContextMenu';
-import { flattenItems } from '@components/ContextMenu/utils';
+import { asText, flattenItems } from '@components/ContextMenu/utils';
 import {
   TypeaheadOptionGroup,
   TypeaheadOptionGroupProps,
@@ -93,6 +93,7 @@ export const useTypeahead = ({
   placeholder,
   filterOptions = true,
   autoSelect = true,
+  searchByGroup = false,
   allowCustomValues = false,
   onChange,
   onClearAll,
@@ -183,7 +184,8 @@ export const useTypeahead = ({
   }, [isMultiple, rawInput, selectedItems, optionsWithKey]);
 
   // Options and groups left after filtering; a group keeps only its matching
-  // options and is dropped, title and all, when none match.
+  // options and is dropped, title and all, when none match. With
+  // searchByGroup, a group whose title matches is kept whole.
   const filteredEntries = useMemo(() => {
     // if filtering is disabled, or there's no input, show all
     if (!filterOptions || !inputValue) return toOptionEntries(children);
@@ -195,14 +197,19 @@ export const useTypeahead = ({
       const text = (label ?? value)?.toString().toLowerCase() || '';
       return text.includes(needle);
     };
+    const groupMatches = ({ textValue, label }: TypeaheadOptionGroupProps) =>
+      String(textValue ?? asText(label) ?? '')
+        .toLowerCase()
+        .includes(needle);
     return toOptionEntries(children).flatMap((child) => {
       if (!isOptionGroup(child)) return matches(child) ? [child] : [];
+      if (searchByGroup && groupMatches(child.props)) return [child];
       const options = toOptionEntries(child.props.children).filter(matches);
       return options.length
         ? [React.cloneElement(child, { children: options })]
         : [];
     });
-  }, [children, inputValue]);
+  }, [children, inputValue, filterOptions, searchByGroup]);
 
   const filteredChildren = useMemo(
     () => toOptionArray(filteredEntries),
