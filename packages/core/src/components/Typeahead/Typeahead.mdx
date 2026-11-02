@@ -268,6 +268,36 @@ import {
 </Typeahead>;
 ```
 
+### Search by group title
+
+Set `searchByGroup` to match the input against group titles as well. A group
+whose title matches is shown with all of its options; other groups are still
+filtered by option label. It is off by default. A title that is not a string
+or number (an icon plus text, say) is matched through the group's `textValue`.
+
+```tsx
+<Typeahead name="ingredients" label="Ingredients" isMultiple searchByGroup>
+  <TypeaheadOptionGroup label="Fruits">
+    <TypeaheadOption value="apple" label="Apple">
+      Apple
+    </TypeaheadOption>
+  </TypeaheadOptionGroup>
+  <TypeaheadOptionGroup
+    label={
+      <>
+        <Icon name="star" size={12} /> Vegetables
+      </>
+    }
+    textValue="Vegetables">
+    <TypeaheadOption value="carrot" label="Carrot">
+      Carrot
+    </TypeaheadOption>
+  </TypeaheadOptionGroup>
+</Typeahead>;
+```
+
+Typing `veg` shows the whole Vegetables group; typing `app` shows only Apple.
+
 ### Event Handling
 
 Handle various events and user interactions:

@@ -213,6 +213,15 @@ export interface TypeaheadProps {
   autoSelect?: boolean;
 
   /**
+   * Also match the input against `TypeaheadOptionGroup` titles. A group whose
+   * title matches is shown with all of its options; otherwise only its
+   * matching options are shown, as usual. A title that is not a string or
+   * number is matched through the group's `textValue`.
+   * @default false
+   */
+  searchByGroup?: boolean;
+
+  /**
    * Allow adding custom values not in the options list.
    * When true, the current input is shown as the first dropdown option (highlighted)
    * and can be selected or added with Enter.
@@ -285,6 +294,7 @@ export type UseTypeaheadProps = Pick<
   | 'placeholder'
   | 'filterOptions'
   | 'autoSelect'
+  | 'searchByGroup'
   | 'allowCustomValues'
   | 'label'
 >;

@@ -860,3 +860,36 @@ Groups.args = {
   isMultiple: true,
   defaultValue: ['banana'],
 };
+
+/**
+ * With `searchByGroup`, the input is matched against group titles too: a group
+ * whose title matches is shown with all of its options. A title that is not
+ * plain text is matched through the group's `textValue`.
+ */
+export const SearchByGroup: StoryObj = (args: TypeaheadProps) => (
+  <Typeahead
+    {...args}
+    label="Ingredients"
+    placeholder="Search ingredients"
+    helperText="Try typing “veg”">
+    {groupedItems.map((group) => (
+      <TypeaheadOptionGroup key={group.label} label={group.label}>
+        {group.items.map((item) => (
+          <TypeaheadOption
+            key={item.value}
+            value={item.value}
+            label={item.label}
+            disabled={item.disabled}>
+            {item.label}
+          </TypeaheadOption>
+        ))}
+      </TypeaheadOptionGroup>
+    ))}
+  </Typeahead>
+);
+
+SearchByGroup.args = {
+  disabled: false,
+  isMultiple: true,
+  searchByGroup: true,
+};

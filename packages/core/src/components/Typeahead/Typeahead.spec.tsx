@@ -737,5 +737,75 @@ describe('Typeahead Component', () => {
 
       expect(onChange).toHaveBeenCalledWith('carrot', true);
     });
+
+    describe('searchByGroup', () => {
+      const renderSearchable = (searchByGroup?: boolean) => {
+        const { container } = render(
+          <Typeahead name="food" label="Food" searchByGroup={searchByGroup}>
+            <TypeaheadOptionGroup label="Fruits">
+              <TypeaheadOption value="apple" label="Apple">
+                Apple
+              </TypeaheadOption>
+              <TypeaheadOption value="banana" label="Banana">
+                Banana
+              </TypeaheadOption>
+            </TypeaheadOptionGroup>
+            <TypeaheadOptionGroup
+              label={<strong>Vegetables</strong>}
+              textValue="Greens">
+              <TypeaheadOption value="carrot" label="Carrot">
+                Carrot
+              </TypeaheadOption>
+            </TypeaheadOptionGroup>
+          </Typeahead>,
+        );
+        const input = container.querySelector(
+          '.typeahead-input',
+        ) as HTMLInputElement;
+        return { user: userEvent.setup(), input };
+      };
+
+      it('ignores group titles by default', async () => {
+        const { user, input } = renderSearchable();
+
+        await user.type(input, 'fru');
+
+        expect(screen.queryByRole('group')).not.toBeInTheDocument();
+        expect(screen.queryByRole('option')).not.toBeInTheDocument();
+      });
+
+      it('shows a whole group when its title matches', async () => {
+        const { user, input } = renderSearchable(true);
+
+        await user.type(input, 'fru');
+
+        const groups = screen.getAllByRole('group');
+        expect(groups).toHaveLength(1);
+        expect(groups[0]).toHaveAccessibleName('Fruits');
+        expect(
+          screen.getAllByRole('option').map((option) => option.textContent),
+        ).toEqual(['Apple', 'Banana']);
+      });
+
+      it('still filters options of groups whose title does not match', async () => {
+        const { user, input } = renderSearchable(true);
+
+        await user.type(input, 'ban');
+
+        expect(
+          screen.getAllByRole('option').map((option) => option.textContent),
+        ).toEqual(['Banana']);
+      });
+
+      it('matches a node title through textValue', async () => {
+        const { user, input } = renderSearchable(true);
+
+        await user.type(input, 'green');
+
+        expect(
+          screen.getAllByRole('option').map((option) => option.textContent),
+        ).toEqual(['Carrot']);
+      });
+    });
   });
 });
