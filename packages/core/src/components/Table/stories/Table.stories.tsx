@@ -129,7 +129,8 @@ TableResizableColumns.parameters = {
     description: {
       story:
         'Drag the right edge of any header cell to resize its column. Width ' +
-        'is traded with the column to the right, so the table stays exactly ' +
+        'is shared with the columns to the right, in proportion to their ' +
+        'width, so the table stays exactly ' +
         'as wide as it was and nothing around it reflows — the last column ' +
         'has nothing to trade with and so has no handle. The handles are ' +
         'keyboard operable: Tab to one, then Left/Right to resize in 8px ' +

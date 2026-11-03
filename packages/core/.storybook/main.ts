@@ -5,6 +5,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import initWebpackConfig from '../webpack.config.js';
 import initBabelConfig from '../../../babel.config.js';
 import webpack from 'webpack';
+import remarkGfm from 'remark-gfm';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,7 +21,14 @@ const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.mdx'],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-docs',
+    {
+      // MDX 3 drops GitHub-flavoured markdown, so without this every `| a | b |`
+      // table in a docs page renders as one run-on paragraph.
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } },
+      },
+    },
     'storybook-addon-pseudo-states',
     '@storybook/addon-mcp',
   ],

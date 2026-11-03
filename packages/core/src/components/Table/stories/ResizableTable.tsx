@@ -44,7 +44,7 @@ const headerRow = (
 );
 
 /**
- * The default: a resize trades width with the next column, so the table stays
+ * The default: a resize trades width with the columns to the right, so the table stays
  * exactly as wide as its container and nothing around it moves. The last column
  * has nothing to trade with and so has no handle.
  */

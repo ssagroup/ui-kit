@@ -33,11 +33,10 @@ export interface TableCellHeaderProps extends TableCellProps {
    * `resizableColumns`. Set it to `false` to pin a column — an actions or
    * checkbox column, typically — at a width the user cannot change.
    *
-   * In the default `fit` mode this also removes the handle from the column to
-   * its *left*, because that handle resizes by trading width with this one and
-   * would otherwise move a column the user was told they could not move. In
-   * `expand` mode nothing pays for a resize, so only this column's own handle
-   * goes.
+   * In the default `fit` mode this column also keeps its width when a column
+   * to its left is resized: the other columns to the right absorb the change,
+   * and a handle with no such column left is hidden. In `expand` mode nothing
+   * pays for a resize, so only this column's own handle goes.
    *
    * Ignored outside a resizable table.
    *
@@ -54,6 +53,18 @@ export interface TableCellHeaderProps extends TableCellProps {
    * @default true
    */
   freezable?: boolean;
+
+  /**
+   * Narrowest this column can be resized to, in pixels, inside a `Table` with
+   * `resizableColumns`. Overrides the table's `minColumnWidth`.
+   */
+  minWidth?: number;
+
+  /**
+   * Widest this column can be resized to, in pixels, inside a `Table` with
+   * `resizableColumns`. Overrides the table's `maxColumnWidth`.
+   */
+  maxWidth?: number;
 
   /**
    * Stable id for this column, used by `frozenColumns` on the `Table`. Give

@@ -13,6 +13,9 @@ Use `DataTable` for interactive data tables. For a static table whose markup
 you write by hand, use `Table` and its row and cell components, which
 `DataTable` is built from.
 
+Coming from `Table`'s column props or from `NestedTable`? See the
+[migration guide](?path=/docs/components-datatable-migration-guide--docs).
+
 ## Default Usage
 
 ```tsx
@@ -29,11 +32,22 @@ const columns: DataTableColumn<Employee>[] = [
   },
 ];
 
-<DataTable data={employees} columns={columns} getRowId={(row) => row.id} />;
+<DataTable data={employees} columns={columns} />;
 ```
 
-Give `getRowId` whenever rows have an id. Rows are keyed by it; without it they
-are keyed by position, and their cells remount whenever the order changes.
+Rows are keyed by their `id` field. Selection and expanded rows are kept as
+these ids. When the id lives elsewhere, say so with `getRowId`:
+
+```tsx
+<DataTable
+  data={contracts}
+  columns={columns}
+  getRowId={(row) => row.contractNumber}
+/>
+```
+
+Rows with neither are keyed by position, and their cells remount whenever the
+order changes.
 
 `columns` does not need to be memoised. The table rebuilds its model only when
 column ids or sort settings change, and always renders the latest `header` and
@@ -43,18 +57,22 @@ column ids or sort settings change, and always renders the latest `header` and
 
 ### Columns
 
-| Field       | Description                                                                         |
-| ----------- | ----------------------------------------------------------------------------------- |
-| `id`        | Stable, unique id. Column state and the sort refer to columns by it.                |
-| `header`    | Header content.                                                                     |
-| `cell`      | `(row, rowIndex) => ReactNode`; `rowIndex` is the position as shown, after sorting. |
-| `align`     | `'left'` (default), `'center'` or `'right'`, for header and body cells.             |
-| `sortable`  | Clicking the header sorts by this column.                                           |
-| `sortKey`   | The server's name for the column, passed to `onSortChange`. Defaults to `id`.       |
-| `sortFn`    | Ascending comparator; sorts the rows in the browser.                                |
-| `width`     | Starting width in pixels. Columns without one are measured on first layout.         |
-| `resizable` | `false` keeps the user from resizing it, for actions or checkbox columns.           |
-| `freezable` | `false` removes the freeze menu from its header.                                    |
+| Field         | Description                                                                         |
+| ------------- | ----------------------------------------------------------------------------------- |
+| `id`          | Stable, unique id. Column state and the sort refer to columns by it.                |
+| `header`      | Header content.                                                                     |
+| `cell`        | `(row, rowIndex) => ReactNode`; `rowIndex` is the position as shown, after sorting. |
+| `align`       | `'left'` (default), `'center'` or `'right'`, for header and body cells.             |
+| `sortable`    | Clicking the header sorts by this column.                                           |
+| `sortKey`     | The server's name for the column, passed to `onSortChange`. Defaults to `id`.       |
+| `sortFn`      | Ascending comparator; sorts the rows in the browser.                                |
+| `width`       | Starting width in pixels. Columns without one are measured on first layout.         |
+| `minWidth`    | Narrowest the user can resize it to. Overrides the table's `minColumnWidth`.        |
+| `maxWidth`    | Widest the user can resize it to. Overrides the table's `maxColumnWidth`.           |
+| `resizable`   | `false` keeps the user from resizing it, for actions or checkbox columns.           |
+| `freezable`   | `false` takes the freeze actions out of its header menu.                            |
+| `reorderable` | `false` keeps the column in place when `reorderableColumns` is on.                  |
+| `hideable`    | `false` keeps the column on screen: no "Hide column", locked in the picker.         |
 
 ### Sorting
 
@@ -117,9 +135,146 @@ control it. Partial values are fine; missing parts fall back to defaults:
 />
 ```
 
-`columnResizeMode`, `minColumnWidth` and `maxColumnWidth` work as on `Table`.
-In the default `fit` mode the column to the right gives up the width the dragged
-column gains; `expand` grows the table instead.
+#### Resize modes
+
+`columnResizeMode` decides what a resize does to the rest of the table:
+
+- `fit` (default): the table keeps its width. The resizable columns to the
+  right of the dragged one share the change, each in proportion to its width,
+  and one that reaches its limit leaves the rest to the others. The last column
+  has no handle.
+- `expand`: the other columns keep their widths, and the table grows or
+  shrinks and scrolls sideways.
+
+The Column Features story puts resizing, freezing, reordering and hiding on
+one table, with a switch between the two modes.
+
+Limits apply in both modes: `minColumnWidth` and `maxColumnWidth` for the whole
+table, and `minWidth` and `maxWidth` on a column for its own:
+
+```tsx
+const columns: DataTableColumn<Employee>[] = [
+  { id: 'name', header: 'Name', cell: (row) => row.name, minWidth: 200 },
+  { id: 'salary', header: 'Salary', cell: renderSalary, maxWidth: 220 },
+  // ...
+];
+```
+
+### Reordering columns
+
+`reorderableColumns` lets the user move columns. They drag the grip that shows
+at the left of a header on hover, or use "Move left" and "Move right" in the
+header menu, which is the keyboard route. The new order is written to
+`columnState.order`, so it is stored along with the rest of the layout:
+
+```tsx
+<DataTable
+  data={rows}
+  columns={columns}
+  reorderableColumns
+  freezeControls
+  defaultColumnState={loadLayout()}
+  onColumnStateChange={saveLayout}
+/>
+```
+
+A column moves only among columns in the same freeze zone: those frozen to the
+left, those frozen to the right, or the ones that scroll. Freezing never moves
+a column, so frozen columns keep the places they stick from. A column with
+`reorderable: false` keeps its place too; the others move past it, which suits
+a checkbox or actions column. A column with nowhere to go, such as the only
+column frozen to an edge, shows its grip faded and does not drag. Escape
+cancels a drag.
+
+### Selection
+
+`selectionMode="multiple"` adds a checkbox column. The header checkbox selects
+or clears the rows on screen, and shows a partial state when only some are
+selected. `"single"` puts a radio in each row instead. The selection is a list
+of row ids, so rows selected on another page stay selected:
+
+```tsx
+const [selected, setSelected] = useState<string[]>([]);
+
+<DataTable
+  data={pageRows}
+  columns={columns}
+  selectionMode="multiple"
+  selectedRowIds={selected}
+  onSelectionChange={setSelected}
+  isRowSelectable={(row) => row.status !== 'Archived'}
+  getRowLabel={(row) => `Select ${row.name}`}
+/>;
+```
+
+`isRowSelectable` disables a row's checkbox and leaves it out of select-all.
+In a tree, a row it rejects that has selectable rows below it keeps its
+checkbox as a way to select them, but its own id never joins the selection.
+`getRowLabel` names each checkbox for screen readers; without it, rows are
+named by position ("Select row 3"). Clicking a checkbox never triggers
+`onRowClick`. If the first column is frozen to the left, the selection column
+stays frozen with it.
+
+### Nested rows
+
+`getSubRows` nests rows under rows, to any depth. Rows with children get an
+expand button in a narrow column at the start, a grey background and bold
+text; children are indented under them. The rows start collapsed. Pass
+`defaultExpanded` (`true` for all, or a list of ids), or control it with
+`expandedRowIds` and `onExpandedChange`:
+
+```tsx
+<DataTable
+  data={departments}
+  columns={columns}
+  getSubRows={(row) => row.members}
+  defaultExpanded
+/>
+```
+
+Every row in the tree needs a unique id. A child with no `id` of its own, and
+no `getRowId`, is keyed under its parent (`"2.0"`). A sorted column sorts each
+row's children among themselves, so children always stay under their parent.
+If the first column is frozen to the left, the expand column stays frozen with
+it. Resizing, freezing, reordering and hiding work on nested tables as on flat
+ones; the second table in the Nested Rows story shows them together.
+
+With `selectionMode="multiple"`, selecting a row selects everything under it.
+A row with only some of its children selected shows a partial check, and the
+header checkbox covers collapsed rows too. The selected ids list every
+selected row, parents included.
+
+This replaces `NestedTable`: its groups become rows with `getSubRows`, and
+`defaultCollapsed={false}` becomes `defaultExpanded`.
+
+### Hiding columns
+
+`hideableColumns` adds "Hide column" to the header menu. Hidden columns are kept
+in `columnState.hidden`. To bring them back, place a `DataTableColumnPicker`
+wherever the page keeps its table controls, and share a controlled column
+state between the two:
+
+```tsx
+const [columnState, setColumnState] = useState<Partial<DataTableColumnState>>(
+  {},
+);
+
+<DataTableColumnPicker
+  columns={columns}
+  columnState={columnState}
+  onColumnStateChange={setColumnState}
+/>
+<DataTable
+  data={rows}
+  columns={columns}
+  hideableColumns
+  columnState={columnState}
+  onColumnStateChange={setColumnState}
+/>
+```
+
+The picker lists columns in display order. Columns with `hideable: false`
+can't be cleared, and neither can the last column on screen.
 
 ### Sticky header
 

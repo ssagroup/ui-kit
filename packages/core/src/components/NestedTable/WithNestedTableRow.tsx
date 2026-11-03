@@ -16,6 +16,10 @@ import { WithNestedTableRowProps } from './types';
  * and ignores `defaultCollapsed` — otherwise it could start collapsed with no
  * way to reopen it.
  *
+ * @deprecated Use `DataTable` with `getSubRows` instead: it nests rows from
+ * data, to any depth, with accessible expand buttons. `NestedTable` is
+ * removed in the next major release.
+ *
  * @category Components
  * @subcategory Data Display
  *

@@ -219,7 +219,7 @@ describe('NestedTable columns', () => {
       fireEvent.keyDown(screen.getAllByRole('separator')[0], {
         key: 'ArrowRight',
       });
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([208, 192, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([208, 196, 196]);
     });
   });
 });

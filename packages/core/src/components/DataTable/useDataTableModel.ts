@@ -2,14 +2,16 @@ import { useMemo, useRef } from 'react';
 import {
   columnOrderingFeature,
   columnVisibilityFeature,
+  createExpandedRowModel,
   createSortedRowModel,
+  rowExpandingFeature,
   rowSortingFeature,
   tableFeatures,
   useTable,
   type RowData,
 } from '@tanstack/react-table';
 import { DataTableColumn, DataTableColumnState, DataTableSort } from './types';
-import { getColumnsSignature } from './utils';
+import { getColumnsSignature, getOwnRowId } from './utils';
 
 // Module scope: TanStack rebuilds its models whenever this object changes.
 const features = tableFeatures({
@@ -17,12 +19,17 @@ const features = tableFeatures({
   sortedRowModel: createSortedRowModel(),
   columnOrderingFeature,
   columnVisibilityFeature,
+  rowExpandingFeature,
+  expandedRowModel: createExpandedRowModel(),
 });
 
 interface UseDataTableModelOptions<Row> {
   data: Row[];
   columns: DataTableColumn<Row>[];
   getRowId?: (row: Row, index: number) => string;
+  getSubRows?: (row: Row) => Row[] | undefined;
+  /** Ids of the expanded rows, or `true` for all of them. */
+  expanded: true | string[];
   columnState: DataTableColumnState;
   sort: DataTableSort | null;
 }
@@ -31,6 +38,17 @@ interface UseDataTableModelOptions<Row> {
 export interface DataTableModelRow<Row> {
   id: string;
   original: Row;
+  /** 0 for a top-level row, 1 for its children, and so on. */
+  depth: number;
+  hasChildren: boolean;
+  isExpanded: boolean;
+}
+
+/** Where a row sits in the tree, expanded or not. */
+export interface DataTableTreeNode<Row> {
+  original: Row;
+  parentId?: string;
+  childIds: string[];
 }
 
 /**
@@ -41,6 +59,8 @@ export const useDataTableModel = <Row>({
   data,
   columns,
   getRowId,
+  getSubRows,
+  expanded,
   columnState,
   sort,
 }: UseDataTableModelOptions<Row>) => {
@@ -50,6 +70,17 @@ export const useDataTableModel = <Row>({
   columnsRef.current = columns;
   const getRowIdRef = useRef(getRowId);
   getRowIdRef.current = getRowId;
+  const getSubRowsRef = useRef(getSubRows);
+  getSubRowsRef.current = getSubRows;
+  const hasSubRows = !!getSubRows;
+  // Stable, so TanStack does not rebuild the tree for an inline function.
+  const subRowsAccessor = useMemo(
+    () =>
+      hasSubRows
+        ? (row: RowData) => getSubRowsRef.current?.(row as Row) as RowData[]
+        : undefined,
+    [hasSubRows],
+  );
 
   const signature = getColumnsSignature(columns);
   const columnDefs = useMemo(
@@ -74,6 +105,13 @@ export const useDataTableModel = <Row>({
       sort ? [{ id: sort.columnId, desc: sort.direction === 'desc' }] : [],
     [sort],
   );
+  const expandedState = useMemo(
+    () =>
+      expanded === true
+        ? true
+        : Object.fromEntries(expanded.map((id) => [id, true])),
+    [expanded],
+  );
   const columnVisibility = useMemo(
     () => Object.fromEntries(columnState.hidden.map((id) => [id, false])),
     [columnState.hidden],
@@ -90,12 +128,20 @@ export const useDataTableModel = <Row>({
     // TanStack wants object rows; ours are, but the public generic stays
     // unconstrained so its types never leak out.
     data: data as unknown as RowData[],
-    getRowId: (row: RowData, index: number) =>
-      getRowIdRef.current?.(row as Row, index) ?? String(index),
+    // getRowId wins, then the row's own `id`. Without either, a child is
+    // keyed under its parent, so ids stay unique across the tree.
+    getRowId: (row: RowData, index: number, parent?: { id: string }) =>
+      getRowIdRef.current?.(row as Row, index) ??
+      getOwnRowId(row) ??
+      (parent ? `${parent.id}.${index}` : String(index)),
+    getSubRows: subRowsAccessor,
+    // The expanded state is ours; never let new data reset it.
+    autoResetExpanded: false,
     // Rows arrive sorted unless the sorted column sorts them itself.
     manualSorting: !sortedColumn?.sortFn,
     state: {
       sorting,
+      expanded: expandedState,
       columnOrder: columnState.order,
       columnVisibility,
     },
@@ -110,7 +156,22 @@ export const useDataTableModel = <Row>({
     .rows.map((row) => ({
       id: row.id,
       original: row.original as Row,
+      depth: row.depth,
+      hasChildren: row.subRows.length > 0,
+      isExpanded: row.subRows.length > 0 && row.getIsExpanded(),
     }));
 
-  return { visibleColumns, rows };
+  // Every row, shown or collapsed away, for selection to cascade through.
+  const tree = new Map<string, DataTableTreeNode<Row>>(
+    table.getCoreRowModel().flatRows.map((row) => [
+      row.id,
+      {
+        original: row.original as Row,
+        parentId: row.parentId,
+        childIds: row.subRows.map((child) => child.id),
+      },
+    ]),
+  );
+
+  return { visibleColumns, rows, tree };
 };

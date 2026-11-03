@@ -142,9 +142,12 @@ const TableBase = styled.table<TableBaseProps>`
         display: none;
       }
 
-      /* Same reasoning one column over: a pinned column may not be resized, so
-         the handle to its left has nothing it is allowed to trade with. */
-      & thead th:has(+ th[data-column-pinned='true']) > [role='separator'] {
+      /* Same reasoning when every column to the right is pinned: those may not
+         be resized, so the handle has nothing it is allowed to trade with. */
+      &
+        thead
+        th:not(:has(~ th:not([data-column-pinned='true'])))
+        > [role='separator'] {
         display: none;
       }
     `}

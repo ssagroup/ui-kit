@@ -6,6 +6,15 @@ import { DOCUMENTED_TABLE_PROPS } from './consts';
 
 # Table
 
+> **Column features are deprecated on `Table`.** `resizableColumns`,
+> `columnWidths`, `frozenColumns`, `freezeControls`, `stickyHeader` and the
+> other column props move to
+> [`DataTable`](?path=/docs/components-datatable--docs), which keeps them by
+> column id and adds sorting, reordering, selection and nested rows. They are
+> removed from `Table` in the next major release. `Table` and its row and cell
+> components stay, for tables you write by hand. See the
+> [migration guide](?path=/docs/components-datatable-migration-guide--docs).
+
 ## Default Usage
 
 The Table component provides a flexible and styled table foundation for displaying tabular data. It works in conjunction with related table components to create complete data tables with features like sorting, styling, and responsive behavior:
@@ -390,6 +399,9 @@ function ResponsiveTable() {
 
 ### Frozen Columns and Sticky Header
 
+> Deprecated on `Table`: use `DataTable`'s `freezeControls`, `columnState.frozen`
+> and `stickyHeader` instead.
+
 Wrap the table in `TableContainer` so it scrolls inside its parent instead of
 overflowing it. `frozenColumns` freezes any column to the left or right edge:
 it stays where it is until scrolling would take it out of view, then sticks
@@ -416,7 +428,7 @@ import { TableContainer } from '@ssa-ui-kit/core';
     </TableHead>
     <TableBody>{/* ... */}</TableBody>
   </Table>
-</TableContainer>
+</TableContainer>;
 ```
 
 Columns are named by the `columnId` of their header cells, so frozen state

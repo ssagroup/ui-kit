@@ -5,6 +5,12 @@ import { ColumnResizeMode } from '@components/Table/types';
 export type DataTableSortDirection = 'asc' | 'desc';
 
 /**
+ * How many rows of a {@link DataTable} the user can select: `multiple` adds a
+ * checkbox column with a select-all checkbox, `single` a radio column.
+ */
+export type DataTableSelectionMode = 'none' | 'single' | 'multiple';
+
+/**
  * The column a {@link DataTable} is sorted by. One column at a time; `null`
  * when the rows are in the order they were given.
  */
@@ -74,6 +80,16 @@ export interface DataTableColumn<Row> {
    */
   width?: number;
   /**
+   * Narrowest the user can resize this column to, in pixels. Overrides the
+   * table's `minColumnWidth`.
+   */
+  minWidth?: number;
+  /**
+   * Widest the user can resize this column to, in pixels. Overrides the
+   * table's `maxColumnWidth`.
+   */
+  maxWidth?: number;
+  /**
    * Whether the user can resize this column, in a table with
    * `resizableColumns`. Turn it off for actions or checkbox columns.
    * @default true
@@ -85,6 +101,20 @@ export interface DataTableColumn<Row> {
    * @default true
    */
   freezable?: boolean;
+  /**
+   * Whether the user can move this column, in a table with
+   * `reorderableColumns`. A column that cannot move keeps its place, and the
+   * others move past it.
+   * @default true
+   */
+  reorderable?: boolean;
+  /**
+   * Whether the user can hide this column, from its header menu in a table
+   * with `hideableColumns`, or from `DataTableColumnPicker`. The column can
+   * still be hidden through `columnState`.
+   * @default true
+   */
+  hideable?: boolean;
 }
 
 /**
@@ -111,7 +141,7 @@ export interface DataTableColumnState {
  *
  * @example
  * ```tsx
- * <DataTable data={rows} columns={columns} getRowId={(row) => row.id} />
+ * <DataTable data={rows} columns={columns} />
  * ```
  */
 export interface DataTableProps<Row> {
@@ -124,8 +154,14 @@ export interface DataTableProps<Row> {
    */
   columns: DataTableColumn<Row>[];
   /**
-   * Stable id of a row. Used as its React key; without it rows are keyed by
-   * position, which remounts cells whenever the order changes.
+   * Stable id of a row, for rows whose id is not in an `id` field, such as
+   * `employeeId` or a key built from several fields. Rows are keyed by it
+   * and selection and expanded state refer to it.
+   *
+   * Without it, a row's own `id` (string or number) is used. Rows without
+   * either are keyed by position, children under their parent (`"2.0"`),
+   * which remounts cells whenever the order changes.
+   * @default (row) => String(row.id)
    */
   getRowId?: (row: Row, index: number) => string;
 
@@ -139,7 +175,7 @@ export interface DataTableProps<Row> {
   defaultColumnState?: Partial<DataTableColumnState>;
   /**
    * Called whenever the user changes the layout: on every frame of a resize
-   * drag, and when freezing or unfreezing. Not called for widths the table
+   * drag, when moving or hiding a column, and when freezing or unfreezing. Not called for widths the table
    * measures itself on first layout.
    */
   onColumnStateChange?: (columnState: DataTableColumnState) => void;
@@ -150,22 +186,43 @@ export interface DataTableProps<Row> {
    */
   resizableColumns?: boolean;
   /**
-   * How a resize spends width; see `Table`'s `columnResizeMode`.
+   * How a resize spends width. `fit` keeps the table's width: the resizable
+   * columns to the right share the change, in proportion to their widths.
+   * `expand` grows or shrinks the table instead, so it scrolls sideways.
    * @default 'fit'
    */
   columnResizeMode?: ColumnResizeMode;
   /**
-   * Narrowest a column can be resized to, in pixels.
+   * Narrowest a column can be resized to, in pixels. A column's own
+   * `minWidth` wins.
    * @default 64
    */
   minColumnWidth?: number;
-  /** Widest a column can be resized to, in pixels. Unbounded when omitted. */
+  /**
+   * Widest a column can be resized to, in pixels. A column's own `maxWidth`
+   * wins. Unbounded when omitted.
+   */
   maxColumnWidth?: number;
   /**
    * Gives every header a menu to freeze its column to either edge.
    * @default false
    */
   freezeControls?: boolean;
+  /**
+   * Lets the user move columns: by dragging the grip at the left of the
+   * header, or with "Move left" and "Move right" in the header menu. A column
+   * moves only among columns frozen to the same edge, or among the unfrozen
+   * ones. The order is kept in `columnState.order`.
+   * @default false
+   */
+  reorderableColumns?: boolean;
+  /**
+   * Adds "Hide column" to the header menu. The last visible column cannot be
+   * hidden. Hidden columns are kept in `columnState.hidden`; bring them back
+   * with `DataTableColumnPicker`.
+   * @default false
+   */
+  hideableColumns?: boolean;
   /**
    * Keeps the header in view while the rows scroll. Give the table a height
    * limit through `maxHeight`.
@@ -218,6 +275,61 @@ export interface DataTableProps<Row> {
     row: Row,
     event: MouseEvent<HTMLTableRowElement> | KeyboardEvent<HTMLTableRowElement>,
   ) => void;
+  /**
+   * Children of a row, shown nested under it, to any depth. Rows with
+   * children get an expand button in a column at the start, and their own
+   * styling; children are indented. A sorted column sorts the children of
+   * each row among themselves.
+   *
+   * @example
+   * ```ts
+   * getSubRows: (team) => team.members
+   * ```
+   */
+  getSubRows?: (row: Row) => Row[] | undefined;
+  /** Ids of the expanded rows, for the controlled case. */
+  expandedRowIds?: string[];
+  /**
+   * Which rows start expanded, for the uncontrolled case: `true` for all,
+   * including rows that arrive later, or a list of ids.
+   * @default false
+   */
+  defaultExpanded?: boolean | string[];
+  /** Called with the ids of the expanded rows whenever the user changes them. */
+  onExpandedChange?: (expandedRowIds: string[]) => void;
+
+  /**
+   * Lets the user select rows: `multiple` adds a checkbox column whose header
+   * checkbox selects or clears the rows shown, `single` a radio column.
+   * With `getSubRows`, selecting a row selects everything under it, and a
+   * row with some of its children selected shows a partial check.
+   * Selection is kept as row ids (see `getRowId`), so rows selected on
+   * another page stay selected.
+   * @default 'none'
+   */
+  selectionMode?: DataTableSelectionMode;
+  /** Ids of the selected rows, for the controlled case. */
+  selectedRowIds?: string[];
+  /** Ids of the rows selected at first, for the uncontrolled case. */
+  defaultSelectedRowIds?: string[];
+  /** Called with the ids of the selected rows whenever the user changes them. */
+  onSelectionChange?: (selectedRowIds: string[]) => void;
+  /**
+   * Whether a row can be selected. Rows that cannot get a disabled checkbox
+   * and are skipped by the header checkbox.
+   *
+   * With `getSubRows`, a row that cannot be selected but has rows below it
+   * that can keeps an enabled checkbox, which selects those rows. Its own id
+   * is never in the selection, even when its checkbox shows checked.
+   */
+  isRowSelectable?: (row: Row) => boolean;
+  /**
+   * Accessible name of a row's selection checkbox, such as the person's
+   * name. Without it the row is named by its position.
+   * @default (row, rowIndex) => `Select row ${rowIndex + 1}`
+   */
+  getRowLabel?: (row: Row, rowIndex: number) => string;
+
   /** Rendered below the table, such as `Pagination`. */
   footer?: ReactNode;
 

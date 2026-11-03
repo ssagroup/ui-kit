@@ -5,6 +5,13 @@ import * as NestedTableStories from './NestedTable.stories';
 
 # NestedTable
 
+> **Deprecated.** Use [`DataTable`](?path=/docs/components-datatable--docs)
+> with `getSubRows` instead. It builds the nesting from data, to any depth,
+> with expand buttons screen readers can use, and adds selection, sorting and
+> column layout. A `WithNestedTableRow` group becomes a row whose children
+> `getSubRows` returns; `defaultCollapsed={false}` becomes `defaultExpanded`.
+> `NestedTable` is removed in the next major release.
+
 ## Default Usage
 
 The NestedTable component provides a sophisticated table system with collapsible row groups, allowing you to organize hierarchical data with expand/collapse functionality. It consists of specialized components that work together to create grouped, interactive table structures:

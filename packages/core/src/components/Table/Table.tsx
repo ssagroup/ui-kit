@@ -35,10 +35,10 @@ const assignRef = <T,>(ref: Ref<T> | undefined, value: T | null) => {
  * it would have had anyway, then switches to `table-layout: fixed` and
  * truncates overflowing cell content with an ellipsis.
  *
- * By default a resize is a trade between two columns: the one to the right
- * gives up exactly what the dragged column gains, so the table stays the width
- * it was and nothing around it reflows. The last column has nothing to its
- * right to trade with, so it has no handle.
+ * By default a resize is paid for by the columns to the right: they give up
+ * what the dragged column gains, each in proportion to its width, so the table
+ * stays the width it was and nothing around it reflows. The last column has
+ * nothing to its right to trade with, so it has no handle.
  *
  * `columnResizeMode="expand"` opts into the other model — the table grows
  * with the dragged column and the others keep their widths — for tables that

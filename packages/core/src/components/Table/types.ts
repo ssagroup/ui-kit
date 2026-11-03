@@ -10,9 +10,10 @@ import { CommonProps } from '@global-types/emotion';
 /**
  * How a resize distributes width.
  *
- * - `fit` — the column to the right gives up what the dragged column gains, so
- *   the table's own width never changes. The last column cannot be dragged,
- *   having nothing to its right to trade with.
+ * - `fit` — the resizable columns to the right share out what the dragged
+ *   column gains or gives up, each in proportion to its width, so the table's
+ *   own width never changes. The last column cannot be dragged, having nothing
+ *   to its right to trade with.
  * - `expand` — the table grows and the other columns keep their widths, so the
  *   table needs a horizontally scrollable parent.
  */
@@ -54,8 +55,8 @@ export interface ColumnResizeOptions {
   maxColumnWidth?: number;
 
   /**
-   * Whether a resize is paid for by the next column or by the table's own
-   * width. Defaults to `fit`, which keeps the table exactly as wide as it was
+   * Whether a resize is paid for by the columns to the right or by the
+   * table's own width. Defaults to `fit`, which keeps the table exactly as wide as it was
    * — surrounding layout never moves because a user dragged a column.
    *
    * Switch to `expand` when the table lives in its own scroll container and
@@ -249,7 +250,9 @@ export interface ColumnFreezeApi {
  * Props for the {@link Table} component.
  *
  * Every attribute of a `table` element, plus the column-resizing options that
- * `resizableColumns` turns on and the column-freezing options.
+ * `resizableColumns` turns on and the column-freezing options. The column
+ * options are deprecated: for tables with column features, use `DataTable`,
+ * which keeps them by column id.
  *
  * @example
  * ```tsx
@@ -275,6 +278,85 @@ export interface TableProps
    * `columnResizeMode`.
    *
    * @default false
+   * @deprecated Use `DataTable`'s `resizableColumns` instead: it keeps
+   * widths by column id. Removed from `Table` in the next major release.
    */
   resizableColumns?: boolean;
+
+  /**
+   * Column widths in pixels, one per column, for the controlled case.
+   *
+   * @deprecated Use `DataTable`'s `columnState.widths`, keyed by column id instead. Removed from `Table` in the next major release.
+   */
+  columnWidths?: number[];
+
+  /**
+   * Starting column widths in pixels, for the uncontrolled case.
+   *
+   * @deprecated Use `DataTable`'s `defaultColumnState.widths` instead. Removed from `Table` in the next major release.
+   */
+  defaultColumnWidths?: number[];
+
+  /**
+   * Called on every width change, including each frame of a drag.
+   *
+   * @deprecated Use `DataTable`'s `onColumnStateChange` instead. Removed from `Table` in the next major release.
+   */
+  onColumnWidthsChange?: (columnWidths: number[]) => void;
+
+  /**
+   * Narrowest a column can be dragged, in pixels.
+   *
+   * @deprecated Use `DataTable`'s `minColumnWidth` instead. Removed from `Table` in the next major release.
+   */
+  minColumnWidth?: number;
+
+  /**
+   * Widest a column can be dragged, in pixels.
+   *
+   * @deprecated Use `DataTable`'s `maxColumnWidth` instead. Removed from `Table` in the next major release.
+   */
+  maxColumnWidth?: number;
+
+  /**
+   * Whether a resize is paid for by the columns to the right or by the table's own width.
+   *
+   * @deprecated Use `DataTable`'s `columnResizeMode` instead. Removed from `Table` in the next major release.
+   */
+  columnResizeMode?: ColumnResizeMode;
+
+  /**
+   * Columns frozen to each edge, for the controlled case.
+   *
+   * @deprecated Use `DataTable`'s `columnState.frozen` instead. Removed from `Table` in the next major release.
+   */
+  frozenColumns?: FrozenColumns;
+
+  /**
+   * Columns frozen to each edge to begin with.
+   *
+   * @deprecated Use `DataTable`'s `defaultColumnState.frozen` instead. Removed from `Table` in the next major release.
+   */
+  defaultFrozenColumns?: FrozenColumns;
+
+  /**
+   * Called whenever the user freezes or unfreezes columns.
+   *
+   * @deprecated Use `DataTable`'s `onColumnStateChange` instead. Removed from `Table` in the next major release.
+   */
+  onFrozenColumnsChange?: (frozenColumns: Required<FrozenColumns>) => void;
+
+  /**
+   * Gives every `TableCellHeader` a menu to freeze its column.
+   *
+   * @deprecated Use `DataTable`'s `freezeControls` instead. Removed from `Table` in the next major release.
+   */
+  freezeControls?: boolean;
+
+  /**
+   * Keeps the header row in view while the table scrolls vertically.
+   *
+   * @deprecated Use `DataTable`'s `stickyHeader` with `maxHeight` instead. Removed from `Table` in the next major release.
+   */
+  stickyHeader?: boolean;
 }
