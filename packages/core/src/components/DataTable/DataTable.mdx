@@ -57,22 +57,23 @@ column ids or sort settings change, and always renders the latest `header` and
 
 ### Columns
 
-| Field         | Description                                                                         |
-| ------------- | ----------------------------------------------------------------------------------- |
-| `id`          | Stable, unique id. Column state and the sort refer to columns by it.                |
-| `header`      | Header content.                                                                     |
-| `cell`        | `(row, rowIndex) => ReactNode`; `rowIndex` is the position as shown, after sorting. |
-| `align`       | `'left'` (default), `'center'` or `'right'`, for header and body cells.             |
-| `sortable`    | Clicking the header sorts by this column.                                           |
-| `sortKey`     | The server's name for the column, passed to `onSortChange`. Defaults to `id`.       |
-| `sortFn`      | Ascending comparator; sorts the rows in the browser.                                |
-| `width`       | Starting width in pixels. Columns without one are measured on first layout.         |
-| `minWidth`    | Narrowest the user can resize it to. Overrides the table's `minColumnWidth`.        |
-| `maxWidth`    | Widest the user can resize it to. Overrides the table's `maxColumnWidth`.           |
-| `resizable`   | `false` keeps the user from resizing it, for actions or checkbox columns.           |
-| `freezable`   | `false` takes the freeze actions out of its header menu.                            |
-| `reorderable` | `false` keeps the column in place when `reorderableColumns` is on.                  |
-| `hideable`    | `false` keeps the column on screen: no "Hide column", locked in the picker.         |
+| Field          | Description                                                                         |
+| -------------- | ----------------------------------------------------------------------------------- |
+| `id`           | Stable, unique id. Column state and the sort refer to columns by it.                |
+| `header`       | Header content.                                                                     |
+| `cell`         | `(row, rowIndex) => ReactNode`; `rowIndex` is the position as shown, after sorting. |
+| `align`        | `'left'` (default), `'center'` or `'right'`, for header and body cells.             |
+| `sortable`     | Clicking the header sorts by this column.                                           |
+| `sortKey`      | The server's name for the column, passed to `onSortChange`. Defaults to `id`.       |
+| `sortFn`       | Ascending comparator; sorts the rows in the browser.                                |
+| `width`        | Starting width in pixels. Columns without one are measured on first layout.         |
+| `minWidth`     | Narrowest the user can resize it to. Overrides the table's `minColumnWidth`.        |
+| `maxWidth`     | Widest the user can resize it to. Overrides the table's `maxColumnWidth`.           |
+| `resizable`    | `false` keeps the user from resizing it, for actions or checkbox columns.           |
+| `freezable`    | `false` takes the freeze actions out of its header menu.                            |
+| `reorderable`  | `false` keeps the column in place when `reorderableColumns` is on.                  |
+| `hideable`     | `false` keeps the column on screen: no "Hide column", locked in the picker.         |
+| `getCellProps` | `(row, rowIndex) => props` for this column's body cells; see Row and cell styles.   |
 
 ### Sorting
 
@@ -275,6 +276,42 @@ const [columnState, setColumnState] = useState<Partial<DataTableColumnState>>(
 
 The picker lists columns in display order. Columns with `hideable: false`
 can't be cleared, and neither can the last column on screen.
+
+### Row and cell styles
+
+`getRowProps` on the table and `getCellProps` on a column style a body row or
+cell from its data. Both return `className`, `style`, `data-*` attributes and
+`background`:
+
+```tsx
+<DataTable
+  data={rows}
+  columns={[
+    // ...
+    {
+      id: 'score',
+      header: 'Score',
+      cell: (row) => row.score,
+      getCellProps: (row) => ({ background: scoreColor(row.score) }),
+    },
+  ]}
+  getRowProps={(row) =>
+    row.excluded
+      ? { className: 'excluded', background: 'rgba(242, 136, 142, 0.16)' }
+      : {}
+  }
+/>
+```
+
+Use `background` for colour rather than `style.background`. Cells paint their
+own background, white, so a colour on the row element would not show; and a
+frozen cell must stay opaque so the cells scrolling under it do not show
+through. `background` is laid over white on every cell of the row, and over
+the grey of a row with children, under the hover and selected states. On a
+cell it stays on top of them.
+
+Every row carries `data-row-id`, and a `className` from `getRowProps` lands on
+the `tr`, so CSS can reach the cells as `.excluded > td`.
 
 ### Sticky header
 

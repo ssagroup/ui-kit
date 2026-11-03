@@ -1,4 +1,10 @@
-import { DataTableColumn, DataTableColumnState, DataTableSort } from './types';
+import { CSSProperties } from 'react';
+import {
+  DataTableColumn,
+  DataTableColumnState,
+  DataTableElementProps,
+  DataTableSort,
+} from './types';
 
 /** Width of the checkbox or radio column, in pixels. */
 export const SELECTION_COLUMN_WIDTH = 48;
@@ -224,4 +230,49 @@ export const getOwnRowId = (row: unknown): string | undefined => {
     (typeof id === 'number' && Number.isFinite(id))
     ? String(id)
     : undefined;
+};
+
+/** Paints a colour over white, so the element stays opaque. */
+const overWhite = (color: string) =>
+  `linear-gradient(${color}, ${color}), #fff`;
+
+/**
+ * Turns what `getRowProps` returned into props for the row element. The
+ * `background` travels as a custom property for the `tintedRow` style, so it
+ * reaches the cells, which paint their own background over the row's.
+ */
+export const toRowElementProps = ({
+  background,
+  style,
+  ...rest
+}: DataTableElementProps = {}): Omit<DataTableElementProps, 'background'> & {
+  isTinted: boolean;
+} => ({
+  ...rest,
+  isTinted: background !== undefined,
+  style:
+    background === undefined
+      ? style
+      : ({ ...style, '--data-table-row-tint': background } as CSSProperties),
+});
+
+/**
+ * Turns what a column's `getCellProps` returned into props for the cell
+ * element. The table's own style, the nested indent, wins over the column's,
+ * so a cell style cannot flatten the tree. The `background` is inline, so it
+ * outlasts the row's hover and selected states.
+ */
+export const toCellElementProps = (
+  { background, style, ...rest }: DataTableElementProps = {},
+  ownStyle?: CSSProperties,
+): Omit<DataTableElementProps, 'background'> => {
+  const merged = {
+    ...style,
+    ...ownStyle,
+    ...(background === undefined ? {} : { background: overWhite(background) }),
+  };
+  return {
+    ...rest,
+    style: Object.keys(merged).length ? merged : undefined,
+  };
 };

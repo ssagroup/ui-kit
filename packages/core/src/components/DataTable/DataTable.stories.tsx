@@ -277,6 +277,67 @@ export const Selection: StoryObj = {
   },
 };
 
+/** Salary as a green tint, stronger for higher pay. */
+const salaryTint = (salary: number) =>
+  `rgba(46, 160, 67, ${(((salary - 3000) / 5000) * 0.35).toFixed(2)})`;
+
+/**
+ * `getRowProps` tints the rows of employees on leave; `getCellProps` on the
+ * Salary column shades each cell by its value. A row tint sits under the
+ * hover and selected states; a cell colour stays. Both stay opaque in the
+ * frozen Name column: scroll sideways to see the rows pass under it.
+ */
+export const RowAndCellStyles: StoryObj = {
+  render: () => {
+    const [selected, setSelected] = useState<string[]>([]);
+
+    return (
+      <Wrapper css={{ width: 720 }}>
+        <DataTable
+          data={employees.slice(0, 12)}
+          columns={employeeColumns.map((column) =>
+            column.id === 'salary'
+              ? {
+                  ...column,
+                  getCellProps: (row: Employee) => ({
+                    background: salaryTint(row.salary),
+                  }),
+                }
+              : column,
+          )}
+          getRowProps={(row) =>
+            row.status === 'On leave'
+              ? {
+                  background: 'rgba(242, 136, 142, 0.16)',
+                  'data-status': 'leave',
+                }
+              : {}
+          }
+          selectionMode="multiple"
+          selectedRowIds={selected}
+          onSelectionChange={setSelected}
+          getRowLabel={(row) => `Select ${row.name}`}
+          onRowClick={() => {}}
+          resizableColumns
+          columnResizeMode="expand"
+          defaultColumnState={{
+            frozen: { start: ['name'], end: [] },
+            widths: {
+              name: 180,
+              email: 220,
+              department: 140,
+              role: 120,
+              location: 120,
+              salary: 120,
+              status: 120,
+            },
+          }}
+        />
+      </Wrapper>
+    );
+  },
+};
+
 /**
  * Departments with their people under them, from `getSubRows`. Selecting a
  * department selects its people; a department with some of them selected

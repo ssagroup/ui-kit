@@ -105,6 +105,7 @@ export type {
   DataTableColumn,
   DataTableColumnPickerProps,
   DataTableColumnState,
+  DataTableElementProps,
   DataTableProps,
   DataTableSelectionMode,
   DataTableSort,

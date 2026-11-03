@@ -33,7 +33,9 @@ import {
   moveColumn,
   NESTED_INDENT,
   SELECTION_COLUMN_WIDTH,
+  toCellElementProps,
   toColumnState,
+  toRowElementProps,
 } from './utils';
 import * as S from './styles';
 
@@ -147,6 +149,7 @@ const DataTable = <Row,>(props: DataTableProps<Row>) => {
     onSelectionChange,
     isRowSelectable,
     getRowLabel = (_row: Row, rowIndex: number) => `Select row ${rowIndex + 1}`,
+    getRowProps,
     footer,
     className,
     ref,
@@ -535,95 +538,107 @@ const DataTable = <Row,>(props: DataTableProps<Row>) => {
                 </TableCell>
               </TableRow>
             ) : (
-              rows.map((row, rowIndex) => (
-                <TableRow
-                  key={row.id}
-                  css={[
-                    onRowClick && S.clickableRow,
-                    row.hasChildren && S.parentRow,
-                    isRowSelected(row.id) &&
-                      (row.hasChildren ? S.selectedParentRow : S.selectedRow),
-                  ]}
-                  // Reachable by keyboard too: Enter on the focused row opens
-                  // it, like following a link.
-                  tabIndex={onRowClick ? 0 : undefined}
-                  onClick={
-                    onRowClick
-                      ? (event) => {
-                          if (
-                            isInteractiveTarget(
-                              event.target,
-                              event.currentTarget,
-                            )
-                          ) {
-                            return;
+              rows.map((row, rowIndex) => {
+                const { isTinted, ...rowProps } = toRowElementProps(
+                  getRowProps?.(row.original, rowIndex),
+                );
+                return (
+                  <TableRow
+                    key={row.id}
+                    {...rowProps}
+                    data-row-id={row.id}
+                    css={[
+                      onRowClick && S.clickableRow,
+                      row.hasChildren && S.parentRow,
+                      isTinted &&
+                        (row.hasChildren ? S.tintedParentRow : S.tintedRow),
+                      isRowSelected(row.id) &&
+                        (row.hasChildren ? S.selectedParentRow : S.selectedRow),
+                    ]}
+                    // Reachable by keyboard too: Enter on the focused row opens
+                    // it, like following a link.
+                    tabIndex={onRowClick ? 0 : undefined}
+                    onClick={
+                      onRowClick
+                        ? (event) => {
+                            if (
+                              isInteractiveTarget(
+                                event.target,
+                                event.currentTarget,
+                              )
+                            ) {
+                              return;
+                            }
+                            onRowClick(row.original, event);
                           }
-                          onRowClick(row.original, event);
-                        }
-                      : undefined
-                  }
-                  onKeyDown={
-                    onRowClick
-                      ? (event) => {
-                          // Only the row itself: Enter on a control inside
-                          // it belongs to that control.
-                          if (
-                            event.key !== 'Enter' ||
-                            event.target !== event.currentTarget
-                          ) {
-                            return;
+                        : undefined
+                    }
+                    onKeyDown={
+                      onRowClick
+                        ? (event) => {
+                            // Only the row itself: Enter on a control inside
+                            // it belongs to that control.
+                            if (
+                              event.key !== 'Enter' ||
+                              event.target !== event.currentTarget
+                            ) {
+                              return;
+                            }
+                            event.preventDefault();
+                            onRowClick(row.original, event);
                           }
-                          event.preventDefault();
-                          onRowClick(row.original, event);
+                        : undefined
+                    }>
+                    {hasSelection && (
+                      <SelectionCell
+                        mode={selectionMode}
+                        name={radioName}
+                        rowId={row.id}
+                        label={getRowLabel(row.original, rowIndex)}
+                        checked={
+                          selectionMode === 'single'
+                            ? selectedSet.has(row.id)
+                            : selection.rowState(row.id, selectedSet) ===
+                              'checked'
                         }
-                      : undefined
-                  }>
-                  {hasSelection && (
-                    <SelectionCell
-                      mode={selectionMode}
-                      name={radioName}
-                      rowId={row.id}
-                      label={getRowLabel(row.original, rowIndex)}
-                      checked={
-                        selectionMode === 'single'
-                          ? selectedSet.has(row.id)
-                          : selection.rowState(row.id, selectedSet) ===
-                            'checked'
-                      }
-                      indeterminate={
-                        selectionMode === 'multiple' &&
-                        selection.rowState(row.id, selectedSet) === 'partial'
-                      }
-                      disabled={
-                        selectionMode === 'single'
-                          ? !canSelect(row.original)
-                          : !selection.isSelectable(row.id)
-                      }
-                      onChange={(selected) => setRowSelected(row.id, selected)}
-                    />
-                  )}
-                  {hasExpander && (
-                    <ExpanderCell
-                      hasChildren={row.hasChildren}
-                      isExpanded={row.isExpanded}
-                      onToggle={() => toggleExpanded(row.id, !row.isExpanded)}
-                    />
-                  )}
-                  {visibleColumns.map((column, columnIndex) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      // Nested rows step in, on the first column only.
-                      style={
-                        columnIndex === 0 && row.depth > 0
-                          ? { paddingLeft: 16 + row.depth * NESTED_INDENT }
-                          : undefined
-                      }>
-                      {column.cell(row.original, rowIndex)}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+                        indeterminate={
+                          selectionMode === 'multiple' &&
+                          selection.rowState(row.id, selectedSet) === 'partial'
+                        }
+                        disabled={
+                          selectionMode === 'single'
+                            ? !canSelect(row.original)
+                            : !selection.isSelectable(row.id)
+                        }
+                        onChange={(selected) =>
+                          setRowSelected(row.id, selected)
+                        }
+                      />
+                    )}
+                    {hasExpander && (
+                      <ExpanderCell
+                        hasChildren={row.hasChildren}
+                        isExpanded={row.isExpanded}
+                        onToggle={() => toggleExpanded(row.id, !row.isExpanded)}
+                      />
+                    )}
+                    {visibleColumns.map((column, columnIndex) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        {...toCellElementProps(
+                          column.getCellProps?.(row.original, rowIndex),
+                          // Nested rows step in, on the first column only.
+                          columnIndex === 0 && row.depth > 0
+                            ? { paddingLeft: 16 + row.depth * NESTED_INDENT }
+                            : undefined,
+                        )}>
+                        {column.cell(row.original, rowIndex)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
