@@ -15,6 +15,7 @@ moved.
 | `Table` with `resizableColumns`, `frozenColumns`, `stickyHeader`…         | Move to `DataTable`. These props are deprecated on `Table`.         |
 | `NestedTable`                                                             | Move to `DataTable` with `getSubRows`. `NestedTable` is deprecated. |
 | A local table component built on `Table` with sorting, loading, selection | Move to `DataTable`; most of it is built in.                        |
+| A table that needs something in [Stay on Table](#stay-on-table)           | Keep `Table`.                                                       |
 
 The deprecated APIs keep working until the next major release.
 
@@ -59,6 +60,20 @@ const columns: DataTableColumn<Employee>[] = [
 Give every column a stable `id`. Rows are keyed by their own `id` field; pass
 `getRowId` when the id lives elsewhere. Column state, sorting and selection all
 refer to those ids.
+
+A few habits from hand-written rows change:
+
+- **Cells get their row as an argument.** A cell component that read its row
+  from a context provider around `TableRow` must take it as a prop instead:
+  `cell: (row) => <RowActions row={row} />`.
+- **Conditional columns are conditional entries.** Build the `columns` array
+  for the case at hand, such as leaving the actions column out when the user
+  may not edit: `[...base, ...(canEdit ? [actionsColumn] : [])]`.
+- **Fixed widths move onto the column.** CSS that sized a column by position
+  (`td:nth-child(2) { width: 140px }`) becomes `width`, `minWidth` or
+  `maxWidth` on that column, which follows it when columns move or hide.
+- **Headers can be anything.** `header` takes a node, so a tooltip or an "add"
+  button in the header goes there.
 
 ## Table column props
 
@@ -166,12 +181,60 @@ props now:
 | a checkbox column and its select-all logic     | `selectionMode="multiple"`, `selectedRowIds`, `onSelectionChange` |
 | a drawer to choose visible columns             | `DataTableColumnPicker`, or write `columnState.hidden` yourself   |
 | navigating on row click                        | `onRowClick`; rows become keyboard-operable                       |
+| a class or tint on some rows (`rowClassName`)  | `getRowProps`, with `className` or `background`                   |
+| a class or colour on some cells                | `getCellProps` on the column                                      |
 
 Sorting stays on the server by default: `onSortChange` gives the new sort and
 the column's `sortKey`, and the table expects the rows to come back sorted.
 Give a column a `sortFn` only when the browser should sort.
 
-## Not covered yet
+Some behaviour to check against the table you are replacing:
 
-- Mobile card layout and virtualised rows.
-- Custom expand icons.
+- **Sort order.** A header sorts ascending on the first click and toggles
+  between ascending and descending after that; clicking never clears the
+  sort. To clear it, set `sort` to `null` from outside, for example from a
+  "Reset" button. One column at a time.
+- **Default sort.** To show a default order on the header before the user
+  picks one, start with `defaultSort` (or a controlled `sort`). Put any
+  tie-break inside the column's `sortFn`.
+- **Errors.** There is no error prop. Pass the message as `emptyState` while
+  the request has failed, with `isLoading` off.
+- **Paging in the browser.** When every row is already loaded, slice `data`
+  for the current page and put `Pagination` in `footer`. Selection is kept by
+  row id, so it survives page changes either way.
+- **Clickable rows.** `onRowClick` answers clicks and Enter, as a link does,
+  not Space. Clicks on buttons, links and inputs inside the row keep their own
+  behaviour, so an actions column can sit in a clickable row.
+- **Unselectable rows.** `isRowSelectable` disables a row's checkbox or radio,
+  in place of a hand-made disabled state.
+- **Mobile.** There is no card layout. Keep the page's own mobile list and
+  switch between it and `DataTable` by breakpoint, as before.
+
+## From a virtualised grid
+
+`DataTable` renders every row it is given; it does not virtualise. That is
+fine for paged data, tens of rows a page. A grid that only virtualised to cope
+with a page of 10 to 50 rows can drop it, along with any code that measured
+row heights for the virtualiser: rows size to their content. A grid that
+shows thousands of rows at once should stay as it is.
+
+## Stay on Table
+
+`Table` and its row and cell components stay, and are the right choice when a
+table needs something `DataTable` does not do:
+
+- **Cells that span rows or columns** (`rowSpan`, `colSpan`), including
+  full-width group-title rows. `getSubRows` nests rows under a parent row
+  with its own cells instead.
+- **A totals row lined up with the columns.** `footer` is a free area below
+  the table, not a row of cells.
+- **Rows dragged into a new order.** Columns reorder; rows do not.
+- **Wrapping rows in other components**, such as a popover per row.
+- **Expanded content that is not rows of the same columns**, such as a
+  detail panel or a different table under a row.
+- **No header row.** `DataTable` always renders one.
+- **Sorting by more than one column at once.**
+- **Custom expand icons, a mobile card layout, or virtualised rows.**
+
+Some of these are planned for `DataTable`. Until then, a table that needs one
+stays on `Table`.

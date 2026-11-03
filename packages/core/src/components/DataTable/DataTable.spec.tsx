@@ -1053,6 +1053,98 @@ describe('DataTable', () => {
     });
   });
 
+  describe('row and cell props', () => {
+    const bodyRows = () => screen.getAllByRole('row').slice(1);
+
+    it('gives every row its id', () => {
+      renderTable();
+
+      expect(bodyRows().map((row) => row.getAttribute('data-row-id'))).toEqual([
+        'p1',
+        'p2',
+        'p3',
+      ]);
+    });
+
+    it('adds class names and data attributes to rows, by shown position', () => {
+      const getRowProps = jest.fn((row: Person) =>
+        row.age > 40 ? { className: 'senior', 'data-tone': 'muted' } : {},
+      );
+      renderTable({ getRowProps });
+
+      const [cleo, ada] = bodyRows();
+      expect(ada).toHaveClass('senior');
+      expect(ada).toHaveAttribute('data-tone', 'muted');
+      expect(cleo).not.toHaveClass('senior');
+      expect(getRowProps).toHaveBeenCalledWith(people[1], 1);
+    });
+
+    it('hands a row background to its cells through a custom property', () => {
+      renderTable({
+        getRowProps: (row) =>
+          row.id === 'p2' ? { background: 'rgb(255, 0, 0)' } : {},
+      });
+
+      const [cleo, ada] = bodyRows();
+      expect(ada.style.getPropertyValue('--data-table-row-tint')).toBe(
+        'rgb(255, 0, 0)',
+      );
+      expect(cleo.style.getPropertyValue('--data-table-row-tint')).toBe('');
+    });
+
+    it('styles one column cells from their row', () => {
+      renderTable({
+        columns: columns.map((column) =>
+          column.id === 'age'
+            ? {
+                ...column,
+                getCellProps: (row: Person) => ({
+                  className: 'age-cell',
+                  'data-old': row.age > 40,
+                  style: row.age > 40 ? { fontWeight: 700 } : undefined,
+                }),
+              }
+            : column,
+        ),
+      });
+
+      const ada = within(bodyRows()[1]).getByRole('cell', { name: '45' });
+      expect(ada).toHaveClass('age-cell');
+      expect(ada).toHaveAttribute('data-old', 'true');
+      expect(ada.style.fontWeight).toBe('700');
+      expect(
+        within(bodyRows()[0]).getByRole('cell', { name: '31' }).style
+          .fontWeight,
+      ).toBe('');
+      expect(screen.getByRole('columnheader', { name: /Age/ })).not.toHaveClass(
+        'age-cell',
+      );
+    });
+
+    it('keeps the nested indent under a cell style', () => {
+      type Node = { id: string; name: string; children?: Node[] };
+      render(
+        <DataTable<Node>
+          data={[{ id: 'a', name: 'A', children: [{ id: 'b', name: 'B' }] }]}
+          columns={[
+            {
+              id: 'name',
+              header: 'Name',
+              cell: (row) => row.name,
+              getCellProps: () => ({ style: { color: 'red' } }),
+            },
+          ]}
+          getSubRows={(row) => row.children}
+          defaultExpanded
+        />,
+      );
+
+      const { style } = screen.getByRole('cell', { name: 'B' });
+      expect(style.paddingLeft).toBe('40px');
+      expect(style.color).toBe('red');
+    });
+  });
+
   describe('row click', () => {
     it('reports the clicked row', async () => {
       const onRowClick = jest.fn();

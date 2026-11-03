@@ -1,4 +1,10 @@
-import { KeyboardEvent, MouseEvent, ReactNode, Ref } from 'react';
+import {
+  CSSProperties,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  Ref,
+} from 'react';
 import { ColumnResizeMode } from '@components/Table/types';
 
 /** Direction of a {@link DataTableSort}. */
@@ -9,6 +15,37 @@ export type DataTableSortDirection = 'asc' | 'desc';
  * checkbox column with a select-all checkbox, `single` a radio column.
  */
 export type DataTableSelectionMode = 'none' | 'single' | 'multiple';
+
+/**
+ * Attributes a {@link DataTable} adds to one body row or cell, returned by
+ * `getRowProps` on the table or `getCellProps` on a column. For styling a row
+ * or cell from its data.
+ *
+ * @example
+ * ```ts
+ * getRowProps: (row) => ({
+ *   className: row.excluded ? 'excluded' : undefined,
+ *   background: row.awaitingReply ? 'rgba(242, 136, 142, 0.08)' : undefined,
+ * })
+ * ```
+ */
+export interface DataTableElementProps {
+  /** Added to the element's class names. */
+  className?: string;
+  /**
+   * Inline style of the element. On a row, a `background` here is hidden by
+   * the cells, which paint their own; use the `background` field instead.
+   */
+  style?: CSSProperties;
+  /**
+   * A colour painted over the cells, such as a translucent tint. Laid over
+   * white, so frozen cells stay opaque. On a row, the hover and selected
+   * states show over it; on a cell, it stays.
+   */
+  background?: string;
+  /** `data-*` attributes, for CSS or tests. */
+  [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
+}
 
 /**
  * The column a {@link DataTable} is sorted by. One column at a time; `null`
@@ -89,6 +126,17 @@ export interface DataTableColumn<Row> {
    * table's `maxColumnWidth`.
    */
   maxWidth?: number;
+  /**
+   * Class name, style, background or data attributes for this column's body
+   * cell in a given row, such as colouring a cell by its value. Header cells
+   * are not affected.
+   *
+   * @example
+   * ```ts
+   * getCellProps: (row) => ({ background: heatColor(row.score) })
+   * ```
+   */
+  getCellProps?: (row: Row, rowIndex: number) => DataTableElementProps;
   /**
    * Whether the user can resize this column, in a table with
    * `resizableColumns`. Turn it off for actions or checkbox columns.
@@ -275,6 +323,16 @@ export interface DataTableProps<Row> {
     row: Row,
     event: MouseEvent<HTMLTableRowElement> | KeyboardEvent<HTMLTableRowElement>,
   ) => void;
+  /**
+   * Class name, style, background or data attributes for a body row, such as
+   * tinting rows that need attention. Each row also carries `data-row-id`.
+   *
+   * @example
+   * ```ts
+   * getRowProps: (row) => (row.excluded ? { className: 'excluded' } : {})
+   * ```
+   */
+  getRowProps?: (row: Row, rowIndex: number) => DataTableElementProps;
   /**
    * Children of a row, shown nested under it, to any depth. Rows with
    * children get an expand button in a column at the start, and their own

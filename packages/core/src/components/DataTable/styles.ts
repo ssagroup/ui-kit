@@ -214,6 +214,20 @@ export const expanderButton = (theme: Theme) => css`
   }
 `;
 
+/**
+ * A row given a `background` by getRowProps. The colour arrives as a custom
+ * property, so every tinted row shares this one class whatever its colour.
+ * Layered over white: frozen cells must stay opaque. Hover and selection
+ * rules come later or weigh more, so they paint over it.
+ */
+export const tintedRow = css`
+  & > td {
+    background:
+      linear-gradient(var(--data-table-row-tint), var(--data-table-row-tint)),
+      #fff;
+  }
+`;
+
 /** A row with children, as NestedTable draws its group rows. */
 export const parentRow = (theme: Theme) => css`
   /* Layered over white: frozen cells must stay opaque. */
@@ -225,6 +239,19 @@ export const parentRow = (theme: Theme) => css`
       ),
       #fff;
     font-weight: 700;
+  }
+`;
+
+/** A tinted row with children: the row's tint over the parent grey. */
+export const tintedParentRow = (theme: Theme) => css`
+  & > td {
+    background:
+      linear-gradient(var(--data-table-row-tint), var(--data-table-row-tint)),
+      linear-gradient(
+        ${theme.colors.greyLighter60},
+        ${theme.colors.greyLighter60}
+      ),
+      #fff;
   }
 `;
 
