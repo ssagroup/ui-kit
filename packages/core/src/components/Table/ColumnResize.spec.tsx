@@ -172,16 +172,16 @@ describe('Table column resizing', () => {
   });
 
   describe('Dragging in the default fit mode', () => {
-    it('Takes what it gives from the column to the right', () => {
+    it('Takes what it gives from the columns to the right, by width', () => {
       const onColumnWidthsChange = jest.fn();
       render(<ResizableTable onColumnWidthsChange={onColumnWidthsChange} />);
 
       drag(getHandles()[0], 50);
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([250, 150, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([250, 175, 175]);
     });
 
-    it('Gives width back to the column to the right', () => {
+    it('Gives width back to the columns to the right', () => {
       const onColumnWidthsChange = jest.fn();
       render(<ResizableTable onColumnWidthsChange={onColumnWidthsChange} />);
 
@@ -219,7 +219,7 @@ describe('Table column resizing', () => {
       expect(onColumnWidthsChange).not.toHaveBeenCalled();
     });
 
-    it('Stops at the minimum of whichever column runs out first', () => {
+    it('Stops once every column to the right is at its minimum', () => {
       const onColumnWidthsChange = jest.fn();
       render(
         <ResizableTable
@@ -228,10 +228,10 @@ describe('Table column resizing', () => {
         />,
       );
 
-      // The column to the right hits 70 long before the drag runs out.
+      // The columns to the right hit 70 long before the drag runs out.
       drag(getHandles()[0], 500);
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([330, 70, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([460, 70, 70]);
     });
 
     it('Stops at the dragged column own minimum', () => {
@@ -245,10 +245,10 @@ describe('Table column resizing', () => {
 
       drag(getHandles()[0], -500);
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([70, 330, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([70, 265, 265]);
     });
 
-    it('Respects maxColumnWidth on both columns', () => {
+    it('Respects maxColumnWidth on the dragged column', () => {
       const onColumnWidthsChange = jest.fn();
       render(
         <ResizableTable
@@ -258,9 +258,122 @@ describe('Table column resizing', () => {
       );
 
       // Growing column one is capped by its own maximum, not by the floor of
-      // the column paying for it.
+      // the columns paying for it.
       drag(getHandles()[0], 500);
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([250, 150, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([250, 175, 175]);
+    });
+
+    it('Splits the change in proportion to width', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(
+        <ResizableTable
+          defaultColumnWidths={[200, 300, 100]}
+          onColumnWidthsChange={onColumnWidthsChange}
+        />,
+      );
+
+      drag(getHandles()[0], 80);
+
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([280, 240, 80]);
+    });
+
+    it('Passes what a column at its minimum cannot pay to the rest', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(
+        <ResizableTable
+          defaultColumnWidths={[200, 300, 100]}
+          minColumnWidth={90}
+          onColumnWidthsChange={onColumnWidthsChange}
+        />,
+      );
+
+      // A fair share would take Role to 80; it stops at 90 and Email pays the
+      // other 10.
+      drag(getHandles()[0], 80);
+
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([280, 230, 90]);
+    });
+
+    it('Restores the widths exactly when dragged back', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(
+        <ResizableTable
+          defaultColumnWidths={[200, 300, 100]}
+          minColumnWidth={90}
+          onColumnWidthsChange={onColumnWidthsChange}
+        />,
+      );
+      const [handle] = getHandles();
+
+      // One gesture: out past Role's minimum and back to where it began.
+      fireEvent.pointerDown(handle, { button: 0, pointerId: 1, clientX: 200 });
+      fireEvent.pointerMove(handle, { pointerId: 1, clientX: 300 });
+      fireEvent.pointerMove(handle, { pointerId: 1, clientX: 200 });
+      fireEvent.pointerUp(handle, { pointerId: 1, clientX: 200 });
+
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([200, 300, 100]);
+    });
+  });
+
+  describe('Per-column limits', () => {
+    const withLimits = (props: Partial<TableProps> = {}) => (
+      <Table resizableColumns defaultColumnWidths={[200, 200, 200]} {...props}>
+        <TableHead>
+          <TableRow>
+            <TableCellHeader maxWidth={260}>Name</TableCellHeader>
+            <TableCellHeader minWidth={180}>Email</TableCellHeader>
+            <TableCellHeader>Role</TableCellHeader>
+          </TableRow>
+        </TableHead>
+      </Table>
+    );
+
+    it('Stops the dragged column at its own maxWidth', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(withLimits({ columnResizeMode: 'expand', onColumnWidthsChange }));
+
+      drag(getHandles()[0], 200);
+
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([260, 200, 200]);
+    });
+
+    it('Stops a paying column at its own minWidth', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(withLimits({ onColumnWidthsChange }));
+
+      // Email gives 20 and stops at 180; Role pays the remaining 30.
+      drag(getHandles()[0], 50);
+
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([250, 180, 170]);
+    });
+
+    it('Never jumps a column that starts past its limit', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(
+        withLimits({
+          columnResizeMode: 'expand',
+          defaultColumnWidths: [300, 200, 200],
+          onColumnWidthsChange,
+        }),
+      );
+      const [name] = getHandles();
+
+      // Past its 260 maximum, Name cannot grow, but is not snapped to 260…
+      fireEvent.keyDown(name, { key: 'ArrowRight' });
+      expect(onColumnWidthsChange).not.toHaveBeenCalled();
+
+      // …and shrinks from where it is.
+      fireEvent.keyDown(name, { key: 'ArrowLeft' });
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([292, 200, 200]);
+    });
+
+    it('Reports the column limits on the handle', () => {
+      render(withLimits({ maxColumnWidth: 400 }));
+
+      const [name, email] = getHandles();
+      expect(name).toHaveAttribute('aria-valuemax', '260');
+      expect(email).toHaveAttribute('aria-valuemin', '180');
+      expect(email).toHaveAttribute('aria-valuemax', '400');
     });
   });
 
@@ -307,13 +420,35 @@ describe('Table column resizing', () => {
       expect(onColumnWidthsChange).not.toHaveBeenCalled();
     });
 
-    it('Leaves handles further from the pinned column alone', () => {
+    it('Skips a pinned column when paying for one before it', () => {
       const onColumnWidthsChange = jest.fn();
       render(withPinnedLastColumn({ onColumnWidthsChange }));
 
       drag(getHandles()[0], 40);
 
       expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 160, 200]);
+    });
+
+    it('Lets the columns past a pinned one pay instead', () => {
+      const onColumnWidthsChange = jest.fn();
+      render(
+        <Table
+          resizableColumns
+          defaultColumnWidths={[200, 200, 200]}
+          onColumnWidthsChange={onColumnWidthsChange}>
+          <TableHead>
+            <TableRow>
+              <TableCellHeader>Name</TableCellHeader>
+              <TableCellHeader resizable={false}>Actions</TableCellHeader>
+              <TableCellHeader>Role</TableCellHeader>
+            </TableRow>
+          </TableHead>
+        </Table>,
+      );
+
+      drag(getHandles()[0], 40);
+
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 200, 160]);
     });
 
     it('Pins only its own column in expand mode', () => {
@@ -431,7 +566,7 @@ describe('Table column resizing', () => {
       render(<ResizableTable onColumnWidthsChange={onColumnWidthsChange} />);
 
       fireEvent.keyDown(getHandles()[0], { key: 'ArrowRight' });
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([208, 192, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([208, 196, 196]);
 
       fireEvent.keyDown(getHandles()[0], { key: 'ArrowLeft' });
       expect(onColumnWidthsChange).toHaveBeenLastCalledWith([200, 200, 200]);
@@ -443,7 +578,7 @@ describe('Table column resizing', () => {
 
       fireEvent.keyDown(getHandles()[0], { key: 'ArrowRight', shiftKey: true });
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 160, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 180, 180]);
     });
 
     it('Restores the starting width on Enter', () => {
@@ -490,7 +625,7 @@ describe('Table column resizing', () => {
 
       drag(getHandles()[0], 40);
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 160, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 180, 180]);
       expect(container.querySelector('col')).toHaveStyle({ width: '200px' });
     });
 
@@ -540,7 +675,7 @@ describe('Table column resizing', () => {
       // 60 rendered pixels is 30 stored units when every unit renders at 2.
       drag(getHandles()[0], 60);
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([230, 170, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([230, 185, 185]);
     });
 
     it('Converts keyboard steps too', () => {
@@ -550,7 +685,7 @@ describe('Table column resizing', () => {
 
       fireEvent.keyDown(getHandles()[0], { key: 'ArrowRight' });
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([204, 196, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([204, 198, 198]);
     });
 
     it('Leaves the delta alone when the two spaces agree', () => {
@@ -560,7 +695,7 @@ describe('Table column resizing', () => {
 
       drag(getHandles()[0], 60);
 
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([260, 140, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([260, 170, 170]);
     });
 
     it('Holds the scale steady for the whole gesture', () => {
@@ -571,12 +706,12 @@ describe('Table column resizing', () => {
       const handle = getHandles()[0];
       fireEvent.pointerDown(handle, { button: 0, pointerId: 1, clientX: 200 });
       fireEvent.pointerMove(handle, { pointerId: 1, clientX: 240 });
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([220, 180, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([220, 190, 190]);
 
       // Same gesture, twice the distance from where it started — so twice the
       // change, measured from the start and not accumulated frame by frame.
       fireEvent.pointerMove(handle, { pointerId: 1, clientX: 280 });
-      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 160, 200]);
+      expect(onColumnWidthsChange).toHaveBeenLastCalledWith([240, 180, 180]);
       fireEvent.pointerUp(handle, { pointerId: 1, clientX: 280 });
     });
   });

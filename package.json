@@ -143,6 +143,7 @@
     "react-dom": "19.2.3",
     "react-refresh": "0.16.0",
     "react-router-dom": "7.10.1",
+    "remark-gfm": "^4.0.1",
     "resize-observer-polyfill": "1.5.1",
     "resolve-tspaths": "0.8.23",
     "semver": "7.7.3",

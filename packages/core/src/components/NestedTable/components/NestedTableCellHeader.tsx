@@ -18,6 +18,10 @@ import { NestedTableCellHeaderProps } from '../types';
  * toggle column the row adds in front gets no handle or menu, and does not
  * count as a column — `0` is the first header cell you render.
  *
+ * @deprecated Use `DataTable` with `getSubRows` instead: it nests rows from
+ * data, to any depth, with accessible expand buttons. `NestedTable` is
+ * removed in the next major release.
+ *
  * @category Components
  * @subcategory Data Display
  *

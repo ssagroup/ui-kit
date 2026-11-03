@@ -37,6 +37,20 @@ const clamp = (value: number, min: number, max?: number) => {
   return max === undefined ? lower : Math.min(lower, max);
 };
 
+/** A header cell's own resize limit, set by `TableCellHeader`'s `minWidth`/`maxWidth`. */
+const cellLimit = (
+  cell: HTMLTableCellElement | undefined,
+  key: 'columnMinWidth' | 'columnMaxWidth',
+) => {
+  const value = Number(cell?.dataset[key]);
+  return cell?.dataset[key] !== undefined && Number.isFinite(value)
+    ? value
+    : undefined;
+};
+
+/** Below this, width left to hand out is rounding noise. */
+const EPSILON = 0.01;
+
 const sum = (values: number[]) => values.reduce((total, v) => total + v, 0);
 
 /**
@@ -186,47 +200,107 @@ export const useColumnResize = (
     initialWidthsRef.current = widths;
   }
 
-  /** How much room a column has left before it would exceed the maximum. */
-  const headroom = (width: number) =>
-    maxColumnWidth === undefined ? Infinity : maxColumnWidth - width;
+  /**
+   * The columns to the right of `index` that pay for its resize in fit mode:
+   * every one the user may resize. Pinned columns and the table's own fixed
+   * columns keep their width.
+   */
+  const payersOf = useCallback((index: number, count: number) => {
+    const payers: number[] = [];
+    for (let i = index + 1; i < count; i++) {
+      if (
+        !isColumnPinned(tableRef.current, i) &&
+        !fixedColumnsRef.current.includes(i)
+      ) {
+        payers.push(i);
+      }
+    }
+    return payers;
+  }, []);
+
+  /**
+   * The widths after resizing column `index` of `base` to `width`, or `null`
+   * when nothing changes. Pure in `base`, so a drag can recompute every frame
+   * from the widths it started with, and dragging back restores them exactly.
+   */
+  const resizedWidths = useCallback(
+    (base: number[], index: number, width: number): number[] | null => {
+      const from = base[index];
+      if (from === undefined) return null;
+
+      const cells = getHeaderCells(tableRef.current);
+      // A column measured outside its limits may move back towards them but
+      // never jumps: its current width stands in for the limit it breaks.
+      const minOf = (i: number) =>
+        Math.min(
+          cellLimit(cells[i], 'columnMinWidth') ?? minColumnWidth,
+          base[i],
+        );
+      const maxOf = (i: number) =>
+        Math.max(
+          cellLimit(cells[i], 'columnMaxWidth') ?? maxColumnWidth ?? Infinity,
+          base[i],
+        );
+
+      if (columnResizeMode === 'expand') {
+        const to = clamp(width, minOf(index), maxOf(index));
+        return to === from ? null : replaceAt(base, index, to);
+      }
+
+      // fit mode: the columns to the right pay for the change between them,
+      // each in proportion to its width, so the table's total width is
+      // unchanged and nothing around it reflows.
+      const payers = payersOf(index, base.length);
+      if (payers.length === 0) return null;
+
+      const next = base.slice();
+      /** How far column `i` can still move in `direction` (1 grows, -1 shrinks). */
+      const roomOf = (i: number, direction: 1 | -1) =>
+        direction === 1 ? maxOf(i) - next[i] : next[i] - minOf(i);
+      const payersRoom = (direction: 1 | -1) =>
+        sum(payers.map((i) => Math.max(0, roomOf(i, direction))));
+
+      // Every column involved constrains the move, and whichever runs out
+      // first wins — clamping only the dragged column would let the payers
+      // slide past their limits, and the widths would stop adding up.
+      const delta = clamp(
+        width - from,
+        -Math.min(from - minOf(index), payersRoom(1)),
+        Math.min(maxOf(index) - from, payersRoom(-1)),
+      );
+      if (Math.abs(delta) < EPSILON) return null;
+      next[index] = from + delta;
+
+      // Hand the change out by width; a payer that hits its limit drops out
+      // and the rest share what it could not take.
+      const direction = delta > 0 ? -1 : 1;
+      let remaining = Math.abs(delta);
+      let active = payers.filter((i) => roomOf(i, direction) > EPSILON);
+      while (remaining > EPSILON && active.length > 0) {
+        const total = sum(active.map((i) => next[i]));
+        let spent = 0;
+        for (const i of active) {
+          const share = Math.min(
+            (remaining * next[i]) / total,
+            roomOf(i, direction),
+          );
+          next[i] += direction * share;
+          spent += share;
+        }
+        remaining -= spent;
+        active = active.filter((i) => roomOf(i, direction) > EPSILON);
+      }
+      return next;
+    },
+    [columnResizeMode, maxColumnWidth, minColumnWidth, payersOf],
+  );
 
   const setColumnWidth = useCallback(
     (index: number, width: number) => {
-      const current = widthsRef.current;
-      const from = current[index];
-      if (from === undefined) return;
-
-      if (columnResizeMode === 'expand') {
-        const to = clamp(width, minColumnWidth, maxColumnWidth);
-        if (to === from) return;
-        setWidths(replaceAt(current, index, to));
-        return;
-      }
-
-      // fit mode: the column to the right pays for the change, so the table's
-      // total width is unchanged and nothing around it reflows.
-      const neighbor = current[index + 1];
-      if (neighbor === undefined) return;
-      // A pinned column is one the user may not resize, and paying for a
-      // the next column's growth would resize it just the same.
-      if (isColumnPinned(tableRef.current, index + 1)) return;
-
-      // Both columns constrain the move, and whichever runs out first wins —
-      // clamping only the dragged column would let its partner slide past the
-      // minimum, and then the widths would stop adding up.
-      const delta = clamp(
-        width - from,
-        -Math.min(from - minColumnWidth, headroom(neighbor)),
-        Math.min(headroom(from), neighbor - minColumnWidth),
-      );
-      if (delta === 0) return;
-
-      const next = current.slice();
-      next[index] = from + delta;
-      next[index + 1] = neighbor - delta;
-      setWidths(next);
+      const next = resizedWidths(widthsRef.current, index, width);
+      if (next) setWidths(next);
     },
-    [columnResizeMode, maxColumnWidth, minColumnWidth, setWidths],
+    [resizedWidths, setWidths],
   );
 
   const resizeColumnBy = useCallback(
@@ -282,7 +356,12 @@ export const useColumnResize = (
     );
   });
 
-  const dragRef = useRef({ startX: 0, startWidth: 0, index: -1, scale: 1 });
+  const dragRef = useRef({
+    startX: 0,
+    startWidths: [] as number[],
+    index: -1,
+    scale: 1,
+  });
 
   /** Converts a distance the pointer moved into stored width units. */
   const toWidthUnits = useCallback(
@@ -315,8 +394,7 @@ export const useColumnResize = (
       // Nothing to trade with, so there is nothing to start.
       if (
         columnResizeMode === 'fit' &&
-        (index >= widthsRef.current.length - 1 ||
-          isColumnPinned(tableRef.current, index + 1))
+        payersOf(index, widthsRef.current.length).length === 0
       ) {
         return;
       }
@@ -328,7 +406,7 @@ export const useColumnResize = (
       event.currentTarget.setPointerCapture(event.pointerId);
       dragRef.current = {
         startX: event.clientX,
-        startWidth: width,
+        startWidths: widthsRef.current,
         index,
         // Captured once for the gesture. In fit mode the stored total does not
         // change while dragging, so the scale cannot drift; recomputing it per
@@ -342,16 +420,23 @@ export const useColumnResize = (
       setResizingColumnIndex(index);
       setDragCursor(true);
     },
-    [columnResizeMode],
+    [columnResizeMode, payersOf],
   );
 
   const handlePointerMove = useCallback(
     (event: PointerEvent<HTMLElement>) => {
-      const { index, startX, startWidth, scale } = dragRef.current;
+      const { index, startX, startWidths, scale } = dragRef.current;
       if (index === -1) return;
-      setColumnWidth(index, startWidth + (event.clientX - startX) / scale);
+      // Back where it started, the drag hands back the starting widths.
+      const next =
+        resizedWidths(
+          startWidths,
+          index,
+          startWidths[index] + (event.clientX - startX) / scale,
+        ) ?? startWidths;
+      if (next !== widthsRef.current) setWidths(next);
     },
-    [setColumnWidth],
+    [resizedWidths, setWidths],
   );
 
   const endDrag = useCallback((event: PointerEvent<HTMLElement>) => {
@@ -390,23 +475,27 @@ export const useColumnResize = (
   );
 
   const getResizeHandleProps = useCallback(
-    (index: number): ResizeHandleProps => ({
-      role: 'separator',
-      'aria-orientation': 'vertical',
-      'aria-valuenow': Math.round(widthsRef.current[index] ?? 0),
-      'aria-valuemin': minColumnWidth,
-      ...(maxColumnWidth === undefined
-        ? {}
-        : { 'aria-valuemax': maxColumnWidth }),
-      tabIndex: 0,
-      'data-resizing': resizingColumnIndex === index ? 'true' : undefined,
-      onPointerDown: handlePointerDown(index),
-      onPointerMove: handlePointerMove,
-      onPointerUp: endDrag,
-      onPointerCancel: endDrag,
-      onDoubleClick: () => resetColumn(index),
-      onKeyDown: handleKeyDown(index),
-    }),
+    (index: number): ResizeHandleProps => {
+      // Called while rendering a handle, whose header cell is already in the
+      // DOM: the handle only asks once it has found its own column index.
+      const cell = getHeaderCells(tableRef.current)[index];
+      const max = cellLimit(cell, 'columnMaxWidth') ?? maxColumnWidth;
+      return {
+        role: 'separator',
+        'aria-orientation': 'vertical',
+        'aria-valuenow': Math.round(widthsRef.current[index] ?? 0),
+        'aria-valuemin': cellLimit(cell, 'columnMinWidth') ?? minColumnWidth,
+        ...(max === undefined ? {} : { 'aria-valuemax': max }),
+        tabIndex: 0,
+        'data-resizing': resizingColumnIndex === index ? 'true' : undefined,
+        onPointerDown: handlePointerDown(index),
+        onPointerMove: handlePointerMove,
+        onPointerUp: endDrag,
+        onPointerCancel: endDrag,
+        onDoubleClick: () => resetColumn(index),
+        onKeyDown: handleKeyDown(index),
+      };
+    },
     [
       endDrag,
       handleKeyDown,

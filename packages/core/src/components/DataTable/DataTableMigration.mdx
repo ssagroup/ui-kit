@@ -1,0 +1,177 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Components/DataTable/Migration guide" />
+
+# Migrating to DataTable
+
+`DataTable` takes over every table that needs column features or nested rows.
+It renders from `data` and `columns`, and keeps the column layout by column id,
+so widths, frozen columns and order survive columns being added, removed or
+moved.
+
+| You use                                                                   | Do this                                                             |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `Table` with hand-written rows, no column features                        | Nothing. `Table` and its row and cell components stay.              |
+| `Table` with `resizableColumns`, `frozenColumns`, `stickyHeader`…         | Move to `DataTable`. These props are deprecated on `Table`.         |
+| `NestedTable`                                                             | Move to `DataTable` with `getSubRows`. `NestedTable` is deprecated. |
+| A local table component built on `Table` with sorting, loading, selection | Move to `DataTable`; most of it is built in.                        |
+
+The deprecated APIs keep working until the next major release.
+
+## From hand-written rows to columns
+
+A `Table` repeats the column structure twice, once in the header and once per
+row. `DataTable` describes each column once:
+
+```tsx
+// Before
+<Table>
+  <TableHead>
+    <TableRow>
+      <TableCellHeader>Name</TableCellHeader>
+      <TableCellHeader align="right">Salary</TableCellHeader>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {employees.map((employee) => (
+      <TableRow key={employee.id}>
+        <TableCell>{employee.name}</TableCell>
+        <TableCell align="right">{fmt(employee.salary)}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>;
+
+// After
+const columns: DataTableColumn<Employee>[] = [
+  { id: 'name', header: 'Name', cell: (row) => row.name },
+  {
+    id: 'salary',
+    header: 'Salary',
+    cell: (row) => fmt(row.salary),
+    align: 'right',
+  },
+];
+
+<DataTable data={employees} columns={columns} />;
+```
+
+Give every column a stable `id`. Rows are keyed by their own `id` field; pass
+`getRowId` when the id lives elsewhere. Column state, sorting and selection all
+refer to those ids.
+
+## Table column props
+
+Positional arrays become objects keyed by column id, all in one
+`DataTableColumnState` you can store and restore whole.
+
+| `Table`                                     | `DataTable`                                              |
+| ------------------------------------------- | -------------------------------------------------------- |
+| `resizableColumns`                          | `resizableColumns`                                       |
+| `columnWidths={[200, 120]}`                 | `columnState={{ widths: { name: 200, salary: 120 } }}`   |
+| `defaultColumnWidths`                       | `defaultColumnState.widths`, or `width` on each column   |
+| `onColumnWidthsChange(widths)`              | `onColumnStateChange(state)`, read `state.widths`        |
+| `minColumnWidth`, `maxColumnWidth`          | the same props                                           |
+| `columnResizeMode`                          | the same prop                                            |
+| `TableCellHeader resizable={false}`         | `resizable: false` on the column                         |
+| `TableCellHeader minWidth` / `maxWidth`     | `minWidth` / `maxWidth` on the column                    |
+| `frozenColumns={{ start: ['name'] }}`       | `columnState={{ frozen: { start: ['name'], end: [] } }}` |
+| `defaultFrozenColumns`                      | `defaultColumnState.frozen`                              |
+| `onFrozenColumnsChange(frozen)`             | `onColumnStateChange(state)`, read `state.frozen`        |
+| `freezeControls`                            | `freezeControls`                                         |
+| `TableCellHeader freezable={false}`         | `freezable: false` on the column                         |
+| `stickyHeader` + `TableContainer maxHeight` | `stickyHeader` + `maxHeight` on `DataTable`              |
+
+Frozen columns given by position (`start: [0]`) need their ids instead.
+
+`DataTable` adds what `Table` could not do: `reorderableColumns`,
+`hideableColumns` with `DataTableColumnPicker`, and `selectionMode`.
+
+## From NestedTable
+
+`NestedTable` builds groups from markup: a `WithNestedTableRow` holds a group
+row and the rows under it. `DataTable` builds them from data: the group row is
+an ordinary row, and `getSubRows` returns its children.
+
+```tsx
+// Before
+<NestedTable defaultCollapsed={false}>
+  <TableHead>
+    <NestedTableRow isHeader>
+      <NestedTableCell as="th">Team</NestedTableCell>
+      <NestedTableCell as="th">Lead</NestedTableCell>
+    </NestedTableRow>
+  </TableHead>
+  <TableBody>
+    {departments.map((department) => (
+      <WithNestedTableRow key={department.id}>
+        <NestedTableRow>
+          <NestedTableCell>{department.name}</NestedTableCell>
+          <NestedTableCell>{department.lead}</NestedTableCell>
+        </NestedTableRow>
+        {department.teams.map((team) => (
+          <NestedTableRow key={team.id}>
+            <NestedTableCell>{team.name}</NestedTableCell>
+            <NestedTableCell>{team.lead}</NestedTableCell>
+          </NestedTableRow>
+        ))}
+      </WithNestedTableRow>
+    ))}
+  </TableBody>
+</NestedTable>
+
+// After: one row type for both levels
+<DataTable
+  data={departments}
+  columns={[
+    { id: 'name', header: 'Team', cell: (row) => row.name },
+    { id: 'lead', header: 'Lead', cell: (row) => row.lead },
+  ]}
+  getSubRows={(row) => row.teams}
+  defaultExpanded
+/>
+```
+
+| `NestedTable`                                    | `DataTable`                                                      |
+| ------------------------------------------------ | ---------------------------------------------------------------- |
+| `WithNestedTableRow` group                       | a row whose `getSubRows` returns its children                    |
+| first row of the group                           | the parent row itself                                            |
+| one level of nesting                             | any depth                                                        |
+| groups start expanded (`defaultCollapsed=false`) | rows start collapsed; pass `defaultExpanded` for the old default |
+| `defaultCollapsed` on the table                  | `defaultExpanded={!defaultCollapsed}`                            |
+| `defaultCollapsed` on one group                  | `defaultExpanded={['group-id', …]}`                              |
+| no way to control expansion                      | `expandedRowIds` and `onExpandedChange`                          |
+| clicking the group row toggles it                | an expand button, with `aria-expanded`; `onRowClick` stays free  |
+| `collapsedIconName`, `expandedIconName`          | not supported: the icons are fixed                               |
+| `NestedTableCellHeader` with column features     | the `DataTable` column props above                               |
+
+Collapsed rows are no longer in the page, rather than hidden with CSS. The
+group row keeps NestedTable's look: grey background and bold text. Children are
+also indented, one step per level.
+
+## From a local table component
+
+A table component built in an app on top of `Table` usually adds server-side
+sorting, a loading state, an empty state, pagination and selection. Those are
+props now:
+
+| Typical local code                             | `DataTable`                                                       |
+| ---------------------------------------------- | ----------------------------------------------------------------- |
+| columns as `{ key, label, render, width }`     | `{ id, header, cell, width }`                                     |
+| a column's server field name (`sortingName`)   | `sortKey`                                                         |
+| sort state, header click handlers, arrow icons | `sortable` columns, `sort` and `onSortChange(sort, sortKey)`      |
+| a spinner or skeleton while fetching           | `isLoading`; rows already shown stay, dimmed                      |
+| an "empty" row                                 | `emptyState`                                                      |
+| `Pagination` under the table                   | `footer`                                                          |
+| a checkbox column and its select-all logic     | `selectionMode="multiple"`, `selectedRowIds`, `onSelectionChange` |
+| a drawer to choose visible columns             | `DataTableColumnPicker`, or write `columnState.hidden` yourself   |
+| navigating on row click                        | `onRowClick`; rows become keyboard-operable                       |
+
+Sorting stays on the server by default: `onSortChange` gives the new sort and
+the column's `sortKey`, and the table expects the rows to come back sorted.
+Give a column a `sortFn` only when the browser should sort.
+
+## Not covered yet
+
+- Mobile card layout and virtualised rows.
+- Custom expand icons.

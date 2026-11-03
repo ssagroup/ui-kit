@@ -19,6 +19,10 @@ import {
  * Borders and background are cleared so the group reads as one block; the row
  * supplies the shading.
  *
+ * @deprecated Use `DataTable` with `getSubRows` instead: it nests rows from
+ * data, to any depth, with accessible expand buttons. `NestedTable` is
+ * removed in the next major release.
+ *
  * @category Components
  * @subcategory Data Display
  *

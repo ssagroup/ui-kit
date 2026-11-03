@@ -48,6 +48,10 @@ const withExpander = (widths?: number[]) =>
  * opaque one — a translucent row would let scrolled content show through.
  * With resizing on, the table renders its own `colgroup`; drop any you had.
  *
+ * @deprecated Use `DataTable` with `getSubRows` instead: it nests rows from
+ * data, to any depth, with accessible expand buttons. `NestedTable` is
+ * removed in the next major release.
+ *
  * @category Components
  * @subcategory Data Display
  *

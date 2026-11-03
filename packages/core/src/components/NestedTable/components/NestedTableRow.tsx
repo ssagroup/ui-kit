@@ -22,6 +22,10 @@ import { useNestedTableContext, useNestedTableRowContext } from '../hooks';
  * it collapses or expands the rest of the group. Later rows are the collapsible
  * body. A group holding only one row shows no toggle and never collapses.
  *
+ * @deprecated Use `DataTable` with `getSubRows` instead: it nests rows from
+ * data, to any depth, with accessible expand buttons. `NestedTable` is
+ * removed in the next major release.
+ *
  * @category Components
  * @subcategory Data Display
  *

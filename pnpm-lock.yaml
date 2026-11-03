@@ -210,6 +210,9 @@ importers:
       react-router-dom:
         specifier: 7.10.1
         version: 7.10.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1
       resize-observer-polyfill:
         specifier: 1.5.1
         version: 1.5.1

@@ -100,11 +100,13 @@ export * as JsonSchema from './JsonSchemaForm';
 // ============================================================================
 // Components for presenting data and content
 
-export { default as DataTable } from './DataTable';
+export { default as DataTable, DataTableColumnPicker } from './DataTable';
 export type {
   DataTableColumn,
+  DataTableColumnPickerProps,
   DataTableColumnState,
   DataTableProps,
+  DataTableSelectionMode,
   DataTableSort,
   DataTableSortDirection,
 } from './DataTable';

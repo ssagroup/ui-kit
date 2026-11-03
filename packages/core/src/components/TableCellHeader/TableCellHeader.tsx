@@ -73,6 +73,8 @@ const TableCellHeader = ({
   resizable = true,
   freezable = true,
   columnId,
+  minWidth,
+  maxWidth,
   ...props
 }: React.PropsWithChildren<TableCellHeaderProps>) => {
   // Null in every table that has not opted into resizing, which is the common
@@ -87,6 +89,10 @@ const TableCellHeader = ({
       // for its the next column's growth, and by the stylesheet rule that drops the
       // handle to its left.
       data-column-pinned={columnResize && !resizable ? 'true' : undefined}
+      // Read back by useColumnResize, over the table's minColumnWidth and
+      // maxColumnWidth.
+      data-column-min-width={columnResize ? minWidth : undefined}
+      data-column-max-width={columnResize ? maxWidth : undefined}
       // Read back by Table, which matches frozenColumns against it.
       data-column-id={columnId === undefined ? undefined : String(columnId)}
       {...props}>

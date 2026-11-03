@@ -1,103 +1,53 @@
-import { MouseEvent, useLayoutEffect, useRef, useState } from 'react';
-import styled from '@emotion/styled';
-import { useTheme } from '@emotion/react';
-import Icon from '@components/Icon';
-import { ContextMenu } from '@components/ContextMenu';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  usePopoverContext,
-} from '@components/Popover';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { ColumnFreezeMenuProps, ColumnId, FrozenColumns } from './types';
 import { useColumnFreezeContext } from './ColumnFreezeContext';
+import { ColumnMenu, ColumnMenuAnchor } from './ColumnMenu';
 import { getColumnIdOf } from './utils';
-
-const Anchor = styled.span`
-  display: inline-flex;
-  vertical-align: middle;
-  margin-left: 4px;
-`;
-
-const Trigger = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-
-  border: none;
-  border-radius: 4px;
-  background: none;
-  cursor: pointer;
-
-  &:hover,
-  &[data-state='open'] {
-    background: ${({ theme }) => theme.colors.greyLighter};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.blue};
-    outline-offset: -2px;
-  }
-
-  /* Hidden until the header is hovered, but it keeps its space so showing it
-     never shifts the header text. Always shown on a frozen column, so the
-     user can see what is frozen, and on touch screens, which cannot hover. */
-  opacity: 0;
-  transition: opacity 0.15s ease-in-out;
-
-  &:focus-visible,
-  &[data-state='open'],
-  &[data-frozen='true'] {
-    opacity: 1;
-  }
-
-  /* Last: stylelint orders selectors by specificity, and this one is the
-     most specific. */
-  th:hover & {
-    opacity: 1;
-  }
-
-  @media (hover: none) {
-    opacity: 1;
-  }
-`;
-
-type MenuEntry = { label: string; next: Required<FrozenColumns> };
-
-// Header cells are often clickable (sorting). The menu lives in a portal,
-// but React still bubbles its events through the cell.
-const stop = (event: MouseEvent) => event.stopPropagation();
-
-/** Lives inside the popover so it can close it. */
-const Menu = ({
-  items,
-  onSelect,
-}: {
-  items: MenuEntry[];
-  onSelect: (next: Required<FrozenColumns>) => void;
-}) => {
-  const { setOpen } = usePopoverContext();
-  return (
-    <ContextMenu<string>
-      aria-label="Freeze column"
-      css={{ minWidth: 180 }}
-      items={items.map(({ label }) => ({ value: label, label }))}
-      onAction={(label) => {
-        const entry = items.find((item) => item.label === label);
-        if (!entry) return;
-        onSelect(entry.next);
-        setOpen(false);
-      }}
-      onClick={stop}
-    />
-  );
-};
 
 const without = (ids: ColumnId[], id: ColumnId) =>
   ids.filter((other) => String(other) !== String(id));
+
+/** Which edge a column is frozen to, if any. */
+export const getFrozenEdge = (
+  { start, end }: Required<FrozenColumns>,
+  id: ColumnId,
+): 'start' | 'end' | null => {
+  const key = String(id);
+  if (start.some((other) => String(other) === key)) return 'start';
+  if (end.some((other) => String(other) === key)) return 'end';
+  return null;
+};
+
+/**
+ * The freeze actions for one column's header menu, each with the frozen
+ * columns it leads to. Shared by `ColumnFreezeMenu` and `DataTable`.
+ */
+export const getFreezeMenuItems = (
+  frozen: Required<FrozenColumns>,
+  id: ColumnId,
+) => {
+  const rest = {
+    start: without(frozen.start, id),
+    end: without(frozen.end, id),
+  };
+  const items: { label: string; next: Required<FrozenColumns> }[] =
+    getFrozenEdge(frozen, id)
+      ? [{ label: 'Unfreeze column', next: rest }]
+      : [
+          {
+            label: 'Freeze to the left',
+            next: { start: [...rest.start, id], end: rest.end },
+          },
+          {
+            label: 'Freeze to the right',
+            next: { start: rest.start, end: [...rest.end, id] },
+          },
+        ];
+  if (rest.start.length + rest.end.length > 0) {
+    items.push({ label: 'Unfreeze all', next: { start: [], end: [] } });
+  }
+  return items;
+};
 
 /**
  * ColumnFreezeMenu - The freeze/unfreeze menu in a table header cell
@@ -133,7 +83,6 @@ const without = (ids: ColumnId[], id: ColumnId) =>
  */
 export const ColumnFreezeMenu = ({ columnId }: ColumnFreezeMenuProps) => {
   const columnFreeze = useColumnFreezeContext();
-  const theme = useTheme();
   const anchorRef = useRef<HTMLSpanElement>(null);
   const [cellId, setCellId] = useState<ColumnId | null>(null);
 
@@ -151,57 +100,21 @@ export const ColumnFreezeMenu = ({ columnId }: ColumnFreezeMenuProps) => {
 
   const id = columnId ?? cellId;
   if (!columnFreeze || id === null) {
-    return <Anchor ref={anchorRef} />;
+    return <ColumnMenuAnchor ref={anchorRef} />;
   }
 
-  const { start, end } = columnFreeze.frozenColumns;
-  const key = String(id);
-  const frozenAt = start.some((other) => String(other) === key)
-    ? 'start'
-    : end.some((other) => String(other) === key)
-      ? 'end'
-      : null;
-  const rest = { start: without(start, id), end: without(end, id) };
-
-  const items: MenuEntry[] = frozenAt
-    ? [{ label: 'Unfreeze column', next: rest }]
-    : [
-        {
-          label: 'Freeze to the left',
-          next: { start: [...rest.start, id], end: rest.end },
-        },
-        {
-          label: 'Freeze to the right',
-          next: { start: rest.start, end: [...rest.end, id] },
-        },
-      ];
-  const others = rest.start.length + rest.end.length;
-  if (others > 0) {
-    items.push({ label: 'Unfreeze all', next: { start: [], end: [] } });
-  }
-
+  const { frozenColumns, setFrozenColumns } = columnFreeze;
   return (
-    <Anchor ref={anchorRef}>
-      <Popover placement="bottom-end">
-        <PopoverTrigger asChild>
-          <Trigger
-            type="button"
-            aria-label="Freeze column options"
-            data-frozen={frozenAt ? 'true' : undefined}
-            onClick={stop}>
-            <Icon
-              name={frozenAt ? 'lock' : 'more-vertical'}
-              size={14}
-              color={theme.colors.greyDarker80}
-            />
-          </Trigger>
-        </PopoverTrigger>
-        {/* No surface here: the menu draws its own. */}
-        <PopoverContent>
-          <Menu items={items} onSelect={columnFreeze.setFrozenColumns} />
-        </PopoverContent>
-      </Popover>
-    </Anchor>
+    <ColumnMenu
+      ref={anchorRef}
+      label="Freeze column"
+      triggerLabel="Freeze column options"
+      frozen={getFrozenEdge(frozenColumns, id) !== null}
+      items={getFreezeMenuItems(frozenColumns, id).map(({ label, next }) => ({
+        label,
+        onSelect: () => setFrozenColumns(next),
+      }))}
+    />
   );
 };
 
