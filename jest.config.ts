@@ -34,6 +34,10 @@ const esm = [
   '@nivo/scales',
   '@rjsf/core',
   '@rjsf/utils',
+  '@tanstack/react-table',
+  '@tanstack/table-core',
+  '@tanstack/react-store',
+  '@tanstack/store',
   'storybook',
 ];
 

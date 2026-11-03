@@ -1,0 +1,175 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as DataTableStories from './DataTable.stories';
+
+<Meta of={DataTableStories} />
+
+# DataTable
+
+A table driven by data. Pass it rows and column definitions; it renders them,
+reports sorting, and owns the column layout: widths, frozen columns, order and
+hidden columns, all keyed by column id.
+
+Use `DataTable` for interactive data tables. For a static table whose markup
+you write by hand, use `Table` and its row and cell components, which
+`DataTable` is built from.
+
+## Default Usage
+
+```tsx
+import { DataTable, DataTableColumn } from '@ssa-ui-kit/core';
+
+const columns: DataTableColumn<Employee>[] = [
+  { id: 'name', header: 'Name', cell: (row) => row.name, sortable: true },
+  { id: 'email', header: 'Email', cell: (row) => row.email },
+  {
+    id: 'salary',
+    header: 'Salary',
+    cell: (row) => formatSalary(row.salary),
+    align: 'right',
+  },
+];
+
+<DataTable data={employees} columns={columns} getRowId={(row) => row.id} />;
+```
+
+Give `getRowId` whenever rows have an id. Rows are keyed by it; without it they
+are keyed by position, and their cells remount whenever the order changes.
+
+`columns` does not need to be memoised. The table rebuilds its model only when
+column ids or sort settings change, and always renders the latest `header` and
+`cell`.
+
+## Features
+
+### Columns
+
+| Field       | Description                                                                         |
+| ----------- | ----------------------------------------------------------------------------------- |
+| `id`        | Stable, unique id. Column state and the sort refer to columns by it.                |
+| `header`    | Header content.                                                                     |
+| `cell`      | `(row, rowIndex) => ReactNode`; `rowIndex` is the position as shown, after sorting. |
+| `align`     | `'left'` (default), `'center'` or `'right'`, for header and body cells.             |
+| `sortable`  | Clicking the header sorts by this column.                                           |
+| `sortKey`   | The server's name for the column, passed to `onSortChange`. Defaults to `id`.       |
+| `sortFn`    | Ascending comparator; sorts the rows in the browser.                                |
+| `width`     | Starting width in pixels. Columns without one are measured on first layout.         |
+| `resizable` | `false` keeps the user from resizing it, for actions or checkbox columns.           |
+| `freezable` | `false` removes the freeze menu from its header.                                    |
+
+### Sorting
+
+One column at a time. Clicking a sortable header sorts ascending, and clicking
+it again toggles the direction. By default the table only reports the new sort
+and expects the rows to come back sorted, which is what server data needs. The
+second argument of `onSortChange` is the column's `sortKey`, ready for the
+request:
+
+```tsx
+const [sort, setSort] = useState<DataTableSort | null>(null);
+
+<DataTable
+  data={rows}
+  columns={columns}
+  sort={sort}
+  onSortChange={(next, sortKey) => {
+    setSort(next);
+    fetchRows({ sorting: sortKey, descending: next?.direction === 'desc' });
+  }}
+  isLoading={isFetching}
+/>;
+```
+
+To sort in the browser instead, give the column a `sortFn`. Compare ascending;
+the table reverses the result for descending:
+
+```tsx
+{ id: 'name', header: 'Name', cell: (row) => row.name, sortable: true,
+  sortFn: (a, b) => a.name.localeCompare(b.name) }
+```
+
+### Column layout
+
+`resizableColumns` lets the user drag a header's right edge, and
+`freezeControls` gives each header a menu to freeze its column to either edge.
+Everything the user changes lands in one `DataTableColumnState`:
+
+```ts
+{
+  order: string[];                  // column ids in display order
+  widths: Record<string, number>;   // px per column id
+  frozen: { start: string[]; end: string[] };
+  hidden: string[];                 // ids of columns not shown
+}
+```
+
+Store it from `onColumnStateChange` and pass it back through
+`defaultColumnState` to remember a user's layout. Pass `columnState` instead to
+control it. Partial values are fine; missing parts fall back to defaults:
+
+```tsx
+<DataTable
+  data={rows}
+  columns={columns}
+  resizableColumns
+  freezeControls
+  defaultColumnState={loadLayout() ?? { frozen: { start: ['name'], end: [] } }}
+  onColumnStateChange={saveLayout}
+/>
+```
+
+`columnResizeMode`, `minColumnWidth` and `maxColumnWidth` work as on `Table`.
+In the default `fit` mode the column to the right gives up the width the dragged
+column gains; `expand` grows the table instead.
+
+### Sticky header
+
+`stickyHeader` keeps the header in view while the rows scroll. Give the table a
+height limit through `maxHeight`:
+
+```tsx
+<DataTable data={rows} columns={columns} stickyHeader maxHeight={480} />
+```
+
+### Loading and empty states
+
+`isLoading` marks the table busy. Rows already shown stay, dimmed, so a re-fetch
+after sorting does not make the table jump. With no rows yet, `loadingState`
+is shown; with no rows and no loading, `emptyState`:
+
+```tsx
+<DataTable
+  data={rows}
+  columns={columns}
+  isLoading={isFetching}
+  loadingState="Loading employees…"
+  emptyState="No employees match these filters"
+/>
+```
+
+### Row click and footer
+
+`onRowClick` receives the row's data. Rows become focusable, and Enter on a
+focused row opens it too. Clicks, and Enter, on a button, link, input or menu
+inside the row are left to that control. Screen readers do not announce a row
+as actionable, so when the action matters, also give the row a link or button
+in a cell.
+
+`footer` renders below the table, the place for `Pagination`:
+
+```tsx
+<DataTable
+  data={pageRows}
+  columns={columns}
+  onRowClick={(row) => navigate(`/employees/${row.id}`)}
+  footer={
+    <PaginationContextProvider page={page} onPageChange={setPage}>
+      <Pagination pagesCount={pagesCount} />
+    </PaginationContextProvider>
+  }
+/>
+```
+
+<Canvas />
+<Controls />
+
+<Stories includePrimary={false} />
