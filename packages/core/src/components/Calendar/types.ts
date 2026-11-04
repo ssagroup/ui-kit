@@ -117,9 +117,44 @@ export type CalendarDayHighlight = {
 };
 
 /**
+ * A day's working time on the day view's timeline, in hours from midnight —
+ * `{ start: 8, end: 20 }` is 08:00–20:00, `17.5` is 17:30. The hours
+ * outside it are shaded grey, but stay open for adding entries.
+ */
+export type CalendarWorkingHours = {
+  /** Hour the working time starts, 0–24. */
+  start: number;
+  /** Hour the working time ends, 0–24; after `start`. */
+  end: number;
+};
+
+/** A weekday, as keyed in {@link CalendarWorkingHoursByWeekday}. */
+export type CalendarWeekday =
+  | 'mon'
+  | 'tue'
+  | 'wed'
+  | 'thu'
+  | 'fri'
+  | 'sat'
+  | 'sun';
+
+/**
+ * Working time per weekday. A weekday left out, or set to `null`, has no
+ * working time — the whole day is shaded.
+ */
+export type CalendarWorkingHoursByWeekday = Partial<
+  Record<CalendarWeekday, CalendarWorkingHours | null>
+>;
+
+/**
  * Per-day options returned by `getDayProps`.
  */
 export type CalendarDayProps = {
+  /**
+   * The day's working time, over `workingHours` — e.g. a short day before a
+   * holiday. `null` shades the whole day.
+   */
+  workingHours?: CalendarWorkingHours | null;
   /** Turns the day into a highlighted, whole-day cell. */
   highlight?: CalendarDayHighlight;
   /**
@@ -213,13 +248,16 @@ export type CalendarEventDetailsControls = {
 };
 
 /**
- * The days a view shows, handed to `onRangeChange`.
+ * The days a view shows, handed to `onRangeChange`. Unlike the calendar's
+ * other day values, `start` and `end` are moments — the span to fetch timed
+ * entries for — so with a `timeZone` they're that zone's midnights, not
+ * local ones.
  */
 export type CalendarRange = {
   view: CalendarView;
-  /** Start of the first day shown. */
+  /** Start of the first day shown, in the calendar's time zone. */
   start: Date;
-  /** End of the last day shown (23:59:59.999). */
+  /** End of the last day shown (23:59:59.999), in the calendar's time zone. */
   end: Date;
 };
 
@@ -327,7 +365,9 @@ export type CalendarProps<TData = unknown> = {
   getDayProps?: (date: Date) => CalendarDayProps | undefined;
   /**
    * Shows an add button on each day (on hover in the month grid) and in the
-   * day view header. Receives the day clicked.
+   * day view header. Receives the day clicked (its start, in local time
+   * like every day value), or the hour clicked on the day view's timeline
+   * — a moment, which in another `timeZone` reads differently locally.
    */
   onAddEvent?: (date: Date) => void;
   /**
@@ -412,9 +452,69 @@ export type CalendarProps<TData = unknown> = {
   locale?: string;
   /**
    * Hour the day view scrolls to when it opens. Defaults to an hour before
-   * the current time on today, and to 8:00 on other days.
+   * the current time on today, and to the start of the working time (see
+   * `workingHours`) or 8:00 on other days.
    */
   scrollToHour?: number;
+  /**
+   * Working time of the day view: the hours outside it get a grey
+   * background. They stay open for adding entries — the shading is only a
+   * hint. One range for every day, or a range per weekday; for one-off days
+   * use `getDayProps(date).workingHours`.
+   *
+   * Unset, no hours are shaded.
+   */
+  workingHours?: CalendarWorkingHours | CalendarWorkingHoursByWeekday;
+  /**
+   * Height of one hour on the day view's timeline, in px. Passing it makes
+   * it controlled: change it from `onHourHeightChange`.
+   */
+  hourHeight?: number;
+  /**
+   * Hour height to start with when `hourHeight` isn't controlled, and the
+   * one a double click on the hour labels goes back to.
+   * @default 68
+   */
+  defaultHourHeight?: number;
+  /** Called as the user resizes the hours — see `resizableHours`. */
+  onHourHeightChange?: (hourHeight: number) => void;
+  /**
+   * Lets the user make the day view's hours taller or shorter by dragging
+   * the hour labels column up or down, or with the arrow keys when it's
+   * focused — from the whole day fitting the view to a single hour filling
+   * it. A double click on the column goes back to `defaultHourHeight`.
+   * @default false
+   */
+  resizableHours?: boolean;
+  /**
+   * IANA time zone the calendar shows times in, e.g. `'Europe/Kyiv'` or
+   * `'UTC'`. Passing it makes it controlled: change it from
+   * `onTimeZoneChange`.
+   *
+   * Timed entries are moved into the zone — an entry at 09:00 in Kyiv shows
+   * at 07:00 in `'UTC'`. Untimed entries, `date` and the other day values
+   * are calendar days and stay on their day. "Today" and the now line follow
+   * the zone.
+   *
+   * @default the browser's time zone
+   */
+  timeZone?: string;
+  /** Time zone to start in when `timeZone` isn't controlled. */
+  defaultTimeZone?: string;
+  /** Called when the user picks a time zone — see `timeZoneSelector`. */
+  onTimeZoneChange?: (timeZone: string) => void;
+  /**
+   * Shows a time zone button that opens a searchable list of zones. It sits
+   * in the toolbar next to the Month/Day toggle; without `toolbar`, in the
+   * day view's header.
+   * @default false
+   */
+  timeZoneSelector?: boolean;
+  /**
+   * Zones the selector offers.
+   * @default every zone the browser knows
+   */
+  timeZones?: string[];
   /** Accessible name of the calendar region. */
   'aria-label'?: string;
   className?: string;

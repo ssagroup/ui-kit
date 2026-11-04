@@ -482,6 +482,327 @@ describe('Calendar', () => {
     });
   });
 
+  describe('working hours, resizing and time zones', () => {
+    const monday = new Date(2026, 9, 12);
+    const timed = events.filter((event) => !event.allDay);
+    const offHours = (container: HTMLElement) =>
+      Array.from(
+        container.querySelectorAll<HTMLElement>('[data-off-hours]'),
+      ).map((band) => [band.style.top, band.style.height]);
+
+    it('shows the all-day row only with untimed entries or a highlight', () => {
+      const { container, rerender } = setup(
+        <Calendar view="day" date={monday} events={timed} />,
+      );
+      expect(container.querySelector('[data-all-day]')).toBeNull();
+
+      rerender(<Calendar view="day" date={monday} events={events} />);
+      expect(container.querySelector('[data-all-day]')).not.toBeNull();
+
+      rerender(
+        <Calendar
+          view="day"
+          date={monday}
+          events={timed}
+          getDayProps={() => ({ highlight: { color: 'red', label: 'Off' } })}
+        />,
+      );
+      expect(container.querySelector('[data-all-day]')).not.toBeNull();
+    });
+
+    it('shades nothing without workingHours', () => {
+      const { container } = setup(<Calendar view="day" date={monday} />);
+      expect(offHours(container)).toEqual([]);
+    });
+
+    it('shades the hours outside the working time', () => {
+      const { container } = setup(
+        <Calendar
+          view="day"
+          date={monday}
+          workingHours={{ start: 8, end: 17.5 }}
+        />,
+      );
+      expect(offHours(container)).toEqual([
+        ['0px', `${8 * 68}px`],
+        [`${17.5 * 68}px`, `${6.5 * 68}px`],
+      ]);
+    });
+
+    it('takes the weekday entry, and getDayProps over it', () => {
+      const weekly = { mon: { start: 9, end: 18 }, fri: { start: 9, end: 15 } };
+      const { container, rerender } = setup(
+        <Calendar view="day" date={monday} workingHours={weekly} />,
+      );
+      expect(offHours(container)).toEqual([
+        ['0px', `${9 * 68}px`],
+        [`${18 * 68}px`, `${6 * 68}px`],
+      ]);
+
+      // A weekday left out has no working time.
+      rerender(
+        <Calendar
+          view="day"
+          date={new Date(2026, 9, 13)}
+          workingHours={weekly}
+        />,
+      );
+      expect(offHours(container)).toEqual([['0px', `${24 * 68}px`]]);
+
+      rerender(
+        <Calendar
+          view="day"
+          date={monday}
+          workingHours={weekly}
+          getDayProps={() => ({ workingHours: { start: 10, end: 12 } })}
+        />,
+      );
+      expect(offHours(container)).toEqual([
+        ['0px', `${10 * 68}px`],
+        [`${12 * 68}px`, `${12 * 68}px`],
+      ]);
+    });
+
+    it('keeps the shaded hours open for adding', async () => {
+      const onAddEvent = jest.fn();
+      const { user } = setup(
+        <Calendar
+          view="day"
+          date={monday}
+          workingHours={{ start: 8, end: 20 }}
+          onAddEvent={onAddEvent}
+        />,
+      );
+      await user.click(screen.getByRole('button', { name: 'Add at 06:00' }));
+      expect(onAddEvent).toHaveBeenLastCalledWith(new Date(2026, 9, 12, 6));
+    });
+
+    it('sizes entry text by the height of its box', () => {
+      setup(
+        <Calendar
+          view="day"
+          date={monday}
+          events={[
+            ...timed,
+            {
+              id: 'long',
+              title: 'Workshop',
+              start: '2026-10-12T18:00',
+              end: '2026-10-12T21:00',
+            },
+            {
+              id: 'beside',
+              title: 'Offsite',
+              start: '2026-10-12T15:00',
+              end: '2026-10-12T18:00',
+            },
+          ]}
+        />,
+      );
+      expect(screen.getByText('Standup')).toHaveStyle({ fontSize: '12px' });
+      expect(screen.getByText('Review')).toHaveStyle({ fontSize: '14px' });
+      expect(screen.getByText('Workshop')).toHaveStyle({ fontSize: '24px' });
+      // Side by side with another entry, the box is too narrow for 24px.
+      expect(screen.getByText('Offsite')).toHaveStyle({ fontSize: '18px' });
+    });
+
+    it('only offers resizing with resizableHours', () => {
+      setup(<Calendar view="day" date={monday} />);
+      expect(screen.queryByRole('slider')).not.toBeInTheDocument();
+    });
+
+    it('resizes the hours from the keyboard', async () => {
+      const onHourHeightChange = jest.fn();
+      const { user } = setup(
+        <Calendar
+          view="day"
+          date={monday}
+          events={events}
+          resizableHours
+          onHourHeightChange={onHourHeightChange}
+        />,
+      );
+      const handle = screen.getByRole('slider', { name: 'Hour height' });
+      expect(handle).toHaveAttribute('aria-valuenow', '68');
+
+      handle.focus();
+      await user.keyboard('{ArrowUp}');
+      expect(onHourHeightChange).toHaveBeenLastCalledWith(76);
+      const review = screen.getByTitle('Review').parentElement as HTMLElement;
+      expect(review.style.top).toBe(`${13 * 76 + 2.5}px`);
+
+      // jsdom has no layout, so the fallback limits apply.
+      await user.keyboard('{Home}');
+      expect(handle).toHaveAttribute('aria-valuenow', '16');
+      await user.keyboard('{ArrowDown}');
+      // Already at the minimum.
+      expect(onHourHeightChange).toHaveBeenCalledTimes(2);
+    });
+
+    it('keeps the current height within the limits, without a jump', async () => {
+      const onHourHeightChange = jest.fn();
+      const { user } = setup(
+        <Calendar
+          view="day"
+          date={monday}
+          resizableHours
+          hourHeight={10}
+          onHourHeightChange={onHourHeightChange}
+        />,
+      );
+      // Below the fallback minimum (16): the limits stretch to include it.
+      const handle = screen.getByRole('slider', { name: 'Hour height' });
+      expect(handle).toHaveAttribute('aria-valuemin', '10');
+      expect(handle).toHaveAttribute('aria-valuenow', '10');
+      handle.focus();
+      await user.keyboard('{ArrowDown}');
+      expect(onHourHeightChange).not.toHaveBeenCalled();
+      await user.keyboard('{ArrowUp}');
+      expect(onHourHeightChange).toHaveBeenLastCalledWith(18);
+    });
+
+    it('goes back to the default height on double click', async () => {
+      const { user } = setup(
+        <Calendar
+          view="day"
+          date={monday}
+          resizableHours
+          defaultHourHeight={60}
+        />,
+      );
+      const handle = screen.getByRole('slider', { name: 'Hour height' });
+      handle.focus();
+      await user.keyboard('{End}');
+      expect(handle).toHaveAttribute('aria-valuenow', '480');
+      await user.dblClick(handle);
+      expect(handle).toHaveAttribute('aria-valuenow', '60');
+    });
+
+    it('shows timed entries in the time zone, untimed ones on their day', () => {
+      setup(
+        <Calendar
+          view="day"
+          date={monday}
+          timeZone="Asia/Tokyo"
+          events={[
+            {
+              id: 'utc',
+              title: 'Call',
+              start: '2026-10-12T09:00:00Z',
+              end: '2026-10-12T10:00:00Z',
+            },
+            {
+              id: 'log',
+              title: 'Development',
+              start: '2026-10-12',
+              allDay: true,
+            },
+          ]}
+        />,
+      );
+      expect(screen.getByText('18:00 – 19:00')).toBeInTheDocument();
+      expect(screen.getByText('Development')).toBeInTheDocument();
+    });
+
+    it('hands days back as local midnight in another zone', async () => {
+      const onDateChange = jest.fn();
+      const onAddEvent = jest.fn();
+      const { user } = setup(
+        <Calendar
+          view="day"
+          toolbar
+          defaultDate={monday}
+          timeZone="Pacific/Kiritimati"
+          onDateChange={onDateChange}
+          onAddEvent={onAddEvent}
+        />,
+      );
+      await user.click(screen.getByRole('button', { name: 'Next day' }));
+      expect(onDateChange).toHaveBeenLastCalledWith(new Date(2026, 9, 13));
+      await user.click(
+        screen.getByRole('button', { name: 'Add to Tuesday, 13 October 2026' }),
+      );
+      expect(onAddEvent).toHaveBeenLastCalledWith(new Date(2026, 9, 13));
+    });
+
+    it('reports the range as moments in the time zone', () => {
+      const onRangeChange = jest.fn();
+      setup(
+        <Calendar
+          view="day"
+          date={monday}
+          timeZone="Asia/Tokyo"
+          onRangeChange={onRangeChange}
+        />,
+      );
+      // Tokyo's midnight, not local — the span to fetch timed entries for.
+      expect(onRangeChange).toHaveBeenLastCalledWith({
+        view: 'day',
+        start: new Date('2026-10-11T15:00:00.000Z'),
+        end: new Date('2026-10-12T14:59:59.999Z'),
+      });
+    });
+
+    it('picks a zone from the selector in the toolbar', async () => {
+      const onTimeZoneChange = jest.fn();
+      const { user } = setup(
+        <Calendar
+          view="day"
+          toolbar
+          date={monday}
+          timeZoneSelector
+          defaultTimeZone="UTC"
+          onTimeZoneChange={onTimeZoneChange}
+          events={[
+            {
+              id: 'utc',
+              title: 'Call',
+              start: '2026-10-12T09:00:00Z',
+              end: '2026-10-12T10:00:00Z',
+            },
+          ]}
+        />,
+      );
+      expect(screen.getByText('09:00 – 10:00')).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'Time zone: UTC' }));
+      await user.type(
+        screen.getByRole('searchbox', { name: 'Search time zone' }),
+        'tokyo',
+      );
+      await user.click(screen.getByRole('option', { name: /Asia\/Tokyo/ }));
+
+      expect(onTimeZoneChange).toHaveBeenLastCalledWith('Asia/Tokyo');
+      expect(screen.getByText('18:00 – 19:00')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Time zone: Tokyo (GMT+9)' }),
+      ).toHaveAttribute('title', 'Asia/Tokyo');
+    });
+
+    it('hides the selector when the zone is pinned', () => {
+      setup(
+        <Calendar view="day" date={monday} timeZoneSelector timeZone="UTC" />,
+      );
+      // Controlled without a handler: the zone can't change, so no button.
+      expect(
+        screen.queryByRole('button', { name: /Time zone/ }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('puts the selector in the day header without a toolbar', () => {
+      setup(
+        <Calendar
+          view="day"
+          date={monday}
+          timeZoneSelector
+          defaultTimeZone="UTC"
+        />,
+      );
+      expect(
+        screen.getByRole('button', { name: 'Time zone: UTC' }),
+      ).toBeInTheDocument();
+    });
+  });
+
   describe('navigation', () => {
     it('opens a day from its number and goes back to the month', async () => {
       const onViewChange = jest.fn();

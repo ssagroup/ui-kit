@@ -7,7 +7,7 @@ import { ButtonGroup } from '@components/ButtonGroup';
 import { IconButton } from '@components/IconButton';
 
 import { CalendarView } from '../types';
-import { hasContent, withLocale } from '../utils';
+import { hasContent, nowIn, withLocale } from '../utils';
 import * as S from '../styles';
 
 const VIEW_LABELS: Record<CalendarView, string> = {
@@ -19,6 +19,10 @@ type CalendarToolbarProps = {
   view: CalendarView;
   date: DateTime;
   locale?: string;
+  /** Zone "Today" is taken in; `undefined` — local time. */
+  timeZone?: string;
+  /** The time zone button, when the calendar offers one. */
+  timeZonePicker?: ReactNode;
   /** Moves to a date; `undefined` when the date can't move. */
   onNavigate?: (date: DateTime) => void;
   /** Views to toggle between; the toggle shows with two or more. */
@@ -35,6 +39,8 @@ export const CalendarToolbar = ({
   view,
   date,
   locale,
+  timeZone,
+  timeZonePicker,
   onNavigate,
   views,
   onViewChange,
@@ -62,7 +68,7 @@ export const CalendarToolbar = ({
             variant="secondary"
             size="small"
             text="Today"
-            onClick={() => onNavigate(DateTime.now().startOf('day'))}
+            onClick={() => onNavigate(nowIn(timeZone).startOf('day'))}
           />
           <IconButton
             icon="carrot-right"
@@ -77,6 +83,7 @@ export const CalendarToolbar = ({
         {title}
       </h2>
       {hasContent(end) && <div css={S.toolbarEnd}>{end}</div>}
+      {hasContent(timeZonePicker) && timeZonePicker}
       {onViewChange && views.length > 1 && (
         // ButtonGroup renders its buttons without a wrapper; without one the
         // toolbar's gap would split them apart.

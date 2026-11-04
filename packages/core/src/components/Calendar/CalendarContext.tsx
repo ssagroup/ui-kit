@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 import { DateTime } from 'luxon';
 
 import { CalendarEvent, CalendarProps } from './types';
@@ -17,8 +17,19 @@ export type CalendarContextValue = Pick<
   | 'renderEventActions'
   | 'getEventProps'
   | 'locale'
+  | 'workingHours'
 > & {
   timeFormat: '24h' | '12h';
+  /** Zone times are shown in; `undefined` — local time. */
+  timeZone?: string;
+  /** Height of one hour on the day view's timeline, in px. */
+  hourHeight: number;
+  /** Resizes the hours; `undefined` when they can't be resized. */
+  setHourHeight?: (height: number) => void;
+  /** Hour height a double click on the hour labels goes back to. */
+  defaultHourHeight: number;
+  /** Extra controls for the day view's header, e.g. the time zone picker. */
+  dayHeaderEnd?: ReactNode;
   /**
    * Whether a day gets an add button, going by `onAddEvent` and
    * `minAddDate` / `maxAddDate` (not `getDayProps`, which the views apply).

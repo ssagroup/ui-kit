@@ -1,7 +1,13 @@
 import { ReactNode } from 'react';
 import { DateTime, Info } from 'luxon';
 
-import { CalendarDateInput, CalendarEvent } from './types';
+import {
+  CalendarDateInput,
+  CalendarEvent,
+  CalendarWeekday,
+  CalendarWorkingHours,
+  CalendarWorkingHoursByWeekday,
+} from './types';
 
 /** Length given to a timed event that has no `end`. */
 export const DEFAULT_EVENT_MINUTES = 30;
@@ -13,9 +19,45 @@ const MINUTES_PER_DAY = 24 * 60;
  */
 export const MAX_SPAN_DAYS = 366;
 
-/** `Date` or ISO string → luxon, in local time. */
-export const toDateTime = (value: CalendarDateInput): DateTime =>
-  value instanceof Date ? DateTime.fromJSDate(value) : DateTime.fromISO(value);
+/**
+ * `Date` or ISO string → luxon. A string without an offset is read in local
+ * time. With a `zone`, the moment is then shown in that zone.
+ */
+export const toDateTime = (
+  value: CalendarDateInput,
+  zone?: string,
+): DateTime => {
+  const parsed =
+    value instanceof Date
+      ? DateTime.fromJSDate(value)
+      : DateTime.fromISO(value);
+  return zone ? parsed.setZone(zone) : parsed;
+};
+
+/**
+ * A day value (`date`, an untimed entry, an add limit): its local calendar
+ * date, as the start of that day in `zone`. Days stay on their date whatever
+ * the zone — only moments move.
+ */
+export const toZonedDay = (
+  value: CalendarDateInput,
+  zone?: string,
+): DateTime => {
+  const day = toDateTime(value).startOf('day');
+  return zone && day.isValid ? day.setZone(zone, { keepLocalTime: true }) : day;
+};
+
+/** The reverse of `toZonedDay`: the same calendar day, as local midnight. */
+export const toLocalDayDate = (day: DateTime): Date =>
+  day.setZone('local', { keepLocalTime: true }).startOf('day').toJSDate();
+
+/** The current moment, in `zone` when given. */
+export const nowIn = (zone?: string) =>
+  zone ? DateTime.now().setZone(zone) : DateTime.now();
+
+/** The browser's IANA time zone. */
+export const getLocalTimeZone = () =>
+  DateTime.local().zoneName ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 /** `yyyy-MM-dd` of a date — the key events are grouped by. */
 export const toDayKey = (value: DateTime): string => value.toISODate() ?? '';
@@ -37,25 +79,28 @@ export type NormalizedEvent<TData = unknown> = {
 
 export const normalizeEvent = <TData>(
   event: CalendarEvent<TData>,
+  zone?: string,
 ): NormalizedEvent<TData> | undefined => {
-  const start = toDateTime(event.start);
-  if (!start.isValid) return undefined;
-
-  const parsedEnd = event.end ? toDateTime(event.end) : undefined;
-  const firstDay = start.startOf('day');
-
   if (event.allDay) {
-    const lastDay = parsedEnd?.isValid ? parsedEnd.startOf('day') : firstDay;
-    const end = lastDay > firstDay ? lastDay : firstDay;
+    // Untimed entries are days: they keep their date in any zone.
+    const start = toZonedDay(event.start, zone);
+    if (!start.isValid) return undefined;
+    const lastDay = event.end ? toZonedDay(event.end, zone) : start;
+    const end = lastDay.isValid && lastDay > start ? lastDay : start;
     return {
       event,
       start,
       end,
       allDay: true,
-      spanDays: Math.min(daysBetween(firstDay, end) + 1, MAX_SPAN_DAYS),
+      spanDays: Math.min(daysBetween(start, end) + 1, MAX_SPAN_DAYS),
       dayOfSpan: 1,
     };
   }
+
+  const start = toDateTime(event.start, zone);
+  if (!start.isValid) return undefined;
+  const parsedEnd = event.end ? toDateTime(event.end, zone) : undefined;
+  const firstDay = start.startOf('day');
 
   const end =
     parsedEnd?.isValid && parsedEnd > start
@@ -109,11 +154,12 @@ const compareEvents = (a: NormalizedEvent, b: NormalizedEvent) => {
  */
 export const groupEventsByDay = <TData>(
   events: CalendarEvent<TData>[],
+  zone?: string,
 ): Map<string, NormalizedEvent<TData>[]> => {
   const byDay = new Map<string, NormalizedEvent<TData>[]>();
 
   for (const event of events) {
-    const normalized = normalizeEvent(event);
+    const normalized = normalizeEvent(event, zone);
     if (!normalized) continue;
     const firstDay = normalized.start.startOf('day');
     for (let index = 0; index < normalized.spanDays; index += 1) {
@@ -289,6 +335,58 @@ export const layoutDayEvents = <TData>(
   closeGroup();
 
   return positioned;
+};
+
+const WEEKDAYS: CalendarWeekday[] = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+  'sun',
+];
+
+const isSingleRange = (
+  value: CalendarWorkingHours | CalendarWorkingHoursByWeekday,
+): value is CalendarWorkingHours => 'start' in value && 'end' in value;
+
+/**
+ * A day's working time: the day's own override, else its weekday's entry or
+ * the single range. `null` — none, the whole day is shaded; `undefined` —
+ * working hours aren't set, nothing is shaded.
+ */
+export const resolveWorkingHours = (
+  workingHours:
+    | CalendarWorkingHours
+    | CalendarWorkingHoursByWeekday
+    | undefined,
+  day: DateTime,
+  override?: CalendarWorkingHours | null,
+): CalendarWorkingHours | null | undefined => {
+  if (override !== undefined) return override;
+  if (!workingHours) return undefined;
+  if (isSingleRange(workingHours)) return workingHours;
+  return workingHours[WEEKDAYS[day.weekday - 1]] ?? null;
+};
+
+/**
+ * The stretches of a day outside its working time, in minutes from
+ * midnight. Hours are clamped to the day; a range that ends before it
+ * starts leaves the whole day outside.
+ */
+export const getNonWorkingRanges = (
+  hours: CalendarWorkingHours | null,
+): { start: number; end: number }[] => {
+  const clamp = (hour: number) =>
+    Math.round(Math.min(Math.max(hour, 0), 24) * 60);
+  const start = hours ? clamp(hours.start) : 0;
+  const end = hours ? clamp(hours.end) : 0;
+  if (!hours || end <= start) return [{ start: 0, end: MINUTES_PER_DAY }];
+  return [
+    { start: 0, end: start },
+    { start: end, end: MINUTES_PER_DAY },
+  ].filter((range) => range.end > range.start);
 };
 
 /** Applies `locale` when given; otherwise keeps luxon's default. */

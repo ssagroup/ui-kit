@@ -383,19 +383,41 @@ export const Navigation: Story = {
   ),
 };
 
+const localZone = DateTime.local().zoneName ?? 'UTC';
+
+const longEvents: CalendarEvent[] = [
+  {
+    id: 'workshop',
+    title: 'Quarterly planning workshop with the product and design teams',
+    start: at(today, '16:00'),
+    end: at(today, '19:00'),
+    color: 'purple',
+  },
+];
+
+const timedDayEvents = [
+  ...dayEvents.filter((event) => !event.allDay),
+  ...longEvents,
+];
+
 /**
- * Controlled: the parent owns `view` and `date`, and feeds the change
- * handlers back in — here to keep them in the URL, say.
+ * Controlled: the parent owns `view`, `date`, `timeZone` and `hourHeight`,
+ * and feeds the change handlers back in — here to keep them in the URL, say.
+ * Working hours are 08:00–20:00; drag the hour labels to resize the hours,
+ * and pick a zone from the clock button.
  */
 export const Controlled: Story = {
   render: function Render(args) {
     const [view, setView] = useState<CalendarView>('month');
     const [date, setDate] = useState<Date>(today.toJSDate());
+    const [timeZone, setTimeZone] = useState(localZone);
+    const [hourHeight, setHourHeight] = useState(68);
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <span>
           Parent state: <strong>{view}</strong>,{' '}
-          <strong>{DateTime.fromJSDate(date).toISODate()}</strong>
+          <strong>{DateTime.fromJSDate(date).toISODate()}</strong>,{' '}
+          <strong>{timeZone}</strong>, <strong>{hourHeight}px</strong> per hour
         </span>
         <Calendar
           {...args}
@@ -405,11 +427,65 @@ export const Controlled: Story = {
           date={date}
           onViewChange={setView}
           onDateChange={setDate}
-          events={[...regularEvents, ...dayEvents]}
+          timeZoneSelector
+          timeZone={timeZone}
+          onTimeZoneChange={setTimeZone}
+          workingHours={{ start: 8, end: 20 }}
+          resizableHours
+          hourHeight={hourHeight}
+          onHourHeightChange={setHourHeight}
+          events={[...regularEvents, ...dayEvents, ...longEvents]}
         />
       </div>
     );
   },
+};
+
+/**
+ * Three opt-in day-view features together:
+ *
+ * - `workingHours` shades the hours outside the working time — here 09:00
+ *   to 18:00 on Monday to Thursday, 09:00 to 15:00 on Friday, and none at
+ *   the weekend. `getDayProps(date).workingHours` overrides a single day.
+ *   The shaded hours stay open for adding.
+ * - `resizableHours`: drag the hour labels column up or down to make the
+ *   hours taller or shorter — from the whole day on screen to a single hour
+ *   filling it — or use the arrow keys once it's focused. Double click it
+ *   to go back to the default height. Entry text grows with its box, up to
+ *   a 24px title, and long titles wrap onto the lines that fit.
+ * - `timeZoneSelector` adds a clock button next to the Month/Day toggle (or
+ *   to the day view's add button, without a toolbar) that opens a
+ *   searchable list of zones. Timed entries move into the chosen zone;
+ *   untimed ones stay on their day. `defaultTimeZone` sets the starting
+ *   zone — here UTC — and `timeZones` would limit the list.
+ *
+ * With no untimed entries or highlight, the all-day row above 00:00 is
+ * hidden.
+ */
+export const WorkingHoursResizeAndTimeZones: Story = {
+  args: {
+    view: 'day',
+    toolbar: true,
+    resizableHours: true,
+    timeZoneSelector: true,
+    defaultTimeZone: 'UTC',
+  },
+  render: (args) => (
+    <Calendar
+      {...args}
+      events={timedDayEvents}
+      onAddEvent={logAdd}
+      workingHours={{
+        mon: { start: 9, end: 18 },
+        tue: { start: 9, end: 18 },
+        wed: { start: 9, end: 18 },
+        thu: { start: 9, end: 18 },
+        fri: { start: 9, end: 15 },
+      }}
+      onHourHeightChange={(height) => console.log('hour height', height)}
+      onTimeZoneChange={(zone) => console.log('time zone', zone)}
+    />
+  ),
 };
 
 /**
