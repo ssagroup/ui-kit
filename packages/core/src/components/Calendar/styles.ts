@@ -127,6 +127,49 @@ export const toolbarTitle = css(ellipsis, {
 
 export const toolbarViews = css({ display: 'flex' });
 
+export const timeZoneButton = (theme: Theme) =>
+  css(buttonReset, text.bodyMedium, {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
+    flexShrink: 0,
+    height: 32,
+    padding: '0 10px',
+    borderRadius: 8,
+    background: theme.palette.secondary.light,
+    whiteSpace: 'nowrap',
+    '&:hover, &[data-state="open"]': {
+      background: theme.palette.secondary.main,
+    },
+    '&:focus-visible': {
+      outline: `1px solid ${theme.palette.primary.main}`,
+    },
+  });
+
+export const timeZonePopover = (theme: Theme) =>
+  css({
+    alignItems: 'stretch',
+    gap: 8,
+    zIndex: 10,
+    width: 320,
+    maxWidth: 'calc(100vw - 32px)',
+    padding: 8,
+    borderRadius: 12,
+    background: theme.colors.white,
+    boxShadow: `0 10px 40px 0 ${theme.colors.greyShadow}`,
+  });
+
+export const timeZoneSearch = (theme: Theme) =>
+  css(text.bodyMedium, {
+    height: 36,
+    padding: '0 12px',
+    border: `1px solid ${theme.colors.greyFocused}`,
+    borderRadius: 8,
+    color: theme.colors.greyDarker,
+    outline: 'none',
+    '&:focus': { borderColor: theme.palette.primary.main },
+  });
+
 export const toolbarEnd = css({
   display: 'flex',
   alignItems: 'center',
@@ -658,9 +701,12 @@ export const dayLead = (theme: Theme) =>
     borderBottom: divider(theme),
   });
 
+/** Set on the timeline to the hour height in px; the hour cells follow it. */
+export const HOUR_HEIGHT_VARIABLE = '--calendar-hour-height';
+
 export const hourCell = (theme: Theme) =>
   css({
-    height: HOUR_HEIGHT,
+    height: `var(${HOUR_HEIGHT_VARIABLE}, ${HOUR_HEIGHT}px)`,
     borderBottom: divider(theme),
   });
 
@@ -693,6 +739,47 @@ export const timeline = css({
   position: 'relative',
 });
 
+/** Holds the shading of the hours outside the working time. */
+export const offHoursLayer = css({
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  left: HOUR_GUTTER_WIDTH,
+  right: 0,
+  pointerEvents: 'none',
+});
+
+/**
+ * Multiplied over the cells rather than painted on them, so the hour lines
+ * and the cells' hover still show through.
+ */
+export const offHours = (theme: Theme) =>
+  css({
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    background: theme.colors.greyLighter,
+    mixBlendMode: 'multiply',
+  });
+
+/** Lies over the hour labels; dragging it resizes the hours. */
+export const hourResizer = (theme: Theme) =>
+  css({
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 2,
+    width: HOUR_GUTTER_WIDTH,
+    cursor: 'ns-resize',
+    touchAction: 'none',
+    '&:hover': { background: theme.colors.greyLighter40 },
+    '&:focus-visible': {
+      outline: `1px solid ${theme.palette.primary.main}`,
+      outlineOffset: -1,
+    },
+  });
+
 /** Holds the timed events over the hour cells, right of the labels. */
 export const dayEventsLayer = css({
   position: 'absolute',
@@ -712,7 +799,64 @@ export const dayEventBox = css({
   flexDirection: 'column',
 });
 
-export type DayEventSize = 'large' | 'medium' | 'small';
+export type DayEventSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
+
+/**
+ * Text of a timed entry by its size, and the box height each size starts
+ * at. `small` lays the title and time out in a row; the rest stack them.
+ */
+export const DAY_EVENT_TEXT: Record<
+  DayEventSize,
+  {
+    minHeight: number;
+    padding: number;
+    title: { fontSize: number; fontWeight: number; lineHeight: string };
+    titleLineHeight: number;
+    time: { fontSize: number; fontWeight: number; lineHeight: string };
+    timeLineHeight: number;
+  }
+> = {
+  small: {
+    minHeight: 0,
+    padding: 0,
+    title: text.bodySmallSemiBold,
+    titleLineHeight: 16,
+    time: text.bodySmall,
+    timeLineHeight: 16,
+  },
+  medium: {
+    minHeight: 32,
+    padding: 0,
+    title: text.bodySmallSemiBold,
+    titleLineHeight: 16,
+    time: text.bodySmall,
+    timeLineHeight: 16,
+  },
+  large: {
+    minHeight: 56,
+    padding: 8,
+    title: text.bodyMediumSemiBold,
+    titleLineHeight: 18,
+    time: text.bodyMedium,
+    timeLineHeight: 18,
+  },
+  xlarge: {
+    minHeight: 90,
+    padding: 10,
+    title: { fontSize: 18, fontWeight: 600, lineHeight: '24px' },
+    titleLineHeight: 24,
+    time: text.bodyMedium,
+    timeLineHeight: 18,
+  },
+  xxlarge: {
+    minHeight: 140,
+    padding: 12,
+    title: { fontSize: 24, fontWeight: 600, lineHeight: '32px' },
+    titleLineHeight: 32,
+    time: { fontSize: 16, fontWeight: 500, lineHeight: '22px' },
+    timeLineHeight: 22,
+  },
+};
 
 export const dayEvent = (
   theme: Theme,
@@ -722,11 +866,13 @@ export const dayEvent = (
   css({
     position: 'relative',
     display: 'flex',
-    alignItems: 'center',
+    // Tall entries read from the top, like a page; short ones centre.
+    alignItems:
+      size === 'xlarge' || size === 'xxlarge' ? 'flex-start' : 'center',
     gap: 8,
     flex: 1,
     minHeight: DAY_EVENT_MIN_HEIGHT,
-    padding: size === 'small' ? '0 16px' : '8px 16px',
+    padding: `${DAY_EVENT_TEXT[size].padding}px 16px`,
     overflow: 'hidden',
     borderRadius: 12,
     background: theme.palette.secondary.light,
@@ -740,7 +886,6 @@ export const dayEvent = (
       width: 8,
       background: stripe,
     },
-    ...(size === 'medium' && { paddingTop: 0, paddingBottom: 0 }),
     'button&:hover, &:has(button:hover)': {
       background: theme.palette.secondary.main,
     },
@@ -760,14 +905,18 @@ export const dayEventContent = (size: DayEventSize) =>
   });
 
 export const dayEventTitle = (size: DayEventSize) =>
-  css(
-    size === 'large' ? text.bodyMediumSemiBold : text.bodySmallSemiBold,
-    ellipsis,
-    { maxWidth: '100%' },
-  );
+  css(DAY_EVENT_TEXT[size].title, ellipsis, { maxWidth: '100%' });
+
+/** A title with room for more lines; the line count is set inline. */
+export const dayEventTitleWrap = css({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  whiteSpace: 'normal',
+  overflowWrap: 'anywhere',
+});
 
 export const dayEventTime = (size: DayEventSize) =>
-  css(size === 'large' ? text.bodyMedium : text.bodySmall, {
+  css(DAY_EVENT_TEXT[size].time, {
     whiteSpace: 'nowrap',
   });
 

@@ -6,8 +6,18 @@ import { CalendarColor, CalendarHighlightColor } from './types';
 export const MONTH_CELL_MIN_HEIGHT = 178;
 /** Width of the weekly total column: 7-day and 5-day grids. */
 export const TOTAL_COLUMN_WIDTH = { 7: 91, 5: 160 } as const;
-/** Height of one hour on the day view's timeline. */
+/** Height of one hour on the day view's timeline, unless resized. */
 export const HOUR_HEIGHT = 68;
+/**
+ * Resize limits for when the view can't be measured (before layout, or with
+ * no height). Otherwise an hour goes from the whole day fitting the view to
+ * a single hour filling it.
+ */
+export const HOUR_HEIGHT_FALLBACK_LIMITS = { min: 16, max: 480 } as const;
+/** Shortest an hour is ever drawn, whatever `hourHeight` says. */
+export const HOUR_HEIGHT_FLOOR = 8;
+/** Hour height change per arrow key press on the resize handle. */
+export const HOUR_HEIGHT_STEP = 8;
 /**
  * Space above the 00:00 line. It holds untimed entries, and leaves room for
  * the 00:00 label, which is centred on its line.

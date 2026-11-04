@@ -13,6 +13,8 @@ import {
   hasContent,
   MonthDay,
   NormalizedEvent,
+  nowIn,
+  toLocalDayDate,
   withLocale,
 } from '../utils';
 import * as S from '../styles';
@@ -74,7 +76,7 @@ const MonthCell = ({
   const theme = useTheme();
   const { getDayProps, onAddEvent, canAddOn, onDayClick, openDay, locale } =
     useCalendarContext();
-  const jsDate = day.date.toJSDate();
+  const jsDate = toLocalDayDate(day.date);
   const dayProps = getDayProps?.(jsDate);
   const highlight = dayProps?.highlight;
   const canAdd =
@@ -172,12 +174,12 @@ export const MonthView = ({
   footer,
 }: MonthViewProps) => {
   const theme = useTheme();
-  const { locale } = useCalendarContext();
+  const { locale, timeZone } = useCalendarContext();
   const withTotal = Boolean(renderWeekTotal);
 
   const weeks = useMemo(
-    () => buildMonthWeeks(month, weekdays),
-    [month, weekdays],
+    () => buildMonthWeeks(month, weekdays, nowIn(timeZone)),
+    [month, weekdays, timeZone],
   );
   const weekdayNames = useMemo(
     () => getWeekdayNames('long', locale).slice(0, weekdays),
@@ -210,9 +212,9 @@ export const MonthView = ({
               {renderWeekTotal && (
                 <div css={S.totalCell(weekdays)}>
                   {renderWeekTotal({
-                    start: week.days[0].date.toJSDate(),
-                    end: week.days[week.days.length - 1].date.toJSDate(),
-                    days: week.days.map((day) => day.date.toJSDate()),
+                    start: toLocalDayDate(week.days[0].date),
+                    end: toLocalDayDate(week.days[week.days.length - 1].date),
+                    days: week.days.map((day) => toLocalDayDate(day.date)),
                     // A Set, so a multi-day event counts once.
                     events: [
                       ...new Set(

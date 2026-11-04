@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { DateTime } from 'luxon';
+import { DateTime, Info } from 'luxon';
 import { useTheme } from '@emotion/react';
 import { useControllableState } from '@ssa-ui-kit/hooks';
 
@@ -18,6 +18,8 @@ import { MonthView } from './components/MonthView';
 import { DayView } from './components/DayView';
 import { CalendarToolbar } from './components/CalendarToolbar';
 import { EventDetailsLayer } from './components/EventDetailsLayer';
+import { TimeZoneSelect } from './components/TimeZoneSelect';
+import { HOUR_HEIGHT, HOUR_HEIGHT_FLOOR } from './consts';
 import {
   CalendarDateInput,
   CalendarEvent,
@@ -26,22 +28,33 @@ import {
   CalendarWeek,
 } from './types';
 import {
+  getLocalTimeZone,
   getVisibleRange,
   groupEventsByDay,
   NormalizedEvent,
+  nowIn,
   toDateTime,
   toDayKey,
+  toLocalDayDate,
+  toZonedDay,
 } from './utils';
 import * as S from './styles';
 
 const NO_EVENTS: never[] = [];
 const ALL_VIEWS: CalendarView[] = ['month', 'day'];
 
-/** Start of the given day, or of today when it's missing or invalid. */
-const toDay = (value: CalendarDateInput | undefined) => {
-  const parsed = value === undefined ? DateTime.now() : toDateTime(value);
-  return (parsed.isValid ? parsed : DateTime.now()).startOf('day');
+/**
+ * Start of the given day in `zone`, or of today there when it's missing or
+ * invalid.
+ */
+const toDay = (value: CalendarDateInput | undefined, zone?: string) => {
+  const parsed = value === undefined ? undefined : toZonedDay(value, zone);
+  return parsed?.isValid ? parsed : nowIn(zone).startOf('day');
 };
+
+// The view's own limits apply while resizing; this only keeps a stray value
+// from collapsing the timeline.
+const clampHourHeight = (height: number) => Math.max(height, HOUR_HEIGHT_FLOOR);
 
 /** `yyyy-MM-dd` of an add limit; empty — no limit — when missing or invalid. */
 const toLimitKey = (value: CalendarDateInput | undefined) => {
@@ -90,6 +103,14 @@ const CalendarInner = <TData,>(
     dayHeader = 'monthYear',
     locale,
     scrollToHour,
+    workingHours,
+    defaultHourHeight,
+    onHourHeightChange,
+    resizableHours = false,
+    defaultTimeZone,
+    onTimeZoneChange,
+    timeZoneSelector = false,
+    timeZones,
     'aria-label': ariaLabel = 'Calendar',
     className,
     style,
@@ -100,6 +121,29 @@ const CalendarInner = <TData,>(
   // owns it" — see `useControllableState`.
   const viewControlled = 'view' in props;
   const dateControlled = 'date' in props;
+  const timeZoneControlled = 'timeZone' in props;
+  const hourHeightControlled = 'hourHeight' in props;
+
+  const [timeZoneState, setTimeZone] = useControllableState<string>({
+    controlled: timeZoneControlled,
+    value: props.timeZone,
+    defaultValue: defaultTimeZone,
+    onChange: onTimeZoneChange,
+  });
+  // An unknown zone falls back to local time rather than breaking every date.
+  const zone =
+    timeZoneState && Info.isValidIANAZone(timeZoneState)
+      ? timeZoneState
+      : undefined;
+
+  const [hourHeightState, setHourHeightState] = useControllableState<number>({
+    controlled: hourHeightControlled,
+    value: props.hourHeight,
+    defaultValue: defaultHourHeight,
+    finalValue: HOUR_HEIGHT,
+    onChange: onHourHeightChange,
+  });
+  const hourHeight = clampHourHeight(hourHeightState ?? HOUR_HEIGHT);
 
   const [viewState, setView] = useControllableState<CalendarView>({
     controlled: viewControlled,
@@ -118,20 +162,28 @@ const CalendarInner = <TData,>(
   });
 
   const current = useMemo(
-    () => toDay(dateState),
+    () => toDay(dateState, zone),
     // Re-parse only when the day changes, not on every new Date instance.
-    [dateState instanceof Date ? dateState.toDateString() : dateState],
+    [dateState instanceof Date ? dateState.toDateString() : dateState, zone],
   );
 
   // A controlled value without its change handler can't move, so the
   // controls that would move it aren't offered.
   const canChangeView = !viewControlled || Boolean(onViewChange);
   const canChangeDate = !dateControlled || Boolean(onDateChange);
+  const canChangeTimeZone = !timeZoneControlled || Boolean(onTimeZoneChange);
+  const canResizeHours =
+    resizableHours && (!hourHeightControlled || Boolean(onHourHeightChange));
   const switchable = canChangeView && views.length > 1;
 
+  // Days go out as local midnight, whatever the zone — see `toZonedDay`.
   const navigate = useCallback(
-    (next: DateTime) => setDate(next.toJSDate()),
+    (next: DateTime) => setDate(toLocalDayDate(next)),
     [setDate],
+  );
+  const setHourHeight = useCallback(
+    (next: number) => setHourHeightState(clampHourHeight(Math.round(next))),
+    [setHourHeightState],
   );
   const openDay = useCallback(
     (day: Date) => {
@@ -142,7 +194,10 @@ const CalendarInner = <TData,>(
   );
   const backToMonth = useCallback(() => setView('month'), [setView]);
 
-  const eventsByDay = useMemo(() => groupEventsByDay(events), [events]);
+  const eventsByDay = useMemo(
+    () => groupEventsByDay(events, zone),
+    [events, zone],
+  );
 
   // Entries of a day or more are already on every day they cover. The day
   // view also shows the rest of shorter ones from the day before — a night
@@ -182,7 +237,9 @@ const CalendarInner = <TData,>(
   );
   const onRangeChangeRef = useRef(onRangeChange);
   onRangeChangeRef.current = onRangeChange;
-  const rangeKey = `${view}|${toDayKey(range.start)}|${toDayKey(range.end)}`;
+  const rangeKey = `${view}|${toDayKey(range.start)}|${toDayKey(range.end)}|${
+    zone ?? ''
+  }`;
   useEffect(() => {
     onRangeChangeRef.current?.({
       view,
@@ -209,6 +266,18 @@ const CalendarInner = <TData,>(
   useEffect(() => setDetails(null), [view, current]);
 
   const clickable = Boolean(onEventClick || renderEventDetails);
+
+  const timeZonePicker = useMemo(
+    () =>
+      timeZoneSelector && canChangeTimeZone ? (
+        <TimeZoneSelect
+          value={zone ?? getLocalTimeZone()}
+          options={timeZones}
+          onChange={setTimeZone}
+        />
+      ) : null,
+    [timeZoneSelector, canChangeTimeZone, zone, timeZones, setTimeZone],
+  );
   const activateEvent = useCallback(
     (event: CalendarEvent, anchor: HTMLElement) => {
       (onEventClick as CalendarProps['onEventClick'])?.(event, { anchor });
@@ -232,6 +301,13 @@ const CalendarInner = <TData,>(
         getEventProps,
         locale,
         timeFormat,
+        timeZone: zone,
+        workingHours,
+        hourHeight,
+        setHourHeight: canResizeHours ? setHourHeight : undefined,
+        defaultHourHeight: clampHourHeight(defaultHourHeight ?? HOUR_HEIGHT),
+        // With a toolbar the picker lives there; otherwise in the day header.
+        dayHeaderEnd: toolbar ? null : timeZonePicker,
         activateEvent: clickable ? activateEvent : undefined,
         openDay:
           switchable && canChangeDate && views.includes('day')
@@ -255,6 +331,13 @@ const CalendarInner = <TData,>(
       getEventProps,
       locale,
       timeFormat,
+      zone,
+      workingHours,
+      hourHeight,
+      canResizeHours,
+      setHourHeight,
+      defaultHourHeight,
+      timeZonePicker,
       clickable,
       activateEvent,
       switchable,
@@ -281,6 +364,8 @@ const CalendarInner = <TData,>(
             view={view}
             date={current}
             locale={locale}
+            timeZone={zone}
+            timeZonePicker={timeZonePicker}
             onNavigate={canChangeDate ? navigate : undefined}
             views={views}
             onViewChange={canChangeView ? setView : undefined}
@@ -356,10 +441,18 @@ const CalendarInner = <TData,>(
  * adds anything up itself — totals are whatever the consumer renders.
  *
  * ### Day view
- * Untimed entries are listed above 00:00; timed ones are placed on the hour
- * timeline, side by side where they overlap. A timed entry that runs past
+ * Untimed entries are listed in a row above 00:00, shown only when there are
+ * some; timed ones are placed on the hour timeline, side by side where they
+ * overlap, with text that grows with their box. A timed entry that runs past
  * midnight continues on the next day's timeline. Today shows a line at the
- * current time.
+ * current time. `workingHours` shades the hours outside the working time
+ * (per weekday if needed); `resizableHours` lets the user drag the hour
+ * labels to make the hours taller or shorter.
+ *
+ * ### Time zones
+ * `timeZone` (or `defaultTimeZone`) shows timed entries in another IANA
+ * zone; untimed entries and day values stay on their date.
+ * `timeZoneSelector` adds a button that lets the user pick the zone.
  *
  * ### Multi-day entries
  * An untimed entry with an `end`, or a timed one lasting 24 hours or more,
