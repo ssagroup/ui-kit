@@ -599,4 +599,68 @@ describe('MultipleDropdown', () => {
       );
     });
   });
+
+  describe('searchable', () => {
+    const getSearch = () =>
+      document.querySelector('input[role="combobox"]') as HTMLInputElement;
+
+    it('filters, toggles with Enter and stays open', async () => {
+      const { user, mockOnChange, getByTestId, getByRole } = setup({
+        searchable: true,
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      expect(getSearch()).toHaveFocus();
+
+      await user.type(getSearch(), 'six');
+      const options = within(getByRole('listbox')).getAllByRole('option');
+      expect(options.map((option) => option.textContent)).toEqual([
+        'Sixth Item',
+      ]);
+
+      await user.keyboard('{Enter}');
+      expect(mockOnChange).toHaveBeenCalledWith(6, true);
+      expect(getByRole('listbox')).toBeInTheDocument();
+      expect(getSearch()).toHaveFocus();
+    });
+
+    it('keeps the list open on Enter with no matches', async () => {
+      const { user, mockOnChange, getByTestId, getByRole } = setup({
+        searchable: true,
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      await user.type(getSearch(), 'zzz{Enter}');
+
+      expect(getByRole('listbox')).toBeInTheDocument();
+      expect(getSearch()).toHaveValue('zzz');
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it('highlights the first selected option when the search is cleared', async () => {
+      const { user, getByTestId } = setup({ searchable: true, selectedItems });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      await user.type(getSearch(), 'six');
+      await user.keyboard('{Escape}');
+
+      const active = document.getElementById(
+        getSearch().getAttribute('aria-activedescendant') ?? '',
+      );
+      expect(active).toHaveTextContent(getListItemValue(selectedItems[0]));
+    });
+
+    it('keeps selections outside the current search', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        searchable: true,
+        selectedItems,
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      await user.type(getSearch(), 'first');
+      await user.clear(getSearch());
+
+      const selected = within(getByRole('listbox'))
+        .getAllByRole('option')
+        .filter((option) => option.getAttribute('aria-selected') === 'true')
+        .map((option) => option.textContent);
+      expect(selected).toEqual(selectedItems.map(getListItemValue));
+    });
+  });
 });

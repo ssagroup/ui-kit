@@ -309,6 +309,27 @@ import {
 </MultipleDropdown>;
 ```
 
+### Search
+
+`searchable` adds a search box above the open list, the same one `Dropdown`
+has. Typing filters the options by their text (case-insensitive, anywhere in
+the text); Enter toggles the highlighted option and the list stays open.
+Selections outside the current search are kept. Escape clears the search, then
+closes. Options whose `children` is markup are matched by their `textValue`.
+
+```tsx
+<MultipleDropdown
+  label="Countries"
+  searchable
+  searchPlaceholder="Search country"
+  selectedItems={selected}
+  onChange={handleChange}>
+  {countries.map((country) => (
+    <DropdownOption key={country} value={country} />
+  ))}
+</MultipleDropdown>
+```
+
 ### Dynamic Item Updates
 
 Add or remove items dynamically:

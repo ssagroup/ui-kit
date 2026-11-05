@@ -177,6 +177,31 @@ export default {
         defaultValue: { summary: 'undefined (sized to content)' },
       },
     },
+    searchable: {
+      description:
+        'Adds a search box above the open list. Typing filters options by their text (case-insensitive, anywhere in the text); Escape clears the search, then closes.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    searchPlaceholder: {
+      description: 'Placeholder and accessible name of the search box.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Search'" },
+      },
+    },
+    searchEmptyState: {
+      description: 'Shown in the list when nothing matches the search.',
+      control: 'text',
+      table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: "'No results found'" },
+      },
+    },
     'dropdownProps.toggleButton.name': {
       description: 'Custom name attribute for dropdown div.',
       control: { type: 'text' },
@@ -716,4 +741,49 @@ export const Groups: StoryObj<Args> = {
     </Dropdown>
   ),
   args: { disabled: false },
+};
+
+const countries = [
+  'Argentina',
+  'Australia',
+  'Austria',
+  'Belgium',
+  'Brazil',
+  'Canada',
+  'Denmark',
+  'Finland',
+  'France',
+  'Germany',
+  'Ireland',
+  'Italy',
+  'Netherlands',
+  'Poland',
+  'Portugal',
+  'Spain',
+  'Sweden',
+  'Ukraine',
+  'United Kingdom',
+  'United States',
+];
+
+/**
+ * `searchable` adds a search box above the open list. It takes focus on open;
+ * typing filters the options by their text, arrows move the highlight, Enter
+ * picks, and Escape clears the search before closing.
+ */
+export const Searchable: StoryObj<Args> = {
+  render: (args) => (
+    <Dropdown {...args}>
+      {countries.map((country) => (
+        <DropdownOption key={country} value={country} />
+      ))}
+    </Dropdown>
+  ),
+  args: {
+    disabled: false,
+    searchable: true,
+    searchPlaceholder: 'Search country',
+    placeholder: 'Select a country',
+    width: 280,
+  },
 };

@@ -9,6 +9,8 @@ export interface DropdownToggleProps
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, ControlledButtonProps> {
   /** Emotion css prop forwarded to the underlying styled button */
   css?: Interpolation<Theme>;
+  /** Ref to the button, e.g. to return focus to it. */
+  ref?: React.Ref<HTMLButtonElement>;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLButtonElement, Element>) => void;
   isOpen: boolean;

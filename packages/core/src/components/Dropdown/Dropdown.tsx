@@ -15,10 +15,12 @@ import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import DropdownOptions from '@components/DropdownOptions';
 import {
+  filterDropdownOptions,
   flattenDropdownOptions,
   toDropdownMenuItems,
 } from '@components/DropdownOptions/utils';
 import { useToggleListKeys } from '@components/DropdownOptions/useToggleListKeys';
+import { DropdownSearch } from '@components/DropdownOptions/DropdownSearch';
 import { getNextActiveValue } from '@components/ContextMenu';
 import { flattenItems } from '@components/ContextMenu/utils';
 import Avatar, { AvatarSizes } from '@components/Avatar';
@@ -190,6 +192,9 @@ const Dropdown = <T extends DropdownOptionProps>({
   success,
   icon,
   width,
+  searchable = false,
+  searchPlaceholder = 'Search',
+  searchEmptyState = 'No results found',
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
   const isDropdownDisabled = resolveDisabled('Dropdown', disabled, isDisabled);
@@ -220,6 +225,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   const dropdownId = useId();
   // Names the toggle; left out without a label, so it never points at a
@@ -239,10 +245,22 @@ const Dropdown = <T extends DropdownOptionProps>({
   // drives the list and points at the option with aria-activedescendant.
   const [activeValue, setActiveValue] = useState<string | number | null>(null);
   const listId = `dropdown-popup-${dropdownId}`;
+  // Search text; only used with `searchable`, cleared on close.
+  const [query, setQuery] = useState('');
 
   const close = () => {
     setIsOpen(false);
     setActiveValue(null);
+    setQuery('');
+    // The search box unmounts with the list; hand focus back to the toggle
+    // rather than dropping it on <body>.
+    if (
+      searchable &&
+      document.activeElement !== toggleRef.current &&
+      dropdownRef.current?.contains(document.activeElement)
+    ) {
+      toggleRef.current?.focus();
+    }
   };
 
   const onChange: DropdownContextType['onChange'] = (item) => {
@@ -295,7 +313,9 @@ const Dropdown = <T extends DropdownOptionProps>({
     }
 
     const rect = dropdownRef.current.getBoundingClientRect();
-    const listHeight = listRef.current?.offsetHeight || maxHeight;
+    // With search the list sits in a card under the search box.
+    const popup = searchable ? listRef.current?.parentElement : listRef.current;
+    const listHeight = popup?.offsetHeight || maxHeight;
     const spaceBelow = window.innerHeight - rect.bottom;
     setPlacement(spaceBelow < listHeight ? 'top' : 'bottom');
   }, [isOpen]);
@@ -306,8 +326,12 @@ const Dropdown = <T extends DropdownOptionProps>({
     (option) => option.props as unknown as T,
   );
 
+  const visibleChildren = searchable
+    ? filterDropdownOptions(childrenArray, query)
+    : childrenArray;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const items = (childrenArray as React.ReactElement<any>[]).map(
+  const items = (visibleChildren as React.ReactElement<any>[]).map(
     (child, index) => {
       return React.cloneElement(child, {
         index,
@@ -317,17 +341,23 @@ const Dropdown = <T extends DropdownOptionProps>({
     },
   );
 
-  const menuItems = toDropdownMenuItems(childrenArray);
+  const menuItems = toDropdownMenuItems(visibleChildren);
+
+  /** The selected option if listed, else the first (or last, for ArrowUp). */
+  const getInitialActiveValue = (
+    entries: typeof menuItems,
+    key = 'ArrowDown',
+  ) => {
+    const selected = flattenItems(entries).find(
+      (item) => !item.disabled && item.value === activeItem?.value,
+    );
+    return selected?.value ?? getNextActiveValue(entries, null, key) ?? null;
+  };
 
   /** Opens with the selected option highlighted, else per the key pressed. */
   const open = (key = 'ArrowDown') => {
     setIsOpen(true);
-    const selected = flattenItems(menuItems).find(
-      (item) => !item.disabled && item.value === activeItem?.value,
-    );
-    setActiveValue(
-      selected?.value ?? getNextActiveValue(menuItems, null, key) ?? null,
-    );
+    setActiveValue(getInitialActiveValue(menuItems, key));
   };
 
   const toggleKeys = useToggleListKeys({
@@ -344,6 +374,42 @@ const Dropdown = <T extends DropdownOptionProps>({
     onKeyUp: componentProps?.toggleButton?.onKeyUp,
   });
 
+  // The search box drives the list while it is open.
+  const searchKeys = useToggleListKeys<HTMLInputElement>({
+    listId,
+    isOpen,
+    disabled: isDropdownDisabled,
+    menuItems,
+    activeValue,
+    setActiveValue,
+    open,
+    close,
+    onPick: (value) => onChange(value as string),
+    typing: true,
+    // Escape clears the search first, then closes.
+    onKeyDown: (event) => {
+      if (event.key === 'Escape' && query) {
+        event.preventDefault();
+        changeQuery('');
+      }
+    },
+  });
+
+  /** Updates the search and moves the highlight to suit it. */
+  const changeQuery = (next: string) => {
+    setQuery(next);
+    const matches = toDropdownMenuItems(
+      filterDropdownOptions(childrenArray, next),
+    );
+    // A cleared search goes back to where opening starts; a search to its
+    // first match.
+    setActiveValue(
+      next.trim()
+        ? (getNextActiveValue(matches, null, 'ArrowDown') ?? null)
+        : getInitialActiveValue(matches),
+    );
+  };
+
   const contextValue: DropdownContextType = React.useMemo(
     () => ({
       onChange,
@@ -353,8 +419,19 @@ const Dropdown = <T extends DropdownOptionProps>({
       placement,
       activeValue,
       setActiveValue,
+      searchable,
+      emptyState: query ? searchEmptyState : undefined,
     }),
-    [onChange, activeItem, maxHeight, placement, activeValue],
+    [
+      onChange,
+      activeItem,
+      maxHeight,
+      placement,
+      activeValue,
+      searchable,
+      query,
+      searchEmptyState,
+    ],
   );
 
   const value = (
@@ -417,6 +494,7 @@ const Dropdown = <T extends DropdownOptionProps>({
           <DropdownToggle
             {...componentProps?.toggleButton}
             {...toggleCssProps}
+            ref={toggleRef}
             className={className}
             isOpen={isOpen}
             disabled={isDropdownDisabled}
@@ -435,7 +513,17 @@ const Dropdown = <T extends DropdownOptionProps>({
             />
           </DropdownToggle>
 
-          {isOpen ? (
+          {isOpen && searchable ? (
+            <DropdownSearch
+              {...searchKeys}
+              query={query}
+              onQueryChange={changeQuery}
+              placeholder={searchPlaceholder}
+              listId={listId}
+              placement={placement}>
+              <DropdownOptions id={listId}>{items}</DropdownOptions>
+            </DropdownSearch>
+          ) : isOpen ? (
             <DropdownOptions id={listId}>{items}</DropdownOptions>
           ) : null}
         </DropdownBase>

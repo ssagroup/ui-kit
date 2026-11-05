@@ -111,6 +111,30 @@ export type DropdownProps<P extends DropdownOptionProps> = {
    * matching the behaviour of previous versions.
    */
   width?: string | number;
+
+  /**
+   * Adds a search box above the open list. Typing filters the options by
+   * their text (case-insensitive, anywhere in the text); a group stays while
+   * any of its options match. Options whose `children` is markup are matched
+   * by their `textValue`. Selections outside the current search are kept.
+   *
+   * Focus moves to the search box on open and keeps driving the list: arrows
+   * move the highlight, Enter toggles, Escape clears the search, then closes.
+   * @default false
+   */
+  searchable?: boolean;
+
+  /**
+   * Placeholder and accessible name of the search box.
+   * @default 'Search'
+   */
+  searchPlaceholder?: string;
+
+  /**
+   * Shown in the list when nothing matches the search.
+   * @default 'No results found'
+   */
+  searchEmptyState?: React.ReactNode;
 };
 
 /**
@@ -146,4 +170,10 @@ export interface DropdownContextType<T extends DropdownOptionProps> {
    * Updates the highlighted option
    */
   setActiveValue?: (value: string | number | null) => void;
+
+  /** The list sits in the search card, which does the positioning. */
+  searchable?: boolean;
+
+  /** Shown when the list has no options. */
+  emptyState?: React.ReactNode;
 }

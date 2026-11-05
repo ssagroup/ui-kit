@@ -111,6 +111,31 @@ export default {
         defaultValue: { summary: 'undefined (sized to content)' },
       },
     },
+    searchable: {
+      description:
+        'Adds a search box above the open list. Typing filters options by their text (case-insensitive, anywhere in the text); Escape clears the search, then closes.',
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    searchPlaceholder: {
+      description: 'Placeholder and accessible name of the search box.',
+      control: 'text',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Search'" },
+      },
+    },
+    searchEmptyState: {
+      description: 'Shown in the list when nothing matches the search.',
+      control: 'text',
+      table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: "'No results found'" },
+      },
+    },
     showPlaceholder: {
       description:
         'When `true` the placeholder value is included in the displayed list. Set to `false` to hide it and only show the badge count.',
@@ -481,4 +506,50 @@ Groups.args = {
   isMultiple: true,
   selectedItems: [groupedItems[0].items[0], groupedItems[1].items[0]],
   label: 'Ingredients',
+};
+
+const countries = [
+  'Argentina',
+  'Australia',
+  'Austria',
+  'Belgium',
+  'Brazil',
+  'Canada',
+  'Denmark',
+  'Finland',
+  'France',
+  'Germany',
+  'Ireland',
+  'Italy',
+  'Netherlands',
+  'Poland',
+  'Portugal',
+  'Spain',
+  'Sweden',
+  'Ukraine',
+  'United Kingdom',
+  'United States',
+];
+
+/**
+ * `searchable` adds a search box above the open list. Typing filters the
+ * options; Enter toggles the highlighted one and the list stays open.
+ * Selections outside the current search are kept.
+ */
+export const Searchable: StoryObj = (args: Args) => (
+  <MultipleDropdown {...args}>
+    {countries.map((country) => (
+      <DropdownOption key={country} value={country} />
+    ))}
+  </MultipleDropdown>
+);
+
+Searchable.args = {
+  disabled: false,
+  isMultiple: true,
+  searchable: true,
+  searchPlaceholder: 'Search country',
+  selectedItems: [{ value: 'Spain' }],
+  label: 'Countries',
+  width: 280,
 };

@@ -25,6 +25,11 @@ export interface DropdownItemProps
   children?: React.ReactNode;
   /** Avatar or icon to display before the option content (e.g. <Avatar size={20} image={url} />) */
   avatar?: React.ReactNode;
+  /**
+   * Plain text of the option, for search and type-to-find. Needed when
+   * `children` is markup rather than text; defaults to the text label.
+   */
+  textValue?: string;
 }
 
 interface MultipleStylesProps {
@@ -125,7 +130,12 @@ const DropdownOptionBase = styled.li<Omit<DropdownItemProps, 'disabled'>>`
  * ```
  */
 const DropdownOption = forwardRef<HTMLLIElement, DropdownItemProps>(
-  function DropdownOption({ disabled, isDisabled, value, ...rest }, ref) {
+  function DropdownOption(
+    // `textValue` is read by the parent dropdown; kept off the <li>.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { disabled, isDisabled, value, textValue, ...rest },
+    ref,
+  ) {
     return (
       <DropdownOptionBase
         ref={ref}

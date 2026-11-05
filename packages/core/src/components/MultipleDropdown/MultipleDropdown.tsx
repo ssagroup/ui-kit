@@ -10,10 +10,12 @@ import DropdownArrow from '@components/DropdownArrow';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
 import {
   OptionValue,
+  filterDropdownOptions,
   flattenDropdownOptions,
   toDropdownMenuItems,
 } from '@components/DropdownOptions/utils';
 import { useToggleListKeys } from '@components/DropdownOptions/useToggleListKeys';
+import { DropdownSearch } from '@components/DropdownOptions/DropdownSearch';
 import { getNextActiveValue } from '@components/ContextMenu';
 import { flattenItems } from '@components/ContextMenu/utils';
 import MultipleDropdownContext from '@components/MultipleDropdown/MultipleDropdown.context';
@@ -45,6 +47,9 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     className,
     maxHeight = 200,
     width,
+    searchable = false,
+    searchPlaceholder = 'Search',
+    searchEmptyState = 'No results found',
   }: DropdownProps<T>,
   ref?: React.ForwardedRef<HTMLDivElement | null>,
 ) {
@@ -55,6 +60,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   );
   const dropdownBaseRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const dropdownId = useId();
   // `width` has no default — without it the base and the toggle both
   // shrink-wrap, which is the historical behaviour. When set it has to clear
@@ -84,6 +90,8 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   // drives the list and points at the option with aria-activedescendant.
   const [activeValue, setActiveValue] = useState<OptionValue | null>(null);
   const listId = `dropdown-popup-${dropdownId}`;
+  // Search text; only used with `searchable`, cleared on close.
+  const [query, setQuery] = useState('');
   const [values, setValues] = useState<Array<unknown>>([]);
   const [valuesWithoutPlaceholder, setValuesWithoutPlaceholder] = useState<
     Array<unknown>
@@ -95,22 +103,41 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   );
 
   const childrenArray = React.Children.toArray(children).filter(Boolean);
-  const menuItems = toDropdownMenuItems(childrenArray);
+  const visibleChildren = searchable
+    ? filterDropdownOptions(childrenArray, query)
+    : childrenArray;
+  const menuItems = toDropdownMenuItems(visibleChildren);
 
   const close = () => {
     setIsOpen(false);
     setActiveValue(null);
+    setQuery('');
+    // The search box unmounts with the list; hand focus back to the toggle
+    // rather than dropping it on <body>.
+    if (
+      searchable &&
+      document.activeElement !== toggleRef.current &&
+      dropdownBaseRef.current?.contains(document.activeElement)
+    ) {
+      toggleRef.current?.focus();
+    }
+  };
+
+  /** The first selected option if listed, else the first (or last, for ArrowUp). */
+  const getInitialActiveValue = (
+    entries: typeof menuItems,
+    key = 'ArrowDown',
+  ) => {
+    const selected = flattenItems(entries).find(
+      (item) => !item.disabled && optionsWithKey[item.value]?.isSelected,
+    );
+    return selected?.value ?? getNextActiveValue(entries, null, key) ?? null;
   };
 
   /** Opens with the first selected option highlighted, else per the key pressed. */
   const open = (key = 'ArrowDown') => {
     setIsOpen(true);
-    const selected = flattenItems(menuItems).find(
-      (item) => !item.disabled && optionsWithKey[item.value]?.isSelected,
-    );
-    setActiveValue(
-      selected?.value ?? getNextActiveValue(menuItems, null, key) ?? null,
-    );
+    setActiveValue(getInitialActiveValue(menuItems, key));
   };
 
   const onChange = (item: DropdownOptionProps) => {
@@ -187,6 +214,42 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     onPick: (value) => onChange(optionsWithKey[value]),
   });
 
+  // The search box drives the list while it is open.
+  const searchKeys = useToggleListKeys<HTMLInputElement>({
+    listId,
+    isOpen,
+    disabled: isDropdownDisabled,
+    menuItems,
+    activeValue,
+    setActiveValue,
+    open,
+    close,
+    onPick: (value) => onChange(optionsWithKey[value]),
+    typing: true,
+    // Escape clears the search first, then closes.
+    onKeyDown: (event) => {
+      if (event.key === 'Escape' && query) {
+        event.preventDefault();
+        changeQuery('');
+      }
+    },
+  });
+
+  /** Updates the search and moves the highlight to suit it. */
+  const changeQuery = (next: string) => {
+    setQuery(next);
+    const matches = toDropdownMenuItems(
+      filterDropdownOptions(childrenArray, next),
+    );
+    // A cleared search goes back to where opening starts; a search to its
+    // first match.
+    setActiveValue(
+      next.trim()
+        ? (getNextActiveValue(matches, null, 'ArrowDown') ?? null)
+        : getInitialActiveValue(matches),
+    );
+  };
+
   const contextValue: DropdownContextType<DropdownOptionProps> = React.useMemo(
     () => ({
       onChange,
@@ -195,8 +258,19 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
       maxHeight,
       activeValue,
       setActiveValue,
+      searchable,
+      emptyState: query ? searchEmptyState : undefined,
     }),
-    [onChange, optionsWithKey, isMultiple, maxHeight, activeValue],
+    [
+      onChange,
+      optionsWithKey,
+      isMultiple,
+      maxHeight,
+      activeValue,
+      searchable,
+      query,
+      searchEmptyState,
+    ],
   );
 
   useEffect(() => {
@@ -216,6 +290,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
         data-testid="dropdown">
         <DropdownToggle
           {...toggleCssProps}
+          ref={toggleRef}
           className={className}
           isOpen={isOpen}
           disabled={isDropdownDisabled}
@@ -247,7 +322,19 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
           <DropdownArrow isUp={isOpen} />
         </DropdownToggle>
 
-        {isOpen ? (
+        {isOpen && searchable ? (
+          <DropdownSearch
+            {...searchKeys}
+            query={query}
+            onQueryChange={changeQuery}
+            placeholder={searchPlaceholder}
+            listId={listId}
+            zIndex={1}>
+            <MultipleDropdownOptions id={listId}>
+              {visibleChildren}
+            </MultipleDropdownOptions>
+          </DropdownSearch>
+        ) : isOpen ? (
           <MultipleDropdownOptions id={listId}>
             {childrenArray}
           </MultipleDropdownOptions>

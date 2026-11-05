@@ -304,6 +304,33 @@ import {
 </Dropdown>;
 ```
 
+### Search
+
+`searchable` adds a search box above the open list. It takes focus when the
+list opens and keeps driving it: typing filters the options by their text
+(case-insensitive, anywhere in the text), arrow keys move the highlight, Enter
+picks, and Escape clears the search before closing. A group stays while any of
+its options match. The search resets each time the list closes.
+
+Options whose `children` is markup have no text to match — give them a
+`textValue`.
+
+```tsx
+<Dropdown
+  searchable
+  searchPlaceholder="Search country"
+  searchEmptyState="No countries found"
+  selectedItem={selected}
+  onChange={setSelected}>
+  {countries.map((country) => (
+    <DropdownOption key={country.code} value={country.code} label={country.name} />
+  ))}
+  <DropdownOption value="other" textValue="Other">
+    <strong>Other</strong>
+  </DropdownOption>
+</Dropdown>
+```
+
 ### Empty State
 
 Handle dropdowns with no options:

@@ -10,7 +10,9 @@ import { flattenItems } from '@components/ContextMenu/utils';
 import { OptionValue } from './utils';
 
 /** Options of {@link useToggleListKeys}. */
-export interface UseToggleListKeysOptions {
+export interface UseToggleListKeysOptions<
+  E extends HTMLElement = HTMLButtonElement,
+> {
   /** Id of the ContextMenu the toggle controls. */
   listId: string;
   isOpen: boolean;
@@ -24,18 +26,24 @@ export interface UseToggleListKeysOptions {
   close: () => void;
   /** Enter or Space on the highlighted option. */
   onPick: (value: OptionValue) => void;
+  /**
+   * Keys go to a text input (the search box): Space types a space and
+   * Home / End move the caret instead of the highlight.
+   */
+  typing?: boolean;
   /** Consumer handlers, run first; `preventDefault()` skips the built-in keys. */
-  onKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
-  onKeyUp?: (event: KeyboardEvent<HTMLButtonElement>) => void;
+  onKeyDown?: (event: KeyboardEvent<E>) => void;
+  onKeyUp?: (event: KeyboardEvent<E>) => void;
 }
 
 /**
  * Keyboard for a dropdown toggle that keeps focus while it drives its list:
  * arrows open it, then Arrow/Home/End move the highlight, Enter/Space pick,
  * Escape/Tab close. Returns the toggle's handlers and its
- * `aria-activedescendant`.
+ * `aria-activedescendant`. With `typing`, drives the list from a search input
+ * instead.
  */
-export const useToggleListKeys = ({
+export const useToggleListKeys = <E extends HTMLElement = HTMLButtonElement>({
   listId,
   isOpen,
   disabled,
@@ -45,9 +53,10 @@ export const useToggleListKeys = ({
   open,
   close,
   onPick,
+  typing = false,
   onKeyDown,
   onKeyUp,
-}: UseToggleListKeysOptions) => {
+}: UseToggleListKeysOptions<E>) => {
   // Set when keydown already acted on Space, so the click the browser fires
   // on keyup does not toggle the list straight back.
   const spaceHandled = useRef(false);
@@ -56,7 +65,7 @@ export const useToggleListKeys = ({
     activeValue !== null &&
     flattenItems(menuItems).some((item) => item.value === activeValue);
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<E>) => {
     onKeyDown?.(event);
     if (event.defaultPrevented || disabled) return;
 
@@ -68,6 +77,12 @@ export const useToggleListKeys = ({
       }
       return;
     }
+
+    if (
+      typing &&
+      (event.key === ' ' || event.key === 'Home' || event.key === 'End')
+    )
+      return;
 
     switch (event.key) {
       case 'ArrowDown':
@@ -86,7 +101,9 @@ export const useToggleListKeys = ({
         event.preventDefault();
         spaceHandled.current = event.key === ' ';
         if (isActiveListed) onPick(activeValue as OptionValue);
-        else close();
+        // With nothing to pick (e.g. no search matches) the search box keeps
+        // the list and the typed text.
+        else if (!typing) close();
         break;
       case 'Escape':
         event.preventDefault();
@@ -98,7 +115,7 @@ export const useToggleListKeys = ({
     }
   };
 
-  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyUp = (event: KeyboardEvent<E>) => {
     onKeyUp?.(event);
     if (event.key === ' ' && spaceHandled.current) {
       spaceHandled.current = false;

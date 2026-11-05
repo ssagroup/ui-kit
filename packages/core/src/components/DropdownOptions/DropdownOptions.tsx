@@ -11,6 +11,11 @@ import { OptionValue, toDropdownMenuItems } from './utils';
 // Focus stays on the toggle while the list is used with the pointer.
 const keepToggleFocus = (event: MouseEvent) => event.preventDefault();
 
+// Inside the search card, which already carries the shadow.
+const inSearchCard = css`
+  box-shadow: none;
+`;
+
 /*
  * Positioned against the Dropdown base, the toggle's containing block.
  * Capped at the toggle's width rather than grown to max-content, which let a
@@ -77,6 +82,8 @@ const DropdownOptions = ({
     placement = 'bottom',
     activeValue = null,
     setActiveValue,
+    searchable,
+    emptyState,
   } = useDropdownContext();
   const labelledby = resolveAriaProp(
     'DropdownOptions',
@@ -90,7 +97,7 @@ const DropdownOptions = ({
       ref={listRef}
       id={id}
       aria-labelledby={labelledby}
-      css={listPosition(placement)}
+      css={searchable ? inSearchCard : listPosition(placement)}
       selectionMode="single"
       items={toDropdownMenuItems(children)}
       value={(activeItem?.value as OptionValue | undefined) ?? null}
@@ -98,6 +105,7 @@ const DropdownOptions = ({
       activeValue={activeValue}
       onActiveValueChange={setActiveValue}
       maxHeight={maxHeight}
+      emptyState={emptyState}
       tabIndex={-1}
       onMouseDown={keepToggleFocus}
     />

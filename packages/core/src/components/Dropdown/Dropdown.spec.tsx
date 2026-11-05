@@ -924,4 +924,155 @@ describe('Dropdown', () => {
       );
     });
   });
+
+  describe('searchable', () => {
+    const getSearch = () =>
+      document.querySelector('input[role="combobox"]') as HTMLInputElement;
+    const optionNames = (listbox: HTMLElement) =>
+      within(listbox)
+        .getAllByRole('option')
+        .map((option) => option.textContent);
+
+    it('has no search box by default', async () => {
+      const { user, getByRole } = setup();
+      await user.click(getByRole('combobox'));
+      expect(getSearch()).toBeNull();
+    });
+
+    it('focuses the search box on open and filters by contained text', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        searchable: true,
+        searchPlaceholder: 'Find item',
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      const search = getByRole('combobox', { name: 'Find item' });
+      expect(search).toHaveFocus();
+      expect(search).toHaveAttribute('placeholder', 'Find item');
+
+      await user.type(search, 'TH');
+      expect(optionNames(getByRole('listbox'))).toEqual([
+        'Third Item',
+        'Fourth Item',
+        'Fifth Item',
+        'Sixth Item',
+        'Seventh Item',
+      ]);
+    });
+
+    it('shows the empty state when nothing matches', async () => {
+      const { user, getByTestId, getByRole } = setup({
+        searchable: true,
+        searchEmptyState: 'Nothing here',
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      await user.type(getSearch(), 'zzz');
+      expect(getByRole('listbox')).toHaveTextContent('Nothing here');
+    });
+
+    it('picks the first match with Enter and returns focus to the toggle', async () => {
+      const { user, mockOnChange, getByTestId, queryByRole } = setup({
+        searchable: true,
+      });
+      const toggle = within(getByTestId('dropdown')).getByRole('combobox');
+      await user.click(toggle);
+      await user.type(getSearch(), 'sev{Enter}');
+
+      expect(mockOnChange).toHaveBeenCalledWith({ value: 'Seventh Item' });
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(toggle).toHaveFocus();
+    });
+
+    it('moves the highlight with arrows and types spaces', async () => {
+      const { user, mockOnChange, getByTestId } = setup({ searchable: true });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      const search = getSearch();
+      await user.type(search, 'd item');
+      expect(search).toHaveValue('d item');
+      // Second Item, Third Item → highlight moves to Third Item.
+      await user.keyboard('{ArrowDown}{Enter}');
+      expect(mockOnChange).toHaveBeenCalledWith({ value: 'Third Item' });
+    });
+
+    it('clears the search on Escape, then closes on a second Escape', async () => {
+      const { user, getByTestId, getByRole, queryByRole } = setup({
+        searchable: true,
+      });
+      const toggle = within(getByTestId('dropdown')).getByRole('combobox');
+      await user.click(toggle);
+      await user.type(getSearch(), 'first');
+      await user.keyboard('{Escape}');
+
+      expect(getSearch()).toHaveValue('');
+      expect(within(getByRole('listbox')).getAllByRole('option')).toHaveLength(
+        items.length,
+      );
+
+      await user.keyboard('{Escape}');
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      expect(toggle).toHaveFocus();
+    });
+
+    it('keeps the list and the search on Enter with no matches', async () => {
+      const { user, mockOnChange, getByTestId, getByRole } = setup({
+        searchable: true,
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      await user.type(getSearch(), 'zzz{Enter}');
+
+      expect(getByRole('listbox')).toBeInTheDocument();
+      expect(getSearch()).toHaveValue('zzz');
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it('highlights the selected option again when the search is cleared', async () => {
+      const { user, mockOnChange, getByTestId } = setup({
+        searchable: true,
+        selectedItem: { value: items[2].value },
+      });
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+      await user.type(getSearch(), 'f');
+      await user.keyboard('{Escape}{ArrowDown}{Enter}');
+
+      // From Third Item (selected) one down, not from First Item.
+      expect(mockOnChange).toHaveBeenCalledWith({ value: items[3].value });
+    });
+
+    it('starts with an empty search on reopen', async () => {
+      const { user, getByTestId } = setup({ searchable: true });
+      const toggle = within(getByTestId('dropdown')).getByRole('combobox');
+      await user.click(toggle);
+      await user.type(getSearch(), 'first');
+      await user.click(document.body);
+      await user.click(toggle);
+      expect(getSearch()).toHaveValue('');
+    });
+
+    it('keeps a group while any of its options match, and matches textValue', async () => {
+      const user = userEvent.setup();
+      const { getByTestId, getByRole } = render(
+        <Dropdown searchable>
+          <DropdownOptionGroup label="Fruits">
+            <DropdownOption value="apple">Apple</DropdownOption>
+            <DropdownOption value="banana">Banana</DropdownOption>
+          </DropdownOptionGroup>
+          <DropdownOptionGroup label="Vegetables">
+            <DropdownOption value="carrot" textValue="Carrot">
+              <strong>Carrot</strong>
+            </DropdownOption>
+          </DropdownOptionGroup>
+        </Dropdown>,
+      );
+      await user.click(within(getByTestId('dropdown')).getByRole('combobox'));
+
+      await user.type(getSearch(), 'an');
+      const listbox = getByRole('listbox');
+      expect(within(listbox).getAllByRole('group')).toHaveLength(1);
+      expect(optionNames(listbox)).toEqual(['Banana']);
+
+      await user.clear(getSearch());
+      await user.type(getSearch(), 'carr');
+      expect(optionNames(getByRole('listbox'))).toEqual(['Carrot']);
+    });
+  });
 });

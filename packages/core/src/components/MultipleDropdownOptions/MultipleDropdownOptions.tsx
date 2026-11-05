@@ -14,6 +14,11 @@ import { DropdownItemsListProps } from './types';
 // Focus stays on the toggle while the list is used with the pointer.
 const keepToggleFocus = (event: MouseEvent) => event.preventDefault();
 
+// Inside the search card, which already carries the shadow.
+const inSearchCard = css`
+  box-shadow: none;
+`;
+
 // Positioned against the MultipleDropdown base, under the toggle.
 const listPosition = css`
   position: absolute;
@@ -64,6 +69,8 @@ const MultipleDropdownOptions = ({
     maxHeight,
     activeValue = null,
     setActiveValue,
+    searchable,
+    emptyState,
   } = useMultipleDropdownContext();
   const labelledby = resolveAriaProp(
     'MultipleDropdownOptions',
@@ -78,12 +85,13 @@ const MultipleDropdownOptions = ({
   const commonProps = {
     id,
     'aria-labelledby': labelledby,
-    css: listPosition,
+    css: searchable ? inSearchCard : listPosition,
     items: toDropdownMenuItems(children),
     onAction: (value: OptionValue) => onChange(allItems[value]),
     activeValue,
     onActiveValueChange: setActiveValue,
     maxHeight,
+    emptyState,
     tabIndex: -1,
     onMouseDown: keepToggleFocus,
   };

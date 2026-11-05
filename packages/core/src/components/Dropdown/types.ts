@@ -193,6 +193,39 @@ export interface DropdownProps<
   width?: string | number;
 
   /**
+   * Adds a search box above the open list. Typing filters the options by
+   * their text (case-insensitive, anywhere in the text); a group stays while
+   * any of its options match. Options whose `children` is markup are matched
+   * by their `textValue`.
+   *
+   * Focus moves to the search box on open and keeps driving the list: arrows
+   * move the highlight, Enter picks, Escape clears the search, then closes.
+   * @default false
+   *
+   * @example
+   * ```tsx
+   * <Dropdown searchable searchPlaceholder="Search country" onChange={setCountry}>
+   *   {countries.map((c) => (
+   *     <DropdownOption key={c.code} value={c.code} label={c.name} />
+   *   ))}
+   * </Dropdown>
+   * ```
+   */
+  searchable?: boolean;
+
+  /**
+   * Placeholder and accessible name of the search box.
+   * @default 'Search'
+   */
+  searchPlaceholder?: string;
+
+  /**
+   * Shown in the list when nothing matches the search.
+   * @default 'No results found'
+   */
+  searchEmptyState?: React.ReactNode;
+
+  /**
    * Props object for sub-components
    * Allows fine-grained control over component parts
    */
@@ -287,4 +320,10 @@ export interface DropdownContextType {
 
   /** Moves the highlight; called by the list on pointer moves. */
   setActiveValue?: (value: string | number | null) => void;
+
+  /** The list sits in the search card, which does the positioning. */
+  searchable?: boolean;
+
+  /** Shown when the list has no options. */
+  emptyState?: React.ReactNode;
 }

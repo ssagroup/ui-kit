@@ -19,6 +19,13 @@ const asText = (value: unknown): string | undefined =>
     ? String(value)
     : undefined;
 
+/** Text an option is searched by: `textValue`, else its text label. */
+const getOptionText = (props: DropdownItemProps) =>
+  props.textValue ??
+  asText(props.children) ??
+  asText(props.label) ??
+  asText(props.value);
+
 const isOptionGroup = (
   child: React.ReactElement,
 ): child is React.ReactElement<DropdownOptionGroupProps> =>
@@ -31,8 +38,7 @@ const toMenuItem = ({
   // before, the list compares values with ===.
   value: props.value as OptionValue,
   label: props.children || props.label || props.value,
-  textValue:
-    asText(props.children) ?? asText(props.label) ?? asText(props.value),
+  textValue: getOptionText(props),
   avatar: props.avatar,
   disabled: resolveDisabled('DropdownOption', props.disabled, props.isDisabled),
   className: props.className,
@@ -78,3 +84,26 @@ export const toDropdownMenuItems = (
         }
       : toMenuItem(child as React.ReactElement<DropdownItemProps>),
   );
+
+/**
+ * The `DropdownOption` children whose text contains `query` (case-insensitive),
+ * in display order. A `DropdownOptionGroup` is kept, holding only its matching
+ * options, while any of them match. An empty query returns the children as is.
+ * Options with no text (custom markup and no `textValue`) never match.
+ */
+export const filterDropdownOptions = (
+  children: React.ReactNode,
+  query: string,
+): React.ReactElement[] => {
+  const search = query.trim().toLowerCase();
+  if (!search) return toElements(children);
+  const matches = (option: React.ReactElement) =>
+    !!getOptionText(option.props as DropdownItemProps)
+      ?.toLowerCase()
+      .includes(search);
+  return toElements(children).flatMap((child) => {
+    if (!isOptionGroup(child)) return matches(child) ? [child] : [];
+    const options = toElements(child.props.children).filter(matches);
+    return options.length ? [React.cloneElement(child, {}, ...options)] : [];
+  });
+};
