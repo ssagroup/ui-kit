@@ -1,5 +1,5 @@
 
-> @ssa-ui-kit/core@3.27.0 build /home/runner/work/ui-kit/ui-kit/packages/core
+> @ssa-ui-kit/core@3.27.1 build /home/runner/work/ui-kit/ui-kit/packages/core
 > node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && node ../../scripts/verify-esm-bundle.mjs && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json && node ../../scripts/ai-source-map.mjs .
 
 clean(core): nothing to remove
@@ -7,9 +7,9 @@ Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 asset [1m[33mindex.js[39m[22m [1m[33m11.4 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main)
-orphan modules 11.1 MiB [1m[33m[orphan][39m[22m 1449 modules
+orphan modules 11.2 MiB [1m[33m[orphan][39m[22m 1450 modules
 runtime modules 1.73 KiB 8 modules
-built modules 11.2 MiB [1m[33m[built][39m[22m
+built modules 11.3 MiB [1m[33m[built][39m[22m
   modules by path [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/*.js[39m[22m 173 KiB 224 modules
   modules by path [1m../../node_modules/.pnpm/style-loader@4.0.0_webpack@5.103.0_esbuild@0.27.1_webpa...(truncated)[39m[22m 5.84 KiB 6 modules
   modules by path [1m../../node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/[39m[22m 28.6 KiB 6 modules
@@ -38,12 +38,12 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 16816 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 17077 ms
 
 asset [1m[33mindex.mjs[39m[22m [1m[33m11.5 MiB[39m[22m [1m[32m[emitted][39m[22m [javascript module] [1m[33m[big][39m[22m (name: main)
-orphan modules 11.1 MiB [1m[33m[orphan][39m[22m 1449 modules
+orphan modules 11.2 MiB [1m[33m[orphan][39m[22m 1450 modules
 runtime modules 1.32 KiB 8 modules
-built modules 11.2 MiB [1m[33m[built][39m[22m
+built modules 11.3 MiB [1m[33m[built][39m[22m
   modules by path [1m../../node_modules/.pnpm/lodash@4.17.21/node_modules/lodash/*.js[39m[22m 173 KiB 224 modules
   modules by path [1m../../node_modules/.pnpm/style-loader@4.0.0_webpack@5.103.0_esbuild@0.27.1_webpa...(truncated)[39m[22m 5.84 KiB 6 modules
   modules by path [1m../../node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/[39m[22m 28.6 KiB 6 modules
@@ -72,7 +72,7 @@ Entrypoints:
 You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
 For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
 
-webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 18368 ms
+webpack 5.103.0 compiled with [1m[33m3 warnings[39m[22m in 17129 ms
 verify-esm-bundle(core): ok — 20 externals, 292 exports load without a bundler
 [1mresolve-tspaths:[22m changed 377 file(s)
-ai-source-map: dist/ai/source-map.md — 169.0KB, 198 components (102 with a summary), 7 groups
+ai-source-map: dist/ai/source-map.md — 169.9KB, 198 components (102 with a summary), 7 groups
