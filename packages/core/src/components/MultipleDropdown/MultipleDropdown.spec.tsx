@@ -762,4 +762,12 @@ describe('MultipleDropdown', () => {
       expect(getByRole('combobox')).not.toHaveAttribute('aria-describedby');
     });
   });
+
+  it('top-aligns the labelText wrapper, so a block parent adds no line-box offset', () => {
+    const { getByTestId } = setup({ labelText: 'Strategy' });
+
+    const wrapper = getByTestId('dropdown').parentElement as HTMLElement;
+    expect(wrapper).toHaveStyleRule('display', 'inline-flex');
+    expect(wrapper).toHaveStyleRule('vertical-align', 'top');
+  });
 });

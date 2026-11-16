@@ -34,6 +34,10 @@ import MultipleDropdownNotification from '@components/MultipleDropdownNotificati
  */
 const MultipleDropdownFieldWrapper = styled.div`
   display: inline-flex;
+
+  /* Top-aligned like Label: in a block parent the default baseline puts the
+     wrapper in a line box about 2px below the fields next to it. */
+  vertical-align: top;
   flex-direction: column;
   align-items: flex-start;
   max-width: 100%;

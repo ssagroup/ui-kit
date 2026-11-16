@@ -21,20 +21,34 @@ type Args = {
   labelled: boolean;
   disabled: boolean;
   required: boolean;
+  /** Plain block cells: fields then sit in a line box, as in most app forms. */
+  blockCells: boolean;
   showGuides: boolean;
 };
 
 const meta: Meta<Args> = {
   title: 'Dev Playground/Field row alignment',
   parameters: { layout: 'fullscreen', controls: { expanded: true } },
-  args: { labelled: true, disabled: false, required: false, showGuides: true },
+  args: {
+    labelled: true,
+    disabled: false,
+    required: false,
+    blockCells: false,
+    showGuides: true,
+  },
 };
 export default meta;
 
 const LABEL_BLOCK = 24; // 18px line-height + 6px gap
 const CONTROL_HEIGHT = 44;
 
-const Row = ({ labelled, disabled, required, showGuides }: Args) => {
+const Row = ({
+  labelled,
+  disabled,
+  required,
+  blockCells,
+  showGuides,
+}: Args) => {
   const methods = useForm();
   const label = (text: string) => (labelled ? text : undefined);
   const top = labelled ? LABEL_BLOCK : 0;
@@ -60,9 +74,15 @@ const Row = ({ labelled, disabled, required, showGuides }: Args) => {
             // Same wrapper PeopleOps uses around each field.
             '& > [data-field]': {
               position: 'relative',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
+              ...(blockCells
+                ? // A block parent puts inline-level fields in a line box, where
+                  // the default baseline alignment can add a few px above them.
+                  { display: 'block' }
+                : {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                  }),
               '&::before, &::after': showGuides
                 ? {
                     content: '""',
@@ -200,5 +220,15 @@ export const Disabled: Story = {
  */
 export const Required: Story = {
   args: { required: true },
+  render: (args) => <Row {...args} />,
+};
+
+/**
+ * Each field in a plain block `<div>`, not a flex column. Inline-level
+ * wrappers then sit in a line box: without `vertical-align: top` they drop
+ * a couple of px below the guides.
+ */
+export const BlockCells: Story = {
+  args: { blockCells: true, required: true },
   render: (args) => <Row {...args} />,
 };

@@ -1092,4 +1092,12 @@ describe('Dropdown', () => {
 
     expect(getByRole('combobox')).not.toHaveAttribute('aria-required');
   });
+
+  it('top-aligns the labelled wrapper, so a block parent adds no line-box offset', () => {
+    const { getByText } = setup({ label: 'Channel' });
+
+    const wrapper = getByText('Channel').parentElement as HTMLElement;
+    expect(wrapper).toHaveStyleRule('display', 'inline-flex');
+    expect(wrapper).toHaveStyleRule('vertical-align', 'top');
+  });
 });
