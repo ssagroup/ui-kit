@@ -13,15 +13,17 @@ const mockError: FieldError = {
 const { register } = mockUseForm();
 
 describe('TextField', () => {
-  it('Renders no <label> when there is no label, so it leaves no gap above the control', () => {
+  // The empty <label> (and its 6px gap) stays until the next major: consumers'
+  // layouts rely on it.
+  it('Renders an empty <label> when there is no label', () => {
     const { container } = render(
       <TextField name="field" placeholder="no label" register={register} />,
     );
 
-    expect(container.querySelector('label')).toBeNull();
+    expect(container.querySelector('label')).toBeEmptyDOMElement();
   });
 
-  it('Renders no <label> for a textarea without a label', () => {
+  it('Renders an empty <label> for a textarea without a label', () => {
     const { container } = render(
       <TextField
         name="field"
@@ -31,7 +33,7 @@ describe('TextField', () => {
       />,
     );
 
-    expect(container.querySelector('label')).toBeNull();
+    expect(container.querySelector('label')).toBeEmptyDOMElement();
   });
 
   it('Render textarea with label and helper text', () => {

@@ -525,8 +525,8 @@ describe('MultipleDropdown', () => {
       expect(dropdownBaseEl).toHaveStyleRule('display', 'inline-block');
       expect(dropdownBaseEl).toHaveStyleRule('min-width', '180px');
       expect(dropdownToggleEl).toHaveStyleRule('width', 'auto');
-      // No fixed cap: the toggle only stops at its container, like Dropdown.
-      expect(dropdownToggleEl).toHaveStyleRule('max-width', '100%');
+      // The multiple toggle keeps its 250px cap until the next major.
+      expect(dropdownToggleEl).toHaveStyleRule('max-width', '250px');
     });
 
     it('applies width to the base and stretches the toggle to fill it', () => {

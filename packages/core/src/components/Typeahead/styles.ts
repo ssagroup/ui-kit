@@ -6,7 +6,6 @@ import Button from '@components/Button';
 import { PopoverTrigger } from '@components/Popover';
 import {
   FIELD_CONTROL_BORDER_WIDTH,
-  FIELD_CONTROL_BOX_SIZING,
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
 } from '@styles/fieldControl';
@@ -237,7 +236,6 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   status: ReturnType<typeof useTypeahead>['status'];
 }>`
   position: relative;
-  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
   border-radius: ${FIELD_CONTROL_RADIUS}px;
   border: ${FIELD_CONTROL_BORDER_WIDTH}px solid
     ${({ status, theme }) =>

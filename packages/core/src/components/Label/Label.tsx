@@ -16,7 +16,7 @@ import { LabelBase, RequiredMark } from './LabelBase';
  */
 const row = css`
   display: inline-flex;
-  vertical-align: top;
+  vertical-align: baseline;
   align-items: center;
   gap: 8px;
   height: ${FIELD_LABEL_LINE_HEIGHT}px;

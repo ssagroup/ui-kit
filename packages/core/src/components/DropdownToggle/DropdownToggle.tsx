@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { resolveAriaProp } from '@utils/deprecation';
 import {
   FIELD_CONTROL_BORDER_WIDTH,
-  FIELD_CONTROL_BOX_SIZING,
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
 } from '@styles/fieldControl';
@@ -85,15 +84,18 @@ const singleDropdownStyles = ({
 const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
   const borderColor = isOpen ? theme.palette.primary.main : theme.colors.grey;
 
-  /* Height, padding and radius come from DropdownToggleBase, so this toggle
-     matches the single dropdown and the other form fields; only the look
-     differs. */
+  /* Own 40px height, padding and 250px cap; matching the 44px fields is held
+     back for the next major. */
   return css`
+    height: 40px;
+    padding: 11px 15px 9px 10px;
     font-size: 14px;
     font-weight: 500;
     color: ${theme.colors.greyDarker};
     border: ${FIELD_CONTROL_BORDER_WIDTH}px solid ${borderColor};
+    border-radius: 12px;
     background: ${theme.colors.white};
+    max-width: 250px;
 
     svg path {
       stroke: ${theme.colors.greyDarker};
@@ -141,7 +143,6 @@ export const DropdownToggleBase = styled.button<
   /* A <button> keeps shrink-to-fit sizing even as a block-level flex container,
      so width: auto alone would let a long label grow it past its container. */
   max-width: 100%;
-  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
   height: ${FIELD_CONTROL_HEIGHT}px;
   padding: 0 14px;
 

@@ -10,9 +10,7 @@ import styled from '@emotion/styled';
 
 import {
   FIELD_CONTROL_BORDER_WIDTH,
-  FIELD_CONTROL_BOX_SIZING,
   FIELD_CONTROL_HEIGHT,
-  FIELD_CONTROL_RADIUS,
 } from '@styles/fieldControl';
 
 import { FieldContextValue, useFieldContext } from './FieldProvider';
@@ -21,12 +19,11 @@ const FieldControlBase = styled.div<FieldContextValue>`
   display: flex;
   align-items: center;
 
-  /* border-box, so the 1px border sits inside the 44px instead of adding 2px */
-  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
   min-height: ${FIELD_CONTROL_HEIGHT}px;
   height: auto;
 
-  border-radius: ${FIELD_CONTROL_RADIUS}px;
+  /* 16px, not FIELD_CONTROL_RADIUS: moving it to 12px is held back for the next major. */
+  border-radius: 16px;
   overflow: hidden;
   border: ${FIELD_CONTROL_BORDER_WIDTH}px solid
     ${({ status, theme }) => {

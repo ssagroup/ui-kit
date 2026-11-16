@@ -114,7 +114,9 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
       ? undefined
       : { css: { width: labelText ? '100%' : width, minWidth: 0 } };
   const toggleCssProps =
-    width === undefined ? undefined : { css: { width: '100%' } };
+    width === undefined
+      ? undefined
+      : { css: { width: '100%', maxWidth: 'none' } };
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, T>
