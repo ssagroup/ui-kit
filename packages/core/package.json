@@ -66,7 +66,7 @@
     "test": "jest -i --no-cache",
     "build": "node ../../scripts/clean.mjs && webpack --mode=production --node-env=production && node ../../scripts/verify-esm-bundle.mjs && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json && node ../../scripts/ai-source-map.mjs .",
     "build:watch": "webpack --mode=production --node-env=production --watch && tsc --build ./tsconfig.build.json && resolve-tspaths -p ./tsconfig.build.json",
-    "sb:dev": "env storybook dev -p 6006",
+    "sb:dev": "env STORYBOOK_DEV_STORIES=true storybook dev -p 6006",
     "sb:build": "env storybook build",
     "test:e2e": "pnpm exec playwright test --project=chromium",
     "test:e2e:ui": "pnpm exec playwright test --project=chromium --ui",

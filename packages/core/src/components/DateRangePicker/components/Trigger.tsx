@@ -51,7 +51,7 @@ export const Trigger = () => {
           {label}
         </C.Field.Label>
       )}
-      <C.Field.Control>
+      <C.Field.Control className={classNames?.trigger?.control}>
         <S.TriggerWrapper
           ref={wrapperRef}
           className={classNames?.trigger?.controlsWrapper}>

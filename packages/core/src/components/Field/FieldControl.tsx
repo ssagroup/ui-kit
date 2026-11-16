@@ -8,18 +8,27 @@ import React, {
 
 import styled from '@emotion/styled';
 
+import {
+  FIELD_CONTROL_BORDER_WIDTH,
+  FIELD_CONTROL_BOX_SIZING,
+  FIELD_CONTROL_HEIGHT,
+  FIELD_CONTROL_RADIUS,
+} from '@styles/fieldControl';
+
 import { FieldContextValue, useFieldContext } from './FieldProvider';
 
 const FieldControlBase = styled.div<FieldContextValue>`
   display: flex;
   align-items: center;
 
-  min-height: 44px;
+  /* border-box, so the 1px border sits inside the 44px instead of adding 2px */
+  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
+  min-height: ${FIELD_CONTROL_HEIGHT}px;
   height: auto;
 
-  border-radius: 16px;
+  border-radius: ${FIELD_CONTROL_RADIUS}px;
   overflow: hidden;
-  border: 1px solid
+  border: ${FIELD_CONTROL_BORDER_WIDTH}px solid
     ${({ status, theme }) => {
       if (status === 'error') return theme.palette.error.main;
       if (status === 'success') return theme.palette.success.light;

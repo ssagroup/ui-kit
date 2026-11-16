@@ -89,6 +89,37 @@ describe('DateRangePicker', () => {
     expect(getByTestId('daterangepicker')).toBeInTheDocument();
   });
 
+  describe('trigger geometry', () => {
+    it('should put classNames.trigger.control on the bordered box, not the outer wrapper', () => {
+      const { getByTestId } = setup({
+        classNames: { trigger: { root: 'my-root', control: 'my-control' } },
+      });
+
+      const root = getByTestId('daterangepicker');
+      const control = root.querySelector<HTMLElement>('.my-control');
+
+      expect(root).toHaveClass('my-root');
+      expect(root).not.toHaveClass('my-control');
+      expect(control).not.toBeNull();
+      // It is the Field.Control: the one carrying the border and the radius.
+      expect(control).toHaveStyleRule('border-radius', '12px');
+      expect(control).toHaveStyleRule('min-height', '44px');
+    });
+
+    it('should not add vertical padding inside the control, so it stays 44px', () => {
+      const { getByTestId } = setup({
+        classNames: { trigger: { controlsWrapper: 'my-wrapper' } },
+      });
+
+      const wrapper =
+        getByTestId('daterangepicker').querySelector<HTMLElement>(
+          '.my-wrapper',
+        );
+
+      expect(wrapper).toHaveStyleRule('padding', '0 14px');
+    });
+  });
+
   it('should open the date range picker when calendar button is clicked', async () => {
     const { getByTestId, user } = setup();
     const calendarButton = getByTestId('daterangepicker-button');

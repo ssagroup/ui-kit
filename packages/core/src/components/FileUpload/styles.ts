@@ -1,4 +1,10 @@
 import { css, Theme } from '@emotion/react';
+import {
+  FIELD_CONTROL_BORDER_WIDTH,
+  FIELD_CONTROL_BOX_SIZING,
+  FIELD_CONTROL_HEIGHT,
+  FIELD_CONTROL_RADIUS,
+} from '@styles/fieldControl';
 
 export const wrapper = css`
   display: flex;
@@ -18,12 +24,15 @@ export const inputRow = (theme: Theme) => css`
   gap: 8px;
 
   width: 100%;
-  min-height: 44px;
-  padding: 4px 14px 4px 4px;
+  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
+  min-height: ${FIELD_CONTROL_HEIGHT}px;
+  /* The 36px button is centred by align-items; vertical padding would push the
+     row past 44px once the border is counted. */
+  padding: 0 14px 0 3px;
 
   background: ${theme.colors.white};
-  border: 1px solid ${theme.colors.grey};
-  border-radius: 12px;
+  border: ${FIELD_CONTROL_BORDER_WIDTH}px solid ${theme.colors.grey};
+  border-radius: ${FIELD_CONTROL_RADIUS}px;
 
   cursor: default;
 

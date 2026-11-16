@@ -1,10 +1,15 @@
 import styled from '@emotion/styled';
+import {
+  FIELD_CONTROL_BOX_SIZING,
+  FIELD_CONTROL_HEIGHT,
+  FIELD_CONTROL_RADIUS,
+} from '@styles/fieldControl';
 
 export const InputBase = styled.input<{ showBorders: boolean }>`
   flex: 1;
 
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 12px;
+  border-radius: ${FIELD_CONTROL_RADIUS}px;
   background-origin: border-box;
   background-clip: padding-box, border-box;
 
@@ -14,7 +19,8 @@ export const InputBase = styled.input<{ showBorders: boolean }>`
   color: ${({ theme }) => theme.colors.greyDarker};
 
   width: 100%;
-  height: 44px;
+  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
+  height: ${FIELD_CONTROL_HEIGHT}px;
   padding: 14px;
 
   font-weight: 500;

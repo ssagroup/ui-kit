@@ -306,7 +306,9 @@ Comprehensive event handling for different interactions:
 
 ### Custom Styling
 
-Apply custom CSS classes to different parts of the component:
+Apply custom CSS classes to different parts of the component. `trigger.root` is the outer wrapper
+around the label, the field and the status area and has no border; `trigger.control` is the bordered,
+rounded box itself, so use it to restyle the field:
 
 ```tsx
 <DateRangePicker
@@ -316,6 +318,7 @@ Apply custom CSS classes to different parts of the component:
   classNames={{
     trigger: {
       root: 'custom-trigger-root',
+      control: 'custom-trigger-control',
       controlsWrapper: 'custom-controls',
       inputFrom: 'custom-input-from',
       inputTo: 'custom-input-to',

@@ -118,7 +118,10 @@ export const DatePickerTrigger = () => {
   return (
     <React.Fragment>
       {label && (
-        <C.Label htmlFor={name} className={classNames?.label}>
+        <C.Label
+          htmlFor={name}
+          disabled={disabled}
+          className={classNames?.label}>
           {label}
         </C.Label>
       )}

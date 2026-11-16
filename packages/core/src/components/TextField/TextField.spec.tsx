@@ -13,6 +13,27 @@ const mockError: FieldError = {
 const { register } = mockUseForm();
 
 describe('TextField', () => {
+  it('Renders no <label> when there is no label, so it leaves no gap above the control', () => {
+    const { container } = render(
+      <TextField name="field" placeholder="no label" register={register} />,
+    );
+
+    expect(container.querySelector('label')).toBeNull();
+  });
+
+  it('Renders no <label> for a textarea without a label', () => {
+    const { container } = render(
+      <TextField
+        name="field"
+        multirow
+        placeholder="no label"
+        register={register}
+      />,
+    );
+
+    expect(container.querySelector('label')).toBeNull();
+  });
+
   it('Render textarea with label and helper text', () => {
     render(
       <TextField

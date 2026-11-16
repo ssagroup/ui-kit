@@ -525,7 +525,8 @@ describe('MultipleDropdown', () => {
       expect(dropdownBaseEl).toHaveStyleRule('display', 'inline-block');
       expect(dropdownBaseEl).toHaveStyleRule('min-width', '180px');
       expect(dropdownToggleEl).toHaveStyleRule('width', 'auto');
-      expect(dropdownToggleEl).toHaveStyleRule('max-width', '250px');
+      // No fixed cap: the toggle only stops at its container, like Dropdown.
+      expect(dropdownToggleEl).toHaveStyleRule('max-width', '100%');
     });
 
     it('applies width to the base and stretches the toggle to fill it', () => {
@@ -549,7 +550,7 @@ describe('MultipleDropdown', () => {
       expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
     });
 
-    it('clears the min-width and max-width caps that would fight the width', () => {
+    it('clears the min-width floor that would fight a smaller width', () => {
       const { getByTestId } = setup({ width: 120 });
 
       const dropdownBaseEl = getByTestId('dropdown');
@@ -558,7 +559,73 @@ describe('MultipleDropdown', () => {
       expect(dropdownBaseEl).toHaveStyleRule('width', '120px');
       expect(dropdownBaseEl).toHaveStyleRule('min-width', '0');
       expect(dropdownToggleEl).toHaveStyleRule('width', '100%');
-      expect(dropdownToggleEl).toHaveStyleRule('max-width', 'none');
+    });
+  });
+
+  describe('labelText', () => {
+    it('renders a field label outside the toggle and names the toggle with it', () => {
+      const { getByText, getByRole } = setup({ labelText: 'Strategy' });
+
+      const toggle = getByRole('combobox');
+      const fieldLabel = getByText('Strategy');
+
+      expect(fieldLabel.tagName).toBe('LABEL');
+      expect(toggle).not.toContainElement(fieldLabel);
+      expect(toggle).toHaveAttribute('aria-labelledby', fieldLabel.id);
+    });
+
+    it('renders no field label and no wrapper without labelText', () => {
+      const { getByRole, getByTestId, container } = setup();
+
+      expect(container.querySelector('label')).toBeNull();
+      expect(getByRole('combobox')).not.toHaveAttribute('aria-labelledby');
+      // The base stays the root, so existing consumers see the same DOM.
+      expect(container.firstElementChild).toBe(getByTestId('dropdown'));
+    });
+
+    it('keeps the in-toggle label prefix separate from the field label', () => {
+      const { getByRole, getByText } = setup({
+        label: 'Prefix',
+        labelText: 'Field label',
+      });
+
+      expect(getByRole('combobox')).toHaveTextContent(
+        'Prefix: Select something',
+      );
+      expect(getByText('Field label')).not.toHaveTextContent('Prefix');
+    });
+
+    it('shows the value without a leading colon when there is no prefix', () => {
+      const { getByRole } = setup({ labelText: 'Strategy' });
+
+      expect(getByRole('combobox').textContent).toBe('Select something');
+    });
+
+    it('greys the field label out when disabled', () => {
+      const enabled = setup({ labelText: 'Strategy' });
+      const enabledColor = getComputedStyle(
+        enabled.getByText('Strategy'),
+      ).color;
+      enabled.unmount();
+
+      const { getByText } = setup({ labelText: 'Strategy', disabled: true });
+
+      expect(getComputedStyle(getByText('Strategy')).color).not.toBe(
+        enabledColor,
+      );
+    });
+
+    it('puts width on the wrapper and lets the base fill it', () => {
+      const { getByTestId } = setup({ labelText: 'Strategy', width: 320 });
+
+      const base = getByTestId('dropdown');
+      const wrapper = base.parentElement as HTMLElement;
+      const toggle = within(base).getByRole('combobox');
+
+      expect(wrapper).toHaveStyleRule('width', '320px');
+      expect(base).toHaveStyleRule('width', '100%');
+      expect(base).toHaveStyleRule('min-width', '0');
+      expect(toggle).toHaveStyleRule('width', '100%');
     });
   });
 

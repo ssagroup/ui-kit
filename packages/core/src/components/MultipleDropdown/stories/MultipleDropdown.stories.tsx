@@ -153,7 +153,13 @@ export default {
     },
     label: {
       description:
-        'Label prefix shown in the toggle button before the selected value(s), e.g. `label="Strategy"` renders "Strategy: Value".',
+        'Text shown inside the toggle button before the selected value(s), e.g. `label="Strategy"` renders "Strategy: Value". Not a field label: it renders nothing outside the button. Use `labelText` for a label above the control.',
+      control: 'text',
+      table: { type: { summary: 'string' } },
+    },
+    labelText: {
+      description:
+        'Field label rendered above the control, like `label` on Dropdown, Typeahead and TextField. Names the toggle for assistive technology and greys out when disabled. Can be combined with `label`.',
       control: 'text',
       table: { type: { summary: 'string' } },
     },
@@ -199,13 +205,60 @@ Basic.args = {
   disabled: false,
   isMultiple: true,
   selectedItems: [items[0], items[2]],
-  label: 'Strategy',
+  labelText: 'Strategy',
+};
+
+/**
+ * `labelText` is the field label, rendered above the control like `label` on
+ * Dropdown, Typeahead and TextField. `label` is different: it is text inside
+ * the toggle button, shown before the selected value. The two can be combined.
+ */
+export const LabelAndPrefix: StoryObj = (args: Args) => {
+  return (
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      `}>
+      <MultipleDropdown {...args} labelText="Field label only">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown {...args} label="Prefix only">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+      <MultipleDropdown
+        {...args}
+        labelText="Field label"
+        label="Prefix inside the toggle">
+        {items.map((item) => (
+          <DropdownOption key={item.value} value={item.value}>
+            {item.label}
+          </DropdownOption>
+        ))}
+      </MultipleDropdown>
+    </div>
+  );
+};
+
+LabelAndPrefix.args = {
+  disabled: false,
+  isMultiple: true,
+  selectedItems: [items[0], items[2]],
 };
 
 /**
  * `width="100%"` makes the dropdown fill its container. It also clears the
- * base's default `min-width: 180px` and the toggle's `max-width: 250px`, which
- * would otherwise silently cap the value.
+ * base's default `min-width: 180px`, which would otherwise silently floor the
+ * value.
  *
  * The value carries on the base only — the toggle is set to `100%` — so the
  * `60%` example below is 60% of the dashed box rather than 60% of an
@@ -223,21 +276,21 @@ export const FullWidth: StoryObj = (args: Args) => {
         border: 1px dashed #c4c4c4;
         border-radius: 12px;
       `}>
-      <MultipleDropdown {...args} width="100%" label="Fills the container">
+      <MultipleDropdown {...args} width="100%" labelText="Fills the container">
         {items.map((item) => (
           <DropdownOption key={item.value} value={item.value}>
             {item.label}
           </DropdownOption>
         ))}
       </MultipleDropdown>
-      <MultipleDropdown {...args} width="60%" label="60% of the container">
+      <MultipleDropdown {...args} width="60%" labelText="60% of the container">
         {items.map((item) => (
           <DropdownOption key={item.value} value={item.value}>
             {item.label}
           </DropdownOption>
         ))}
       </MultipleDropdown>
-      <MultipleDropdown {...args} label="Sized to content">
+      <MultipleDropdown {...args} labelText="Sized to content">
         {items.map((item) => (
           <DropdownOption key={item.value} value={item.value}>
             {item.label}
@@ -254,6 +307,10 @@ FullWidth.args = {
   selectedItems: [items[0], items[2]],
 };
 
+/**
+ * With the placeholder hidden and nothing selected, the toggle would be empty,
+ * so this story keeps a `label` prefix as the button's text.
+ */
 export const PlaceholderHidden: StoryObj = (args: Args) => {
   return (
     <MultipleDropdown {...args}>
@@ -297,7 +354,6 @@ export const Opened: StoryObj = (args: Args) => {
     <MultipleDropdown
       selectedItems={args.selectedItems}
       isMultiple={args.isMultiple}
-      label={args.label}
       {...args}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
@@ -311,7 +367,7 @@ export const Opened: StoryObj = (args: Args) => {
 Opened.args = {
   isOpen: true,
   disabled: false,
-  label: 'Strategy',
+  labelText: 'Strategy',
   isMultiple: true,
   selectedItems: [items[1]],
 };
@@ -326,10 +382,10 @@ export const Simple: StoryObj = (args: Args) => {
   );
 };
 
-Simple.args = { disabled: false, label: 'Strategy', selectedItems: [] };
+Simple.args = { disabled: false, labelText: 'Strategy', selectedItems: [] };
 
 export const NoItems: StoryObj = () => {
-  return <MultipleDropdown label="Strategy">{null}</MultipleDropdown>;
+  return <MultipleDropdown labelText="Strategy">{null}</MultipleDropdown>;
 };
 
 NoItems.args = { disabled: false, selectedItems: [] };
@@ -360,7 +416,7 @@ export const Custom: StoryObj = (args: Args) => {
     <MultipleDropdown
       disabled={args.disabled}
       selectedItems={[items[2]]}
-      label="Strategy"
+      labelText="Strategy"
       css={css`
         background: #ff947b;
         :focus {
@@ -398,7 +454,7 @@ export const LegacyStyle: StoryObj<Args> = {
       <LegacyMultipleDropdown
         {...args}
         selectedItems={[items[0], items[2]]}
-        label="Strategy">
+        labelText="Strategy">
         {items.map((item) => (
           <DropdownOption key={item.value} value={item.value}>
             {item.label}
@@ -413,7 +469,7 @@ LegacyStyle.args = { disabled: false, isMultiple: true };
 
 export const Disabled: StoryObj<Args> = {
   render: () => (
-    <MultipleDropdown label="Strategy" disabled selectedItems={[items[0]]}>
+    <MultipleDropdown labelText="Strategy" disabled selectedItems={[items[0]]}>
       {items.map((item) => (
         <DropdownOption key={item.value} value={item.value}>
           {item.label}
@@ -458,7 +514,7 @@ DynamicallyChangedItems.args = {
   disabled: false,
   isMultiple: true,
   selectedItems: [items[0], items[2]],
-  label: 'Strategy2',
+  labelText: 'Strategy2',
 };
 
 const groupedItems = [
@@ -505,7 +561,7 @@ Groups.args = {
   disabled: false,
   isMultiple: true,
   selectedItems: [groupedItems[0].items[0], groupedItems[1].items[0]],
-  label: 'Ingredients',
+  labelText: 'Ingredients',
 };
 
 const countries = [
@@ -550,6 +606,6 @@ Searchable.args = {
   searchable: true,
   searchPlaceholder: 'Search country',
   selectedItems: [{ value: 'Spain' }],
-  label: 'Countries',
+  labelText: 'Countries',
   width: 280,
 };

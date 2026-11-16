@@ -120,9 +120,14 @@ const TextField = ({
 
   return (
     <>
-      <Label htmlFor={controlId} disabled={disabled} badge={badge}>
-        {label}
-      </Label>
+      {/* Without a label nothing is rendered: an empty <label> still keeps its
+          6px bottom margin and would push the control below the fields next
+          to it. */}
+      {label && (
+        <Label htmlFor={controlId} disabled={disabled} badge={badge}>
+          {label}
+        </Label>
+      )}
 
       {multirow ? (
         <Textarea

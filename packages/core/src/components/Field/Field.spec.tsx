@@ -4,6 +4,23 @@ import userEvent from '@testing-library/user-event';
 import { Field } from './';
 
 describe('Field', () => {
+  it('Field.Control uses the shared control geometry', () => {
+    const { getByTestId } = render(
+      <Field.Root>
+        <Field.Control data-testid="control">
+          <input aria-label="name" />
+        </Field.Control>
+      </Field.Root>,
+    );
+
+    // 44px outer height with the border inside it, and the same 12px radius
+    // as Input, Dropdown and the other fields it sits beside in a row.
+    const control = getByTestId('control');
+    expect(control).toHaveStyleRule('min-height', '44px');
+    expect(control).toHaveStyleRule('box-sizing', 'border-box');
+    expect(control).toHaveStyleRule('border-radius', '12px');
+  });
+
   it('Render with label and helper text', () => {
     const { getByText, getByRole } = render(
       <Field.Root>

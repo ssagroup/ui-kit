@@ -5,6 +5,7 @@ import { mapObjIndexed } from '@ssa-ui-kit/utils';
 import { useMergeRefs } from '@floating-ui/react';
 
 import DropdownBase from '@components/DropdownBase';
+import Label from '@components/Label';
 import DropdownToggle from '@components/DropdownToggle';
 import DropdownArrow from '@components/DropdownArrow';
 import MultipleDropdownOptions from '@components/MultipleDropdownOptions';
@@ -26,6 +27,18 @@ import { DropdownContextType, DropdownProps } from './types';
 import { getActiveItems } from '@components/MultipleDropdown/utils';
 import MultipleDropdownNotification from '@components/MultipleDropdownNotification';
 
+/*
+ * Only rendered with `labelText`. Shrink-wraps like the base it holds, and
+ * `max-width: 100%` lets a long toggle clip instead of overflowing, as in
+ * Dropdown's field wrapper.
+ */
+const MultipleDropdownFieldWrapper = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+`;
+
 const DropdownPlaceholderLabel = styled.div`
   white-space: nowrap;
   overflow: hidden;
@@ -42,6 +55,7 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     placeholder = 'Select something',
     showPlaceholder = true,
     label,
+    labelText,
     children,
     onChange: handleChange,
     className,
@@ -62,10 +76,13 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dropdownId = useId();
+  // Names the toggle; left out without a field label, so it never points at a
+  // missing element.
+  const labelId = labelText ? `dropdown-label-${dropdownId}` : undefined;
   // `width` has no default — without it the base and the toggle both
   // shrink-wrap, which is the historical behaviour. When set it has to clear
-  // the base's `min-width` and the multiple toggle's `max-width`, otherwise
-  // those caps silently win over the explicit value.
+  // the base's `min-width`, otherwise that floor silently wins over a smaller
+  // explicit value.
   //
   // Only the outer base gets the requested value; the toggle gets 100%.
   // Repeating the value would compound relative units: `width="60%"` would
@@ -76,12 +93,18 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   // re-serializes any incoming `className` (e.g. from
   // `styled(MultipleDropdown)`). Omitting the key keeps the no-width path
   // identical to writing no `css` prop.
+  //
+  // With a field label the requested width goes on the wrapper that holds the
+  // label, and the base fills it: a percentage on the base alone would resolve
+  // against a shrink-wrapped wrapper.
+  const wrapperCssProps =
+    width === undefined || !labelText ? undefined : { css: { width } };
   const baseCssProps =
-    width === undefined ? undefined : { css: { width, minWidth: 0 } };
-  const toggleCssProps =
     width === undefined
       ? undefined
-      : { css: { width: '100%', maxWidth: 'none' } };
+      : { css: { width: labelText ? '100%' : width, minWidth: 0 } };
+  const toggleCssProps =
+    width === undefined ? undefined : { css: { width: '100%' } };
   const [isOpen, setIsOpen] = useState(isInitOpen || false);
   const [optionsWithKey, setOptionsWithKey] = useState<
     Record<number | string, T>
@@ -282,64 +305,82 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     setValuesWithoutPlaceholder(newValuesWithoutPlaceholder);
   }, [optionsWithKey]);
 
+  // "Label: value" only when there is a prefix; without one the value stands
+  // alone instead of showing a stray leading colon.
+  const separator = label ? ': ' : '';
+
+  const dropdown = (
+    <DropdownBase
+      {...baseCssProps}
+      ref={useMergeRefs([dropdownBaseRef, ref])}
+      data-testid="dropdown">
+      <DropdownToggle
+        {...toggleCssProps}
+        ref={toggleRef}
+        className={className}
+        isOpen={isOpen}
+        disabled={isDropdownDisabled}
+        onClick={() => (isOpen ? close() : open())}
+        {...toggleKeys}
+        aria-labelledby={labelId}
+        aria-controls={listId}
+        isMultiple={isMultiple}
+        selectedCount={valuesWithoutPlaceholder.length}>
+        {isMultiple ? (
+          <>
+            <DropdownPlaceholderLabel>
+              {label}
+              {showPlaceholder
+                ? values.length > 0 && `${separator}${values[0]}`
+                : valuesWithoutPlaceholder.length > 0 &&
+                  `${separator}${valuesWithoutPlaceholder[0]}`}
+            </DropdownPlaceholderLabel>
+            {values.length > 1 ? (
+              <MultipleDropdownNotification as={'div'}>
+                +{values.length - 1}
+              </MultipleDropdownNotification>
+            ) : (
+              ''
+            )}
+          </>
+        ) : (
+          values.join('')
+        )}
+        <DropdownArrow isUp={isOpen} />
+      </DropdownToggle>
+
+      {isOpen && searchable ? (
+        <DropdownSearch
+          {...searchKeys}
+          query={query}
+          onQueryChange={changeQuery}
+          placeholder={searchPlaceholder}
+          listId={listId}
+          zIndex={1}>
+          <MultipleDropdownOptions id={listId}>
+            {visibleChildren}
+          </MultipleDropdownOptions>
+        </DropdownSearch>
+      ) : isOpen ? (
+        <MultipleDropdownOptions id={listId}>
+          {childrenArray}
+        </MultipleDropdownOptions>
+      ) : null}
+    </DropdownBase>
+  );
+
   return (
     <MultipleDropdownContext.Provider value={contextValue}>
-      <DropdownBase
-        {...baseCssProps}
-        ref={useMergeRefs([dropdownBaseRef, ref])}
-        data-testid="dropdown">
-        <DropdownToggle
-          {...toggleCssProps}
-          ref={toggleRef}
-          className={className}
-          isOpen={isOpen}
-          disabled={isDropdownDisabled}
-          onClick={() => (isOpen ? close() : open())}
-          {...toggleKeys}
-          aria-controls={listId}
-          isMultiple={isMultiple}
-          selectedCount={valuesWithoutPlaceholder.length}>
-          {isMultiple ? (
-            <>
-              <DropdownPlaceholderLabel>
-                {label}
-                {showPlaceholder
-                  ? values.length > 0 && `: ${values[0]}`
-                  : valuesWithoutPlaceholder.length > 0 &&
-                    `: ${valuesWithoutPlaceholder[0]}`}
-              </DropdownPlaceholderLabel>
-              {values.length > 1 ? (
-                <MultipleDropdownNotification as={'div'}>
-                  +{values.length - 1}
-                </MultipleDropdownNotification>
-              ) : (
-                ''
-              )}
-            </>
-          ) : (
-            values.join('')
-          )}
-          <DropdownArrow isUp={isOpen} />
-        </DropdownToggle>
-
-        {isOpen && searchable ? (
-          <DropdownSearch
-            {...searchKeys}
-            query={query}
-            onQueryChange={changeQuery}
-            placeholder={searchPlaceholder}
-            listId={listId}
-            zIndex={1}>
-            <MultipleDropdownOptions id={listId}>
-              {visibleChildren}
-            </MultipleDropdownOptions>
-          </DropdownSearch>
-        ) : isOpen ? (
-          <MultipleDropdownOptions id={listId}>
-            {childrenArray}
-          </MultipleDropdownOptions>
-        ) : null}
-      </DropdownBase>
+      {labelText ? (
+        <MultipleDropdownFieldWrapper {...wrapperCssProps}>
+          <Label id={labelId} disabled={isDropdownDisabled}>
+            {labelText}
+          </Label>
+          {dropdown}
+        </MultipleDropdownFieldWrapper>
+      ) : (
+        dropdown
+      )}
     </MultipleDropdownContext.Provider>
   );
 }

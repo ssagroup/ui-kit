@@ -17,8 +17,19 @@ const __dirname = dirname(__filename);
 // babel-loader entirely: every `.stories.tsx` fails with "Module parse failed".
 const [appWebpackConfig] = [initWebpackConfig()].flat() as Configuration[];
 
+// Dev-only stories: `*.dev.stories.tsx` files are developer test beds (e.g. every
+// form field in one row to check alignment) that should never ship in the
+// deployed Storybook. They are left out of the glob below unless
+// STORYBOOK_DEV_STORIES=true, which only the `sb:dev` script sets. `sb:build`,
+// CI and the deploy scripts never set it, so a build cannot include them.
+const includeDevStories = process.env.STORYBOOK_DEV_STORIES === 'true';
+
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.mdx'],
+  stories: [
+    '../src/**/!(*.dev).stories.@(js|jsx|ts|tsx)',
+    '../src/**/*.mdx',
+    ...(includeDevStories ? ['../src/**/*.dev.stories.@(js|jsx|ts|tsx)'] : []),
+  ],
   addons: [
     '@storybook/addon-links',
     {

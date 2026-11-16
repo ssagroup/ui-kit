@@ -79,10 +79,20 @@ export type DropdownProps<P extends DropdownOptionProps> = {
   isOpen?: boolean;
 
   /**
-   * Label prefix shown in the toggle button before the selected value(s)
-   * e.g. `label="Strategy"` renders "Strategy: Value"
+   * Text shown **inside the toggle button**, before the selected value(s),
+   * e.g. `label="Strategy"` renders "Strategy: Value". It is not a field label
+   * and renders nothing outside the button. To put a label above the control
+   * like the other form fields, use `labelText`.
    */
   label?: string;
+
+  /**
+   * Field label rendered above the control, the same as `label` on Dropdown,
+   * Typeahead and TextField. It names the toggle button for assistive
+   * technology and greys out when the dropdown is disabled. Can be combined
+   * with `label`, which only affects the text inside the button.
+   */
+  labelText?: string;
 
   /**
    * Callback fired when an option is toggled

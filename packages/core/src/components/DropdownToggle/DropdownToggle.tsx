@@ -1,6 +1,12 @@
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { resolveAriaProp } from '@utils/deprecation';
+import {
+  FIELD_CONTROL_BORDER_WIDTH,
+  FIELD_CONTROL_BOX_SIZING,
+  FIELD_CONTROL_HEIGHT,
+  FIELD_CONTROL_RADIUS,
+} from '@styles/fieldControl';
 import { DropdownToggleProps, MultipleStylesProps } from './types';
 
 /** Border colors per status, mirroring Input's basic/error/success maps */
@@ -79,16 +85,15 @@ const singleDropdownStyles = ({
 const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
   const borderColor = isOpen ? theme.palette.primary.main : theme.colors.grey;
 
+  /* Height, padding and radius come from DropdownToggleBase, so this toggle
+     matches the single dropdown and the other form fields; only the look
+     differs. */
   return css`
-    height: 40px;
-    padding: 11px 15px 9px 10px;
     font-size: 14px;
     font-weight: 500;
     color: ${theme.colors.greyDarker};
-    border: 1px solid ${borderColor};
-    border-radius: 12px;
+    border: ${FIELD_CONTROL_BORDER_WIDTH}px solid ${borderColor};
     background: ${theme.colors.white};
-    max-width: 250px;
 
     svg path {
       stroke: ${theme.colors.greyDarker};
@@ -134,10 +139,10 @@ export const DropdownToggleBase = styled.button<
   width: auto;
 
   /* A <button> keeps shrink-to-fit sizing even as a block-level flex container,
-     so width: auto alone would let a long label grow it past its container.
-     The multiple-select variant overrides this with its own 250px cap. */
+     so width: auto alone would let a long label grow it past its container. */
   max-width: 100%;
-  height: 44px;
+  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
+  height: ${FIELD_CONTROL_HEIGHT}px;
   padding: 0 14px;
 
   font: inherit;
@@ -149,7 +154,7 @@ export const DropdownToggleBase = styled.button<
   cursor: pointer;
   outline: inherit;
 
-  border-radius: 12px;
+  border-radius: ${FIELD_CONTROL_RADIUS}px;
 
   /* Single dropdown: input-like (white bg, palette borders); applied when !isMultiple */
   ${({ isMultiple, isOpen, disabled, status, theme }) =>

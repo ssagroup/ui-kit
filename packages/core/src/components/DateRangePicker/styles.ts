@@ -16,8 +16,14 @@ export {
   type RangeEdge,
 } from '@components/DatePicker/styles';
 
+/*
+ * Horizontal padding only. The bordered box is Field.Control, which already
+ * sets the shared 44px control height and centres its content, so vertical
+ * padding here would just stack on top of it and make the trigger taller than
+ * the other fields.
+ */
 export const TriggerWrapper = styled(Wrapper)`
-  padding: 14px;
+  padding: 0 14px;
   cursor: default;
 `;
 

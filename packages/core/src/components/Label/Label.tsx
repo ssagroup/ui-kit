@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import { css } from '@emotion/react';
+import { FIELD_LABEL_GAP, FIELD_LABEL_LINE_HEIGHT } from '@styles/fieldControl';
 
 import { Chip } from '@components/Chip';
 import { resolveDisabled } from '@utils/deprecation';
@@ -15,12 +16,12 @@ import { LabelBase } from './LabelBase';
  */
 const row = css`
   display: inline-flex;
-  vertical-align: baseline;
+  vertical-align: top;
   align-items: center;
   gap: 8px;
-  height: 18px;
+  height: ${FIELD_LABEL_LINE_HEIGHT}px;
   min-width: 0;
-  margin: 0 0 6px 4px;
+  margin: 0 0 ${FIELD_LABEL_GAP}px 4px;
 
   & > label {
     flex: 0 1 auto;

@@ -126,6 +126,16 @@ describe('DatePicker', () => {
     expect(queryByLabelText('15 minutes')).not.toBeInTheDocument();
   });
 
+  it('Greys the label out when [disabled], like the other fields', () => {
+    const enabled = setup();
+    const enabledColor = getComputedStyle(enabled.getByText('Field')).color;
+    enabled.unmount();
+
+    const { getByText } = setup({ disabled: true });
+
+    expect(getComputedStyle(getByText('Field')).color).not.toBe(enabledColor);
+  });
+
   it('Does not render the clear button unless [showClearButton] is set', () => {
     const { queryByTestId } = setup();
 

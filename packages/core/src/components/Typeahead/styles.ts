@@ -4,6 +4,12 @@ import styled from '@emotion/styled';
 import Wrapper from '@components/Wrapper';
 import Button from '@components/Button';
 import { PopoverTrigger } from '@components/Popover';
+import {
+  FIELD_CONTROL_BORDER_WIDTH,
+  FIELD_CONTROL_BOX_SIZING,
+  FIELD_CONTROL_HEIGHT,
+  FIELD_CONTROL_RADIUS,
+} from '@styles/fieldControl';
 import { useTypeahead } from './useTypeahead';
 import { TypeaheadItemProps } from './types';
 
@@ -231,15 +237,16 @@ export const TypeaheadTrigger = styled(PopoverTrigger)<{
   status: ReturnType<typeof useTypeahead>['status'];
 }>`
   position: relative;
-  border-radius: 12px;
-  border: 1px solid
+  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
+  border-radius: ${FIELD_CONTROL_RADIUS}px;
+  border: ${FIELD_CONTROL_BORDER_WIDTH}px solid
     ${({ status, theme }) =>
       status === 'basic'
         ? theme.colors.grey
         : status === 'error'
           ? theme.palette.error.light
           : theme.palette.success.light};
-  min-height: 44px;
+  min-height: ${FIELD_CONTROL_HEIGHT}px;
   height: auto;
   background: ${({ theme }) => theme.colors.white};
   gap: 8px;

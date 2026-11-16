@@ -223,7 +223,11 @@ export interface DateRangePickerProps {
    */
   classNames?: {
     trigger?: {
+      /** Outer wrapper around the label, the control and the status area. It has no border. */
       root?: string;
+      /** The bordered, rounded box that holds the inputs and icons. Use it to restyle the field itself. */
+      control?: string;
+      /** Flex row inside the control that lays out the inputs and icons. */
       controlsWrapper?: string;
       inputFrom?: string;
       inputTo?: string;
