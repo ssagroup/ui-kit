@@ -96,7 +96,10 @@ jobs:
         run: pnpm test:coverage:ci
 
   storybook:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, where Playwright 1.57 cannot
+    # install Chromium. Unpin after bumping Playwright to a version that
+    # supports it.
+    runs-on: ubuntu-24.04
     needs: [build]
     strategy:
       fail-fast: false
