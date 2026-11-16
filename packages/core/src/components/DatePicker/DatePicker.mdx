@@ -203,6 +203,19 @@ so a field with an error is never shown as successful:
 />
 ```
 
+### Required
+
+`required` shows a red `*` after the `label` and sets `aria-required` on the input. The `*` is decorative (`aria-hidden`), so the accessible name stays the label text. `required` does not validate: keep the rule in `validationSchema`.
+
+```tsx
+<DatePicker
+  name="start"
+  label="Start date"
+  required
+  validationSchema={{ required: 'Start date is required' }}
+/>
+```
+
 ### Disabled State
 
 Disable the date picker when needed:

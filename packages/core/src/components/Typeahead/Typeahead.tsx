@@ -193,6 +193,7 @@ export const Typeahead = ({
   name = 'typeahead-search',
   label,
   labelBadge,
+  required = false,
   value,
   defaultValue,
   selectedItems,
@@ -282,15 +283,17 @@ export const Typeahead = ({
     label && labelBadge
       ? { ...labelBadge, id: getLabelBadgeId(inputId) }
       : undefined;
-  const contextValue = badge
-    ? {
-        ...hookResult,
-        inputAriaProps: {
-          ...hookResult.inputAriaProps,
-          'aria-describedby': badge.id,
-        },
-      }
-    : hookResult;
+  const contextValue =
+    badge || required
+      ? {
+          ...hookResult,
+          inputAriaProps: {
+            ...hookResult.inputAriaProps,
+            ...(badge && { 'aria-describedby': badge.id }),
+            ...(required && { 'aria-required': true }),
+          },
+        }
+      : hookResult;
 
   return (
     <TypeaheadContext.Provider value={contextValue}>
@@ -308,6 +311,7 @@ export const Typeahead = ({
             htmlFor={inputId}
             badge={badge}
             disabled={isTypeaheadDisabled}
+            required={required}
             data-testid="typeahead-label">
             {label}
           </Label>

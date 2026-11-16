@@ -67,6 +67,14 @@ export interface TextFieldProps
   labelBadge?: LabelBadge;
 
   /**
+   * Marks the field as required: sets `aria-required` on the input or
+   * textarea and, with a `label`, shows a red `*` after the label text.
+   * Validation itself stays with `validationSchema`.
+   * @default false
+   */
+  required?: boolean;
+
+  /**
    * React Hook Form field error object
    * Used to display validation error messages
    */

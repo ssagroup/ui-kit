@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Textarea from '@components/Textarea';
-import { Field } from '@components/Field';
-import { getLabelBadgeId } from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 
 type Args = Parameters<typeof Textarea>[0];
@@ -243,32 +241,39 @@ export const AllStatuses: StoryObj<typeof Textarea> = () => {
 };
 AllStatuses.storyName = 'All statuses';
 
-/**
- * Textarea has no label of its own: label it with `Field.Label`, whose
- * `badge` works the same as the fields' `labelBadge`. Point the textarea's
- * `aria-describedby` at `getLabelBadgeId(id)` so the badge is announced.
- */
+/** `labelBadge` shows a status badge next to the label and describes the textarea. */
 const TextareaWithLabelBadge = () => {
   const { register } = useForm<FieldValues>();
 
   return (
-    <Field.Root>
-      <Field.Label
-        htmlFor="bio"
-        badge={{ text: 'not present in the CV', color: 'warning' }}>
-        Bio
-      </Field.Label>
-      <Textarea
-        id="bio"
-        name="bio"
-        rows={4}
-        register={register}
-        aria-describedby={getLabelBadgeId('bio')}
-      />
-    </Field.Root>
+    <Textarea
+      name="bio"
+      label="Bio"
+      labelBadge={{ text: 'not present in the CV', color: 'warning' }}
+      rows={4}
+      register={register}
+    />
   );
 };
 
 export const WithLabelBadge: StoryObj<typeof Textarea> = {
   render: () => <TextareaWithLabelBadge />,
+};
+
+/**
+ * `label` renders the kit Label above the textarea, the same as TextField.
+ * `required` adds a red `*` and sets `aria-required` on the textarea.
+ */
+export const WithLabel: StoryObj<typeof Textarea> = (args: Args) => {
+  const { register } = useForm<FieldValues>();
+
+  return <Textarea {...args} register={register} />;
+};
+WithLabel.args = {
+  name: 'summary',
+  label: 'Summary',
+  required: true,
+  placeholder: 'Textarea',
+  rows: 4,
+  validationSchema: { required: 'Required' },
 };

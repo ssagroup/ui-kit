@@ -86,6 +86,7 @@ const TextField = ({
   name,
   label,
   labelBadge,
+  required = false,
   errors,
   helperText,
   success,
@@ -124,7 +125,11 @@ const TextField = ({
           6px bottom margin and would push the control below the fields next
           to it. */}
       {label && (
-        <Label htmlFor={controlId} disabled={disabled} badge={badge}>
+        <Label
+          htmlFor={controlId}
+          disabled={disabled}
+          required={required}
+          badge={badge}>
           {label}
         </Label>
       )}
@@ -136,6 +141,7 @@ const TextField = ({
           disabled={disabled}
           maxLength={maxLength}
           setCountChar={handleCount}
+          required={required}
           aria-describedby={badge?.id}
           {...props}
         />
@@ -148,7 +154,11 @@ const TextField = ({
           showStatusIcon={false}
           onKeyUp={handleInputKeyUp}
           {...props}
-          inputProps={{ ...props.inputProps, 'aria-describedby': describedBy }}
+          inputProps={{
+            'aria-required': required || undefined,
+            ...props.inputProps,
+            'aria-describedby': describedBy,
+          }}
         />
       )}
 

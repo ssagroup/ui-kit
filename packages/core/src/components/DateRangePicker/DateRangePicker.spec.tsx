@@ -1100,4 +1100,24 @@ describe('DateRangePicker', () => {
       });
     });
   });
+
+  it('marks both inputs [required] with aria-required and the label with a *', () => {
+    const { getByTestId } = setup({ label: 'Period', required: true });
+
+    for (const side of ['from', 'to']) {
+      expect(getByTestId(`daterangepicker-input-${side}`)).toHaveAttribute(
+        'aria-required',
+        'true',
+      );
+    }
+    expect(getByTestId('label-required-mark')).toBeInTheDocument();
+  });
+
+  it('leaves aria-required off by default', () => {
+    const { getByTestId } = setup({ label: 'Period' });
+
+    expect(getByTestId('daterangepicker-input-from')).not.toHaveAttribute(
+      'aria-required',
+    );
+  });
 });

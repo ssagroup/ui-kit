@@ -293,10 +293,26 @@ or number (an icon plus text, say) is matched through the group's `textValue`.
       Carrot
     </TypeaheadOption>
   </TypeaheadOptionGroup>
-</Typeahead>;
+</Typeahead>
 ```
 
 Typing `veg` shows the whole Vegetables group; typing `app` shows only Apple.
+
+### Required
+
+`required` shows a red `*` after the `label` and sets `aria-required` on the search input. The `*` is decorative (`aria-hidden`), so the accessible name stays the label text. `required` does not validate: keep the rule in `validationSchema`.
+
+```tsx
+<Typeahead
+  name="language"
+  label="Language"
+  required
+  validationSchema={{ required: 'Language is required' }}>
+  <TypeaheadOption value="en" label="English">
+    English
+  </TypeaheadOption>
+</Typeahead>
+```
 
 ### Event Handling
 

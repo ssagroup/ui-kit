@@ -142,6 +142,13 @@ export interface DropdownProps<
   labelBadge?: LabelBadge;
 
   /**
+   * Marks the field as required: sets `aria-required` on the toggle and,
+   * with a `label`, shows a red `*` after the label text. It does not validate: a selection is still up to the consumer.
+   * @default false
+   */
+  required?: boolean;
+
+  /**
    * Helper text displayed below the dropdown
    * Shown when no errors are present
    */

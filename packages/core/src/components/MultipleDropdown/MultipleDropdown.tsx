@@ -56,6 +56,8 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     showPlaceholder = true,
     label,
     labelText,
+    labelBadge,
+    required = false,
     children,
     onChange: handleChange,
     className,
@@ -79,6 +81,10 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
   // Names the toggle; left out without a field label, so it never points at a
   // missing element.
   const labelId = labelText ? `dropdown-label-${dropdownId}` : undefined;
+  const badge =
+    labelText && labelBadge
+      ? { ...labelBadge, id: `dropdown-badge-${dropdownId}` }
+      : undefined;
   // `width` has no default — without it the base and the toggle both
   // shrink-wrap, which is the historical behaviour. When set it has to clear
   // the base's `min-width`, otherwise that floor silently wins over a smaller
@@ -323,6 +329,8 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
         onClick={() => (isOpen ? close() : open())}
         {...toggleKeys}
         aria-labelledby={labelId}
+        aria-required={required || undefined}
+        {...(badge && { 'aria-describedby': badge.id })}
         aria-controls={listId}
         isMultiple={isMultiple}
         selectedCount={valuesWithoutPlaceholder.length}>
@@ -373,7 +381,11 @@ function MultipleDropdownInner<T extends DropdownOptionProps>(
     <MultipleDropdownContext.Provider value={contextValue}>
       {labelText ? (
         <MultipleDropdownFieldWrapper {...wrapperCssProps}>
-          <Label id={labelId} disabled={isDropdownDisabled}>
+          <Label
+            id={labelId}
+            disabled={isDropdownDisabled}
+            required={required}
+            badge={badge}>
             {labelText}
           </Label>
           {dropdown}

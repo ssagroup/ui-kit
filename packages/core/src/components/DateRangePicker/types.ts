@@ -132,6 +132,14 @@ export interface DateRangePickerProps {
   label?: string;
 
   /**
+   * Marks the field as required: sets **`aria-required`** on both inputs and,
+   * with a **`label`**, shows a red `*` after the label text. Validation
+   * itself stays with your form rules.
+   * @default false
+   */
+  required?: boolean;
+
+  /**
    * Date string format for both fields. Defaults from **`rangePickerType`** if omitted.
    */
   format?: Format;

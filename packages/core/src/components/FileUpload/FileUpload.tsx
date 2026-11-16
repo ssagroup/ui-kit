@@ -106,6 +106,7 @@ const getFileProgress = (
  */
 const FileUpload = ({
   label,
+  required = false,
   placeholder = 'No file selected',
   helperText,
   actionText = 'Choose File',
@@ -222,7 +223,11 @@ const FileUpload = ({
 
   return (
     <div css={[S.wrapper, css]} className={className}>
-      {label && <Label disabled={disabled}>{label}</Label>}
+      {label && (
+        <Label disabled={disabled} required={required}>
+          {label}
+        </Label>
+      )}
 
       <input
         ref={inputRef}

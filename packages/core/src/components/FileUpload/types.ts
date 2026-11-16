@@ -12,6 +12,16 @@ export type FileUploadProgress = number | FileUploadProgressEntry[];
 
 export interface FileUploadProps {
   label?: string;
+
+  /**
+   * Shows a red `*` after the `label` text. Visual only: the file input is
+   * hidden and the visible trigger is a button, which cannot carry
+   * `aria-required`, so say "required" in the label or helper text if screen
+   * reader users need it. Validation stays with the consumer.
+   * @default false
+   */
+  required?: boolean;
+
   placeholder?: string;
   helperText?: string;
   actionText?: string;

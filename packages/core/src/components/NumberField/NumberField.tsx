@@ -17,6 +17,12 @@ export interface NumberFieldProps extends InputProps {
   defaultValue?: number;
   description?: React.ReactNode;
   label?: React.ReactNode;
+  /**
+   * Marks the field as required: sets `aria-required` on the input and,
+   * with a `label`, shows a red `*` after the label text.
+   * @default false
+   */
+  required?: boolean;
   success?: React.ReactNode;
   error?: React.ReactNode;
   status?: FieldRootProps['status'];
@@ -30,6 +36,7 @@ export const NumberField = ({
   defaultValue,
   description,
   label,
+  required = false,
   success,
   error,
   status,
@@ -61,7 +68,11 @@ export const NumberField = ({
 
   return (
     <Field.Root disabled={disabled} status={status}>
-      {label && <Field.Label htmlFor={id}>{label}</Field.Label>}
+      {label && (
+        <Field.Label htmlFor={id} required={required}>
+          {label}
+        </Field.Label>
+      )}
       <Field.Control css={{ padding: '0 14px' }}>
         <Input
           ref={inputRef}
@@ -72,13 +83,16 @@ export const NumberField = ({
             height: '32px',
             borderRadius: 0,
           }}
-          inputProps={{
-            autoComplete: 'off',
-            value: _value,
-            onChange: handleChange,
-          }}
           status="custom"
           {...inputProps}
+          inputProps={{
+            autoComplete: 'off',
+            'aria-required': required || undefined,
+            value: _value,
+            onChange: handleChange,
+            // Consumer keys still win, as when their object replaced this one.
+            ...inputProps.inputProps,
+          }}
         />
       </Field.Control>
       {description && <Field.Description>{description}</Field.Description>}

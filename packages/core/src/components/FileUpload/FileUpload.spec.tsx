@@ -545,4 +545,20 @@ describe('FileUpload', () => {
       expect(deleteBtn).toBeDisabled();
     });
   });
+
+  describe('required', () => {
+    it('shows a * after the label', () => {
+      render(<FileUpload label="CV" required />);
+
+      expect(screen.getByText('CV')).toContainElement(
+        screen.getByTestId('label-required-mark'),
+      );
+    });
+
+    it('shows no * by default', () => {
+      render(<FileUpload label="CV" />);
+
+      expect(screen.queryByTestId('label-required-mark')).toBeNull();
+    });
+  });
 });

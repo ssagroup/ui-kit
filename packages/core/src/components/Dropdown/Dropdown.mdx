@@ -198,6 +198,20 @@ Set an initial selected item:
 </Dropdown>
 ```
 
+### Required
+
+`required` shows a red `*` after the `label` and sets `aria-required` on the toggle. The `*` is decorative (`aria-hidden`), so the accessible name stays the label text. `required` does not validate: keep the rule in your form logic.
+
+```tsx
+<Dropdown label="Channel" required selectedItem={value} onChange={setValue}>
+  {items.map((item) => (
+    <DropdownOption key={item.id} value={item.id}>
+      {item.value}
+    </DropdownOption>
+  ))}
+</Dropdown>
+```
+
 ### Disabled State
 
 Disable the entire dropdown when needed:
@@ -323,7 +337,11 @@ Options whose `children` is markup have no text to match — give them a
   selectedItem={selected}
   onChange={setSelected}>
   {countries.map((country) => (
-    <DropdownOption key={country.code} value={country.code} label={country.name} />
+    <DropdownOption
+      key={country.code}
+      value={country.code}
+      label={country.name}
+    />
   ))}
   <DropdownOption value="other" textValue="Other">
     <strong>Other</strong>

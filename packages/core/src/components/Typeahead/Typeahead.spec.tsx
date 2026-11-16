@@ -808,4 +808,28 @@ describe('Typeahead Component', () => {
       });
     });
   });
+
+  it('marks the input [required] with aria-required and the label with a *', () => {
+    setup({ label: 'Recruiter', required: true });
+
+    const input = document.getElementById('formElement-test-typeahead-text');
+    expect(input).toHaveAttribute('aria-required', 'true');
+    // The aria-hidden * stays out of the name.
+    expect(input).toHaveAccessibleName('Recruiter');
+    expect(screen.getByTestId('label-required-mark')).toBeInTheDocument();
+  });
+
+  it('keeps the badge description next to [required]', () => {
+    setup({
+      label: 'Recruiter',
+      required: true,
+      labelBadge: { text: 'default' },
+    });
+
+    const input = document.getElementById('formElement-test-typeahead-text');
+    expect(input).toHaveAttribute('aria-required', 'true');
+    // The aria-hidden * stays out of the name.
+    expect(input).toHaveAccessibleName('Recruiter');
+    expect(input).toHaveAccessibleDescription('default');
+  });
 });

@@ -240,3 +240,42 @@ describe('TextField labelBadge', () => {
     expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-describedby');
   });
 });
+
+describe('TextField required', () => {
+  it('marks the input with aria-required and the label with a *', () => {
+    render(
+      <TextField name="email" label="Email" required register={register} />,
+    );
+
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveAttribute('aria-required', 'true');
+    expect(input).not.toHaveAttribute('required');
+    expect(input).toHaveAccessibleName('Email');
+    expect(screen.getByTestId('label-required-mark')).toBeInTheDocument();
+  });
+
+  it('marks a multirow textarea the same way, with one label', () => {
+    const { container } = render(
+      <TextField
+        name="bio"
+        label="Bio"
+        multirow
+        required
+        register={register}
+      />,
+    );
+
+    expect(screen.getByRole('textbox')).toHaveAttribute(
+      'aria-required',
+      'true',
+    );
+    expect(container.querySelectorAll('label')).toHaveLength(1);
+  });
+
+  it('sets nothing when not required', () => {
+    render(<TextField name="email" label="Email" register={register} />);
+
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-required');
+    expect(screen.queryByTestId('label-required-mark')).toBeNull();
+  });
+});

@@ -37,4 +37,30 @@ describe('NumberField', () => {
     const { getByText } = setup({ status: 'success', success: 'Success text' });
     expect(getByText('Success text')).toBeInTheDocument();
   });
+
+  it('marks the input [required] with aria-required and the label with a *', () => {
+    const { getByRole, getByTestId } = setup({
+      label: 'Amount',
+      required: true,
+    });
+
+    expect(getByRole('textbox')).toHaveAttribute('aria-required', 'true');
+    expect(getByTestId('label-required-mark')).toBeInTheDocument();
+  });
+
+  it('keeps value handling and aria-required when inputProps are passed', async () => {
+    const onChange = jest.fn();
+    const { getByRole } = setup({
+      required: true,
+      onChange,
+      inputProps: { 'data-testid': 'amount' } as NumberFieldProps['inputProps'],
+    });
+
+    const input = getByRole('textbox');
+    await userEvent.type(input, '7');
+    expect(input).toHaveValue('7');
+    expect(onChange).toHaveBeenLastCalledWith(7);
+    expect(input).toHaveAttribute('aria-required', 'true');
+    expect(input).toHaveAttribute('data-testid', 'amount');
+  });
 });

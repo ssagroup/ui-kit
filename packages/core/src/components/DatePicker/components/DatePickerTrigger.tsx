@@ -12,6 +12,7 @@ export const DatePickerTrigger = () => {
     format,
     name,
     label,
+    required,
     classNames,
     openCalendarMode,
     inputRef,
@@ -121,6 +122,7 @@ export const DatePickerTrigger = () => {
         <C.Label
           htmlFor={name}
           disabled={disabled}
+          required={required}
           className={classNames?.label}>
           {label}
         </C.Label>
@@ -140,6 +142,7 @@ export const DatePickerTrigger = () => {
             id: inputProps?.inputProps?.id || name,
             'data-testid': 'datepicker-input',
             autoComplete: 'off',
+            'aria-required': required || undefined,
             ...inputElementProps,
           }}
           errors={fieldError as FieldError}

@@ -1,5 +1,6 @@
 import { ReactEventHandler } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import type { LabelBadge } from '@components/Label/types';
 
 /**
  * Props for the Textarea component
@@ -55,6 +56,28 @@ export interface TextareaProps extends Partial<
    * Name attribute for the textarea, required for React Hook Form integration
    */
   name: string;
+
+  /**
+   * Label rendered above the textarea with the kit `Label`, the same as
+   * `label` on TextField, so a labelled Textarea lines up with the fields
+   * next to it. Nothing is rendered above the control without it.
+   */
+  label?: string;
+
+  /**
+   * Status badge to the right of the label, e.g.
+   * `{ text: 'mapped', color: 'primary' }`. Announced as the textarea's
+   * description. Needs a `label`.
+   */
+  labelBadge?: LabelBadge;
+
+  /**
+   * Marks the field as required: sets `aria-required` on the textarea and,
+   * with a `label`, shows a red `*` after the label text. Validation itself
+   * stays with `validationSchema`.
+   * @default false
+   */
+  required?: boolean;
 
   /**
    * Placeholder text displayed when textarea is empty

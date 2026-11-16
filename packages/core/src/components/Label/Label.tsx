@@ -5,7 +5,7 @@ import { FIELD_LABEL_GAP, FIELD_LABEL_LINE_HEIGHT } from '@styles/fieldControl';
 import { Chip } from '@components/Chip';
 import { resolveDisabled } from '@utils/deprecation';
 import { LabelProps } from './types';
-import { LabelBase } from './LabelBase';
+import { LabelBase, RequiredMark } from './LabelBase';
 
 /**
  * The label's own bottom/left margin moves to the row, and the row is held
@@ -55,19 +55,29 @@ const Label = ({
   className,
   disabled,
   isDisabled,
+  required,
   onMouseEnter,
   onMouseLeave,
 }: LabelProps) => {
   const generatedId = useId();
+  const isLabelDisabled = resolveDisabled('Label', disabled, isDisabled);
   const label = (
     <LabelBase
       htmlFor={htmlFor}
       id={id}
-      isDisabled={resolveDisabled('Label', disabled, isDisabled)}
+      isDisabled={isLabelDisabled}
       className={className}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
       {children}
+      {required && (
+        <RequiredMark
+          aria-hidden="true"
+          isDisabled={isLabelDisabled}
+          data-testid="label-required-mark">
+          *
+        </RequiredMark>
+      )}
     </LabelBase>
   );
 

@@ -443,4 +443,14 @@ describe('DatePicker', () => {
     expect(mockOnChange).toHaveBeenCalled();
     expect(mockOnYearChange).toHaveBeenCalled();
   });
+
+  it('Marks the input [required] with aria-required and the label with a *', () => {
+    const { getByTestId } = setup({ required: true });
+
+    expect(getByTestId('datepicker-input')).toHaveAttribute(
+      'aria-required',
+      'true',
+    );
+    expect(getByTestId('label-required-mark')).toBeInTheDocument();
+  });
 });

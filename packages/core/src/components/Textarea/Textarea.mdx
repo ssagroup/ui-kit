@@ -82,6 +82,27 @@ function BasicTextareaExample() {
 }
 ```
 
+### Label
+
+`label` renders the kit `Label` above the textarea with the same 6px gap as `TextField`, so a
+labelled Textarea lines up with the fields next to it. `required` adds a red `*` after the label and
+sets `aria-required` on the textarea; `labelBadge` adds a status badge that describes it. Without
+`label` nothing is rendered above the control.
+
+```tsx
+<Textarea
+  name="summary"
+  label="Summary"
+  required
+  labelBadge={{ text: 'mapped', color: 'primary' }}
+  register={register}
+  validationSchema={{ required: 'Summary is required' }}
+/>
+```
+
+The `*` is decorative (`aria-hidden`), so the accessible name stays the label text. `required` does
+not validate: keep the rule in `validationSchema`.
+
 ### Disabled and Read-Only States
 
 Handle different interaction states:
@@ -97,35 +118,23 @@ function TextareaStates() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Disabled textarea */}
-      <div>
-        <label
-          style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-          Disabled Textarea
-        </label>
-        <Textarea
-          name="disabled"
-          placeholder="This textarea is disabled"
-          register={register}
-          disabled={true}
-          rows={4}
-        />
-      </div>
+      <Textarea
+        name="disabled"
+        label="Disabled Textarea"
+        placeholder="This textarea is disabled"
+        register={register}
+        disabled={true}
+        rows={4}
+      />
 
-      {/* Read-only textarea */}
-      <div>
-        <label
-          style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-          Read-Only Textarea
-        </label>
-        <Textarea
-          name="readonly"
-          placeholder="This textarea is read-only"
-          register={register}
-          readOnly={true}
-          rows={4}
-        />
-      </div>
+      <Textarea
+        name="readonly"
+        label="Read-Only Textarea"
+        placeholder="This textarea is read-only"
+        register={register}
+        readOnly={true}
+        rows={4}
+      />
     </div>
   );
 }

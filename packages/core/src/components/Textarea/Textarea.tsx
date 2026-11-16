@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { callAll } from '@ssa-ui-kit/utils';
+import Label, { getLabelBadgeId } from '@components/Label';
 import { TextareaProps } from './types';
 import { TextareaBase } from './TextareaBase';
 
@@ -89,6 +90,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   function TextareaInner(
     {
       name,
+      label,
+      labelBadge,
+      required = false,
       placeholder,
       validationSchema,
       disabled = false,
@@ -116,9 +120,18 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const registerResult = register?.(name, validationSchema);
     const onChange = registerResult?.onChange;
 
-    return (
+    const id = idProp ?? `formElement-${name}`;
+    const badge =
+      label && labelBadge
+        ? { ...labelBadge, id: getLabelBadgeId(id) }
+        : undefined;
+    const describedBy =
+      [rest['aria-describedby'], badge?.id].filter(Boolean).join(' ') ||
+      undefined;
+
+    const control = (
       <TextareaBase
-        id={idProp ?? `formElement-${name}`}
+        id={id}
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readOnly}
@@ -127,11 +140,30 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         onPaste={onPaste}
         title={title}
         status={status}
+        aria-required={required || undefined}
         {...rest}
+        aria-describedby={describedBy}
         {...registerResult}
         onChange={callAll(setCountChar, onChange)}
         ref={useMergeRefs([registerResult?.ref, ref])}
       />
+    );
+
+    if (!label) {
+      return control;
+    }
+
+    return (
+      <>
+        <Label
+          htmlFor={id}
+          disabled={disabled}
+          required={required}
+          badge={badge}>
+          {label}
+        </Label>
+        {control}
+      </>
     );
   },
 );

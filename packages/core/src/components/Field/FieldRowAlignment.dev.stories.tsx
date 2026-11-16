@@ -11,6 +11,7 @@ import {
   FileUpload,
   MultipleDropdown,
   NumberField,
+  Textarea,
   TextField,
   Typeahead,
   TypeaheadOption,
@@ -19,20 +20,21 @@ import {
 type Args = {
   labelled: boolean;
   disabled: boolean;
+  required: boolean;
   showGuides: boolean;
 };
 
 const meta: Meta<Args> = {
   title: 'Dev Playground/Field row alignment',
   parameters: { layout: 'fullscreen', controls: { expanded: true } },
-  args: { labelled: true, disabled: false, showGuides: true },
+  args: { labelled: true, disabled: false, required: false, showGuides: true },
 };
 export default meta;
 
 const LABEL_BLOCK = 24; // 18px line-height + 6px gap
 const CONTROL_HEIGHT = 44;
 
-const Row = ({ labelled, disabled, showGuides }: Args) => {
+const Row = ({ labelled, disabled, required, showGuides }: Args) => {
   const methods = useForm();
   const label = (text: string) => (labelled ? text : undefined);
   const top = labelled ? LABEL_BLOCK : 0;
@@ -82,7 +84,8 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
               width="100%"
               label={label('Dropdown')}
               placeholder="Select"
-              disabled={disabled}>
+              disabled={disabled}
+              required={required}>
               <DropdownOption value="a">Option A</DropdownOption>
             </Dropdown>
           </div>
@@ -91,7 +94,8 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
             <MultipleDropdown
               width="100%"
               labelText={label('MultipleDropdown')}
-              disabled={disabled}>
+              disabled={disabled}
+              required={required}>
               <DropdownOption value="a">Option A</DropdownOption>
             </MultipleDropdown>
           </div>
@@ -101,7 +105,8 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
               width="100%"
               label={label('Typeahead')}
               placeholder="Search"
-              disabled={disabled}>
+              disabled={disabled}
+              required={required}>
               <TypeaheadOption value="a" label="Option A">
                 Option A
               </TypeaheadOption>
@@ -114,6 +119,7 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
               label={label('TextField')}
               placeholder="Text"
               disabled={disabled}
+              required={required}
             />
           </div>
 
@@ -122,6 +128,7 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
               name="numberField"
               label={label('NumberField')}
               disabled={disabled}
+              required={required}
             />
           </div>
 
@@ -130,6 +137,7 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
               name="datePicker"
               label={label('DatePicker')}
               disabled={disabled}
+              required={required}
             />
           </div>
 
@@ -139,6 +147,19 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
               label={label('DateRangePicker')}
               showStatusArea={false}
               disabled={disabled}
+              required={required}
+            />
+          </div>
+
+          <div data-field="Textarea">
+            <Textarea
+              name="textarea"
+              label={label('Textarea')}
+              placeholder="Text"
+              rows={1}
+              register={methods.register}
+              disabled={disabled}
+              required={required}
             />
           </div>
 
@@ -146,6 +167,7 @@ const Row = ({ labelled, disabled, showGuides }: Args) => {
             <FileUpload
               label={label('FileUpload')}
               disabled={disabled}
+              required={required}
               onChange={() => undefined}
             />
           </div>
@@ -169,5 +191,14 @@ export const Unlabelled: Story = {
 /** Disabled state: same geometry, only colours change. */
 export const Disabled: Story = {
   args: { disabled: true },
+  render: (args) => <Row {...args} />,
+};
+
+/**
+ * Required fields: a red `*` after each label. The label block stays 24px,
+ * so the lines still hold.
+ */
+export const Required: Story = {
+  args: { required: true },
   render: (args) => <Row {...args} />,
 };

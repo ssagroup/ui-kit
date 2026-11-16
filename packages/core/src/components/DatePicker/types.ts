@@ -92,6 +92,14 @@ export interface DatePickerProps {
   label?: string;
 
   /**
+   * Marks the field as required: sets **`aria-required`** on the input and,
+   * with a **`label`**, shows a red `*` after the label text. Validation
+   * itself stays with **`validationSchema`**.
+   * @default false
+   */
+  required?: boolean;
+
+  /**
    * Date string format for display, mask, and parsing.
    * @default From **`pickerType`**: `mm/dd/yyyy`, `mm/yyyy`, or `yyyy`
    */

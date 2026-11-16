@@ -272,6 +272,16 @@ Style the column through **`classNames.presets`**:
 />
 ```
 
+### Required
+
+`required` shows a red `*` after the `label` and sets `aria-required` on both inputs. The `*` is
+decorative (`aria-hidden`), so the accessible name stays the label text. `required` does not
+validate: keep the rule in your form logic.
+
+```tsx
+<DateRangePicker name="period" label="Period" required />
+```
+
 ### Disabled State
 
 Disable the date range picker when needed:

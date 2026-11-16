@@ -730,4 +730,36 @@ describe('MultipleDropdown', () => {
       expect(selected).toEqual(selectedItems.map(getListItemValue));
     });
   });
+
+  describe('required and labelBadge', () => {
+    it('marks the toggle [required] and shows a * after labelText', () => {
+      const { getByRole, getByTestId } = setup({
+        labelText: 'Strategy',
+        required: true,
+      });
+
+      expect(getByRole('combobox')).toHaveAttribute('aria-required', 'true');
+      expect(getByRole('combobox')).toHaveAccessibleName('Strategy');
+      expect(getByTestId('label-required-mark')).toBeInTheDocument();
+    });
+
+    it('shows a label badge and describes the toggle with it', () => {
+      const { getByRole, getByText } = setup({
+        labelText: 'Strategy',
+        labelBadge: { text: 'mapped', color: 'primary' },
+      });
+
+      expect(getByText('mapped')).toBeInTheDocument();
+      expect(getByRole('combobox')).toHaveAccessibleDescription('mapped');
+    });
+
+    it('ignores labelBadge without labelText', () => {
+      const { getByRole, queryByText } = setup({
+        labelBadge: { text: 'mapped' },
+      });
+
+      expect(queryByText('mapped')).toBeNull();
+      expect(getByRole('combobox')).not.toHaveAttribute('aria-describedby');
+    });
+  });
 });

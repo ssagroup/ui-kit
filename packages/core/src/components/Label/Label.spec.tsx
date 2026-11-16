@@ -92,3 +92,62 @@ describe('Label badge', () => {
     expect(container.firstElementChild?.tagName).toBe('LABEL');
   });
 });
+
+describe('Label required', () => {
+  it('renders a decorative * after the text, outside the accessible name', () => {
+    render(
+      <>
+        <Label htmlFor="email" required>
+          Email
+        </Label>
+        <input id="email" />
+      </>,
+    );
+
+    const mark = screen.getByTestId('label-required-mark');
+    expect(mark).toHaveTextContent('*');
+    expect(mark).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByText('Email')).toContainElement(mark);
+    expect(screen.getByRole('textbox')).toHaveAccessibleName('Email');
+  });
+
+  it('colours the * with the error palette and a 2px gap', () => {
+    render(<Label required>Email</Label>);
+
+    const mark = screen.getByTestId('label-required-mark');
+    expect(mark).toHaveStyleRule('color', 'rgb(222, 79, 79)');
+    expect(mark).toHaveStyleRule('margin-left', '2px');
+  });
+
+  it('greys the * out with a disabled label', () => {
+    render(
+      <Label required disabled>
+        Email
+      </Label>,
+    );
+
+    expect(screen.getByTestId('label-required-mark')).not.toHaveStyleRule(
+      'color',
+      'rgb(222, 79, 79)',
+    );
+  });
+
+  it('renders no * by default', () => {
+    render(<Label>Email</Label>);
+
+    expect(screen.queryByTestId('label-required-mark')).toBeNull();
+  });
+
+  it('keeps the * inside the label next to a badge', () => {
+    render(
+      <Label htmlFor="email" required badge={{ text: 'mapped' }}>
+        Email
+      </Label>,
+    );
+
+    expect(screen.getByText('Email')).toContainElement(
+      screen.getByTestId('label-required-mark'),
+    );
+    expect(screen.getByText('mapped')).toBeInTheDocument();
+  });
+});

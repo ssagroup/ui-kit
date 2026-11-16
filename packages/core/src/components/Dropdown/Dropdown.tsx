@@ -187,6 +187,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   avatarBorder = false,
   label,
   labelBadge,
+  required = false,
   helperText,
   errors,
   success,
@@ -481,7 +482,11 @@ const Dropdown = <T extends DropdownOptionProps>({
   return (
     <DropdownFieldWrapper {...wrapperCssProps}>
       {label ? (
-        <Label id={labelId} disabled={isDropdownDisabled} badge={badge}>
+        <Label
+          id={labelId}
+          disabled={isDropdownDisabled}
+          required={required}
+          badge={badge}>
           {label}
         </Label>
       ) : null}
@@ -504,6 +509,7 @@ const Dropdown = <T extends DropdownOptionProps>({
             onFocus={setIsFocused.bind(null, true)}
             colors={colors}
             aria-labelledby={labelId}
+            aria-required={required || undefined}
             {...(badge && { 'aria-describedby': badge.id })}
             aria-controls={listId}>
             {toggleContent}

@@ -13,6 +13,7 @@ export const Trigger = () => {
     nameFrom,
     nameTo,
     label,
+    required,
     lastFocusedElement,
     disabled,
     status,
@@ -47,6 +48,7 @@ export const Trigger = () => {
       {label && (
         <C.Field.Label
           htmlFor={lastFocusedElement === 'from' ? nameFrom : nameTo}
+          required={required}
           className={classNames?.label}>
           {label}
         </C.Field.Label>

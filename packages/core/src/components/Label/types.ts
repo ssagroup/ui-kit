@@ -40,6 +40,13 @@ export interface LabelProps extends CommonProps {
   children: React.ReactNode;
   /** Status badge shown to the right of the label text */
   badge?: LabelBadge;
+  /**
+   * Marks the field as required with a red `*` after the label text. The
+   * marker is decorative (`aria-hidden`) and is not part of the accessible
+   * name: the control carries the semantics (`aria-required`), which the
+   * kit's fields with a `required` prop set for you.
+   */
+  required?: boolean;
   /** Renders the label in its muted, disabled state. */
   disabled?: boolean;
   /**

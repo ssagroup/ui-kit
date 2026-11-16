@@ -78,6 +78,22 @@ Control the validation state of the field to show appropriate styling and messag
 </Field.Root>
 ```
 
+### Required
+
+`Field.Label` takes `required`, which shows a red, `aria-hidden` `*` after the text. Set
+`aria-required` on the control yourself:
+
+```tsx
+<Field.Root>
+  <Field.Label htmlFor="email" required>
+    Email
+  </Field.Label>
+  <Field.Control>
+    <Input name="email" inputProps={{ 'aria-required': true }} />
+  </Field.Control>
+</Field.Root>
+```
+
 ### Disabled State
 
 Disable the entire field, which affects styling and behavior of all child components:

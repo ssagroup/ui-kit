@@ -21,6 +21,7 @@ export const TriggerInput = ({
     inputToRef,
     inputProps,
     disabled,
+    required,
     setLastFocusedElement,
     classNames,
     onBlur: handleBlur,
@@ -167,6 +168,7 @@ export const TriggerInput = ({
         id: inputProps?.inputProps?.id || currentName,
         'data-testid': `daterangepicker-input-${datepickerType}`,
         autoComplete: 'off',
+        'aria-required': required || undefined,
         className: [
           css`
             border: none !important;

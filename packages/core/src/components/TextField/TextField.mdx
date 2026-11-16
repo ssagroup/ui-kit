@@ -289,6 +289,21 @@ function FieldsWithActions() {
 }
 ```
 
+### Required
+
+`required` shows a red `*` after the label and sets `aria-required` on the input (or the textarea
+with `multirow`). The `*` is decorative (`aria-hidden`), so the accessible name stays the label text. `required` does not validate: keep the rule in `validationSchema`.
+
+```tsx
+<TextField
+  name="email"
+  label="Email"
+  required
+  register={register}
+  validationSchema={{ required: 'Email is required' }}
+/>
+```
+
 ### Disabled States
 
 Handle disabled form fields appropriately:

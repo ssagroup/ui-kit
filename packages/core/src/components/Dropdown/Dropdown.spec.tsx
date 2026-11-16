@@ -1075,4 +1075,21 @@ describe('Dropdown', () => {
       expect(optionNames(getByRole('listbox'))).toEqual(['Carrot']);
     });
   });
+
+  it('marks the toggle [required] with aria-required and the label with a *', () => {
+    const { getByRole, getByTestId } = setup({
+      label: 'Channel',
+      required: true,
+    });
+
+    expect(getByRole('combobox')).toHaveAttribute('aria-required', 'true');
+    expect(getByRole('combobox')).toHaveAccessibleName('Channel');
+    expect(getByTestId('label-required-mark')).toBeInTheDocument();
+  });
+
+  it('leaves aria-required off by default', () => {
+    const { getByRole } = setup({ label: 'Channel' });
+
+    expect(getByRole('combobox')).not.toHaveAttribute('aria-required');
+  });
 });

@@ -1,4 +1,5 @@
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
+import { LabelBadge } from '@components/Label/types';
 
 /**
  * Props for the MultipleDropdown component
@@ -93,6 +94,20 @@ export type DropdownProps<P extends DropdownOptionProps> = {
    * with `label`, which only affects the text inside the button.
    */
   labelText?: string;
+
+  /**
+   * Status badge to the right of `labelText`, e.g.
+   * `{ text: 'mapped', color: 'primary' }`. Announced as the toggle's
+   * description. Needs `labelText`.
+   */
+  labelBadge?: LabelBadge;
+
+  /**
+   * Marks the field as required: sets `aria-required` on the toggle and,
+   * with a `labelText`, shows a red `*` after the label text. It does not validate: a selection is still up to the consumer.
+   * @default false
+   */
+  required?: boolean;
 
   /**
    * Callback fired when an option is toggled

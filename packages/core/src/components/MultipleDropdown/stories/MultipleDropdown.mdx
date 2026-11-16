@@ -140,6 +140,21 @@ value (`label="Strategy"` renders "Strategy: Value"), and it renders nothing out
 `labelText` when you want a label like the other form fields. The two can be combined, and without
 `label` the toggle shows just the value, with no leading colon.
 
+`required` shows a red `*` after `labelText` and sets `aria-required` on the toggle, and
+`labelBadge` adds a status badge next to it that describes the toggle, as on `Dropdown`. Both need
+`labelText`. The `*` is decorative (`aria-hidden`), so the accessible name stays the label text. `required` does not validate: keep the rule in your form logic.
+
+```tsx
+<MultipleDropdown
+  labelText="Strategy"
+  required
+  labelBadge={{ text: 'mapped', color: 'primary' }}
+  selectedItems={selectedItems}
+  onChange={handleChange}>
+  {/* options */}
+</MultipleDropdown>
+```
+
 ### Width
 
 By default the MultipleDropdown sizes itself to its content. Use the `width` prop for an explicit

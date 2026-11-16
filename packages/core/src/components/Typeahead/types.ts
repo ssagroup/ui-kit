@@ -172,6 +172,13 @@ export interface TypeaheadProps {
   labelBadge?: LabelBadge;
 
   /**
+   * Marks the field as required: sets `aria-required` on the input and,
+   * with a `label`, shows a red `*` after the label text. Validation itself stays with `validationSchema`.
+   * @default false
+   */
+  required?: boolean;
+
+  /**
    * Helper text displayed below the input
    */
   helperText?: string;
