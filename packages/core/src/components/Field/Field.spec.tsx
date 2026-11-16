@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Field } from './';
 
 describe('Field', () => {
-  it('Field.Control uses the shared control geometry', () => {
+  it('Field.Control keeps its 44px minimum height and 16px radius', () => {
     const { getByTestId } = render(
       <Field.Root>
         <Field.Control data-testid="control">
@@ -13,12 +13,11 @@ describe('Field', () => {
       </Field.Root>,
     );
 
-    // 44px outer height with the border inside it, and the same 12px radius
-    // as Input, Dropdown and the other fields it sits beside in a row.
+    // The 12px radius and explicit border-box sizing are held back for the next major.
     const control = getByTestId('control');
     expect(control).toHaveStyleRule('min-height', '44px');
-    expect(control).toHaveStyleRule('box-sizing', 'border-box');
-    expect(control).toHaveStyleRule('border-radius', '12px');
+    expect(control).not.toHaveStyleRule('box-sizing', 'border-box');
+    expect(control).toHaveStyleRule('border-radius', '16px');
   });
 
   it('Render with label and helper text', () => {

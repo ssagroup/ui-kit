@@ -1093,11 +1093,13 @@ describe('Dropdown', () => {
     expect(getByRole('combobox')).not.toHaveAttribute('aria-required');
   });
 
-  it('top-aligns the labelled wrapper, so a block parent adds no line-box offset', () => {
+  // Baseline-aligned, as before 3.27.2: top-aligning it moves labelled
+  // Dropdowns in block parents, so that is held back for the next major.
+  it('keeps the labelled wrapper on the default baseline', () => {
     const { getByText } = setup({ label: 'Channel' });
 
     const wrapper = getByText('Channel').parentElement as HTMLElement;
     expect(wrapper).toHaveStyleRule('display', 'inline-flex');
-    expect(wrapper).toHaveStyleRule('vertical-align', 'top');
+    expect(wrapper).not.toHaveStyleRule('vertical-align', 'top');
   });
 });

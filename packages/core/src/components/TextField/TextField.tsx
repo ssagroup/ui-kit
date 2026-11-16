@@ -121,18 +121,16 @@ const TextField = ({
 
   return (
     <>
-      {/* Without a label nothing is rendered: an empty <label> still keeps its
-          6px bottom margin and would push the control below the fields next
-          to it. */}
-      {label && (
-        <Label
-          htmlFor={controlId}
-          disabled={disabled}
-          required={required}
-          badge={badge}>
-          {label}
-        </Label>
-      )}
+      {/* Rendered even without `label`: the empty <label> keeps its 6px bottom
+          margin, which consumers' layouts rely on. Dropping it shifts unlabelled
+          fields up 6px, so that change is held back for the next major. */}
+      <Label
+        htmlFor={controlId}
+        disabled={disabled}
+        required={required}
+        badge={badge}>
+        {label}
+      </Label>
 
       {multirow ? (
         <Textarea

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import {
-  FIELD_CONTROL_BOX_SIZING,
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
 } from '@styles/fieldControl';
@@ -19,7 +18,6 @@ export const InputBase = styled.input<{ showBorders: boolean }>`
   color: ${({ theme }) => theme.colors.greyDarker};
 
   width: 100%;
-  box-sizing: ${FIELD_CONTROL_BOX_SIZING};
   height: ${FIELD_CONTROL_HEIGHT}px;
   padding: 14px;
 

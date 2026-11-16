@@ -102,11 +102,13 @@ describe('DateRangePicker', () => {
       expect(root).not.toHaveClass('my-control');
       expect(control).not.toBeNull();
       // It is the Field.Control: the one carrying the border and the radius.
-      expect(control).toHaveStyleRule('border-radius', '12px');
+      // 16px until the 12px field radius ships in the next major.
+      expect(control).toHaveStyleRule('border-radius', '16px');
       expect(control).toHaveStyleRule('min-height', '44px');
     });
 
-    it('should not add vertical padding inside the control, so it stays 44px', () => {
+    // Keeps the pre-3.27.2 46px trigger; the 44px trigger is held back for the next major.
+    it('should keep its 14px padding on every side', () => {
       const { getByTestId } = setup({
         classNames: { trigger: { controlsWrapper: 'my-wrapper' } },
       });
@@ -116,7 +118,7 @@ describe('DateRangePicker', () => {
           '.my-wrapper',
         );
 
-      expect(wrapper).toHaveStyleRule('padding', '0 14px');
+      expect(wrapper).toHaveStyleRule('padding', '14px');
     });
   });
 
