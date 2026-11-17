@@ -6,19 +6,22 @@ import { defaultBoardArr, linkBoardArr } from './helpers';
 
 describe('TradingScoreboard', () => {
   it('Renders all items', () => {
-    const { getAllByRole, getByRole } = render(
+    const { getAllByRole } = render(
       <TradingScoreboard
         itemsPerRow={5}
         items={defaultBoardArr}
         onClick={(item) => item}
       />,
     );
+    // Query once and check names by index: getByRole({ name }) in a loop
+    // recomputes every button's accessible name per item, which is slow
+    // enough in jsdom to time out on CI.
     const itemsEls = getAllByRole('button');
     expect(itemsEls.length).toBe(defaultBoardArr.length);
 
-    for (const item of defaultBoardArr) {
-      getByRole('button', { name: new RegExp(item.title, 'i') });
-    }
+    defaultBoardArr.forEach((item, i) => {
+      expect(itemsEls[i]).toHaveAccessibleName(new RegExp(item.title, 'i'));
+    });
   });
 
   it('Renders with Render Prop', () => {
@@ -48,7 +51,7 @@ describe('TradingScoreboard', () => {
     const user = userEvent.setup();
     const mockOnClick = jest.fn();
 
-    const { getByRole } = render(
+    const { getAllByRole } = render(
       <TradingScoreboard
         itemsPerRow={5}
         items={defaultBoardArr}
@@ -56,19 +59,20 @@ describe('TradingScoreboard', () => {
       />,
     );
 
-    for (const item of defaultBoardArr) {
-      const buttonEl = getByRole('button', {
-        name: new RegExp(item.title, 'i'),
-      });
-      await user.click(buttonEl);
-      expect(mockOnClick).toHaveBeenCalledWith(item);
+    const itemsEls = getAllByRole('button');
+    for (let i = 0; i < defaultBoardArr.length; i++) {
+      expect(itemsEls[i]).toHaveAccessibleName(
+        new RegExp(defaultBoardArr[i].title, 'i'),
+      );
+      await user.click(itemsEls[i]);
+      expect(mockOnClick).toHaveBeenCalledWith(defaultBoardArr[i]);
     }
 
     expect(mockOnClick).toBeCalledTimes(defaultBoardArr.length);
   });
 
   it('Renders with link prop', () => {
-    const { getByRole } = render(
+    const { getAllByRole } = render(
       <MemoryRouter>
         <Routes>
           <Route
@@ -79,9 +83,10 @@ describe('TradingScoreboard', () => {
       </MemoryRouter>,
     );
 
-    for (const item of linkBoardArr) {
-      getByRole('link', { name: new RegExp(item.title, 'i') });
-    }
+    const linkEls = getAllByRole('link');
+    linkBoardArr.forEach((item, i) => {
+      expect(linkEls[i]).toHaveAccessibleName(new RegExp(item.title, 'i'));
+    });
   });
 
   it('Calls onClick handlers with render prop when clicked', async () => {
