@@ -11,6 +11,7 @@ import {
   FileRejectionReason,
   FileUploadProgress,
 } from './types';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import * as S from './styles';
 
 const normalizeValue = (value?: File | File[]): File[] => {
@@ -127,6 +128,7 @@ const FileUpload = ({
   onFileRejected,
 }: FileUploadProps) => {
   const theme = useTheme();
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File[]>(normalizeValue(value));
   const [isDragOver, setIsDragOver] = useState(false);
@@ -306,7 +308,7 @@ const FileUpload = ({
       ) : (
         <div
           css={[
-            S.inputRow(theme),
+            S.inputRow(theme, fieldGeometryV2),
             hasError && S.inputRowError(theme),
             disabled && S.inputRowDisabled(theme),
           ]}>

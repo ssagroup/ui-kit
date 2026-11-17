@@ -5,7 +5,10 @@ import {
   FIELD_CONTROL_BORDER_WIDTH,
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
+  FieldGeometryProps,
+  fieldGeometryBoxSizing,
 } from '@styles/fieldControl';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import { DropdownToggleProps, MultipleStylesProps } from './types';
 
 /** Border colors per status, mirroring Input's basic/error/success maps */
@@ -81,21 +84,31 @@ const singleDropdownStyles = ({
   `;
 };
 
-const multipleStyles = ({ theme, isOpen }: MultipleStylesProps) => {
+const multipleStyles = ({
+  theme,
+  isOpen,
+  fieldGeometryV2,
+}: MultipleStylesProps & FieldGeometryProps) => {
   const borderColor = isOpen ? theme.palette.primary.main : theme.colors.grey;
 
-  /* Own 40px height, padding and 250px cap; matching the 44px fields is held
-     back for the next major. */
+  /* Own 40px height, padding and 250px cap. Under fieldGeometryV2 these come
+     from DropdownToggleBase instead, so it matches the 44px fields. */
+  const ownGeometry = fieldGeometryV2
+    ? ''
+    : css`
+        height: 40px;
+        padding: 11px 15px 9px 10px;
+        border-radius: 12px;
+        max-width: 250px;
+      `;
+
   return css`
-    height: 40px;
-    padding: 11px 15px 9px 10px;
+    ${ownGeometry}
     font-size: 14px;
     font-weight: 500;
     color: ${theme.colors.greyDarker};
     border: ${FIELD_CONTROL_BORDER_WIDTH}px solid ${borderColor};
-    border-radius: 12px;
     background: ${theme.colors.white};
-    max-width: 250px;
 
     svg path {
       stroke: ${theme.colors.greyDarker};
@@ -128,7 +141,8 @@ export const DropdownToggleBase = styled.button<
   Pick<
     DropdownToggleProps,
     'colors' | 'isOpen' | 'disabled' | 'isMultiple' | 'selectedCount' | 'status'
-  >
+  > &
+    FieldGeometryProps
 >`
   display: flex;
   flex-flow: row nowrap;
@@ -143,6 +157,7 @@ export const DropdownToggleBase = styled.button<
   /* A <button> keeps shrink-to-fit sizing even as a block-level flex container,
      so width: auto alone would let a long label grow it past its container. */
   max-width: 100%;
+  ${fieldGeometryBoxSizing}
   height: ${FIELD_CONTROL_HEIGHT}px;
   padding: 0 14px;
 
@@ -162,11 +177,12 @@ export const DropdownToggleBase = styled.button<
     !isMultiple && singleDropdownStyles({ theme, isOpen, disabled, status })}
 
   /* Multiple dropdown: overrides above and adds its own border/background */
-  ${({ isMultiple, isOpen, theme }) =>
+  ${({ isMultiple, isOpen, theme, fieldGeometryV2 }) =>
     isMultiple &&
     multipleStyles({
       theme,
       isOpen,
+      fieldGeometryV2,
     })}
 `;
 
@@ -186,42 +202,47 @@ const DropdownToggle = ({
   status,
   className,
   ...restProps
-}: DropdownToggleProps) => (
-  <DropdownToggleBase
-    {...restProps}
-    className={className}
-    colors={colors}
-    isOpen={isOpen}
-    type="button"
-    isMultiple={isMultiple}
-    selectedCount={selectedCount}
-    status={status}
-    onClick={(e) => {
-      // Safari doesn't support focus on buttons 🤔
-      (e.currentTarget as HTMLButtonElement).focus();
-      if (onClick) {
-        onClick(e);
-      }
-    }}
-    onFocus={onFocus}
-    disabled={disabled}
-    role="combobox"
-    aria-labelledby={resolveAriaProp(
-      'DropdownToggle',
-      'aria-labelledby',
-      ariaLabelledbyNative,
-      ariaLabelledby,
-    )}
-    aria-controls={resolveAriaProp(
-      'DropdownToggle',
-      'aria-controls',
-      ariaControlsNative,
-      ariaControls,
-    )}
-    aria-expanded={isOpen}
-    aria-haspopup="listbox">
-    {children}
-  </DropdownToggleBase>
-);
+}: DropdownToggleProps) => {
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
+
+  return (
+    <DropdownToggleBase
+      {...restProps}
+      fieldGeometryV2={fieldGeometryV2}
+      className={className}
+      colors={colors}
+      isOpen={isOpen}
+      type="button"
+      isMultiple={isMultiple}
+      selectedCount={selectedCount}
+      status={status}
+      onClick={(e) => {
+        // Safari doesn't support focus on buttons 🤔
+        (e.currentTarget as HTMLButtonElement).focus();
+        if (onClick) {
+          onClick(e);
+        }
+      }}
+      onFocus={onFocus}
+      disabled={disabled}
+      role="combobox"
+      aria-labelledby={resolveAriaProp(
+        'DropdownToggle',
+        'aria-labelledby',
+        ariaLabelledbyNative,
+        ariaLabelledby,
+      )}
+      aria-controls={resolveAriaProp(
+        'DropdownToggle',
+        'aria-controls',
+        ariaControlsNative,
+        ariaControls,
+      )}
+      aria-expanded={isOpen}
+      aria-haspopup="listbox">
+      {children}
+    </DropdownToggleBase>
+  );
+};
 
 export default DropdownToggle;

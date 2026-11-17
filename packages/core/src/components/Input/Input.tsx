@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import FormHelperText from '@components/FormHelperText';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import { InputBase } from './InputBase';
 import { InputGroup } from './InputGroup';
 import { InputProps, InputStatusColors } from './types';
@@ -59,6 +60,8 @@ const InputInner = (
     onKeyUp?.(e);
   };
 
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
+
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     registerResult?.onBlur(e);
     inputProps.onBlur?.(e);
@@ -72,6 +75,7 @@ const InputInner = (
         disabled={disabled}>
         {startElement ? <div css={S.startElement}>{startElement}</div> : null}
         <InputBase
+          fieldGeometryV2={fieldGeometryV2}
           type={type}
           id={`formElement-${name}`}
           showBorders={showBorders}

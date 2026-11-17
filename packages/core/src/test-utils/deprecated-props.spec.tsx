@@ -59,7 +59,10 @@ import { resetDeprecationWarnings } from '@utils/deprecation';
 const deprecationWarnings = (spy: jest.SpyInstance): string[] =>
   spy.mock.calls
     .map((call) => String(call[0]))
-    .filter((message) => message.startsWith('[ssa-ui-kit]'));
+    .filter((message) => message.startsWith('[ssa-ui-kit]'))
+    // Opt-in flag notices ("fieldGeometryV2 is off") share the prefix but are
+    // not deprecations.
+    .filter((message) => !message.startsWith('[ssa-ui-kit] Feature flag'));
 
 /**
  * `isDisabled` → `disabled` (issue #656, Phase 2, chunk 1 finding 1).

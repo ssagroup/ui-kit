@@ -3,6 +3,7 @@ import Label, { getLabelBadgeId } from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 import Input from '@components/Input';
 import Textarea from '@components/Textarea';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import { TextFieldProps } from './types';
 
 /**
@@ -95,6 +96,7 @@ const TextField = ({
   ...props
 }: TextFieldProps) => {
   const [countChar, setCountChar] = React.useState(0);
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
 
   const status = success ? 'success' : errors ? 'error' : 'basic';
 
@@ -121,16 +123,19 @@ const TextField = ({
 
   return (
     <>
-      {/* Rendered even without `label`: the empty <label> keeps its 6px bottom
-          margin, which consumers' layouts rely on. Dropping it shifts unlabelled
-          fields up 6px, so that change is held back for the next major. */}
-      <Label
-        htmlFor={controlId}
-        disabled={disabled}
-        required={required}
-        badge={badge}>
-        {label}
-      </Label>
+      {/* Without fieldGeometryV2 the empty <label> is rendered even without
+          `label`: its 6px bottom margin is part of the layout consumers built
+          on. Under the flag nothing is rendered, so unlabelled fields line up
+          with the fields next to them. */}
+      {(label || !fieldGeometryV2) && (
+        <Label
+          htmlFor={controlId}
+          disabled={disabled}
+          required={required}
+          badge={badge}>
+          {label}
+        </Label>
+      )}
 
       {multirow ? (
         <Textarea

@@ -1,0 +1,106 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guides/Feature Flags" />
+
+# Feature Flags
+
+Breaking changes ship as **opt-in flags**. The new behaviour lands in a minor
+release switched off, so upgrading the kit never changes an app by itself. Each
+app turns a flag on when it is ready, one page or form at a time if it likes.
+
+## Opting in
+
+```tsx
+import { FeatureFlag, FeatureFlagsProvider } from '@ssa-ui-kit/core';
+
+<FeatureFlagsProvider flags={{ [FeatureFlag.fieldGeometryV2]: true }}>
+  <EditPageLayout />
+</FeatureFlagsProvider>;
+```
+
+`FeatureFlag` lists every flag name, so you can import the key rather than
+type it by hand. Plain `{ fieldGeometryV2: true }` works too and is
+type-checked the same way.
+
+- **Providers nest.** An inner provider overrides only the flags it names, so
+  you can enable a flag app-wide and switch it back off for one legacy screen,
+  or the other way round.
+- **Portals follow the React tree.** Popovers, dropdown lists and modals use
+  the flags of the component that opened them.
+- **The provider is separate from the theme.** Theme is visual configuration;
+  flags are behavioural opt-ins with an expiry date. Keeping them apart means a
+  theme override can never drop a flag, and flags can be scoped without
+  re-creating the theme.
+
+## Reading flags in your app
+
+Wrappers around kit components sometimes carry fixes that a flag makes
+unnecessary. Read the same flag so the fix goes away exactly where the new
+behaviour is on:
+
+```tsx
+import { useFeatureFlags, useFeatureFlag } from '@ssa-ui-kit/core';
+
+// All flags at once
+const { fieldGeometryV2 } = useFeatureFlags();
+
+// Or just one
+const geometryV2 = useFeatureFlag('fieldGeometryV2');
+```
+
+Both return the resolved value: whatever the nearest provider set, otherwise
+the kit default. Only the flags you actually read count towards the
+"becomes the default" warning.
+
+## Lifecycle
+
+| Stage           | Kit release       | Default | What apps do                           |
+| --------------- | ----------------- | ------- | -------------------------------------- |
+| Introduced      | minor (e.g. 3.x)  | off     | Opt in screen by screen                |
+| Default flipped | next major (4.0)  | on      | Pass `false` to keep the old behaviour |
+| Removed         | major after (5.0) | always  | Delete the flag from the provider      |
+
+While a flag is off by default, the kit logs a **dev-only warning** the first
+time a component reads it without the app having chosen. Pass `false` to
+acknowledge it and silence the warning. Passing a flag the kit no longer knows
+(for example after it was removed) also warns, so stale flags get cleaned up.
+
+## Current flags
+
+| Flag              | Since  | Default in | Issue |
+| ----------------- | ------ | ---------- | ----- |
+| `fieldGeometryV2` | 3.28.0 | 4.0.0      | #703  |
+
+### fieldGeometryV2
+
+Form fields share one geometry so fields of different kinds line up in a row.
+With the flag on:
+
+- Bordered controls (Input, Field.Control, Dropdown and MultipleDropdown
+  toggles, Typeahead, FileUpload) use `box-sizing: border-box`, so the 1px
+  border sits inside the 44px.
+- Field.Control's radius moves from 16px to the shared 12px.
+- MultipleDropdown's toggle grows from 40px to 44px and loses its 250px
+  `max-width` cap, matching Dropdown.
+- DateRangePicker's trigger drops its vertical padding (46px → 44px), and the
+  FileUpload row does too.
+- Label, and Dropdown's labelled wrapper, are top-aligned, so a plain block
+  parent no longer pushes them ~2px down.
+- TextField without a `label` renders no empty `<label>`, so the 6px gap above
+  unlabelled fields goes away.
+
+Check any wrapper that compensated for the old geometry (extra margins, fixed
+heights, `max-width` overrides on MultipleDropdown) and drop the fix under the
+same flag.
+
+## Adding a flag (kit contributors)
+
+1. Add an entry to `featureFlagRegistry` in
+   `src/contexts/FeatureFlags/registry.ts` with `default: false`.
+2. Branch on `useFeatureFlag('name')` and leave the old path untouched.
+3. Test both paths, and add a story with `parameters: { featureFlags: { name: true } }`.
+4. List the flag in **Current flags** above.
+
+Every flag gets a toolbar toggle in Storybook (flag icon) automatically, with
+`default`, `on` and `off` options. `on` and `off` override the story's own
+`parameters.featureFlags`; `default` hands control back to the story.

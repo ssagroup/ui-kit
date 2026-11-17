@@ -11,19 +11,25 @@ import styled from '@emotion/styled';
 import {
   FIELD_CONTROL_BORDER_WIDTH,
   FIELD_CONTROL_HEIGHT,
+  FIELD_CONTROL_RADIUS,
+  FieldGeometryProps,
+  fieldGeometryBoxSizing,
 } from '@styles/fieldControl';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 
 import { FieldContextValue, useFieldContext } from './FieldProvider';
 
-const FieldControlBase = styled.div<FieldContextValue>`
+const FieldControlBase = styled.div<FieldContextValue & FieldGeometryProps>`
   display: flex;
   align-items: center;
 
+  ${fieldGeometryBoxSizing}
   min-height: ${FIELD_CONTROL_HEIGHT}px;
   height: auto;
 
-  /* 16px, not FIELD_CONTROL_RADIUS: moving it to 12px is held back for the next major. */
-  border-radius: 16px;
+  /* 16px until fieldGeometryV2 moves it to the shared 12px. */
+  border-radius: ${({ fieldGeometryV2 }) =>
+    fieldGeometryV2 ? FIELD_CONTROL_RADIUS : 16}px;
   overflow: hidden;
   border: ${FIELD_CONTROL_BORDER_WIDTH}px solid
     ${({ status, theme }) => {
@@ -144,7 +150,8 @@ const isForwardRefComponent = (component: React.ReactElement): boolean => {
 export const FieldControl = React.forwardRef<HTMLDivElement, FieldControlProps>(
   function FieldControl({ children, controlRef, ...props }, ref) {
     const ctx = useFieldContext();
-    const baseProps = { ...props, ...ctx };
+    const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
+    const baseProps = { ...props, ...ctx, fieldGeometryV2 };
 
     const internalRef = useRef<HTMLElement>(null);
 

@@ -4,6 +4,7 @@ import { FIELD_LABEL_GAP, FIELD_LABEL_LINE_HEIGHT } from '@styles/fieldControl';
 
 import { Chip } from '@components/Chip';
 import { resolveDisabled } from '@utils/deprecation';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import { LabelProps } from './types';
 import { LabelBase, RequiredMark } from './LabelBase';
 
@@ -17,6 +18,9 @@ import { LabelBase, RequiredMark } from './LabelBase';
 const row = css`
   display: inline-flex;
   vertical-align: baseline;
+  &[data-field-geometry='v2'] {
+    vertical-align: top;
+  }
   align-items: center;
   gap: 8px;
   height: ${FIELD_LABEL_LINE_HEIGHT}px;
@@ -61,8 +65,10 @@ const Label = ({
 }: LabelProps) => {
   const generatedId = useId();
   const isLabelDisabled = resolveDisabled('Label', disabled, isDisabled);
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
   const label = (
     <LabelBase
+      fieldGeometryV2={fieldGeometryV2}
       htmlFor={htmlFor}
       id={id}
       isDisabled={isLabelDisabled}
@@ -86,7 +92,7 @@ const Label = ({
   }
 
   return (
-    <div css={row}>
+    <div css={row} data-field-geometry={fieldGeometryV2 ? 'v2' : undefined}>
       {label}
       <Chip
         id={

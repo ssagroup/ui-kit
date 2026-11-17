@@ -6,6 +6,7 @@ import { ClearButton } from '@components/DatePicker/components/ClearButton';
 import { TriggerInput } from './TriggerInput';
 import { TriggerStatusArea } from './TriggerStatusArea';
 import { useDateRangePickerContext } from '../useDateRangePickerContext';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import * as S from '../styles';
 
 export const Trigger = () => {
@@ -27,6 +28,7 @@ export const Trigger = () => {
     setIsOpen,
     handleToggleOpen,
   } = useDateRangePickerContext();
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
 
   const theme = useTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -56,6 +58,7 @@ export const Trigger = () => {
       <C.Field.Control className={classNames?.trigger?.control}>
         <S.TriggerWrapper
           ref={wrapperRef}
+          fieldGeometryV2={fieldGeometryV2}
           className={classNames?.trigger?.controlsWrapper}>
           <TriggerInput
             datepickerType="from"

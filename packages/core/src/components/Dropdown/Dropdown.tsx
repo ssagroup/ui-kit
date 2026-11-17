@@ -29,6 +29,8 @@ import Label from '@components/Label';
 import FormHelperText from '@components/FormHelperText';
 import DropdownContext from '@components/Dropdown/Dropdown.context';
 import { resolveDisabled } from '@utils/deprecation';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
+import { FieldGeometryProps } from '@styles/fieldControl';
 import { DropdownOptionProps } from '@components/DropdownOptions/types';
 
 import { DropdownContextType, DropdownPositions, DropdownProps } from './types';
@@ -40,8 +42,14 @@ import { DropdownContextType, DropdownPositions, DropdownProps } from './types';
  * of ellipsising. `max-width: 100%` gives each level a definite width to
  * resolve against, which is what actually lets the label clip.
  */
-const DropdownFieldWrapper = styled.div`
+const DropdownFieldWrapper = styled.div<FieldGeometryProps>`
   display: inline-flex;
+
+  /* Under fieldGeometryV2, top-aligned like Label: in a block parent the
+     default baseline puts the wrapper in a line box about 2px below the fields
+     next to it. */
+  vertical-align: ${({ fieldGeometryV2 }) =>
+    fieldGeometryV2 ? 'top' : 'baseline'};
   flex-direction: column;
   align-items: flex-start;
   max-width: 100%;
@@ -199,6 +207,7 @@ const Dropdown = <T extends DropdownOptionProps>({
   dropdownProps: componentProps,
 }: DropdownProps<T>) => {
   const isDropdownDisabled = resolveDisabled('Dropdown', disabled, isDisabled);
+  const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
   const status = success ? 'success' : errors ? 'error' : 'basic';
   const { dropdownPosition = DropdownPositions.auto } = componentProps ?? {};
   // `width` has no default: without it every level keeps shrink-wrapping, which
@@ -480,7 +489,9 @@ const Dropdown = <T extends DropdownOptionProps>({
   );
 
   return (
-    <DropdownFieldWrapper {...wrapperCssProps}>
+    <DropdownFieldWrapper
+      {...wrapperCssProps}
+      fieldGeometryV2={fieldGeometryV2}>
       {label ? (
         <Label
           id={labelId}

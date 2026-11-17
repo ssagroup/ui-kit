@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 import Wrapper from '@components/Wrapper';
+import {
+  FieldGeometryProps,
+  withoutFieldGeometryProp,
+} from '@styles/fieldControl';
 
 /*
  * The calendar cells are identical to the single-date picker's, so they live in
@@ -16,8 +20,16 @@ export {
   type RangeEdge,
 } from '@components/DatePicker/styles';
 
-export const TriggerWrapper = styled(Wrapper)`
-  padding: 14px;
+/*
+ * Under fieldGeometryV2, horizontal padding only: the bordered box is
+ * Field.Control, which already sets the shared 44px height and centres its
+ * content, so vertical padding would stack on top and make the trigger taller
+ * than the other fields. Without the flag it keeps its pre-3.27.2 46px.
+ */
+export const TriggerWrapper = styled(Wrapper, {
+  shouldForwardProp: withoutFieldGeometryProp,
+})<FieldGeometryProps>`
+  padding: ${({ fieldGeometryV2 }) => (fieldGeometryV2 ? '0 14px' : '14px')};
   cursor: default;
 `;
 

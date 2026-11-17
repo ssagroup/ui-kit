@@ -8,6 +8,9 @@ import {
   FIELD_CONTROL_BORDER_WIDTH,
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
+  FieldGeometryProps,
+  fieldGeometryBoxSizing,
+  withoutFieldGeometryProp,
 } from '@styles/fieldControl';
 import { useTypeahead } from './useTypeahead';
 import { TypeaheadItemProps } from './types';
@@ -231,11 +234,16 @@ export const TypeaheadInputsGroupWrapper = styled(Wrapper)<{
   flex-direction: column !important;
 `;
 
-export const TypeaheadTrigger = styled(PopoverTrigger)<{
-  isOpen: boolean;
-  status: ReturnType<typeof useTypeahead>['status'];
-}>`
+export const TypeaheadTrigger = styled(PopoverTrigger, {
+  shouldForwardProp: withoutFieldGeometryProp,
+})<
+  {
+    isOpen: boolean;
+    status: ReturnType<typeof useTypeahead>['status'];
+  } & FieldGeometryProps
+>`
   position: relative;
+  ${fieldGeometryBoxSizing}
   border-radius: ${FIELD_CONTROL_RADIUS}px;
   border: ${FIELD_CONTROL_BORDER_WIDTH}px solid
     ${({ status, theme }) =>

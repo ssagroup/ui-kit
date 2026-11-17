@@ -3,6 +3,7 @@ import {
   FIELD_CONTROL_BORDER_WIDTH,
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
+  fieldGeometryBoxSizing,
 } from '@styles/fieldControl';
 
 export const wrapper = css`
@@ -17,14 +18,20 @@ export const hiddenInput = css`
 
 // ─── Input row (button + filename) ───────────────────────────────────────────
 
-export const inputRow = (theme: Theme) => css`
+/*
+ * Under fieldGeometryV2 there is no vertical padding: the 36px button is
+ * centred by align-items, and padding would push the border-box row past 44px.
+ * Without the flag the row keeps its pre-3.27.2 46px.
+ */
+export const inputRow = (theme: Theme, fieldGeometryV2: boolean) => css`
   display: flex;
   align-items: center;
   gap: 8px;
 
   width: 100%;
+  ${fieldGeometryBoxSizing({ fieldGeometryV2 })}
   min-height: ${FIELD_CONTROL_HEIGHT}px;
-  padding: 4px 14px 4px 4px;
+  padding: ${fieldGeometryV2 ? '0 14px 0 3px' : '4px 14px 4px 4px'};
 
   background: ${theme.colors.white};
   border: ${FIELD_CONTROL_BORDER_WIDTH}px solid ${theme.colors.grey};

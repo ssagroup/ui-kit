@@ -2,9 +2,13 @@ import styled from '@emotion/styled';
 import {
   FIELD_CONTROL_HEIGHT,
   FIELD_CONTROL_RADIUS,
+  FieldGeometryProps,
+  fieldGeometryBoxSizing,
 } from '@styles/fieldControl';
 
-export const InputBase = styled.input<{ showBorders: boolean }>`
+export const InputBase = styled.input<
+  { showBorders: boolean } & FieldGeometryProps
+>`
   flex: 1;
 
   background: ${({ theme }) => theme.colors.white};
@@ -18,6 +22,7 @@ export const InputBase = styled.input<{ showBorders: boolean }>`
   color: ${({ theme }) => theme.colors.greyDarker};
 
   width: 100%;
+  ${fieldGeometryBoxSizing}
   height: ${FIELD_CONTROL_HEIGHT}px;
   padding: 14px;
 

@@ -28,7 +28,13 @@ type Args = {
 
 const meta: Meta<Args> = {
   title: 'Dev Playground/Field row alignment',
-  parameters: { layout: 'fullscreen', controls: { expanded: true } },
+  // The #703 alignment these stories check ships behind fieldGeometryV2.
+  // Switch the flag toolbar to "off" to compare with the pre-3.27.2 geometry.
+  parameters: {
+    layout: 'fullscreen',
+    controls: { expanded: true },
+    featureFlags: { fieldGeometryV2: true },
+  },
   args: {
     labelled: true,
     disabled: false,
