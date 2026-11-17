@@ -123,13 +123,16 @@ export interface InputProps extends Partial<
 
   /**
    * React element to display before the input (e.g., icon)
-   * Commonly an Icon component
+   * Commonly an Icon component. The input's left padding grows to fit wider
+   * content, so typed text never runs under it.
    */
   startElement?: React.ReactElement;
 
   /**
    * React element to display after the input (e.g., icon or action button)
-   * Commonly an Icon component or clear button
+   * Commonly an Icon component, IconButton, or a text Button. The input's
+   * right padding grows to fit wider content, so typed text never runs under it.
+   * Replaces the error/success status icon.
    */
   endElement?: React.ReactElement;
 
@@ -201,14 +204,18 @@ export interface InputProps extends Partial<
   onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
 
   /**
-   * Click handler for the start element
-   * Useful for making start icons interactive (e.g., toggle password visibility)
+   * Click handler for the start element's wrapper.
+   * Fires for any click inside `startElement`; not called when `disabled`. A plain Icon is mouse-only, so
+   * for keyboard access pass a button (e.g. IconButton): its keyboard-triggered
+   * click bubbles up and fires this handler too.
    */
   onStartElementClick?: (event: BaseSyntheticEvent) => void;
 
   /**
-   * Click handler for the end element
-   * Useful for making end icons interactive (e.g., clear button)
+   * Click handler for the end element's wrapper.
+   * Fires for any click inside `endElement`; not called when `disabled`. A plain Icon is mouse-only, so
+   * for keyboard access pass a button (e.g. IconButton): its keyboard-triggered
+   * click bubbles up and fires this handler too.
    */
   onEndElementClick?: (event: BaseSyntheticEvent) => void;
 }

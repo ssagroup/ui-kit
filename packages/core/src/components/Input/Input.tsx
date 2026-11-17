@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import FormHelperText from '@components/FormHelperText';
 import { useFeatureFlag } from '@contexts/FeatureFlags';
@@ -8,6 +8,7 @@ import { InputProps, InputStatusColors } from './types';
 import { InputStatusError } from './InputStatusError';
 import { InputStatusSuccess } from './InputStatusSuccess';
 import * as S from './styles';
+import { useSlotPadding } from './useSlotPadding';
 
 const mapColors: InputStatusColors = {
   basic: S.basic,
@@ -40,6 +41,8 @@ const InputInner = (
     showBorders = true,
     register,
     onKeyUp,
+    onStartElementClick,
+    onEndElementClick,
   }: InputProps,
   inputRef?: React.ForwardedRef<HTMLInputElement | null>,
 ) => {
@@ -62,6 +65,11 @@ const InputInner = (
 
   const fieldGeometryV2 = useFeatureFlag('fieldGeometryV2');
 
+  const startElementRef = useRef<HTMLDivElement>(null);
+  const endElementRef = useRef<HTMLDivElement>(null);
+  const paddingLeft = useSlotPadding(startElementRef, !!startElement);
+  const paddingRight = useSlotPadding(endElementRef, !!endElement);
+
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     registerResult?.onBlur(e);
     inputProps.onBlur?.(e);
@@ -73,7 +81,18 @@ const InputInner = (
         css={[mapColors[status]]}
         className={wrapperClassName}
         disabled={disabled}>
-        {startElement ? <div css={S.startElement}>{startElement}</div> : null}
+        {startElement ? (
+          // Delegated click: keyboard access comes from the button passed in
+          // as startElement, whose Enter/Space click bubbles up here. A key
+          // handler on this wrapper would fire the callback twice.
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+          <div
+            ref={startElementRef}
+            css={S.startElement}
+            onClick={disabled ? undefined : onStartElementClick}>
+            {startElement}
+          </div>
+        ) : null}
         <InputBase
           fieldGeometryV2={fieldGeometryV2}
           type={type}
@@ -82,13 +101,20 @@ const InputInner = (
           placeholder={placeholder}
           disabled={disabled}
           css={{
-            paddingLeft: startElement && 40,
-            paddingRight: endElement && 40,
+            // Static rule; the measured widths arrive as CSS variables via
+            // style, so a changing width never emits a new emotion class.
+            paddingLeft: startElement ? 'var(--input-slot-start)' : undefined,
+            paddingRight: endElement ? 'var(--input-slot-end)' : undefined,
           }}
           className={className}
           onKeyUp={handleCount}
           {...inputProps}
           {...registerResult}
+          style={{
+            ...inputProps.style,
+            ...(paddingLeft && { '--input-slot-start': `${paddingLeft}px` }),
+            ...(paddingRight && { '--input-slot-end': `${paddingRight}px` }),
+          }}
           onBlur={handleBlur}
           ref={useMergeRefs([registerResult?.ref, inputRef])}
         />
@@ -100,7 +126,18 @@ const InputInner = (
           <InputStatusSuccess successTooltip={successTooltip} />
         ) : null}
 
-        {endElement ? <div css={S.endElement}>{endElement}</div> : null}
+        {endElement ? (
+          // Delegated click: keyboard access comes from the button passed in
+          // as endElement, whose Enter/Space click bubbles up here. A key
+          // handler on this wrapper would fire the callback twice.
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+          <div
+            ref={endElementRef}
+            css={S.endElement}
+            onClick={disabled ? undefined : onEndElementClick}>
+            {endElement}
+          </div>
+        ) : null}
       </InputGroup>
       {showHelperText && (
         <div

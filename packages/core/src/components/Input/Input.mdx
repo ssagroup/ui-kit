@@ -144,24 +144,73 @@ Add icons or custom elements to enhance the input:
 
 // Input with both icons
 <Input
-  name="password"
-  type="password"
-  placeholder="Password"
+  name="search"
+  placeholder="Search in workspace"
   register={register}
   startElement={<Icon name="lock" size={16} />}
-  endElement={<Icon name="visible" size={16} />}
+  endElement={<Icon name="search" size={16} />}
 />
+```
 
-// Input with custom action button
+### Actions Inside the Field
+
+Put a button in `startElement` or `endElement` to add an action. Use kit
+`IconButton` or `Button` (both default to `type="button"`, so they don't submit
+the surrounding form). The input widens its padding to fit the element, so typed
+text never runs under a text button. Icons keep the standard 40px padding, so existing layouts do not shift.
+
+<Canvas of={InputStories.WithCallAction} />
+
+```tsx
+// Text action
 <Input
-  name="confirmation"
+  name="confirmationCode"
   placeholder="Confirmation code"
   register={register}
   endElement={
-    <button onClick={() => console.log('Resend code')}>
-      Resend
-    </button>
+    <Button variant="custom" size="small" text="Resend code" onClick={resend} />
   }
+/>
+```
+
+<Canvas of={InputStories.WithPasswordToggle} />
+
+```tsx
+// Password visibility toggle
+const [visible, setVisible] = useState(false);
+
+<Input
+  name="password"
+  type={visible ? 'text' : 'password'}
+  placeholder="Password"
+  register={register}
+  endElement={
+    <IconButton
+      icon={visible ? 'invisible' : 'visible'}
+      aria-label={visible ? 'Hide password' : 'Show password'}
+      transparent
+      onClick={() => setVisible((value) => !value)}
+    />
+  }
+/>
+```
+
+`onStartElementClick` and `onEndElementClick` handle a click anywhere inside the
+slot, which is handy when the element itself has no `onClick`. A plain `Icon` is
+mouse-only, so pass a button if the action must work from the keyboard: its
+keyboard-triggered click bubbles up to the handler.
+
+<Canvas of={InputStories.WithEndElementClick} />
+
+```tsx
+const { register, setValue } = useForm();
+
+<Input
+  name="search"
+  placeholder="Search"
+  register={register}
+  endElement={<IconButton icon="cross" aria-label="Clear search" transparent />}
+  onEndElementClick={() => setValue('search', '')}
 />
 ```
 

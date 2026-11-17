@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import Input from '@components/Input';
 import Icon from '@components/Icon';
+import Button from '@components/Button';
+import { IconButton } from '@components/IconButton';
 import { InputProps } from './types';
 
 export default {
@@ -214,21 +217,89 @@ WithStatusDisabled.args = {};
 
 export const WithCallAction: StoryObj<typeof Input> = () => {
   const { register } = useForm<FieldValues>();
+  const [sent, setSent] = useState(0);
 
   return (
     <Input
-      type="password"
-      placeholder="Field"
-      name="field6"
+      placeholder="Confirmation code"
+      name="confirmationCode"
       register={register}
       endElement={
-        <button onClick={() => console.log('calling action...')}>Action</button>
+        <Button
+          variant="custom"
+          size="small"
+          text={sent ? `Resent (${sent})` : 'Resend code'}
+          onClick={() => setSent((count) => count + 1)}
+        />
       }
-      status="basic"
     />
   );
 };
 WithCallAction.args = {};
+WithCallAction.parameters = {
+  docs: {
+    description: {
+      story:
+        'A text action inside the field. The input reserves room for the button, so typed text never runs under it.',
+    },
+  },
+};
+
+export const WithPasswordToggle: StoryObj<typeof Input> = () => {
+  const { register } = useForm<FieldValues>();
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <Input
+      type={visible ? 'text' : 'password'}
+      placeholder="Password"
+      name="password"
+      register={register}
+      endElement={
+        <IconButton
+          icon={visible ? 'invisible' : 'visible'}
+          aria-label={visible ? 'Hide password' : 'Show password'}
+          transparent
+          onClick={() => setVisible((value) => !value)}
+        />
+      }
+    />
+  );
+};
+WithPasswordToggle.args = {};
+WithPasswordToggle.parameters = {
+  docs: {
+    description: {
+      story:
+        'An icon action inside the field: toggles password visibility. IconButton renders a real button, so it works from the keyboard.',
+    },
+  },
+};
+
+export const WithEndElementClick: StoryObj<typeof Input> = () => {
+  const { register, setValue } = useForm<FieldValues>();
+
+  return (
+    <Input
+      placeholder="Search"
+      name="search"
+      register={register}
+      endElement={
+        <IconButton icon="cross" aria-label="Clear search" transparent />
+      }
+      onEndElementClick={() => setValue('search', '')}
+    />
+  );
+};
+WithEndElementClick.args = {};
+WithEndElementClick.parameters = {
+  docs: {
+    description: {
+      story:
+        '`onEndElementClick` (and `onStartElementClick`) handle clicks anywhere in the slot. Pass a button as the element so the handler also fires from the keyboard.',
+    },
+  },
+};
 
 export const Focused: StoryObj<typeof Input> & {
   args: { label?: string };
