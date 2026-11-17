@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
 import { useControllableState } from '@ssa-ui-kit/hooks';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import { resolveDisabled, warnDeprecatedProp } from '@utils/deprecation';
+import { isDevEnvironment } from '@utils/environment';
 import { ButtonGroupContext } from './ButtonGroupContext';
 import { ButtonGroupButtonBase, hasLabel } from './ButtonGroupButtonBase';
+import { GroupRoot } from './styles';
 import {
   ButtonGroupProps,
   ButtonGroupItem,
@@ -33,6 +36,13 @@ const toReportedItem = (item: ButtonGroupItemInput): ButtonGroupItem =>
     ? (item as ButtonGroupItem)
     : { ...item, text: item.ariaLabel ?? '' };
 
+let warnedWrapperPropsWithoutFlag = false;
+
+/** @internal Test-only: re-arms the once-per-process warning. */
+export const resetButtonGroupWarnings = () => {
+  warnedWrapperPropsWithoutFlag = false;
+};
+
 /**
  * ButtonGroup - A row of mutually exclusive buttons.
  *
@@ -47,6 +57,11 @@ const toReportedItem = (item: ButtonGroupItemInput): ButtonGroupItem =>
  *
  * Selection can be controlled (`value`) or left to the group (`defaultValue`).
  * Either accepts a bare `id` or a whole item.
+ *
+ * With the `buttonV2` flag on, the buttons sit in an inline-flex
+ * `<span role="group">`. Name it with `aria-label` (or `aria-labelledby`), and
+ * size or lay it out with `className`. Without the flag the buttons render
+ * straight into the parent and those three props are ignored.
  *
  * @category Form Controls
  * @subcategory Action
@@ -76,7 +91,29 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
     selectedItem,
     externalState,
     onClick,
+    className,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
   } = props;
+
+  const buttonV2 = useFeatureFlag('buttonV2');
+
+  if (
+    !buttonV2 &&
+    !warnedWrapperPropsWithoutFlag &&
+    isDevEnvironment() &&
+    (className !== undefined ||
+      ariaLabel !== undefined ||
+      ariaLabelledBy !== undefined)
+  ) {
+    warnedWrapperPropsWithoutFlag = true;
+    console.warn(
+      '[ssa-ui-kit] `ButtonGroup` ignores `css`, `className`, `aria-label` ' +
+        'and `aria-labelledby` unless the `buttonV2` feature flag is on: they ' +
+        'go on the group wrapper, which only renders with the flag. Style the ' +
+        'buttons with `buttonStyles` instead, or turn the flag on.',
+    );
+  }
 
   const hasLegacySelection =
     'externalState' in props || 'selectedItem' in props;
@@ -124,34 +161,47 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
     [activeId, setSelectedId, onClick, buttonStyles],
   );
 
+  const buttons = isComposed
+    ? children
+    : items.map((item) => {
+        const isItemDisabled = resolveDisabled(
+          'ButtonGroup',
+          item.disabled,
+          item.isDisabled,
+        );
+
+        return (
+          <ButtonGroupButtonBase
+            key={item.id}
+            isActive={
+              activeId !== undefined && activeId === item.id && !isItemDisabled
+            }
+            disabled={isItemDisabled}
+            onClick={() => handleSelect(toReportedItem(item))}
+            buttonStyles={buttonStyles}
+            icon={item.icon}
+            ariaLabel={item.ariaLabel}>
+            {item.text}
+          </ButtonGroupButtonBase>
+        );
+      });
+
   return (
     <ButtonGroupContext.Provider value={contextValue}>
-      {isComposed
-        ? children
-        : items.map((item) => {
-            const isItemDisabled = resolveDisabled(
-              'ButtonGroup',
-              item.disabled,
-              item.isDisabled,
-            );
-
-            return (
-              <ButtonGroupButtonBase
-                key={item.id}
-                isActive={
-                  activeId !== undefined &&
-                  activeId === item.id &&
-                  !isItemDisabled
-                }
-                disabled={isItemDisabled}
-                onClick={() => handleSelect(toReportedItem(item))}
-                buttonStyles={buttonStyles}
-                icon={item.icon}
-                ariaLabel={item.ariaLabel}>
-                {item.text}
-              </ButtonGroupButtonBase>
-            );
-          })}
+      {buttonV2 ? (
+        // A span, not a div: buttons are phrasing content, so a group inside a
+        // <p> or a Typography paragraph was valid HTML before the wrapper.
+        <span
+          role="group"
+          css={GroupRoot}
+          className={className}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}>
+          {buttons}
+        </span>
+      ) : (
+        buttons
+      )}
     </ButtonGroupContext.Provider>
   );
 };

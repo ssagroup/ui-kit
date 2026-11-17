@@ -53,6 +53,34 @@ export const buttonBlock = css`
   }
 `;
 
+/**
+ * `buttonV2` block mode. The wrapper only stretches the button; the button
+ * centres its content as one group, so the icon keeps its 6px gap instead of
+ * the auto margins of `buttonBlock` pushing it away from the label.
+ */
+export const buttonBlockV2 = css`
+  display: grid;
+`;
+
+export const blockContentV2 = css`
+  justify-content: center;
+`;
+
+/**
+ * `buttonV2`: what makes a disabled button read as disabled, beyond the
+ * variant's grey background.
+ *
+ * The colour goes on the button, not just the `text` label (which sets the
+ * same grey itself), so an icon painted with `currentColor`, any `children`,
+ * and the loading spinner all follow it. Icons with a fixed `color` keep it.
+ */
+export const disabledV2 = (theme: Theme) => css`
+  &:disabled {
+    color: ${theme.colors.grey40};
+    cursor: not-allowed;
+  }
+`;
+
 export const iconWrapperRight = css`
   display: inline-flex;
   margin-right: 6px;

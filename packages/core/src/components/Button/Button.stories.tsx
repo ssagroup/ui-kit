@@ -6,6 +6,7 @@ import Button from './index';
 import {
   GridWrapper,
   HeaderTitle,
+  InheritColors,
   sizes,
   variants,
 } from './helpers.stories-extra';
@@ -166,6 +167,43 @@ Disabled.parameters = {
     description: {
       story:
         'Use **custom** for new code; **tertiary** is legacy (same appearance, kept for compatibility).',
+    },
+  },
+};
+
+const currentColorIcon = <Icon name="plus" size={14} color="currentColor" />;
+
+export const DisabledWithIcons = () => (
+  <InheritColors>
+    <GridWrapper
+      css={{ gridTemplate: "'a a a'", '& button': { whiteSpace: 'nowrap' } }}>
+      <HeaderTitle>Variant</HeaderTitle>
+      <HeaderTitle>Enabled</HeaderTitle>
+      <HeaderTitle>Disabled</HeaderTitle>
+      {variants.map((variant) => (
+        <React.Fragment key={variant}>
+          <HeaderTitle css={{ width: 80 }}>{variant}</HeaderTitle>
+          {[false, true].map((disabled) => (
+            <Button
+              key={String(disabled)}
+              variant={variant}
+              disabled={disabled}
+              startIcon={currentColorIcon}>
+              Add item
+            </Button>
+          ))}
+        </React.Fragment>
+      ))}
+    </GridWrapper>
+  </InheritColors>
+);
+
+DisabledWithIcons.parameters = {
+  featureFlags: { buttonV2: true },
+  docs: {
+    description: {
+      story:
+        'With the `buttonV2` flag, a disabled button greys everything that paints in `currentColor` (icons, `children`, the loading spinner), not only a `text` label, and shows a not-allowed cursor. The label here is `children`, so this also shows the 6px icon gap that `buttonV2` adds next to `children`. Use the flag toolbar to compare with the flag off.',
     },
   },
 };

@@ -3,18 +3,13 @@ import { SerializedStyles, Theme } from '@emotion/react';
 import { MouseEventHandler } from 'react';
 
 /**
- * ARIA properties for button accessibility
+ * ARIA properties for button accessibility. Every `aria-*` attribute is
+ * accepted and forwarded to the `<button>`, so a Button can be a disclosure
+ * toggle (`aria-expanded` + `aria-controls`) or a menu trigger
+ * (`aria-haspopup`).
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/button/
  */
-type ButtonAriaProps = Pick<
-  AriaAttributes,
-  | 'aria-labelledby'
-  | 'aria-label'
-  | 'aria-describedby'
-  | 'aria-disabled'
-  | 'aria-pressed'
-  | 'aria-current'
->;
+type ButtonAriaProps = AriaAttributes;
 
 /**
  * Props for the Button component

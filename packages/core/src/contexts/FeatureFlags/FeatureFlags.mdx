@@ -70,6 +70,7 @@ acknowledge it and silence the warning. Passing a flag the kit no longer knows
 | Flag              | Since  | Default in | Issue |
 | ----------------- | ------ | ---------- | ----- |
 | `fieldGeometryV2` | 3.28.0 | 4.0.0      | #703  |
+| `buttonV2`        | 3.28.0 | 4.0.0      | #704  |
 
 ### fieldGeometryV2
 
@@ -92,6 +93,39 @@ With the flag on:
 Check any wrapper that compensated for the old geometry (extra margins, fixed
 heights, `max-width` overrides on MultipleDropdown) and drop the fix under the
 same flag.
+
+### buttonV2
+
+Button and ButtonGroup fixes from #704. With the flag on:
+
+- A disabled Button sets its grey on the whole button, not only a `text`
+  label. Icons painted in `currentColor`, `children` and the loading spinner
+  follow it, and the cursor is `not-allowed`. Icons with a fixed colour keep
+  it.
+- The 6px icon gap also applies next to a `children` label. Children that
+  render nothing (`null`, `false`, `''`, or a Fragment of those) still make
+  the button icon-only.
+- `block` buttons centre the icon and label together instead of spreading
+  them across the width.
+- ButtonGroup wraps its buttons in an inline-flex `<span role="group">` that
+  takes `className`, `aria-label` and `aria-labelledby`.
+
+What to check in your app when you turn it on:
+
+- Spacing you added between an icon and a `children` label (`gap` on the
+  button, a margin on the icon). It now doubles; drop it.
+- Icon colours computed from the disabled state, e.g.
+  `color={disabled ? grey : white}`. Use `color="currentColor"` instead.
+- Disabled styles that also lower `opacity`: the content is grey now too, so
+  it can look faded twice.
+- Containers that laid out ButtonGroup's buttons as their own children
+  (`& > *`, `flex: 1` on the buttons, `flex-wrap`). Move that styling onto the
+  group through `className` or `css`.
+- Wrapper `<div>`s you added around a ButtonGroup to keep a parent `gap` from
+  splitting it. They can go.
+
+Button's wider `aria-*` types (`aria-expanded`, `aria-controls`, and the rest)
+are not behind the flag; they are additive.
 
 ## Adding a flag (kit contributors)
 

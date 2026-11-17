@@ -118,7 +118,8 @@ export const CustomStyle: StoryObj<typeof ButtonGroup> = () => {
         buttonStyles={css`
           background: ${theme.colors.white};
 
-          &:hover {
+          /* Scoped, so a disabled button does not light up on hover. */
+          &:hover:not(:disabled) {
             background: ${theme.colors.greyLighter};
           }
         `}
@@ -129,3 +130,45 @@ export const CustomStyle: StoryObj<typeof ButtonGroup> = () => {
 };
 
 CustomStyle.args = {};
+
+export const GroupWrapper: StoryObj<typeof ButtonGroup> = () => (
+  <div
+    css={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 24,
+      maxWidth: 420,
+    }}>
+    {/* A parent gap no longer pulls the segments apart. */}
+    <div css={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <span>Period</span>
+      <ButtonGroup
+        aria-label="Period"
+        items={[
+          { id: 'day', text: 'Day' },
+          { id: 'week', text: 'Week' },
+          { id: 'month', text: 'Month' },
+        ]}
+      />
+    </div>
+    {/* Stretched through className: the group is a flex row, buttons share it. */}
+    <ButtonGroup
+      aria-label="Units"
+      css={{ display: 'flex', '& > button': { flex: 1 } }}
+      items={[
+        { id: 'hours', text: 'Hours' },
+        { id: 'days', text: 'Days' },
+      ]}
+    />
+  </div>
+);
+
+GroupWrapper.parameters = {
+  featureFlags: { buttonV2: true },
+  docs: {
+    description: {
+      story:
+        'With the `buttonV2` flag, the buttons sit in an inline-flex `<span role="group">`. Name it with `aria-label`; the parent\'s `gap` then spaces the group as one item. To stretch it, pass `className` (or `css`): the second group is `display: flex` with `flex: 1` buttons.',
+    },
+  },
+};

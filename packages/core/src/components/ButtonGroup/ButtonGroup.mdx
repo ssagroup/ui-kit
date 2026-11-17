@@ -171,9 +171,45 @@ const itemsWithDisabled: ButtonGroupItem[] = [
 ];
 ```
 
+### Group Wrapper
+
+With the `buttonV2` feature flag, the buttons sit in an inline-flex
+`<span role="group">`, so the group is one element in your layout:
+
+- A parent's `gap` or `justify-content: space-between` spaces the group as one
+  item instead of pulling the buttons apart. A `<div>` you added around the
+  group for this can go.
+- Name the group with `aria-label` or `aria-labelledby`.
+- Style the wrapper with `className` (or `css`). Without the flag there is no
+  wrapper, and these props are ignored with a dev warning.
+
+This can break layouts that styled the buttons as direct children of your own
+container. Move those rules onto the group:
+
+```tsx
+// Before: the container stretched the buttons.
+<div css={{ display: 'flex', '& > *': { flex: 1 } }}>
+  <ButtonGroup items={items} />
+</div>
+
+// With buttonV2: stretch through the group itself.
+<ButtonGroup
+  items={items}
+  aria-label="Units"
+  css={{ display: 'flex', width: '100%', '& > button': { flex: 1 } }}
+/>
+```
+
+The same applies to `flex-wrap`: the wrapper does not wrap by default, so pass
+`css={{ flexWrap: 'wrap' }}` if the strip must wrap.
+
+<Canvas of={ButtonGroupStories.GroupWrapper} />
+
 ### Custom Styling
 
-Apply custom styles to all buttons using the `buttonStyles` prop:
+Apply custom styles to all buttons using the `buttonStyles` prop. Your rules
+win over the kit's when the specificity ties, so scope hover styles with
+`:not(:disabled)`, or a disabled button lights up on hover:
 
 ```tsx
 import { css } from '@emotion/react';
@@ -187,7 +223,7 @@ function StyledDemo() {
         background: white;
         border: 1px solid #ddd;
 
-        &:hover {
+        &:hover:not(:disabled) {
           background: #f5f5f5;
         }
 

@@ -30,6 +30,18 @@ export const featureFlagRegistry = {
     default: false,
     issue: '#703',
   },
+  buttonV2: {
+    description:
+      'A disabled Button greys its icons and children too, not only a `text` ' +
+      'label, and shows a not-allowed cursor. The 6px icon gap also applies ' +
+      'next to a `children` label, and in block mode. ButtonGroup wraps its ' +
+      'buttons in an inline-flex <span role="group"> that takes `className` ' +
+      'and `aria-label`.',
+    introducedIn: '3.28.0',
+    defaultIn: '4.0.0',
+    default: false,
+    issue: '#704',
+  },
 } as const satisfies FeatureFlagRegistry;
 
 /** Names of the kit's opt-in flags. */

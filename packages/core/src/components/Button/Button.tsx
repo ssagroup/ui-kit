@@ -2,7 +2,9 @@ import { forwardRef } from 'react';
 import { useTheme } from '@emotion/react';
 
 import Wrapper from '@components/Wrapper/Wrapper';
+import { useFeatureFlag } from '@contexts/FeatureFlags';
 import { resolveDisabled } from '@utils/deprecation';
+import { rendersContent } from '@utils/rendersContent';
 
 import { ButtonBase } from './ButtonBase';
 import {
@@ -15,6 +17,9 @@ import {
   sizeStyles,
   variantStyles,
   buttonBlock,
+  buttonBlockV2,
+  blockContentV2,
+  disabledV2,
   iconWrapperLeft,
   iconWrapperRight,
   loadingContent,
@@ -122,6 +127,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const theme = useTheme();
+    const buttonV2 = useFeatureFlag('buttonV2');
     const isButtonDisabled =
       resolveDisabled('Button', disabled, isDisabled) || loading;
 
@@ -139,11 +145,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       return <GreyButtonText text={text} size={size} />;
     };
 
+    // An icon only gets its 6px gap when something sits next to it. Before
+    // buttonV2 only `text` counted, so a `children` label sat flush.
+    const hasLabel = buttonV2
+      ? rendersContent(text) || rendersContent(children)
+      : Boolean(text);
+    const iconStyle = !hasLabel ? { margin: 0 } : undefined;
+
     const content = (
       <>
         {startIcon ? (
           <span
-            style={!text ? { margin: 0 } : undefined}
+            style={iconStyle}
             css={iconWrapperRight}
             className={startIconClassName}>
             {startIcon}
@@ -152,7 +165,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children ?? resolveTextNode()}
         {endIcon ? (
           <span
-            style={!text ? { margin: 0 } : undefined}
+            style={iconStyle}
             css={iconWrapperLeft}
             className={endIconClassName}>
             {endIcon}
@@ -164,7 +177,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const btn = (
       <ButtonBase
         ref={ref}
-        css={[sizeStyles[size], appliedVariantStyle]}
+        css={[
+          sizeStyles[size],
+          appliedVariantStyle,
+          buttonV2 && disabledV2(theme),
+          buttonV2 && block && blockContentV2,
+        ]}
         type={type}
         disabled={isButtonDisabled}
         aria-busy={loading || undefined}
@@ -189,7 +207,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       </ButtonBase>
     );
 
-    return block ? <Wrapper css={buttonBlock}>{btn}</Wrapper> : btn;
+    return block ? (
+      <Wrapper css={buttonV2 ? buttonBlockV2 : buttonBlock}>{btn}</Wrapper>
+    ) : (
+      btn
+    );
   },
 );
 

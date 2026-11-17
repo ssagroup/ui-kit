@@ -112,3 +112,17 @@ export const IconSlot = css`
 export const IconSlotWithLabel = css`
   margin-right: 6px;
 `;
+
+/**
+ * `buttonV2` wrapper. Inline-flex so the strip keeps its old footprint: it
+ * sizes to its buttons and sits in a line like they did. A parent's `gap` or
+ * `justify-content: space-between` now spaces the group as one item instead of
+ * pulling the buttons apart. To stretch or wrap the strip, style the group
+ * through `className` (e.g. `display: flex` plus `flex: 1` on the buttons).
+ */
+export const GroupRoot = css`
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  max-width: 100%;
+`;

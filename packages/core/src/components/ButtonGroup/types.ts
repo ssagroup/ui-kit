@@ -105,7 +105,34 @@ export interface ButtonGroupProps {
    * reading `id`, or give each button its own `onClick`.
    */
   onClick?: (item: ButtonGroupItem) => void;
+
+  /**
+   * Styles merged into every button in the group.
+   *
+   * These win over the kit's own hover and disabled rules when the
+   * specificity ties, so scope hover styles as `&:hover:not(:disabled)` or a
+   * disabled button lights up on hover.
+   */
   buttonStyles?: SerializedStyles;
+
+  /**
+   * Class for the group's `<span role="group">` wrapper, e.g. to stretch the
+   * strip (`display: flex`) or let it wrap. Requires the `buttonV2` feature
+   * flag; without it there is no wrapper and the prop is ignored.
+   */
+  className?: string;
+
+  /**
+   * Accessible name for the group, e.g. `"Period"`. Requires the `buttonV2`
+   * feature flag.
+   */
+  'aria-label'?: string;
+
+  /**
+   * Id of the element that names the group. Requires the `buttonV2` feature
+   * flag.
+   */
+  'aria-labelledby'?: string;
 }
 
 export interface ButtonGroupButtonProps {
