@@ -98,6 +98,7 @@ const config: StorybookConfig = {
             '../../../node_modules/react-dom',
           ),
           '@storybook-assets': path.resolve(__dirname, './assets'),
+          '@storybook-layout': path.resolve(__dirname, './layout'),
         },
       },
       module: {

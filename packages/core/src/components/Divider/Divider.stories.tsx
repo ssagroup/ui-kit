@@ -1,5 +1,15 @@
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import {
+  Caption,
+  Matrix,
+  Panel,
+  PanelGrid,
+  PanelRow,
+  PanelStack,
+  Stack,
+  storyCanvas,
+} from '@storybook-layout';
 
 import Button from '@components/Button';
 import Icon from '@components/Icon';
@@ -38,39 +48,6 @@ export const DOCUMENTED_DIVIDER_PROPS = [
 const VARIANTS: DividerVariant[] = ['solid', 'dashed', 'dotted'];
 const SIZES: DividerSize[] = ['small', 'medium', 'large'];
 
-const surface: CSSProperties = {
-  background: '#fff',
-  borderRadius: 20,
-  padding: 24,
-  boxSizing: 'border-box',
-};
-
-const caption: CSSProperties = {
-  margin: '0 0 8px',
-  fontSize: 12,
-  fontWeight: 600,
-  color: 'rgba(43, 45, 49, 0.6)',
-  textTransform: 'uppercase',
-  letterSpacing: 0.4,
-};
-
-const Panel = ({
-  title,
-  width,
-  children,
-  style,
-}: {
-  title?: string;
-  width?: number | string;
-  children: ReactNode;
-  style?: CSSProperties;
-}) => (
-  <div style={{ ...surface, width, ...style }}>
-    {title && <p style={caption}>{title}</p>}
-    {children}
-  </div>
-);
-
 /** The design's "Avatar" slot: any node, here a 24px circle with an icon. */
 const AvatarNode = ({ background = '#d2d4db' }: { background?: string }) => (
   <span
@@ -89,22 +66,16 @@ const AvatarNode = ({ background = '#d2d4db' }: { background?: string }) => (
 
 /** A fixed-height row for vertical dividers. */
 const VerticalRow = ({ children }: { children: ReactNode }) => (
-  <div style={{ display: 'flex', height: 200, alignItems: 'center' }}>
+  <Stack direction="row" height={200} align="center">
     {children}
-  </div>
+  </Stack>
 );
 
 const meta: Meta<typeof Divider> = {
   title: 'Components/Divider',
   component: Divider,
   excludeStories: ['DOCUMENTED_DIVIDER_PROPS'],
-  decorators: [
-    (Story) => (
-      <div style={{ background: '#eef1f7', padding: 24 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [storyCanvas],
   parameters: {
     controls: { include: DOCUMENTED_DIVIDER_PROPS },
   },
@@ -163,29 +134,16 @@ export const Default: Story = {
 /** Every line style at every thickness, in both orientations. */
 export const StylesAndSizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+    <PanelStack>
       <Panel title="Horizontal">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '80px repeat(3, minmax(160px, 1fr))',
-            alignItems: 'center',
-            columnGap: 24,
-          }}>
-          <span />
-          {SIZES.map((size) => (
-            <p key={size} style={caption}>
-              {size}
-            </p>
-          ))}
-          {VARIANTS.map((variant) => (
-            <Row key={variant} label={variant}>
-              {SIZES.map((size) => (
-                <Divider key={size} variant={variant} size={size} />
-              ))}
-            </Row>
-          ))}
-        </div>
+        <Matrix
+          rows={VARIANTS}
+          columns={SIZES}
+          minColumnWidth={160}
+          renderCell={(variant, size) => (
+            <Divider variant={variant} size={size} />
+          )}
+        />
       </Panel>
       <Panel title="Vertical">
         <VerticalRow>
@@ -207,40 +165,31 @@ export const StylesAndSizes: Story = {
                     size={size}
                   />
                 </div>
-                <span style={{ ...caption, margin: 0, fontSize: 10 }}>
+                <Caption style={{ fontSize: 10, textAlign: 'center' }}>
                   {variant}
                   <br />
                   {size}
-                </span>
+                </Caption>
               </div>
             )),
           )}
         </VerticalRow>
       </Panel>
-    </div>
+    </PanelStack>
   ),
 };
-
-const Row = ({ label, children }: { label: string; children: ReactNode }) => (
-  <>
-    <p style={{ ...caption, margin: 0 }}>{label}</p>
-    {children}
-  </>
-);
 
 /** Nothing, text, a kit icon or any node in the middle. */
 export const Content: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+    <PanelRow>
       <Panel title="Horizontal" width={520}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Divider />
-          <Divider>This is a separator</Divider>
-          <Divider icon="language" />
-          <Divider aria-label="Assignee">
-            <AvatarNode />
-          </Divider>
-        </div>
+        <Divider />
+        <Divider>This is a separator</Divider>
+        <Divider icon="language" />
+        <Divider aria-label="Assignee">
+          <AvatarNode />
+        </Divider>
       </Panel>
       <Panel title="Vertical">
         <VerticalRow>
@@ -252,7 +201,7 @@ export const Content: Story = {
           </Divider>
         </VerticalRow>
       </Panel>
-    </div>
+    </PanelRow>
   ),
 };
 
@@ -269,12 +218,7 @@ const COLORS: { color: DividerColor; label: string }[] = [
  */
 export const Colors: Story = {
   render: () => (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-        gap: 24,
-      }}>
+    <PanelGrid>
       {COLORS.map(({ color, label }) => (
         <Panel key={label} title={label}>
           <Divider color={color} />
@@ -287,21 +231,21 @@ export const Colors: Story = {
           </Divider>
         </Panel>
       ))}
-    </div>
+    </PanelGrid>
   ),
 };
 
 /** Length, spacing, gap, font size and icon size. */
 export const Customization: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+    <PanelRow>
       <Panel title="length" width={520}>
         <Divider length={200}>200px</Divider>
         <Divider length="60%">60%</Divider>
         <Divider>100% (default)</Divider>
       </Panel>
       <Panel title="spacing: 0 / 8 (default) / 24" width={520}>
-        <div style={{ display: 'flex', gap: 24 }}>
+        <Stack direction="row" gap={24}>
           {[0, 8, 24].map((spacing) => (
             // Blocks touch the divider: the parent has no gap.
             <div key={spacing} style={{ flex: 1 }}>
@@ -310,7 +254,7 @@ export const Customization: Story = {
               <Skeleton height={24} animation="none" />
             </div>
           ))}
-        </div>
+        </Stack>
       </Panel>
       <Panel title="gap: 4 / 12 (default) / 32" width={520}>
         {[4, 12, 32].map((gap) => (
@@ -332,22 +276,22 @@ export const Customization: Story = {
           <Divider orientation="vertical" variant="dotted" />
         </VerticalRow>
       </Panel>
-    </div>
+    </PanelRow>
   ),
 };
 
 const ModalExample = () => (
-  <Panel width={380} style={{ boxShadow: '0 12px 40px rgba(43,45,49,0.16)' }}>
+  <Panel width={380} elevated>
     <p style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>Sign in</p>
     <Divider spacing={16} />
     <SkeletonGroup label="Loading sign-in form">
       <SkeletonForm fields={2} actions={false} />
     </SkeletonGroup>
     <Divider spacing={16}>Or continue with</Divider>
-    <div style={{ display: 'flex', gap: 12 }}>
+    <Stack direction="row" gap={12}>
       <Button variant="secondary" size="small" text="Google" block />
       <Button variant="secondary" size="small" text="Microsoft" block />
-    </div>
+    </Stack>
   </Panel>
 );
 
@@ -370,7 +314,7 @@ const ListExample = () => (
 
 const ToolbarExample = () => (
   <Panel width="fit-content" title="Toolbar">
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <Stack direction="row" align="center">
       <Button size="small" text="Bold" />
       <Button size="small" text="Italic" />
       <Divider orientation="vertical" length={20} />
@@ -378,7 +322,7 @@ const ToolbarExample = () => (
       <Button size="small" text="Centre" />
       <Divider orientation="vertical" length={20} />
       <Button size="small" text="Link" />
-    </div>
+    </Stack>
   </Panel>
 );
 
@@ -458,19 +402,13 @@ const FormSectionsExample = () => (
 export const ExamplesWithContent: Story = {
   name: 'Example with content',
   render: () => (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 24,
-        alignItems: 'flex-start',
-      }}>
+    <PanelRow>
       <ModalExample />
       <ListExample />
       <FormSectionsExample />
       <ToolbarExample />
       <StatsExample />
       <SidebarExample />
-    </div>
+    </PanelRow>
   ),
 };

@@ -198,6 +198,8 @@ const config: JestConfigWithTsJest = {
         '^@storybook-assets/(.*)$': [
           '<rootDir>/packages/core/.storybook/assets/$1',
         ],
+        '^@storybook-layout$':
+          '<rootDir>/packages/core/.storybook/layout/index.tsx',
         '^@hooks/(.*)$': [
           '<rootDir>/packages/hooks/src/hooks/$1',
           '<rootDir>/packages/hooks/src/hooks/$1.ts',

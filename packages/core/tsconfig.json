@@ -18,6 +18,7 @@
       "@styles/*": ["./src/styles/*"],
       "@global-types/*": ["./src/types/*"],
       "@storybook-assets/*": ["./.storybook/assets/*"],
+      "@storybook-layout": ["./.storybook/layout/index"],
       "@utils/*": ["./src/utils/*"]
     }
   },
