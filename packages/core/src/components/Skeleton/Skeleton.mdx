@@ -1,0 +1,249 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as SkeletonStories from './Skeleton.stories';
+import { SkeletonGroup } from './SkeletonGroup';
+import { SkeletonText } from './presets/SkeletonText';
+import { SkeletonListItem } from './presets/SkeletonListItem';
+import { SkeletonMediaCard } from './presets/SkeletonMediaCard';
+import { SkeletonTable } from './presets/SkeletonTable';
+import { SkeletonForm } from './presets/SkeletonForm';
+import { SkeletonWidgetCard } from './presets/SkeletonWidgetCard';
+
+<Meta of={SkeletonStories} />
+
+# Skeleton
+
+Grey placeholders shown in place of content that is still loading. They take the content's shape, so the page doesn't jump when the data arrives.
+
+The kit has three layers:
+
+- **`Skeleton`**: a single block (bar, box or circle). Every other piece is built from it.
+- **`SkeletonGroup`**: marks a region as loading and sets the look of everything inside.
+- **Ready-made layouts**: `SkeletonText`, `SkeletonListItem`, `SkeletonMediaCard`, `SkeletonTable`, `SkeletonForm` and `SkeletonWidgetCard`.
+
+A page skeleton is a combination of these inside one `SkeletonGroup`. See the [page recipes](#page-recipes).
+
+```tsx
+import { SkeletonGroup, SkeletonListItem } from '@ssa-ui-kit/core';
+
+const People = ({ isLoading, people }) =>
+  isLoading ? (
+    <SkeletonGroup label="Loading people">
+      <SkeletonListItem count={5} />
+    </SkeletonGroup>
+  ) : (
+    <PeopleList people={people} />
+  );
+```
+
+<Canvas of={SkeletonStories.Default} />
+<Controls of={SkeletonStories.Default} />
+
+## Size
+
+Every piece and layout **fills its container's width by default** (`width: 100%`), so it follows the layout it sits in. Size it to the content it stands in for:
+
+- `width` / `height`: a number is pixels, a string any CSS length (`'60%'`, `'12rem'`).
+- `shape="circle"` defaults to 48px and stays round when only `width` is set.
+- `radius` overrides the corner radius.
+
+<Canvas of={SkeletonStories.Shapes} />
+
+## Animation
+
+`animation` is `wave` (default), `pulse` or `none`. Both animations loop every 1.6s:
+
+- **Wave**: a soft band crosses each piece, then rests.
+- **Pulse**: each piece fades darker and lighter.
+
+Users who ask their system for reduced motion always get the static block.
+
+<Canvas of={SkeletonStories.Animations} />
+
+## Corners
+
+`corners` is `rounded` (default, 12px corners, so thin lines become pills) or `squared` (4px, 2px on thin lines and media blocks).
+
+<Canvas of={SkeletonStories.Corners} />
+
+## SkeletonGroup
+
+Wrap each loading region in one `SkeletonGroup`:
+
+- **Look**: `animation` and `corners` apply to every piece inside. A value set on a piece or layout still wins: in the example above, the list item pulses inside a waving group.
+- **Accessibility**: pieces are hidden from screen readers. The group sets `aria-busy` and announces its `label` (default `Loading…`) once, instead of once per piece. A group inside another group only passes its settings down.
+- **Layout**: the group adds none. Lay its children out with your own grid or flex container.
+
+The group has no `preset` prop. Its children are the content: any mix of `Skeleton` pieces, ready-made layouts and your own markup. A layout used on its own (outside a group) acts as its own group and takes a `label` too.
+
+```tsx
+<SkeletonGroup animation="pulse" corners="squared" label="Loading report">
+  <SkeletonText lines={2} />
+  <SkeletonTable rows={8} />
+</SkeletonGroup>
+```
+
+<ArgTypes of={SkeletonGroup} />
+
+### Building your own layout
+
+The ready-made layouts are just `Skeleton` pieces in flex containers. When none fits, build one the same way. This is `SkeletonListItem` written out by hand:
+
+```tsx
+<SkeletonGroup label="Loading comment">
+  <div css={{ display: 'flex', gap: 16 }}>
+    <Skeleton shape="circle" width={48} />
+    <div css={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
+      <div css={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
+        <Skeleton height={24} width="60%" />
+        <div css={{ display: 'flex', gap: 8 }}>
+          <Skeleton height={24} width={80} />
+          <Skeleton shape="circle" width={24} />
+        </div>
+      </div>
+      <Skeleton height={12} />
+      <Skeleton height={12} />
+      <div css={{ display: 'flex', gap: 8 }}>
+        <Skeleton height={32} width={80} />
+        <Skeleton height={32} width={80} />
+      </div>
+    </div>
+  </div>
+</SkeletonGroup>
+```
+
+Pixel widths (avatars, chips) keep their size in a flex row; relative widths (`'60%'`, the default `100%`) shrink with it.
+
+## Ready-made layouts
+
+All six on one canvas; each is described below with its code and props.
+
+<Canvas of={SkeletonStories.Presets} />
+
+### SkeletonText
+
+A paragraph: `lines` full-width lines (12px by default), the last one `lastLineWidth` wide.
+
+```tsx
+<SkeletonText lines={4} />
+```
+
+<ArgTypes of={SkeletonText} />
+
+### SkeletonListItem
+
+An avatar beside a title, `lines` of text and `chips`. `trailing` adds a badge and an icon at the end of the title row. `count` stacks a list.
+
+```tsx
+<SkeletonListItem count={3} chips={2} trailing />
+```
+
+<ArgTypes of={SkeletonListItem} />
+
+### SkeletonMediaCard
+
+A title bar over a `mediaHeight` block, for an image, a chart or a video.
+
+```tsx
+<SkeletonMediaCard mediaHeight={180} />
+```
+
+<ArgTypes of={SkeletonMediaCard} />
+
+### SkeletonTable
+
+Built from the kit's own `Table`, `TableRow` and `TableCell`, so its rows have the same height and padding as the loaded table. Match `columns` to the real table; `header={false}` drops the header row.
+
+It draws the same white, rounded surface as the real table, so put it where the table goes, without an extra card around it.
+
+```tsx
+const Users = ({ isLoading, rows }) =>
+  isLoading ? (
+    <SkeletonTable rows={6} columns={5} />
+  ) : (
+    <UsersTable rows={rows} />
+  );
+```
+
+<ArgTypes of={SkeletonTable} />
+
+### SkeletonForm
+
+Labelled fields with the kit's field geometry (18px label line, 6px gap, 44px control), plus a button (`actions`). `columns` lays the fields out in a grid.
+
+```tsx
+<SkeletonForm fields={6} columns={2} />
+```
+
+<ArgTypes of={SkeletonForm} />
+
+### SkeletonWidgetCard
+
+The `WidgetCard` frame with a title bar. The body is a `SkeletonText` unless you pass children.
+
+```tsx
+<SkeletonWidgetCard />
+
+<SkeletonWidgetCard>
+  <Skeleton height={160} />
+</SkeletonWidgetCard>
+```
+
+<ArgTypes of={SkeletonWidgetCard} />
+
+## Page recipes
+
+These are compositions, not exports. Copy one and adjust it to your page.
+
+### Dashboard
+
+<Canvas of={SkeletonStories.DashboardPage} />
+
+```tsx
+<SkeletonGroup label="Loading dashboard">
+  <Skeleton height={32} width={240} css={{ marginBottom: 24 }} />
+  <div
+    css={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+    <SkeletonWidgetCard>
+      <Skeleton height={120} />
+    </SkeletonWidgetCard>
+    <SkeletonWidgetCard>
+      <Skeleton shape="circle" width={120} />
+    </SkeletonWidgetCard>
+    <SkeletonWidgetCard />
+  </div>
+  <SkeletonTable css={{ marginTop: 24 }} rows={5} columns={5} />
+</SkeletonGroup>
+```
+
+### List page
+
+<Canvas of={SkeletonStories.ListPage} />
+
+```tsx
+<SkeletonGroup label="Loading people">
+  <div css={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+    <div css={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <Skeleton height={32} width="40%" />
+      <Skeleton height={44} width="40%" style={{ marginLeft: 'auto' }} />
+    </div>
+    <SkeletonListItem count={4} lines={1} />
+  </div>
+</SkeletonGroup>
+```
+
+### Detail page
+
+<Canvas of={SkeletonStories.DetailPage} />
+
+```tsx
+<SkeletonGroup animation="pulse" label="Loading profile">
+  <div css={{ display: 'flex', gap: 24 }}>
+    <div
+      css={{ display: 'flex', flexDirection: 'column', gap: 24, width: 360 }}>
+      <SkeletonListItem lines={1} chips={0} avatarSize={64} />
+      <SkeletonText lines={5} />
+    </div>
+    <SkeletonForm fields={4} columns={2} />
+  </div>
+</SkeletonGroup>
+```

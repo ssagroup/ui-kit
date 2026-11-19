@@ -303,3 +303,5 @@ export * from './Icon';
 export * from './Icon/types';
 
 export * from './FullscreenModeContext';
+export * from './Skeleton';
+export type * from './Skeleton/types';
