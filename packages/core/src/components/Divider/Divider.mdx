@@ -1,0 +1,77 @@
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import * as DividerStories from './Divider.stories';
+import { DOCUMENTED_DIVIDER_PROPS } from './Divider.stories';
+
+<Meta of={DividerStories} />
+
+# Divider
+
+A line that separates content horizontally or vertically. It can have text, a kit icon or any node in the middle.
+
+```tsx
+import { Divider } from '@ssa-ui-kit/core';
+
+<Divider />
+<Divider>Or continue with</Divider>
+<Divider icon="lock" variant="dashed" />
+<Divider orientation="vertical" length={20} />
+```
+
+<Canvas of={DividerStories.Default} />
+<Controls of={DividerStories.Default} include={DOCUMENTED_DIVIDER_PROPS} />
+
+## Styles and sizes
+
+- `variant`: `solid` (default), `dashed` or `dotted`. Dashes and dots have round ends, spaced as in the design.
+- `size`: line thickness only. `small` is 1px (default), `medium` 2px, `large` 3px. Text and icon keep their size at every thickness.
+
+<Canvas of={DividerStories.StylesAndSizes} />
+
+## Content
+
+Without content the divider is a single line. With content, the line splits around it, 12px away (`gap`):
+
+- **Text**: a string or number is shown as the divider's text, 14px medium. It also becomes the separator's accessible name.
+- **Icon**: `icon` takes a kit icon name, sized by `iconSize` (default 20px).
+- **Any node**: an avatar, a badge or a button is rendered as is, and stays reachable by keyboard and screen readers. Pass `aria-label` if the divider should have a name.
+
+`icon` and `children` are mutually exclusive. Empty content (`''`, `null`, `false`) renders a plain line.
+
+<Canvas of={DividerStories.Content} />
+
+## Colours
+
+| `color` | Line | Text and icon |
+| --- | --- | --- |
+| `subtle` (default) | light grey | design dark grey |
+| `strong` | darker, semi-transparent grey | design dark grey |
+| theme key (`'blue'`) or CSS colour (`'#e5484d'`) | that colour | that colour |
+
+A node passed as children inherits the colour, but its own styles win. In the example, the avatar keeps its grey in every row.
+
+<Canvas of={DividerStories.Colors} />
+
+## Size and spacing
+
+- `length`: width of a horizontal divider or height of a vertical one. A number is pixels, a string any CSS length. Defaults to `100%`.
+- **Vertical without `length`**: the divider stretches to the height of its flex row, or fills a parent with a fixed height. In a parent with neither, set `length`.
+- `spacing`: empty space on both sides of the line (above and below a horizontal divider, left and right of a vertical one). Defaults to **8px**, so the divider keeps clear of its neighbours even when the parent has no gap. Set `0` to remove it.
+- `gap`: space between the line and the content. Defaults to 12px.
+- `fontSize` and `iconSize` resize text and icon content.
+
+Long text wraps instead of pushing the lines out. Each line piece keeps at least 16px.
+
+<Canvas of={DividerStories.Customization} />
+
+## Example with content
+
+The divider in real layouts: a modal, a grouped list, a sectioned form, a toolbar, widget stats and a sidebar page. Skeletons stand in for the content.
+
+<Canvas of={DividerStories.ExamplesWithContent} />
+
+## Accessibility
+
+- Renders `role="separator"`, with `aria-orientation="vertical"` when vertical.
+- Text content becomes the accessible name. An icon or a node does not, so pass `aria-label` if the break is meaningful.
+- A separator's children are hidden from assistive tech. So with a node, which may be interactive, the role sits on the first line piece instead of the wrapper. The node stays a normal element, and `className`/`style` still apply to the wrapper.
+- The lines are decorative SVGs hidden from screen readers.

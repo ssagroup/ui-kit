@@ -305,3 +305,5 @@ export * from './Icon/types';
 export * from './FullscreenModeContext';
 export * from './Skeleton';
 export type * from './Skeleton/types';
+export * from './Divider';
+export type * from './Divider/types';
